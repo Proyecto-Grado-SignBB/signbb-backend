@@ -1,20 +1,14 @@
 package org.signbb.backend.crobservaciones.controladores;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class RespuestaRequest {
     private String respuesta;
-
-    public RespuestaRequest() {
-    }
-
-    public RespuestaRequest(String respuesta) {
-        this.respuesta = respuesta;
-    }
-
-    public String getRespuesta() {
-        return respuesta;
-    }
-
-    public void setRespuesta(String respuesta) {
-        this.respuesta = respuesta;
-    }
 }
