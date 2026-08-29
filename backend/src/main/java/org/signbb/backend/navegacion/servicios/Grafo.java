@@ -5,8 +5,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Grafo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,31 +23,4 @@ public class Grafo {
 
     @ManyToOne
     private Nodo nodoRaiz;
-
-    public Grafo() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public Nodo getNodoRaiz() {
-        return nodoRaiz;
-    }
-
-    public void setNodoRaiz(Nodo nodoRaiz) {
-        this.nodoRaiz = nodoRaiz;
-    }
 }

@@ -8,10 +8,18 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Nodo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,37 +30,4 @@ public class Nodo {
     @CollectionTable(name = "nodo_opciones", joinColumns = @JoinColumn(name = "nodo_id"))
     @JsonProperty("opciones")
     private List<OpcionRespuesta> opcionesRespuesta;
-
-    public Nodo() {
-    }
-
-    public Nodo(long id, String texto, List<OpcionRespuesta> opcionesRespuesta) {
-        this.id = id;
-        this.texto = texto;
-        this.opcionesRespuesta = opcionesRespuesta;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getTexto() {
-        return texto;
-    }
-
-    public void setTexto(String texto) {
-        this.texto = texto;
-    }
-
-    public List<OpcionRespuesta> getOpcionesRespuesta() {
-        return opcionesRespuesta;
-    }
-
-    public void setOpcionesRespuesta(List<OpcionRespuesta> opcionesRespuesta) {
-        this.opcionesRespuesta = opcionesRespuesta;
-    }
 }
