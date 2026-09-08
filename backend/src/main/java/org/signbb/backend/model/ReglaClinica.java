@@ -8,13 +8,15 @@ import java.util.Optional;
 /**
  * TAD ReglaClinica (Sección 4.2 del documento de diseño).
  *
- * <p>Representa el conocimiento del neonatólogo: un conjunto de condiciones
+ * <p>
+ * Representa el conocimiento del neonatólogo: un conjunto de condiciones
  * (unidas por AND) que, al cumplirse en un {@link EstadoPaciente}, apuntan a un
- * nodo destino (alerta, recomendación, etc.). No decide qué hacer con el
- * resultado — solo sabe "compararse contra un estado". La identidad está dada
- * por {@code idRegla}.
+ * nodo destino (alerta, recomendación, etc.) con un nivel de gravedad asociado.
+ * No decide qué hacer con el resultado — solo sabe "compararse contra un
+ * estado". La identidad está dada por {@code idRegla}.
  *
- * <p>Migrado desde {@code src/regla_clinica.py}.
+ * <p>
+ * Migrado desde {@code src/regla_clinica.py}.
  */
 public final class ReglaClinica {
 
@@ -22,15 +24,10 @@ public final class ReglaClinica {
     private final String nombre;
     private final List<Condicion> condiciones;
     private final Nodo nodoDestino;
-    private final int peso;
+    private final NivelAlerta nivel;
 
     public ReglaClinica(String idRegla, String nombre, List<Condicion> condiciones,
-                        Nodo nodoDestino) {
-        this(idRegla, nombre, condiciones, nodoDestino, 0);
-    }
-
-    public ReglaClinica(String idRegla, String nombre, List<Condicion> condiciones,
-                        Nodo nodoDestino, int peso) {
+            Nodo nodoDestino, NivelAlerta nivel) {
         if (idRegla == null || idRegla.isEmpty()) {
             throw new IllegalArgumentException("idRegla debe ser una cadena no vacía");
         }
@@ -50,11 +47,14 @@ public final class ReglaClinica {
         if (nodoDestino == null) {
             throw new IllegalArgumentException("nodoDestino debe ser Nodo");
         }
+        if (nivel == null) {
+            throw new IllegalArgumentException("nivel debe ser NivelAlerta");
+        }
         this.idRegla = idRegla;
         this.nombre = nombre;
         this.condiciones = new ArrayList<>(condiciones);
         this.nodoDestino = nodoDestino;
-        this.peso = peso;
+        this.nivel = nivel;
     }
 
     public String getIdRegla() {
@@ -74,8 +74,8 @@ public final class ReglaClinica {
         return nodoDestino;
     }
 
-    public int getPeso() {
-        return peso;
+    public NivelAlerta getNivel() {
+        return nivel;
     }
 
     /** True si TODAS las condiciones se cumplen en el estado dado. */
@@ -108,7 +108,7 @@ public final class ReglaClinica {
     @Override
     public String toString() {
         return "ReglaClinica(id='" + idRegla + "', nombre='" + nombre + "', condiciones="
-                + condiciones.size() + ", destino='" + nodoDestino.getId() + "', peso="
-                + peso + ")";
+                + condiciones.size() + ", destino='" + nodoDestino.getId() + "', nivel="
+                + nivel + ")";
     }
 }
