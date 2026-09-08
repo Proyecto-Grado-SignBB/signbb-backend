@@ -1,0 +1,248 @@
+{
+  "graph": {
+    "directed": true,
+    "type": "clinico",
+    "label": "Evaluación de Ictericia en Bebés Prematuros",
+    "metadata": {
+      "autor": "Dra. Catalina Rodríguez",
+      "fechaCreacion": "2026-09-08",
+      "descripcion": "Grafo clínico para evaluar signos de ictericia en recién nacidos prematuros",
+      "institucion": "Fundación Canguro"
+    },
+    "nodes": {
+      "inicio": {
+        "label": "Evaluación de Ictericia",
+        "metadata": {
+          "tipo": "inicio",
+          "peso": 100,
+          "archivos": false,
+          "src": [],
+          "categorias": ["ictericia", "piel"]
+        }
+      },
+      "pregunta_coloracion": {
+        "label": "¿Observa coloración amarilla en la piel o los ojos del bebé?",
+        "metadata": {
+          "tipo": "pregunta",
+          "peso": 95,
+          "archivos": true,
+          "src": ["/images/ictericia-ejemplo.jpg", "/images/ictericia-ojos.jpg"],
+          "categorias": ["ictericia", "piel", "ojos"]
+        }
+      },
+      "pregunta_tiempo": {
+        "label": "¿Desde hace cuánto tiempo presenta esta coloración?",
+        "metadata": {
+          "tipo": "pregunta",
+          "peso": 90,
+          "archivos": false,
+          "src": [],
+          "categorias": ["ictericia", "tiempo"]
+        }
+      },
+      "pregunta_alimentacion": {
+        "label": "¿El bebé se está alimentando menos de lo habitual?",
+        "metadata": {
+          "tipo": "pregunta",
+          "peso": 85,
+          "archivos": false,
+          "src": [],
+          "categorias": ["ictericia", "alimentacion"]
+        }
+      },
+      "pregunta_letargo": {
+        "label": "¿El bebé está más somnoliento o letárgico de lo normal?",
+        "metadata": {
+          "tipo": "pregunta",
+          "peso": 80,
+          "archivos": false,
+          "src": [],
+          "categorias": ["ictericia", "comportamiento"]
+        }
+      },
+      "pregunta_poposangre": {
+        "label": "¿Ha observado sangre en las heces del bebé?",
+        "metadata": {
+          "tipo": "pregunta",
+          "peso": 95,
+          "archivos": true,
+          "src": ["/images/heces-sangre-ejemplo.jpg"],
+          "categorias": ["ictericia", "digestivo", "sangre"]
+        }
+      },
+      "recomendacion_tranquilidad": {
+        "label": "La coloración amarilla puede ser normal en los primeros días. Mantenga la lactancia frecuente y consulte con su pediatra en la próxima cita de control.",
+        "metadata": {
+          "tipo": "recomendacion",
+          "peso": 30,
+          "archivos": false,
+          "src": [],
+          "categorias": ["ictericia", "tranquilidad"]
+        }
+      },
+      "recomendacion_observacion": {
+        "label": "La ictericia es leve. Aumente la frecuencia de las tomas y observe si la coloración se extiende. Consulte con su pediatra en las próximas 24 horas si no mejora.",
+        "metadata": {
+          "tipo": "recomendacion",
+          "peso": 50,
+          "archivos": false,
+          "src": [],
+          "categorias": ["ictericia", "observacion"]
+        }
+      },
+      "consulta_medica_urgente": {
+        "label": "¡ATENCIÓN! La ictericia puede ser grave. Acuda de inmediato al servicio de urgencias con su bebé. Lleve el carnet de control y el registro de alimentación.",
+        "metadata": {
+          "tipo": "consulta médica",
+          "peso": 100,
+          "archivos": false,
+          "src": [],
+          "categorias": ["ictericia", "urgencia", "alarma"]
+        }
+      },
+      "consulta_medica_prioritaria": {
+        "label": "Requiere valoración médica prioritaria. Consulte con su pediatra o acuda al servicio de urgencias en las próximas horas.",
+        "metadata": {
+          "tipo": "consulta médica",
+          "peso": 85,
+          "archivos": false,
+          "src": [],
+          "categorias": ["ictericia", "prioritario"]
+        }
+      },
+      "bloqueo_condicion_invalida": {
+        "label": "No se ha podido determinar una ruta clara. Por favor, reinicie la evaluación o consulte directamente con su pediatra.",
+        "metadata": {
+          "tipo": "bloqueo",
+          "peso": 10,
+          "archivos": false,
+          "src": [],
+          "categorias": ["error", "invalido"]
+        }
+      }
+    },
+    "edges": [
+      {
+        "source": "inicio",
+        "relation": "inicia_navegacion",
+        "target": "pregunta_coloracion",
+        "directed": true,
+        "metadata": {
+          "archivos": false,
+          "src": [],
+          "categorias": ["inicio"]
+        }
+      },
+      {
+        "source": "pregunta_coloracion",
+        "relation": "SI",
+        "target": "pregunta_tiempo",
+        "directed": true,
+        "metadata": {
+          "archivos": false,
+          "src": [],
+          "categorias": ["ictericia", "positivo"]
+        }
+      },
+      {
+        "source": "pregunta_coloracion",
+        "relation": "NO",
+        "target": "recomendacion_tranquilidad",
+        "directed": true,
+        "metadata": {
+          "archivos": false,
+          "src": [],
+          "categorias": ["ictericia", "negativo"]
+        }
+      },
+      {
+        "source": "pregunta_tiempo",
+        "relation": "MENOS_DE_24_HORAS",
+        "target": "pregunta_alimentacion",
+        "directed": true,
+        "metadata": {
+          "archivos": false,
+          "src": [],
+          "categorias": ["ictericia", "tiempo_corto"]
+        }
+      },
+      {
+        "source": "pregunta_tiempo",
+        "relation": "MAS_DE_24_HORAS",
+        "target": "consulta_medica_urgente",
+        "directed": true,
+        "metadata": {
+          "archivos": false,
+          "src": [],
+          "categorias": ["ictericia", "tiempo_largo", "alarma"]
+        }
+      },
+      {
+        "source": "pregunta_alimentacion",
+        "relation": "SI",
+        "target": "consulta_medica_prioritaria",
+        "directed": true,
+        "metadata": {
+          "archivos": false,
+          "src": [],
+          "categorias": ["ictericia", "alimentacion", "preocupante"]
+        }
+      },
+      {
+        "source": "pregunta_alimentacion",
+        "relation": "NO",
+        "target": "pregunta_letargo",
+        "directed": true,
+        "metadata": {
+          "archivos": false,
+          "src": [],
+          "categorias": ["ictericia", "alimentacion_normal"]
+        }
+      },
+      {
+        "source": "pregunta_letargo",
+        "relation": "SI",
+        "target": "consulta_medica_urgente",
+        "directed": true,
+        "metadata": {
+          "archivos": false,
+          "src": [],
+          "categorias": ["ictericia", "letargo", "alarma"]
+        }
+      },
+      {
+        "source": "pregunta_letargo",
+        "relation": "NO",
+        "target": "recomendacion_observacion",
+        "directed": true,
+        "metadata": {
+          "archivos": false,
+          "src": [],
+          "categorias": ["ictericia", "comportamiento_normal"]
+        }
+      },
+      {
+        "source": "pregunta_poposangre",
+        "relation": "SI",
+        "target": "consulta_medica_urgente",
+        "directed": true,
+        "metadata": {
+          "archivos": false,
+          "src": [],
+          "categorias": ["sangre", "alarma"]
+        }
+      },
+      {
+        "source": "pregunta_poposangre",
+        "relation": "NO",
+        "target": "recomendacion_observacion",
+        "directed": true,
+        "metadata": {
+          "archivos": false,
+          "src": [],
+          "categorias": ["digestivo", "normal"]
+        }
+      }
+    ]
+  }
+}
