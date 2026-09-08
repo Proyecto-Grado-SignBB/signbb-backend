@@ -18,7 +18,8 @@ class BaseReglasTest {
     }
 
     private static ReglaClinica regla(String id, List<Condicion> condiciones) {
-        return new ReglaClinica(id, "regla-" + id, condiciones, n("dest-" + id));
+        return new ReglaClinica(id, "regla-" + id, condiciones, n("dest-" + id),
+                NivelAlerta.CONSULTAR_MEDICO);
     }
 
     @Test

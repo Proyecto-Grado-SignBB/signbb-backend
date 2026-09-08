@@ -22,10 +22,10 @@ class ReglaClinicaTest {
                 "Fiebre alta",
                 List.of(new Condicion("fiebre", "Sí"), new Condicion("temp", "≥38°C")),
                 destino(),
-                8);
+                NivelAlerta.URGENCIA);
         assertEquals("r1", r.getIdRegla());
         assertEquals("Fiebre alta", r.getNombre());
-        assertEquals(8, r.getPeso());
+        assertEquals(NivelAlerta.URGENCIA, r.getNivel());
         assertEquals("urg", r.getNodoDestino().getId());
         assertEquals(
                 List.of(new Condicion("fiebre", "Sí"), new Condicion("temp", "≥38°C")),
@@ -35,14 +35,15 @@ class ReglaClinicaTest {
     @Test
     void condicionesVaciasFalla() {
         assertThrows(IllegalArgumentException.class,
-                () -> new ReglaClinica("r1", "n", List.of(), destino()));
+                () -> new ReglaClinica("r1", "n", List.of(), destino(),
+                        NivelAlerta.CONSULTAR_MEDICO));
     }
 
     @Test
     void condicionesCumplidasTodas() {
         ReglaClinica r = new ReglaClinica("r1", "n",
                 List.of(new Condicion("fiebre", "Sí"), new Condicion("temp", "≥38°C")),
-                destino());
+                destino(), NivelAlerta.CONSULTAR_MEDICO);
         EstadoPaciente e = new EstadoPaciente("s1");
         e.registrarRespuesta("fiebre", "Sí");
         e.registrarRespuesta("temp", "≥38°C");
@@ -53,7 +54,7 @@ class ReglaClinicaTest {
     void condicionesNoCumplidasUnaFalta() {
         ReglaClinica r = new ReglaClinica("r1", "n",
                 List.of(new Condicion("fiebre", "Sí"), new Condicion("temp", "≥38°C")),
-                destino());
+                destino(), NivelAlerta.CONSULTAR_MEDICO);
         EstadoPaciente e = new EstadoPaciente("s1");
         e.registrarRespuesta("fiebre", "Sí");
         assertFalse(r.condicionesCumplidas(e));
@@ -62,7 +63,8 @@ class ReglaClinicaTest {
     @Test
     void condicionesNoCumplidasRespuestaDistinta() {
         ReglaClinica r = new ReglaClinica("r1", "n",
-                List.of(new Condicion("fiebre", "Sí")), destino());
+                List.of(new Condicion("fiebre", "Sí")), destino(),
+                NivelAlerta.CONSULTAR_MEDICO);
         EstadoPaciente e = new EstadoPaciente("s1");
         e.registrarRespuesta("fiebre", "No");
         assertFalse(r.condicionesCumplidas(e));
@@ -71,9 +73,9 @@ class ReglaClinicaTest {
     @Test
     void igualdadPorId() {
         ReglaClinica r1 = new ReglaClinica("mismo", "a",
-                List.of(new Condicion("x", "y")), destino());
+                List.of(new Condicion("x", "y")), destino(), NivelAlerta.CONSULTAR_MEDICO);
         ReglaClinica r2 = new ReglaClinica("mismo", "b",
-                List.of(new Condicion("otro", "otro")), destino());
+                List.of(new Condicion("otro", "otro")), destino(), NivelAlerta.URGENCIA);
         assertEquals(r1, r2);
         assertEquals(r1.hashCode(), r2.hashCode());
     }
@@ -81,7 +83,7 @@ class ReglaClinicaTest {
     @Test
     void condicionesEsCopia() {
         ReglaClinica r = new ReglaClinica("r1", "n",
-                List.of(new Condicion("fiebre", "Sí")), destino());
+                List.of(new Condicion("fiebre", "Sí")), destino(), NivelAlerta.CONSULTAR_MEDICO);
         List<Condicion> c = r.getCondiciones();
         c.add(new Condicion("hack", "hack"));
         assertEquals(1, r.getCondiciones().size());
