@@ -1,9 +1,12 @@
 package org.signbb.backend;
 
 import org.signbb.backend.model.*;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 /**
@@ -96,6 +99,35 @@ public class DemoTriajeRunner implements CommandLineRunner {
             if (g.esNodoTerminal(actual)) {
                 System.out.printf("%n  Terminal alcanzado: %s%n", actual.getContenido());
                 break;
+            }
+        }
+
+        separador("5. Grafo cargado desde static/ejemplo_grafo.json");
+        String json;
+        try {
+            json = new ClassPathResource("static/ejemplo_grafo.json")
+                    .getContentAsString(StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new IllegalStateException("No se pudo leer ejemplo_grafo.json", e);
+        }
+        GrafoClinico desdeJson = JsonParser.parseJsonToGrafoClinico(json);
+
+        System.out.printf("Nodos cargados: %d%n", desdeJson.size());
+        System.out.printf("Nodo inicial: %s%n",
+                desdeJson.obtenerNodoInicial().map(Nodo::getId).orElse("(ninguno)"));
+        System.out.printf("Ruta válida: %s%n", desdeJson.rutaValida());
+
+        System.out.println("\nNodos:");
+        for (Nodo n : desdeJson.obtenerNodos()) {
+            System.out.printf("  %-28s (%-15s, peso %3d) %s%n",
+                    n.getId(), n.getTipo(), n.getPeso(), n.getContenido());
+        }
+
+        System.out.println("\nAristas:");
+        for (Nodo n : desdeJson.obtenerNodos()) {
+            for (Respuesta r : desdeJson.obtenerOpciones(n)) {
+                System.out.printf("  %-28s --[%s]--> %s%n",
+                        r.getOrigen().getId(), r.getCondicion(), r.getDestino().getId());
             }
         }
     }

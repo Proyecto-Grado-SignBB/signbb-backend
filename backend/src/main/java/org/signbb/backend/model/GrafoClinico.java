@@ -16,17 +16,22 @@ import java.util.Set;
 /**
  * TAD GrafoClinico (Secciones 4 y 5 del documento de diseño).
  *
- * <p>Implementa las 13 operaciones especificadas más la operación
+ * <p>
+ * Implementa las 13 operaciones especificadas más la operación *
  * {@link #navegar()} descrita en la sección 5.1.
  *
- * <p>Representación interna: lista de adyacencia ({@link LinkedHashMap} de
- * {@link Nodo} → lista de {@link Respuesta}). Se prefiere sobre matriz porque el
- * grafo es disperso y la operación dominante es "obtener aristas salientes de un
+ * <p>
+ * Representación interna: lista de adyacencia ({@link LinkedHashMap} de
+ * {@link Nodo} → lista de {@link Respuesta}). Se prefiere sobre matriz porque
+ * el
+ * grafo es disperso y la operación dominante es "obtener aristas salientes de
+ * un
  * nodo". Se usa LinkedHashMap para conservar el orden de inserción de los nodos
  * (igual que el {@code dict} de Python), lo que hace determinista tanto la
  * elección del nodo inicial tras un borrado como los recorridos.
  *
- * <p>Migrado desde {@code src/grafo_clinico.py}.
+ * <p>
+ * Migrado desde {@code src/grafo_clinico.py}.
  */
 public final class GrafoClinico {
 
@@ -360,5 +365,20 @@ public final class GrafoClinico {
 
     public boolean contains(Nodo nodo) {
         return adyacencia.containsKey(nodo);
+    }
+
+    /** Busca un nodo por su id. */
+    public Optional<Nodo> obtenerNodoPorId(String id) {
+        for (Nodo n : adyacencia.keySet()) {
+            if (n.getId().equals(id)) {
+                return Optional.of(n);
+            }
+        }
+        return Optional.empty();
+    }
+
+    /** Nodos del grafo en orden de inserción — retorna copia de las llaves. */
+    public List<Nodo> obtenerNodos() {
+        return new ArrayList<>(adyacencia.keySet());
     }
 }
