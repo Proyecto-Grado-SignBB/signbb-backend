@@ -17,6 +17,7 @@ public final class Respuesta {
     private final Nodo destino;
     private final String condicion;
 
+    /** Crea la arista activada por la respuesta {@code condicion}. */
     public Respuesta(Nodo origen, Nodo destino, String condicion) {
         if (origen == null) {
             throw new IllegalArgumentException("origen debe ser Nodo");
@@ -32,14 +33,17 @@ public final class Respuesta {
         this.condicion = condicion;
     }
 
+    /** Nodo del que sale la arista. */
     public Nodo getOrigen() {
         return origen;
     }
 
+    /** Nodo al que llega la arista. */
     public Nodo getDestino() {
         return destino;
     }
 
+    /** Respuesta que activa la arista. */
     public String getCondicion() {
         return condicion;
     }

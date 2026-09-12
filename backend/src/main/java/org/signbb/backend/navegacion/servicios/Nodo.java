@@ -15,17 +15,25 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * Entidad JPA de nodo de pregunta persistido para el módulo de navegación;
+ * distinta del TAD {@link org.signbb.backend.model.Nodo}.
+ */
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Nodo {
+    /** Identificador autogenerado. */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    /** Texto de la pregunta mostrada al cuidador. */
     private String texto;
 
+    /** Opciones de respuesta del nodo. */
     @ElementCollection
     @CollectionTable(name = "nodo_opciones", joinColumns = @JoinColumn(name = "nodo_id"))
     @JsonProperty("opciones")

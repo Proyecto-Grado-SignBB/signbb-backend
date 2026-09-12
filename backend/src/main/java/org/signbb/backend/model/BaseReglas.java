@@ -19,6 +19,7 @@ public final class BaseReglas {
 
     private final Map<String, ReglaClinica> reglas = new LinkedHashMap<>();
 
+    /** Agrega una regla nueva; falla si ya existe una con el mismo id. */
     public void agregarRegla(ReglaClinica regla) {
         if (regla == null) {
             throw new IllegalArgumentException("regla debe ser ReglaClinica");
@@ -30,6 +31,7 @@ public final class BaseReglas {
         reglas.put(regla.getIdRegla(), regla);
     }
 
+    /** Elimina la regla con el id dado; falla si no existe. */
     public void eliminarRegla(String idRegla) {
         if (!reglas.containsKey(idRegla)) {
             throw new IllegalArgumentException("no existe la regla '" + idRegla + "'");
@@ -37,6 +39,7 @@ public final class BaseReglas {
         reglas.remove(idRegla);
     }
 
+    /** Retorna la regla con el id dado; falla si no existe. */
     public ReglaClinica obtenerRegla(String idRegla) {
         if (!reglas.containsKey(idRegla)) {
             throw new IllegalArgumentException("no existe la regla '" + idRegla + "'");
@@ -44,6 +47,7 @@ public final class BaseReglas {
         return reglas.get(idRegla);
     }
 
+    /** Copia de todas las reglas en orden de inserción. */
     public List<ReglaClinica> todasLasReglas() {
         return new ArrayList<>(reglas.values());
     }
@@ -64,6 +68,7 @@ public final class BaseReglas {
         return reglas.size();
     }
 
+    /** True si existe una regla con el id dado. */
     public boolean contains(String idRegla) {
         return reglas.containsKey(idRegla);
     }

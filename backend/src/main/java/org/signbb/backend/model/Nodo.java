@@ -28,6 +28,7 @@ public final class Nodo {
         this(id, tipo, contenido, 0);
     }
 
+    /** Constructor con peso explícito. */
     public Nodo(String id, String tipo, String contenido, int peso) {
         if (id == null || id.isEmpty()) {
             throw new IllegalArgumentException("id debe ser una cadena no vacía");
@@ -45,18 +46,23 @@ public final class Nodo {
         this.peso = peso;
     }
 
+    /** Id único del nodo. */
     public String getId() {
         return id;
     }
 
+    /** Tipo del nodo: {@code pregunta}, {@code recomendacion}, {@code bloqueo}
+     * o {@code consulta_medica}. */
     public String getTipo() {
         return tipo;
     }
 
+    /** Texto mostrado al cuidador. */
     public String getContenido() {
         return contenido;
     }
 
+    /** Peso de urgencia del nodo. */
     public int getPeso() {
         return peso;
     }

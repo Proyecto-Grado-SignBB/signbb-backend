@@ -26,6 +26,7 @@ public final class ReglaClinica {
     private final Nodo nodoDestino;
     private final NivelAlerta nivel;
 
+    /** Crea la regla validando sus cinco componentes. */
     public ReglaClinica(String idRegla, String nombre, List<Condicion> condiciones,
             Nodo nodoDestino, NivelAlerta nivel) {
         if (idRegla == null || idRegla.isEmpty()) {
@@ -57,10 +58,12 @@ public final class ReglaClinica {
         this.nivel = nivel;
     }
 
+    /** Identificador único de la regla. */
     public String getIdRegla() {
         return idRegla;
     }
 
+    /** Texto descriptivo de la regla. */
     public String getNombre() {
         return nombre;
     }
@@ -70,10 +73,12 @@ public final class ReglaClinica {
         return new ArrayList<>(condiciones);
     }
 
+    /** Nodo terminal al que salta el motor si la regla se activa. */
     public Nodo getNodoDestino() {
         return nodoDestino;
     }
 
+    /** Severidad producida al activarse la regla. */
     public NivelAlerta getNivel() {
         return nivel;
     }

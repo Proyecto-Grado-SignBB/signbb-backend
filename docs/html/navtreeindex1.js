@@ -1,0 +1,19 @@
+var NAVTREEINDEX1 =
+{
+"namespaceorg_1_1signbb_1_1backend_1_1crobservaciones.html":[0,0,0,0,0,0],
+"namespaceorg_1_1signbb_1_1backend_1_1crobservaciones_1_1controladores.html":[0,0,0,0,0,0,0],
+"namespaceorg_1_1signbb_1_1backend_1_1model.html":[0,0,0,0,0,1],
+"namespaceorg_1_1signbb_1_1backend_1_1model.html#a32db2753178bcd5704dc5d20a99328d3":[0,0,0,0,0,1,11],
+"namespaceorg_1_1signbb_1_1backend_1_1model.html#a893a31672c47ab0b020b893488afb827":[0,0,0,0,0,1,9],
+"namespaceorg_1_1signbb_1_1backend_1_1model.html#af4612fd97222862815b471a822bdff91":[0,0,0,0,0,1,10],
+"namespaceorg_1_1signbb_1_1backend_1_1navegacion.html":[0,0,0,0,0,2],
+"namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1repositorios.html":[0,0,0,0,0,2,0],
+"namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios.html":[0,0,0,0,0,2,1],
+"namespaceorg_1_1signbb_1_1backend_1_1reglas.html":[0,0,0,0,0,3],
+"namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1servicios.html":[0,0,0,0,0,3,0],
+"namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1servicios.html#a2090027b7dffa06412a49815c0a1b08f":[0,0,0,0,0,3,0,2],
+"namespaces.html":[0,0],
+"pages.html":[],
+"":[0,0,0],
+"":[0,0,0,0]
+};
