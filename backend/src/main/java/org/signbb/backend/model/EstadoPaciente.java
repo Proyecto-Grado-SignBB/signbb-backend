@@ -13,7 +13,7 @@ import java.util.Optional;
  * preguntas del grafo y el puntaje acumulado. No contiene lógica de
  * inferencia — solo almacena y consulta.
  *
- * <p>Se usa {@link LinkedHashMap} para conservar el orden de inserción de las
+ * <p>Se usa {@code LinkedHashMap} para conservar el orden de inserción de las
  * respuestas (mismo comportamiento determinista que el dict de Python).
  *
  * <p>Migrado desde {@code src/estado_paciente.py}.
@@ -24,6 +24,7 @@ public final class EstadoPaciente {
     private final Map<String, String> respuestas = new LinkedHashMap<>();
     private int puntaje = 0;
 
+    /** Crea la sesión de triaje vacía. */
     public EstadoPaciente(String idSesion) {
         if (idSesion == null || idSesion.isEmpty()) {
             throw new IllegalArgumentException("idSesion debe ser una cadena no vacía");
@@ -31,10 +32,12 @@ public final class EstadoPaciente {
         this.idSesion = idSesion;
     }
 
+    /** Identificador de la sesión. */
     public String getIdSesion() {
         return idSesion;
     }
 
+    /** Registra la respuesta del cuidador para el nodo dado. */
     public void registrarRespuesta(String idNodo, String respuesta) {
         if (idNodo == null || idNodo.isEmpty()) {
             throw new IllegalArgumentException("idNodo debe ser una cadena no vacía");
@@ -50,10 +53,12 @@ public final class EstadoPaciente {
         return Optional.ofNullable(respuestas.get(idNodo));
     }
 
+    /** Suma puntos al puntaje de la sesión. */
     public void sumarPuntaje(int delta) {
         puntaje += delta;
     }
 
+    /** Puntaje acumulado de la sesión. */
     public int getPuntaje() {
         return puntaje;
     }
@@ -67,6 +72,7 @@ public final class EstadoPaciente {
         return lista;
     }
 
+    /** Vacía las respuestas y reinicia el puntaje. */
     public void reiniciar() {
         respuestas.clear();
         puntaje = 0;

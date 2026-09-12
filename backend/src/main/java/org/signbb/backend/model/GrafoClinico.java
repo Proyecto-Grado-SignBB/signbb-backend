@@ -21,7 +21,7 @@ import java.util.Set;
  * {@link #navegar()} descrita en la sección 5.1.
  *
  * <p>
- * Representación interna: lista de adyacencia ({@link LinkedHashMap} de
+ * Representación interna: lista de adyacencia ({@code LinkedHashMap} de
  * {@link Nodo} → lista de {@link Respuesta}). Se prefiere sobre matriz porque
  * el
  * grafo es disperso y la operación dominante es "obtener aristas salientes de
@@ -46,6 +46,7 @@ public final class GrafoClinico {
         this(8, 3);
     }
 
+    /** Crea el grafo con umbrales de peso explícitos. */
     public GrafoClinico(int umbralAlto, int umbralBajo) {
         if (umbralBajo > umbralAlto) {
             throw new IllegalArgumentException(
@@ -143,6 +144,7 @@ public final class GrafoClinico {
         return Optional.ofNullable(nodoInicial);
     }
 
+    /** Fija el nodo inicial de la navegación (debe pertenecer al grafo). */
     public void setNodoInicial(Nodo nodo) {
         if (!adyacencia.containsKey(nodo)) {
             throw new IllegalArgumentException(
@@ -193,6 +195,7 @@ public final class GrafoClinico {
         bloqueado = true;
     }
 
+    /** Reversa de {@link #bloquearRuta()}: reanuda la navegación. */
     public void desbloquearRuta() {
         bloqueado = false;
     }
@@ -363,6 +366,7 @@ public final class GrafoClinico {
         return adyacencia.size();
     }
 
+    /** True si el nodo pertenece al grafo. */
     public boolean contains(Nodo nodo) {
         return adyacencia.containsKey(nodo);
     }

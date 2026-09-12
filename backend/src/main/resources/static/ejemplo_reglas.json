@@ -1,0 +1,60 @@
+{
+  "rules": {
+    "R1": {
+      "nombre": "Ictericia prolongada",
+      "condiciones": [
+        { "idNodo": "pregunta_coloracion", "respuesta": "SI" },
+        { "idNodo": "pregunta_tiempo", "respuesta": "MAS_DE_24_HORAS" }
+      ],
+      "nodoDestino": "consulta_medica_urgente",
+      "nivel": "URGENCIA",
+      "metadata": {
+        "autor": "Dra. Catalina Rodríguez",
+        "fechaCreacion": "2026-09-08T10:00:00Z",
+        "descripcion": "Coloración amarilla presente por más de 24 horas: derivar a urgencias"
+      }
+    },
+    "R2": {
+      "nombre": "Ictericia con letargo",
+      "condiciones": [
+        { "idNodo": "pregunta_coloracion", "respuesta": "SI" },
+        { "idNodo": "pregunta_letargo", "respuesta": "SI" }
+      ],
+      "nodoDestino": "consulta_medica_urgente",
+      "nivel": "URGENCIA",
+      "metadata": {
+        "autor": "Dra. Catalina Rodríguez",
+        "fechaCreacion": "2026-09-08T10:00:00Z",
+        "descripcion": "Letargo junto con coloración amarilla: derivar a urgencias"
+      }
+    },
+    "R3": {
+      "nombre": "Ictericia con mala alimentación",
+      "condiciones": [
+        { "idNodo": "pregunta_coloracion", "respuesta": "SI" },
+        { "idNodo": "pregunta_alimentacion", "respuesta": "SI" }
+      ],
+      "nodoDestino": "consulta_medica_prioritaria",
+      "nivel": "CONSULTAR_MEDICO",
+      "metadata": {
+        "autor": "Dra. Catalina Rodríguez",
+        "fechaCreacion": "2026-09-08T10:00:00Z",
+        "descripcion": "Coloración amarilla con alimentación reducida: valoración médica prioritaria"
+      }
+    },
+    "R4": {
+      "nombre": "Sangre en heces con coloración",
+      "condiciones": [
+        { "idNodo": "pregunta_coloracion", "respuesta": "SI" },
+        { "idNodo": "pregunta_poposangre", "respuesta": "SI" }
+      ],
+      "nodoDestino": "consulta_medica_urgente",
+      "nivel": "URGENCIA",
+      "metadata": {
+        "autor": "Dra. Catalina Rodríguez",
+        "fechaCreacion": "2026-09-08T10:00:00Z",
+        "descripcion": "Sangre en heces junto con coloración amarilla: derivar a urgencias"
+      }
+    }
+  }
+}

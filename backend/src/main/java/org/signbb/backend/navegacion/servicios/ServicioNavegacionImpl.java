@@ -9,6 +9,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Implementación provisional del módulo de navegación: {@code responder}
+ * codifica a mano un flujo respiratorio de prueba, pendiente de conectar
+ * con el TAD GrafoClinico y la base de reglas.
+ */
 @Service
 public class ServicioNavegacionImpl implements ServicioNavegacion {
 
@@ -16,6 +21,7 @@ public class ServicioNavegacionImpl implements ServicioNavegacion {
     private final RepositorioRecorrido repoRecorrido;
     private final RepositorioGrafo repoGrafo;
 
+    /** Inyecta los tres repositorios del módulo. */
     @Autowired
     public ServicioNavegacionImpl(RepositorioNodo repoNodo,
                                   RepositorioRecorrido repoRecorrido,
@@ -25,11 +31,13 @@ public class ServicioNavegacionImpl implements ServicioNavegacion {
         this.repoGrafo = repoGrafo;
     }
 
+    /** Delega en el repositorio de nodos. */
     @Override
     public Nodo guardar(Nodo nodo) {
         return repoNodo.save(nodo);
     }
 
+    /** Crea un recorrido en curso desde la raíz del grafo. */
     @Override
     public Recorrido iniciar(long idGrafo) {
         Grafo grafo = repoGrafo.findById(idGrafo)
@@ -43,6 +51,7 @@ public class ServicioNavegacionImpl implements ServicioNavegacion {
         return repoRecorrido.save(recorrido);
     }
 
+    /** Transición hardcodeada del flujo respiratorio de prueba. */
     @Override
     public Recorrido responder(long recorridoId, String respuesta) {
         Recorrido recorrido = repoRecorrido.findById(recorridoId)
@@ -86,6 +95,7 @@ public class ServicioNavegacionImpl implements ServicioNavegacion {
         return repoRecorrido.save(recorrido);
     }
 
+    /** Busca el recorrido por su id. */
     @Override
     public Recorrido consultar(long recorridoId) {
         return repoRecorrido.findById(recorridoId)

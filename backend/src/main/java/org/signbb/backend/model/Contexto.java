@@ -18,6 +18,7 @@ public final class Contexto {
     private final List<EstadoPaciente> sesiones = new ArrayList<>();
     private int puntajeGlobal = 0;
 
+    /** Crea el contexto del paciente sin sesiones. */
     public Contexto(String idPaciente) {
         if (idPaciente == null || idPaciente.isEmpty()) {
             throw new IllegalArgumentException("idPaciente debe ser una cadena no vacía");
@@ -25,10 +26,12 @@ public final class Contexto {
         this.idPaciente = idPaciente;
     }
 
+    /** Identificador del paciente. */
     public String getIdPaciente() {
         return idPaciente;
     }
 
+    /** Crea y agrega una sesión con id único en el contexto. */
     public EstadoPaciente nuevaSesion(String idSesion) {
         for (EstadoPaciente s : sesiones) {
             if (s.getIdSesion().equals(idSesion)) {
@@ -54,10 +57,12 @@ public final class Contexto {
         return new ArrayList<>(sesiones);
     }
 
+    /** Suma puntos al puntaje global del paciente. */
     public void sumarPuntajeGlobal(int delta) {
         puntajeGlobal += delta;
     }
 
+    /** Puntaje global acumulado entre sesiones. */
     public int getPuntajeGlobal() {
         return puntajeGlobal;
     }
