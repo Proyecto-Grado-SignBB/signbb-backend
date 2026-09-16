@@ -1,104 +1,67 @@
 package org.signbb.backend.navegacion.servicios;
 
-import org.signbb.backend.config.RecursoNoEncontradoException;
-import org.signbb.backend.navegacion.repositorios.RepositorioGrafo;
-import org.signbb.backend.navegacion.repositorios.RepositorioNodo;
-import org.signbb.backend.navegacion.repositorios.RepositorioRecorrido;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.UUID;
+
+import org.signbb.backend.crobservaciones.controladores.RecorridoDTO;
+import org.signbb.backend.model.EstadoPaciente;
+import org.signbb.backend.navegacion.motor.ContextoClinico;
+import org.signbb.backend.navegacion.motor.MotorNavegacion;
+import org.signbb.backend.navegacion.motor.RepositorioSesion;
+import org.signbb.backend.navegacion.motor.ResultadoPaso;
+import org.signbb.backend.navegacion.motor.SesionTriaje;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
- * Implementación provisional del módulo de navegación: {@code responder}
- * codifica a mano un flujo respiratorio de prueba, pendiente de conectar
- * con el TAD GrafoClinico y la base de reglas.
+ * Implementación del módulo de navegación sobre el motor real: cablea el
+ * {@link MotorNavegacion} (recorrido guiado + reglas) con el
+ * {@link ContextoClinico} (grafo y reglas en memoria) y el
+ * {@link RepositorioSesion} (estado del recorrido entre peticiones).
  */
 @Service
 public class ServicioNavegacionImpl implements ServicioNavegacion {
 
-    private final RepositorioNodo repoNodo;
-    private final RepositorioRecorrido repoRecorrido;
-    private final RepositorioGrafo repoGrafo;
+    private final ContextoClinico contexto;
+    private final MotorNavegacion motor;
+    private final RepositorioSesion repositorioSesion;
 
-    /** Inyecta los tres repositorios del módulo. */
-    @Autowired
-    public ServicioNavegacionImpl(RepositorioNodo repoNodo,
-                                  RepositorioRecorrido repoRecorrido,
-                                  RepositorioGrafo repoGrafo) {
-        this.repoNodo = repoNodo;
-        this.repoRecorrido = repoRecorrido;
-        this.repoGrafo = repoGrafo;
+    /** Inyecta el contexto clínico, el motor y el repositorio de sesiones. */
+    public ServicioNavegacionImpl(ContextoClinico contexto, MotorNavegacion motor,
+            RepositorioSesion repositorioSesion) {
+        this.contexto = contexto;
+        this.motor = motor;
+        this.repositorioSesion = repositorioSesion;
     }
 
-    /** Delega en el repositorio de nodos. */
+    /** Abre una sesión nueva y devuelve la primera pregunta del recorrido. */
     @Override
-    public Nodo guardar(Nodo nodo) {
-        return repoNodo.save(nodo);
+    public RecorridoDTO iniciar() {
+        EstadoPaciente estado = new EstadoPaciente(UUID.randomUUID().toString());
+        ResultadoPaso paso = motor.iniciar(estado, contexto.getGrafo());
+        SesionTriaje sesion = repositorioSesion.crear(estado, paso);
+        return RecorridoDTO.desde(sesion.getId(), contexto.getGrafo(), paso);
     }
 
-    /** Crea un recorrido en curso desde la raíz del grafo. */
+    /** Registra la respuesta sobre la pregunta pendiente y avanza un paso. */
     @Override
-    public Recorrido iniciar(long idGrafo) {
-        Grafo grafo = repoGrafo.findById(idGrafo)
-            .orElseThrow(() -> new RecursoNoEncontradoException("Grafo no encontrado: " + idGrafo));
-
-        Recorrido recorrido = new Recorrido();
-        recorrido.setNodoActual(grafo.getNodoRaiz());
-        recorrido.setEstado(Recorrido.Estado.EN_CURSO);
-        recorrido.setResultado(null);
-        recorrido.setMensaje(null);
-        return repoRecorrido.save(recorrido);
-    }
-
-    /** Transición hardcodeada del flujo respiratorio de prueba. */
-    @Override
-    public Recorrido responder(long recorridoId, String respuesta) {
-        Recorrido recorrido = repoRecorrido.findById(recorridoId)
-            .orElseThrow(() -> new RecursoNoEncontradoException("Recorrido no encontrado: " + recorridoId));
-
-        Nodo nodoActual = recorrido.getNodoActual();
-        if (nodoActual == null) {
-            return recorrido;
+    public RecorridoDTO responder(String recorridoId, String respuesta) {
+        SesionTriaje sesion = repositorioSesion.buscar(recorridoId);
+        ResultadoPaso ultimo = sesion.getUltimoPaso();
+        if (ultimo.finalizado()) {
+            return RecorridoDTO.desde(recorridoId, contexto.getGrafo(), ultimo);
         }
 
-        String textoNodo = nodoActual.getTexto();
-        List<Nodo> nodos = (List<Nodo>) repoNodo.findAll();
-
-        if ("¿Tu bebé está respirando más rápido de lo usual?".equals(textoNodo)) {
-            if ("no".equals(respuesta)) {
-                recorrido.setNodoActual(null);
-                recorrido.setEstado(Recorrido.Estado.FINALIZADO);
-                recorrido.setResultado(Recorrido.Resultado.NORMAL);
-                recorrido.setMensaje("No se detectan signos de alarma respiratoria en este momento.");
-            } else if ("si".equals(respuesta)) {
-                Nodo p2 = nodos.stream()
-                    .filter(n -> "¿Cuál describe mejor a tu bebé ahora?".equals(n.getTexto()))
-                    .findFirst()
-                    .orElse(null);
-                recorrido.setNodoActual(p2);
-                recorrido.setEstado(Recorrido.Estado.EN_CURSO);
-            }
-        } else if ("¿Cuál describe mejor a tu bebé ahora?".equals(textoNodo)) {
-            List<String> graves = List.of("cianosis", "apnea");
-            recorrido.setNodoActual(null);
-            recorrido.setEstado(Recorrido.Estado.FINALIZADO);
-            if (graves.contains(respuesta)) {
-                recorrido.setResultado(Recorrido.Resultado.REQUIERE_ATENCION);
-                recorrido.setMensaje("Según lo que respondiste, es recomendable consultar a un profesional de salud para valorar a tu bebé.");
-            } else {
-                recorrido.setResultado(Recorrido.Resultado.NORMAL);
-                recorrido.setMensaje("No se detectan signos de alarma respiratoria en este momento.");
-            }
-        }
-
-        return repoRecorrido.save(recorrido);
+        var nodoActual = ultimo.preguntaActual();
+        ResultadoPaso paso = motor.paso(
+                contexto.getGrafo(), contexto.getBase(), sesion.getEstado(), nodoActual, respuesta);
+        sesion.setUltimoPaso(paso);
+        repositorioSesion.guardar(sesion);
+        return RecorridoDTO.desde(recorridoId, contexto.getGrafo(), paso);
     }
 
-    /** Busca el recorrido por su id. */
+    /** Devuelve el estado actual del recorrido (pregunta pendiente o desenlace). */
     @Override
-    public Recorrido consultar(long recorridoId) {
-        return repoRecorrido.findById(recorridoId)
-            .orElseThrow(() -> new RecursoNoEncontradoException("Recorrido no encontrado: " + recorridoId));
+    public RecorridoDTO consultar(String recorridoId) {
+        SesionTriaje sesion = repositorioSesion.buscar(recorridoId);
+        return RecorridoDTO.desde(recorridoId, contexto.getGrafo(), sesion.getUltimoPaso());
     }
 }
