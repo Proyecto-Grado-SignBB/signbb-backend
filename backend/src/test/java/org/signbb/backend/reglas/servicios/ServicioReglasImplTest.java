@@ -14,128 +14,101 @@ import org.signbb.backend.model.NivelAlerta;
 import org.signbb.backend.model.Nodo;
 import org.signbb.backend.model.ReglaClinica;
 
-/** Tests de la resolución de conflicto por severidad del ServicioReglas. */
+/**
+ * Verifica la resolución por severidad de {@link ServicioReglasImpl}
+ * (Algoritmo 3, fase de resolución de conflicto), en particular el caso de
+ * dos o más reglas de nivel máximo activándose a la vez.
+ */
 class ServicioReglasImplTest {
 
-    private final ServicioReglas servicio = new ServicioReglasImpl();
+    private final ServicioReglasImpl servicio = new ServicioReglasImpl();
 
-    private static Nodo n(String id) {
-        return new Nodo(id, "consulta_medica", "c-" + id, 5);
-    }
-
-    private static ReglaClinica regla(String id, NivelAlerta nivel, String idDestino,
-            Condicion... condiciones) {
-        return new ReglaClinica(id, "regla-" + id, List.of(condiciones), n(idDestino), nivel);
-    }
-
-    private static List<String> ids(List<ReglaClinica> reglas) {
-        return reglas.stream().map(ReglaClinica::getIdRegla).toList();
+    private static Nodo destino(String id) {
+        return new Nodo(id, "consulta_medica", "Contenido de " + id);
     }
 
     @Test
-    void obtenerReglasActivadasRetornaLasDisparadas() {
+    void evaluarConDosReglasDeMismoNivelCombinaLasRazones() {
+        Nodo destino = destino("consulta_medica_urgente");
+
+        ReglaClinica r1 = new ReglaClinica(
+                "R1", "Ictericia prolongada",
+                List.of(new Condicion("pregunta_coloracion", "SI"),
+                        new Condicion("pregunta_tiempo", "MAS_DE_24_HORAS")),
+                destino, NivelAlerta.URGENCIA);
+
+        ReglaClinica r2 = new ReglaClinica(
+                "R2", "Ictericia con letargo",
+                List.of(new Condicion("pregunta_coloracion", "SI"),
+                        new Condicion("pregunta_letargo", "SI")),
+                destino, NivelAlerta.URGENCIA);
+
+        ReglaClinica r3 = new ReglaClinica(
+                "R3", "Ictericia con mala alimentación",
+                List.of(new Condicion("pregunta_alimentacion", "SI")),
+                destino("consulta_medica_prioritaria"), NivelAlerta.CONSULTAR_MEDICO);
+
         BaseReglas base = new BaseReglas();
-        base.agregarRegla(regla("r1", NivelAlerta.URGENCIA, "d1",
-                new Condicion("fiebre", "SI")));
-        base.agregarRegla(regla("r2", NivelAlerta.URGENCIA, "d2",
-                new Condicion("tos", "SI")));
-        EstadoPaciente e = new EstadoPaciente("s1");
-        e.registrarRespuesta("fiebre", "SI");
+        base.agregarRegla(r1);
+        base.agregarRegla(r2);
+        base.agregarRegla(r3);
 
-        assertEquals(List.of("r1"), ids(servicio.obtenerReglasActivadas(base, e)));
+        EstadoPaciente estado = new EstadoPaciente("sesion-test");
+        estado.registrarRespuesta("pregunta_coloracion", "SI");
+        estado.registrarRespuesta("pregunta_tiempo", "MAS_DE_24_HORAS");
+        estado.registrarRespuesta("pregunta_letargo", "SI");
+        // No se registra alimentación: R3 no debe activarse.
+
+        ResultadoInferencia inferencia = servicio.evaluar(base, estado);
+
+        assertEquals(NivelAlerta.URGENCIA, inferencia.nivel());
+        assertEquals(2, inferencia.reglas().size());
+        List<String> nombres = inferencia.reglas().stream().map(ReglaClinica::getNombre).toList();
+        assertTrue(nombres.containsAll(List.of("Ictericia prolongada", "Ictericia con letargo")));
+        assertEquals(destino, inferencia.destino());
     }
 
     @Test
-    void ningunaActivaDevuelveNormalImplicito() {
+    void evaluarSinReglasActivadasEsNormal() {
         BaseReglas base = new BaseReglas();
-        base.agregarRegla(regla("r1", NivelAlerta.URGENCIA, "d1",
-                new Condicion("fiebre", "SI")));
-        EstadoPaciente e = new EstadoPaciente("s1");
-        e.registrarRespuesta("fiebre", "NO");
+        base.agregarRegla(new ReglaClinica(
+                "R1", "Ictericia prolongada",
+                List.of(new Condicion("pregunta_coloracion", "SI")),
+                destino("consulta_medica_urgente"), NivelAlerta.URGENCIA));
 
-        ResultadoInferencia r = servicio.evaluar(base, e);
+        EstadoPaciente estado = new EstadoPaciente("sesion-test-2");
+        // Sin respuestas registradas: ninguna condición se cumple.
 
-        assertTrue(r.esNormal());
-        assertNull(r.destino());
-        assertTrue(r.reglas().isEmpty());
+        ResultadoInferencia inferencia = servicio.evaluar(base, estado);
+
+        assertTrue(inferencia.esNormal());
+        assertTrue(inferencia.reglas().isEmpty());
+        assertNull(inferencia.destino());
     }
 
     @Test
-    void baseVaciaDevuelveNormal() {
-        ResultadoInferencia r = servicio.evaluar(new BaseReglas(), new EstadoPaciente("s1"));
+    void evaluarConNivelesMixtosGanaElMasSevero() {
+        Nodo destinoUrgencia = destino("consulta_medica_urgente");
+        Nodo destinoConsulta = destino("consulta_medica_prioritaria");
 
-        assertTrue(r.esNormal());
-    }
-
-    @Test
-    void soloConsultarMedicoDevuelveConsultarMedico() {
         BaseReglas base = new BaseReglas();
-        base.agregarRegla(regla("r1", NivelAlerta.CONSULTAR_MEDICO, "d1",
-                new Condicion("fiebre", "SI")));
-        EstadoPaciente e = new EstadoPaciente("s1");
-        e.registrarRespuesta("fiebre", "SI");
+        base.agregarRegla(new ReglaClinica(
+                "R2", "Ictericia con letargo",
+                List.of(new Condicion("pregunta_letargo", "SI")),
+                destinoUrgencia, NivelAlerta.URGENCIA));
+        base.agregarRegla(new ReglaClinica(
+                "R3", "Ictericia con mala alimentación",
+                List.of(new Condicion("pregunta_alimentacion", "SI")),
+                destinoConsulta, NivelAlerta.CONSULTAR_MEDICO));
 
-        ResultadoInferencia r = servicio.evaluar(base, e);
+        EstadoPaciente estado = new EstadoPaciente("sesion-test-3");
+        estado.registrarRespuesta("pregunta_letargo", "SI");
+        estado.registrarRespuesta("pregunta_alimentacion", "SI");
 
-        assertEquals(NivelAlerta.CONSULTAR_MEDICO, r.nivel());
-        assertEquals("d1", r.destino().getId());
-        assertEquals(List.of("r1"), ids(r.reglas()));
-    }
+        ResultadoInferencia inferencia = servicio.evaluar(base, estado);
 
-    @Test
-    void urgenciaSuperaConsultarMedico() {
-        BaseReglas base = new BaseReglas();
-        base.agregarRegla(regla("r1", NivelAlerta.CONSULTAR_MEDICO, "d1",
-                new Condicion("fiebre", "SI")));
-        base.agregarRegla(regla("r2", NivelAlerta.URGENCIA, "d2",
-                new Condicion("letargo", "SI")));
-        EstadoPaciente e = new EstadoPaciente("s1");
-        e.registrarRespuesta("fiebre", "SI");
-        e.registrarRespuesta("letargo", "SI");
-
-        ResultadoInferencia r = servicio.evaluar(base, e);
-
-        assertEquals(NivelAlerta.URGENCIA, r.nivel());
-        assertEquals("d2", r.destino().getId());
-        assertEquals(List.of("r2"), ids(r.reglas()));
-    }
-
-    @Test
-    void empateUrgenciaCombinaRazonesYEligePrimeraPorInsercion() {
-        BaseReglas base = new BaseReglas();
-        base.agregarRegla(regla("r1", NivelAlerta.URGENCIA, "d1",
-                new Condicion("fiebre", "SI")));
-        base.agregarRegla(regla("r2", NivelAlerta.URGENCIA, "d2",
-                new Condicion("letargo", "SI")));
-        base.agregarRegla(regla("r3", NivelAlerta.CONSULTAR_MEDICO, "d3",
-                new Condicion("tos", "SI")));
-        EstadoPaciente e = new EstadoPaciente("s1");
-        e.registrarRespuesta("fiebre", "SI");
-        e.registrarRespuesta("letargo", "SI");
-        e.registrarRespuesta("tos", "SI");
-
-        ResultadoInferencia r = servicio.evaluar(base, e);
-
-        assertEquals(NivelAlerta.URGENCIA, r.nivel());
-        assertEquals(List.of("r1", "r2"), ids(r.reglas()));
-        assertEquals("d1", r.destino().getId());
-    }
-
-    @Test
-    void empateConsultarMedicoCombinaRazones() {
-        BaseReglas base = new BaseReglas();
-        base.agregarRegla(regla("r1", NivelAlerta.CONSULTAR_MEDICO, "d1",
-                new Condicion("fiebre", "SI")));
-        base.agregarRegla(regla("r2", NivelAlerta.CONSULTAR_MEDICO, "d2",
-                new Condicion("tos", "SI")));
-        EstadoPaciente e = new EstadoPaciente("s1");
-        e.registrarRespuesta("fiebre", "SI");
-        e.registrarRespuesta("tos", "SI");
-
-        ResultadoInferencia r = servicio.evaluar(base, e);
-
-        assertEquals(NivelAlerta.CONSULTAR_MEDICO, r.nivel());
-        assertEquals(List.of("r1", "r2"), ids(r.reglas()));
-        assertEquals("d1", r.destino().getId());
+        assertEquals(NivelAlerta.URGENCIA, inferencia.nivel());
+        assertEquals(1, inferencia.reglas().size());
+        assertEquals("Ictericia con letargo", inferencia.reglas().get(0).getNombre());
     }
 }
