@@ -34,7 +34,9 @@ public class JsonParser {
                     id,
                     normalizarTipo(meta.path("tipo").asText()),
                     info.path("label").asText(),
-                    meta.path("peso").asInt());
+                    meta.path("peso").asInt(),
+                    meta.path("archivos").asBoolean(),
+                    buildSrc(meta.path("src")));
             nodosPorId.put(id, nodo);
             grafo.agregarNodo(nodo);
         }
@@ -55,6 +57,19 @@ public class JsonParser {
             case "consulta médica" -> "consulta_medica";
             default -> tipo;
         };
+    }
+
+    /**
+     * Mapea el arreglo JSON {@code metadata.src} a una lista de rutas de imagen.
+     */
+    private static List<String> buildSrc(JsonNode srcJson) {
+        List<String> src = new ArrayList<>();
+        if (srcJson.isArray()) {
+            for (JsonNode s : srcJson) {
+                src.add(s.asText());
+            }
+        }
+        return src;
     }
 
     /**
