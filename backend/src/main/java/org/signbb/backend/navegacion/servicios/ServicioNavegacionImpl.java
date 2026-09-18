@@ -1,5 +1,6 @@
 package org.signbb.backend.navegacion.servicios;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.signbb.backend.crobservaciones.controladores.RecorridoDTO;
@@ -16,6 +17,11 @@ import org.springframework.stereotype.Service;
  * {@link MotorNavegacion} (recorrido guiado + reglas) con el
  * {@link ContextoClinico} (grafo y reglas en memoria) y el
  * {@link RepositorioSesion} (estado del recorrido entre peticiones).
+ *
+ * <p>
+ * MODIFICADO: se agrega {@link #responder(String, List)} para selección
+ * múltiple, con la misma estructura que el {@link #responder(String, String)}
+ * ya existente (que no cambia).
  */
 @Service
 public class ServicioNavegacionImpl implements ServicioNavegacion {
@@ -53,6 +59,35 @@ public class ServicioNavegacionImpl implements ServicioNavegacion {
         var nodoActual = ultimo.preguntaActual();
         ResultadoPaso paso = motor.paso(
                 contexto.getGrafo(), contexto.getBase(), sesion.getEstado(), nodoActual, respuesta);
+        sesion.setUltimoPaso(paso);
+        repositorioSesion.guardar(sesion);
+        return RecorridoDTO.desde(recorridoId, contexto.getGrafo(), paso);
+    }
+
+    /**
+     * Registra varias respuestas marcadas a la vez (selección múltiple) y
+     * avanza un paso. Con una sola respuesta, delega en
+     * {@link #responder(String, String)} para no duplicar el comportamiento
+     * ya probado.
+     */
+    @Override
+    public RecorridoDTO responder(String recorridoId, List<String> respuestas) {
+        if (respuestas == null || respuestas.isEmpty()) {
+            throw new IllegalArgumentException("respuestas no puede ser vacío");
+        }
+        if (respuestas.size() == 1) {
+            return responder(recorridoId, respuestas.get(0));
+        }
+
+        SesionTriaje sesion = repositorioSesion.buscar(recorridoId);
+        ResultadoPaso ultimo = sesion.getUltimoPaso();
+        if (ultimo.finalizado()) {
+            return RecorridoDTO.desde(recorridoId, contexto.getGrafo(), ultimo);
+        }
+
+        var nodoActual = ultimo.preguntaActual();
+        ResultadoPaso paso = motor.paso(
+                contexto.getGrafo(), contexto.getBase(), sesion.getEstado(), nodoActual, respuestas);
         sesion.setUltimoPaso(paso);
         repositorioSesion.guardar(sesion);
         return RecorridoDTO.desde(recorridoId, contexto.getGrafo(), paso);
