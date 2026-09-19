@@ -48,7 +48,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"namespaceorg_1_1signbb_1_1backend_1_1crobservaciones.html"
+"enumorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1Recorrido_1_1Estado.html#a2cbf29c521b838645b35999ac8437306"
 ];
 
 const SYNCONMSG = 'pulsar para deshabilitar sincronización';

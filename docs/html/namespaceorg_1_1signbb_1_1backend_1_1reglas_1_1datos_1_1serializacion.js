@@ -1,0 +1,4 @@
+var namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion =
+[
+    [ "BaseReglasParser", "classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasParser.html", "classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasParser" ]
+];

@@ -1,10 +1,6 @@
 var searchData=
 [
-  ['obtenercaminocausal_0',['obtenerCaminoCausal',['../classorg_1_1signbb_1_1backend_1_1model_1_1GrafoClinico.html#a952cfb8be7560487f5bbc46e80553895',1,'org::signbb::backend::model::GrafoClinico']]],
-  ['obtenernodoinicial_1',['obtenerNodoInicial',['../classorg_1_1signbb_1_1backend_1_1model_1_1GrafoClinico.html#a31f9a9cd4c991ef53e9d35cbb041543f',1,'org::signbb::backend::model::GrafoClinico']]],
-  ['obtenernodoporid_2',['obtenerNodoPorId',['../classorg_1_1signbb_1_1backend_1_1model_1_1GrafoClinico.html#a725247e207b85373a94ef67c214d4f1e',1,'org::signbb::backend::model::GrafoClinico']]],
-  ['obtenernodos_3',['obtenerNodos',['../classorg_1_1signbb_1_1backend_1_1model_1_1GrafoClinico.html#aec8442ce555f220db84ec0e06b7b1b60',1,'org::signbb::backend::model::GrafoClinico']]],
-  ['obteneropciones_4',['obtenerOpciones',['../classorg_1_1signbb_1_1backend_1_1model_1_1GrafoClinico.html#ace302f9e46ed3b30c7fdbb938f0dbcfc',1,'org::signbb::backend::model::GrafoClinico']]],
-  ['obtenerregla_5',['obtenerRegla',['../classorg_1_1signbb_1_1backend_1_1model_1_1BaseReglas.html#a1bbae1f68719fdb6ef32eed63367c042',1,'org::signbb::backend::model::BaseReglas']]],
-  ['obtenerreglasactivadas_6',['obtenerReglasActivadas',['../interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglas.html#acd416a3ffcf6e83e11abe096ab170929',1,'org.signbb.backend.reglas.servicios.ServicioReglas.obtenerReglasActivadas()'],['../classorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglasImpl.html#a6d6f8ed3369a3d40ebc90d544b136128',1,'org.signbb.backend.reglas.servicios.ServicioReglasImpl.obtenerReglasActivadas()']]]
+  ['navegar_0',['navegar',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#a663b63be985b0f89a5f7e62f56350c4a',1,'org::signbb::backend::navegacion::modelo::GrafoClinico']]],
+  ['nodo_1',['Nodo',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#a989f7144539269fde9418584743120af',1,'org.signbb.backend.navegacion.modelo.Nodo.Nodo(String id, String tipo, String contenido)'],['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#a20be0adf142333adb821eeb1323ffaa5',1,'org.signbb.backend.navegacion.modelo.Nodo.Nodo(String id, String tipo, String contenido, int peso)'],['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#ad4256523919dbfb28cea16c82f749cb1',1,'org.signbb.backend.navegacion.modelo.Nodo.Nodo(String id, String tipo, String contenido, int peso, boolean archivos, List&lt; String &gt; src)']]],
+  ['nuevasesion_2',['nuevaSesion',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html#a1f0db75bb5a3575a99b347657fb7b02b',1,'org::signbb::backend::navegacion::modelo::Contexto']]]
 ];

@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 </div><!--header-->
 <div class="contents">
 
-<p>Implementación de <code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglas.html">ServicioReglas</a></code> que delega en <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1model_1_1BaseReglas.html">BaseReglas</a></code> y aplica la jerarquía de <code><a class="el" href="enumorg_1_1signbb_1_1backend_1_1model_1_1NivelAlerta.html">NivelAlerta</a></code>.  
+<p>Implementación de <code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglas.html">ServicioReglas</a></code> que delega en <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html">BaseReglas</a></code> y aplica la jerarquía de <code><a class="el" href="enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1NivelAlerta.html">NivelAlerta</a></code>.  
  <a href="#details">Más...</a></p>
 <div class="dynheader">
 Diagrama de herencia de org.signbb.backend.reglas.servicios.ServicioReglasImpl</div>
@@ -126,13 +126,13 @@ Diagrama de herencia de org.signbb.backend.reglas.servicios.ServicioReglasImpl</
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Métodos públicos</h2></td></tr>
-<tr class="memitem:a6d6f8ed3369a3d40ebc90d544b136128" id="r_a6d6f8ed3369a3d40ebc90d544b136128"><td class="memItemLeft">List&lt; <a class="el" href="classorg_1_1signbb_1_1backend_1_1model_1_1ReglaClinica.html">ReglaClinica</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a6d6f8ed3369a3d40ebc90d544b136128">obtenerReglasActivadas</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1model_1_1BaseReglas.html">BaseReglas</a> base, <a class="el" href="classorg_1_1signbb_1_1backend_1_1model_1_1EstadoPaciente.html">EstadoPaciente</a> estado)</td></tr>
+<tr class="memitem:a6d6f8ed3369a3d40ebc90d544b136128" id="r_a6d6f8ed3369a3d40ebc90d544b136128"><td class="memItemLeft">List&lt; <a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html">ReglaClinica</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a6d6f8ed3369a3d40ebc90d544b136128">obtenerReglasActivadas</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html">BaseReglas</a> base, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html">EstadoPaciente</a> estado)</td></tr>
 <tr class="memdesc:a6d6f8ed3369a3d40ebc90d544b136128"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forward chaining: delega en <code class="JavaDocCode">BaseReglas.reglasActivadas</code>.  <br /></td></tr>
-<tr class="memitem:add527d6e14c77d616658d2f2958b1b60" id="r_add527d6e14c77d616658d2f2958b1b60"><td class="memItemLeft"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1servicios.html#a2090027b7dffa06412a49815c0a1b08f">ResultadoInferencia</a>&#160;</td><td class="memItemRight"><a class="el" href="#add527d6e14c77d616658d2f2958b1b60">evaluar</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1model_1_1BaseReglas.html">BaseReglas</a> base, <a class="el" href="classorg_1_1signbb_1_1backend_1_1model_1_1EstadoPaciente.html">EstadoPaciente</a> estado)</td></tr>
+<tr class="memitem:add527d6e14c77d616658d2f2958b1b60" id="r_add527d6e14c77d616658d2f2958b1b60"><td class="memItemLeft">ResultadoInferencia&#160;</td><td class="memItemRight"><a class="el" href="#add527d6e14c77d616658d2f2958b1b60">evaluar</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html">BaseReglas</a> base, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html">EstadoPaciente</a> estado)</td></tr>
 <tr class="memdesc:add527d6e14c77d616658d2f2958b1b60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resolución por severidad: gana el nivel máximo; en empate se combinan las razones y la primera regla por orden de inserción define el destino.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
-<div class="textblock"><p>Implementación de <code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglas.html">ServicioReglas</a></code> que delega en <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1model_1_1BaseReglas.html">BaseReglas</a></code> y aplica la jerarquía de <code><a class="el" href="enumorg_1_1signbb_1_1backend_1_1model_1_1NivelAlerta.html">NivelAlerta</a></code>. </p>
+<div class="textblock"><p>Implementación de <code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglas.html">ServicioReglas</a></code> que delega en <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html">BaseReglas</a></code> y aplica la jerarquía de <code><a class="el" href="enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1NivelAlerta.html">NivelAlerta</a></code>. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
 <a id="add527d6e14c77d616658d2f2958b1b60" name="add527d6e14c77d616658d2f2958b1b60"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#add527d6e14c77d616658d2f2958b1b60">&#9670;&#160;</a></span>evaluar()</h2>
@@ -141,14 +141,14 @@ Métodos públicos</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1servicios.html#a2090027b7dffa06412a49815c0a1b08f">ResultadoInferencia</a> org.signbb.backend.reglas.servicios.ServicioReglasImpl.evaluar </td>
+          <td class="memname">ResultadoInferencia org.signbb.backend.reglas.servicios.ServicioReglasImpl.evaluar </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classorg_1_1signbb_1_1backend_1_1model_1_1BaseReglas.html">BaseReglas</a></td>          <td class="paramname"><span class="paramname"><em>base</em></span>, </td>
+          <td class="paramtype"><a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html">BaseReglas</a></td>          <td class="paramname"><span class="paramname"><em>base</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classorg_1_1signbb_1_1backend_1_1model_1_1EstadoPaciente.html">EstadoPaciente</a></td>          <td class="paramname"><span class="paramname"><em>estado</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html">EstadoPaciente</a></td>          <td class="paramname"><span class="paramname"><em>estado</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -166,14 +166,14 @@ Métodos públicos</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">List&lt; <a class="el" href="classorg_1_1signbb_1_1backend_1_1model_1_1ReglaClinica.html">ReglaClinica</a> &gt; org.signbb.backend.reglas.servicios.ServicioReglasImpl.obtenerReglasActivadas </td>
+          <td class="memname">List&lt; <a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html">ReglaClinica</a> &gt; org.signbb.backend.reglas.servicios.ServicioReglasImpl.obtenerReglasActivadas </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classorg_1_1signbb_1_1backend_1_1model_1_1BaseReglas.html">BaseReglas</a></td>          <td class="paramname"><span class="paramname"><em>base</em></span>, </td>
+          <td class="paramtype"><a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html">BaseReglas</a></td>          <td class="paramname"><span class="paramname"><em>base</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classorg_1_1signbb_1_1backend_1_1model_1_1EstadoPaciente.html">EstadoPaciente</a></td>          <td class="paramname"><span class="paramname"><em>estado</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html">EstadoPaciente</a></td>          <td class="paramname"><span class="paramname"><em>estado</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
