@@ -9,9 +9,6 @@ var annotated_dup =
             [ "ManejadorExcepciones", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorExcepciones.html", null ],
             [ "RecursoNoEncontradoException", "classorg_1_1signbb_1_1backend_1_1config_1_1RecursoNoEncontradoException.html", null ]
           ] ],
-          [ "model", "namespaceorg_1_1signbb_1_1backend_1_1model.html", [
-            [ "JsonParser", "classorg_1_1signbb_1_1backend_1_1model_1_1JsonParser.html", "classorg_1_1signbb_1_1backend_1_1model_1_1JsonParser" ]
-          ] ],
           [ "navegacion", "namespaceorg_1_1signbb_1_1backend_1_1navegacion.html", [
             [ "datos", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos.html", [
               [ "repositorios", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios.html", [

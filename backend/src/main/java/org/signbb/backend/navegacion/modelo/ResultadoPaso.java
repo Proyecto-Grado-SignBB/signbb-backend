@@ -2,6 +2,7 @@ package org.signbb.backend.navegacion.modelo;
 
 import java.util.List;
 
+import org.signbb.backend.navegacion.servicios.MotorNavegacion;
 import org.signbb.backend.reglas.modelo.NivelAlerta;
 import org.signbb.backend.reglas.modelo.ReglaClinica;
 

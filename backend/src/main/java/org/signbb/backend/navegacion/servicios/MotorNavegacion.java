@@ -1,7 +1,12 @@
-package org.signbb.backend.navegacion.modelo;
+package org.signbb.backend.navegacion.servicios;
 
 import java.util.List;
 
+import org.signbb.backend.navegacion.modelo.EstadoPaciente;
+import org.signbb.backend.navegacion.modelo.GrafoClinico;
+import org.signbb.backend.navegacion.modelo.Nodo;
+import org.signbb.backend.navegacion.modelo.Respuesta;
+import org.signbb.backend.navegacion.modelo.ResultadoPaso;
 import org.signbb.backend.reglas.modelo.BaseReglas;
 import org.signbb.backend.reglas.modelo.NivelAlerta;
 import org.signbb.backend.reglas.modelo.ResultadoInferencia;
