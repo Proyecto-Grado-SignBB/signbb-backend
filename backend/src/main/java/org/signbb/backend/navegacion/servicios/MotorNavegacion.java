@@ -1,5 +1,6 @@
 package org.signbb.backend.navegacion.servicios;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.signbb.backend.navegacion.modelo.EstadoPaciente;
@@ -31,6 +32,14 @@ import org.springframework.stereotype.Service;
  * Como un backend REST es sin estado, el bucle {@code while} de la
  * formulación se descompone en dos operaciones: {@link #iniciar} (una vez por
  * recorrido) y {@link #paso} (una vez por respuesta del cuidador).
+ *
+ * <p>
+ * MODIFICADO: se agrega
+ * {@link #paso(GrafoClinico, BaseReglas, EstadoPaciente, Nodo, List)}
+ * para selección múltiple. Resuelve cuál respuesta domina (mayor {@code peso}
+ * del nodo destino) y delega en el
+ * {@link #paso(GrafoClinico, BaseReglas, EstadoPaciente, Nodo, String)}
+ * de un solo {@code String}, que no cambia.
  */
 @Service
 public class MotorNavegacion {
@@ -89,6 +98,41 @@ public class MotorNavegacion {
                     grafo.obtenerCaminoCausal(siguiente));
         }
         return ResultadoPaso.pregunta(siguiente);
+    }
+
+    /**
+     * Selección múltiple: el cuidador marcó varias opciones a la vez para
+     * {@code nodoActual}. Cada opción lleva, por definición del grafo, a un
+     * nodo destino distinto (una arista por {@code condicion}); se avanza
+     * hacia el de mayor {@code peso} (urgencia), que es el que efectivamente
+     * se registra como respuesta del cuidador para este nodo. Con una sola
+     * respuesta marcada, es exactamente el mismo resultado que llamar
+     * directamente al {@code paso} de un solo {@code String}.
+     *
+     * @throws IllegalArgumentException si {@code respuestasMarcadas} es nula o
+     *                                  vacía.
+     */
+    public ResultadoPaso paso(GrafoClinico grafo, BaseReglas base, EstadoPaciente estado,
+            Nodo nodoActual, List<String> respuestasMarcadas) {
+        if (respuestasMarcadas == null || respuestasMarcadas.isEmpty()) {
+            throw new IllegalArgumentException("respuestasMarcadas no puede ser vacío");
+        }
+        String respuestaGanadora = resolverGanadora(grafo, nodoActual, respuestasMarcadas);
+        return paso(grafo, base, estado, nodoActual, respuestaGanadora);
+    }
+
+    /**
+     * Compara, para cada opción marcada, el {@code peso} del nodo destino de su
+     * arista, y devuelve la opción cuyo destino es más urgente. En caso de
+     * empate exacto, gana la primera encontrada en el orden de la lista.
+     */
+    private String resolverGanadora(GrafoClinico grafo, Nodo nodoActual, List<String> respuestasMarcadas) {
+        if (respuestasMarcadas.size() == 1) {
+            return respuestasMarcadas.get(0);
+        }
+        return respuestasMarcadas.stream()
+                .max(Comparator.comparingInt(r -> grafo.evaluarPaso(nodoActual, r).getPeso()))
+                .orElseThrow();
     }
 
     /**
