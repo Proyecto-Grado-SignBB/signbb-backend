@@ -1,0 +1,112 @@
+@startuml
+allowmixing
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam nodesep 40
+skinparam ranksep 60
+
+title SignBB Backend — Arquitectura por módulos
+
+package "observaciones" {
+  package "controladores" as obs_ctrl {
+    class ControladorConsulta
+    class "RecorridoDTO / PreguntaDTO / RespuestaRequest" as DTOs
+  }
+  package "modelo" as obs_mod {
+    class SeleccionCuidador
+    class TipoInteraccion
+  }
+  package "repositorios" as obs_repo {
+    class RepositorioObservaciones
+  }
+  package "servicios" as obs_srv {
+    class "ServicioCaptura (Impl)" as ServicioCaptura
+  }
+}
+
+package "navegacion" {
+  package "datos" {
+    package "serializacion" as nav_ser {
+      class GrafoClinicoParser
+    }
+    package "repositorios" as nav_repo {
+      class "Repositorios JPA (Grafo, Nodo, Recorrido)" as ReposNav
+    }
+  }
+  package "modelo (TAD)" as nav_mod {
+    class GrafoClinico
+    class Nodo
+    class EstadoPaciente
+    class SesionTriaje
+    class ContextoClinico
+  }
+  package "servicios" as nav_srv {
+    class "ServicioNavegacion (Impl)" as ServicioNavegacion
+    class MotorNavegacion
+    class "Entidades JPA (Grafo, Nodo, OpcionRespuesta, Recorrido)" as EntidadesNav
+  }
+}
+
+package "reglas" {
+  package "datos" {
+    package "serializacion" as reg_ser {
+      class BaseReglasParser
+    }
+  }
+  package "modelo (TAD)" as reg_mod {
+    class BaseReglas
+    class ReglaClinica
+    class NivelAlerta
+  }
+  package "servicios" as reg_srv {
+    class "ServicioReglas (Impl)" as ServicioReglas
+  }
+}
+
+package "config" {
+  class DatabaseInit
+  class ManejadorExcepciones
+}
+
+package "auditoria (reservado)" as auditoria
+package "seguridad (reservado)" as seguridad
+
+database "H2 (en memoria)" as h2
+
+' Flujo de una consulta guiada (captura de observaciones)
+obs_ctrl ..> obs_srv : registrar respuesta\n(valida y audita)
+obs_ctrl ..> nav_srv : iniciar / consultar
+obs_srv ..> nav_srv : responder(List<String>)
+obs_srv ..> obs_repo : persiste la selección
+obs_repo ..> h2
+
+' Núcleo de navegación y reglas
+nav_srv ..> nav_mod : grafo, sesiones y estado
+nav_srv ..> reg_srv : forward chaining
+nav_srv ..> reg_mod : BaseReglas, NivelAlerta
+nav_srv ..> obs_ctrl : consume RecorridoDTO / PreguntaDTO
+
+' Carga inicial desde los JSON del classpath
+nav_mod ..> nav_ser : ContextoClinico carga el grafo
+nav_mod ..> reg_ser : ContextoClinico carga la base de reglas
+reg_ser ..> nav_mod : resuelve nodoDestino\ncontra el grafo
+reg_ser ..> reg_mod : construye ReglaClinica
+
+' Persistencia del grafo (JPA)
+nav_repo ..> EntidadesNav
+nav_repo ..> h2
+DatabaseInit ..> nav_repo : siembra la BD al arrancar
+DatabaseInit ..> EntidadesNav
+
+note bottom of reg_ser
+  Dependencias cruzadas conocidas (refactor pendiente):
+  ContextoClinico vive en navegación pero carga la base de
+  reglas; BaseReglasParser resuelve destinos contra el grafo
+  de navegación; los DTO del recorrido viven en
+  observaciones.controladores y navegación los consume.
+end note
+
+note right of auditoria
+  Paquetes reservados, sin implementación aún.
+end note
+@enduml
