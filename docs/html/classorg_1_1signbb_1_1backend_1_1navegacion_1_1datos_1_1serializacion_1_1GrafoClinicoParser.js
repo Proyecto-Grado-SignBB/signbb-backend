@@ -1,0 +1,4 @@
+var classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoParser =
+[
+    [ "parseJsonToGrafoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoParser.html#a74eac55b599e9ef2a911d2f2518d14ee", null ]
+];

@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 </div><!--header-->
 <div class="contents">
 
-<p>Implementación provisional del módulo de navegación: <code class="JavaDocCode">responder</code> codifica a mano un flujo respiratorio de prueba, pendiente de conectar con el TAD GrafoClinico y la base de reglas.  
+<p>Implementación del módulo de navegación sobre el motor real: cablea el <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1MotorNavegacion.html">MotorNavegacion</a></code> (recorrido guiado + reglas) con el <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html">ContextoClinico</a></code> (grafo y reglas en memoria) y el <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html">RepositorioSesion</a></code> (estado del recorrido entre peticiones).  
  <a href="#details">Más...</a></p>
 <div class="dynheader">
 Diagrama de herencia de org.signbb.backend.navegacion.servicios.ServicioNavegacionImpl</div>
@@ -120,100 +120,77 @@ Diagrama de herencia de org.signbb.backend.navegacion.servicios.ServicioNavegaci
  <div class="center">
   <img src="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImpl.png" usemap="#org_2Esignbb_2Ebackend_2Enavegacion_2Eservicios_2EServicioNavegacionImpl_map" alt=""/>
   <map id="org_2Esignbb_2Ebackend_2Enavegacion_2Eservicios_2EServicioNavegacionImpl_map" name="org_2Esignbb_2Ebackend_2Enavegacion_2Eservicios_2EServicioNavegacionImpl_map">
-<area href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html" title="API del módulo de navegación por el grafo clínico (en construcción)." alt="org.signbb.backend.navegacion.servicios.ServicioNavegacion" shape="rect" coords="0,0,390,24"/>
+<area href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html" title="API del módulo de navegación por el grafo clínico." alt="org.signbb.backend.navegacion.servicios.ServicioNavegacion" shape="rect" coords="0,0,390,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Métodos públicos</h2></td></tr>
-<tr class="memitem:a4267f82547bb98ac15076ce8d9c529ce" id="r_a4267f82547bb98ac15076ce8d9c529ce"><td class="memItemLeft"><a id="a4267f82547bb98ac15076ce8d9c529ce" name="a4267f82547bb98ac15076ce8d9c529ce"></a>
-&#160;</td><td class="memItemRight"><b>ServicioNavegacionImpl</b> (<a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1repositorios_1_1RepositorioNodo.html">RepositorioNodo</a> repoNodo, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1repositorios_1_1RepositorioRecorrido.html">RepositorioRecorrido</a> repoRecorrido, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1repositorios_1_1RepositorioGrafo.html">RepositorioGrafo</a> repoGrafo)</td></tr>
-<tr class="memdesc:a4267f82547bb98ac15076ce8d9c529ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta los tres repositorios del módulo. <br /></td></tr>
-<tr class="memitem:af3be3a2f1fc53a05022d351e44c53558" id="r_af3be3a2f1fc53a05022d351e44c53558"><td class="memItemLeft"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1Nodo.html">Nodo</a>&#160;</td><td class="memItemRight"><a class="el" href="#af3be3a2f1fc53a05022d351e44c53558">guardar</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1Nodo.html">Nodo</a> nodo)</td></tr>
-<tr class="memdesc:af3be3a2f1fc53a05022d351e44c53558"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delega en el repositorio de nodos.  <br /></td></tr>
-<tr class="memitem:aaf398b695221b2f04b5834514ba64bc7" id="r_aaf398b695221b2f04b5834514ba64bc7"><td class="memItemLeft"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1Recorrido.html">Recorrido</a>&#160;</td><td class="memItemRight"><a class="el" href="#aaf398b695221b2f04b5834514ba64bc7">iniciar</a> (long idGrafo)</td></tr>
-<tr class="memdesc:aaf398b695221b2f04b5834514ba64bc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea un recorrido en curso desde la raíz del grafo.  <br /></td></tr>
-<tr class="memitem:a02e6ad6ecc6dc0d18493e1b4824cb685" id="r_a02e6ad6ecc6dc0d18493e1b4824cb685"><td class="memItemLeft"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1Recorrido.html">Recorrido</a>&#160;</td><td class="memItemRight"><a class="el" href="#a02e6ad6ecc6dc0d18493e1b4824cb685">responder</a> (long recorridoId, String respuesta)</td></tr>
-<tr class="memdesc:a02e6ad6ecc6dc0d18493e1b4824cb685"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transición hardcodeada del flujo respiratorio de prueba.  <br /></td></tr>
-<tr class="memitem:aa49cb0696bdb730ccead1df6cfc14da8" id="r_aa49cb0696bdb730ccead1df6cfc14da8"><td class="memItemLeft"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1Recorrido.html">Recorrido</a>&#160;</td><td class="memItemRight"><a class="el" href="#aa49cb0696bdb730ccead1df6cfc14da8">consultar</a> (long recorridoId)</td></tr>
-<tr class="memdesc:aa49cb0696bdb730ccead1df6cfc14da8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busca el recorrido por su id.  <br /></td></tr>
+<tr class="memitem:af5ec517c37203c610d1940ff6fa25222" id="r_af5ec517c37203c610d1940ff6fa25222"><td class="memItemLeft"><a id="af5ec517c37203c610d1940ff6fa25222" name="af5ec517c37203c610d1940ff6fa25222"></a>
+&#160;</td><td class="memItemRight"><b>ServicioNavegacionImpl</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html">ContextoClinico</a> contexto, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1MotorNavegacion.html">MotorNavegacion</a> motor, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html">RepositorioSesion</a> repositorioSesion)</td></tr>
+<tr class="memdesc:af5ec517c37203c610d1940ff6fa25222"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta el contexto clínico, el motor y el repositorio de sesiones. <br /></td></tr>
+<tr class="memitem:aab2e1089853199ea85ca0a6c2ac40d7f" id="r_aab2e1089853199ea85ca0a6c2ac40d7f"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#aab2e1089853199ea85ca0a6c2ac40d7f">iniciar</a> ()</td></tr>
+<tr class="memdesc:aab2e1089853199ea85ca0a6c2ac40d7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abre una sesión nueva y devuelve la primera pregunta del recorrido.  <br /></td></tr>
+<tr class="memitem:aca3129f76f650bab7d85ac7b05b3495b" id="r_aca3129f76f650bab7d85ac7b05b3495b"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#aca3129f76f650bab7d85ac7b05b3495b">responder</a> (String recorridoId, String respuesta)</td></tr>
+<tr class="memdesc:aca3129f76f650bab7d85ac7b05b3495b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registra la respuesta sobre la pregunta pendiente y avanza un paso.  <br /></td></tr>
+<tr class="memitem:a273ef4bb1ad2e9dfde22507a5c68875d" id="r_a273ef4bb1ad2e9dfde22507a5c68875d"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#a273ef4bb1ad2e9dfde22507a5c68875d">consultar</a> (String recorridoId)</td></tr>
+<tr class="memdesc:a273ef4bb1ad2e9dfde22507a5c68875d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Devuelve el estado actual del recorrido (pregunta pendiente o desenlace).  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
-<div class="textblock"><p>Implementación provisional del módulo de navegación: <code class="JavaDocCode">responder</code> codifica a mano un flujo respiratorio de prueba, pendiente de conectar con el TAD GrafoClinico y la base de reglas. </p>
+<div class="textblock"><p>Implementación del módulo de navegación sobre el motor real: cablea el <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1MotorNavegacion.html">MotorNavegacion</a></code> (recorrido guiado + reglas) con el <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html">ContextoClinico</a></code> (grafo y reglas en memoria) y el <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html">RepositorioSesion</a></code> (estado del recorrido entre peticiones). </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
-<a id="aa49cb0696bdb730ccead1df6cfc14da8" name="aa49cb0696bdb730ccead1df6cfc14da8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa49cb0696bdb730ccead1df6cfc14da8">&#9670;&#160;</a></span>consultar()</h2>
+<a id="a273ef4bb1ad2e9dfde22507a5c68875d" name="a273ef4bb1ad2e9dfde22507a5c68875d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a273ef4bb1ad2e9dfde22507a5c68875d">&#9670;&#160;</a></span>consultar()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1Recorrido.html">Recorrido</a> org.signbb.backend.navegacion.servicios.ServicioNavegacionImpl.consultar </td>
+          <td class="memname">RecorridoDTO org.signbb.backend.navegacion.servicios.ServicioNavegacionImpl.consultar </td>
           <td>(</td>
-          <td class="paramtype">long</td>          <td class="paramname"><span class="paramname"><em>recorridoId</em></span></td><td>)</td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>recorridoId</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Busca el recorrido por su id. </p>
+<p>Devuelve el estado actual del recorrido (pregunta pendiente o desenlace). </p>
 
-<p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html#a96e471346926541509ae79bf65405bdb">org.signbb.backend.navegacion.servicios.ServicioNavegacion</a>.</p>
+<p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html#af7511e879f969f2609b1fbcd19d0b56e">org.signbb.backend.navegacion.servicios.ServicioNavegacion</a>.</p>
 
 </div>
 </div>
-<a id="af3be3a2f1fc53a05022d351e44c53558" name="af3be3a2f1fc53a05022d351e44c53558"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af3be3a2f1fc53a05022d351e44c53558">&#9670;&#160;</a></span>guardar()</h2>
+<a id="aab2e1089853199ea85ca0a6c2ac40d7f" name="aab2e1089853199ea85ca0a6c2ac40d7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab2e1089853199ea85ca0a6c2ac40d7f">&#9670;&#160;</a></span>iniciar()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1Nodo.html">Nodo</a> org.signbb.backend.navegacion.servicios.ServicioNavegacionImpl.guardar </td>
+          <td class="memname">RecorridoDTO org.signbb.backend.navegacion.servicios.ServicioNavegacionImpl.iniciar </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1Nodo.html">Nodo</a></td>          <td class="paramname"><span class="paramname"><em>nodo</em></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Delega en el repositorio de nodos. </p>
+<p>Abre una sesión nueva y devuelve la primera pregunta del recorrido. </p>
 
-<p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html#a7f3082b081a9a8023b55586d8a60752f">org.signbb.backend.navegacion.servicios.ServicioNavegacion</a>.</p>
+<p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html#a82ef31a7df53d5d7161870795111854f">org.signbb.backend.navegacion.servicios.ServicioNavegacion</a>.</p>
 
 </div>
 </div>
-<a id="aaf398b695221b2f04b5834514ba64bc7" name="aaf398b695221b2f04b5834514ba64bc7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaf398b695221b2f04b5834514ba64bc7">&#9670;&#160;</a></span>iniciar()</h2>
+<a id="aca3129f76f650bab7d85ac7b05b3495b" name="aca3129f76f650bab7d85ac7b05b3495b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca3129f76f650bab7d85ac7b05b3495b">&#9670;&#160;</a></span>responder()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1Recorrido.html">Recorrido</a> org.signbb.backend.navegacion.servicios.ServicioNavegacionImpl.iniciar </td>
+          <td class="memname">RecorridoDTO org.signbb.backend.navegacion.servicios.ServicioNavegacionImpl.responder </td>
           <td>(</td>
-          <td class="paramtype">long</td>          <td class="paramname"><span class="paramname"><em>idGrafo</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Crea un recorrido en curso desde la raíz del grafo. </p>
-
-<p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html#aef6e84689cb9c408d6f0d4106f08b42c">org.signbb.backend.navegacion.servicios.ServicioNavegacion</a>.</p>
-
-</div>
-</div>
-<a id="a02e6ad6ecc6dc0d18493e1b4824cb685" name="a02e6ad6ecc6dc0d18493e1b4824cb685"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02e6ad6ecc6dc0d18493e1b4824cb685">&#9670;&#160;</a></span>responder()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1Recorrido.html">Recorrido</a> org.signbb.backend.navegacion.servicios.ServicioNavegacionImpl.responder </td>
-          <td>(</td>
-          <td class="paramtype">long</td>          <td class="paramname"><span class="paramname"><em>recorridoId</em></span>, </td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>recorridoId</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -223,9 +200,9 @@ Métodos públicos</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Transición hardcodeada del flujo respiratorio de prueba. </p>
+<p>Registra la respuesta sobre la pregunta pendiente y avanza un paso. </p>
 
-<p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html#af1d27282c2b9022c2c4866cdccbeb318">org.signbb.backend.navegacion.servicios.ServicioNavegacion</a>.</p>
+<p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html#a129f8a32cea64590bfe65f6db56c16a6">org.signbb.backend.navegacion.servicios.ServicioNavegacion</a>.</p>
 
 </div>
 </div>
