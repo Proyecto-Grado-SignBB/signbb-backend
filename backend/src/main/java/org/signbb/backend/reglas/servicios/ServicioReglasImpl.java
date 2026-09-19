@@ -3,10 +3,11 @@ package org.signbb.backend.reglas.servicios;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.signbb.backend.model.BaseReglas;
-import org.signbb.backend.model.EstadoPaciente;
-import org.signbb.backend.model.NivelAlerta;
-import org.signbb.backend.model.ReglaClinica;
+import org.signbb.backend.navegacion.modelo.EstadoPaciente;
+import org.signbb.backend.reglas.modelo.BaseReglas;
+import org.signbb.backend.reglas.modelo.NivelAlerta;
+import org.signbb.backend.reglas.modelo.ReglaClinica;
+import org.signbb.backend.reglas.modelo.ResultadoInferencia;
 import org.springframework.stereotype.Service;
 
 /**

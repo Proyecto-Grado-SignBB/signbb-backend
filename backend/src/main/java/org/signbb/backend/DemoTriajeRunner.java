@@ -1,7 +1,14 @@
 package org.signbb.backend;
 
 import org.signbb.backend.model.*;
-import org.signbb.backend.reglas.servicios.ResultadoInferencia;
+import org.signbb.backend.navegacion.modelo.EstadoPaciente;
+import org.signbb.backend.navegacion.modelo.GrafoClinico;
+import org.signbb.backend.navegacion.modelo.Nodo;
+import org.signbb.backend.navegacion.modelo.PasoCausal;
+import org.signbb.backend.navegacion.modelo.Respuesta;
+import org.signbb.backend.reglas.modelo.BaseReglas;
+import org.signbb.backend.reglas.modelo.ReglaClinica;
+import org.signbb.backend.reglas.modelo.ResultadoInferencia;
 import org.signbb.backend.reglas.servicios.ServicioReglas;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -16,19 +23,21 @@ import org.springframework.stereotype.Component;
  * Demo del TAD Grafo Clínico y del motor de reglas (migrada de
  * {@code ejemplo_triaje.py}).
  *
- * <p>Muestra por consola:
+ * <p>
+ * Muestra por consola:
  * <ul>
- *   <li>La navegación automática por prioridad ({@code navegar()}).</li>
- *   <li>El camino causal reconstruido hasta el diagnóstico.</li>
- *   <li>Un recorrido paso a paso simulando respuestas del padre
- *       ({@code evaluarPaso()}).</li>
- *   <li>El grafo clínico y la base de reglas cargados desde
- *       {@code static/ejemplo_grafo.json} y {@code static/ejemplo_reglas.json}.</li>
- *   <li>La evaluación de reglas sobre cuatro escenarios de estado del
- *       paciente (forward chaining + resolución por severidad).</li>
+ * <li>La navegación automática por prioridad ({@code navegar()}).</li>
+ * <li>El camino causal reconstruido hasta el diagnóstico.</li>
+ * <li>Un recorrido paso a paso simulando respuestas del padre
+ * ({@code evaluarPaso()}).</li>
+ * <li>El grafo clínico y la base de reglas cargados desde
+ * {@code static/ejemplo_grafo.json} y {@code static/ejemplo_reglas.json}.</li>
+ * <li>La evaluación de reglas sobre cuatro escenarios de estado del
+ * paciente (forward chaining + resolución por severidad).</li>
  * </ul>
  *
- * <p>Se ejecuta automáticamente al arrancar la app Spring Boot.
+ * <p>
+ * Se ejecuta automáticamente al arrancar la app Spring Boot.
  */
 @Component
 public class DemoTriajeRunner implements CommandLineRunner {
@@ -113,7 +122,7 @@ public class DemoTriajeRunner implements CommandLineRunner {
         }
 
         separador("4. Recorrido paso a paso (respuestas simuladas del padre)");
-        String[][] respuestasPadre = {{"Sí", "raiz"}, {"37-38°C", "temp"}, {"Sí", "letargo"}};
+        String[][] respuestasPadre = { { "Sí", "raiz" }, { "37-38°C", "temp" }, { "Sí", "letargo" } };
         Nodo actual = g.obtenerNodoInicial().orElseThrow();
         System.out.printf("Inicio: %s — %s%n", actual.getId(), actual.getContenido());
         for (String[] par : respuestasPadre) {

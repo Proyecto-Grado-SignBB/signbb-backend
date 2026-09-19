@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
+import org.signbb.backend.navegacion.modelo.Nodo;
 
 /** Tests del TAD Nodo (migrados de tests/test_nodo.py). */
 class NodoTest {
@@ -23,7 +24,7 @@ class NodoTest {
 
     @Test
     void creacionTerminales() {
-        for (String tipo : new String[] {"recomendacion", "bloqueo", "consulta_medica"}) {
+        for (String tipo : new String[] { "recomendacion", "bloqueo", "consulta_medica" }) {
             Nodo n = new Nodo("t-" + tipo, tipo, "texto");
             assertTrue(n.esTerminal());
         }

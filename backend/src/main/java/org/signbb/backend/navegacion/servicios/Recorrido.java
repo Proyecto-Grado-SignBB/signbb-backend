@@ -45,7 +45,7 @@ public class Recorrido {
 
     /**
      * Resultado del recorrido; provisional, pendiente de alinear con
-     * {@link org.signbb.backend.model.NivelAlerta}.
+     * {@link org.signbb.backend.reglas.modelo.NivelAlerta}.
      */
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     public enum Resultado {

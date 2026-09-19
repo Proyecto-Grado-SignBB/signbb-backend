@@ -10,13 +10,15 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.signbb.backend.model.BaseReglas;
-import org.signbb.backend.model.EstadoPaciente;
-import org.signbb.backend.model.GrafoClinico;
 import org.signbb.backend.model.JsonParser;
-import org.signbb.backend.model.NivelAlerta;
-import org.signbb.backend.model.Nodo;
-import org.signbb.backend.model.ReglaClinica;
+import org.signbb.backend.navegacion.modelo.EstadoPaciente;
+import org.signbb.backend.navegacion.modelo.GrafoClinico;
+import org.signbb.backend.navegacion.modelo.MotorNavegacion;
+import org.signbb.backend.navegacion.modelo.Nodo;
+import org.signbb.backend.navegacion.modelo.ResultadoPaso;
+import org.signbb.backend.reglas.modelo.BaseReglas;
+import org.signbb.backend.reglas.modelo.NivelAlerta;
+import org.signbb.backend.reglas.modelo.ReglaClinica;
 import org.signbb.backend.reglas.servicios.ServicioReglasImpl;
 import org.springframework.core.io.ClassPathResource;
 

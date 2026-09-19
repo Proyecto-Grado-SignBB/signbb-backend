@@ -1,7 +1,7 @@
 package org.signbb.backend.config;
 
-import org.signbb.backend.navegacion.repositorios.RepositorioGrafo;
-import org.signbb.backend.navegacion.repositorios.RepositorioNodo;
+import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafo;
+import org.signbb.backend.navegacion.datos.repositorios.RepositorioNodo;
 import org.signbb.backend.navegacion.servicios.Grafo;
 import org.signbb.backend.navegacion.servicios.Nodo;
 import org.signbb.backend.navegacion.servicios.OpcionRespuesta;
@@ -34,12 +34,11 @@ public class DatabaseInit implements CommandLineRunner {
         Nodo p2 = new Nodo();
         p2.setTexto("¿Cuál describe mejor a tu bebé ahora?");
         p2.setOpcionesRespuesta(List.of(
-            new OpcionRespuesta("Respiración más agitada de lo usual", "agitada"),
-            new OpcionRespuesta("Piel o labios con tono azulado", "cianosis"),
-            new OpcionRespuesta("Quejido leve al respirar", "quejido"),
-            new OpcionRespuesta("Pausas cortas al respirar (apnea)", "apnea"),
-            new OpcionRespuesta("Ninguna de las anteriores", "ninguna")
-        ));
+                new OpcionRespuesta("Respiración más agitada de lo usual", "agitada"),
+                new OpcionRespuesta("Piel o labios con tono azulado", "cianosis"),
+                new OpcionRespuesta("Quejido leve al respirar", "quejido"),
+                new OpcionRespuesta("Pausas cortas al respirar (apnea)", "apnea"),
+                new OpcionRespuesta("Ninguna de las anteriores", "ninguna")));
         p2 = repositorioNodo.save(p2);
 
         Grafo grafoDificultadRespiratoria = new Grafo();

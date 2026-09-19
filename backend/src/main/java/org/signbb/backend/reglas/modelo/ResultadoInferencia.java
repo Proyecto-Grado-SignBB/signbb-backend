@@ -1,0 +1,26 @@
+package org.signbb.backend.reglas.modelo;
+
+import java.util.List;
+
+import org.signbb.backend.navegacion.modelo.Nodo;
+
+/**
+ * Resultado de evaluar la base de reglas contra el estado del paciente
+ * (Algoritmo 3 del motor, fase de resolución de conflicto por severidad):
+ * el destino de la regla ganadora {@code ρ*}, el nivel máximo {@code M} y
+ * las reglas de nivel máximo {@code A*} cuyas razones se combinan.
+ *
+ * <p>
+ * Un nivel {@code NORMAL} con lista vacía indica que ninguna regla se
+ * activó (el destino es {@code null} en ese caso).
+ */
+public record ResultadoInferencia(Nodo destino, NivelAlerta nivel, List<ReglaClinica> reglas) {
+
+    public ResultadoInferencia {
+        reglas = List.copyOf(reglas);
+    }
+
+    public boolean esNormal() {
+        return nivel == NivelAlerta.NORMAL;
+    }
+}

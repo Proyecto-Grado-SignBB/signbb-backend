@@ -5,6 +5,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.signbb.backend.navegacion.modelo.GrafoClinico;
+import org.signbb.backend.navegacion.modelo.Nodo;
+import org.signbb.backend.reglas.modelo.BaseReglas;
+import org.signbb.backend.reglas.modelo.Condicion;
+import org.signbb.backend.reglas.modelo.NivelAlerta;
+import org.signbb.backend.reglas.modelo.ReglaClinica;
+
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 
