@@ -1,11 +1,12 @@
 package org.signbb.backend;
 
-import org.signbb.backend.model.*;
+import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoParser;
 import org.signbb.backend.navegacion.modelo.EstadoPaciente;
 import org.signbb.backend.navegacion.modelo.GrafoClinico;
 import org.signbb.backend.navegacion.modelo.Nodo;
 import org.signbb.backend.navegacion.modelo.PasoCausal;
 import org.signbb.backend.navegacion.modelo.Respuesta;
+import org.signbb.backend.reglas.datos.serializacion.BaseReglasParser;
 import org.signbb.backend.reglas.modelo.BaseReglas;
 import org.signbb.backend.reglas.modelo.ReglaClinica;
 import org.signbb.backend.reglas.modelo.ResultadoInferencia;
@@ -139,7 +140,7 @@ public class DemoTriajeRunner implements CommandLineRunner {
         }
 
         separador("5. Grafo cargado desde static/ejemplo_grafo.json");
-        GrafoClinico desdeJson = JsonParser.parseJsonToGrafoClinico(
+        GrafoClinico desdeJson = GrafoClinicoParser.parseJsonToGrafoClinico(
                 leerRecurso("static/ejemplo_grafo.json"));
 
         System.out.printf("Nodos cargados: %d%n", desdeJson.size());
@@ -162,7 +163,7 @@ public class DemoTriajeRunner implements CommandLineRunner {
         }
 
         separador("6. Base de reglas cargada desde static/ejemplo_reglas.json");
-        BaseReglas base = JsonParser.parseJsonToBaseReglas(
+        BaseReglas base = BaseReglasParser.parseJsonToBaseReglas(
                 leerRecurso("static/ejemplo_reglas.json"), desdeJson);
         System.out.printf("Reglas cargadas: %d%n", base.size());
         for (ReglaClinica r : base.todasLasReglas()) {

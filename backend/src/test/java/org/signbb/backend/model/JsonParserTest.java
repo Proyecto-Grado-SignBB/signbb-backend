@@ -7,8 +7,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import org.junit.jupiter.api.Test;
+import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoParser;
 import org.signbb.backend.navegacion.modelo.GrafoClinico;
 import org.signbb.backend.navegacion.modelo.Nodo;
+import org.signbb.backend.reglas.datos.serializacion.BaseReglasParser;
 import org.signbb.backend.reglas.modelo.BaseReglas;
 import org.signbb.backend.reglas.modelo.Condicion;
 import org.signbb.backend.reglas.modelo.NivelAlerta;
@@ -59,7 +61,7 @@ class JsonParserTest {
 
   @Test
   void parseGrafoDeEjemplo() {
-    GrafoClinico g = JsonParser.parseJsonToGrafoClinico(leer("/static/ejemplo_grafo.json"));
+    GrafoClinico g = GrafoClinicoParser.parseJsonToGrafoClinico(leer("/static/ejemplo_grafo.json"));
 
     assertEquals(11, g.size());
     assertEquals("inicio", g.obtenerNodoInicial().orElseThrow().getId());
@@ -70,8 +72,8 @@ class JsonParserTest {
 
   @Test
   void parseReglasDeEjemploResuelveDestinosContraElGrafo() {
-    GrafoClinico g = JsonParser.parseJsonToGrafoClinico(leer("/static/ejemplo_grafo.json"));
-    BaseReglas base = JsonParser.parseJsonToBaseReglas(
+    GrafoClinico g = GrafoClinicoParser.parseJsonToGrafoClinico(leer("/static/ejemplo_grafo.json"));
+    BaseReglas base = BaseReglasParser.parseJsonToBaseReglas(
         leer("/static/ejemplo_reglas.json"), g);
 
     assertEquals(4, base.size());
@@ -89,26 +91,26 @@ class JsonParserTest {
 
   @Test
   void nivelNormalEsRechazado() {
-    GrafoClinico g = JsonParser.parseJsonToGrafoClinico(GRAFO_MINIMO);
+    GrafoClinico g = GrafoClinicoParser.parseJsonToGrafoClinico(GRAFO_MINIMO);
 
     assertThrows(IllegalArgumentException.class,
-        () -> JsonParser.parseJsonToBaseReglas(reglasJson("NORMAL"), g));
+        () -> BaseReglasParser.parseJsonToBaseReglas(reglasJson("NORMAL"), g));
   }
 
   @Test
   void nivelInvalidoEsRechazado() {
-    GrafoClinico g = JsonParser.parseJsonToGrafoClinico(GRAFO_MINIMO);
+    GrafoClinico g = GrafoClinicoParser.parseJsonToGrafoClinico(GRAFO_MINIMO);
 
     assertThrows(IllegalArgumentException.class,
-        () -> JsonParser.parseJsonToBaseReglas(reglasJson("XYZ"), g));
+        () -> BaseReglasParser.parseJsonToBaseReglas(reglasJson("XYZ"), g));
   }
 
   @Test
   void nodoDestinoInexistenteEsRechazado() {
-    GrafoClinico g = JsonParser.parseJsonToGrafoClinico(GRAFO_MINIMO);
+    GrafoClinico g = GrafoClinicoParser.parseJsonToGrafoClinico(GRAFO_MINIMO);
     String json = reglasJson("URGENCIA").replace("\"cm\"", "\"no_existe\"");
 
     assertThrows(IllegalArgumentException.class,
-        () -> JsonParser.parseJsonToBaseReglas(json, g));
+        () -> BaseReglasParser.parseJsonToBaseReglas(json, g));
   }
 }

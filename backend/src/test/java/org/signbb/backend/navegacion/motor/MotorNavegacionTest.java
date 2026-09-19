@@ -10,12 +10,13 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.signbb.backend.model.JsonParser;
+import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoParser;
 import org.signbb.backend.navegacion.modelo.EstadoPaciente;
 import org.signbb.backend.navegacion.modelo.GrafoClinico;
-import org.signbb.backend.navegacion.modelo.MotorNavegacion;
 import org.signbb.backend.navegacion.modelo.Nodo;
 import org.signbb.backend.navegacion.modelo.ResultadoPaso;
+import org.signbb.backend.navegacion.servicios.MotorNavegacion;
+import org.signbb.backend.reglas.datos.serializacion.BaseReglasParser;
 import org.signbb.backend.reglas.modelo.BaseReglas;
 import org.signbb.backend.reglas.modelo.NivelAlerta;
 import org.signbb.backend.reglas.modelo.ReglaClinica;
@@ -25,9 +26,9 @@ import org.springframework.core.io.ClassPathResource;
 /**
  * Tests del recorrido guiado del motor de navegación sobre el grafo y las
  * reglas de ejemplo (ictericia). Prueban el motor puro, sin Spring ni base de
- * datos: cargan grafo + reglas con {@link JsonParser} y ejercen las tres ramas
- * del Algoritmo 3 (corto-circuito por regla, avance por el grafo y NORMAL por
- * defecto).
+ * datos: cargan grafo + reglas con {@link GrafoClinicoParser} y
+ * {@link BaseReglasParser} y ejercen las tres ramas del Algoritmo 3
+ * (corto-circuito por regla, avance por el grafo y NORMAL por defecto).
  */
 class MotorNavegacionTest {
 
@@ -37,8 +38,8 @@ class MotorNavegacionTest {
 
     @BeforeEach
     void cargar() throws IOException {
-        grafo = JsonParser.parseJsonToGrafoClinico(leer("static/ejemplo_grafo.json"));
-        base = JsonParser.parseJsonToBaseReglas(leer("static/ejemplo_reglas.json"), grafo);
+        grafo = GrafoClinicoParser.parseJsonToGrafoClinico(leer("static/ejemplo_grafo.json"));
+        base = BaseReglasParser.parseJsonToBaseReglas(leer("static/ejemplo_reglas.json"), grafo);
         motor = new MotorNavegacion(new ServicioReglasImpl());
     }
 

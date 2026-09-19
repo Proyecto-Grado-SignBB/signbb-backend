@@ -3,7 +3,9 @@ package org.signbb.backend.navegacion.modelo;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-import org.signbb.backend.model.JsonParser;
+import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoParser;
+import org.signbb.backend.navegacion.servicios.MotorNavegacion;
+import org.signbb.backend.reglas.datos.serializacion.BaseReglasParser;
 import org.signbb.backend.reglas.modelo.BaseReglas;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +18,8 @@ import org.springframework.stereotype.Component;
  *
  * <p>
  * Al arrancar la aplicación lee {@code static/ejemplo_grafo.json} y
- * {@code static/ejemplo_reglas.json} con {@link JsonParser} y valida el grafo
+ * {@code static/ejemplo_reglas.json} con {@link GrafoClinicoParser} y
+ * {@link BaseReglasParser}, y valida el grafo
  * ({@code rutaValida}, {@code validarCiclo}), registrando una advertencia si
  * algo no cuadra (por ejemplo, un nodo huérfano inalcanzable). El grafo y las
  * reglas quedan disponibles para {@link MotorNavegacion} vía {@link #getGrafo}
@@ -32,8 +35,9 @@ public class ContextoClinico {
 
     /** Carga grafo y reglas de los recursos del classpath y valida el grafo. */
     public ContextoClinico() {
-        this.grafo = JsonParser.parseJsonToGrafoClinico(leerRecurso("static/ejemplo_grafo.json"));
-        this.base = JsonParser.parseJsonToBaseReglas(
+        this.grafo = GrafoClinicoParser.parseJsonToGrafoClinico(
+                leerRecurso("static/ejemplo_grafo.json"));
+        this.base = BaseReglasParser.parseJsonToBaseReglas(
                 leerRecurso("static/ejemplo_reglas.json"), grafo);
 
         if (!grafo.rutaValida()) {

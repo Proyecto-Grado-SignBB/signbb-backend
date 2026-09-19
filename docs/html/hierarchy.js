@@ -21,7 +21,6 @@ var hierarchy =
     [ "org.signbb.backend.navegacion.modelo.GrafoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html", null ],
     [ "org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoParser", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoParser.html", null ],
     [ "org.signbb.backend.observaciones.controladores.IniciarRecorridoRequest", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1IniciarRecorridoRequest.html", null ],
-    [ "org.signbb.backend.model.JsonParser", "classorg_1_1signbb_1_1backend_1_1model_1_1JsonParser.html", null ],
     [ "org.signbb.backend.config.ManejadorExcepciones", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorExcepciones.html", null ],
     [ "org.signbb.backend.navegacion.modelo.MotorNavegacion", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1MotorNavegacion.html", null ],
     [ "org.signbb.backend.reglas.modelo.NivelAlerta", "enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1NivelAlerta.html", null ],
