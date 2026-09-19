@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
+import org.signbb.backend.navegacion.modelo.Nodo;
+import org.signbb.backend.navegacion.modelo.Respuesta;
 
 /** Tests del TAD Respuesta (migrados de tests/test_respuesta.py). */
 class RespuestaTest {

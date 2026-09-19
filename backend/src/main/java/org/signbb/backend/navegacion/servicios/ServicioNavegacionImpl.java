@@ -2,13 +2,13 @@ package org.signbb.backend.navegacion.servicios;
 
 import java.util.UUID;
 
-import org.signbb.backend.crobservaciones.controladores.RecorridoDTO;
-import org.signbb.backend.model.EstadoPaciente;
-import org.signbb.backend.navegacion.motor.ContextoClinico;
-import org.signbb.backend.navegacion.motor.MotorNavegacion;
-import org.signbb.backend.navegacion.motor.RepositorioSesion;
-import org.signbb.backend.navegacion.motor.ResultadoPaso;
-import org.signbb.backend.navegacion.motor.SesionTriaje;
+import org.signbb.backend.navegacion.modelo.ContextoClinico;
+import org.signbb.backend.navegacion.modelo.EstadoPaciente;
+import org.signbb.backend.navegacion.modelo.MotorNavegacion;
+import org.signbb.backend.navegacion.modelo.RepositorioSesion;
+import org.signbb.backend.navegacion.modelo.ResultadoPaso;
+import org.signbb.backend.navegacion.modelo.SesionTriaje;
+import org.signbb.backend.observaciones.controladores.RecorridoDTO;
 import org.springframework.stereotype.Service;
 
 /**

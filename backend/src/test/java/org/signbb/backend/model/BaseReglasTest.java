@@ -9,6 +9,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
+import org.signbb.backend.navegacion.modelo.EstadoPaciente;
+import org.signbb.backend.navegacion.modelo.Nodo;
+import org.signbb.backend.reglas.modelo.BaseReglas;
+import org.signbb.backend.reglas.modelo.Condicion;
+import org.signbb.backend.reglas.modelo.NivelAlerta;
+import org.signbb.backend.reglas.modelo.ReglaClinica;
 
 /** Tests del TAD BaseReglas (migrados de tests/test_base_reglas.py). */
 class BaseReglasTest {

@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import org.signbb.backend.navegacion.modelo.Contexto;
+import org.signbb.backend.navegacion.modelo.EstadoPaciente;
 
 /** Tests del TAD Contexto (migrados de tests/test_contexto.py). */
 class ContextoTest {

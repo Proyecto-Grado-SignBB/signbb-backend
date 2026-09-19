@@ -12,7 +12,7 @@ import lombok.Setter;
 
 /**
  * Entidad JPA de grafo clínico persistido para el módulo de navegación;
- * distinta del TAD {@link org.signbb.backend.model.GrafoClinico}.
+ * distinta del TAD {@link org.signbb.backend.navegacion.modelo.GrafoClinico}.
  */
 @Entity
 @Getter

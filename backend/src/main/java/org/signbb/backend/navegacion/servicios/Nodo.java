@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * Entidad JPA de nodo de pregunta persistido para el módulo de navegación;
- * distinta del TAD {@link org.signbb.backend.model.Nodo}.
+ * distinta del TAD {@link org.signbb.backend.navegacion.modelo.Nodo}.
  */
 @Entity
 @Getter

@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
+import org.signbb.backend.navegacion.modelo.EstadoPaciente;
+import org.signbb.backend.navegacion.modelo.Sintoma;
 
 /** Tests del TAD EstadoPaciente (migrados de tests/test_estado_paciente.py). */
 class EstadoPacienteTest {

@@ -8,6 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import org.signbb.backend.navegacion.modelo.GrafoClinico;
+import org.signbb.backend.navegacion.modelo.Nodo;
+import org.signbb.backend.navegacion.modelo.PasoCausal;
+import org.signbb.backend.navegacion.modelo.Respuesta;
 
 /** Tests del TAD GrafoClinico (migrados de tests/test_grafo_clinico.py). */
 class GrafoClinicoTest {
@@ -79,7 +83,7 @@ class GrafoClinicoTest {
         Nodo a = n("a");
         Nodo b = n("b");
         Nodo c = n("c");
-        for (Nodo x : new Nodo[] {a, b, c}) {
+        for (Nodo x : new Nodo[] { a, b, c }) {
             g.agregarNodo(x);
         }
         g.conectarRespuestas(a, b, "Sí");
@@ -103,7 +107,7 @@ class GrafoClinicoTest {
         Nodo a = n("a");
         Nodo b = n("b");
         Nodo c = n("c");
-        for (Nodo x : new Nodo[] {a, b, c}) {
+        for (Nodo x : new Nodo[] { a, b, c }) {
             g.agregarNodo(x);
         }
         g.conectarRespuestas(a, b, "Sí");
@@ -197,7 +201,7 @@ class GrafoClinicoTest {
         Nodo a = n("a");
         Nodo b = n("b");
         Nodo c = n("c");
-        for (Nodo x : new Nodo[] {a, b, c}) {
+        for (Nodo x : new Nodo[] { a, b, c }) {
             g.agregarNodo(x);
         }
         g.conectarRespuestas(a, b, "Sí");
@@ -220,7 +224,7 @@ class GrafoClinicoTest {
         Nodo raiz = n("raiz");
         Nodo p1 = n("p1");
         Nodo t = n("t", "recomendacion", 0);
-        for (Nodo x : new Nodo[] {raiz, p1, t}) {
+        for (Nodo x : new Nodo[] { raiz, p1, t }) {
             g.agregarNodo(x);
         }
         g.conectarRespuestas(raiz, p1, "Sí");
@@ -255,7 +259,7 @@ class GrafoClinicoTest {
         Nodo raiz = n("raiz", "pregunta", 5);
         Nodo urgente = n("urgente", "consulta_medica", 10);
         Nodo leve = n("leve", "recomendacion", 5);
-        for (Nodo x : new Nodo[] {raiz, urgente, leve}) {
+        for (Nodo x : new Nodo[] { raiz, urgente, leve }) {
             g.agregarNodo(x);
         }
         g.conectarRespuestas(raiz, urgente, "fiebre alta");
@@ -271,7 +275,7 @@ class GrafoClinicoTest {
         Nodo intermedio = n("intermedio", "pregunta", 4);
         Nodo descarte = n("descarte", "recomendacion", 1);
         Nodo normal = n("normal", "recomendacion", 5);
-        for (Nodo x : new Nodo[] {raiz, intermedio, descarte, normal}) {
+        for (Nodo x : new Nodo[] { raiz, intermedio, descarte, normal }) {
             g.agregarNodo(x);
         }
         g.conectarRespuestas(raiz, descarte, "poco");
