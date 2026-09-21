@@ -1,0 +1,124 @@
+# =============================================================================
+# Docker Compose para SignBB - Servicios de Base de Datos
+# =============================================================================
+# Este archivo define los servicios de PostgreSQL y Adminer.
+# Se ejecuta con: docker compose up -d
+# =============================================================================
+
+services:
+
+  # ===========================================================================
+  # SERVICIO: db (PostgreSQL)
+  # ===========================================================================
+  # Base de datos relacional principal del sistema SignBB.
+  # Almacena: grafos clínicos, reglas, credenciales, historiales y observaciones.
+  # ===========================================================================
+  db:
+    # Imagen oficial de PostgreSQL, versión 16 con Alpine Linux (más ligera).
+    # Alpine reduce el tamaño de la imagen (~80 MB vs ~400 MB de la versión Debian).
+    image: postgres:16-alpine
+
+    # Política de reinicio: si el contenedor falla, Docker lo reinicia automáticamente.
+    # "always" garantiza que la base de datos esté disponible tras reinicios del host.
+    restart: always
+
+    # Memoria compartida (shared memory) para PostgreSQL.
+    # PostgreSQL usa /dev/shm para operaciones paralelas (ej. sorts, joins).
+    # Docker limita esto a 64 MB por defecto, lo que puede causar errores.
+    # 128 MB es suficiente para el volumen de datos de SignBB.
+    shm_size: 128mb
+
+    # Variables de entorno que PostgreSQL lee al inicializarse por primera vez.
+    # Solo se aplican si el volumen de datos está vacío (primera ejecución).
+    environment:
+      # Superusuario de PostgreSQL (por defecto sería "postgres").
+      # Se usa "admin" para seguir la convención del proyecto.
+      POSTGRES_USER: admin
+
+      # Contraseña del superusuario.
+      # En producción, usar un secreto gestionado (Docker Secrets, Vault, etc.).
+      POSTGRES_PASSWORD: example
+
+      # Base de datos que se crea automáticamente al inicializar.
+      # Si no se especifica, PostgreSQL crea una base de datos con el nombre del usuario.
+      POSTGRES_DB: signbb
+
+    # Mapeo de puertos: host:contenedor
+    # Expone el puerto 5432 de PostgreSQL al puerto 5432 del host.
+    # Necesario para conectarse desde herramientas externas (ej. DBeaver, psql).
+    # En producción, se puede omitir si solo el backend accede a la BD.
+    ports:
+      - "5432:5432"
+
+    # Volumen para persistir los datos de PostgreSQL.
+    # Sin esto, los datos se pierden al eliminar el contenedor.
+    # El volumen "postgres_data" es gestionado por Docker (named volume).
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    # Healthcheck: verifica que PostgreSQL esté listo para aceptar conexiones.
+    # Docker ejecuta este comando periódicamente dentro del contenedor.
+    # "pg_isready" es la herramienta oficial de PostgreSQL para verificar disponibilidad.
+    healthcheck:
+      # Comando que se ejecuta para verificar el estado.
+      # -U admin: verifica con el usuario admin.
+      # -d signbb: verifica la base de datos signbb.
+      test: ["CMD-SHELL", "pg_isready -U admin -d signbb"]
+
+      # Intervalo entre verificaciones: cada 10 segundos.
+      interval: 10s
+
+      # Tiempo máximo de espera por una respuesta: 5 segundos.
+      timeout: 5s
+
+      # Número de intentos fallidos antes de marcar el contenedor como "unhealthy".
+      retries: 5
+
+      # Tiempo de gracia antes de empezar a verificar: 30 segundos.
+      # PostgreSQL tarda unos segundos en inicializar y estar listo.
+      start_period: 30s
+
+  # ===========================================================================
+  # SERVICIO: adminer (Cliente de Base de Datos Web)
+  # ===========================================================================
+  # Interfaz web ligera para administrar PostgreSQL desde el navegador.
+  # Útil para desarrollo, pruebas y depuración de la base de datos.
+  # NO se recomienda exponerlo en producción sin autenticación.
+  # ===========================================================================
+  adminer:
+    # Imagen oficial de Adminer (cliente de BD web, similar a phpMyAdmin).
+    image: adminer
+
+    # Política de reinicio: si el contenedor falla, Docker lo reinicia.
+    restart: always
+
+    # Mapeo de puertos: expone Adminer en http://localhost:8180
+    # El puerto 8180 del host se mapea al 8080 del contenedor.
+    ports:
+      - "8180:8080"
+
+    # Variable de entorno que indica a Adminer el servidor por defecto.
+    # Sin esto, Adminer intentaría conectarse a "localhost" (sí mismo).
+    # "db" es el nombre del servicio de PostgreSQL en esta red de Docker.
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+
+    # Dependencia: Adminer espera a que PostgreSQL esté saludable.
+    # "condition: service_healthy" hace que Docker espere a que el healthcheck
+    # de PostgreSQL pase antes de iniciar Adminer.
+    # Esto evita errores de conexión al abrir Adminer inmediatamente.
+    depends_on:
+      db:
+        condition: service_healthy
+
+# =============================================================================
+# VOLÚMENES
+# =============================================================================
+# Los volúmenes nombrados son gestionados por Docker y persisten los datos
+# incluso si los contenedores se eliminan (docker compose down).
+# Solo se eliminan con: docker compose down -v
+# =============================================================================
+volumes:
+  # Volumen para los datos de PostgreSQL.
+  # Almacena: tablas, índices, configuraciones, WAL, etc.
+  postgres_data:
