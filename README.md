@@ -27,3 +27,8 @@ repositorio:
 
 El HTML resultante queda en `docs/html` (abrir `docs/html/index.html`).
 La fuente es `backend/src/main/java`, configurada en el `Doxyfile`.
+
+El diagrama de arquitectura por módulos (`docs/diagramas/arquitectura_modulos.svg`)
+se regenera desde su fuente PlantUML:
+
+    java -jar plantuml.jar -tsvg docs/diagramas/arquitectura_modulos.puml

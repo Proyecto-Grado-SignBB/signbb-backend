@@ -1,4 +1,27 @@
 var searchData=
 [
-  ['historial_0',['historial',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html#ac9621111e710c1bd0c6d507418f68d0e',1,'org::signbb::backend::navegacion::modelo::Contexto']]]
+  ['getbase_0',['getBase',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html#a2cc47d733725b4de2c959883484cfc24',1,'org::signbb::backend::navegacion::modelo::ContextoClinico']]],
+  ['getcondicion_1',['getCondicion',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html#adcff188ee13a66538c8e55c75e3ea13c',1,'org::signbb::backend::navegacion::modelo::Respuesta']]],
+  ['getcondiciones_2',['getCondiciones',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a5adcc4094019e96306b4f337419498a9',1,'org::signbb::backend::reglas::modelo::ReglaClinica']]],
+  ['getcontenido_3',['getContenido',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#a4674a825f21134246464313314a607b2',1,'org::signbb::backend::navegacion::modelo::Nodo']]],
+  ['getdestino_4',['getDestino',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html#ac5ab6128e6d6b9d653b46bdfee020884',1,'org::signbb::backend::navegacion::modelo::Respuesta']]],
+  ['getestado_5',['getEstado',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html#a870241fd9a6caff9edfd9ff7a98a35a0',1,'org::signbb::backend::navegacion::modelo::SesionTriaje']]],
+  ['getgrafo_6',['getGrafo',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html#aca7fd88b2089b4d18a937c4d7d316ec1',1,'org::signbb::backend::navegacion::modelo::ContextoClinico']]],
+  ['getid_7',['getId',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#a65f237802a77131279b4b57f0928ee20',1,'org.signbb.backend.navegacion.modelo.Nodo.getId()'],['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html#aa8a05aba1167e6c1505cfd8357853f20',1,'org.signbb.backend.navegacion.modelo.SesionTriaje.getId()']]],
+  ['getidpaciente_8',['getIdPaciente',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html#a6214a703864318c313a44398d1c72eb5',1,'org::signbb::backend::navegacion::modelo::Contexto']]],
+  ['getidregla_9',['getIdRegla',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a6524395e9a99f380f69bc6bebf87c535',1,'org::signbb::backend::reglas::modelo::ReglaClinica']]],
+  ['getidsesion_10',['getIdSesion',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a57d254543b6c75e786f94457007cb5dc',1,'org::signbb::backend::navegacion::modelo::EstadoPaciente']]],
+  ['getnivel_11',['getNivel',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a821b498d769ae2d64e06f5542de1632c',1,'org::signbb::backend::reglas::modelo::ReglaClinica']]],
+  ['getnododestino_12',['getNodoDestino',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a669bfc74305e7bb29326549a24e71268',1,'org::signbb::backend::reglas::modelo::ReglaClinica']]],
+  ['getnombre_13',['getNombre',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a33ce3899c7c45aa9d6d648fde82e4f01',1,'org::signbb::backend::reglas::modelo::ReglaClinica']]],
+  ['getorigen_14',['getOrigen',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html#a8fbfa057a051f2c3943cfa2c8b11fe26',1,'org::signbb::backend::navegacion::modelo::Respuesta']]],
+  ['getpeso_15',['getPeso',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#a2c38f03b138bdb1a70865ac170c97561',1,'org::signbb::backend::navegacion::modelo::Nodo']]],
+  ['getpuntaje_16',['getPuntaje',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a1d2f57bfa6a76787ba621bb8a3e3b3cd',1,'org::signbb::backend::navegacion::modelo::EstadoPaciente']]],
+  ['getpuntajeglobal_17',['getPuntajeGlobal',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html#a7f7d7412b6249fb58bbab09cedccaf9c',1,'org::signbb::backend::navegacion::modelo::Contexto']]],
+  ['getrespuesta_18',['getRespuesta',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a97f41cd544308a79e4d51e8fef9077fa',1,'org::signbb::backend::navegacion::modelo::EstadoPaciente']]],
+  ['getsrc_19',['getSrc',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#a6cd8e440f3b8ba14473032f39610eb99',1,'org::signbb::backend::navegacion::modelo::Nodo']]],
+  ['gettipo_20',['getTipo',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#a37db948b982079b5211b41e7a4e14433',1,'org::signbb::backend::navegacion::modelo::Nodo']]],
+  ['getultimopaso_21',['getUltimoPaso',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html#a09e39ab3aea8c0d8df5abc9745b3cdbd',1,'org::signbb::backend::navegacion::modelo::SesionTriaje']]],
+  ['grafoclinico_22',['GrafoClinico',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#a7f0e86a6e41914b98aa16ef85689a715',1,'org.signbb.backend.navegacion.modelo.GrafoClinico.GrafoClinico()'],['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#a198df3cbf6d64405bc4032443da9acb1',1,'org.signbb.backend.navegacion.modelo.GrafoClinico.GrafoClinico(int umbralAlto, int umbralBajo)']]],
+  ['guardar_23',['guardar',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html#a4dfd943b7a34ac405e62906b3b3b11d2',1,'org::signbb::backend::navegacion::modelo::RepositorioSesion']]]
 ];

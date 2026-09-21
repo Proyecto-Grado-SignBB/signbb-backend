@@ -10,14 +10,19 @@ title SignBB Backend — Arquitectura por módulos
 package "observaciones" {
   package "controladores" as obs_ctrl {
     class ControladorConsulta
-    class "RecorridoDTO / PreguntaDTO / RespuestaRequest" as DTOs
+    class "RecorridoDTO / PreguntaDTO / ResultadoDTO\nPasoCausalDTO / RespuestaRequest" as DTOs
   }
   package "modelo" as obs_mod {
     class SeleccionCuidador
     class TipoInteraccion
   }
-  package "repositorios" as obs_repo {
-    class RepositorioObservaciones
+  package "datos" {
+    package "entidades" as obs_ent {
+      class ObservacionEntity
+    }
+    package "repositorios" as obs_repo {
+      class RepositorioObservaciones
+    }
   }
   package "servicios" as obs_srv {
     class "ServicioCaptura (Impl)" as ServicioCaptura
@@ -29,21 +34,20 @@ package "navegacion" {
     package "serializacion" as nav_ser {
       class GrafoClinicoParser
     }
-    package "repositorios" as nav_repo {
-      class "Repositorios JPA (Grafo, Nodo, Recorrido)" as ReposNav
-    }
+    package "repositorios (reservado)" as nav_repo
+    package "entidades (reservado)" as nav_ent
   }
   package "modelo (TAD)" as nav_mod {
     class GrafoClinico
     class Nodo
     class EstadoPaciente
     class SesionTriaje
+    class RepositorioSesion
     class ContextoClinico
   }
   package "servicios" as nav_srv {
     class "ServicioNavegacion (Impl)" as ServicioNavegacion
     class MotorNavegacion
-    class "Entidades JPA (Grafo, Nodo, OpcionRespuesta, Recorrido)" as EntidadesNav
   }
 }
 
@@ -52,6 +56,8 @@ package "reglas" {
     package "serializacion" as reg_ser {
       class BaseReglasParser
     }
+    package "repositorios (reservado)" as reg_repo
+    package "entidades (reservado)" as reg_ent
   }
   package "modelo (TAD)" as reg_mod {
     class BaseReglas
@@ -63,13 +69,21 @@ package "reglas" {
   }
 }
 
+package "auditoria (reservado)" as auditoria {
+  package "datos (reservado)" as aud_datos
+  package "modelo (reservado)" as aud_mod
+  package "servicios (reservado)" as aud_srv
+  package "controladores (reservado)" as aud_ctrl
+}
+package "seguridad (reservado)" as seguridad
+
 package "config" {
-  class DatabaseInit
+  class ConfiguracionCors
   class ManejadorExcepciones
+  class RecursoNoEncontradoException
 }
 
-package "auditoria (reservado)" as auditoria
-package "seguridad (reservado)" as seguridad
+class "DemoTriajeRunner" as demo
 
 database "H2 (en memoria)" as h2
 
@@ -78,6 +92,7 @@ obs_ctrl ..> obs_srv : registrar respuesta\n(valida y audita)
 obs_ctrl ..> nav_srv : iniciar / consultar
 obs_srv ..> nav_srv : responder(List<String>)
 obs_srv ..> obs_repo : persiste la selección
+obs_repo ..> obs_ent
 obs_repo ..> h2
 
 ' Núcleo de navegación y reglas
@@ -92,11 +107,9 @@ nav_mod ..> reg_ser : ContextoClinico carga la base de reglas
 reg_ser ..> nav_mod : resuelve nodoDestino\ncontra el grafo
 reg_ser ..> reg_mod : construye ReglaClinica
 
-' Persistencia del grafo (JPA)
-nav_repo ..> EntidadesNav
-nav_repo ..> h2
-DatabaseInit ..> nav_repo : siembra la BD al arrancar
-DatabaseInit ..> EntidadesNav
+' Demo de arranque por consola
+demo ..> nav_mod : grafo de ejemplo
+demo ..> reg_srv : evalúa escenarios
 
 note bottom of reg_ser
   Dependencias cruzadas conocidas (refactor pendiente):

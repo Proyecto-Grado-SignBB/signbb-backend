@@ -18,9 +18,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.signbb.backend.observaciones.controladores.PreguntaDTO;
 import org.signbb.backend.observaciones.controladores.RecorridoDTO;
+import org.signbb.backend.observaciones.datos.entidades.ObservacionEntity;
+import org.signbb.backend.observaciones.datos.repositorios.RepositorioObservaciones;
 import org.signbb.backend.observaciones.modelo.TipoInteraccion;
-import org.signbb.backend.observaciones.repositorios.ObservacionEntity;
-import org.signbb.backend.observaciones.repositorios.RepositorioObservaciones;
 import org.signbb.backend.navegacion.servicios.ServicioNavegacion;
 
 /**
