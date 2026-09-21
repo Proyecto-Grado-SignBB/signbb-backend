@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['finalizado_0',['FINALIZADO',['../enumorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1Recorrido_1_1Estado.html#aa708dbc2305161c77d80e68575c67b6e',1,'org::signbb::backend::navegacion::servicios::Recorrido::Estado']]]
+  ['findbyrecorridoidorderbytimestampasc_0',['findByRecorridoIdOrderByTimestampAsc',['../interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioObservaciones.html#a0171765ec8dae0207ab421704ccf5749',1,'org::signbb::backend::observaciones::datos::repositorios::RepositorioObservaciones']]]
 ];

@@ -130,12 +130,15 @@ Métodos públicos</h2></td></tr>
 <tr class="memdesc:a82ef31a7df53d5d7161870795111854f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inicia un recorrido sobre el grafo clínico cargado y devuelve la primera pregunta.  <br /></td></tr>
 <tr class="memitem:a129f8a32cea64590bfe65f6db56c16a6" id="r_a129f8a32cea64590bfe65f6db56c16a6"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#a129f8a32cea64590bfe65f6db56c16a6">responder</a> (String recorridoId, String respuesta)</td></tr>
 <tr class="memdesc:a129f8a32cea64590bfe65f6db56c16a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registra la respuesta del cuidador y avanza el recorrido un paso.  <br /></td></tr>
+<tr class="memitem:adbf63657501976de781efc5b9efaac73" id="r_adbf63657501976de781efc5b9efaac73"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#adbf63657501976de781efc5b9efaac73">responder</a> (String recorridoId, List&lt; String &gt; respuestas)</td></tr>
+<tr class="memdesc:adbf63657501976de781efc5b9efaac73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registra una o más respuestas marcadas a la vez para la misma pregunta (selección múltiple) y avanza el recorrido un paso.  <br /></td></tr>
 <tr class="memitem:af7511e879f969f2609b1fbcd19d0b56e" id="r_af7511e879f969f2609b1fbcd19d0b56e"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#af7511e879f969f2609b1fbcd19d0b56e">consultar</a> (String recorridoId)</td></tr>
 <tr class="memdesc:af7511e879f969f2609b1fbcd19d0b56e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Consulta el estado actual de un recorrido.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>API del módulo de navegación por el grafo clínico. </p>
-<p>Expone el recorrido guiado como operaciones sin estado por petición: <code><a class="el" href="#a82ef31a7df53d5d7161870795111854f">iniciar</a></code> abre un recorrido y devuelve la primera pregunta; <code><a class="el" href="#a129f8a32cea64590bfe65f6db56c16a6">responder</a></code> registra una respuesta y avanza un paso; <code><a class="el" href="#af7511e879f969f2609b1fbcd19d0b56e">consultar</a></code> devuelve el estado actual. </p>
+<p>Expone el recorrido guiado como operaciones sin estado por petición: <code><a class="el" href="#a82ef31a7df53d5d7161870795111854f">iniciar</a></code> abre un recorrido y devuelve la primera pregunta; <code><a class="el" href="#a129f8a32cea64590bfe65f6db56c16a6">responder</a></code> registra una respuesta y avanza un paso; <code><a class="el" href="#af7511e879f969f2609b1fbcd19d0b56e">consultar</a></code> devuelve el estado actual.</p>
+<p>MODIFICADO: se agrega la sobrecarga <code><a class="el" href="">responder(String, List)</a></code> para selección múltiple. La firma de un solo <code class="JavaDocCode">String</code> no cambia. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
 <a id="af7511e879f969f2609b1fbcd19d0b56e" name="af7511e879f969f2609b1fbcd19d0b56e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af7511e879f969f2609b1fbcd19d0b56e">&#9670;&#160;</a></span>consultar()</h2>
@@ -179,8 +182,34 @@ Métodos públicos</h2></td></tr>
 
 </div>
 </div>
+<a id="adbf63657501976de781efc5b9efaac73" name="adbf63657501976de781efc5b9efaac73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbf63657501976de781efc5b9efaac73">&#9670;&#160;</a></span>responder() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RecorridoDTO org.signbb.backend.navegacion.servicios.ServicioNavegacion.responder </td>
+          <td>(</td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>recorridoId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">List&lt; String &gt;</td>          <td class="paramname"><span class="paramname"><em>respuestas</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Registra una o más respuestas marcadas a la vez para la misma pregunta (selección múltiple) y avanza el recorrido un paso. </p>
+<p>Con una sola respuesta, se comporta exactamente igual que <code><a class="el" href="#a129f8a32cea64590bfe65f6db56c16a6">responder(String, String)</a></code>. Cuando hay más de una, se avanza hacia el nodo destino de mayor <code class="JavaDocCode">peso</code> entre los candidatos (ver <code class="JavaDocCode">MotorNavegacion.paso</code>). </p>
+
+<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImpl.html#a6b0cb1249eb985e18241cd1b93995bb6">org.signbb.backend.navegacion.servicios.ServicioNavegacionImpl</a>.</p>
+
+</div>
+</div>
 <a id="a129f8a32cea64590bfe65f6db56c16a6" name="a129f8a32cea64590bfe65f6db56c16a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a129f8a32cea64590bfe65f6db56c16a6">&#9670;&#160;</a></span>responder()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a129f8a32cea64590bfe65f6db56c16a6">&#9670;&#160;</a></span>responder() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
