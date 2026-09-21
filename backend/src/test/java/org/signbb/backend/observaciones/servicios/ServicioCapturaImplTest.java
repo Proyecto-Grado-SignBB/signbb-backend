@@ -50,7 +50,7 @@ class ServicioCapturaImplTest {
     }
 
     private RecorridoDTO recorridoConPregunta(String idNodo, List<String> opciones) {
-        PreguntaDTO pregunta = new PreguntaDTO(idNodo, "¿texto?", opciones, false, List.of());
+        PreguntaDTO pregunta = new PreguntaDTO(idNodo, "¿texto?", opciones, false, List.of(), null);
         return new RecorridoDTO(RECORRIDO_ID, "EN_CURSO", pregunta, null);
     }
 

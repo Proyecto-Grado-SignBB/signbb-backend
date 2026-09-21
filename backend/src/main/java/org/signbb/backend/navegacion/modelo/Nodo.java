@@ -20,12 +20,22 @@ public final class Nodo {
     /** Tipos de nodo admitidos. */
     public static final Set<String> TIPOS_VALIDOS = Set.of("pregunta", "recomendacion", "bloqueo", "consulta_medica");
 
+    /**
+     * MODIFICADO: valores válidos para el override opcional de
+     * {@code tipoInteraccion} en la metadata del grafo. Cuando es
+     * {@code null}, {@code RecorridoDTO.desde} lo infiere a partir de las
+     * opciones del nodo.
+     */
+    public static final Set<String> TIPOS_INTERACCION_VALIDOS = Set.of("SI_NO", "SELECCION_UNICA",
+            "SELECCION_MULTIPLE");
+
     private final String id;
     private final String tipo;
     private final String contenido;
     private final int peso;
     private final boolean archivos;
     private final List<String> src;
+    private final String tipoInteraccion;
 
     /** Constructor con peso por defecto (0) y sin archivos adjuntos. */
     public Nodo(String id, String tipo, String contenido) {
@@ -39,9 +49,20 @@ public final class Nodo {
 
     /**
      * Constructor completo: permite marcar el nodo como una pregunta con
-     * imágenes de apoyo ({@code archivos}) y sus rutas ({@code src}).
+     * imágenes de apoyo ({@code archivos}) y sus rutas ({@code src}). Sin
+     * override explícito de {@code tipoInteraccion}.
      */
     public Nodo(String id, String tipo, String contenido, int peso, boolean archivos, List<String> src) {
+        this(id, tipo, contenido, peso, archivos, src, null);
+    }
+
+    /**
+     * MODIFICADO: constructor completo con override explícito de
+     * {@code tipoInteraccion} (nulo si el grafo no lo especifica para este
+     * nodo).
+     */
+    public Nodo(String id, String tipo, String contenido, int peso, boolean archivos, List<String> src,
+            String tipoInteraccion) {
         if (id == null || id.isEmpty()) {
             throw new IllegalArgumentException("id debe ser una cadena no vacía");
         }
@@ -52,12 +73,18 @@ public final class Nodo {
         if (contenido == null) {
             throw new IllegalArgumentException("contenido debe ser una cadena");
         }
+        if (tipoInteraccion != null && !TIPOS_INTERACCION_VALIDOS.contains(tipoInteraccion)) {
+            throw new IllegalArgumentException(
+                    "tipoInteraccion inválido: '" + tipoInteraccion + "'. Debe ser uno de "
+                            + TIPOS_INTERACCION_VALIDOS + " o venir ausente");
+        }
         this.id = id;
         this.tipo = tipo;
         this.contenido = contenido;
         this.peso = peso;
         this.archivos = archivos;
         this.src = src == null ? List.of() : List.copyOf(src);
+        this.tipoInteraccion = tipoInteraccion;
     }
 
     /** Id único del nodo. */
@@ -93,6 +120,17 @@ public final class Nodo {
      */
     public List<String> getSrc() {
         return src;
+    }
+
+    /**
+     * MODIFICADO: override explícito de {@code tipoInteraccion} declarado en
+     * la metadata del grafo para este nodo ({@code SI_NO},
+     * {@code SELECCION_UNICA} o {@code SELECCION_MULTIPLE}), o {@code null}
+     * si el grafo no lo especifica (el valor por defecto se infiere en
+     * {@code RecorridoDTO.desde} a partir de las opciones del nodo).
+     */
+    public String getTipoInteraccion() {
+        return tipoInteraccion;
     }
 
     /** Un nodo es terminal si no es una pregunta. */

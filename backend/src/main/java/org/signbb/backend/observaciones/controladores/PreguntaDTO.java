@@ -14,11 +14,18 @@ import java.util.List;
  * {@code tieneImagenes} indica si esta pregunta tiene imágenes de apoyo
  * (viene de {@code metadata.archivos} del grafo); {@code imagenes} trae sus
  * rutas ({@code metadata.src}), vacía si {@code tieneImagenes} es false.
+ *
+ * <p>
+ * MODIFICADO: se agrega {@code tipoInteraccion} ({@code SI_NO},
+ * {@code SELECCION_UNICA} o {@code SELECCION_MULTIPLE}) para que el
+ * frontend sepa qué pantalla renderizar sin tener que inferirlo del número
+ * de opciones. Se resuelve en {@link RecorridoDTO#desde}.
  */
 public record PreguntaDTO(
-                String id,
-                String texto,
-                List<String> opciones,
-                boolean tieneImagenes,
-                List<String> imagenes) {
+        String id,
+        String texto,
+        List<String> opciones,
+        boolean tieneImagenes,
+        List<String> imagenes,
+        String tipoInteraccion) {
 }
