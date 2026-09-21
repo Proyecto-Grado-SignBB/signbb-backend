@@ -8,6 +8,7 @@ import org.signbb.backend.navegacion.modelo.GrafoClinico;
 import org.signbb.backend.navegacion.modelo.Nodo;
 import org.signbb.backend.reglas.modelo.BaseReglas;
 import org.signbb.backend.reglas.modelo.Condicion;
+import org.signbb.backend.reglas.modelo.ExpresionCondicion;
 import org.signbb.backend.reglas.modelo.NivelAlerta;
 import org.signbb.backend.reglas.modelo.ReglaClinica;
 
@@ -42,7 +43,7 @@ public class BaseReglasParser {
             ReglaClinica regla = new ReglaClinica(
                     id,
                     info.path("nombre").asText(),
-                    buildCondiciones(info.path("condiciones")),
+                    buildExpresion(info.path("condiciones")),
                     buildDestino(info.path("nodoDestino").asText(), grafo),
                     nivel);
             base.agregarRegla(regla);
@@ -50,15 +51,40 @@ public class BaseReglasParser {
         return base;
     }
 
-    /** Mapea el arreglo JSON de condiciones a una lista de {@link Condicion}. */
-    private static List<Condicion> buildCondiciones(JsonNode condicionesJson) {
-        List<Condicion> condiciones = new ArrayList<>();
-        for (JsonNode condicion : condicionesJson) {
-            condiciones.add(new Condicion(
-                    condicion.path("idNodo").asText(),
-                    condicion.path("respuesta").asText()));
+    /**
+     * Construye la {@link ExpresionCondicion} de una regla de forma recursiva:
+     * <ul>
+     * <li>un arreglo JSON se interpreta como {@code AND} implícito de sus
+     * elementos (compatibilidad con el formato plano previo);</li>
+     * <li>un objeto con clave {@code "and"} o {@code "or"} produce
+     * {@link ExpresionCondicion.Y} o {@link ExpresionCondicion.O} de la lista
+     * anidada;</li>
+     * <li>un objeto con {@code idNodo}/{@code respuesta} es una hoja
+     * {@link Condicion}.</li>
+     * </ul>
+     */
+    private static ExpresionCondicion buildExpresion(JsonNode nodo) {
+        if (nodo.isArray()) {
+            return new ExpresionCondicion.Y(buildOperandos(nodo));
         }
-        return condiciones;
+        if (nodo.has("and")) {
+            return new ExpresionCondicion.Y(buildOperandos(nodo.get("and")));
+        }
+        if (nodo.has("or")) {
+            return new ExpresionCondicion.O(buildOperandos(nodo.get("or")));
+        }
+        return new Condicion(
+                nodo.path("idNodo").asText(),
+                nodo.path("respuesta").asText());
+    }
+
+    /** Mapea un arreglo JSON de sub-expresiones a la lista de operandos. */
+    private static List<ExpresionCondicion> buildOperandos(JsonNode arreglo) {
+        List<ExpresionCondicion> operandos = new ArrayList<>();
+        for (JsonNode hijo : arreglo) {
+            operandos.add(buildExpresion(hijo));
+        }
+        return operandos;
     }
 
     /** Resuelve el {@code nodoDestino} de una regla contra los nodos del grafo. */
