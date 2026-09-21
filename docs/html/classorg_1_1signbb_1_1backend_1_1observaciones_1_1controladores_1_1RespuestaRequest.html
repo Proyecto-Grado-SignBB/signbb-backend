@@ -116,6 +116,15 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
  <a href="#details">Más...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Cuerpo de la petición que responde la pregunta actual. </p>
+<p>MODIFICADO respecto a la versión anterior: se agregan <code class="JavaDocCode">opciones</code> y <code class="JavaDocCode">tipo</code>, ambos opcionales, para soportar selección múltiple sin romper al cliente actual (que solo envía <code class="JavaDocCode">respuesta</code>).</p>
+<ul>
+<li>
+Sí/No y selección única: igual que hoy, solo <code class="JavaDocCode">respuesta</code>. </li>
+<li>
+Selección múltiple: el cliente envía <code class="JavaDocCode">opciones</code> con todas las opciones marcadas (uno o más elementos) y deja <code class="JavaDocCode">respuesta</code> nulo. </li>
+<li>
+<code class="JavaDocCode">tipo</code> es una pista opcional del frontend ("SI_NO", "SELECCION_UNICA" o "SELECCION_MULTIPLE") para que la auditoría registre el tipo exacto. Si no se envía, <code class="JavaDocCode">ControladorConsulta</code> lo infiere del tamaño de la lista resuelta — ver el javadoc de <code class="JavaDocCode">responder</code>. </li>
+</ul>
 </div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/main/java/org/signbb/backend/observaciones/controladores/<b>RespuestaRequest.java</b></li>
 </ul>

@@ -1,0 +1,13 @@
+package org.signbb.backend.observaciones.datos.repositorios;
+
+import java.util.List;
+
+import org.signbb.backend.observaciones.datos.entidades.ObservacionEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+/** Acceso a la auditoría de observaciones del cuidador. */
+public interface RepositorioObservaciones extends JpaRepository<ObservacionEntity, Long> {
+
+    /** Historial de un recorrido, en el orden en que ocurrió. */
+    List<ObservacionEntity> findByRecorridoIdOrderByTimestampAsc(String recorridoId);
+}

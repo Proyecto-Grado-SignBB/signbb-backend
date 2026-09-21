@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['iniciar_0',['iniciar',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1MotorNavegacion.html#aee31570928cbf962341dbed0d72c1177',1,'org.signbb.backend.navegacion.modelo.MotorNavegacion.iniciar()'],['../interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html#a82ef31a7df53d5d7161870795111854f',1,'org.signbb.backend.navegacion.servicios.ServicioNavegacion.iniciar()'],['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImpl.html#aab2e1089853199ea85ca0a6c2ac40d7f',1,'org.signbb.backend.navegacion.servicios.ServicioNavegacionImpl.iniciar()'],['../classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1ControladorConsulta.html#a9286a48fea4c7faf8f9f483ceaea3431',1,'org.signbb.backend.observaciones.controladores.ControladorConsulta.iniciar()']]]
+  ['historial_0',['historial',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html#ac9621111e710c1bd0c6d507418f68d0e',1,'org::signbb::backend::navegacion::modelo::Contexto']]]
 ];

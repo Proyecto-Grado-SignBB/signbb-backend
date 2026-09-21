@@ -3,10 +3,10 @@ package org.signbb.backend.observaciones.servicios;
 import java.util.List;
 
 import org.signbb.backend.observaciones.controladores.RecorridoDTO;
+import org.signbb.backend.observaciones.datos.entidades.ObservacionEntity;
+import org.signbb.backend.observaciones.datos.repositorios.RepositorioObservaciones;
 import org.signbb.backend.observaciones.modelo.SeleccionCuidador;
 import org.signbb.backend.observaciones.modelo.TipoInteraccion;
-import org.signbb.backend.observaciones.repositorios.ObservacionEntity;
-import org.signbb.backend.observaciones.repositorios.RepositorioObservaciones;
 import org.signbb.backend.navegacion.servicios.ServicioNavegacion;
 import org.springframework.stereotype.Service;
 

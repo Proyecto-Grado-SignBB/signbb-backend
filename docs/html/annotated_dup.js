@@ -3,19 +3,13 @@ var annotated_dup =
     [ "org", null, [
       [ "signbb", null, [
         [ "backend", "namespaceorg_1_1signbb_1_1backend.html", [
-          [ "config", null, [
+          [ "config", "namespaceorg_1_1signbb_1_1backend_1_1config.html", [
             [ "ConfiguracionCors", "classorg_1_1signbb_1_1backend_1_1config_1_1ConfiguracionCors.html", null ],
-            [ "DatabaseInit", "classorg_1_1signbb_1_1backend_1_1config_1_1DatabaseInit.html", null ],
-            [ "ManejadorExcepciones", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorExcepciones.html", null ],
+            [ "ManejadorExcepciones", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorExcepciones.html", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorExcepciones" ],
             [ "RecursoNoEncontradoException", "classorg_1_1signbb_1_1backend_1_1config_1_1RecursoNoEncontradoException.html", null ]
           ] ],
           [ "navegacion", "namespaceorg_1_1signbb_1_1backend_1_1navegacion.html", [
             [ "datos", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos.html", [
-              [ "repositorios", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios.html", [
-                [ "RepositorioGrafo", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafo.html", null ],
-                [ "RepositorioNodo", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioNodo.html", null ],
-                [ "RepositorioRecorrido", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioRecorrido.html", null ]
-              ] ],
               [ "serializacion", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion.html", [
                 [ "GrafoClinicoParser", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoParser.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoParser" ]
               ] ]
@@ -25,17 +19,13 @@ var annotated_dup =
               [ "ContextoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico" ],
               [ "EstadoPaciente", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente" ],
               [ "GrafoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico" ],
-              [ "MotorNavegacion", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1MotorNavegacion.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1MotorNavegacion" ],
               [ "Nodo", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo" ],
               [ "RepositorioSesion", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion" ],
               [ "Respuesta", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta" ],
               [ "SesionTriaje", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje" ]
             ] ],
             [ "servicios", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios.html", [
-              [ "Grafo", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1Grafo.html", null ],
-              [ "Nodo", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1Nodo.html", null ],
-              [ "OpcionRespuesta", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1OpcionRespuesta.html", null ],
-              [ "Recorrido", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1Recorrido.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1Recorrido" ],
+              [ "MotorNavegacion", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion" ],
               [ "ServicioNavegacion", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion" ],
               [ "ServicioNavegacionImpl", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImpl.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImpl" ]
             ] ]
@@ -43,8 +33,23 @@ var annotated_dup =
           [ "observaciones", "namespaceorg_1_1signbb_1_1backend_1_1observaciones.html", [
             [ "controladores", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html", [
               [ "ControladorConsulta", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1ControladorConsulta.html", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1ControladorConsulta" ],
-              [ "IniciarRecorridoRequest", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1IniciarRecorridoRequest.html", null ],
               [ "RespuestaRequest", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1RespuestaRequest.html", null ]
+            ] ],
+            [ "datos", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos.html", [
+              [ "entidades", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1entidades.html", [
+                [ "ObservacionEntity", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1entidades_1_1ObservacionEntity.html", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1entidades_1_1ObservacionEntity" ]
+              ] ],
+              [ "repositorios", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios.html", [
+                [ "RepositorioObservaciones", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioObservaciones.html", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioObservaciones" ]
+              ] ]
+            ] ],
+            [ "modelo", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo.html", [
+              [ "SeleccionCuidador", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1SeleccionCuidador.html", null ],
+              [ "TipoInteraccion", "enumorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1TipoInteraccion.html", null ]
+            ] ],
+            [ "servicios", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios.html", [
+              [ "ServicioCaptura", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCaptura.html", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCaptura" ],
+              [ "ServicioCapturaImpl", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl.html", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl" ]
             ] ]
           ] ],
           [ "reglas", "namespaceorg_1_1signbb_1_1backend_1_1reglas.html", [

@@ -4,7 +4,6 @@ var namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo =
     [ "ContextoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico" ],
     [ "EstadoPaciente", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente" ],
     [ "GrafoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico" ],
-    [ "MotorNavegacion", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1MotorNavegacion.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1MotorNavegacion" ],
     [ "Nodo", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo" ],
     [ "RepositorioSesion", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion" ],
     [ "Respuesta", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta" ],

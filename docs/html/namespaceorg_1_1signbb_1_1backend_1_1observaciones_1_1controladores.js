@@ -1,7 +1,6 @@
 var namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores =
 [
     [ "ControladorConsulta", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1ControladorConsulta.html", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1ControladorConsulta" ],
-    [ "IniciarRecorridoRequest", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1IniciarRecorridoRequest.html", null ],
     [ "RespuestaRequest", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1RespuestaRequest.html", null ],
     [ "PasoCausalDTO", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#abf521345a643e096255cffb171039530", null ],
     [ "PreguntaDTO", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#a313109dbfb95e4d772191164e4e9f02f", null ],
