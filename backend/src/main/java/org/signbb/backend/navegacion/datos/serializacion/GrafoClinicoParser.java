@@ -39,7 +39,8 @@ public class GrafoClinicoParser {
                     info.path("label").asText(),
                     meta.path("peso").asInt(),
                     meta.path("archivos").asBoolean(),
-                    buildSrc(meta.path("src")));
+                    buildSrc(meta.path("src")),
+                    buildTipoInteraccion(meta.path("tipoInteraccion")));
             nodosPorId.put(id, nodo);
             grafo.agregarNodo(nodo);
         }
@@ -73,5 +74,17 @@ public class GrafoClinicoParser {
             }
         }
         return src;
+    }
+
+    /**
+     * NUEVO: mapea {@code metadata.tipoInteraccion} (opcional) a un String o
+     * {@code null} si el nodo no lo especifica. La validación de que el valor
+     * sea uno de los admitidos ({@code Nodo.TIPOS_INTERACCION_VALIDOS}) la
+     * hace el constructor de {@link Nodo}.
+     */
+    private static String buildTipoInteraccion(JsonNode tipoInteraccionJson) {
+        return (tipoInteraccionJson.isMissingNode() || tipoInteraccionJson.isNull())
+                ? null
+                : tipoInteraccionJson.asText();
     }
 }

@@ -37,7 +37,8 @@ public record RecorridoDTO(
                                         actual.getContenido(),
                                         opciones,
                                         actual.tieneArchivos(),
-                                        actual.getSrc());
+                                        actual.getSrc(),
+                                        resolverTipoInteraccion(actual, opciones));
                         return new RecorridoDTO(recorridoId, paso.estado().name(), pregunta, null);
                 }
 
@@ -51,5 +52,24 @@ public record RecorridoDTO(
                 ResultadoDTO resultado = new ResultadoDTO(
                                 paso.nivel().name(), destino.getId(), destino.getContenido(), razones, camino);
                 return new RecorridoDTO(recorridoId, paso.estado().name(), null, resultado);
+        }
+
+        /**
+         * NUEVO: resuelve el {@code tipoInteraccion} de la pregunta. Usa el
+         * override explícito de {@code metadata.tipoInteraccion} del nodo si
+         * viene; si no, infiere {@code SI_NO} cuando las opciones son
+         * exactamente {SI, NO}, y {@code SELECCION_UNICA} en cualquier otro
+         * caso — así ningún grafo existente cambia de comportamiento.
+         * {@code SELECCION_MULTIPLE} solo se obtiene marcándolo explícitamente
+         * en la metadata del nodo en el grafo JSON.
+         */
+        private static String resolverTipoInteraccion(Nodo actual, List<String> opciones) {
+                if (actual.getTipoInteraccion() != null) {
+                        return actual.getTipoInteraccion();
+                }
+                boolean esSiNo = opciones.size() == 2
+                                && opciones.contains("SI")
+                                && opciones.contains("NO");
+                return esSiNo ? "SI_NO" : "SELECCION_UNICA";
         }
 }

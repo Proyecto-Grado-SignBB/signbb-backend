@@ -17,7 +17,10 @@
           "peso": 100,
           "archivos": false,
           "src": [],
-          "categorias": ["ictericia", "piel"]
+          "categorias": [
+            "ictericia",
+            "piel"
+          ]
         }
       },
       "pregunta_coloracion": {
@@ -26,8 +29,15 @@
           "tipo": "pregunta",
           "peso": 95,
           "archivos": true,
-          "src": ["/images/ictericia-ejemplo.jpg", "/images/ictericia-ojos.jpg"],
-          "categorias": ["ictericia", "piel", "ojos"]
+          "src": [
+            "/images/ictericia-ejemplo.jpg",
+            "/images/ictericia-ojos.jpg"
+          ],
+          "categorias": [
+            "ictericia",
+            "piel",
+            "ojos"
+          ]
         }
       },
       "pregunta_tiempo": {
@@ -37,7 +47,10 @@
           "peso": 90,
           "archivos": false,
           "src": [],
-          "categorias": ["ictericia", "tiempo"]
+          "categorias": [
+            "ictericia",
+            "tiempo"
+          ]
         }
       },
       "pregunta_alimentacion": {
@@ -47,7 +60,10 @@
           "peso": 85,
           "archivos": false,
           "src": [],
-          "categorias": ["ictericia", "alimentacion"]
+          "categorias": [
+            "ictericia",
+            "alimentacion"
+          ]
         }
       },
       "pregunta_letargo": {
@@ -57,7 +73,10 @@
           "peso": 80,
           "archivos": false,
           "src": [],
-          "categorias": ["ictericia", "comportamiento"]
+          "categorias": [
+            "ictericia",
+            "comportamiento"
+          ]
         }
       },
       "pregunta_poposangre": {
@@ -66,8 +85,14 @@
           "tipo": "pregunta",
           "peso": 95,
           "archivos": true,
-          "src": ["/images/heces-sangre-ejemplo.jpg"],
-          "categorias": ["ictericia", "digestivo", "sangre"]
+          "src": [
+            "/images/heces-sangre-ejemplo.jpg"
+          ],
+          "categorias": [
+            "ictericia",
+            "digestivo",
+            "sangre"
+          ]
         }
       },
       "recomendacion_tranquilidad": {
@@ -77,7 +102,10 @@
           "peso": 30,
           "archivos": false,
           "src": [],
-          "categorias": ["ictericia", "tranquilidad"]
+          "categorias": [
+            "ictericia",
+            "tranquilidad"
+          ]
         }
       },
       "recomendacion_observacion": {
@@ -87,7 +115,10 @@
           "peso": 50,
           "archivos": false,
           "src": [],
-          "categorias": ["ictericia", "observacion"]
+          "categorias": [
+            "ictericia",
+            "observacion"
+          ]
         }
       },
       "consulta_medica_urgente": {
@@ -97,7 +128,11 @@
           "peso": 100,
           "archivos": false,
           "src": [],
-          "categorias": ["ictericia", "urgencia", "alarma"]
+          "categorias": [
+            "ictericia",
+            "urgencia",
+            "alarma"
+          ]
         }
       },
       "consulta_medica_prioritaria": {
@@ -107,7 +142,10 @@
           "peso": 85,
           "archivos": false,
           "src": [],
-          "categorias": ["ictericia", "prioritario"]
+          "categorias": [
+            "ictericia",
+            "prioritario"
+          ]
         }
       },
       "bloqueo_condicion_invalida": {
@@ -117,7 +155,10 @@
           "peso": 10,
           "archivos": false,
           "src": [],
-          "categorias": ["error", "invalido"]
+          "categorias": [
+            "error",
+            "invalido"
+          ]
         }
       }
     },
@@ -130,7 +171,9 @@
         "metadata": {
           "archivos": false,
           "src": [],
-          "categorias": ["inicio"]
+          "categorias": [
+            "inicio"
+          ]
         }
       },
       {
@@ -141,7 +184,10 @@
         "metadata": {
           "archivos": false,
           "src": [],
-          "categorias": ["ictericia", "positivo"]
+          "categorias": [
+            "ictericia",
+            "positivo"
+          ]
         }
       },
       {
@@ -152,7 +198,10 @@
         "metadata": {
           "archivos": false,
           "src": [],
-          "categorias": ["ictericia", "negativo"]
+          "categorias": [
+            "ictericia",
+            "negativo"
+          ]
         }
       },
       {
@@ -163,7 +212,10 @@
         "metadata": {
           "archivos": false,
           "src": [],
-          "categorias": ["ictericia", "tiempo_corto"]
+          "categorias": [
+            "ictericia",
+            "tiempo_corto"
+          ]
         }
       },
       {
@@ -174,7 +226,11 @@
         "metadata": {
           "archivos": false,
           "src": [],
-          "categorias": ["ictericia", "tiempo_largo", "alarma"]
+          "categorias": [
+            "ictericia",
+            "tiempo_largo",
+            "alarma"
+          ]
         }
       },
       {
@@ -185,7 +241,11 @@
         "metadata": {
           "archivos": false,
           "src": [],
-          "categorias": ["ictericia", "alimentacion", "preocupante"]
+          "categorias": [
+            "ictericia",
+            "alimentacion",
+            "preocupante"
+          ]
         }
       },
       {
@@ -196,7 +256,10 @@
         "metadata": {
           "archivos": false,
           "src": [],
-          "categorias": ["ictericia", "alimentacion_normal"]
+          "categorias": [
+            "ictericia",
+            "alimentacion_normal"
+          ]
         }
       },
       {
@@ -207,7 +270,11 @@
         "metadata": {
           "archivos": false,
           "src": [],
-          "categorias": ["ictericia", "letargo", "alarma"]
+          "categorias": [
+            "ictericia",
+            "letargo",
+            "alarma"
+          ]
         }
       },
       {
@@ -218,7 +285,10 @@
         "metadata": {
           "archivos": false,
           "src": [],
-          "categorias": ["ictericia", "comportamiento_normal"]
+          "categorias": [
+            "ictericia",
+            "comportamiento_normal"
+          ]
         }
       },
       {
@@ -229,7 +299,10 @@
         "metadata": {
           "archivos": false,
           "src": [],
-          "categorias": ["sangre", "alarma"]
+          "categorias": [
+            "sangre",
+            "alarma"
+          ]
         }
       },
       {
@@ -240,7 +313,10 @@
         "metadata": {
           "archivos": false,
           "src": [],
-          "categorias": ["digestivo", "normal"]
+          "categorias": [
+            "digestivo",
+            "normal"
+          ]
         }
       }
     ]
