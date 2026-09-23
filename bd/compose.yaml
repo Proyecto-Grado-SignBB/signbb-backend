@@ -111,6 +111,48 @@ services:
       db:
         condition: service_healthy
 
+
+  # ===========================================================================
+  # SERVICIO: SILO (Almacenamiento de objetos)
+  # ===========================================================================
+  # Almacenamiento de objetos compatible con la API de Amazon S3
+  # Almacena: Fotografias, multimedia
+  # ===========================================================================
+  silo:
+    image: pgsty/silo:RELEASE.2026-08-06T00-00-00Z
+    container_name: silo
+
+    # Política de reinicio: igual que db y adminer, el servicio vuelve tras
+    # reinicios del host.
+    restart: always
+
+    # Sirve los objetos desde /data y expone la consola web en el puerto 9001.
+    command: server /data --console-address ":9001"
+
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+
+    environment:
+      # Credenciales raíz del almacenamiento (solo desarrollo).
+      # MINIO_ROOT_PASSWORD debe tener 8+ caracteres (la imagen lo exige).
+      MINIO_ROOT_USER: silo-admin
+      MINIO_ROOT_PASSWORD: ejemplo123
+
+    # Volumen nombrado para persistir los objetos.
+    # Debe montarse en /data: es la ruta que sirve el comando "server" y el
+    # VOLUME declarado por la imagen. Montarla en otra ruta rompe la
+    # persistencia (los objetos quedarían fuera del volumen nombrado).
+    volumes:
+      - silo_data:/data
+
+    healthcheck:
+      test: ["CMD", "silo", "healthcheck", "ready"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
 # =============================================================================
 # VOLÚMENES
 # =============================================================================
@@ -122,3 +164,6 @@ volumes:
   # Volumen para los datos de PostgreSQL.
   # Almacena: tablas, índices, configuraciones, WAL, etc.
   postgres_data:
+
+  # Volumen para los datos de SILO
+  silo_data:
