@@ -40,6 +40,20 @@
           ]
         }
       },
+      "pregunta_signos": {
+        "label": "Además de la coloración amarilla, ¿cuáles de estos signos observa en su bebé?",
+        "metadata": {
+          "tipo": "pregunta",
+          "peso": 92,
+          "archivos": false,
+          "src": [],
+          "categorias": [
+            "ictericia",
+            "signos"
+          ],
+          "tipoInteraccion": "SELECCION_MULTIPLE"
+        }
+      },
       "pregunta_tiempo": {
         "label": "¿Desde hace cuánto tiempo presenta esta coloración?",
         "metadata": {
@@ -179,7 +193,7 @@
       {
         "source": "pregunta_coloracion",
         "relation": "SI",
-        "target": "pregunta_tiempo",
+        "target": "pregunta_signos",
         "directed": true,
         "metadata": {
           "archivos": false,
@@ -187,6 +201,82 @@
           "categorias": [
             "ictericia",
             "positivo"
+          ]
+        }
+      },
+      {
+        "source": "pregunta_signos",
+        "relation": "SOMNOLENCIA",
+        "target": "consulta_medica_urgente",
+        "directed": true,
+        "metadata": {
+          "archivos": false,
+          "src": [],
+          "categorias": [
+            "ictericia",
+            "signos",
+            "alarma"
+          ]
+        }
+      },
+      {
+        "source": "pregunta_signos",
+        "relation": "SANGRE_EN_HECES",
+        "target": "consulta_medica_urgente",
+        "directed": true,
+        "metadata": {
+          "archivos": false,
+          "src": [],
+          "categorias": [
+            "ictericia",
+            "signos",
+            "sangre",
+            "alarma"
+          ]
+        }
+      },
+      {
+        "source": "pregunta_signos",
+        "relation": "NINGUNO",
+        "target": "recomendacion_tranquilidad",
+        "directed": true,
+        "metadata": {
+          "archivos": false,
+          "src": [],
+          "categorias": [
+            "ictericia",
+            "signos",
+            "tranquilidad"
+          ]
+        }
+      },
+      {
+        "source": "pregunta_signos",
+        "relation": "COME_MENOS",
+        "target": "consulta_medica_prioritaria",
+        "directed": true,
+        "metadata": {
+          "archivos": false,
+          "src": [],
+          "categorias": [
+            "ictericia",
+            "signos",
+            "preocupante"
+          ]
+        }
+      },
+      {
+        "source": "pregunta_signos",
+        "relation": "AMARILLO_SE_EXTIENDE",
+        "target": "pregunta_tiempo",
+        "directed": true,
+        "metadata": {
+          "archivos": false,
+          "src": [],
+          "categorias": [
+            "ictericia",
+            "signos",
+            "tiempo"
           ]
         }
       },
