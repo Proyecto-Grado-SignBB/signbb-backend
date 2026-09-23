@@ -28,8 +28,9 @@ El backend tiene dos perfiles; el activo se define en
   datos se pierden al detener la aplicación. Consola H2 en
   `http://localhost:8080/h2-console` (usuario `sa`).
 - `docker` — **PostgreSQL** en `localhost:5432` (base `signbb`): requiere la
-  base de datos de `bd/compose.yaml` levantada y persiste los datos en el
-  volumen del compose. Ver `bd/MANUAL_BD.md` para levantarla y administrarla.
+  base de datos de `contenedores/compose.yaml` levantada y persiste los datos
+  en el volumen del compose. Ver `contenedores/MANUAL_CONTENEDORES.md` para
+  levantarla y administrarla.
 
 Para cambiar de perfil en un arranque puntual, sin editar archivos, se pasa
 como flag (ej. pasar de memoria a docker o viceversa):
@@ -40,7 +41,7 @@ como flag (ej. pasar de memoria a docker o viceversa):
 Para usar docker de forma permanente, dejar `spring.profiles.active=docker`
 en `application.properties` y levantar la base de datos:
 
-    cd ../bd && docker compose up -d
+    cd ../contenedores && docker compose up -d
 
 Las pruebas usan el perfil activo: con `docker` la base de datos debe estar
 levantada; con `dev` corren contra H2 en memoria sin ningún requisito:

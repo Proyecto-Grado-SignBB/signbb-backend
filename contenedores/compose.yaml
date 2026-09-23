@@ -153,6 +153,45 @@ services:
       retries: 5
       start_period: 30s
 
+  # ===========================================================================
+  # SERVICIO: cache (Redis)
+  # ===========================================================================
+  # Caché distribuida en memoria para los motores de navegación y reglas
+  # (según el documento de diseño). Guarda el contenido clínico activo
+  # (grafo y reglas) como copia caliente de lo que vive en PostgreSQL y las
+  # sesiones temporales de los recorridos en curso, evitando lecturas
+  # repetidas a la base y permitiendo que las consultas sobrevivan reinicios
+  # del backend.
+  # ===========================================================================
+  cache:
+    # Imagen oficial de Redis 8 con Alpine Linux (ligera).
+    image: redis:8-alpine
+
+    # Política de reinicio: igual que db y silo, el servicio vuelve tras
+    # reinicios del host.
+    restart: always
+
+    # AOF: persiste las escrituras en el volumen para que las sesiones
+    # sobrevivan reinicios del propio contenedor (no es solo caché volátil).
+    command: redis-server --appendonly yes
+
+    # Mapeo de puertos: expone Redis en localhost:6379 para el backend (que
+    # corre en el host durante el desarrollo) y para redis-cli / RedisInsight.
+    ports:
+      - "6379:6379"
+
+    # Volumen nombrado para el AOF de Redis.
+    volumes:
+      - redis_data:/data
+
+    # Healthcheck: Redis responde PONG mientras acepte comandos.
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
 # =============================================================================
 # VOLÚMENES
 # =============================================================================
@@ -167,3 +206,6 @@ volumes:
 
   # Volumen para los datos de SILO
   silo_data:
+
+  # Volumen para el AOF de Redis (cache y sesiones)
+  redis_data:
