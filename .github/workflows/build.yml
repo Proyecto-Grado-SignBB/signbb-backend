@@ -26,4 +26,7 @@ jobs:
         run: chmod +x mvnw
 
       - name: Build and test
-        run: ./mvnw -B verify
+        # Perfil dev (H2 en memoria): el runner no tiene el PostgreSQL del
+        # perfil docker (bd/compose.yaml). El perfil se fuerza por flag y no
+        # editando application.properties (alli el default es docker).
+        run: ./mvnw -B verify -Dspring.profiles.active=dev
