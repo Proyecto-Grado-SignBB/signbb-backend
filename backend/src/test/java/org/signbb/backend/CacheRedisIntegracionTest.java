@@ -93,7 +93,7 @@ class CacheRedisIntegracionTest {
 
         GrafoClinicoJson documento = resolvedor.documentoGrafo();
 
-        assertEquals(11, GrafoClinicoMapper.desde(documento).size());
+        assertEquals(12, GrafoClinicoMapper.desde(documento).size());
         assertTrue(Boolean.TRUE.equals(redis.hasKey(ResolvedorContenidoClinico.CLAVE_GRAFO)));
     }
 
@@ -107,7 +107,7 @@ class CacheRedisIntegracionTest {
         grafos.deleteAll();
 
         GrafoClinicoJson documento = resolvedor.documentoGrafo();
-        assertEquals(11, GrafoClinicoMapper.desde(documento).size());
+        assertEquals(12, GrafoClinicoMapper.desde(documento).size());
     }
 
     @Test
@@ -133,7 +133,7 @@ class CacheRedisIntegracionTest {
     void elContextoSirveContenidoCompleto() {
         // No requiere Redis: en dev resuelve directo desde la base (H2), lo que
         // verifica también el camino de degradación del cache de punta a punta.
-        assertEquals(11, contexto.getGrafo().size());
-        assertEquals(4, contexto.getBase().size());
+        assertEquals(12, contexto.getGrafo().size());
+        assertEquals(7, contexto.getBase().size());
     }
 }

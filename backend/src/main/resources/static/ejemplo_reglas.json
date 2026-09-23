@@ -55,6 +55,48 @@
         "fechaCreacion": "2026-09-08T10:00:00Z",
         "descripcion": "Sangre en heces junto con coloración amarilla: derivar a urgencias"
       }
+    },
+    "R5": {
+      "nombre": "Signos múltiples: somnolencia",
+      "condiciones": [
+        { "idNodo": "pregunta_coloracion", "respuesta": "SI" },
+        { "idNodo": "pregunta_signos", "respuesta": "SOMNOLENCIA" }
+      ],
+      "nodoDestino": "consulta_medica_urgente",
+      "nivel": "URGENCIA",
+      "metadata": {
+        "autor": "Dra. Catalina Rodríguez",
+        "fechaCreacion": "2026-09-08T10:00:00Z",
+        "descripcion": "Somnolencia marcada junto con la coloración amarilla (selección múltiple): derivar a urgencias"
+      }
+    },
+    "R6": {
+      "nombre": "Signos múltiples: sangre en heces",
+      "condiciones": [
+        { "idNodo": "pregunta_coloracion", "respuesta": "SI" },
+        { "idNodo": "pregunta_signos", "respuesta": "SANGRE_EN_HECES" }
+      ],
+      "nodoDestino": "consulta_medica_urgente",
+      "nivel": "URGENCIA",
+      "metadata": {
+        "autor": "Dra. Catalina Rodríguez",
+        "fechaCreacion": "2026-09-08T10:00:00Z",
+        "descripcion": "Sangre en heces marcada junto con la coloración amarilla (selección múltiple): derivar a urgencias"
+      }
+    },
+    "R7": {
+      "nombre": "Signos múltiples: alimentación reducida",
+      "condiciones": [
+        { "idNodo": "pregunta_coloracion", "respuesta": "SI" },
+        { "idNodo": "pregunta_signos", "respuesta": "COME_MENOS" }
+      ],
+      "nodoDestino": "consulta_medica_prioritaria",
+      "nivel": "CONSULTAR_MEDICO",
+      "metadata": {
+        "autor": "Dra. Catalina Rodríguez",
+        "fechaCreacion": "2026-09-08T10:00:00Z",
+        "descripcion": "Alimentación reducida marcada junto con la coloración amarilla (selección múltiple): valoración médica prioritaria"
+      }
     }
   }
 }

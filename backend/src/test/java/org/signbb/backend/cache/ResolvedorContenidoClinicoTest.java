@@ -76,7 +76,7 @@ class ResolvedorContenidoClinicoTest {
         String cacheado = new ObjectMapper().writeValueAsString(filaGrafo.getEstructura());
         when(valores.get(ResolvedorContenidoClinico.CLAVE_GRAFO)).thenReturn(cacheado);
 
-        assertEquals(11, resolvedor.documentoGrafo().graph().nodes().size());
+        assertEquals(12, resolvedor.documentoGrafo().graph().nodes().size());
         verify(grafos, never()).findAll();
     }
 
@@ -85,7 +85,7 @@ class ResolvedorContenidoClinicoTest {
         when(valores.get(ResolvedorContenidoClinico.CLAVE_GRAFO)).thenReturn(null);
         when(grafos.findAll()).thenReturn(List.of(filaGrafo));
 
-        assertEquals(11, resolvedor.documentoGrafo().graph().nodes().size());
+        assertEquals(12, resolvedor.documentoGrafo().graph().nodes().size());
         verify(valores).set(eq(ResolvedorContenidoClinico.CLAVE_GRAFO), anyString(),
                 eq(Duration.ofHours(24)));
     }
@@ -96,7 +96,7 @@ class ResolvedorContenidoClinicoTest {
                 .thenThrow(new DataAccessResourceFailureException("cache caído"));
         when(grafos.findAll()).thenReturn(List.of(filaGrafo));
 
-        assertEquals(11, resolvedor.documentoGrafo().graph().nodes().size());
+        assertEquals(12, resolvedor.documentoGrafo().graph().nodes().size());
     }
 
     @Test
@@ -106,7 +106,7 @@ class ResolvedorContenidoClinicoTest {
         doThrow(new DataAccessResourceFailureException("cache caído"))
                 .when(valores).set(anyString(), anyString(), any(Duration.class));
 
-        assertEquals(4, resolvedor.documentoReglas().rules().size());
+        assertEquals(7, resolvedor.documentoReglas().rules().size());
     }
 
     @Test

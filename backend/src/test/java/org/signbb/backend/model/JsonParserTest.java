@@ -63,7 +63,7 @@ class JsonParserTest {
   void parseGrafoDeEjemplo() {
     GrafoClinico g = GrafoClinicoParser.parseJsonToGrafoClinico(leer("/static/ejemplo_grafo.json"));
 
-    assertEquals(11, g.size());
+    assertEquals(12, g.size());
     assertEquals("inicio", g.obtenerNodoInicial().orElseThrow().getId());
     Nodo urgente = g.obtenerNodoPorId("consulta_medica_urgente").orElseThrow();
     assertEquals("consulta_medica", urgente.getTipo());
@@ -76,7 +76,7 @@ class JsonParserTest {
     BaseReglas base = BaseReglasParser.parseJsonToBaseReglas(
         leer("/static/ejemplo_reglas.json"), g);
 
-    assertEquals(4, base.size());
+    assertEquals(7, base.size());
 
     ReglaClinica r1 = base.obtenerRegla("R1");
     assertEquals(NivelAlerta.URGENCIA, r1.getNivel());

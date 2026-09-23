@@ -69,7 +69,7 @@ class PersistenciaEstructuraJsonTest {
     assertEquals(documento, recargado.getEstructura());
 
     GrafoClinico tad = GrafoClinicoMapper.desde(recargado.getEstructura());
-    assertEquals(11, tad.size());
+    assertEquals(12, tad.size());
     assertEquals("inicio", tad.obtenerNodoInicial().orElseThrow().getId());
   }
 
@@ -87,7 +87,7 @@ class PersistenciaEstructuraJsonTest {
     assertEquals(documento, recargado.getEstructura());
 
     BaseReglas tad = BaseReglasMapper.desde(recargado.getEstructura(), grafo);
-    assertEquals(4, tad.size());
+    assertEquals(7, tad.size());
     assertEquals("consulta_medica_urgente", tad.obtenerRegla("R1").getNodoDestino().getId());
   }
 

@@ -79,9 +79,15 @@ class MotorNavegacionTest {
 
         ResultadoPaso tras1 = motor.paso(grafo, base, e, coloracion, "SI");
         assertFalse(tras1.finalizado(), "una sola condición no debe disparar ninguna regla");
-        assertEquals("pregunta_tiempo", tras1.preguntaActual().getId());
+        assertEquals("pregunta_signos", tras1.preguntaActual().getId());
 
-        ResultadoPaso tras2 = motor.paso(grafo, base, e, tras1.preguntaActual(), "MAS_DE_24_HORAS");
+        // La pregunta de signos es de selección múltiple: sin regla para esta
+        // opción, avanza por el grafo hacia la pregunta de tiempo.
+        ResultadoPaso trasSignos = motor.paso(grafo, base, e, tras1.preguntaActual(), "AMARILLO_SE_EXTIENDE");
+        assertFalse(trasSignos.finalizado());
+        assertEquals("pregunta_tiempo", trasSignos.preguntaActual().getId());
+
+        ResultadoPaso tras2 = motor.paso(grafo, base, e, trasSignos.preguntaActual(), "MAS_DE_24_HORAS");
 
         assertTrue(tras2.finalizado());
         assertEquals(NivelAlerta.URGENCIA, tras2.nivel());
@@ -93,7 +99,9 @@ class MotorNavegacionTest {
     void coloracionMenos24YAlimentacionDisparaConsultarMedicoR3() {
         EstadoPaciente e = new EstadoPaciente("s");
         Nodo coloracion = motor.iniciar(e, grafo).preguntaActual();
-        Nodo tiempo = motor.paso(grafo, base, e, coloracion, "SI").preguntaActual();
+        Nodo signos = motor.paso(grafo, base, e, coloracion, "SI").preguntaActual();
+        assertEquals("pregunta_signos", signos.getId());
+        Nodo tiempo = motor.paso(grafo, base, e, signos, "AMARILLO_SE_EXTIENDE").preguntaActual();
         Nodo alimentacion = motor.paso(grafo, base, e, tiempo, "MENOS_DE_24_HORAS").preguntaActual();
         assertEquals("pregunta_alimentacion", alimentacion.getId());
 
@@ -126,7 +134,8 @@ class MotorNavegacionTest {
     void recorridoNormalCompletoLlegaATerminalSinAlarma() {
         EstadoPaciente e = new EstadoPaciente("s");
         Nodo coloracion = motor.iniciar(e, grafo).preguntaActual();
-        Nodo tiempo = motor.paso(grafo, base, e, coloracion, "SI").preguntaActual();
+        Nodo signos = motor.paso(grafo, base, e, coloracion, "SI").preguntaActual();
+        Nodo tiempo = motor.paso(grafo, base, e, signos, "AMARILLO_SE_EXTIENDE").preguntaActual();
         Nodo alimentacion = motor.paso(grafo, base, e, tiempo, "MENOS_DE_24_HORAS").preguntaActual();
         Nodo letargo = motor.paso(grafo, base, e, alimentacion, "NO").preguntaActual();
         assertEquals("pregunta_letargo", letargo.getId());
