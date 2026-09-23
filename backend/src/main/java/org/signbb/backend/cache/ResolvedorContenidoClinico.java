@@ -39,7 +39,10 @@ public class ResolvedorContenidoClinico {
     /** Clave de la base de reglas en Redis. */
     public static final String CLAVE_REGLAS = "signbb:contenido:reglas";
 
-    /** TTL del contenido: higiene del cache; la invalidación real es {@link #invalidar()}. */
+    /**
+     * TTL del contenido: higiene del cache; la invalidación real es
+     * {@link #invalidar()}.
+     */
     private static final Duration TTL = Duration.ofHours(24);
 
     private final StringRedisTemplate redis;
@@ -89,6 +92,7 @@ public class ResolvedorContenidoClinico {
      * Invalida la copia en caliente (borra las claves). Pensado para el
      * módulo de Autoría: cuando el contenido cambie en la base de datos, se
      * invoca y la siguiente resolución refresca el cache.
+     * Esta eliminacion solo se sede hacer si no hay sesiones activas
      */
     public void invalidar() {
         try {
@@ -99,7 +103,9 @@ public class ResolvedorContenidoClinico {
         }
     }
 
-    /** Lee el cache de forma tolerante a fallos: null si Redis está caído o vacío. */
+    /**
+     * Lee el cache de forma tolerante a fallos: null si Redis está caído o vacío.
+     */
     private String leerCache(String clave) {
         try {
             return redis.opsForValue().get(clave);
