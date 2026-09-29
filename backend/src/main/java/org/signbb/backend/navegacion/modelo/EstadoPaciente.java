@@ -2,9 +2,11 @@ package org.signbb.backend.navegacion.modelo;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * TAD EstadoPaciente (Sección 4.2 del documento de diseño).
@@ -19,12 +21,22 @@ import java.util.Optional;
  * respuestas (mismo comportamiento determinista que el dict de Python).
  *
  * <p>
+ * MODIFICADO (multi-respuesta): una pregunta de selección múltiple puede
+ * registrar varias respuestas para el mismo nodo. {@link #registrarRespuesta}
+ * mantiene el contrato histórico (sobrescribe con una sola), mientras que
+ * {@link #registrarRespuestas} guarda todas las opciones marcadas; las reglas
+ * las consultan con {@link #getRespuestas}. También se recuerdan las reglas ya
+ * disparadas ({@link #marcarReglaDisparada}) para que el encadenamiento hacia
+ * adelante no vuelva a activarlas cuando una regla redirige el recorrido.
+ *
+ * <p>
  * Migrado desde {@code src/estado_paciente.py}.
  */
 public final class EstadoPaciente {
 
     private final String idSesion;
-    private final Map<String, String> respuestas = new LinkedHashMap<>();
+    private final Map<String, List<String>> respuestas = new LinkedHashMap<>();
+    private final Set<String> reglasDisparadas = new LinkedHashSet<>();
     private int puntaje = 0;
 
     /** Crea la sesión de triaje vacía. */
@@ -40,20 +52,72 @@ public final class EstadoPaciente {
         return idSesion;
     }
 
-    /** Registra la respuesta del cuidador para el nodo dado. */
+    /**
+     * Registra una respuesta única para el nodo dado, sobrescribiendo lo que
+     * hubiera (contrato histórico de respuesta única).
+     */
     public void registrarRespuesta(String idNodo, String respuesta) {
+        registrarRespuestas(idNodo, List.of(respuesta));
+    }
+
+    /**
+     * Registra todas las opciones marcadas por el cuidador para el nodo dado
+     * (selección múltiple). Reemplaza lo registrado antes para ese nodo.
+     */
+    public void registrarRespuestas(String idNodo, List<String> respuestasMarcadas) {
         if (idNodo == null || idNodo.isEmpty()) {
             throw new IllegalArgumentException("idNodo debe ser una cadena no vacía");
         }
-        if (respuesta == null || respuesta.isEmpty()) {
-            throw new IllegalArgumentException("respuesta debe ser una cadena no vacía");
+        if (respuestasMarcadas == null || respuestasMarcadas.isEmpty()) {
+            throw new IllegalArgumentException("debe venir al menos una respuesta");
         }
-        respuestas.put(idNodo, respuesta);
+        List<String> copia = new ArrayList<>();
+        for (String r : respuestasMarcadas) {
+            if (r == null || r.isEmpty()) {
+                throw new IllegalArgumentException("respuesta debe ser una cadena no vacía");
+            }
+            copia.add(r);
+        }
+        respuestas.put(idNodo, copia);
     }
 
-    /** Devuelve la respuesta registrada para {@code idNodo}, si existe. */
+    /**
+     * Primera respuesta registrada para {@code idNodo}, si existe. Para
+     * selección múltiple use {@link #getRespuestas}.
+     */
     public Optional<String> getRespuesta(String idNodo) {
-        return Optional.ofNullable(respuestas.get(idNodo));
+        List<String> valores = respuestas.get(idNodo);
+        if (valores == null || valores.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(valores.get(0));
+    }
+
+    /** Copia de todas las respuestas registradas para {@code idNodo}. */
+    public List<String> getRespuestas(String idNodo) {
+        List<String> valores = respuestas.get(idNodo);
+        return valores == null ? List.of() : new ArrayList<>(valores);
+    }
+
+    /** True si {@code respuesta} está entre las registradas para {@code idNodo}. */
+    public boolean contieneRespuesta(String idNodo, String respuesta) {
+        List<String> valores = respuestas.get(idNodo);
+        return valores != null && valores.contains(respuesta);
+    }
+
+    /** Marca una regla como ya disparada (no debe reevaluarse). */
+    public void marcarReglaDisparada(String idRegla) {
+        reglasDisparadas.add(idRegla);
+    }
+
+    /** True si la regla ya se disparó en este recorrido. */
+    public boolean reglaDisparada(String idRegla) {
+        return reglasDisparadas.contains(idRegla);
+    }
+
+    /** Copia de las reglas ya disparadas, en orden de inserción. */
+    public Set<String> reglasDisparadas() {
+        return new LinkedHashSet<>(reglasDisparadas);
     }
 
     /** Suma puntos al puntaje de la sesión. */
@@ -66,22 +130,28 @@ public final class EstadoPaciente {
         return puntaje;
     }
 
-    /** Copia de los síntomas registrados (no expone la estructura interna). */
+    /**
+     * Copia de los síntomas registrados (no expone la estructura interna). Un
+     * nodo de selección múltiple aporta un síntoma por cada respuesta marcada.
+     */
     public List<Sintoma> sintomas() {
         List<Sintoma> lista = new ArrayList<>();
-        for (Map.Entry<String, String> e : respuestas.entrySet()) {
-            lista.add(new Sintoma(e.getKey(), e.getValue()));
+        for (Map.Entry<String, List<String>> e : respuestas.entrySet()) {
+            for (String respuesta : e.getValue()) {
+                lista.add(new Sintoma(e.getKey(), respuesta));
+            }
         }
         return lista;
     }
 
-    /** Vacía las respuestas y reinicia el puntaje. */
+    /** Vacía las respuestas, las reglas disparadas y reinicia el puntaje. */
     public void reiniciar() {
         respuestas.clear();
+        reglasDisparadas.clear();
         puntaje = 0;
     }
 
-    /** Número de respuestas registradas. */
+    /** Número de nodos con al menos una respuesta registrada. */
     public int size() {
         return respuestas.size();
     }

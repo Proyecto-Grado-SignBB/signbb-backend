@@ -82,8 +82,13 @@ public class RepositorioSesionRedis implements RepositorioSesion {
     /** Reconstruye la sesión desde su forma serializable, resolviendo referencias por id. */
     private SesionTriaje reconstruir(SesionJson json) {
         EstadoPaciente estado = new EstadoPaciente(json.id());
-        for (Map.Entry<String, String> e : json.respuestas().entrySet()) {
-            estado.registrarRespuesta(e.getKey(), e.getValue());
+        for (Map.Entry<String, List<String>> e : json.respuestas().entrySet()) {
+            estado.registrarRespuestas(e.getKey(), e.getValue());
+        }
+        if (json.reglasDisparadas() != null) {
+            for (String idRegla : json.reglasDisparadas()) {
+                estado.marcarReglaDisparada(idRegla);
+            }
         }
         estado.sumarPuntaje(json.puntaje());
         return new SesionTriaje(json.id(), estado, reconstruirPaso(json.ultimoPaso()));

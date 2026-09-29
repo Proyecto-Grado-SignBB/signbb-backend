@@ -2,6 +2,7 @@ package org.signbb.backend.navegacion.servicios;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import org.signbb.backend.navegacion.modelo.EstadoPaciente;
 import org.signbb.backend.navegacion.modelo.GrafoClinico;
@@ -10,6 +11,7 @@ import org.signbb.backend.navegacion.modelo.Respuesta;
 import org.signbb.backend.navegacion.modelo.ResultadoPaso;
 import org.signbb.backend.reglas.modelo.BaseReglas;
 import org.signbb.backend.reglas.modelo.NivelAlerta;
+import org.signbb.backend.reglas.modelo.ReglaClinica;
 import org.signbb.backend.reglas.modelo.ResultadoInferencia;
 import org.signbb.backend.reglas.servicios.ServicioReglas;
 import org.springframework.stereotype.Service;
@@ -84,30 +86,17 @@ public class MotorNavegacion {
     public ResultadoPaso paso(GrafoClinico grafo, BaseReglas base, EstadoPaciente estado,
             Nodo nodoActual, String respuesta) {
         estado.registrarRespuesta(nodoActual.getId(), respuesta);
-
-        ResultadoInferencia inferencia = servicioReglas.evaluar(base, estado);
-        if (inferencia.nivel() != NivelAlerta.NORMAL) {
-            Nodo destino = inferencia.destino();
-            return ResultadoPaso.terminal(destino, inferencia.nivel(), inferencia.reglas(),
-                    grafo.obtenerCaminoCausal(destino));
-        }
-
-        Nodo siguiente = grafo.evaluarPaso(nodoActual, respuesta);
-        if (grafo.esNodoTerminal(siguiente)) {
-            return ResultadoPaso.terminal(siguiente, NivelAlerta.NORMAL, List.of(),
-                    grafo.obtenerCaminoCausal(siguiente));
-        }
-        return ResultadoPaso.pregunta(siguiente);
+        return resolver(grafo, base, estado, nodoActual, respuesta);
     }
 
     /**
      * Selección múltiple: el cuidador marcó varias opciones a la vez para
-     * {@code nodoActual}. Cada opción lleva, por definición del grafo, a un
-     * nodo destino distinto (una arista por {@code condicion}); se avanza
-     * hacia el de mayor {@code peso} (urgencia), que es el que efectivamente
-     * se registra como respuesta del cuidador para este nodo. Con una sola
-     * respuesta marcada, es exactamente el mismo resultado que llamar
-     * directamente al {@code paso} de un solo {@code String}.
+     * {@code nodoActual}. Se registran TODAS como respuestas del nodo (así las
+     * reglas AND que cruzan varias opciones de la misma pregunta pueden
+     * activarse y el recorrido se interrumpe en el terminal más grave). Si
+     * ninguna regla dispara, se avanza por la opción cuyo destino tiene mayor
+     * {@code peso}; con una sola respuesta marcada el resultado es idéntico al
+     * {@code paso} de un solo {@code String}.
      *
      * @throws IllegalArgumentException si {@code respuestasMarcadas} es nula o
      *                                  vacía.
@@ -117,22 +106,77 @@ public class MotorNavegacion {
         if (respuestasMarcadas == null || respuestasMarcadas.isEmpty()) {
             throw new IllegalArgumentException("respuestasMarcadas no puede ser vacío");
         }
-        String respuestaGanadora = resolverGanadora(grafo, nodoActual, respuestasMarcadas);
-        return paso(grafo, base, estado, nodoActual, respuestaGanadora);
+        estado.registrarRespuestas(nodoActual.getId(), respuestasMarcadas);
+
+        ResultadoInferencia inferencia = servicioReglas.evaluar(base, estado);
+        if (!inferencia.esNormal()) {
+            return resolverInferencia(grafo, estado, inferencia);
+        }
+        return avanzar(grafo, nodoActual, opcionMasGrave(grafo, nodoActual, respuestasMarcadas));
+    }
+
+    /** Evalúa las reglas tras registrar una respuesta y decide el siguiente paso. */
+    private ResultadoPaso resolver(GrafoClinico grafo, BaseReglas base, EstadoPaciente estado,
+            Nodo nodoActual, String respuesta) {
+        ResultadoInferencia inferencia = servicioReglas.evaluar(base, estado);
+        if (!inferencia.esNormal()) {
+            return resolverInferencia(grafo, estado, inferencia);
+        }
+        return avanzar(grafo, nodoActual, respuesta);
     }
 
     /**
-     * Compara, para cada opción marcada, el {@code peso} del nodo destino de su
-     * arista, y devuelve la opción cuyo destino es más urgente. En caso de
-     * empate exacto, gana la primera encontrada en el orden de la lista.
+     * Resuelve un disparo de reglas. Si el destino de la regla ganadora es un
+     * nodo terminal, el recorrido corta ahí (comportamiento histórico); si es
+     * una pregunta, es una regla "gate" y el recorrido continúa desde ese nodo
+     * (su nivel no se reporta como alerta).
      */
-    private String resolverGanadora(GrafoClinico grafo, Nodo nodoActual, List<String> respuestasMarcadas) {
+    private ResultadoPaso resolverInferencia(GrafoClinico grafo, EstadoPaciente estado,
+            ResultadoInferencia inferencia) {
+        for (ReglaClinica r : inferencia.reglas()) {
+            estado.marcarReglaDisparada(r.getIdRegla());
+        }
+        Nodo destino = inferencia.destino();
+        if (grafo.esNodoTerminal(destino)) {
+            return ResultadoPaso.terminal(destino, inferencia.nivel(), inferencia.reglas(),
+                    grafo.obtenerCaminoCausal(destino));
+        }
+        return ResultadoPaso.pregunta(destino);
+    }
+
+    /** Avanza por la arista de {@code respuesta}; cierra en NORMAL si el destino es terminal. */
+    private ResultadoPaso avanzar(GrafoClinico grafo, Nodo nodoActual, String respuesta) {
+        Nodo siguiente = grafo.evaluarPaso(nodoActual, respuesta);
+        if (grafo.esNodoTerminal(siguiente)) {
+            return ResultadoPaso.terminal(siguiente, NivelAlerta.NORMAL, List.of(),
+                    grafo.obtenerCaminoCausal(siguiente));
+        }
+        return ResultadoPaso.pregunta(siguiente);
+    }
+
+    /**
+     * Devuelve la opción marcada cuyo nodo destino tiene mayor {@code peso}
+     * (la más grave). Se apoya en una cola de prioridad (max-heap por peso) con
+     * desempate <b>estable</b> por el índice de la opción en la lista: a igual
+     * peso gana la primera marcada (una {@code PriorityQueue} sin ese desempate
+     * no garantiza el orden de inserción).
+     */
+    private String opcionMasGrave(GrafoClinico grafo, Nodo nodoActual,
+            List<String> respuestasMarcadas) {
         if (respuestasMarcadas.size() == 1) {
             return respuestasMarcadas.get(0);
         }
-        return respuestasMarcadas.stream()
-                .max(Comparator.comparingInt(r -> grafo.evaluarPaso(nodoActual, r).getPeso()))
-                .orElseThrow();
+        record Candidata(int indice, String condicion, int peso) {
+        }
+        PriorityQueue<Candidata> cola = new PriorityQueue<>(
+                Comparator.comparingInt(Candidata::peso).reversed()
+                        .thenComparingInt(Candidata::indice));
+        for (int i = 0; i < respuestasMarcadas.size(); i++) {
+            String condicion = respuestasMarcadas.get(i);
+            cola.add(new Candidata(i, condicion,
+                    grafo.evaluarPaso(nodoActual, condicion).getPeso()));
+        }
+        return cola.poll().condicion();
     }
 
     /**

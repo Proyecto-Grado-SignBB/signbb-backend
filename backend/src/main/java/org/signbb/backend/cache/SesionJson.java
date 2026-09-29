@@ -1,11 +1,13 @@
 package org.signbb.backend.cache;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.signbb.backend.navegacion.modelo.ResultadoPaso;
 import org.signbb.backend.navegacion.modelo.SesionTriaje;
+import org.signbb.backend.navegacion.modelo.Sintoma;
 import org.signbb.backend.reglas.modelo.ReglaClinica;
 
 /**
@@ -13,13 +15,15 @@ import org.signbb.backend.reglas.modelo.ReglaClinica;
  *
  * <p>
  * En vez de serializar el {@code ResultadoPaso} completo (que embebe nodos y
- * reglas enteras), se guardan las respuestas acumuladas y referencias por
- * id: al cargar, el paso se reconstruye resolviendo esas referencias contra
- * el contenido clínico vigente (ver {@code RepositorioSesionRedis}).
+ * reglas enteras), se guardan las respuestas acumuladas (varias por nodo en
+ * selección múltiple), las reglas ya disparadas y referencias por id: al
+ * cargar, el paso se reconstruye resolviendo esas referencias contra el
+ * contenido clínico vigente (ver {@code RepositorioSesionRedis}).
  */
 public record SesionJson(
         String id,
-        Map<String, String> respuestas,
+        Map<String, List<String>> respuestas,
+        List<String> reglasDisparadas,
         int puntaje,
         PasoJson ultimoPaso) {
 
@@ -39,9 +43,10 @@ public record SesionJson(
 
     /** Serializa la sesión del dominio a su forma almacenable. */
     public static SesionJson desde(SesionTriaje sesion) {
-        Map<String, String> respuestas = new LinkedHashMap<>();
-        sesion.getEstado().sintomas()
-                .forEach(s -> respuestas.put(s.idNodo(), s.respuesta()));
+        Map<String, List<String>> respuestas = new LinkedHashMap<>();
+        for (Sintoma s : sesion.getEstado().sintomas()) {
+            respuestas.computeIfAbsent(s.idNodo(), k -> new ArrayList<>()).add(s.respuesta());
+        }
 
         ResultadoPaso paso = sesion.getUltimoPaso();
         PasoJson pasoJson = new PasoJson(
@@ -54,6 +59,7 @@ public record SesionJson(
                         .map(p -> new CaminoJson(p.nodo().getId(), p.condicion()))
                         .toList());
         return new SesionJson(sesion.getId(), respuestas,
+                List.copyOf(sesion.getEstado().reglasDisparadas()),
                 sesion.getEstado().getPuntaje(), pasoJson);
     }
 }

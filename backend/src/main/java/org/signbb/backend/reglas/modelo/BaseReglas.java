@@ -57,11 +57,16 @@ public final class BaseReglas {
         return new ArrayList<>(reglas.values());
     }
 
-    /** Reglas cuyas condiciones se cumplen en el estado dado. */
+    /**
+     * Reglas cuyas condiciones se cumplen en el estado dado, excluyendo las
+     * que ya se dispararon antes en el recorrido ({@link
+     * EstadoPaciente#reglaDisparada}). Evita que una regla que redirige el
+     * recorrido vuelva a activarse en los pasos siguientes.
+     */
     public List<ReglaClinica> reglasActivadas(EstadoPaciente estado) {
         List<ReglaClinica> activadas = new ArrayList<>();
         for (ReglaClinica r : reglas.values()) {
-            if (r.condicionesCumplidas(estado)) {
+            if (!estado.reglaDisparada(r.getIdRegla()) && r.condicionesCumplidas(estado)) {
                 activadas.add(r);
             }
         }

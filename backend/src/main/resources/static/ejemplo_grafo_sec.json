@@ -1,0 +1,367 @@
+{
+  "graph": {
+    "directed": true,
+    "type": "clinico",
+    "label": "Ciberseguridad: correo, contraseñas y archivos sospechosos",
+    "metadata": {
+      "autor": "Grupo 20",
+      "fechaCreacion": "2026-09-29",
+      "descripcion": "Grafo de ejemplo (no clínico) de triaje de ciberseguridad: clasifica una consulta en correo, contraseñas o archivos, y orienta el riesgo (rojo/amarillo/verde).",
+      "institucion": "Pontificia Universidad Javeriana"
+    },
+    "nodoInicial": "O",
+    "nodes": {
+      "O": {
+        "label": "¿Con qué categoría está relacionada su consulta?",
+        "metadata": {
+          "tipo": "pregunta",
+          "peso": 2,
+          "archivos": false,
+          "src": [],
+          "tipoInteraccion": "SELECCION_UNICA"
+        }
+      },
+      "E1": {
+        "label": "Inspeccione el correo y revise si alguna opción aplica",
+        "metadata": {
+          "tipo": "pregunta",
+          "peso": 2,
+          "archivos": false,
+          "src": [],
+          "tipoInteraccion": "SELECCION_MULTIPLE"
+        }
+      },
+      "E2": {
+        "label": "¿Estaba esperando este correo?",
+        "metadata": {
+          "tipo": "pregunta",
+          "peso": 3,
+          "archivos": false,
+          "src": [],
+          "tipoInteraccion": "SI_NO"
+        }
+      },
+      "E3": {
+        "label": "¿Le están pidiendo información sensible?",
+        "metadata": {
+          "tipo": "pregunta",
+          "peso": 1,
+          "archivos": false,
+          "src": [],
+          "tipoInteraccion": "SI_NO"
+        }
+      },
+      "P1": {
+        "label": "Inspeccione su contraseña y revise si alguna opción aplica",
+        "metadata": {
+          "tipo": "pregunta",
+          "peso": 2,
+          "archivos": false,
+          "src": [],
+          "tipoInteraccion": "SELECCION_MULTIPLE"
+        }
+      },
+      "P2": {
+        "label": "¿Usa un administrador de contraseñas?",
+        "metadata": {
+          "tipo": "pregunta",
+          "peso": 3,
+          "archivos": false,
+          "src": [],
+          "tipoInteraccion": "SI_NO"
+        }
+      },
+      "P3": {
+        "label": "¿Tiene llaves de acceso o 2FA?",
+        "metadata": {
+          "tipo": "pregunta",
+          "peso": 1,
+          "archivos": false,
+          "src": [],
+          "tipoInteraccion": "SI_NO"
+        }
+      },
+      "A1": {
+        "label": "Inspeccione el archivo y revise si alguna opción aplica",
+        "metadata": {
+          "tipo": "pregunta",
+          "peso": 2,
+          "archivos": false,
+          "src": [],
+          "tipoInteraccion": "SELECCION_MULTIPLE"
+        }
+      },
+      "A2": {
+        "label": "¿El archivo tiene doble extensión (ej. recibo.pdf.exe)?",
+        "metadata": {
+          "tipo": "pregunta",
+          "peso": 3,
+          "archivos": false,
+          "src": [],
+          "tipoInteraccion": "SI_NO"
+        }
+      },
+      "A3": {
+        "label": "¿Le pide habilitar macros al abrirlo?",
+        "metadata": {
+          "tipo": "pregunta",
+          "peso": 1,
+          "archivos": false,
+          "src": [],
+          "tipoInteraccion": "SI_NO"
+        }
+      },
+      "ET1": {
+        "label": "Es altamente probable que sea phishing. No interactúe con el correo y repórtelo.",
+        "metadata": {
+          "tipo": "consulta médica",
+          "peso": 3,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "ET2": {
+        "label": "Proceda con precaución: puede ser phishing. Verifique el remitente por otro canal.",
+        "metadata": {
+          "tipo": "recomendacion",
+          "peso": 2,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "ET3": {
+        "label": "No se han detectado riesgos en el correo.",
+        "metadata": {
+          "tipo": "recomendacion",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "PT1": {
+        "label": "Su contraseña no es segura. Cámbiela y no la reutilice.",
+        "metadata": {
+          "tipo": "consulta médica",
+          "peso": 3,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "PT2": {
+        "label": "Es recomendable que modifique su contraseña.",
+        "metadata": {
+          "tipo": "recomendacion",
+          "peso": 2,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "PT3": {
+        "label": "No debe cambiar su contraseña.",
+        "metadata": {
+          "tipo": "recomendacion",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "AT1": {
+        "label": "Archivo malicioso detectado: elimínelo y no lo vuelva a abrir.",
+        "metadata": {
+          "tipo": "consulta médica",
+          "peso": 3,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "AT2": {
+        "label": "Archivo sospechoso: analícelo con el antivirus antes de usarlo.",
+        "metadata": {
+          "tipo": "recomendacion",
+          "peso": 2,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "AT3": {
+        "label": "No se han detectado riesgos en el archivo.",
+        "metadata": {
+          "tipo": "recomendacion",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      }
+    },
+    "edges": [
+      {
+        "source": "O",
+        "relation": "Verificar correo",
+        "target": "E1",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "O",
+        "relation": "Verificar contraseña",
+        "target": "P1",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "O",
+        "relation": "Verificar archivo sospechoso",
+        "target": "A1",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "E1",
+        "relation": "Remitente desconocido",
+        "target": "E2",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "E1",
+        "relation": "Amenazas o advertencias",
+        "target": "E3",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "E1",
+        "relation": "No aplica",
+        "target": "ET3",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "E2",
+        "relation": "No",
+        "target": "ET1",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "E2",
+        "relation": "Si",
+        "target": "ET2",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "E3",
+        "relation": "Si",
+        "target": "ET1",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "E3",
+        "relation": "No",
+        "target": "ET2",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "P1",
+        "relation": "Es una contraseña antigua",
+        "target": "P2",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "P1",
+        "relation": "Es la misma de otros sitios",
+        "target": "P3",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "P1",
+        "relation": "No aplica",
+        "target": "PT3",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "P2",
+        "relation": "No",
+        "target": "PT1",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "P2",
+        "relation": "Si",
+        "target": "PT2",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "P3",
+        "relation": "No",
+        "target": "PT1",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "P3",
+        "relation": "Si",
+        "target": "PT3",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "A1",
+        "relation": "Descargado de un enlace",
+        "target": "A2",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "A1",
+        "relation": "Enviado por un contacto",
+        "target": "A3",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "A1",
+        "relation": "No aplica",
+        "target": "AT3",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "A2",
+        "relation": "Si",
+        "target": "AT1",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "A2",
+        "relation": "No",
+        "target": "AT2",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "A3",
+        "relation": "Si",
+        "target": "AT1",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "A3",
+        "relation": "No",
+        "target": "AT3",
+        "directed": true,
+        "metadata": {}
+      }
+    ]
+  }
+}

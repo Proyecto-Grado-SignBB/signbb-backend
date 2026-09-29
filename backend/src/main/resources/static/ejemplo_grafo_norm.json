@@ -1,0 +1,163 @@
+{
+  "graph": {
+    "directed": true,
+    "type": "clinico",
+    "label": "Normalización de base de datos: 1NF, 2NF, 3NF",
+    "metadata": {
+      "autor": "Grupo 20",
+      "fechaCreacion": "2026-09-29",
+      "descripcion": "Grafo de ejemplo (no clínico) que decide en qué forma normal está una tabla: 1NF, 2NF o 3NF.",
+      "institucion": "Pontificia Universidad Javeriana"
+    },
+    "nodoInicial": "inicio",
+    "nodes": {
+      "inicio": {
+        "label": "Normalización de base de datos: 1NF, 2NF, 3NF",
+        "metadata": {
+          "tipo": "inicio",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "q_1nf": {
+        "label": "¿La tabla exhibe TODAS estas propiedades de 1NF?",
+        "metadata": {
+          "tipo": "pregunta",
+          "peso": 1,
+          "archivos": false,
+          "src": [],
+          "tipoInteraccion": "SELECCION_MULTIPLE"
+        }
+      },
+      "q_2nf": {
+        "label": "¿Todos los atributos no clave dependen totalmente de la clave primaria?",
+        "metadata": {
+          "tipo": "pregunta",
+          "peso": 2,
+          "archivos": false,
+          "src": [],
+          "tipoInteraccion": "SI_NO"
+        }
+      },
+      "q_3nf": {
+        "label": "¿Algún atributo no principal depende de otro atributo no principal?",
+        "metadata": {
+          "tipo": "pregunta",
+          "peso": 3,
+          "archivos": false,
+          "src": [],
+          "tipoInteraccion": "SI_NO"
+        }
+      },
+      "en_3nf": {
+        "label": "La tabla está en 3NF: no hay dependencias transitivas.",
+        "metadata": {
+          "tipo": "recomendacion",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "no_1nf": {
+        "label": "La tabla NO está en 1NF. Requiere normalizar antes de continuar.",
+        "metadata": {
+          "tipo": "consulta médica",
+          "peso": 3,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "no_2nf": {
+        "label": "La tabla NO está en 2NF: hay dependencias parciales de la clave primaria.",
+        "metadata": {
+          "tipo": "consulta médica",
+          "peso": 2,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "no_3nf": {
+        "label": "La tabla NO está en 3NF: hay dependencias transitivas.",
+        "metadata": {
+          "tipo": "consulta médica",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      }
+    },
+    "edges": [
+      {
+        "source": "inicio",
+        "relation": "inicia_navegacion",
+        "target": "q_1nf",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "q_1nf",
+        "relation": "CELDA_UNICA",
+        "target": "q_2nf",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "q_1nf",
+        "relation": "CLAVE_PRIMARIA",
+        "target": "q_2nf",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "q_1nf",
+        "relation": "SIN_FILAS_O_COLUMNAS_DUPLICADAS",
+        "target": "q_2nf",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "q_1nf",
+        "relation": "VALOR_UNICO_POR_PAR",
+        "target": "q_2nf",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "q_1nf",
+        "relation": "NINGUNA",
+        "target": "no_1nf",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "q_2nf",
+        "relation": "SI",
+        "target": "q_3nf",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "q_2nf",
+        "relation": "NO",
+        "target": "no_2nf",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "q_3nf",
+        "relation": "SI",
+        "target": "no_3nf",
+        "directed": true,
+        "metadata": {}
+      },
+      {
+        "source": "q_3nf",
+        "relation": "NO",
+        "target": "en_3nf",
+        "directed": true,
+        "metadata": {}
+      }
+    ]
+  }
+}

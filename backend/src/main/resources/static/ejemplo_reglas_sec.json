@@ -1,0 +1,91 @@
+{
+  "rules": {
+    "R1": {
+      "nombre": "Correo inesperado del que no se esperaba nada",
+      "condiciones": [
+        { "idNodo": "O", "respuesta": "Verificar correo" },
+        { "idNodo": "E1", "respuesta": "Remitente desconocido" },
+        { "idNodo": "E2", "respuesta": "No" }
+      ],
+      "nodoDestino": "ET1",
+      "nivel": "URGENCIA",
+      "metadata": {
+        "autor": "Grupo 20",
+        "fechaCreacion": "2026-09-29T00:00:00Z",
+        "descripcion": "Remitente desconocido y correo no esperado: phishing altamente probable."
+      }
+    },
+    "R2": {
+      "nombre": "Piden información sensible",
+      "condiciones": [
+        { "idNodo": "O", "respuesta": "Verificar correo" },
+        { "idNodo": "E1", "respuesta": "Amenazas o advertencias" },
+        { "idNodo": "E3", "respuesta": "Si" }
+      ],
+      "nodoDestino": "ET1",
+      "nivel": "URGENCIA",
+      "metadata": {
+        "autor": "Grupo 20",
+        "fechaCreacion": "2026-09-29T00:00:00Z",
+        "descripcion": "El correo pide información sensible con amenazas o advertencias."
+      }
+    },
+    "R3": {
+      "nombre": "Contraseña antigua sin administrador",
+      "condiciones": [
+        { "idNodo": "O", "respuesta": "Verificar contraseña" },
+        { "idNodo": "P1", "respuesta": "Es una contraseña antigua" },
+        { "idNodo": "P2", "respuesta": "No" }
+      ],
+      "nodoDestino": "PT1",
+      "nivel": "URGENCIA",
+      "metadata": {
+        "autor": "Grupo 20",
+        "fechaCreacion": "2026-09-29T00:00:00Z",
+        "descripcion": "Contraseña antigua y sin administrador de contraseñas: no es segura."
+      }
+    },
+    "R4": {
+      "nombre": "Archivo descargado con doble extensión",
+      "condiciones": [
+        { "idNodo": "O", "respuesta": "Verificar archivo sospechoso" },
+        { "idNodo": "A1", "respuesta": "Descargado de un enlace" },
+        { "idNodo": "A2", "respuesta": "Si" }
+      ],
+      "nodoDestino": "AT1",
+      "nivel": "URGENCIA",
+      "metadata": {
+        "autor": "Grupo 20",
+        "fechaCreacion": "2026-09-29T00:00:00Z",
+        "descripcion": "Archivo descargado de un enlace con doble extensión: malicioso."
+      }
+    },
+    "R5": {
+      "nombre": "Archivo de riesgo con doble extensión o macros (AND/OR)",
+      "condiciones": {
+        "and": [
+          { "idNodo": "O", "respuesta": "Verificar archivo sospechoso" },
+          {
+            "or": [
+              { "idNodo": "A1", "respuesta": "Descargado de un enlace" },
+              { "idNodo": "A1", "respuesta": "Enviado por un contacto" }
+            ]
+          },
+          {
+            "or": [
+              { "idNodo": "A2", "respuesta": "Si" },
+              { "idNodo": "A3", "respuesta": "Si" }
+            ]
+          }
+        ]
+      },
+      "nodoDestino": "AT1",
+      "nivel": "URGENCIA",
+      "metadata": {
+        "autor": "Grupo 20",
+        "fechaCreacion": "2026-09-29T00:00:00Z",
+        "descripcion": "Archivo proveniente de un enlace o contacto y con doble extensión o macros: malicioso."
+      }
+    }
+  }
+}
