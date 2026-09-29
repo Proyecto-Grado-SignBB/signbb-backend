@@ -28,6 +28,10 @@ class ServicioReglasImplTest {
                 return new Nodo(id, "consulta_medica", "Contenido de " + id);
         }
 
+        private static Nodo destino(String id, int peso) {
+                return new Nodo(id, "consulta_medica", "Contenido de " + id, peso);
+        }
+
         @Test
         void evaluarConDosReglasDeMismoNivelCombinaLasRazones() {
                 Nodo destino = destino("consulta_medica_urgente");
@@ -111,5 +115,34 @@ class ServicioReglasImplTest {
                 assertEquals(NivelAlerta.URGENCIA, inferencia.nivel());
                 assertEquals(1, inferencia.reglas().size());
                 assertEquals("Ictericia con letargo", inferencia.reglas().get(0).getNombre());
+        }
+
+        @Test
+        void empateDeNivelGanaElDestinoDeMayorPeso() {
+                // Dos reglas de igual nivel (URGENCIA) activándose a la vez, con
+                // destinos de distinto peso: debe ganar el más crítico (mayor peso),
+                // aunque se haya insertado después.
+                Nodo destinoLeve = destino("consulta_leve", 10);
+                Nodo destinoCritico = destino("consulta_critica", 90);
+
+                BaseReglas base = new BaseReglas();
+                base.agregarRegla(new ReglaClinica(
+                                "R_LEVE", "Signo leve",
+                                List.of(new Condicion("signo_leve", "SI")),
+                                destinoLeve, NivelAlerta.URGENCIA));
+                base.agregarRegla(new ReglaClinica(
+                                "R_CRITICO", "Signo crítico",
+                                List.of(new Condicion("signo_critico", "SI")),
+                                destinoCritico, NivelAlerta.URGENCIA));
+
+                EstadoPaciente estado = new EstadoPaciente("sesion-peso");
+                estado.registrarRespuesta("signo_leve", "SI");
+                estado.registrarRespuesta("signo_critico", "SI");
+
+                ResultadoInferencia inferencia = servicio.evaluar(base, estado);
+
+                assertEquals(NivelAlerta.URGENCIA, inferencia.nivel());
+                assertEquals(2, inferencia.reglas().size());
+                assertEquals("consulta_critica", inferencia.destino().getId());
         }
 }

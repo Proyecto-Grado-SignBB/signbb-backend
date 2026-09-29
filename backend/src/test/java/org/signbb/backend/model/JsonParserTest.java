@@ -1,13 +1,16 @@
 package org.signbb.backend.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import org.junit.jupiter.api.Test;
 import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoParser;
+import org.signbb.backend.navegacion.modelo.EstadoPaciente;
 import org.signbb.backend.navegacion.modelo.GrafoClinico;
 import org.signbb.backend.navegacion.modelo.Nodo;
 import org.signbb.backend.reglas.datos.serializacion.BaseReglasParser;
@@ -112,5 +115,74 @@ class JsonParserTest {
 
     assertThrows(IllegalArgumentException.class,
         () -> BaseReglasParser.parseJsonToBaseReglas(json, g));
+  }
+
+  @Test
+  void parseCondicionesConOrSeActivaConCualquiera() {
+    GrafoClinico g = GrafoClinicoParser.parseJsonToGrafoClinico(GRAFO_MINIMO);
+    String json = """
+        {
+          "rules": {
+            "R_OR": {
+              "nombre": "cualquiera de dos signos",
+              "condiciones": { "or": [
+                { "idNodo": "letargo", "respuesta": "SI" },
+                { "idNodo": "sangre", "respuesta": "SI" }
+              ] },
+              "nodoDestino": "cm",
+              "nivel": "URGENCIA"
+            }
+          }
+        }
+        """;
+    BaseReglas base = BaseReglasParser.parseJsonToBaseReglas(json, g);
+    ReglaClinica regla = base.obtenerRegla("R_OR");
+
+    EstadoPaciente soloLetargo = new EstadoPaciente("s1");
+    soloLetargo.registrarRespuesta("letargo", "SI");
+    assertTrue(regla.condicionesCumplidas(soloLetargo));
+
+    EstadoPaciente ninguno = new EstadoPaciente("s2");
+    ninguno.registrarRespuesta("letargo", "NO");
+    ninguno.registrarRespuesta("sangre", "NO");
+    assertFalse(regla.condicionesCumplidas(ninguno));
+  }
+
+  @Test
+  void parseCondicionesConAndDeOrAnidado() {
+    GrafoClinico g = GrafoClinicoParser.parseJsonToGrafoClinico(GRAFO_MINIMO);
+    // coloracion=SI AND (letargo=SI OR sangre=SI)
+    String json = """
+        {
+          "rules": {
+            "R_MIX": {
+              "nombre": "coloración con signo grave",
+              "condiciones": { "and": [
+                { "idNodo": "coloracion", "respuesta": "SI" },
+                { "or": [
+                  { "idNodo": "letargo", "respuesta": "SI" },
+                  { "idNodo": "sangre", "respuesta": "SI" }
+                ] }
+              ] },
+              "nodoDestino": "cm",
+              "nivel": "URGENCIA"
+            }
+          }
+        }
+        """;
+    BaseReglas base = BaseReglasParser.parseJsonToBaseReglas(json, g);
+    ReglaClinica regla = base.obtenerRegla("R_MIX");
+
+    EstadoPaciente completo = new EstadoPaciente("s3");
+    completo.registrarRespuesta("coloracion", "SI");
+    completo.registrarRespuesta("sangre", "SI");
+    assertTrue(regla.condicionesCumplidas(completo));
+
+    EstadoPaciente sinRama = new EstadoPaciente("s4");
+    sinRama.registrarRespuesta("coloracion", "SI");
+    assertFalse(regla.condicionesCumplidas(sinRama));
+
+    // getCondiciones aplana las tres hojas en orden.
+    assertEquals(3, regla.getCondiciones().size());
   }
 }

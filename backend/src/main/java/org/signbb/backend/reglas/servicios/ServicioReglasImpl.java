@@ -1,6 +1,7 @@
 package org.signbb.backend.reglas.servicios;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.signbb.backend.navegacion.modelo.EstadoPaciente;
@@ -24,8 +25,10 @@ public class ServicioReglasImpl implements ServicioReglas {
     }
 
     /**
-     * Resolución por severidad: gana el nivel máximo; en empate se combinan
-     * las razones y la primera regla por orden de inserción define el destino.
+     * Resolución por severidad: gana el nivel máximo; entre las reglas de ese
+     * nivel se combinan todas como razones y el destino es el de mayor
+     * {@code peso} (el signo más crítico). En empate exacto de peso, la primera
+     * por orden de inserción define el destino.
      */
     @Override
     public ResultadoInferencia evaluar(BaseReglas base, EstadoPaciente estado) {
@@ -48,7 +51,11 @@ public class ServicioReglasImpl implements ServicioReglas {
             }
         }
 
-        return new ResultadoInferencia(razones.get(0).getNodoDestino(), nivelMax, razones);
+        ReglaClinica ganadora = razones.stream()
+                .max(Comparator.comparingInt(r -> r.getNodoDestino().getPeso()))
+                .orElseThrow();
+
+        return new ResultadoInferencia(ganadora.getNodoDestino(), nivelMax, razones);
     }
 
 }

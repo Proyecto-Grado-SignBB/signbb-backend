@@ -2,10 +2,9 @@ package org.signbb.backend.reglas.datos.serializacion;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.List;
 import java.util.Map;
 
-import org.signbb.backend.reglas.modelo.Condicion;
+import tools.jackson.databind.JsonNode;
 
 /**
  * Documento JSON de una base de reglas: el mismo formato de intercambio de
@@ -18,6 +17,12 @@ import org.signbb.backend.reglas.modelo.Condicion;
  * reconstruir el TAD, fallando de inmediato si la referencia queda colgando.
  * El {@code nivel} se mantiene como cadena para preservar el contrato de los
  * parsers (valores inválidos lanzan {@link IllegalArgumentException}).
+ *
+ * <p>
+ * {@code condiciones} se conserva como {@link JsonNode} porque el formato
+ * admite tanto un arreglo plano (AND implícito) como objetos {@code and}/{@code or}
+ * anidados a cualquier profundidad; la expresión se interpreta y se
+ * reconstruye en {@link BaseReglasMapper}.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record BaseReglasJson(Map<String, ReglaJson> rules) {
@@ -26,7 +31,7 @@ public record BaseReglasJson(Map<String, ReglaJson> rules) {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public record ReglaJson(
             String nombre,
-            List<Condicion> condiciones,
+            JsonNode condiciones,
             String nodoDestino,
             String nivel,
             Map<String, Object> metadata) {
