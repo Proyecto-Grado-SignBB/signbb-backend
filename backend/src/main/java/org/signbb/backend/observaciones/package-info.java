@@ -1,5 +1,5 @@
 /**
- * Módulo de consultas guiadas para las observaciones del cuidador (en
+ * @brief Módulo de consultas guiadas para las observaciones del cuidador (en
  * construcción).
  */
 package org.signbb.backend.observaciones;

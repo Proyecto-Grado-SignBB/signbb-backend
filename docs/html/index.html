@@ -3,16 +3,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SignBB: Página principal</title>
+<title>SignBB: SignBB — Backend</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="jquery.js"></script>
-<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -33,23 +33,47 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Generado por Doxygen 1.9.8 -->
+<!-- Generado por Doxygen 1.18.0 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-var searchBox = new SearchBox("searchBox", "search/",'.html');
-/* @license-end */
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
-<script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function() {
-  initMenu('',true,false,'search.php','Buscar');
-  $(document).ready(function() { init_search(); });
-});
-/* @license-end */
-</script>
-<div id="main-nav"></div>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
 </div><!-- top -->
 <div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
@@ -57,21 +81,16 @@ $(function() {
       <div id="nav-sync" class="sync"></div>
     </div>
   </div>
-  <div id="splitbar" style="-moz-user-select:none;" 
-       class="ui-resizable-handle">
+  <div id="splitbar" class="ui-resizable-handle">
   </div>
 </div>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('index.html',''); initResizable(); });
-/* @license-end */
+document.addEventListener('DOMContentLoaded',() => { initNavTree('index.html','',''); });
 </script>
+<div id="container">
 <div id="doc-content">
 <!-- window showing the filter options -->
-<div id="MSearchSelectWindow"
-     onmouseover="return searchBox.OnSearchSelectShow()"
-     onmouseout="return searchBox.OnSearchSelectHide()"
-     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<div id="MSearchSelectWindow">
 </div>
 
 <!-- iframe showing the search results (closed by default) -->
@@ -88,16 +107,51 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">SignBB documentación</div></div>
+<div><div class="header">
+  <div class="headertitle"><div class="title">SignBB — Backend </div></div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><p><a class="anchor" id="md_README"></a></p>
+<p>Backend del sistema SignBB: triaje clínico guiado por un grafo de navegación y un motor de reglas.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md1"></a>
+Requisitos</h1>
+<ul>
+<li>Java SDK 25</li>
+<li>Spring Boot 4.1.1 (Web MVC, Data JPA, H2, Lombok)</li>
+<li>Maven (se usa el wrapper <span class="tt">backend/mvnw</span>, no requiere instalación local)</li>
+<li>Doxygen (solo para regenerar la documentación)</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
+Construcción y pruebas</h1>
+<p>Desde el directorio <span class="tt">backend</span>: </p><pre class="fragment">./mvnw test              # compila y ejecuta la suite de tests
+./mvnw spring-boot:run   # arranca la aplicación (demo de triaje por consola)
+./mvnw verify            # build completo, igual que en CI (GitHub Actions)
+</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
+Perfiles de base de datos</h1>
+<p>El backend tiene dos perfiles; el activo se define en <span class="tt">backend/src/main/resources/application.properties</span> con la propiedad <span class="tt">spring.profiles.active</span> (hoy <span class="tt">docker</span> por defecto):</p>
+<ul>
+<li><span class="tt">dev</span> — <b>H2 en memoria</b> (<span class="tt">jdbc:h2:mem:dcbapp</span>): no necesita Docker y los datos se pierden al detener la aplicación. Consola H2 en <span class="tt"><a href="http://localhost:8080/h2-console">http://localhost:8080/h2-console</a></span> (usuario <span class="tt">sa</span>).</li>
+<li><span class="tt">docker</span> — <b>PostgreSQL</b> en <span class="tt">localhost:5432</span> (base <span class="tt">signbb</span>): requiere la base de datos de <span class="tt">contenedores/compose.yaml</span> levantada y persiste los datos en el volumen del compose. Ver <span class="tt">contenedores/MANUAL_CONTENEDORES.md</span> para levantarla y administrarla.</li>
+</ul>
+<p>Para cambiar de perfil en un arranque puntual, sin editar archivos, se pasa como flag (ej. pasar de memoria a docker o viceversa): </p><pre class="fragment">./mvnw spring-boot:run -Dspring-boot.run.profiles=dev     # H2 en memoria
+./mvnw spring-boot:run -Dspring-boot.run.profiles=docker  # PostgreSQL
+</pre><p>Para usar docker de forma permanente, dejar <span class="tt">spring.profiles.active=docker</span> en <span class="tt">application.properties</span> y levantar la base de datos: </p><pre class="fragment">cd ../contenedores &amp;&amp; docker compose up -d
+</pre><p>Las pruebas usan el perfil activo: con <span class="tt">docker</span> la base de datos debe estar levantada; con <span class="tt">dev</span> corren contra H2 en memoria sin ningún requisito: </p><pre class="fragment">./mvnw test                               # usa el perfil activo
+./mvnw test -Dspring.profiles.active=dev  # fuerza H2 en memoria
+</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
+Documentación</h1>
+<p>La documentación del código se genera con Doxygen desde la raíz del repositorio: </p><pre class="fragment">doxygen Doxyfile
+</pre><p>El HTML resultante queda en <span class="tt">docs/html</span> (abrir <span class="tt">docs/html/index.html</span>). La fuente es <span class="tt">backend/src/main/java</span>, configurada en el <span class="tt">Doxyfile</span>.</p>
+<p>El diagrama de arquitectura por módulos (<span class="tt">docs/diagramas/arquitectura_modulos.svg</span>) se regenera desde su fuente PlantUML: </p><pre class="fragment">java -jar plantuml.jar -tsvg docs/diagramas/arquitectura_modulos.puml
+</pre> </div></div><!-- PageDoc -->
+<a href="doxygen_crawl.html"></a>
 </div><!-- contents -->
 </div><!-- doc-content -->
+</div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
   </ul>
 </div>
 </body>

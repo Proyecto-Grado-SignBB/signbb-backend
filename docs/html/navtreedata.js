@@ -25,8 +25,16 @@
 var NAVTREE =
 [
   [ "SignBB", "index.html", [
+    [ "SignBB — Backend", "index.html", "index" ],
+    [ "Manual de contenedores", "md_contenedores_2MANUAL__CONTENEDORES.html", [
+      [ "Levantar", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md6", null ],
+      [ "Dar de baja", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md7", null ],
+      [ "Eliminar los datos persistentes", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md8", null ],
+      [ "Acceso rápido", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md9", null ],
+      [ "Parámetros de conexión (perfil <span class=\"tt\">docker</span> del backend)", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md10", null ]
+    ] ],
     [ "Paquetes", "namespaces.html", [
-      [ "Lista de paquetes", "namespaces.html", null ],
+      [ "Lista de paquetes", "namespaces.html", "namespaces_dup" ],
       [ "Miembros de paquete", "namespacemembers.html", [
         [ "Todos", "namespacemembers.html", null ],
         [ "Funciones", "namespacemembers_func.html", null ]
@@ -47,8 +55,10 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html"
+"annotated.html",
+"classorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1entidades_1_1ObservacionEntity.html#a760ef5edb95e3bba6adedf866ee46bd1"
 ];
 
-var SYNCONMSG = 'pulsar para deshabilitar sincronización';
-var SYNCOFFMSG = 'pulsar para habilitar sincronización';
+const SYNCONMSG = 'pulsar para deshabilitar sincronización';
+const SYNCOFFMSG = 'pulsar para habilitar sincronización';
+const LISTOFALLMEMBERS = 'Lista de todos los miembros';

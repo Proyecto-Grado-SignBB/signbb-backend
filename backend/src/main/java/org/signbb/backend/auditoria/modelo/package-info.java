@@ -1,2 +1,2 @@
-/** Modelo del módulo de auditoría */
+/** @brief Modelo del módulo de auditoría */
 package org.signbb.backend.auditoria.modelo;

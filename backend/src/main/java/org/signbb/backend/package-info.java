@@ -1,2 +1,2 @@
-/** Aplicación Spring Boot de SignBB. */
+/** @brief Aplicación Spring Boot de SignBB. */
 package org.signbb.backend;

@@ -1,2 +1,2 @@
-/** Contiene toda la funcionalidad asociada al modulo de seguridad */
+/** @brief Contiene toda la funcionalidad asociada al modulo de seguridad */
 package org.signbb.backend.seguridad;

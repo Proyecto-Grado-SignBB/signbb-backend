@@ -8,6 +8,8 @@ on:
     paths:
       - 'backend/src/main/java/**'
       - 'Doxyfile'
+      - 'README.md'
+      - 'contenedores/MANUAL_CONTENEDORES.md'
       - '.github/workflows/docs.yml'
 
 permissions:
@@ -19,7 +21,7 @@ concurrency:
 
 jobs:
   doxygen:
-    runs-on: ubuntu-latest
+    runs-on: 1.18.0
     steps:
       - name: Checkout
         uses: actions/checkout@v4

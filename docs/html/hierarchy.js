@@ -29,10 +29,8 @@ var hierarchy =
     [ "org.signbb.backend.observaciones.datos.entidades.ObservacionEntity", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1entidades_1_1ObservacionEntity.html", null ],
     [ "org.signbb.backend.reglas.modelo.ReglaClinica", "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html", null ],
     [ "org.signbb.backend.navegacion.modelo.RepositorioSesion", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html", [
+      [ "org.signbb.backend.cache.RepositorioSesionRedis", "classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html", null ],
       [ "org.signbb.backend.navegacion.modelo.RepositorioSesionMemoria", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesionMemoria.html", null ]
-    ] ],
-    [ "RepositorioSesion", null, [
-      [ "org.signbb.backend.cache.RepositorioSesionRedis", "classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html", null ]
     ] ],
     [ "org.signbb.backend.cache.ResolvedorContenidoClinico", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico.html", null ],
     [ "org.signbb.backend.navegacion.modelo.Respuesta", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html", null ],

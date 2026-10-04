@@ -1,7 +1,7 @@
 var annotated_dup =
 [
-    [ "org", null, [
-      [ "signbb", null, [
+    [ "org", "namespaceorg.html", [
+      [ "signbb", "namespaceorg_1_1signbb.html", [
         [ "backend", "namespaceorg_1_1signbb_1_1backend.html", [
           [ "cache", null, [
             [ "CacheNoDisponibleException", "classorg_1_1signbb_1_1backend_1_1cache_1_1CacheNoDisponibleException.html", null ],

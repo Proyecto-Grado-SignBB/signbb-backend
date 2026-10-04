@@ -1,2 +1,2 @@
-/** Módulo del motor de reglas clínicas. */
+/** @brief Módulo del motor de reglas clínicas. */
 package org.signbb.backend.reglas;

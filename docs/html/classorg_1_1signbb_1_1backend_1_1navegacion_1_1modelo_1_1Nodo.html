@@ -3,16 +3,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>SignBB: Referencia de la clase org.signbb.backend.navegacion.modelo.Nodo</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="jquery.js"></script>
-<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -33,23 +33,47 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Generado por Doxygen 1.9.8 -->
+<!-- Generado por Doxygen 1.18.0 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-var searchBox = new SearchBox("searchBox", "search/",'.html');
-/* @license-end */
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
-<script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function() {
-  initMenu('',true,false,'search.php','Buscar');
-  $(document).ready(function() { init_search(); });
-});
-/* @license-end */
-</script>
-<div id="main-nav"></div>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
 </div><!-- top -->
 <div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
@@ -57,21 +81,16 @@ $(function() {
       <div id="nav-sync" class="sync"></div>
     </div>
   </div>
-  <div id="splitbar" style="-moz-user-select:none;" 
-       class="ui-resizable-handle">
+  <div id="splitbar" class="ui-resizable-handle">
   </div>
 </div>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html',''); initResizable(); });
-/* @license-end */
+document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html','','classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo-members'); });
 </script>
+<div id="container">
 <div id="doc-content">
 <!-- window showing the filter options -->
-<div id="MSearchSelectWindow"
-     onmouseover="return searchBox.OnSearchSelectShow()"
-     onmouseout="return searchBox.OnSearchSelectHide()"
-     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<div id="MSearchSelectWindow">
 </div>
 
 <!-- iframe showing the search results (closed by default) -->
@@ -89,91 +108,70 @@ $(document).ready(function(){initNavTree('classorg_1_1signbb_1_1backend_1_1naveg
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-methods">Métodos públicos</a> &#124;
-<a href="#pub-static-attribs">Atributos públicos estáticos</a> &#124;
-<a href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo-members.html">Lista de todos los miembros</a>  </div>
   <div class="headertitle"><div class="title">Referencia de la clase org.signbb.backend.navegacion.modelo.Nodo</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>TAD Nodo del Grafo Clínico (Sección 2 del documento de diseño).  
- <a href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#details">Más...</a></p>
+<p>TAD <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html" title="TAD Nodo del Grafo Clínico (Sección 2 del documento de diseño).">Nodo</a> del Grafo Clínico (Sección 2 del documento de diseño).  
+ <a href="#details">Más...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Métodos públicos</h2></td></tr>
-<tr class="memitem:a989f7144539269fde9418584743120af" id="r_a989f7144539269fde9418584743120af"><td class="memItemLeft" align="right" valign="top"><a id="a989f7144539269fde9418584743120af" name="a989f7144539269fde9418584743120af"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Nodo</b> (String id, String tipo, String contenido)</td></tr>
+<tr class="memitem:a989f7144539269fde9418584743120af" id="r_a989f7144539269fde9418584743120af"><td class="memItemLeft"><a id="a989f7144539269fde9418584743120af" name="a989f7144539269fde9418584743120af"></a>
+&#160;</td><td class="memItemRight"><b>Nodo</b> (String id, String tipo, String contenido)</td></tr>
 <tr class="memdesc:a989f7144539269fde9418584743120af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor con peso por defecto (0) y sin archivos adjuntos. <br /></td></tr>
-<tr class="separator:a989f7144539269fde9418584743120af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20be0adf142333adb821eeb1323ffaa5" id="r_a20be0adf142333adb821eeb1323ffaa5"><td class="memItemLeft" align="right" valign="top"><a id="a20be0adf142333adb821eeb1323ffaa5" name="a20be0adf142333adb821eeb1323ffaa5"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Nodo</b> (String id, String tipo, String contenido, int peso)</td></tr>
+<tr class="memitem:a20be0adf142333adb821eeb1323ffaa5" id="r_a20be0adf142333adb821eeb1323ffaa5"><td class="memItemLeft"><a id="a20be0adf142333adb821eeb1323ffaa5" name="a20be0adf142333adb821eeb1323ffaa5"></a>
+&#160;</td><td class="memItemRight"><b>Nodo</b> (String id, String tipo, String contenido, int peso)</td></tr>
 <tr class="memdesc:a20be0adf142333adb821eeb1323ffaa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor con peso explícito y sin archivos adjuntos. <br /></td></tr>
-<tr class="separator:a20be0adf142333adb821eeb1323ffaa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4256523919dbfb28cea16c82f749cb1" id="r_ad4256523919dbfb28cea16c82f749cb1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#ad4256523919dbfb28cea16c82f749cb1">Nodo</a> (String id, String tipo, String contenido, int peso, boolean archivos, List&lt; String &gt; src)</td></tr>
+<tr class="memitem:ad4256523919dbfb28cea16c82f749cb1" id="r_ad4256523919dbfb28cea16c82f749cb1"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ad4256523919dbfb28cea16c82f749cb1">Nodo</a> (String id, String tipo, String contenido, int peso, boolean archivos, List&lt; String &gt; src)</td></tr>
 <tr class="memdesc:ad4256523919dbfb28cea16c82f749cb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor completo: permite marcar el nodo como una pregunta con imágenes de apoyo (<code class="JavaDocCode">archivos</code>) y sus rutas (<code class="JavaDocCode">src</code>).  <br /></td></tr>
-<tr class="separator:ad4256523919dbfb28cea16c82f749cb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae1e6b5a22c6314464aa82cf989bcd21" id="r_aae1e6b5a22c6314464aa82cf989bcd21"><td class="memItemLeft" align="right" valign="top"><a id="aae1e6b5a22c6314464aa82cf989bcd21" name="aae1e6b5a22c6314464aa82cf989bcd21"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Nodo</b> (String id, String tipo, String contenido, int peso, boolean archivos, List&lt; String &gt; src, String tipoInteraccion)</td></tr>
+<tr class="memitem:aae1e6b5a22c6314464aa82cf989bcd21" id="r_aae1e6b5a22c6314464aa82cf989bcd21"><td class="memItemLeft"><a id="aae1e6b5a22c6314464aa82cf989bcd21" name="aae1e6b5a22c6314464aa82cf989bcd21"></a>
+&#160;</td><td class="memItemRight"><b>Nodo</b> (String id, String tipo, String contenido, int peso, boolean archivos, List&lt; String &gt; src, String tipoInteraccion)</td></tr>
 <tr class="memdesc:aae1e6b5a22c6314464aa82cf989bcd21"><td class="mdescLeft">&#160;</td><td class="mdescRight">MODIFICADO: constructor completo con override explícito de <code class="JavaDocCode">tipoInteraccion</code> (nulo si el grafo no lo especifica para este nodo). <br /></td></tr>
-<tr class="separator:aae1e6b5a22c6314464aa82cf989bcd21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65f237802a77131279b4b57f0928ee20" id="r_a65f237802a77131279b4b57f0928ee20"><td class="memItemLeft" align="right" valign="top"><a id="a65f237802a77131279b4b57f0928ee20" name="a65f237802a77131279b4b57f0928ee20"></a>
-String&#160;</td><td class="memItemRight" valign="bottom"><b>getId</b> ()</td></tr>
+<tr class="memitem:a65f237802a77131279b4b57f0928ee20" id="r_a65f237802a77131279b4b57f0928ee20"><td class="memItemLeft"><a id="a65f237802a77131279b4b57f0928ee20" name="a65f237802a77131279b4b57f0928ee20"></a>
+String&#160;</td><td class="memItemRight"><b>getId</b> ()</td></tr>
 <tr class="memdesc:a65f237802a77131279b4b57f0928ee20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Id único del nodo. <br /></td></tr>
-<tr class="separator:a65f237802a77131279b4b57f0928ee20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37db948b982079b5211b41e7a4e14433" id="r_a37db948b982079b5211b41e7a4e14433"><td class="memItemLeft" align="right" valign="top"><a id="a37db948b982079b5211b41e7a4e14433" name="a37db948b982079b5211b41e7a4e14433"></a>
-String&#160;</td><td class="memItemRight" valign="bottom"><b>getTipo</b> ()</td></tr>
+<tr class="memitem:a37db948b982079b5211b41e7a4e14433" id="r_a37db948b982079b5211b41e7a4e14433"><td class="memItemLeft"><a id="a37db948b982079b5211b41e7a4e14433" name="a37db948b982079b5211b41e7a4e14433"></a>
+String&#160;</td><td class="memItemRight"><b>getTipo</b> ()</td></tr>
 <tr class="memdesc:a37db948b982079b5211b41e7a4e14433"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tipo del nodo: <code class="JavaDocCode">pregunta</code>, <code class="JavaDocCode">recomendacion</code>, <code class="JavaDocCode">bloqueo</code> o <code class="JavaDocCode">consulta_medica</code>. <br /></td></tr>
-<tr class="separator:a37db948b982079b5211b41e7a4e14433"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4674a825f21134246464313314a607b2" id="r_a4674a825f21134246464313314a607b2"><td class="memItemLeft" align="right" valign="top"><a id="a4674a825f21134246464313314a607b2" name="a4674a825f21134246464313314a607b2"></a>
-String&#160;</td><td class="memItemRight" valign="bottom"><b>getContenido</b> ()</td></tr>
+<tr class="memitem:a4674a825f21134246464313314a607b2" id="r_a4674a825f21134246464313314a607b2"><td class="memItemLeft"><a id="a4674a825f21134246464313314a607b2" name="a4674a825f21134246464313314a607b2"></a>
+String&#160;</td><td class="memItemRight"><b>getContenido</b> ()</td></tr>
 <tr class="memdesc:a4674a825f21134246464313314a607b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Texto mostrado al cuidador. <br /></td></tr>
-<tr class="separator:a4674a825f21134246464313314a607b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c38f03b138bdb1a70865ac170c97561" id="r_a2c38f03b138bdb1a70865ac170c97561"><td class="memItemLeft" align="right" valign="top"><a id="a2c38f03b138bdb1a70865ac170c97561" name="a2c38f03b138bdb1a70865ac170c97561"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getPeso</b> ()</td></tr>
+<tr class="memitem:a2c38f03b138bdb1a70865ac170c97561" id="r_a2c38f03b138bdb1a70865ac170c97561"><td class="memItemLeft"><a id="a2c38f03b138bdb1a70865ac170c97561" name="a2c38f03b138bdb1a70865ac170c97561"></a>
+int&#160;</td><td class="memItemRight"><b>getPeso</b> ()</td></tr>
 <tr class="memdesc:a2c38f03b138bdb1a70865ac170c97561"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peso de urgencia del nodo. <br /></td></tr>
-<tr class="separator:a2c38f03b138bdb1a70865ac170c97561"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0bbd1689fdbcb6ee74e8a356911e7c12" id="r_a0bbd1689fdbcb6ee74e8a356911e7c12"><td class="memItemLeft" align="right" valign="top"><a id="a0bbd1689fdbcb6ee74e8a356911e7c12" name="a0bbd1689fdbcb6ee74e8a356911e7c12"></a>
-boolean&#160;</td><td class="memItemRight" valign="bottom"><b>tieneArchivos</b> ()</td></tr>
+<tr class="memitem:a0bbd1689fdbcb6ee74e8a356911e7c12" id="r_a0bbd1689fdbcb6ee74e8a356911e7c12"><td class="memItemLeft"><a id="a0bbd1689fdbcb6ee74e8a356911e7c12" name="a0bbd1689fdbcb6ee74e8a356911e7c12"></a>
+boolean&#160;</td><td class="memItemRight"><b>tieneArchivos</b> ()</td></tr>
 <tr class="memdesc:a0bbd1689fdbcb6ee74e8a356911e7c12"><td class="mdescLeft">&#160;</td><td class="mdescRight">True si la pregunta tiene imágenes de apoyo asociadas (<code class="JavaDocCode">src</code>). <br /></td></tr>
-<tr class="separator:a0bbd1689fdbcb6ee74e8a356911e7c12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6cd8e440f3b8ba14473032f39610eb99" id="r_a6cd8e440f3b8ba14473032f39610eb99"><td class="memItemLeft" align="right" valign="top"><a id="a6cd8e440f3b8ba14473032f39610eb99" name="a6cd8e440f3b8ba14473032f39610eb99"></a>
-List&lt; String &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getSrc</b> ()</td></tr>
-<tr class="memdesc:a6cd8e440f3b8ba14473032f39610eb99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rutas de las imágenes de apoyo (vacía si <code><a class="el" href="">tieneArchivos()</a></code> es false). <br /></td></tr>
-<tr class="separator:a6cd8e440f3b8ba14473032f39610eb99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adef2f5061922890cd5d4ecad80f1894f" id="r_adef2f5061922890cd5d4ecad80f1894f"><td class="memItemLeft" align="right" valign="top"><a id="adef2f5061922890cd5d4ecad80f1894f" name="adef2f5061922890cd5d4ecad80f1894f"></a>
-String&#160;</td><td class="memItemRight" valign="bottom"><b>getTipoInteraccion</b> ()</td></tr>
+<tr class="memitem:a6cd8e440f3b8ba14473032f39610eb99" id="r_a6cd8e440f3b8ba14473032f39610eb99"><td class="memItemLeft"><a id="a6cd8e440f3b8ba14473032f39610eb99" name="a6cd8e440f3b8ba14473032f39610eb99"></a>
+List&lt; String &gt;&#160;</td><td class="memItemRight"><b>getSrc</b> ()</td></tr>
+<tr class="memdesc:a6cd8e440f3b8ba14473032f39610eb99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rutas de las imágenes de apoyo (vacía si <code><a class="el" href="#a0bbd1689fdbcb6ee74e8a356911e7c12">tieneArchivos()</a></code> es false). <br /></td></tr>
+<tr class="memitem:adef2f5061922890cd5d4ecad80f1894f" id="r_adef2f5061922890cd5d4ecad80f1894f"><td class="memItemLeft"><a id="adef2f5061922890cd5d4ecad80f1894f" name="adef2f5061922890cd5d4ecad80f1894f"></a>
+String&#160;</td><td class="memItemRight"><b>getTipoInteraccion</b> ()</td></tr>
 <tr class="memdesc:adef2f5061922890cd5d4ecad80f1894f"><td class="mdescLeft">&#160;</td><td class="mdescRight">MODIFICADO: override explícito de <code class="JavaDocCode">tipoInteraccion</code> declarado en la metadata del grafo para este nodo (<code class="JavaDocCode">SI_NO</code>, <code class="JavaDocCode">SELECCION_UNICA</code> o <code class="JavaDocCode">SELECCION_MULTIPLE</code>), o <code class="JavaDocCode">null</code> si el grafo no lo especifica (el valor por defecto se infiere en <code class="JavaDocCode">RecorridoDTO.desde</code> a partir de las opciones del nodo). <br /></td></tr>
-<tr class="separator:adef2f5061922890cd5d4ecad80f1894f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74393acbe922e01e7cb89433be36f206" id="r_a74393acbe922e01e7cb89433be36f206"><td class="memItemLeft" align="right" valign="top"><a id="a74393acbe922e01e7cb89433be36f206" name="a74393acbe922e01e7cb89433be36f206"></a>
-boolean&#160;</td><td class="memItemRight" valign="bottom"><b>esTerminal</b> ()</td></tr>
+<tr class="memitem:a74393acbe922e01e7cb89433be36f206" id="r_a74393acbe922e01e7cb89433be36f206"><td class="memItemLeft"><a id="a74393acbe922e01e7cb89433be36f206" name="a74393acbe922e01e7cb89433be36f206"></a>
+boolean&#160;</td><td class="memItemRight"><b>esTerminal</b> ()</td></tr>
 <tr class="memdesc:a74393acbe922e01e7cb89433be36f206"><td class="mdescLeft">&#160;</td><td class="mdescRight">Un nodo es terminal si no es una pregunta. <br /></td></tr>
-<tr class="separator:a74393acbe922e01e7cb89433be36f206"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a953cfc2ed1e7ca842d925e3d3b102205" id="r_a953cfc2ed1e7ca842d925e3d3b102205"><td class="memItemLeft" align="right" valign="top"><a id="a953cfc2ed1e7ca842d925e3d3b102205" name="a953cfc2ed1e7ca842d925e3d3b102205"></a>
-boolean&#160;</td><td class="memItemRight" valign="bottom"><b>equals</b> (Object o)</td></tr>
-<tr class="separator:a953cfc2ed1e7ca842d925e3d3b102205"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5fb9e6ce2e63fae01e75b3c192fe067" id="r_aa5fb9e6ce2e63fae01e75b3c192fe067"><td class="memItemLeft" align="right" valign="top"><a id="aa5fb9e6ce2e63fae01e75b3c192fe067" name="aa5fb9e6ce2e63fae01e75b3c192fe067"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>hashCode</b> ()</td></tr>
-<tr class="separator:aa5fb9e6ce2e63fae01e75b3c192fe067"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abeff95f600a5f49ae5f0de83fd1769e5" id="r_abeff95f600a5f49ae5f0de83fd1769e5"><td class="memItemLeft" align="right" valign="top"><a id="abeff95f600a5f49ae5f0de83fd1769e5" name="abeff95f600a5f49ae5f0de83fd1769e5"></a>
-String&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> ()</td></tr>
-<tr class="separator:abeff95f600a5f49ae5f0de83fd1769e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a953cfc2ed1e7ca842d925e3d3b102205" id="r_a953cfc2ed1e7ca842d925e3d3b102205"><td class="memItemLeft"><a id="a953cfc2ed1e7ca842d925e3d3b102205" name="a953cfc2ed1e7ca842d925e3d3b102205"></a>
+boolean&#160;</td><td class="memItemRight"><b>equals</b> (Object o)</td></tr>
+<tr class="memitem:aa5fb9e6ce2e63fae01e75b3c192fe067" id="r_aa5fb9e6ce2e63fae01e75b3c192fe067"><td class="memItemLeft"><a id="aa5fb9e6ce2e63fae01e75b3c192fe067" name="aa5fb9e6ce2e63fae01e75b3c192fe067"></a>
+int&#160;</td><td class="memItemRight"><b>hashCode</b> ()</td></tr>
+<tr class="memitem:abeff95f600a5f49ae5f0de83fd1769e5" id="r_abeff95f600a5f49ae5f0de83fd1769e5"><td class="memItemLeft"><a id="abeff95f600a5f49ae5f0de83fd1769e5" name="abeff95f600a5f49ae5f0de83fd1769e5"></a>
+String&#160;</td><td class="memItemRight"><b>toString</b> ()</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Atributos públicos estáticos</h2></td></tr>
-<tr class="memitem:a872eb074d51806c826829b2f869a8fdb" id="r_a872eb074d51806c826829b2f869a8fdb"><td class="memItemLeft" align="right" valign="top"><a id="a872eb074d51806c826829b2f869a8fdb" name="a872eb074d51806c826829b2f869a8fdb"></a>
-static final Set&lt; String &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>TIPOS_VALIDOS</b> = Set.of(&quot;pregunta&quot;, &quot;recomendacion&quot;, &quot;bloqueo&quot;, &quot;consulta_medica&quot;)</td></tr>
+<tr class="memitem:a872eb074d51806c826829b2f869a8fdb" id="r_a872eb074d51806c826829b2f869a8fdb"><td class="memItemLeft"><a id="a872eb074d51806c826829b2f869a8fdb" name="a872eb074d51806c826829b2f869a8fdb"></a>
+static final Set&lt; String &gt;&#160;</td><td class="memItemRight"><b>TIPOS_VALIDOS</b> = Set.of(&quot;pregunta&quot;, &quot;recomendacion&quot;, &quot;bloqueo&quot;, &quot;consulta_medica&quot;)</td></tr>
 <tr class="memdesc:a872eb074d51806c826829b2f869a8fdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tipos de nodo admitidos. <br /></td></tr>
-<tr class="separator:a872eb074d51806c826829b2f869a8fdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3758f7b81004c118d2092459cb1e8ac" id="r_aa3758f7b81004c118d2092459cb1e8ac"><td class="memItemLeft" align="right" valign="top">static final Set&lt; String &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#aa3758f7b81004c118d2092459cb1e8ac">TIPOS_INTERACCION_VALIDOS</a></td></tr>
+<tr class="memitem:aa3758f7b81004c118d2092459cb1e8ac" id="r_aa3758f7b81004c118d2092459cb1e8ac"><td class="memItemLeft">static final Set&lt; String &gt;&#160;</td><td class="memItemRight"><a class="el" href="#aa3758f7b81004c118d2092459cb1e8ac">TIPOS_INTERACCION_VALIDOS</a></td></tr>
 <tr class="memdesc:aa3758f7b81004c118d2092459cb1e8ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">MODIFICADO: valores válidos para el override opcional de <code class="JavaDocCode">tipoInteraccion</code> en la metadata del grafo.  <br /></td></tr>
-<tr class="separator:aa3758f7b81004c118d2092459cb1e8ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Descripción detallada</h2>
-<div class="textblock"><p>TAD Nodo del Grafo Clínico (Sección 2 del documento de diseño). </p>
-<p>Representa una pregunta al padre o un nodo terminal (recomendación, bloqueo, consulta médica). La identidad de un Nodo está dada únicamente por su <code class="JavaDocCode">id</code>: dos nodos con el mismo id se consideran iguales.</p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
+<div class="textblock"><p>TAD <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html" title="TAD Nodo del Grafo Clínico (Sección 2 del documento de diseño).">Nodo</a> del Grafo Clínico (Sección 2 del documento de diseño). </p>
+<p>Representa una pregunta al padre o un nodo terminal (recomendación, bloqueo, consulta médica). La identidad de un <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html" title="TAD Nodo del Grafo Clínico (Sección 2 del documento de diseño).">Nodo</a> está dada únicamente por su <code class="JavaDocCode">id</code>: dos nodos con el mismo id se consideran iguales.</p>
 <p>Migrado desde <code class="JavaDocCode">src/nodo.py</code>. </p>
-</div><h2 class="groupheader">Documentación de constructores y destructores</h2>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Documentación de constructores y destructores</h2>
 <a id="ad4256523919dbfb28cea16c82f749cb1" name="ad4256523919dbfb28cea16c82f749cb1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad4256523919dbfb28cea16c82f749cb1">&#9670;&#160;</a></span>Nodo()</h2>
 
@@ -183,43 +181,32 @@ static final Set&lt; String &gt;&#160;</td><td class="memItemRight" valign="bott
         <tr>
           <td class="memname">org.signbb.backend.navegacion.modelo.Nodo.Nodo </td>
           <td>(</td>
-          <td class="paramtype">String&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>id</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">String&#160;</td>
-          <td class="paramname"><em>tipo</em>, </td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>tipo</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">String&#160;</td>
-          <td class="paramname"><em>contenido</em>, </td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>contenido</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>peso</em>, </td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>peso</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">boolean&#160;</td>
-          <td class="paramname"><em>archivos</em>, </td>
+          <td class="paramtype">boolean</td>          <td class="paramname"><span class="paramname"><em>archivos</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">List&lt; String &gt;&#160;</td>
-          <td class="paramname"><em>src</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="paramtype">List&lt; String &gt;</td>          <td class="paramname"><span class="paramname"><em>src</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -229,7 +216,7 @@ static final Set&lt; String &gt;&#160;</td><td class="memItemRight" valign="bott
 
 </div>
 </div>
-<h2 class="groupheader">Documentación de datos miembro</h2>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Documentación de datos miembro</h2>
 <a id="aa3758f7b81004c118d2092459cb1e8ac" name="aa3758f7b81004c118d2092459cb1e8ac"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa3758f7b81004c118d2092459cb1e8ac">&#9670;&#160;</a></span>TIPOS_INTERACCION_VALIDOS</h2>
 
@@ -245,12 +232,12 @@ static final Set&lt; String &gt;&#160;</td><td class="memItemRight" valign="bott
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Valor inicial:</b><div class="fragment"><div class="line">= Set.of(<span class="stringliteral">&quot;SI_NO&quot;</span>, <span class="stringliteral">&quot;SELECCION_UNICA&quot;</span>,</div>
-<div class="line">            <span class="stringliteral">&quot;SELECCION_MULTIPLE&quot;</span>)</div>
+<b>Valor inicial:</b><div class="fragment"><div class="line">                                          = Set.of(<span class="stringliteral">&quot;SI_NO&quot;</span>, <span class="stringliteral">&quot;SELECCION_UNICA&quot;</span>,</div>
+<div class="line"><span class="stringliteral">&quot;SELECCION_MULTIPLE&quot;</span>)</div>
 </div><!-- fragment -->
 <p>MODIFICADO: valores válidos para el override opcional de <code class="JavaDocCode">tipoInteraccion</code> en la metadata del grafo. </p>
 <p>Cuando es <code class="JavaDocCode">null</code>, <code class="JavaDocCode">RecorridoDTO.desde</code> lo infiere a partir de las opciones del nodo. </p>
@@ -262,11 +249,19 @@ static final Set&lt; String &gt;&#160;</td><td class="memItemRight" valign="bott
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>org</b></li><li class="navelem"><b>signbb</b></li><li class="navelem"><a class="el" href="namespaceorg_1_1signbb_1_1backend.html">backend</a></li><li class="navelem"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion.html">navegacion</a></li><li class="navelem"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html">modelo</a></li><li class="navelem"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html">Nodo</a></li>
-    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="navelem"><a href="namespaceorg.html">org</a></li><li class="navelem"><a href="namespaceorg_1_1signbb.html">signbb</a></li><li class="navelem"><a href="namespaceorg_1_1signbb_1_1backend.html">backend</a></li><li class="navelem"><a href="namespaceorg_1_1signbb_1_1backend_1_1navegacion.html">navegacion</a></li><li class="navelem"><a href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html">modelo</a></li><li class="navelem"><a href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html">Nodo</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
   </ul>
 </div>
 </body>
