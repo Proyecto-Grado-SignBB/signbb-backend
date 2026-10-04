@@ -2,14 +2,14 @@
   "rules": {
     "R1": {
       "nombre": "Propiedades de 1NF completas",
-      "condiciones": {
-        "and": [
+      "condiciones": [
+        [
           { "idNodo": "q_1nf", "respuesta": "CELDA_UNICA" },
           { "idNodo": "q_1nf", "respuesta": "CLAVE_PRIMARIA" },
           { "idNodo": "q_1nf", "respuesta": "SIN_FILAS_O_COLUMNAS_DUPLICADAS" },
           { "idNodo": "q_1nf", "respuesta": "VALOR_UNICO_POR_PAR" }
         ]
-      },
+      ],
       "nodoDestino": "q_2nf",
       "nivel": "CONSULTAR_MEDICO",
       "metadata": {

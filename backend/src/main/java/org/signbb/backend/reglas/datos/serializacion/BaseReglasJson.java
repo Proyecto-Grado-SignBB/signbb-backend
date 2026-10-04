@@ -19,10 +19,11 @@ import tools.jackson.databind.JsonNode;
  * parsers (valores inválidos lanzan {@link IllegalArgumentException}).
  *
  * <p>
- * {@code condiciones} se conserva como {@link JsonNode} porque el formato
- * admite tanto un arreglo plano (AND implícito) como objetos {@code and}/{@code or}
- * anidados a cualquier profundidad; la expresión se interpreta y se
- * reconstruye en {@link BaseReglasMapper}.
+ * {@code condiciones} se conserva como {@link JsonNode} porque la premisa se
+ * expresa en forma normal disyuntiva (FND): un arreglo de casos, donde cada
+ * caso es un arreglo de condiciones. El formato plano (arreglo de condiciones)
+ * se acepta como un único caso por compatibilidad; la expresión se interpreta
+ * y se reconstruye en {@link BaseReglasMapper}.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record BaseReglasJson(Map<String, ReglaJson> rules) {

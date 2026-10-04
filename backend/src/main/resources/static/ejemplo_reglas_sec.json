@@ -62,23 +62,28 @@
     },
     "R5": {
       "nombre": "Archivo de riesgo con doble extensión o macros (AND/OR)",
-      "condiciones": {
-        "and": [
+      "condiciones": [
+        [
           { "idNodo": "O", "respuesta": "Verificar archivo sospechoso" },
-          {
-            "or": [
-              { "idNodo": "A1", "respuesta": "Descargado de un enlace" },
-              { "idNodo": "A1", "respuesta": "Enviado por un contacto" }
-            ]
-          },
-          {
-            "or": [
-              { "idNodo": "A2", "respuesta": "Si" },
-              { "idNodo": "A3", "respuesta": "Si" }
-            ]
-          }
+          { "idNodo": "A1", "respuesta": "Descargado de un enlace" },
+          { "idNodo": "A2", "respuesta": "Si" }
+        ],
+        [
+          { "idNodo": "O", "respuesta": "Verificar archivo sospechoso" },
+          { "idNodo": "A1", "respuesta": "Descargado de un enlace" },
+          { "idNodo": "A3", "respuesta": "Si" }
+        ],
+        [
+          { "idNodo": "O", "respuesta": "Verificar archivo sospechoso" },
+          { "idNodo": "A1", "respuesta": "Enviado por un contacto" },
+          { "idNodo": "A2", "respuesta": "Si" }
+        ],
+        [
+          { "idNodo": "O", "respuesta": "Verificar archivo sospechoso" },
+          { "idNodo": "A1", "respuesta": "Enviado por un contacto" },
+          { "idNodo": "A3", "respuesta": "Si" }
         ]
-      },
+      ],
       "nodoDestino": "AT1",
       "nivel": "URGENCIA",
       "metadata": {

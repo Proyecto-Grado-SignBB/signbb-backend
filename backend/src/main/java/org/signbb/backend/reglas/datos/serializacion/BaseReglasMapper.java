@@ -8,8 +8,8 @@ import java.util.Map;
 import org.signbb.backend.navegacion.modelo.GrafoClinico;
 import org.signbb.backend.navegacion.modelo.Nodo;
 import org.signbb.backend.reglas.modelo.BaseReglas;
+import org.signbb.backend.reglas.modelo.Caso;
 import org.signbb.backend.reglas.modelo.Condicion;
-import org.signbb.backend.reglas.modelo.ExpresionCondicion;
 import org.signbb.backend.reglas.modelo.NivelAlerta;
 import org.signbb.backend.reglas.modelo.ReglaClinica;
 
@@ -23,9 +23,11 @@ import tools.jackson.databind.node.ObjectNode;
  * {@link BaseReglasJson}.
  *
  * <p>
- * El {@code nodoDestino} de cada regla se persiste como id (referencia) y se
- * resuelve contra el {@link GrafoClinico} correspondiente al reconstruir el
- * TAD, fallando de inmediato si el nodo no existe en el grafo.
+ * La premisa de cada regla se expresa en forma normal disyuntiva (FND): una
+ * lista de casos (disyunción) donde cada caso es una lista de condiciones
+ * (conjunción). El {@code nodoDestino} de cada regla se persiste como id
+ * (referencia) y se resuelve contra el {@link GrafoClinico} correspondiente al
+ * reconstruir el TAD, fallando de inmediato si el nodo no existe en el grafo.
  */
 public final class BaseReglasMapper {
 
@@ -47,10 +49,10 @@ public final class BaseReglasMapper {
                     .orElseThrow(() -> new IllegalArgumentException(
                             "nodoDestino '" + reglaJson.nodoDestino()
                                     + "' no existe en el grafo"));
-            tad.agregarRegla(new ReglaClinica(
+            tad.agregarRegla(ReglaClinica.conCasos(
                     e.getKey(),
                     reglaJson.nombre(),
-                    buildExpresion(reglaJson.condiciones()),
+                    buildCasos(reglaJson.condiciones()),
                     destino,
                     nivel));
         }
@@ -63,7 +65,7 @@ public final class BaseReglasMapper {
         for (ReglaClinica regla : tad.todasLasReglas()) {
             reglas.put(regla.getIdRegla(), new BaseReglasJson.ReglaJson(
                     regla.getNombre(),
-                    expresionAJson(regla.getExpresion()),
+                    casosAJson(regla.getCasos()),
                     regla.getNodoDestino().getId(),
                     regla.getNivel().name(),
                     Map.of()));
@@ -72,70 +74,66 @@ public final class BaseReglasMapper {
     }
 
     /**
-     * Interpreta el JSON de {@code condiciones} como una {@link ExpresionCondicion}:
-     * un arreglo es un {@code AND} implícito (compatibilidad con el formato plano
-     * previo); un objeto con {@code "and"} o {@code "or"} produce
-     * {@link ExpresionCondicion.Y} o {@link ExpresionCondicion.O} de sus operandos
-     * (anidables a cualquier profundidad); un objeto con {@code idNodo}/{@code respuesta}
-     * es una hoja {@link Condicion}.
+     * Interpreta el JSON de {@code condiciones} como la FND de una regla: un
+     * arreglo de arreglos, donde cada arreglo interno es un caso (conjunción).
+     * Por compatibilidad con el formato plano previo, un arreglo de objetos
+     * {@code {idNodo, respuesta}} se interpreta como un único caso. Cualquier
+     * otra forma (vacía, mixta, u objeto {@code and}/{@code or}) es rechazada.
      */
-    private static ExpresionCondicion buildExpresion(JsonNode nodo) {
+    private static List<Caso> buildCasos(JsonNode nodo) {
         if (nodo == null || nodo.isNull() || nodo.isMissingNode()) {
             throw new IllegalArgumentException(
                     "la regla no tiene condiciones o vienen vacías");
         }
-        if (nodo.isArray()) {
-            return new ExpresionCondicion.Y(buildOperandos(nodo));
+        if (!nodo.isArray() || nodo.size() == 0) {
+            throw new IllegalArgumentException(
+                    "las condiciones deben ser un arreglo no vacío de casos");
         }
-        if (nodo.has("and")) {
-            return new ExpresionCondicion.Y(buildOperandos(nodo.get("and")));
+        if (nodo.get(0).isArray()) {
+            List<Caso> casos = new ArrayList<>();
+            for (JsonNode hijo : nodo) {
+                casos.add(buildCaso(hijo));
+            }
+            return casos;
         }
-        if (nodo.has("or")) {
-            return new ExpresionCondicion.O(buildOperandos(nodo.get("or")));
+        if (nodo.get(0).isObject()) {
+            return List.of(buildCaso(nodo));
         }
-        return new Condicion(
-                nodo.path("idNodo").asText(),
-                nodo.path("respuesta").asText());
+        throw new IllegalArgumentException(
+                "cada caso debe ser un arreglo de condiciones o un objeto {idNodo, respuesta}");
     }
 
-    /** Mapea un arreglo JSON de sub-expresiones a la lista de operandos. */
-    private static List<ExpresionCondicion> buildOperandos(JsonNode arreglo) {
+    /** Mapea un arreglo JSON de condiciones a la conjunción {@link Caso}. */
+    private static Caso buildCaso(JsonNode arreglo) {
         if (arreglo == null || !arreglo.isArray() || arreglo.size() == 0) {
             throw new IllegalArgumentException(
-                    "el operador and/or requiere un arreglo no vacío de condiciones");
+                    "un caso requiere un arreglo no vacío de condiciones");
         }
-        List<ExpresionCondicion> operandos = new ArrayList<>();
+        List<Condicion> condiciones = new ArrayList<>();
         for (JsonNode hijo : arreglo) {
-            operandos.add(buildExpresion(hijo));
+            if (!hijo.isObject()) {
+                throw new IllegalArgumentException(
+                        "cada condición debe ser un objeto {idNodo, respuesta}");
+            }
+            condiciones.add(new Condicion(
+                    hijo.path("idNodo").asText(),
+                    hijo.path("respuesta").asText()));
         }
-        return operandos;
+        return new Caso(condiciones);
     }
 
-    /** Serializa una {@link ExpresionCondicion} al formato JSON de {@code condiciones}. */
-    private static JsonNode expresionAJson(ExpresionCondicion expresion) {
-        if (expresion instanceof Condicion hoja) {
-            ObjectNode nodo = NODOS.objectNode();
-            nodo.put("idNodo", hoja.idNodo());
-            nodo.put("respuesta", hoja.respuesta());
-            return nodo;
-        }
-        ObjectNode nodo = NODOS.objectNode();
-        if (expresion instanceof ExpresionCondicion.Y y) {
-            nodo.set("and", operandosAJson(y.operandos()));
-        } else if (expresion instanceof ExpresionCondicion.O o) {
-            nodo.set("or", operandosAJson(o.operandos()));
-        } else {
-            throw new IllegalStateException(
-                    "Expresión de condiciones desconocida: " + expresion);
-        }
-        return nodo;
-    }
-
-    /** Serializa una lista de operandos a un arreglo JSON. */
-    private static ArrayNode operandosAJson(List<ExpresionCondicion> operandos) {
+    /** Serializa la FND de una regla al formato JSON de {@code condiciones}. */
+    private static ArrayNode casosAJson(List<Caso> casos) {
         ArrayNode arreglo = NODOS.arrayNode();
-        for (ExpresionCondicion e : operandos) {
-            arreglo.add(expresionAJson(e));
+        for (Caso caso : casos) {
+            ArrayNode casoJson = NODOS.arrayNode();
+            for (Condicion c : caso.condiciones()) {
+                ObjectNode condicion = NODOS.objectNode();
+                condicion.put("idNodo", c.idNodo());
+                condicion.put("respuesta", c.respuesta());
+                casoJson.add(condicion);
+            }
+            arreglo.add(casoJson);
         }
         return arreglo;
     }
