@@ -1,0 +1,80 @@
+{
+  "graph": {
+    "id": "grafo_piel_ictericia",
+    "label": "Evaluación de Ictericia en Bebés Prematuros",
+    "directed": true,
+    "category": ["piel"],
+    "preguntaInicial": "pregunta_coloracion",
+    "metadata": {
+      "autor": "Dra. Catalina Rodríguez",
+      "fechaCreacion": "2026-10-03T10:00:00Z",
+      "descripcion": "Evalúa la coloración amarilla de la piel y los ojos (ictericia) en recién nacidos prematuros y orienta al cuidador según los signos de alarma asociados.",
+      "institucion": "Fundación Canguro",
+      "etiquetaOpcion": "Coloración amarilla"
+    },
+    "nodes": {
+      "pregunta_coloracion": {
+        "label": "¿Observa coloración amarilla en la piel o los ojos del bebé?",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_UNICA",
+          "peso": 95,
+          "archivos": true,
+          "src": [
+            "/media/ictericia-piel.jpg",
+            "/media/ictericia-ojos.jpg"
+          ]
+        }
+      },
+      "pregunta_signos": {
+        "label": "Además de la coloración amarilla, ¿cuáles de estos signos observa en su bebé?",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_MULTIPLE",
+          "peso": 92,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "recomendacion_lactancia": {
+        "label": "La coloración amarilla puede ser normal en los primeros días. Mantenga la lactancia frecuente y comente lo observado en el próximo control con su pediatra.",
+        "metadata": {
+          "tipo": "terminal",
+          "desenlace": "recomendacion",
+          "peso": 30,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "consulta_prioritaria": {
+        "label": "Requiere valoración médica prioritaria. Consulte con su pediatra en las próximas horas.",
+        "metadata": {
+          "tipo": "terminal",
+          "desenlace": "consulta_medica",
+          "peso": 85,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "urgencia_inmediata": {
+        "label": "¡ATENCIÓN! Acuda de inmediato al servicio de urgencias con su bebé. Lleve el carné de control y el registro de alimentación.",
+        "metadata": {
+          "tipo": "terminal",
+          "desenlace": "urgencia",
+          "peso": 100,
+          "archivos": false,
+          "src": []
+        }
+      }
+    },
+    "edges": [
+      { "source": "pregunta_coloracion", "relation": "SI",                   "target": "pregunta_signos",         "directed": true },
+      { "source": "pregunta_coloracion", "relation": "NO",                   "target": "recomendacion_lactancia", "directed": true },
+
+      { "source": "pregunta_signos",     "relation": "NINGUNO",              "target": "recomendacion_lactancia", "directed": true },
+      { "source": "pregunta_signos",     "relation": "COME_MENOS",           "target": "consulta_prioritaria",    "directed": true },
+      { "source": "pregunta_signos",     "relation": "AMARILLO_SE_EXTIENDE", "target": "consulta_prioritaria",    "directed": true },
+      { "source": "pregunta_signos",     "relation": "SOMNOLENCIA",          "target": "urgencia_inmediata",      "directed": true }
+    ]
+  }
+}
