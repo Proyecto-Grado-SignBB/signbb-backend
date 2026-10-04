@@ -10,6 +10,8 @@ on:
       - 'Doxyfile'
       - 'README.md'
       - 'contenedores/MANUAL_CONTENEDORES.md'
+      - 'backend/src/test/java/org/signbb/backend/navegacion/motor/README.md'
+      - 'docs/img/**'
       - '.github/workflows/docs.yml'
 
 permissions:
@@ -21,7 +23,7 @@ concurrency:
 
 jobs:
   doxygen:
-    runs-on: 1.18.0
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,14 +31,22 @@ jobs:
           ref: ${{ github.ref_name }}
           fetch-depth: 0
 
-      - name: Instalar Doxygen (con caché de APT)
-        uses: awalsh128/cache-apt-pkgs-action@v1
-        with:
-          packages: doxygen
-          version: 1.0
+      - name: Instalar Doxygen 1.18.0
+        # Versión fijada: la salida de Doxygen cambia entre versiones (paquetes,
+        # numeración); se ancla para que las docs sean reproducibles.
+        run: |
+          curl -fsSL -o /tmp/doxygen.tar.gz \
+            https://github.com/doxygen/doxygen/releases/download/Release_1_18_0/doxygen-1.18.0.linux.bin.tar.gz
+          tar -xzf /tmp/doxygen.tar.gz -C /tmp
+          sudo cp /tmp/doxygen-1.18.0/bin/doxygen /usr/local/bin/doxygen
+          doxygen --version
 
       - name: Regenerar documentación
-        run: doxygen Doxyfile
+        # Se limpia docs/html para no arrastrar páginas obsoletas que Doxygen
+        # ya no genera (p. ej. al cambiar opciones como IMPLICIT_DIR_DOCS).
+        run: |
+          rm -rf docs/html
+          doxygen Doxyfile
 
       - name: Commit y push de docs/html si hay cambios
         run: |

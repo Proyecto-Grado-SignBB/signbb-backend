@@ -33,6 +33,20 @@ var NAVTREE =
       [ "Acceso rápido", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md9", null ],
       [ "Parámetros de conexión (perfil <span class=\"tt\">docker</span> del backend)", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md10", null ]
     ] ],
+    [ "Pruebas del motor de navegación — grafos de ejemplo", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html", [
+      [ "Cómo ejecutarlas", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md12", null ],
+      [ "Ejemplo 1 — Normalización de base de datos", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md13", [
+        [ "Estructura (<span class=\"tt\">ejemplo_grafo_norm.json</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md14", null ],
+        [ "Reglas (<span class=\"tt\">ejemplo_reglas_norm.json</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md15", null ],
+        [ "Pruebas — <span class=\"tt\">MotorNavegacionNormalizacionTest</span>", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md16", null ]
+      ] ],
+      [ "Ejemplo 2 — Triaje de ciberseguridad", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md18", [
+        [ "Estructura (<span class=\"tt\">ejemplo_grafo_sec.json</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md19", null ],
+        [ "Reglas (<span class=\"tt\">ejemplo_reglas_sec.json</span>, todas <span class=\"tt\">URGENCIA</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md20", null ],
+        [ "Pruebas — <span class=\"tt\">MotorNavegacionSeguridadTest</span>", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md21", null ]
+      ] ],
+      [ "Convenciones del motor que asumen las pruebas", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md23", null ]
+    ] ],
     [ "Paquetes", "namespaces.html", [
       [ "Lista de paquetes", "namespaces.html", "namespaces_dup" ],
       [ "Miembros de paquete", "namespacemembers.html", [
