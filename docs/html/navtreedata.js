@@ -26,7 +26,7 @@ var NAVTREE =
 [
   [ "SignBB", "index.html", [
     [ "Paquetes", "namespaces.html", [
-      [ "Lista de paquetes", "namespaces.html", "namespaces_dup" ],
+      [ "Lista de paquetes", "namespaces.html", null ],
       [ "Miembros de paquete", "namespacemembers.html", [
         [ "Todos", "namespacemembers.html", null ],
         [ "Funciones", "namespacemembers_func.html", null ]
@@ -47,10 +47,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html",
-"enumorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1TipoInteraccion.html"
+"annotated.html"
 ];
 
-const SYNCONMSG = 'pulsar para deshabilitar sincronización';
-const SYNCOFFMSG = 'pulsar para habilitar sincronización';
-const LISTOFALLMEMBERS = 'Lista de todos los miembros';
+var SYNCONMSG = 'pulsar para deshabilitar sincronización';
+var SYNCOFFMSG = 'pulsar para habilitar sincronización';

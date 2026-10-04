@@ -3,6 +3,11 @@ var annotated_dup =
     [ "org", null, [
       [ "signbb", null, [
         [ "backend", "namespaceorg_1_1signbb_1_1backend.html", [
+          [ "cache", null, [
+            [ "CacheNoDisponibleException", "classorg_1_1signbb_1_1backend_1_1cache_1_1CacheNoDisponibleException.html", null ],
+            [ "RepositorioSesionRedis", "classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html", "classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis" ],
+            [ "ResolvedorContenidoClinico", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico.html", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico" ]
+          ] ],
           [ "config", "namespaceorg_1_1signbb_1_1backend_1_1config.html", [
             [ "ConfiguracionCors", "classorg_1_1signbb_1_1backend_1_1config_1_1ConfiguracionCors.html", null ],
             [ "ManejadorExcepciones", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorExcepciones.html", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorExcepciones" ],
@@ -10,7 +15,14 @@ var annotated_dup =
           ] ],
           [ "navegacion", "namespaceorg_1_1signbb_1_1backend_1_1navegacion.html", [
             [ "datos", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos.html", [
+              [ "entidades", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades.html", [
+                [ "GrafoClinicoEntity", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1GrafoClinicoEntity.html", null ]
+              ] ],
+              [ "repositorios", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios.html", [
+                [ "RepositorioGrafoClinico", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafoClinico.html", null ]
+              ] ],
               [ "serializacion", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion.html", [
+                [ "GrafoClinicoMapper", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoMapper.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoMapper" ],
                 [ "GrafoClinicoParser", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoParser.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoParser" ]
               ] ]
             ] ],
@@ -20,7 +32,8 @@ var annotated_dup =
               [ "EstadoPaciente", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente" ],
               [ "GrafoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico" ],
               [ "Nodo", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo" ],
-              [ "RepositorioSesion", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion" ],
+              [ "RepositorioSesion", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion" ],
+              [ "RepositorioSesionMemoria", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesionMemoria.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesionMemoria" ],
               [ "Respuesta", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta" ],
               [ "SesionTriaje", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje" ]
             ] ],
@@ -54,7 +67,14 @@ var annotated_dup =
           ] ],
           [ "reglas", "namespaceorg_1_1signbb_1_1backend_1_1reglas.html", [
             [ "datos", "namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos.html", [
+              [ "entidades", "namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1entidades.html", [
+                [ "BaseReglasEntity", "classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1entidades_1_1BaseReglasEntity.html", null ]
+              ] ],
+              [ "repositorios", "namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1repositorios.html", [
+                [ "RepositorioBaseReglas", "interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1repositorios_1_1RepositorioBaseReglas.html", null ]
+              ] ],
               [ "serializacion", "namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion.html", [
+                [ "BaseReglasMapper", "classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasMapper.html", "classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasMapper" ],
                 [ "BaseReglasParser", "classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasParser.html", "classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasParser" ]
               ] ]
             ] ],
@@ -69,6 +89,7 @@ var annotated_dup =
             ] ]
           ] ],
           [ "BackendApplication", "classorg_1_1signbb_1_1backend_1_1BackendApplication.html", null ],
+          [ "DatabaseInit", "classorg_1_1signbb_1_1backend_1_1DatabaseInit.html", "classorg_1_1signbb_1_1backend_1_1DatabaseInit" ],
           [ "DemoTriajeRunner", "classorg_1_1signbb_1_1backend_1_1DemoTriajeRunner.html", "classorg_1_1signbb_1_1backend_1_1DemoTriajeRunner" ]
         ] ]
       ] ]

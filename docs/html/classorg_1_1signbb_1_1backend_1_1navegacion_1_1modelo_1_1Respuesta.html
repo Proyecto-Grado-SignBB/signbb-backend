@@ -3,16 +3,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>SignBB: Referencia de la clase org.signbb.backend.navegacion.modelo.Respuesta</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="codefolding.js"></script>
-<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
-<script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -33,47 +33,23 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Generado por Doxygen 1.18.0 -->
+<!-- Generado por Doxygen 1.9.8 -->
 <script type="text/javascript">
-let searchBox = new SearchBox("searchBox", "search/",'.html');
-</script>
-<script type="text/javascript">
-document.addEventListener('DOMContentLoaded', codefold.init);
-</script>
-<script type="application/json" id="doxygen-config">
-{
-  "relPath": "",
-  "generateTreeView": true,
-  "searchEngine": true,
-  "serverBasedSearch": false,
-  "disableIndex": false,
-  "dynamicMenus": true,
-  "fullSidebar": false
-}
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
-<div id="main-nav-mobile">
-<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
-<label class="main-menu-btn" for="main-menu-state">
-<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
-<span id="searchBoxPos1"></span>
-</div>
-</div><!-- main-nav-mobile -->
-<div id="main-nav">
-  <ul class="sm sm-dox" id="main-menu">
-    <li id="searchBoxPos2">
-        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
-          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
-          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
-          </span>
-        </div>
-    </li>
-  </ul>
-</div><!-- main-nav -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
 </div><!-- top -->
 <div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
@@ -81,16 +57,21 @@ document.addEventListener('DOMContentLoaded', codefold.init);
       <div id="nav-sync" class="sync"></div>
     </div>
   </div>
-  <div id="splitbar" class="ui-resizable-handle">
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
   </div>
 </div>
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html','','classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta-members'); });
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html',''); initResizable(); });
+/* @license-end */
 </script>
-<div id="container">
 <div id="doc-content">
 <!-- window showing the filter options -->
-<div id="MSearchSelectWindow">
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
 </div>
 
 <!-- iframe showing the search results (closed by default) -->
@@ -108,36 +89,46 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-methods">Métodos públicos</a> &#124;
+<a href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta-members.html">Lista de todos los miembros</a>  </div>
   <div class="headertitle"><div class="title">Referencia de la clase org.signbb.backend.navegacion.modelo.Respuesta</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>TAD <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html" title="TAD Respuesta (arista) del Grafo Clínico (Sección 3 del documento de diseño).">Respuesta</a> (arista) del Grafo Clínico (Sección 3 del documento de diseño).  
- <a href="#details">Más...</a></p>
+<p>TAD Respuesta (arista) del Grafo Clínico (Sección 3 del documento de diseño).  
+ <a href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html#details">Más...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Métodos públicos</h2></td></tr>
-<tr class="memitem:ada042660473ef73fa205ca9bf8ee3a4a" id="r_ada042660473ef73fa205ca9bf8ee3a4a"><td class="memItemLeft"><a id="ada042660473ef73fa205ca9bf8ee3a4a" name="ada042660473ef73fa205ca9bf8ee3a4a"></a>
-&#160;</td><td class="memItemRight"><b>Respuesta</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html">Nodo</a> origen, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html">Nodo</a> destino, String condicion)</td></tr>
+<tr class="memitem:ada042660473ef73fa205ca9bf8ee3a4a" id="r_ada042660473ef73fa205ca9bf8ee3a4a"><td class="memItemLeft" align="right" valign="top"><a id="ada042660473ef73fa205ca9bf8ee3a4a" name="ada042660473ef73fa205ca9bf8ee3a4a"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Respuesta</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html">Nodo</a> origen, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html">Nodo</a> destino, String condicion)</td></tr>
 <tr class="memdesc:ada042660473ef73fa205ca9bf8ee3a4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea la arista activada por la respuesta <code class="JavaDocCode">condicion</code>. <br /></td></tr>
-<tr class="memitem:a8fbfa057a051f2c3943cfa2c8b11fe26" id="r_a8fbfa057a051f2c3943cfa2c8b11fe26"><td class="memItemLeft"><a id="a8fbfa057a051f2c3943cfa2c8b11fe26" name="a8fbfa057a051f2c3943cfa2c8b11fe26"></a>
-<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html">Nodo</a>&#160;</td><td class="memItemRight"><b>getOrigen</b> ()</td></tr>
-<tr class="memdesc:a8fbfa057a051f2c3943cfa2c8b11fe26"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html" title="TAD Nodo del Grafo Clínico (Sección 2 del documento de diseño).">Nodo</a> del que sale la arista. <br /></td></tr>
-<tr class="memitem:ac5ab6128e6d6b9d653b46bdfee020884" id="r_ac5ab6128e6d6b9d653b46bdfee020884"><td class="memItemLeft"><a id="ac5ab6128e6d6b9d653b46bdfee020884" name="ac5ab6128e6d6b9d653b46bdfee020884"></a>
-<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html">Nodo</a>&#160;</td><td class="memItemRight"><b>getDestino</b> ()</td></tr>
-<tr class="memdesc:ac5ab6128e6d6b9d653b46bdfee020884"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html" title="TAD Nodo del Grafo Clínico (Sección 2 del documento de diseño).">Nodo</a> al que llega la arista. <br /></td></tr>
-<tr class="memitem:adcff188ee13a66538c8e55c75e3ea13c" id="r_adcff188ee13a66538c8e55c75e3ea13c"><td class="memItemLeft"><a id="adcff188ee13a66538c8e55c75e3ea13c" name="adcff188ee13a66538c8e55c75e3ea13c"></a>
-String&#160;</td><td class="memItemRight"><b>getCondicion</b> ()</td></tr>
-<tr class="memdesc:adcff188ee13a66538c8e55c75e3ea13c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html" title="TAD Respuesta (arista) del Grafo Clínico (Sección 3 del documento de diseño).">Respuesta</a> que activa la arista. <br /></td></tr>
-<tr class="memitem:a13dd3c3955a2b236b155c87ed1120a8d" id="r_a13dd3c3955a2b236b155c87ed1120a8d"><td class="memItemLeft"><a id="a13dd3c3955a2b236b155c87ed1120a8d" name="a13dd3c3955a2b236b155c87ed1120a8d"></a>
-boolean&#160;</td><td class="memItemRight"><b>equals</b> (Object o)</td></tr>
-<tr class="memitem:adc4247473749585f26c793d688776253" id="r_adc4247473749585f26c793d688776253"><td class="memItemLeft"><a id="adc4247473749585f26c793d688776253" name="adc4247473749585f26c793d688776253"></a>
-int&#160;</td><td class="memItemRight"><b>hashCode</b> ()</td></tr>
-<tr class="memitem:adf0a7c0008cc0dc382251fc4436a18c4" id="r_adf0a7c0008cc0dc382251fc4436a18c4"><td class="memItemLeft"><a id="adf0a7c0008cc0dc382251fc4436a18c4" name="adf0a7c0008cc0dc382251fc4436a18c4"></a>
-String&#160;</td><td class="memItemRight"><b>toString</b> ()</td></tr>
+<tr class="separator:ada042660473ef73fa205ca9bf8ee3a4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fbfa057a051f2c3943cfa2c8b11fe26" id="r_a8fbfa057a051f2c3943cfa2c8b11fe26"><td class="memItemLeft" align="right" valign="top"><a id="a8fbfa057a051f2c3943cfa2c8b11fe26" name="a8fbfa057a051f2c3943cfa2c8b11fe26"></a>
+<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html">Nodo</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getOrigen</b> ()</td></tr>
+<tr class="memdesc:a8fbfa057a051f2c3943cfa2c8b11fe26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nodo del que sale la arista. <br /></td></tr>
+<tr class="separator:a8fbfa057a051f2c3943cfa2c8b11fe26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5ab6128e6d6b9d653b46bdfee020884" id="r_ac5ab6128e6d6b9d653b46bdfee020884"><td class="memItemLeft" align="right" valign="top"><a id="ac5ab6128e6d6b9d653b46bdfee020884" name="ac5ab6128e6d6b9d653b46bdfee020884"></a>
+<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html">Nodo</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getDestino</b> ()</td></tr>
+<tr class="memdesc:ac5ab6128e6d6b9d653b46bdfee020884"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nodo al que llega la arista. <br /></td></tr>
+<tr class="separator:ac5ab6128e6d6b9d653b46bdfee020884"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcff188ee13a66538c8e55c75e3ea13c" id="r_adcff188ee13a66538c8e55c75e3ea13c"><td class="memItemLeft" align="right" valign="top"><a id="adcff188ee13a66538c8e55c75e3ea13c" name="adcff188ee13a66538c8e55c75e3ea13c"></a>
+String&#160;</td><td class="memItemRight" valign="bottom"><b>getCondicion</b> ()</td></tr>
+<tr class="memdesc:adcff188ee13a66538c8e55c75e3ea13c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Respuesta que activa la arista. <br /></td></tr>
+<tr class="separator:adcff188ee13a66538c8e55c75e3ea13c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13dd3c3955a2b236b155c87ed1120a8d" id="r_a13dd3c3955a2b236b155c87ed1120a8d"><td class="memItemLeft" align="right" valign="top"><a id="a13dd3c3955a2b236b155c87ed1120a8d" name="a13dd3c3955a2b236b155c87ed1120a8d"></a>
+boolean&#160;</td><td class="memItemRight" valign="bottom"><b>equals</b> (Object o)</td></tr>
+<tr class="separator:a13dd3c3955a2b236b155c87ed1120a8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc4247473749585f26c793d688776253" id="r_adc4247473749585f26c793d688776253"><td class="memItemLeft" align="right" valign="top"><a id="adc4247473749585f26c793d688776253" name="adc4247473749585f26c793d688776253"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>hashCode</b> ()</td></tr>
+<tr class="separator:adc4247473749585f26c793d688776253"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf0a7c0008cc0dc382251fc4436a18c4" id="r_adf0a7c0008cc0dc382251fc4436a18c4"><td class="memItemLeft" align="right" valign="top"><a id="adf0a7c0008cc0dc382251fc4436a18c4" name="adf0a7c0008cc0dc382251fc4436a18c4"></a>
+String&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> ()</td></tr>
+<tr class="separator:adf0a7c0008cc0dc382251fc4436a18c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
-<div class="textblock"><p>TAD <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html" title="TAD Respuesta (arista) del Grafo Clínico (Sección 3 del documento de diseño).">Respuesta</a> (arista) del Grafo Clínico (Sección 3 del documento de diseño). </p>
+<a name="details" id="details"></a><h2 class="groupheader">Descripción detallada</h2>
+<div class="textblock"><p>TAD Respuesta (arista) del Grafo Clínico (Sección 3 del documento de diseño). </p>
 <p>Representa una arista dirigida entre un nodo origen y un nodo destino, condicionada por una opción de respuesta. Dos aristas son iguales si coinciden en (idOrigen, idDestino, condición).</p>
 <p>Migrado desde <code class="JavaDocCode">src/respuesta.py</code>. </p>
 </div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
@@ -145,19 +136,11 @@ String&#160;</td><td class="memItemRight"><b>toString</b> ()</td></tr>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
-<div id="page-nav" class="page-nav-panel">
-<div id="page-nav-resize-handle"></div>
-<div id="page-nav-tree">
-<div id="page-nav-contents">
-</div><!-- page-nav-contents -->
-</div><!-- page-nav-tree -->
-</div><!-- page-nav -->
-</div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>org</b></li><li class="navelem"><b>signbb</b></li><li class="navelem"><a href="namespaceorg_1_1signbb_1_1backend.html">backend</a></li><li class="navelem"><a href="namespaceorg_1_1signbb_1_1backend_1_1navegacion.html">navegacion</a></li><li class="navelem"><a href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html">modelo</a></li><li class="navelem"><a href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html">Respuesta</a></li>
-    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
+    <li class="navelem"><b>org</b></li><li class="navelem"><b>signbb</b></li><li class="navelem"><a class="el" href="namespaceorg_1_1signbb_1_1backend.html">backend</a></li><li class="navelem"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion.html">navegacion</a></li><li class="navelem"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html">modelo</a></li><li class="navelem"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html">Respuesta</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>

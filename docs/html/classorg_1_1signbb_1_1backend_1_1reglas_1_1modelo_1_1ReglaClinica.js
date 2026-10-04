@@ -1,7 +1,10 @@
 var classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica =
 [
     [ "ReglaClinica", "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a4a6b85be8d0e591ee472612d26ec5c35", null ],
+    [ "ReglaClinica", "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a171acd9a7f5aedff933daaeee22a3295", null ],
+    [ "conCasos", "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a7e530ddb3baf04ee4e9ed2f542ba5982", null ],
     [ "condicionesCumplidas", "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a1a4d690fd63b5e391ed360cec3f729fc", null ],
+    [ "getCasos", "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a568b484c581e2b1363fa1ad6d654a03f", null ],
     [ "getCondiciones", "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a5adcc4094019e96306b4f337419498a9", null ],
     [ "getIdRegla", "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a6524395e9a99f380f69bc6bebf87c535", null ],
     [ "getNivel", "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a821b498d769ae2d64e06f5542de1632c", null ],
