@@ -1,0 +1,49 @@
+name: docs
+
+# Regenera la documentación Doxygen y la commitea a docs/html en la misma
+# rama. Solo corre cuando cambian las entradas de las docs (código Java,
+# Doxyfile o este workflow) para no gastar runner en cada push.
+on:
+  push:
+    paths:
+      - 'backend/src/main/java/**'
+      - 'Doxyfile'
+      - '.github/workflows/docs.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: docs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  doxygen:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+
+      - name: Instalar Doxygen (con caché de APT)
+        uses: awalsh128/cache-apt-pkgs-action@v1
+        with:
+          packages: doxygen
+          version: 1.0
+
+      - name: Regenerar documentación
+        run: doxygen Doxyfile
+
+      - name: Commit y push de docs/html si hay cambios
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/html
+          if git diff --cached --quiet; then
+            echo "Sin cambios en docs/html"
+          else
+            git commit -m 'docs: regenerar Doxygen [skip ci]'
+            git push origin HEAD:${{ github.ref_name }}
+          fi
