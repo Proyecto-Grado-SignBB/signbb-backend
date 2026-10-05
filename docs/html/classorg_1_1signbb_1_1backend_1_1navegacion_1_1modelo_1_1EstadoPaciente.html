@@ -136,6 +136,11 @@ List&lt; String &gt;&#160;</td><td class="memItemRight"><b>getRespuestas</b> (St
 <tr class="memitem:a85f6c5b1292e6f153f382e67959c0f34" id="r_a85f6c5b1292e6f153f382e67959c0f34"><td class="memItemLeft"><a id="a85f6c5b1292e6f153f382e67959c0f34" name="a85f6c5b1292e6f153f382e67959c0f34"></a>
 boolean&#160;</td><td class="memItemRight"><b>contieneRespuesta</b> (String idNodo, String respuesta)</td></tr>
 <tr class="memdesc:a85f6c5b1292e6f153f382e67959c0f34"><td class="mdescLeft">&#160;</td><td class="mdescRight">True si <code class="JavaDocCode">respuesta</code> está entre las registradas para <code class="JavaDocCode">idNodo</code>. <br /></td></tr>
+<tr class="memitem:a4e0e5be27a09dbf4124a4ee5806378a3" id="r_a4e0e5be27a09dbf4124a4ee5806378a3"><td class="memItemLeft">Map&lt; String, List&lt; String &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a4e0e5be27a09dbf4124a4ee5806378a3">respuestasEnOrden</a> ()</td></tr>
+<tr class="memdesc:a4e0e5be27a09dbf4124a4ee5806378a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copia de las respuestas por nodo en el orden en que se respondieron las preguntas.  <br /></td></tr>
+<tr class="memitem:adc6e906cf92f61ccf825ef13ac7d2410" id="r_adc6e906cf92f61ccf825ef13ac7d2410"><td class="memItemLeft"><a id="adc6e906cf92f61ccf825ef13ac7d2410" name="adc6e906cf92f61ccf825ef13ac7d2410"></a>
+Optional&lt; String &gt;&#160;</td><td class="memItemRight"><b>ultimaPreguntaRespondida</b> ()</td></tr>
+<tr class="memdesc:adc6e906cf92f61ccf825ef13ac7d2410"><td class="mdescLeft">&#160;</td><td class="mdescRight">Id de la última pregunta respondida, o vacío si aún no hay respuestas. <br /></td></tr>
 <tr class="memitem:a8b06d81c3f04f4079fea3b7bd44e6e7e" id="r_a8b06d81c3f04f4079fea3b7bd44e6e7e"><td class="memItemLeft"><a id="a8b06d81c3f04f4079fea3b7bd44e6e7e" name="a8b06d81c3f04f4079fea3b7bd44e6e7e"></a>
 void&#160;</td><td class="memItemRight"><b>marcarReglaDisparada</b> (String idRegla)</td></tr>
 <tr class="memdesc:a8b06d81c3f04f4079fea3b7bd44e6e7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Marca una regla como ya disparada (no debe reevaluarse). <br /></td></tr>
@@ -210,6 +215,26 @@ String&#160;</td><td class="memItemRight"><b>toString</b> ()</td></tr>
 
 <p>Registra todas las opciones marcadas por el cuidador para el nodo dado (selección múltiple). </p>
 <p>Reemplaza lo registrado antes para ese nodo. </p>
+
+</div>
+</div>
+<a id="a4e0e5be27a09dbf4124a4ee5806378a3" name="a4e0e5be27a09dbf4124a4ee5806378a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e0e5be27a09dbf4124a4ee5806378a3">&#9670;&#160;</a></span>respuestasEnOrden()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Map&lt; String, List&lt; String &gt; &gt; org.signbb.backend.navegacion.modelo.EstadoPaciente.respuestasEnOrden </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Copia de las respuestas por nodo en el orden en que se respondieron las preguntas. </p>
+<p>Es el historial del recorrido: el motor lo reproduce para volver a la pregunta anterior. </p>
 
 </div>
 </div>

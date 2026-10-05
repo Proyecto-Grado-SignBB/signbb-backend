@@ -135,6 +135,8 @@ Métodos públicos</h2></td></tr>
 <tr class="memdesc:aca3129f76f650bab7d85ac7b05b3495b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registra la respuesta sobre la pregunta pendiente y avanza un paso.  <br /></td></tr>
 <tr class="memitem:a6b0cb1249eb985e18241cd1b93995bb6" id="r_a6b0cb1249eb985e18241cd1b93995bb6"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#a6b0cb1249eb985e18241cd1b93995bb6">responder</a> (String recorridoId, List&lt; String &gt; respuestas)</td></tr>
 <tr class="memdesc:a6b0cb1249eb985e18241cd1b93995bb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registra varias respuestas marcadas a la vez (selección múltiple) y avanza un paso.  <br /></td></tr>
+<tr class="memitem:a354917ea71546b7fcede2c7adbaf394d" id="r_a354917ea71546b7fcede2c7adbaf394d"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#a354917ea71546b7fcede2c7adbaf394d">retroceder</a> (String recorridoId)</td></tr>
+<tr class="memdesc:a354917ea71546b7fcede2c7adbaf394d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vuelve a la pregunta anterior y guarda la sesión con el estado ya recalculado, para que el siguiente <code class="JavaDocCode">responder</code> parta de él.  <br /></td></tr>
 <tr class="memitem:a273ef4bb1ad2e9dfde22507a5c68875d" id="r_a273ef4bb1ad2e9dfde22507a5c68875d"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#a273ef4bb1ad2e9dfde22507a5c68875d">consultar</a> (String recorridoId)</td></tr>
 <tr class="memdesc:a273ef4bb1ad2e9dfde22507a5c68875d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Devuelve el estado actual del recorrido (pregunta pendiente o desenlace).  <br /></td></tr>
 </table>
@@ -232,6 +234,27 @@ Métodos públicos</h2></td></tr>
 <p>Registra la respuesta sobre la pregunta pendiente y avanza un paso. </p>
 
 <p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html#a129f8a32cea64590bfe65f6db56c16a6">org.signbb.backend.navegacion.servicios.ServicioNavegacion</a>.</p>
+
+</div>
+</div>
+<a id="a354917ea71546b7fcede2c7adbaf394d" name="a354917ea71546b7fcede2c7adbaf394d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a354917ea71546b7fcede2c7adbaf394d">&#9670;&#160;</a></span>retroceder()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RecorridoDTO org.signbb.backend.navegacion.servicios.ServicioNavegacionImpl.retroceder </td>
+          <td>(</td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>recorridoId</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Vuelve a la pregunta anterior y guarda la sesión con el estado ya recalculado, para que el siguiente <code class="JavaDocCode">responder</code> parta de él. </p>
+
+<p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html#a7075fd56cad7c7d69503cc97280e13a0">org.signbb.backend.navegacion.servicios.ServicioNavegacion</a>.</p>
 
 </div>
 </div>

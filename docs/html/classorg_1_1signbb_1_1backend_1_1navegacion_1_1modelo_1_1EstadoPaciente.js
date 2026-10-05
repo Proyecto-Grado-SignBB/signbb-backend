@@ -12,7 +12,9 @@ var classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente =
     [ "reglaDisparada", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a33b186021195f345c6ce390a0d361735", null ],
     [ "reglasDisparadas", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a60d0e8204b999e4e78061da4bd366d34", null ],
     [ "reiniciar", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a2987dbc31ec74d124ec2ab4eb06a3d99", null ],
+    [ "respuestasEnOrden", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a4e0e5be27a09dbf4124a4ee5806378a3", null ],
     [ "sintomas", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a64696f31f73d34102f5d965db0ede57d", null ],
     [ "size", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a9059c481166e855a25805260afec2b3c", null ],
-    [ "sumarPuntaje", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a3add1935843d981ff05b90ac1cfb9962", null ]
+    [ "sumarPuntaje", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a3add1935843d981ff05b90ac1cfb9962", null ],
+    [ "ultimaPreguntaRespondida", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#adc6e906cf92f61ccf825ef13ac7d2410", null ]
 ];

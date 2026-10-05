@@ -134,10 +134,12 @@ Métodos públicos</h2></td></tr>
 <tr class="memdesc:adbf63657501976de781efc5b9efaac73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registra una o más respuestas marcadas a la vez para la misma pregunta (selección múltiple) y avanza el recorrido un paso.  <br /></td></tr>
 <tr class="memitem:af7511e879f969f2609b1fbcd19d0b56e" id="r_af7511e879f969f2609b1fbcd19d0b56e"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#af7511e879f969f2609b1fbcd19d0b56e">consultar</a> (String recorridoId)</td></tr>
 <tr class="memdesc:af7511e879f969f2609b1fbcd19d0b56e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Consulta el estado actual de un recorrido.  <br /></td></tr>
+<tr class="memitem:a7075fd56cad7c7d69503cc97280e13a0" id="r_a7075fd56cad7c7d69503cc97280e13a0"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#a7075fd56cad7c7d69503cc97280e13a0">retroceder</a> (String recorridoId)</td></tr>
+<tr class="memdesc:a7075fd56cad7c7d69503cc97280e13a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vuelve a la última pregunta respondida (también si el recorrido ya finalizó) y recalcula el estado del paciente sin esa respuesta: las reglas que disparó dejan de estar disparadas.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>API del módulo de navegación por el grafo clínico. </p>
-<p>Expone el recorrido guiado como operaciones sin estado por petición: <code><a class="el" href="#a82ef31a7df53d5d7161870795111854f">iniciar</a></code> abre un recorrido y devuelve la primera pregunta; <code><a class="el" href="#a129f8a32cea64590bfe65f6db56c16a6">responder</a></code> registra una respuesta y avanza un paso; <code><a class="el" href="#af7511e879f969f2609b1fbcd19d0b56e">consultar</a></code> devuelve el estado actual.</p>
+<p>Expone el recorrido guiado como operaciones sin estado por petición: <code><a class="el" href="#a82ef31a7df53d5d7161870795111854f">iniciar</a></code> abre un recorrido y devuelve la primera pregunta; <code><a class="el" href="#a129f8a32cea64590bfe65f6db56c16a6">responder</a></code> registra una respuesta y avanza un paso; <code><a class="el" href="#af7511e879f969f2609b1fbcd19d0b56e">consultar</a></code> devuelve el estado actual; <code><a class="el" href="#a7075fd56cad7c7d69503cc97280e13a0">retroceder</a></code> vuelve a la pregunta anterior para cambiar su respuesta.</p>
 <p>MODIFICADO: se agrega la sobrecarga <code><a class="el" href="">responder(String, List)</a></code> para selección múltiple. La firma de un solo <code class="JavaDocCode">String</code> no cambia. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
 <a id="af7511e879f969f2609b1fbcd19d0b56e" name="af7511e879f969f2609b1fbcd19d0b56e"></a>
@@ -230,6 +232,34 @@ Métodos públicos</h2></td></tr>
 <p>Registra la respuesta del cuidador y avanza el recorrido un paso. </p>
 
 <p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImpl.html#aca3129f76f650bab7d85ac7b05b3495b">org.signbb.backend.navegacion.servicios.ServicioNavegacionImpl</a>.</p>
+
+</div>
+</div>
+<a id="a7075fd56cad7c7d69503cc97280e13a0" name="a7075fd56cad7c7d69503cc97280e13a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7075fd56cad7c7d69503cc97280e13a0">&#9670;&#160;</a></span>retroceder()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RecorridoDTO org.signbb.backend.navegacion.servicios.ServicioNavegacion.retroceder </td>
+          <td>(</td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>recorridoId</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Vuelve a la última pregunta respondida (también si el recorrido ya finalizó) y recalcula el estado del paciente sin esa respuesta: las reglas que disparó dejan de estar disparadas. </p>
+<p>Ver <code class="JavaDocCode">MotorNavegacion.retroceder</code>.</p>
+<dl class="exception"><dt>Excepciones</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">IllegalArgumentException</td><td>si el recorrido aún no tiene respuestas. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImpl.html#a354917ea71546b7fcede2c7adbaf394d">org.signbb.backend.navegacion.servicios.ServicioNavegacionImpl</a>.</p>
 
 </div>
 </div>
