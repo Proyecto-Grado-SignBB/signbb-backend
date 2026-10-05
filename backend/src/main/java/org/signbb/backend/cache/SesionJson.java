@@ -19,13 +19,28 @@ import org.signbb.backend.reglas.modelo.ReglaClinica;
  * selección múltiple), las reglas ya disparadas y referencias por id: al
  * cargar, el paso se reconstruye resolviendo esas referencias contra el
  * contenido clínico vigente (ver {@code RepositorioSesionRedis}).
+ *
+ * <p>
+ * {@code historial} es la pila de pasos del recorrido, que permite
+ * retroceder sin reevaluar reglas. Una sesión guardada antes de que existiera
+ * no lo trae ({@code null}); entonces el motor retrocede reproduciendo el
+ * recorrido.
  */
 public record SesionJson(
         String id,
         Map<String, List<String>> respuestas,
         List<String> reglasDisparadas,
         int puntaje,
-        PasoJson ultimoPaso) {
+        PasoJson ultimoPaso,
+        List<PasoRecorridoJson> historial) {
+
+    /** Un paso de la pila del recorrido (ver {@code PasoRecorrido}). */
+    public record PasoRecorridoJson(
+            String idPregunta,
+            List<String> respuestas,
+            List<String> respuestasPrevias,
+            List<String> reglasMarcadas) {
+    }
 
     /** Último paso del recorrido, con nodos y reglas referenciados por id. */
     public record PasoJson(
@@ -60,6 +75,10 @@ public record SesionJson(
                         .toList());
         return new SesionJson(sesion.getId(), respuestas,
                 List.copyOf(sesion.getEstado().reglasDisparadas()),
-                sesion.getEstado().getPuntaje(), pasoJson);
+                sesion.getEstado().getPuntaje(), pasoJson,
+                sesion.getEstado().pasos().stream()
+                        .map(p -> new PasoRecorridoJson(p.idPregunta(), p.respuestas(),
+                                p.respuestasPrevias(), p.reglasMarcadas()))
+                        .toList());
     }
 }

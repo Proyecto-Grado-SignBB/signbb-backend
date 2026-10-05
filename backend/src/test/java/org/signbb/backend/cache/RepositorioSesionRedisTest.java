@@ -26,6 +26,7 @@ import org.signbb.backend.navegacion.modelo.ContextoClinico;
 import org.signbb.backend.navegacion.modelo.EstadoPaciente;
 import org.signbb.backend.navegacion.modelo.GrafoClinico;
 import org.signbb.backend.navegacion.modelo.Nodo;
+import org.signbb.backend.navegacion.modelo.PasoRecorrido;
 import org.signbb.backend.navegacion.modelo.RepositorioSesion;
 import org.signbb.backend.navegacion.modelo.ResultadoPaso;
 import org.signbb.backend.navegacion.modelo.SesionTriaje;
@@ -146,6 +147,37 @@ class RepositorioSesionRedisTest {
                 List.copyOf(recuperado.respuestasEnOrden().keySet()));
         assertEquals("grafo_piel_ictericia/pregunta_coloracion",
                 recuperado.ultimaPreguntaRespondida().orElseThrow());
+    }
+
+    @Test
+    void laPilaDePasosSobreviveAGuardarYBuscar() {
+        EstadoPaciente estado = new EstadoPaciente("s-redis-5");
+        estado.registrarRespuesta("grafo_piel_ictericia/pregunta_coloracion", "SI");
+        estado.marcarReglaDisparada("grafo_piel_ictericia/R1");
+        estado.apilarPaso(new PasoRecorrido("grafo_piel_ictericia/pregunta_coloracion",
+                List.of("SI"), List.of(), List.of("grafo_piel_ictericia/R1")));
+        Nodo pregunta = grafo.obtenerNodoPorId("grafo_piel_ictericia/pregunta_signos").orElseThrow();
+
+        SesionTriaje sesion = repositorio.crear(estado, ResultadoPaso.pregunta(pregunta));
+        List<PasoRecorrido> pasos = repositorio.buscar(sesion.getId()).getEstado().pasos();
+
+        assertEquals(List.of(new PasoRecorrido("grafo_piel_ictericia/pregunta_coloracion",
+                List.of("SI"), List.of(), List.of("grafo_piel_ictericia/R1"))), pasos);
+    }
+
+    @Test
+    void sesionGuardadaSinHistorialCargaConLaPilaVacia() {
+        // Formato anterior a la pila: no trae el campo historial.
+        almacen.put("signbb:sesion:s-vieja", """
+                {"id":"s-vieja","respuestas":{"pregunta_inicial":["piel"]},"reglasDisparadas":[],
+                 "puntaje":0,"ultimoPaso":{"estado":"EN_CURSO","preguntaId":"puente_piel",
+                 "nivel":null,"destinoId":null,"razonesIds":[],"caminoCausal":[]}}
+                """);
+
+        EstadoPaciente estado = repositorio.buscar("s-vieja").getEstado();
+
+        assertTrue(estado.pasos().isEmpty());
+        assertEquals(List.of("piel"), estado.getRespuestas("pregunta_inicial"));
     }
 
     @Test

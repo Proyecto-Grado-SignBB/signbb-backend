@@ -30,6 +30,12 @@ import java.util.Set;
  * adelante no vuelva a activarlas cuando una regla redirige el recorrido.
  *
  * <p>
+ * MODIFICADO (retroceder): cada respuesta del recorrido se anota en una pila
+ * de {@link PasoRecorrido} con las reglas que marcó. {@link #desapilarPaso}
+ * deshace el último paso entero (su respuesta y sus reglas) sin reevaluar
+ * nada; quién apila y cuándo lo decide el motor de navegación.
+ *
+ * <p>
  * Migrado desde {@code src/estado_paciente.py}.
  */
 public final class EstadoPaciente {
@@ -37,6 +43,7 @@ public final class EstadoPaciente {
     private final String idSesion;
     private final Map<String, List<String>> respuestas = new LinkedHashMap<>();
     private final Set<String> reglasDisparadas = new LinkedHashSet<>();
+    private final List<PasoRecorrido> pasos = new ArrayList<>();
     private int puntaje = 0;
 
     /** Crea la sesión de triaje vacía. */
@@ -118,13 +125,56 @@ public final class EstadoPaciente {
         return copia;
     }
 
-    /** Id de la última pregunta respondida, o vacío si aún no hay respuestas. */
+    /**
+     * Id de la última pregunta respondida, o vacío si aún no hay respuestas.
+     * Si hay pila de pasos, es la pregunta de su cima; si no, la última
+     * insertada en las respuestas.
+     */
     public Optional<String> ultimaPreguntaRespondida() {
+        if (!pasos.isEmpty()) {
+            return Optional.of(pasos.get(pasos.size() - 1).idPregunta());
+        }
         String ultima = null;
         for (String idNodo : respuestas.keySet()) {
             ultima = idNodo;
         }
         return Optional.ofNullable(ultima);
+    }
+
+    /**
+     * Apila un paso ya aplicado: solo lo anota, no toca respuestas ni reglas
+     * (las registró quien lo apila). Lo usan el motor y la reconstrucción de
+     * una sesión guardada.
+     */
+    public void apilarPaso(PasoRecorrido paso) {
+        if (paso == null) {
+            throw new IllegalArgumentException("paso no puede ser nulo");
+        }
+        pasos.add(paso);
+    }
+
+    /**
+     * Deshace el último paso: restaura las respuestas previas de su pregunta
+     * (o la borra si no tenía) y desmarca las reglas que ese paso marcó.
+     * Devuelve el paso deshecho, o vacío si la pila está vacía.
+     */
+    public Optional<PasoRecorrido> desapilarPaso() {
+        if (pasos.isEmpty()) {
+            return Optional.empty();
+        }
+        PasoRecorrido paso = pasos.remove(pasos.size() - 1);
+        if (paso.respuestasPrevias().isEmpty()) {
+            respuestas.remove(paso.idPregunta());
+        } else {
+            respuestas.put(paso.idPregunta(), new ArrayList<>(paso.respuestasPrevias()));
+        }
+        paso.reglasMarcadas().forEach(reglasDisparadas::remove);
+        return Optional.of(paso);
+    }
+
+    /** Copia de la pila de pasos, del primero al último. */
+    public List<PasoRecorrido> pasos() {
+        return new ArrayList<>(pasos);
     }
 
     /** Marca una regla como ya disparada (no debe reevaluarse). */
@@ -166,10 +216,11 @@ public final class EstadoPaciente {
         return lista;
     }
 
-    /** Vacía las respuestas, las reglas disparadas y reinicia el puntaje. */
+    /** Vacía las respuestas, las reglas disparadas, la pila de pasos y reinicia el puntaje. */
     public void reiniciar() {
         respuestas.clear();
         reglasDisparadas.clear();
+        pasos.clear();
         puntaje = 0;
     }
 

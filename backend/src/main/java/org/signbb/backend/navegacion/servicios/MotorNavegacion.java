@@ -1,5 +1,6 @@
 package org.signbb.backend.navegacion.servicios;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -11,6 +12,7 @@ import java.util.Set;
 import org.signbb.backend.navegacion.modelo.EstadoPaciente;
 import org.signbb.backend.navegacion.modelo.GrafoClinico;
 import org.signbb.backend.navegacion.modelo.Nodo;
+import org.signbb.backend.navegacion.modelo.PasoRecorrido;
 import org.signbb.backend.navegacion.modelo.Respuesta;
 import org.signbb.backend.navegacion.modelo.ResultadoPaso;
 import org.signbb.backend.reglas.modelo.BaseReglas;
@@ -66,10 +68,13 @@ import org.springframework.stereotype.Service;
  *
  * <p>
  * {@link #retroceder} vuelve a la pregunta anterior para cambiar su
- * respuesta. En vez de deshacer a mano, reinicia la memoria de trabajo y
- * reproduce las respuestas que se conservan: así las respuestas deshechas y
- * las reglas que dispararon por ellas desaparecen, y el estado queda igual al
- * de un recorrido que nunca las hubiera dado.
+ * respuesta. Cada {@link #paso} apila en {@link EstadoPaciente} un
+ * {@link PasoRecorrido} con la pregunta, las opciones y las reglas que esa
+ * respuesta marcó; retroceder lo desapila, de modo que desaparecen
+ * exactamente esa respuesta y esas reglas, sin reevaluar nada. Una regla que
+ * se activó pero no ganó nunca se marcó, así que no hay nada que deshacer de
+ * ella. Si el estado no trae pila (una sesión guardada antes de existir), se
+ * recurre a reproducir el recorrido desde cero.
  *
  * <p>
  * Como un backend REST es sin estado, el bucle {@code while} de la
@@ -162,9 +167,9 @@ public class MotorNavegacion {
      */
     public ResultadoPaso paso(GrafoClinico grafo, BaseReglas base, EstadoPaciente estado,
             Nodo nodoActual, String respuesta) {
-        validarRespuestas(grafo, nodoActual, Collections.singletonList(respuesta));
-        estado.registrarRespuesta(nodoActual.getId(), respuesta);
-        return aplicarLimite(grafo, estado, resolver(grafo, base, estado, nodoActual, respuesta));
+        List<String> respuestas = Collections.singletonList(respuesta);
+        validarRespuestas(grafo, nodoActual, respuestas);
+        return registrarYResolver(grafo, base, estado, nodoActual, respuestas, respuesta);
     }
 
     /**
@@ -186,25 +191,43 @@ public class MotorNavegacion {
     public ResultadoPaso paso(GrafoClinico grafo, BaseReglas base, EstadoPaciente estado,
             Nodo nodoActual, List<String> respuestasMarcadas) {
         validarRespuestas(grafo, nodoActual, respuestasMarcadas);
-        estado.registrarRespuestas(nodoActual.getId(), respuestasMarcadas);
-        return aplicarLimite(grafo, estado, resolver(grafo, base, estado, nodoActual,
-                opcionMasGrave(grafo, nodoActual, respuestasMarcadas)));
+        return registrarYResolver(grafo, base, estado, nodoActual, respuestasMarcadas,
+                opcionMasGrave(grafo, nodoActual, respuestasMarcadas));
     }
 
     /**
      * Vuelve a la última pregunta respondida para que el cuidador cambie su
      * respuesta. Funciona también con el recorrido finalizado (vuelve a la
-     * pregunta que lo cerró). La memoria de trabajo se reinicia y se
-     * reproducen, en orden, las respuestas anteriores a esa pregunta; así
-     * desaparecen su respuesta y las reglas que disparó, y el encadenamiento
-     * hacia adelante vuelve a evaluarse desde cero.
+     * pregunta que lo cerró). Desapila el último {@link PasoRecorrido}: se
+     * borra (o restaura) su respuesta y se desmarcan solo las reglas que ese
+     * paso marcó, sin reevaluar las reglas.
      *
      * @throws IllegalArgumentException si aún no hay ninguna respuesta.
-     * @throws IllegalStateException    si al reproducir el recorrido no se
-     *                                  vuelve a la misma pregunta (el
-     *                                  contenido clínico cambió).
+     * @throws IllegalStateException    si la pregunta ya no existe en el
+     *                                  contenido clínico, o si sin pila no se
+     *                                  pudo reproducir el recorrido.
      */
     public ResultadoPaso retroceder(GrafoClinico grafo, BaseReglas base, EstadoPaciente estado) {
+        if (estado.pasos().isEmpty()) {
+            return retrocederReproduciendo(grafo, base, estado);
+        }
+        PasoRecorrido deshecho = estado.desapilarPaso().orElseThrow();
+        Nodo pregunta = grafo.obtenerNodoPorId(deshecho.idPregunta())
+                .orElseThrow(() -> new IllegalStateException(
+                        "la pregunta '" + deshecho.idPregunta()
+                                + "' ya no existe en el contenido clínico"));
+        return ResultadoPaso.pregunta(pregunta);
+    }
+
+    /**
+     * Respaldo de {@link #retroceder} para un estado sin pila de pasos (una
+     * sesión guardada antes de que existiera, o respuestas registradas a mano):
+     * reinicia la memoria de trabajo y reproduce, en orden, las respuestas
+     * anteriores a la última pregunta. Al reproducir con {@link #paso} la pila
+     * queda reconstruida.
+     */
+    private ResultadoPaso retrocederReproduciendo(GrafoClinico grafo, BaseReglas base,
+            EstadoPaciente estado) {
         String anterior = estado.ultimaPreguntaRespondida()
                 .orElseThrow(() -> new IllegalArgumentException("no hay pregunta anterior a la cual volver"));
         Map<String, List<String>> conservadas = estado.respuestasEnOrden();
@@ -229,13 +252,32 @@ public class MotorNavegacion {
     }
 
     /**
+     * Registra la respuesta ya validada, corre el encadenamiento hacia
+     * adelante y apila el {@link PasoRecorrido} con las reglas que este paso
+     * marcó (las disparadas después menos las de antes). Por último aplica el
+     * máximo de preguntas.
+     */
+    private ResultadoPaso registrarYResolver(GrafoClinico grafo, BaseReglas base, EstadoPaciente estado,
+            Nodo nodoActual, List<String> respuestas, String respuestaParaAvanzar) {
+        List<String> previas = estado.getRespuestas(nodoActual.getId());
+        Set<String> antes = estado.reglasDisparadas();
+        estado.registrarRespuestas(nodoActual.getId(), respuestas);
+        ResultadoPaso resultado = resolver(grafo, base, estado, nodoActual, respuestaParaAvanzar);
+        List<String> marcadas = new ArrayList<>(estado.reglasDisparadas());
+        marcadas.removeAll(antes);
+        estado.apilarPaso(new PasoRecorrido(nodoActual.getId(), respuestas, previas, marcadas));
+        return aplicarLimite(grafo, estado, resultado);
+    }
+
+    /**
      * Cierra el recorrido en {@link #LIMITE_PREGUNTAS} si ya se respondieron
-     * {@code maxPreguntas} preguntas y {@code resultado} pide otra. Un
+     * {@code maxPreguntas} preguntas (pasos de la pila, contando las que se
+     * respondieron de nuevo) y {@code resultado} pide otra. Un
      * resultado ya finalizado (por regla o terminal) se devuelve sin cambios.
      * El camino causal llega hasta la pregunta que quedó sin responder.
      */
     private ResultadoPaso aplicarLimite(GrafoClinico grafo, EstadoPaciente estado, ResultadoPaso resultado) {
-        if (resultado.finalizado() || estado.size() < maxPreguntas) {
+        if (resultado.finalizado() || estado.pasos().size() < maxPreguntas) {
             return resultado;
         }
         return ResultadoPaso.terminal(LIMITE_PREGUNTAS, NivelAlerta.NORMAL, List.of(),

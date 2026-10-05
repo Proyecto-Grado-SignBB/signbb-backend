@@ -10,6 +10,7 @@ import org.signbb.backend.config.RecursoNoEncontradoException;
 import org.signbb.backend.navegacion.modelo.ContextoClinico;
 import org.signbb.backend.navegacion.modelo.EstadoPaciente;
 import org.signbb.backend.navegacion.modelo.Nodo;
+import org.signbb.backend.navegacion.modelo.PasoRecorrido;
 import org.signbb.backend.navegacion.modelo.PasoCausal;
 import org.signbb.backend.navegacion.modelo.RepositorioSesion;
 import org.signbb.backend.navegacion.modelo.ResultadoPaso;
@@ -92,6 +93,12 @@ public class RepositorioSesionRedis implements RepositorioSesion {
             }
         }
         estado.sumarPuntaje(json.puntaje());
+        if (json.historial() != null) {
+            for (SesionJson.PasoRecorridoJson p : json.historial()) {
+                estado.apilarPaso(new PasoRecorrido(p.idPregunta(), p.respuestas(),
+                        p.respuestasPrevias(), p.reglasMarcadas()));
+            }
+        }
         return new SesionTriaje(json.id(), estado, reconstruirPaso(json.ultimoPaso()));
     }
 
