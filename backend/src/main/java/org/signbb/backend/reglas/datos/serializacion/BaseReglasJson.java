@@ -8,8 +8,14 @@ import tools.jackson.databind.JsonNode;
 
 /**
  * Documento JSON de una base de reglas: el mismo formato de intercambio de
- * {@code static/ejemplo_reglas.json}, usado además como formato persistido en
- * la columna {@code estructura} de {@code BaseReglasEntity}.
+ * {@code static/ejemplo_reglas_piel_ictericia.json}, usado además como formato
+ * persistido en la columna {@code estructura} de {@code BaseReglasEntity}.
+ *
+ * <p>
+ * {@code grafoId} indica a qué grafo pertenece la base. Las reglas de un
+ * subgrafo usan los ids locales de sus nodos y {@code CompositorGrafoClinico}
+ * los prefija al aplanar; las reglas del grafo raíz usan los ids ya prefijados
+ * y permiten combinar signos de varias categorías.
  *
  * <p>
  * Cada regla referencia su {@code nodoDestino} por id (nunca embebe el nodo):
@@ -26,7 +32,7 @@ import tools.jackson.databind.JsonNode;
  * y se reconstruye en {@link BaseReglasMapper}.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record BaseReglasJson(Map<String, ReglaJson> rules) {
+public record BaseReglasJson(String grafoId, Map<String, ReglaJson> rules) {
 
     /** Regla clínica en formato serializable. */
     @JsonIgnoreProperties(ignoreUnknown = true)

@@ -8,22 +8,31 @@ import java.util.Set;
  * TAD Nodo del Grafo Clínico (Sección 2 del documento de diseño).
  *
  * <p>
- * Representa una pregunta al padre o un nodo terminal (recomendación,
- * bloqueo, consulta médica). La identidad de un Nodo está dada únicamente por
- * su {@code id}: dos nodos con el mismo id se consideran iguales.
+ * Representa una pregunta al padre o un nodo terminal. En el TAD el tipo de un
+ * terminal es directamente su desenlace ({@code recomendacion},
+ * {@code consulta_medica} o {@code urgencia}); el documento JSON lo expresa
+ * como {@code tipo: "terminal"} más {@code desenlace} y
+ * {@code GrafoClinicoMapper} hace la traducción. La identidad de un Nodo está
+ * dada únicamente por su {@code id}: dos nodos con el mismo id se consideran
+ * iguales.
  *
  * <p>
  * Migrado desde {@code src/nodo.py}.
  */
 public final class Nodo {
 
-    /** Tipos de nodo admitidos. */
-    public static final Set<String> TIPOS_VALIDOS = Set.of("pregunta", "recomendacion", "bloqueo", "consulta_medica");
+    /**
+     * Tipos de nodo admitidos: {@code pregunta} y los tres desenlaces de un
+     * terminal ({@code recomendacion}, {@code consulta_medica},
+     * {@code urgencia}).
+     */
+    public static final Set<String> TIPOS_VALIDOS = Set.of("pregunta", "recomendacion", "consulta_medica",
+            "urgencia");
 
     /**
      * MODIFICADO: valores válidos para el override opcional de
      * {@code tipoInteraccion} en la metadata del grafo. Cuando es
-     * {@code null}, {@code RecorridoDTO.desde} lo infiere a partir de las
+     * {@code null}, {@code GrafoClinico.tipoInteraccion} lo infiere a partir de las
      * opciones del nodo.
      */
     public static final Set<String> TIPOS_INTERACCION_VALIDOS = Set.of("SI_NO", "SELECCION_UNICA",
@@ -93,8 +102,8 @@ public final class Nodo {
     }
 
     /**
-     * Tipo del nodo: {@code pregunta}, {@code recomendacion}, {@code bloqueo}
-     * o {@code consulta_medica}.
+     * Tipo del nodo: {@code pregunta}, {@code recomendacion},
+     * {@code consulta_medica} o {@code urgencia}.
      */
     public String getTipo() {
         return tipo;
@@ -105,7 +114,11 @@ public final class Nodo {
         return contenido;
     }
 
-    /** Peso de urgencia del nodo. */
+    /**
+     * Peso de urgencia del nodo. En el formato de intercambio va de 1 a 3
+     * (1 = baja, 2 = media, 3 = urgente); la escala se valida en
+     * {@code GrafoClinicoMapper}, no en el TAD.
+     */
     public int getPeso() {
         return peso;
     }
@@ -127,7 +140,7 @@ public final class Nodo {
      * la metadata del grafo para este nodo ({@code SI_NO},
      * {@code SELECCION_UNICA} o {@code SELECCION_MULTIPLE}), o {@code null}
      * si el grafo no lo especifica (el valor por defecto se infiere en
-     * {@code RecorridoDTO.desde} a partir de las opciones del nodo).
+     * {@code GrafoClinico#tipoInteraccion} a partir de las opciones del nodo).
      */
     public String getTipoInteraccion() {
         return tipoInteraccion;

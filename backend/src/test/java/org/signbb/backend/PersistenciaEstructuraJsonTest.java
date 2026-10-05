@@ -58,7 +58,8 @@ class PersistenciaEstructuraJsonTest {
 
   @Test
   void grafoClinicoIdaYVueltaEnLaColumnaJson() {
-    GrafoClinicoJson documento = GrafoClinicoParser.parseJsonToDocumento(leer("/static/ejemplo_grafo.json"));
+    GrafoClinicoJson documento = GrafoClinicoParser.parseJsonToDocumento(
+        leer("/static/ejemplo_subgrafo_piel_ictericia.json"));
 
     GrafoClinicoEntity entidad = new GrafoClinicoEntity();
     entidad.setEstructura(documento);
@@ -69,14 +70,16 @@ class PersistenciaEstructuraJsonTest {
     assertEquals(documento, recargado.getEstructura());
 
     GrafoClinico tad = GrafoClinicoMapper.desde(recargado.getEstructura());
-    assertEquals(12, tad.size());
-    assertEquals("inicio", tad.obtenerNodoInicial().orElseThrow().getId());
+    assertEquals(5, tad.size());
+    assertEquals("pregunta_coloracion", tad.obtenerNodoInicial().orElseThrow().getId());
   }
 
   @Test
   void baseReglasIdaYVueltaEnLaColumnaJson() {
-    GrafoClinico grafo = GrafoClinicoParser.parseJsonToGrafoClinico(leer("/static/ejemplo_grafo.json"));
-    BaseReglasJson documento = BaseReglasParser.parseJsonToDocumento(leer("/static/ejemplo_reglas.json"));
+    GrafoClinico grafo = GrafoClinicoParser.parseJsonToGrafoClinico(
+        leer("/static/ejemplo_subgrafo_piel_ictericia.json"));
+    BaseReglasJson documento = BaseReglasParser.parseJsonToDocumento(
+        leer("/static/ejemplo_reglas_piel_ictericia.json"));
 
     BaseReglasEntity entidad = new BaseReglasEntity();
     entidad.setEstructura(documento);
@@ -87,13 +90,17 @@ class PersistenciaEstructuraJsonTest {
     assertEquals(documento, recargado.getEstructura());
 
     BaseReglas tad = BaseReglasMapper.desde(recargado.getEstructura(), grafo);
-    assertEquals(7, tad.size());
-    assertEquals("consulta_medica_urgente", tad.obtenerRegla("R1").getNodoDestino().getId());
+    assertEquals("grafo_piel_ictericia", recargado.getEstructura().grafoId());
+    assertEquals(3, tad.size());
+    assertEquals("urgencia_inmediata", tad.obtenerRegla("R1").getNodoDestino().getId());
   }
 
   @Test
   void siembraInicialDejaDatosConsultables() {
-    assertTrue(grafos.count() >= 1, "DatabaseInit debe sembrar el grafo de ejemplo");
+    assertTrue(grafos.findAll().stream()
+        .anyMatch(f -> "grafo_raiz".equals(f.getEstructura().graph().id())),
+        "DatabaseInit debe sembrar el grafo raíz");
+    assertTrue(grafos.count() >= 2, "DatabaseInit debe sembrar el grafo raíz y el subgrafo de ejemplo");
     assertTrue(bases.count() >= 1, "DatabaseInit debe sembrar la base de reglas de ejemplo");
   }
 }

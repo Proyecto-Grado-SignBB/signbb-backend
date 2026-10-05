@@ -18,7 +18,7 @@ Con el template de Redis y los repositorios simulados (Mockito):
 - **Hit de Redis**: el documento se toma del cache y la base de datos no se
   consulta ni una vez.
 - **Miss**: se lee la fila de la base de datos y se puebla el cache con TTL
-  de 24 horas (`signbb:contenido:grafo` / `signbb:contenido:reglas`).
+  de 24 horas (`signbb:contenido:v2:grafo` / `signbb:contenido:v2:reglas`).
 - **Redis caído al leer**: se degrada a la base de datos sin fallar (Redis
   nunca es dependencia dura).
 - **Redis caído al escribir**: la resolución igual retorna el documento;
@@ -69,7 +69,7 @@ por eso en dev/CI aparecen como *skipped*, no como falla:
 
 ## Notas
 
-- Claves en Redis: `signbb:contenido:grafo|reglas` (TTL 24 h) y
+- Claves en Redis: `signbb:contenido:v2:grafo|reglas` (TTL 24 h) y
   `signbb:sesion:<id>` (TTL 24 h); inspección manual con
   `docker exec -it contenedores-cache-1 redis-cli`
   (ver `contenedores/MANUAL_CONTENEDORES.md`).

@@ -36,8 +36,9 @@ import org.signbb.backend.reglas.servicios.ServicioReglasImpl;
 class MotorNavegacionSeleccionMultipleTest {
 
     // Recorte del grafo de ictericia compartido: alcanza con el nodo inicial y
-    // la primera pregunta (dos opciones, "SI"/"NO", con destinos de distinto
-    // peso) para probar el desempate.
+    // la primera pregunta (marcada SELECCION_MULTIPLE para admitir varias
+    // respuestas; dos opciones, "SI"/"NO", con destinos de distinto peso) para
+    // probar el desempate.
     private static final String GRAFO_JSON = """
             {
               "graph": {
@@ -47,19 +48,19 @@ class MotorNavegacionSeleccionMultipleTest {
                 "nodes": {
                   "inicio": {
                     "label": "Evaluación de Ictericia",
-                    "metadata": { "tipo": "inicio", "peso": 100, "archivos": false, "src": [] }
+                    "metadata": { "tipo": "inicio", "peso": 3, "archivos": false, "src": [] }
                   },
                   "pregunta_coloracion": {
                     "label": "¿Observa coloración amarilla en la piel o los ojos del bebé?",
-                    "metadata": { "tipo": "pregunta", "peso": 95, "archivos": false, "src": [] }
+                    "metadata": { "tipo": "pregunta", "tipoInteraccion": "SELECCION_MULTIPLE", "peso": 3, "archivos": false, "src": [] }
                   },
                   "pregunta_tiempo": {
                     "label": "¿Desde hace cuánto tiempo presenta esta coloración?",
-                    "metadata": { "tipo": "pregunta", "peso": 90, "archivos": false, "src": [] }
+                    "metadata": { "tipo": "pregunta", "peso": 2, "archivos": false, "src": [] }
                   },
                   "recomendacion_tranquilidad": {
                     "label": "La coloración amarilla puede ser normal en los primeros días.",
-                    "metadata": { "tipo": "recomendacion", "peso": 30, "archivos": false, "src": [] }
+                    "metadata": { "tipo": "recomendacion", "peso": 1, "archivos": false, "src": [] }
                   }
                 },
                 "edges": [
@@ -89,11 +90,11 @@ class MotorNavegacionSeleccionMultipleTest {
         Nodo preguntaColoracion = inicio.preguntaActual();
 
         // El cuidador marca "SI" y "NO" a la vez (caso límite, para forzar el
-        // desempate): "SI" lleva a pregunta_tiempo (peso 90), "NO" lleva a
-        // recomendacion_tranquilidad (peso 30) — debe ganar "SI".
+        // desempate): "SI" lleva a pregunta_tiempo (peso 2), "NO" lleva a
+        // recomendacion_tranquilidad (peso 1) — debe ganar "SI".
         ResultadoPaso resultado = motor.paso(grafo, base, estado, preguntaColoracion, List.of("NO", "SI"));
 
-        assertFalse(resultado.finalizado(), "peso 90 (SI) debería ganarle a peso 30 (NO) y seguir la pregunta");
+        assertFalse(resultado.finalizado(), "peso 2 (SI) debería ganarle a peso 1 (NO) y seguir la pregunta");
         assertEquals("pregunta_tiempo", resultado.preguntaActual().getId());
     }
 
@@ -110,6 +111,6 @@ class MotorNavegacionSeleccionMultipleTest {
         ResultadoPaso viaLista = motor.paso(grafo, base, estado, preguntaColoracion, List.of("NO"));
 
         assertEquals("recomendacion_tranquilidad", viaLista.destino().getId());
-        assertEquals(30, viaLista.destino().getPeso()); // sanity check del fixture
+        assertEquals(1, viaLista.destino().getPeso()); // sanity check del fixture
     }
 }

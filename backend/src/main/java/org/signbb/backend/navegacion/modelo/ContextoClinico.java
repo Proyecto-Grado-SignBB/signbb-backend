@@ -58,7 +58,7 @@ public class ContextoClinico {
 
         if (!g.rutaValida()) {
             log.warn("El grafo clínico no cumple rutaValida(): puede haber nodos huérfanos "
-                    + "o preguntas sin salida (p. ej. 'pregunta_poposangre' sin arista de entrada).");
+                    + "o preguntas sin salida (p. ej. una pregunta sin arista de entrada).");
         }
         if (!g.validarCiclo()) {
             log.warn("El grafo clínico contiene ciclos: la navegación podría no terminar.");

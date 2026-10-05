@@ -1,23 +1,22 @@
 package org.signbb.backend;
 
-import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoParser;
+import org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico;
+import org.signbb.backend.navegacion.datos.serializacion.ContenidoEjemplo;
+import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoMapper;
 import org.signbb.backend.navegacion.modelo.EstadoPaciente;
 import org.signbb.backend.navegacion.modelo.GrafoClinico;
 import org.signbb.backend.navegacion.modelo.Nodo;
 import org.signbb.backend.navegacion.modelo.PasoCausal;
 import org.signbb.backend.navegacion.modelo.Respuesta;
-import org.signbb.backend.reglas.datos.serializacion.BaseReglasParser;
+import org.signbb.backend.reglas.datos.serializacion.BaseReglasMapper;
 import org.signbb.backend.reglas.modelo.BaseReglas;
 import org.signbb.backend.reglas.modelo.ReglaClinica;
 import org.signbb.backend.reglas.modelo.ResultadoInferencia;
 import org.signbb.backend.reglas.servicios.ServicioReglas;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,8 +30,9 @@ import org.springframework.stereotype.Component;
  * <li>El camino causal reconstruido hasta el diagnóstico.</li>
  * <li>Un recorrido paso a paso simulando respuestas del padre
  * ({@code evaluarPaso()}).</li>
- * <li>El grafo clínico y la base de reglas cargados desde
- * {@code static/ejemplo_grafo.json} y {@code static/ejemplo_reglas.json}.</li>
+ * <li>El grafo clínico y la base de reglas de ejemplo
+ * ({@link ContenidoEjemplo}) ya compuestos: grafo raíz más el subgrafo de
+ * ictericia, con los ids del subgrafo prefijados.</li>
  * <li>La evaluación de reglas sobre cuatro escenarios de estado del
  * paciente (forward chaining + resolución por severidad).</li>
  * </ul>
@@ -42,6 +42,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DemoTriajeRunner implements CommandLineRunner {
+
+    /** Subgrafo de ejemplo cuyas preguntas usan los escenarios de la sección 6. */
+    private static final String SUBGRAFO_ICTERICIA = "grafo_piel_ictericia";
 
     private final ServicioReglas servicioReglas;
 
@@ -53,15 +56,15 @@ public class DemoTriajeRunner implements CommandLineRunner {
     /** Puebla el mini grafo de fiebre de demo y retorna sus nodos por id. */
     private static Map<String, Nodo> construirGrafo(GrafoClinico g) {
         Map<String, Nodo> nodos = new LinkedHashMap<>();
-        nodos.put("raiz", new Nodo("raiz", "pregunta", "¿El bebé tiene fiebre?", 7));
-        nodos.put("temp", new Nodo("temp", "pregunta", "¿Cuál es la temperatura?", 9));
-        nodos.put("letargo", new Nodo("letargo", "pregunta", "¿Está letárgico?", 6));
+        nodos.put("raiz", new Nodo("raiz", "pregunta", "¿El bebé tiene fiebre?", 1));
+        nodos.put("temp", new Nodo("temp", "pregunta", "¿Cuál es la temperatura?", 2));
+        nodos.put("letargo", new Nodo("letargo", "pregunta", "¿Está letárgico?", 2));
         nodos.put("urgencia", new Nodo("urgencia", "consulta_medica",
-                "Consulta médica urgente inmediata", 10));
+                "Consulta médica urgente inmediata", 3));
         nodos.put("consulta", new Nodo("consulta", "consulta_medica",
-                "Agendar consulta médica pronto", 7));
+                "Agendar consulta médica pronto", 2));
         nodos.put("reco_hogar", new Nodo("reco_hogar", "recomendacion",
-                "Cuidados en casa y observar", 4));
+                "Cuidados en casa y observar", 1));
         nodos.put("descarte", new Nodo("descarte", "recomendacion",
                 "Sin señales de alerta", 1));
 
@@ -86,19 +89,10 @@ public class DemoTriajeRunner implements CommandLineRunner {
         System.out.println("\n" + "=".repeat(60) + "\n" + titulo + "\n" + "=".repeat(60));
     }
 
-    /** Lee un recurso del classpath como UTF-8. */
-    private static String leerRecurso(String ruta) {
-        try {
-            return new ClassPathResource(ruta).getContentAsString(StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            throw new IllegalStateException("No se pudo leer " + ruta, e);
-        }
-    }
-
     /** Ejecuta las seis secciones de la demo al arrancar la app. */
     @Override
     public void run(String... args) {
-        GrafoClinico g = new GrafoClinico(8, 3);
+        GrafoClinico g = new GrafoClinico();
         construirGrafo(g);
 
         separador("1. Validaciones del grafo");
@@ -139,9 +133,9 @@ public class DemoTriajeRunner implements CommandLineRunner {
             }
         }
 
-        separador("5. Grafo cargado desde static/ejemplo_grafo.json");
-        GrafoClinico desdeJson = GrafoClinicoParser.parseJsonToGrafoClinico(
-                leerRecurso("static/ejemplo_grafo.json"));
+        separador("5. Grafo compuesto: raíz + subgrafo de ictericia");
+        CompositorGrafoClinico.Contenido contenido = ContenidoEjemplo.compuesto();
+        GrafoClinico desdeJson = GrafoClinicoMapper.desde(contenido.grafo());
 
         System.out.printf("Nodos cargados: %d%n", desdeJson.size());
         System.out.printf("Nodo inicial: %s%n",
@@ -150,54 +144,51 @@ public class DemoTriajeRunner implements CommandLineRunner {
 
         System.out.println("\nNodos:");
         for (Nodo n : desdeJson.obtenerNodos()) {
-            System.out.printf("  %-28s (%-15s, peso %3d) %s%n",
+            System.out.printf("  %-44s (%-15s, peso %d) %s%n",
                     n.getId(), n.getTipo(), n.getPeso(), n.getContenido());
         }
 
         System.out.println("\nAristas:");
         for (Nodo n : desdeJson.obtenerNodos()) {
             for (Respuesta r : desdeJson.obtenerOpciones(n)) {
-                System.out.printf("  %-28s --[%s]--> %s%n",
+                System.out.printf("  %-44s --[%s]--> %s%n",
                         r.getOrigen().getId(), r.getCondicion(), r.getDestino().getId());
             }
         }
 
-        separador("6. Base de reglas cargada desde static/ejemplo_reglas.json");
-        BaseReglas base = BaseReglasParser.parseJsonToBaseReglas(
-                leerRecurso("static/ejemplo_reglas.json"), desdeJson);
+        separador("6. Base de reglas compuesta (ids prefijados por subgrafo)");
+        BaseReglas base = BaseReglasMapper.desde(contenido.reglas(), desdeJson);
         System.out.printf("Reglas cargadas: %d%n", base.size());
         for (ReglaClinica r : base.todasLasReglas()) {
-            System.out.printf("  %-3s [%-16s] %s → %s%n",
+            System.out.printf("  %-24s [%-16s] %s → %s%n",
                     r.getIdRegla(), r.getNivel(), r.getNombre(),
                     r.getNodoDestino().getId());
         }
 
-        System.out.println("\nEscenario 1: coloración + menos de 24h + come menos + letargo");
+        String coloracion = CompositorGrafoClinico.prefijar(SUBGRAFO_ICTERICIA, "pregunta_coloracion");
+        String signos = CompositorGrafoClinico.prefijar(SUBGRAFO_ICTERICIA, "pregunta_signos");
+
+        System.out.println("\nEscenario 1: coloración amarilla + somnolencia");
         EstadoPaciente preocupante = new EstadoPaciente("sesion-demo-1");
-        preocupante.registrarRespuesta("pregunta_coloracion", "SI");
-        preocupante.registrarRespuesta("pregunta_tiempo", "MENOS_DE_24_HORAS");
-        preocupante.registrarRespuesta("pregunta_alimentacion", "SI");
-        preocupante.registrarRespuesta("pregunta_letargo", "SI");
+        preocupante.registrarRespuesta(coloracion, "SI");
+        preocupante.registrarRespuestas(signos, List.of("SOMNOLENCIA"));
         imprimirEvaluacion(base, preocupante);
 
-        System.out.println("\nEscenario 2: sin señales de alerta (todo NO)");
+        System.out.println("\nEscenario 2: sin coloración amarilla");
         EstadoPaciente tranquilo = new EstadoPaciente("sesion-demo-2");
-        tranquilo.registrarRespuesta("pregunta_coloracion", "NO");
-        tranquilo.registrarRespuesta("pregunta_poposangre", "NO");
+        tranquilo.registrarRespuesta(coloracion, "NO");
         imprimirEvaluacion(base, tranquilo);
 
-        System.out.println("\nEscenario 3: coloración + más de 24h + letargo (empate URGENCIA)");
-        EstadoPaciente empate = new EstadoPaciente("sesion-demo-3");
-        empate.registrarRespuesta("pregunta_coloracion", "SI");
-        empate.registrarRespuesta("pregunta_tiempo", "MAS_DE_24_HORAS");
-        empate.registrarRespuesta("pregunta_letargo", "SI");
-        imprimirEvaluacion(base, empate);
+        System.out.println("\nEscenario 3: come menos + el amarillo se extiende (R2 URGENCIA y R3 CONSULTAR_MEDICO)");
+        EstadoPaciente combinado = new EstadoPaciente("sesion-demo-3");
+        combinado.registrarRespuesta(coloracion, "SI");
+        combinado.registrarRespuestas(signos, List.of("COME_MENOS", "AMARILLO_SE_EXTIENDE"));
+        imprimirEvaluacion(base, combinado);
 
-        System.out.println("\nEscenario 4: coloración + come menos, sin letargo (solo CONSULTAR_MEDICO)");
+        System.out.println("\nEscenario 4: el amarillo se extiende, sin otros signos (solo CONSULTAR_MEDICO)");
         EstadoPaciente moderado = new EstadoPaciente("sesion-demo-4");
-        moderado.registrarRespuesta("pregunta_coloracion", "SI");
-        moderado.registrarRespuesta("pregunta_alimentacion", "SI");
-        moderado.registrarRespuesta("pregunta_letargo", "NO");
+        moderado.registrarRespuesta(coloracion, "SI");
+        moderado.registrarRespuestas(signos, List.of("AMARILLO_SE_EXTIENDE"));
         imprimirEvaluacion(base, moderado);
     }
 
@@ -210,7 +201,7 @@ public class DemoTriajeRunner implements CommandLineRunner {
         }
         System.out.println("  Reglas activadas (forward chaining):");
         for (ReglaClinica r : activadas) {
-            System.out.printf("    %-3s [%-16s] %s%n",
+            System.out.printf("    %-24s [%-16s] %s%n",
                     r.getIdRegla(), r.getNivel(), r.getNombre());
         }
         ResultadoInferencia resultado = servicioReglas.evaluar(base, estado);
@@ -218,7 +209,7 @@ public class DemoTriajeRunner implements CommandLineRunner {
                 resultado.nivel());
         System.out.println("  Razones combinadas del nivel máximo:");
         for (ReglaClinica r : resultado.reglas()) {
-            System.out.printf("    %-3s → %s%n", r.getIdRegla(), r.getNodoDestino().getId());
+            System.out.printf("    %-24s → %s%n", r.getIdRegla(), r.getNodoDestino().getId());
         }
         System.out.printf("  Corto-circuito al destino de la primera regla: (%s) %s%n",
                 resultado.destino().getId(), resultado.destino().getContenido());

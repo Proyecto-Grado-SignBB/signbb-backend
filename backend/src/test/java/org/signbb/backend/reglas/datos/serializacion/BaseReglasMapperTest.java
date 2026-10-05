@@ -3,10 +3,10 @@ package org.signbb.backend.reglas.datos.serializacion;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import org.junit.jupiter.api.Test;
+import org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico;
+import org.signbb.backend.navegacion.datos.serializacion.ContenidoEjemplo;
+import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoMapper;
 import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoParser;
 import org.signbb.backend.navegacion.modelo.GrafoClinico;
 import org.signbb.backend.reglas.modelo.BaseReglas;
@@ -19,8 +19,8 @@ class BaseReglasMapperTest {
       {
         "graph": {
           "nodes": {
-            "p1": { "label": "¿Pregunta?", "metadata": { "tipo": "pregunta", "peso": 10 } },
-            "cm": { "label": "Consulta", "metadata": { "tipo": "consulta médica", "peso": 50 } }
+            "p1": { "label": "¿Pregunta?", "metadata": { "tipo": "pregunta", "peso": 1 } },
+            "cm": { "label": "Consulta", "metadata": { "tipo": "consulta médica", "peso": 2 } }
           },
           "edges": [
             { "source": "p1", "relation": "SI", "target": "cm" }
@@ -42,21 +42,11 @@ class BaseReglasMapperTest {
       }
       """;
 
-  private static String leer(String ruta) {
-    try (InputStream is = BaseReglasMapperTest.class.getResourceAsStream(ruta)) {
-      if (is == null) {
-        throw new IllegalStateException("No se encontró " + ruta);
-      }
-      return new String(is.readAllBytes(), StandardCharsets.UTF_8);
-    } catch (IOException e) {
-      throw new IllegalStateException("No se pudo leer " + ruta, e);
-    }
-  }
-
   @Test
-  void idaYVueltaDesdeElEjemplo() {
-    GrafoClinico grafo = GrafoClinicoParser.parseJsonToGrafoClinico(leer("/static/ejemplo_grafo.json"));
-    BaseReglas original = BaseReglasParser.parseJsonToBaseReglas(leer("/static/ejemplo_reglas.json"), grafo);
+  void idaYVueltaDesdeElEjemploCompuesto() {
+    CompositorGrafoClinico.Contenido contenido = ContenidoEjemplo.compuesto();
+    GrafoClinico grafo = GrafoClinicoMapper.desde(contenido.grafo());
+    BaseReglas original = BaseReglasMapper.desde(contenido.reglas(), grafo);
     BaseReglas reconstruido = BaseReglasMapper.desde(BaseReglasMapper.desde(original), grafo);
 
     assertEquals(original.size(), reconstruido.size());

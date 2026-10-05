@@ -17,7 +17,7 @@
         "metadata": {
           "tipo": "pregunta",
           "tipoInteraccion": "SELECCION_UNICA",
-          "peso": 100,
+          "peso": 1,
           "archivos": false,
           "src": []
         }
@@ -28,7 +28,7 @@
         "metadata": {
           "tipo": "pregunta",
           "tipoInteraccion": "SELECCION_UNICA",
-          "peso": 90,
+          "peso": 1,
           "archivos": false,
           "src": []
         }
@@ -38,7 +38,7 @@
         "metadata": {
           "tipo": "pregunta",
           "tipoInteraccion": "SELECCION_UNICA",
-          "peso": 90,
+          "peso": 1,
           "archivos": false,
           "src": []
         }
@@ -48,7 +48,7 @@
         "metadata": {
           "tipo": "pregunta",
           "tipoInteraccion": "SELECCION_UNICA",
-          "peso": 90,
+          "peso": 1,
           "archivos": false,
           "src": []
         }
@@ -59,7 +59,7 @@
         "metadata": {
           "tipo": "referencia",
           "grafoId": "grafo_piel_ictericia",
-          "peso": 0,
+          "peso": 1,
           "archivos": false,
           "src": []
         }
@@ -69,7 +69,7 @@
         "metadata": {
           "tipo": "referencia",
           "grafoId": "grafo_piel_cianosis",
-          "peso": 0,
+          "peso": 1,
           "archivos": false,
           "src": []
         }
@@ -79,7 +79,7 @@
         "metadata": {
           "tipo": "referencia",
           "grafoId": "grafo_temperatura_fiebre",
-          "peso": 0,
+          "peso": 1,
           "archivos": false,
           "src": []
         }
@@ -89,7 +89,7 @@
         "metadata": {
           "tipo": "referencia",
           "grafoId": "grafo_respiracion_dificultad",
-          "peso": 0,
+          "peso": 1,
           "archivos": false,
           "src": []
         }

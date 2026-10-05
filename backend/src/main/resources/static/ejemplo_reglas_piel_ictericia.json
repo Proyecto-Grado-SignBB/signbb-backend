@@ -1,0 +1,53 @@
+{
+  "grafoId": "grafo_piel_ictericia",
+  "rules": {
+    "R1": {
+      "nombre": "Ictericia con somnolencia",
+      "condiciones": [
+        [
+          { "idNodo": "pregunta_coloracion", "respuesta": "SI" },
+          { "idNodo": "pregunta_signos", "respuesta": "SOMNOLENCIA" }
+        ]
+      ],
+      "nodoDestino": "urgencia_inmediata",
+      "nivel": "URGENCIA",
+      "metadata": {
+        "autor": "Dra. Catalina Rodríguez",
+        "fechaCreacion": "2026-10-05T10:00:00Z",
+        "descripcion": "La coloración amarilla con somnolencia es un signo de alarma de hiperbilirrubinemia: urgencias."
+      }
+    },
+    "R2": {
+      "nombre": "Come menos y el amarillo se extiende",
+      "condiciones": [
+        [
+          { "idNodo": "pregunta_signos", "respuesta": "COME_MENOS" },
+          { "idNodo": "pregunta_signos", "respuesta": "AMARILLO_SE_EXTIENDE" }
+        ]
+      ],
+      "nodoDestino": "urgencia_inmediata",
+      "nivel": "URGENCIA",
+      "metadata": {
+        "autor": "Dra. Catalina Rodríguez",
+        "fechaCreacion": "2026-10-05T10:00:00Z",
+        "descripcion": "Cada signo por separado lleva a consulta, pero juntos indican urgencia: combinación que el grafo solo no detecta."
+      }
+    },
+    "R3": {
+      "nombre": "Ictericia que se extiende",
+      "condiciones": [
+        [
+          { "idNodo": "pregunta_coloracion", "respuesta": "SI" },
+          { "idNodo": "pregunta_signos", "respuesta": "AMARILLO_SE_EXTIENDE" }
+        ]
+      ],
+      "nodoDestino": "consulta_prioritaria",
+      "nivel": "CONSULTAR_MEDICO",
+      "metadata": {
+        "autor": "Dra. Catalina Rodríguez",
+        "fechaCreacion": "2026-10-05T10:00:00Z",
+        "descripcion": "La coloración que avanza hacia el abdomen o las piernas requiere valoración médica prioritaria."
+      }
+    }
+  }
+}

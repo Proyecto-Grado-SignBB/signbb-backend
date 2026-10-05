@@ -2,6 +2,7 @@ package org.signbb.backend.cache;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
@@ -11,27 +12,30 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
 import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico;
-import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoParser;
+import org.signbb.backend.navegacion.datos.serializacion.ContenidoEjemplo;
+import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoJson;
 import org.signbb.backend.reglas.datos.entidades.BaseReglasEntity;
 import org.signbb.backend.reglas.datos.repositorios.RepositorioBaseReglas;
-import org.signbb.backend.reglas.datos.serializacion.BaseReglasParser;
+import org.signbb.backend.reglas.datos.serializacion.BaseReglasJson;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
 import tools.jackson.databind.ObjectMapper;
 
-/** Tests unitarios de la resolución cache-aside del contenido clínico. */
+/**
+ * Tests unitarios de la resolución cache-aside del contenido clínico: la base
+ * guarda raíz, subgrafos y reglas por separado y el resolvedor cachea el
+ * resultado ya compuesto.
+ */
 class ResolvedorContenidoClinicoTest {
 
     private StringRedisTemplate redis;
@@ -40,18 +44,14 @@ class ResolvedorContenidoClinicoTest {
     private RepositorioBaseReglas bases;
     private ResolvedorContenidoClinico resolvedor;
 
-    private GrafoClinicoEntity filaGrafo;
+    private GrafoClinicoEntity filaRaiz;
+    private GrafoClinicoEntity filaSubgrafo;
     private BaseReglasEntity filaReglas;
 
-    private static String leer(String ruta) {
-        try (InputStream is = ResolvedorContenidoClinicoTest.class.getResourceAsStream(ruta)) {
-            if (is == null) {
-                throw new IllegalStateException("No se encontró " + ruta);
-            }
-            return new String(is.readAllBytes(), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            throw new IllegalStateException("No se pudo leer " + ruta, e);
-        }
+    private static GrafoClinicoEntity filaGrafo(GrafoClinicoJson documento) {
+        GrafoClinicoEntity fila = new GrafoClinicoEntity();
+        fila.setEstructura(documento);
+        return fila;
     }
 
     @BeforeEach
@@ -63,30 +63,37 @@ class ResolvedorContenidoClinicoTest {
         grafos = mock(RepositorioGrafoClinico.class);
         bases = mock(RepositorioBaseReglas.class);
 
-        filaGrafo = new GrafoClinicoEntity();
-        filaGrafo.setEstructura(GrafoClinicoParser.parseJsonToDocumento(leer("/static/ejemplo_grafo.json")));
+        filaRaiz = filaGrafo(ContenidoEjemplo.raiz());
+        filaSubgrafo = filaGrafo(ContenidoEjemplo.subgrafos().get(0));
         filaReglas = new BaseReglasEntity();
-        filaReglas.setEstructura(BaseReglasParser.parseJsonToDocumento(leer("/static/ejemplo_reglas.json")));
+        filaReglas.setEstructura(ContenidoEjemplo.bases().get(0));
 
         resolvedor = new ResolvedorContenidoClinico(redis, grafos, bases);
     }
 
     @Test
     void hitDeRedisNoTocaLaBase() {
-        String cacheado = new ObjectMapper().writeValueAsString(filaGrafo.getEstructura());
-        when(valores.get(ResolvedorContenidoClinico.CLAVE_GRAFO)).thenReturn(cacheado);
+        GrafoClinicoJson compuesto = ContenidoEjemplo.compuesto().grafo();
+        when(valores.get(ResolvedorContenidoClinico.CLAVE_GRAFO))
+                .thenReturn(new ObjectMapper().writeValueAsString(compuesto));
 
-        assertEquals(12, resolvedor.documentoGrafo().graph().nodes().size());
+        assertEquals(7, resolvedor.documentoGrafo().graph().nodes().size());
         verify(grafos, never()).findAll();
     }
 
     @Test
-    void missLeeLaBaseYPueblaElCache() {
-        when(valores.get(ResolvedorContenidoClinico.CLAVE_GRAFO)).thenReturn(null);
-        when(grafos.findAll()).thenReturn(List.of(filaGrafo));
+    void missComponeDesdeLaBaseYPueblaAmbasClaves() {
+        when(grafos.findAll()).thenReturn(List.of(filaRaiz, filaSubgrafo));
+        when(bases.findAll()).thenReturn(List.of(filaReglas));
 
-        assertEquals(12, resolvedor.documentoGrafo().graph().nodes().size());
+        GrafoClinicoJson documento = resolvedor.documentoGrafo();
+
+        // Raíz sin referencias ni puentes vacíos (2) + subgrafo de ictericia (5).
+        assertEquals(7, documento.graph().nodes().size());
+        assertTrue(documento.graph().nodes().containsKey("grafo_piel_ictericia/pregunta_coloracion"));
         verify(valores).set(eq(ResolvedorContenidoClinico.CLAVE_GRAFO), anyString(),
+                eq(Duration.ofHours(24)));
+        verify(valores).set(eq(ResolvedorContenidoClinico.CLAVE_REGLAS), anyString(),
                 eq(Duration.ofHours(24)));
     }
 
@@ -94,25 +101,50 @@ class ResolvedorContenidoClinicoTest {
     void redisCaidoDegradaALaBaseDeDatos() {
         when(valores.get(ResolvedorContenidoClinico.CLAVE_GRAFO))
                 .thenThrow(new DataAccessResourceFailureException("cache caído"));
-        when(grafos.findAll()).thenReturn(List.of(filaGrafo));
+        when(grafos.findAll()).thenReturn(List.of(filaRaiz, filaSubgrafo));
+        when(bases.findAll()).thenReturn(List.of(filaReglas));
 
-        assertEquals(12, resolvedor.documentoGrafo().graph().nodes().size());
+        assertEquals(7, resolvedor.documentoGrafo().graph().nodes().size());
     }
 
     @Test
     void falloAlEscribirElCacheNoRompeLaResolucion() {
-        when(valores.get(ResolvedorContenidoClinico.CLAVE_REGLAS)).thenReturn(null);
+        when(grafos.findAll()).thenReturn(List.of(filaRaiz, filaSubgrafo));
+        when(bases.count()).thenReturn(1L);
         when(bases.findAll()).thenReturn(List.of(filaReglas));
         doThrow(new DataAccessResourceFailureException("cache caído"))
                 .when(valores).set(anyString(), anyString(), any(Duration.class));
 
-        assertEquals(7, resolvedor.documentoReglas().rules().size());
+        BaseReglasJson reglas = resolvedor.documentoReglas();
+
+        assertEquals(3, reglas.rules().size());
+        assertTrue(reglas.rules().containsKey("grafo_piel_ictericia/R1"));
+    }
+
+    @Test
+    void filasDelFormatoPrevioSeIgnoran() {
+        GrafoClinicoJson legado = new GrafoClinicoJson(new GrafoClinicoJson.Grafo(
+                null, "legado", true, List.of(), null, "x", Map.of(), Map.of(), List.of()));
+        BaseReglasEntity reglasLegado = new BaseReglasEntity();
+        reglasLegado.setEstructura(new BaseReglasJson(null, Map.of()));
+        when(grafos.findAll()).thenReturn(List.of(filaGrafo(legado), filaRaiz, filaSubgrafo));
+        when(bases.findAll()).thenReturn(List.of(reglasLegado, filaReglas));
+
+        assertEquals(7, resolvedor.documentoGrafo().graph().nodes().size());
+    }
+
+    @Test
+    void sinGrafoRaizFallaConErrorExplicito() {
+        when(grafos.findAll()).thenReturn(List.of(filaSubgrafo));
+
+        IllegalStateException error = assertThrows(IllegalStateException.class,
+                () -> resolvedor.documentoGrafo());
+        assertTrue(error.getMessage().contains("grafo_raiz"));
     }
 
     @Test
     void baseSinContenidoFallaConErrorExplicito() {
-        when(valores.get(ResolvedorContenidoClinico.CLAVE_REGLAS)).thenReturn(null);
-        when(bases.findAll()).thenReturn(List.of());
+        when(bases.count()).thenReturn(0L);
 
         IllegalStateException error = assertThrows(IllegalStateException.class,
                 () -> resolvedor.documentoReglas());

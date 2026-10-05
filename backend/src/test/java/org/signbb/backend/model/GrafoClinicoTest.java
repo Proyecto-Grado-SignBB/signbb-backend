@@ -306,4 +306,37 @@ class GrafoClinicoTest {
         g.desbloquearRuta();
         assertEquals(t, g.navegar().orElseThrow());
     }
+
+    // ---------- tipo de interacción ----------
+
+    @Test
+    void tipoInteraccionSeInfiereDeLasOpciones() {
+        GrafoClinico g = new GrafoClinico();
+        Nodo siNo = n("si_no");
+        Nodo unica = n("unica");
+        Nodo t = n("t", "recomendacion", 1);
+        g.agregarNodo(siNo);
+        g.agregarNodo(unica);
+        g.agregarNodo(t);
+        g.conectarRespuestas(siNo, t, "SI");
+        g.conectarRespuestas(siNo, unica, "NO");
+        g.conectarRespuestas(unica, t, "A");
+        g.conectarRespuestas(unica, t, "B");
+
+        assertEquals("SI_NO", g.tipoInteraccion(siNo));
+        assertEquals("SELECCION_UNICA", g.tipoInteraccion(unica));
+    }
+
+    @Test
+    void tipoInteraccionDeclaradoTienePrioridad() {
+        GrafoClinico g = new GrafoClinico();
+        Nodo multiple = new Nodo("m", "pregunta", "¿Cuáles?", 1, false, List.of(), "SELECCION_MULTIPLE");
+        Nodo t = n("t", "recomendacion", 1);
+        g.agregarNodo(multiple);
+        g.agregarNodo(t);
+        g.conectarRespuestas(multiple, t, "SI");
+        g.conectarRespuestas(multiple, t, "NO");
+
+        assertEquals("SELECCION_MULTIPLE", g.tipoInteraccion(multiple));
+    }
 }

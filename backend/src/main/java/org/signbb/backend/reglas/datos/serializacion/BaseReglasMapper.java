@@ -28,6 +28,9 @@ import tools.jackson.databind.node.ObjectNode;
  * (conjunción). El {@code nodoDestino} de cada regla se persiste como id
  * (referencia) y se resuelve contra el {@link GrafoClinico} correspondiente al
  * reconstruir el TAD, fallando de inmediato si el nodo no existe en el grafo.
+ * Cada condición se revisa también contra el grafo: su {@code idNodo} debe ser
+ * una pregunta y su {@code respuesta} una de las opciones de esa pregunta; si
+ * no, la regla nunca podría dispararse y se rechaza al cargarla.
  */
 public final class BaseReglasMapper {
 
@@ -49,17 +52,22 @@ public final class BaseReglasMapper {
                     .orElseThrow(() -> new IllegalArgumentException(
                             "nodoDestino '" + reglaJson.nodoDestino()
                                     + "' no existe en el grafo"));
+            List<Caso> casos = buildCasos(reglaJson.condiciones());
+            validarCondiciones(e.getKey(), casos, grafo);
             tad.agregarRegla(ReglaClinica.conCasos(
                     e.getKey(),
                     reglaJson.nombre(),
-                    buildCasos(reglaJson.condiciones()),
+                    casos,
                     destino,
                     nivel));
         }
         return tad;
     }
 
-    /** Serializa el TAD al documento JSON, referenciando destinos por id. */
+    /**
+     * Serializa el TAD al documento JSON, referenciando destinos por id. El
+     * documento resultante no declara {@code grafoId}: el TAD no lo almacena.
+     */
     public static BaseReglasJson desde(BaseReglas tad) {
         Map<String, BaseReglasJson.ReglaJson> reglas = new LinkedHashMap<>();
         for (ReglaClinica regla : tad.todasLasReglas()) {
@@ -70,7 +78,7 @@ public final class BaseReglasMapper {
                     regla.getNivel().name(),
                     Map.of()));
         }
-        return new BaseReglasJson(reglas);
+        return new BaseReglasJson(null, reglas);
     }
 
     /**
@@ -101,6 +109,33 @@ public final class BaseReglasMapper {
         }
         throw new IllegalArgumentException(
                 "cada caso debe ser un arreglo de condiciones o un objeto {idNodo, respuesta}");
+    }
+
+    /**
+     * Revisa cada condición de la regla contra el grafo: el nodo existe, es
+     * una pregunta y la respuesta es una de sus opciones.
+     */
+    private static void validarCondiciones(String idRegla, List<Caso> casos, GrafoClinico grafo) {
+        for (Caso caso : casos) {
+            for (Condicion c : caso.condiciones()) {
+                Nodo nodo = grafo.obtenerNodoPorId(c.idNodo())
+                        .orElseThrow(() -> new IllegalArgumentException(
+                                "la regla '" + idRegla + "' tiene una condición sobre '" + c.idNodo()
+                                        + "', que no existe en el grafo"));
+                if (nodo.esTerminal()) {
+                    throw new IllegalArgumentException(
+                            "la regla '" + idRegla + "' tiene una condición sobre el terminal '"
+                                    + c.idNodo() + "': solo las preguntas tienen respuestas");
+                }
+                boolean esOpcion = grafo.obtenerOpciones(nodo).stream()
+                        .anyMatch(r -> r.getCondicion().equals(c.respuesta()));
+                if (!esOpcion) {
+                    throw new IllegalArgumentException(
+                            "la regla '" + idRegla + "' espera la respuesta '" + c.respuesta()
+                                    + "' en '" + c.idNodo() + "', que no es una de sus opciones");
+                }
+            }
+        }
     }
 
     /** Mapea un arreglo JSON de condiciones a la conjunción {@link Caso}. */

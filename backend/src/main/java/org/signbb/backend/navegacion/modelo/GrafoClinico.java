@@ -41,9 +41,13 @@ public final class GrafoClinico {
     private final int umbralBajo;
     private boolean bloqueado = false;
 
-    /** Operación 1: crearGrafo() con umbrales por defecto (alto=8, bajo=3). */
+    /**
+     * Operación 1: crearGrafo() con umbrales por defecto para la escala de
+     * peso 1–3 (alto=3: un terminal urgente corta; bajo=1: no se descarta
+     * ninguno).
+     */
     public GrafoClinico() {
-        this(8, 3);
+        this(3, 1);
     }
 
     /** Crea el grafo con umbrales de peso explícitos. */
@@ -165,6 +169,25 @@ public final class GrafoClinico {
                     "el nodo " + nodoActual.getId() + " no está en el grafo");
         }
         return new ArrayList<>(adyacencia.get(nodoActual));
+    }
+
+    /**
+     * Operación adicional: tipo de interacción efectivo de una pregunta. Usa el
+     * {@code tipoInteraccion} declarado en el nodo si viene; si no, lo infiere
+     * de sus opciones: {@code SI_NO} cuando son exactamente {SI, NO} y
+     * {@code SELECCION_UNICA} en cualquier otro caso. {@code SELECCION_MULTIPLE}
+     * solo se obtiene declarándolo en el nodo. Lo comparten el motor (que solo
+     * admite varias respuestas en {@code SELECCION_MULTIPLE}) y la vista REST.
+     */
+    public String tipoInteraccion(Nodo pregunta) {
+        if (pregunta.getTipoInteraccion() != null) {
+            return pregunta.getTipoInteraccion();
+        }
+        List<Respuesta> opciones = obtenerOpciones(pregunta);
+        boolean esSiNo = opciones.size() == 2
+                && opciones.stream().anyMatch(r -> "SI".equals(r.getCondicion()))
+                && opciones.stream().anyMatch(r -> "NO".equals(r.getCondicion()));
+        return esSiNo ? "SI_NO" : "SELECCION_UNICA";
     }
 
     /** Operación 9. */

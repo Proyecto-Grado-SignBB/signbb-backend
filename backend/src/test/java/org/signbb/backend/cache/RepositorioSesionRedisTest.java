@@ -11,9 +11,6 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +19,9 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.signbb.backend.config.RecursoNoEncontradoException;
-import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoParser;
+import org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico;
+import org.signbb.backend.navegacion.datos.serializacion.ContenidoEjemplo;
+import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoMapper;
 import org.signbb.backend.navegacion.modelo.ContextoClinico;
 import org.signbb.backend.navegacion.modelo.EstadoPaciente;
 import org.signbb.backend.navegacion.modelo.GrafoClinico;
@@ -30,7 +29,7 @@ import org.signbb.backend.navegacion.modelo.Nodo;
 import org.signbb.backend.navegacion.modelo.RepositorioSesion;
 import org.signbb.backend.navegacion.modelo.ResultadoPaso;
 import org.signbb.backend.navegacion.modelo.SesionTriaje;
-import org.signbb.backend.reglas.datos.serializacion.BaseReglasParser;
+import org.signbb.backend.reglas.datos.serializacion.BaseReglasMapper;
 import org.signbb.backend.reglas.modelo.BaseReglas;
 import org.signbb.backend.reglas.modelo.NivelAlerta;
 import org.springframework.dao.DataAccessResourceFailureException;
@@ -45,18 +44,8 @@ class RepositorioSesionRedisTest {
     private StringRedisTemplate redis;
     private ValueOperations<String, String> valores;
     private GrafoClinico grafo;
+    private BaseReglas base;
     private RepositorioSesion repositorio;
-
-    private static String leer(String ruta) {
-        try (InputStream is = RepositorioSesionRedisTest.class.getResourceAsStream(ruta)) {
-            if (is == null) {
-                throw new IllegalStateException("No se encontró " + ruta);
-            }
-            return new String(is.readAllBytes(), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            throw new IllegalStateException("No se pudo leer " + ruta, e);
-        }
-    }
 
     @BeforeEach
     @SuppressWarnings("unchecked")
@@ -71,9 +60,9 @@ class RepositorioSesionRedisTest {
             return null;
         }).when(valores).set(anyString(), anyString(), any(Duration.class));
 
-        grafo = GrafoClinicoParser.parseJsonToGrafoClinico(leer("/static/ejemplo_grafo.json"));
-        BaseReglas base = BaseReglasParser.parseJsonToBaseReglas(
-                leer("/static/ejemplo_reglas.json"), grafo);
+        CompositorGrafoClinico.Contenido contenido = ContenidoEjemplo.compuesto();
+        grafo = GrafoClinicoMapper.desde(contenido.grafo());
+        base = BaseReglasMapper.desde(contenido.reglas(), grafo);
 
         ContextoClinico contexto = mock(ContextoClinico.class);
         when(contexto.getGrafo()).thenReturn(grafo);
@@ -85,30 +74,28 @@ class RepositorioSesionRedisTest {
     @Test
     void crearYBuscarSesionEnCurso() {
         EstadoPaciente estado = new EstadoPaciente("s-redis-1");
-        estado.registrarRespuesta("pregunta_coloracion", "SI");
-        Nodo pregunta = grafo.obtenerNodoPorId("pregunta_tiempo").orElseThrow();
+        estado.registrarRespuesta("grafo_piel_ictericia/pregunta_coloracion", "SI");
+        Nodo pregunta = grafo.obtenerNodoPorId("grafo_piel_ictericia/pregunta_signos").orElseThrow();
 
         SesionTriaje sesion = repositorio.crear(estado, ResultadoPaso.pregunta(pregunta));
         SesionTriaje recuperada = repositorio.buscar(sesion.getId());
 
         assertEquals(sesion.getId(), recuperada.getId());
-        assertEquals("SI", recuperada.getEstado().getRespuesta("pregunta_coloracion").orElseThrow());
-        assertEquals("pregunta_tiempo", recuperada.getUltimoPaso().preguntaActual().getId());
+        assertEquals("SI", recuperada.getEstado().getRespuesta("grafo_piel_ictericia/pregunta_coloracion").orElseThrow());
+        assertEquals("grafo_piel_ictericia/pregunta_signos", recuperada.getUltimoPaso().preguntaActual().getId());
         assertFalse(recuperada.getUltimoPaso().finalizado());
     }
 
     @Test
     void guardarYBuscarSesionFinalizada() {
         EstadoPaciente estado = new EstadoPaciente("s-redis-2");
-        estado.registrarRespuesta("pregunta_coloracion", "SI");
-        estado.registrarRespuesta("pregunta_tiempo", "MAS_DE_24_HORAS");
+        estado.registrarRespuesta("grafo_piel_ictericia/pregunta_coloracion", "SI");
+        estado.registrarRespuesta("grafo_piel_ictericia/pregunta_signos", "SOMNOLENCIA");
         estado.sumarPuntaje(5);
-        Nodo urgente = grafo.obtenerNodoPorId("consulta_medica_urgente").orElseThrow();
-        BaseReglas base = BaseReglasParser.parseJsonToBaseReglas(
-                leer("/static/ejemplo_reglas.json"), grafo);
+        Nodo urgente = grafo.obtenerNodoPorId("grafo_piel_ictericia/urgencia_inmediata").orElseThrow();
 
         SesionTriaje sesion = new SesionTriaje("s-finalizada", estado, ResultadoPaso.terminal(
-                urgente, NivelAlerta.URGENCIA, List.of(base.obtenerRegla("R1")),
+                urgente, NivelAlerta.URGENCIA, List.of(base.obtenerRegla("grafo_piel_ictericia/R1")),
                 grafo.obtenerCaminoCausal(urgente)));
         repositorio.guardar(sesion);
 
@@ -116,9 +103,9 @@ class RepositorioSesionRedisTest {
 
         assertTrue(recuperada.getUltimoPaso().finalizado());
         assertEquals(NivelAlerta.URGENCIA, recuperada.getUltimoPaso().nivel());
-        assertEquals("consulta_medica_urgente", recuperada.getUltimoPaso().destino().getId());
+        assertEquals("grafo_piel_ictericia/urgencia_inmediata", recuperada.getUltimoPaso().destino().getId());
         assertEquals(1, recuperada.getUltimoPaso().razones().size());
-        assertEquals("R1", recuperada.getUltimoPaso().razones().get(0).getIdRegla());
+        assertEquals("grafo_piel_ictericia/R1", recuperada.getUltimoPaso().razones().get(0).getIdRegla());
         assertEquals(sesion.getUltimoPaso().caminoCausal().size(),
                 recuperada.getUltimoPaso().caminoCausal().size());
         assertEquals(5, recuperada.getEstado().getPuntaje());
@@ -137,7 +124,7 @@ class RepositorioSesionRedisTest {
                 .when(valores).set(anyString(), anyString(), any(Duration.class));
 
         EstadoPaciente estado = new EstadoPaciente("s-redis-3");
-        Nodo pregunta = grafo.obtenerNodoPorId("pregunta_tiempo").orElseThrow();
+        Nodo pregunta = grafo.obtenerNodoPorId("grafo_piel_ictericia/pregunta_signos").orElseThrow();
 
         assertThrows(CacheNoDisponibleException.class, () -> repositorio.buscar("x"));
         assertThrows(CacheNoDisponibleException.class,

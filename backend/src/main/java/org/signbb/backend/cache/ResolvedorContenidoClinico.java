@@ -1,10 +1,12 @@
 package org.signbb.backend.cache;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
 import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico;
+import org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico;
 import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoJson;
 import org.signbb.backend.reglas.datos.entidades.BaseReglasEntity;
 import org.signbb.backend.reglas.datos.repositorios.RepositorioBaseReglas;
@@ -27,17 +29,26 @@ import tools.jackson.databind.ObjectMapper;
  * semilla de {@code DatabaseInit}. Si Redis no responde se degrada a la base
  * de datos (Redis nunca es dependencia dura del arranque ni de la consulta);
  * si la base no tiene contenido, falla con un error explícito.
+ *
+ * <p>
+ * La base de datos guarda cada grafo por separado (el raíz del sistema y un
+ * subgrafo por médico) y cada base de reglas con su {@code grafoId}. Este
+ * resolvedor los compone con {@link CompositorGrafoClinico} y cachea el
+ * resultado plano, que es lo único que ven {@code ContextoClinico} y el motor.
  */
 @Component
 public class ResolvedorContenidoClinico {
 
     private static final Logger log = LoggerFactory.getLogger(ResolvedorContenidoClinico.class);
 
-    /** Clave del grafo clínico en Redis. */
-    public static final String CLAVE_GRAFO = "signbb:contenido:grafo";
+    /**
+     * Clave del grafo clínico ya compuesto en Redis. Lleva {@code v2} para no
+     * leer el documento único del formato previo que pudiera seguir cacheado.
+     */
+    public static final String CLAVE_GRAFO = "signbb:contenido:v2:grafo";
 
-    /** Clave de la base de reglas en Redis. */
-    public static final String CLAVE_REGLAS = "signbb:contenido:reglas";
+    /** Clave de la base de reglas ya compuesta en Redis. */
+    public static final String CLAVE_REGLAS = "signbb:contenido:v2:reglas";
 
     /**
      * TTL del contenido: higiene del cache; la invalidación real es
@@ -58,34 +69,78 @@ public class ResolvedorContenidoClinico {
         this.bases = bases;
     }
 
-    /** Documento del grafo clínico: cache Redis → base de datos. */
+    /**
+     * Grafo clínico compuesto (raíz + subgrafos, sin referencias): cache
+     * Redis → base de datos.
+     */
     public GrafoClinicoJson documentoGrafo() {
         String cacheado = leerCache(CLAVE_GRAFO);
         if (cacheado != null) {
             return mapper.readValue(cacheado, GrafoClinicoJson.class);
         }
-        GrafoClinicoJson documento = grafos.findAll().stream().findFirst()
-                .map(GrafoClinicoEntity::getEstructura)
-                .orElseThrow(() -> new IllegalStateException(
-                        "no hay grafo clínico en la base de datos; la siembra inicial "
-                                + "(DatabaseInit) debió poblarla"));
-        escribirCache(CLAVE_GRAFO, mapper.writeValueAsString(documento));
-        return documento;
+        return componerYCachear().grafo();
     }
 
-    /** Documento de la base de reglas: cache Redis → base de datos. */
+    /**
+     * Base de reglas compuesta (todas las bases, ids prefijados): cache Redis
+     * → base de datos.
+     */
     public BaseReglasJson documentoReglas() {
         String cacheado = leerCache(CLAVE_REGLAS);
         if (cacheado != null) {
             return mapper.readValue(cacheado, BaseReglasJson.class);
         }
-        BaseReglasJson documento = bases.findAll().stream().findFirst()
-                .map(BaseReglasEntity::getEstructura)
-                .orElseThrow(() -> new IllegalStateException(
-                        "no hay base de reglas en la base de datos; la siembra inicial "
-                                + "(DatabaseInit) debió poblarla"));
-        escribirCache(CLAVE_REGLAS, mapper.writeValueAsString(documento));
-        return documento;
+        if (bases.count() == 0) {
+            throw new IllegalStateException(
+                    "no hay base de reglas en la base de datos; la siembra inicial "
+                            + "(DatabaseInit) debió poblarla");
+        }
+        return componerYCachear().reglas();
+    }
+
+    /**
+     * Lee de la base de datos el grafo raíz, los subgrafos y las bases de
+     * reglas, los compone con {@link CompositorGrafoClinico} y cachea ambos
+     * resultados. Las filas del formato previo (grafo sin {@code id}, base sin
+     * {@code grafoId}) se ignoran con un aviso.
+     */
+    private CompositorGrafoClinico.Contenido componerYCachear() {
+        GrafoClinicoJson raiz = null;
+        List<GrafoClinicoJson> subgrafos = new ArrayList<>();
+        for (GrafoClinicoEntity fila : grafos.findAll()) {
+            GrafoClinicoJson documento = fila.getEstructura();
+            String id = documento == null || documento.graph() == null ? null : documento.graph().id();
+            if (id == null || id.isBlank()) {
+                log.warn("Se ignora el grafo de la fila {}: no declara 'id' (formato previo).",
+                        fila.getId());
+            } else if (CompositorGrafoClinico.ID_RAIZ.equals(id)) {
+                raiz = documento;
+            } else {
+                subgrafos.add(documento);
+            }
+        }
+        if (raiz == null) {
+            throw new IllegalStateException(
+                    "no hay grafo clínico raíz ('" + CompositorGrafoClinico.ID_RAIZ
+                            + "') en la base de datos; la siembra inicial (DatabaseInit) debió poblarla");
+        }
+
+        List<BaseReglasJson> documentosReglas = new ArrayList<>();
+        for (BaseReglasEntity fila : bases.findAll()) {
+            BaseReglasJson documento = fila.getEstructura();
+            if (documento == null || documento.grafoId() == null || documento.grafoId().isBlank()) {
+                log.warn("Se ignora la base de reglas de la fila {}: no declara 'grafoId' "
+                        + "(formato previo).", fila.getId());
+            } else {
+                documentosReglas.add(documento);
+            }
+        }
+
+        CompositorGrafoClinico.Contenido contenido =
+                CompositorGrafoClinico.componer(raiz, subgrafos, documentosReglas);
+        escribirCache(CLAVE_GRAFO, mapper.writeValueAsString(contenido.grafo()));
+        escribirCache(CLAVE_REGLAS, mapper.writeValueAsString(contenido.reglas()));
+        return contenido;
     }
 
     /**

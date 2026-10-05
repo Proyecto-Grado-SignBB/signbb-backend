@@ -18,7 +18,7 @@
         "metadata": {
           "tipo": "pregunta",
           "tipoInteraccion": "SELECCION_UNICA",
-          "peso": 95,
+          "peso": 2,
           "archivos": true,
           "src": [
             "/media/ictericia-piel.jpg",
@@ -31,7 +31,7 @@
         "metadata": {
           "tipo": "pregunta",
           "tipoInteraccion": "SELECCION_MULTIPLE",
-          "peso": 92,
+          "peso": 2,
           "archivos": false,
           "src": []
         }
@@ -41,7 +41,7 @@
         "metadata": {
           "tipo": "terminal",
           "desenlace": "recomendacion",
-          "peso": 30,
+          "peso": 1,
           "archivos": false,
           "src": []
         }
@@ -51,7 +51,7 @@
         "metadata": {
           "tipo": "terminal",
           "desenlace": "consulta_medica",
-          "peso": 85,
+          "peso": 2,
           "archivos": false,
           "src": []
         }
@@ -61,7 +61,7 @@
         "metadata": {
           "tipo": "terminal",
           "desenlace": "urgencia",
-          "peso": 100,
+          "peso": 3,
           "archivos": false,
           "src": []
         }

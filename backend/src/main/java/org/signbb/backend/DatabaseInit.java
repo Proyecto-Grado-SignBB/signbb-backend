@@ -1,37 +1,38 @@
 package org.signbb.backend;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
 import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico;
+import org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico;
+import org.signbb.backend.navegacion.datos.serializacion.ContenidoEjemplo;
 import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoJson;
-import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoParser;
+import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoMapper;
 import org.signbb.backend.navegacion.modelo.GrafoClinico;
-import org.signbb.backend.navegacion.modelo.Nodo;
 import org.signbb.backend.reglas.datos.entidades.BaseReglasEntity;
 import org.signbb.backend.reglas.datos.repositorios.RepositorioBaseReglas;
-import org.signbb.backend.reglas.datos.serializacion.BaseReglasParser;
+import org.signbb.backend.reglas.datos.serializacion.BaseReglasJson;
+import org.signbb.backend.reglas.datos.serializacion.BaseReglasMapper;
 import org.signbb.backend.reglas.modelo.BaseReglas;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 /**
- * Inicialización de la base de datos: siembra el grafo clínico y la base de
- * reglas de ejemplo ({@code static/ejemplo_grafo.json} y
- * {@code static/ejemplo_reglas.json}) cuando sus tablas están vacías.
+ * Inicialización de la base de datos: siembra el contenido clínico de ejemplo
+ * ({@link ContenidoEjemplo}: grafo raíz, subgrafo de ictericia y su base de
+ * reglas) cuando aún no existe el grafo raíz.
  *
  * <p>
- * Antes de guardar cada documento se reconstruye el TAD con los parsers, de
- * modo que solo se persisten datos válidos (referencias colgantes, niveles
- * inválidos o aristas rotas fallan aquí). El documento se guarda tal cual
- * viene del JSON para conservar los metadatos de presentación (autor,
- * categorías) que el TAD no almacena, completando el {@code nodoInicial}
- * explícito si el archivo no lo trae. La siembra es idempotente: si las
- * tablas ya tienen filas, no hace nada.
+ * Antes de guardar se compone el contenido y se reconstruyen los TAD, de modo
+ * que solo se persisten datos válidos (pesos fuera de 1–3, referencias
+ * colgantes, niveles inválidos o aristas rotas fallan aquí). Cada documento se
+ * guarda por separado y tal cual viene del JSON, para conservar los metadatos
+ * de presentación (autor, categoría) que el TAD no almacena; la composición se
+ * repite al resolver el contenido. La siembra es idempotente: si el grafo raíz
+ * ya está, no hace nada. Las filas del formato previo no se tocan; el
+ * resolvedor las ignora.
  */
 @Component
 public class DatabaseInit implements CommandLineRunner {
@@ -48,28 +49,34 @@ public class DatabaseInit implements CommandLineRunner {
         this.repositorioBases = repositorioBases;
     }
 
-    /** Siembra grafo y reglas de ejemplo si sus tablas están vacías. */
+    /** Siembra el contenido de ejemplo si el grafo raíz no existe. */
     @Override
     public void run(String... args) {
-        long grafos = repositorioGrafos.count();
-        long bases = repositorioBases.count();
-        if (grafos > 0 && bases > 0) {
+        boolean hayRaiz = repositorioGrafos.findAll().stream()
+                .map(GrafoClinicoEntity::getEstructura)
+                .anyMatch(DatabaseInit::esRaiz);
+        if (hayRaiz) {
             log.info("Base de datos ya inicializada: {} grafo(s), {} base(s) de reglas.",
-                    grafos, bases);
+                    repositorioGrafos.count(), repositorioBases.count());
             return;
         }
-        if (grafos == 0) {
-            sembrarGrafo();
-        }
-        if (bases == 0) {
-            sembrarBaseReglas();
-        }
+
+        GrafoClinicoJson raiz = ContenidoEjemplo.raiz();
+        List<GrafoClinicoJson> subgrafos = ContenidoEjemplo.subgrafos();
+        List<BaseReglasJson> bases = ContenidoEjemplo.bases();
+        validar(CompositorGrafoClinico.componer(raiz, subgrafos, bases));
+
+        guardarGrafo(raiz);
+        subgrafos.forEach(this::guardarGrafo);
+        bases.forEach(this::guardarBase);
+        log.info("Contenido clínico de ejemplo sembrado: 1 grafo raíz, {} subgrafo(s), "
+                + "{} base(s) de reglas.", subgrafos.size(), bases.size());
     }
 
-    /** Guarda ejemplo_grafo.json tras validar que el TAD se reconstruye. */
-    private void sembrarGrafo() {
-        String json = leerRecurso("static/ejemplo_grafo.json");
-        GrafoClinico grafo = GrafoClinicoParser.parseJsonToGrafoClinico(json);
+    /** Reconstruye los TAD del contenido compuesto y avisa de rutas dudosas. */
+    private static void validar(CompositorGrafoClinico.Contenido contenido) {
+        GrafoClinico grafo = GrafoClinicoMapper.desde(contenido.grafo());
+        BaseReglas base = BaseReglasMapper.desde(contenido.reglas(), grafo);
         if (!grafo.rutaValida()) {
             log.warn("El grafo sembrado no cumple rutaValida(): puede haber nodos huérfanos "
                     + "o preguntas sin salida.");
@@ -77,50 +84,25 @@ public class DatabaseInit implements CommandLineRunner {
         if (!grafo.validarCiclo()) {
             log.warn("El grafo sembrado contiene ciclos: la navegación podría no terminar.");
         }
+        log.info("Contenido de ejemplo validado: {} nodos y {} reglas tras componer.",
+                grafo.size(), base.size());
+    }
 
+    private void guardarGrafo(GrafoClinicoJson documento) {
         GrafoClinicoEntity entidad = new GrafoClinicoEntity();
-        entidad.setEstructura(conNodoInicialExplicito(
-                GrafoClinicoParser.parseJsonToDocumento(json), grafo));
+        entidad.setEstructura(documento);
         repositorioGrafos.save(entidad);
-        log.info("Grafo clínico de ejemplo sembrado: {} nodos.", grafo.size());
     }
 
-    /**
-     * Completa {@code nodoInicial} con el inicial del TAD cuando el documento
-     * no lo trae, de modo que la fila persistida quede autocontenida (sin
-     * depender de la convención "primer nodo insertado").
-     */
-    private static GrafoClinicoJson conNodoInicialExplicito(
-            GrafoClinicoJson documento, GrafoClinico tad) {
-        GrafoClinicoJson.Grafo g = documento.graph();
-        if (g.nodoInicial() != null) {
-            return documento;
-        }
-        String inicial = tad.obtenerNodoInicial().map(Nodo::getId).orElse(null);
-        return new GrafoClinicoJson(new GrafoClinicoJson.Grafo(
-                g.label(), g.metadata(), inicial, g.nodes(), g.edges()));
-    }
-
-    /** Guarda ejemplo_reglas.json tras validarlo contra el grafo de ejemplo. */
-    private void sembrarBaseReglas() {
-        String jsonGrafo = leerRecurso("static/ejemplo_grafo.json");
-        GrafoClinico grafo = GrafoClinicoParser.parseJsonToGrafoClinico(jsonGrafo);
-
-        String json = leerRecurso("static/ejemplo_reglas.json");
-        BaseReglas base = BaseReglasParser.parseJsonToBaseReglas(json, grafo);
-
+    private void guardarBase(BaseReglasJson documento) {
         BaseReglasEntity entidad = new BaseReglasEntity();
-        entidad.setEstructura(BaseReglasParser.parseJsonToDocumento(json));
+        entidad.setEstructura(documento);
         repositorioBases.save(entidad);
-        log.info("Base de reglas de ejemplo sembrada: {} reglas.", base.size());
     }
 
-    /** Lee un recurso del classpath como texto UTF-8. */
-    private static String leerRecurso(String ruta) {
-        try {
-            return new ClassPathResource(ruta).getContentAsString(StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            throw new IllegalStateException("No se pudo leer " + ruta, e);
-        }
+    /** True si el documento es el grafo raíz del sistema. */
+    private static boolean esRaiz(GrafoClinicoJson documento) {
+        return documento != null && documento.graph() != null
+                && CompositorGrafoClinico.ID_RAIZ.equals(documento.graph().id());
     }
 }

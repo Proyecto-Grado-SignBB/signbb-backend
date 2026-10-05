@@ -24,7 +24,7 @@ class NodoTest {
 
     @Test
     void creacionTerminales() {
-        for (String tipo : new String[] { "recomendacion", "bloqueo", "consulta_medica" }) {
+        for (String tipo : new String[] { "recomendacion", "consulta_medica", "urgencia" }) {
             Nodo n = new Nodo("t-" + tipo, tipo, "texto");
             assertTrue(n.esTerminal());
         }
