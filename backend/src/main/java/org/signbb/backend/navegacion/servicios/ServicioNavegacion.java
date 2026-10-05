@@ -12,7 +12,8 @@ import org.signbb.backend.observaciones.controladores.RecorridoDTO;
  * {@link #iniciar} abre un recorrido y devuelve la primera pregunta;
  * {@link #responder} registra una respuesta y avanza un paso;
  * {@link #consultar}
- * devuelve el estado actual.
+ * devuelve el estado actual; {@link #retroceder} vuelve a la pregunta
+ * anterior para cambiar su respuesta.
  *
  * <p>
  * MODIFICADO: se agrega la sobrecarga {@link #responder(String, List)} para
@@ -41,4 +42,14 @@ public interface ServicioNavegacion {
 
     /** Consulta el estado actual de un recorrido. */
     RecorridoDTO consultar(String recorridoId);
+
+    /**
+     * Vuelve a la última pregunta respondida (también si el recorrido ya
+     * finalizó) y recalcula el estado del paciente sin esa respuesta: las
+     * reglas que disparó dejan de estar disparadas. Ver
+     * {@code MotorNavegacion.retroceder}.
+     *
+     * @throws IllegalArgumentException si el recorrido aún no tiene respuestas.
+     */
+    RecorridoDTO retroceder(String recorridoId);
 }

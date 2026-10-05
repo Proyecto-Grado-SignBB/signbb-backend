@@ -14,6 +14,7 @@ import org.signbb.backend.navegacion.modelo.PasoCausal;
 import org.signbb.backend.navegacion.modelo.RepositorioSesion;
 import org.signbb.backend.navegacion.modelo.ResultadoPaso;
 import org.signbb.backend.navegacion.modelo.SesionTriaje;
+import org.signbb.backend.navegacion.servicios.MotorNavegacion;
 import org.signbb.backend.reglas.modelo.NivelAlerta;
 import org.signbb.backend.reglas.modelo.ReglaClinica;
 import org.springframework.context.annotation.Profile;
@@ -94,7 +95,12 @@ public class RepositorioSesionRedis implements RepositorioSesion {
         return new SesionTriaje(json.id(), estado, reconstruirPaso(json.ultimoPaso()));
     }
 
-    /** Reconstruye el último paso resolviendo nodos y reglas contra el contenido vigente. */
+    /**
+     * Reconstruye el último paso resolviendo nodos y reglas contra el
+     * contenido vigente. El desenlace de sistema
+     * {@code MotorNavegacion.LIMITE_PREGUNTAS} no está en el grafo y se
+     * resuelve por su id.
+     */
     private ResultadoPaso reconstruirPaso(SesionJson.PasoJson paso) {
         if (ResultadoPaso.Estado.EN_CURSO.name().equals(paso.estado())) {
             Nodo pregunta = contexto.getGrafo().obtenerNodoPorId(paso.preguntaId())
@@ -104,10 +110,12 @@ public class RepositorioSesionRedis implements RepositorioSesion {
             return ResultadoPaso.pregunta(pregunta);
         }
 
-        Nodo destino = contexto.getGrafo().obtenerNodoPorId(paso.destinoId())
-                .orElseThrow(() -> new IllegalStateException(
-                        "la sesión referencia el nodo '" + paso.destinoId()
-                                + "' que ya no existe en el contenido clínico"));
+        Nodo destino = MotorNavegacion.LIMITE_PREGUNTAS.getId().equals(paso.destinoId())
+                ? MotorNavegacion.LIMITE_PREGUNTAS
+                : contexto.getGrafo().obtenerNodoPorId(paso.destinoId())
+                        .orElseThrow(() -> new IllegalStateException(
+                                "la sesión referencia el nodo '" + paso.destinoId()
+                                        + "' que ya no existe en el contenido clínico"));
         NivelAlerta nivel = paso.nivel() == null ? NivelAlerta.NORMAL
                 : NivelAlerta.valueOf(paso.nivel());
 

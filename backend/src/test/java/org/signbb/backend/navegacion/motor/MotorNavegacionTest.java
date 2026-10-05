@@ -211,4 +211,64 @@ class MotorNavegacionTest {
         assertThrows(IllegalArgumentException.class,
                 () -> motor.paso(grafo, base, e, terminal, "SI"));
     }
+
+    @Test
+    void retrocederVuelveALaPreguntaAnteriorYBorraSuRespuesta() {
+        EstadoPaciente e = new EstadoPaciente("s");
+        Nodo coloracion = hastaColoracion(e);
+        Nodo signos = motor.paso(grafo, base, e, coloracion, "SI").preguntaActual();
+        assertEquals(id("pregunta_signos"), signos.getId());
+
+        ResultadoPaso atras = motor.retroceder(grafo, base, e);
+
+        assertFalse(atras.finalizado());
+        assertEquals(id("pregunta_coloracion"), atras.preguntaActual().getId());
+        assertTrue(e.getRespuestas(coloracion.getId()).isEmpty());
+        assertEquals(List.of("piel"), e.getRespuestas("pregunta_inicial"));
+
+        // Con otra respuesta el recorrido toma el otro camino.
+        ResultadoPaso paso = motor.paso(grafo, base, e, atras.preguntaActual(), "NO");
+        assertEquals(id("recomendacion_lactancia"), paso.destino().getId());
+        assertEquals(NivelAlerta.NORMAL, paso.nivel());
+    }
+
+    @Test
+    void retrocederTrasUnaReglaDeshaceSuDisparo() {
+        EstadoPaciente e = new EstadoPaciente("s");
+        Nodo signos = motor.paso(grafo, base, e, hastaColoracion(e), "SI").preguntaActual();
+        ResultadoPaso urgencia = motor.paso(grafo, base, e, signos, List.of("SOMNOLENCIA"));
+        assertEquals(NivelAlerta.URGENCIA, urgencia.nivel());
+        assertTrue(e.reglaDisparada(id("R1")));
+
+        ResultadoPaso atras = motor.retroceder(grafo, base, e);
+
+        assertEquals(id("pregunta_signos"), atras.preguntaActual().getId());
+        assertFalse(e.reglaDisparada(id("R1")), "la regla de la respuesta deshecha no debe seguir disparada");
+        assertTrue(e.getRespuestas(signos.getId()).isEmpty());
+        assertEquals(List.of("SI"), e.getRespuestas(id("pregunta_coloracion")));
+
+        ResultadoPaso paso = motor.paso(grafo, base, e, atras.preguntaActual(), List.of("NINGUNO"));
+        assertEquals(NivelAlerta.NORMAL, paso.nivel());
+        assertTrue(paso.razones().isEmpty());
+    }
+
+    @Test
+    void retrocederDosVecesVuelveDosPreguntas() {
+        EstadoPaciente e = new EstadoPaciente("s");
+        motor.paso(grafo, base, e, hastaColoracion(e), "SI");
+
+        motor.retroceder(grafo, base, e);
+        ResultadoPaso atras = motor.retroceder(grafo, base, e);
+
+        assertEquals("puente_piel", atras.preguntaActual().getId());
+        assertEquals(1, e.size());
+    }
+
+    @Test
+    void retrocederSinRespuestasSeRechaza() {
+        EstadoPaciente e = new EstadoPaciente("s");
+        motor.iniciar(e, grafo);
+
+        assertThrows(IllegalArgumentException.class, () -> motor.retroceder(grafo, base, e));
+    }
 }

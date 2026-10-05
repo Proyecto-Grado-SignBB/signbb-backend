@@ -29,6 +29,7 @@ import org.signbb.backend.navegacion.modelo.Nodo;
 import org.signbb.backend.navegacion.modelo.RepositorioSesion;
 import org.signbb.backend.navegacion.modelo.ResultadoPaso;
 import org.signbb.backend.navegacion.modelo.SesionTriaje;
+import org.signbb.backend.navegacion.servicios.MotorNavegacion;
 import org.signbb.backend.reglas.datos.serializacion.BaseReglasMapper;
 import org.signbb.backend.reglas.modelo.BaseReglas;
 import org.signbb.backend.reglas.modelo.NivelAlerta;
@@ -109,6 +110,42 @@ class RepositorioSesionRedisTest {
         assertEquals(sesion.getUltimoPaso().caminoCausal().size(),
                 recuperada.getUltimoPaso().caminoCausal().size());
         assertEquals(5, recuperada.getEstado().getPuntaje());
+    }
+
+    @Test
+    void sesionCerradaPorLimiteReconstruyeElNodoDeSistema() {
+        EstadoPaciente estado = new EstadoPaciente("s-redis-3");
+        estado.registrarRespuesta("pregunta_inicial", "piel");
+        Nodo pendiente = grafo.obtenerNodoPorId("puente_piel").orElseThrow();
+
+        SesionTriaje sesion = new SesionTriaje("s-limite", estado, ResultadoPaso.terminal(
+                MotorNavegacion.LIMITE_PREGUNTAS, NivelAlerta.NORMAL, List.of(),
+                grafo.obtenerCaminoCausal(pendiente)));
+        repositorio.guardar(sesion);
+
+        ResultadoPaso recuperado = repositorio.buscar("s-limite").getUltimoPaso();
+
+        assertTrue(recuperado.finalizado());
+        assertEquals(MotorNavegacion.LIMITE_PREGUNTAS, recuperado.destino());
+        assertEquals(NivelAlerta.NORMAL, recuperado.nivel());
+    }
+
+    @Test
+    void elOrdenDeLasRespuestasSeConserva() {
+        // El motor reproduce este orden para volver a la pregunta anterior.
+        EstadoPaciente estado = new EstadoPaciente("s-redis-4");
+        estado.registrarRespuesta("pregunta_inicial", "piel");
+        estado.registrarRespuesta("puente_piel", "coloracion_amarilla");
+        estado.registrarRespuesta("grafo_piel_ictericia/pregunta_coloracion", "SI");
+        Nodo pregunta = grafo.obtenerNodoPorId("grafo_piel_ictericia/pregunta_signos").orElseThrow();
+
+        SesionTriaje sesion = repositorio.crear(estado, ResultadoPaso.pregunta(pregunta));
+        EstadoPaciente recuperado = repositorio.buscar(sesion.getId()).getEstado();
+
+        assertEquals(List.of("pregunta_inicial", "puente_piel", "grafo_piel_ictericia/pregunta_coloracion"),
+                List.copyOf(recuperado.respuestasEnOrden().keySet()));
+        assertEquals("grafo_piel_ictericia/pregunta_coloracion",
+                recuperado.ultimaPreguntaRespondida().orElseThrow());
     }
 
     @Test

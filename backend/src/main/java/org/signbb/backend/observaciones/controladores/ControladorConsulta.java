@@ -61,6 +61,15 @@ public class ControladorConsulta {
         return ResponseEntity.ok(servicioCaptura.registrarRespuesta(recorridoId, tipo, seleccionadas));
     }
 
+    /**
+     * {@code POST /api/recorridos/{id}/retroceder}: vuelve a la pregunta
+     * anterior para cambiar su respuesta (400 si aún no hay respuestas).
+     */
+    @PostMapping("/recorridos/{recorridoId}/retroceder")
+    public ResponseEntity<RecorridoDTO> retroceder(@PathVariable String recorridoId) {
+        return ResponseEntity.ok(servicioNavegacion.retroceder(recorridoId));
+    }
+
     /** {@code GET /api/recorridos/{id}}: consulta el estado del recorrido. */
     @GetMapping("/recorridos/{recorridoId}")
     public ResponseEntity<RecorridoDTO> consultar(@PathVariable String recorridoId) {

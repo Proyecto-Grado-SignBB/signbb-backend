@@ -92,6 +92,19 @@ public class ServicioNavegacionImpl implements ServicioNavegacion {
         return RecorridoDTO.desde(recorridoId, contexto.getGrafo(), paso);
     }
 
+    /**
+     * Vuelve a la pregunta anterior y guarda la sesión con el estado ya
+     * recalculado, para que el siguiente {@code responder} parta de él.
+     */
+    @Override
+    public RecorridoDTO retroceder(String recorridoId) {
+        SesionTriaje sesion = repositorioSesion.buscar(recorridoId);
+        ResultadoPaso paso = motor.retroceder(contexto.getGrafo(), contexto.getBase(), sesion.getEstado());
+        sesion.setUltimoPaso(paso);
+        repositorioSesion.guardar(sesion);
+        return RecorridoDTO.desde(recorridoId, contexto.getGrafo(), paso);
+    }
+
     /** Devuelve el estado actual del recorrido (pregunta pendiente o desenlace). */
     @Override
     public RecorridoDTO consultar(String recorridoId) {

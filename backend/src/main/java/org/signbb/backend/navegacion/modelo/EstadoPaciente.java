@@ -105,6 +105,28 @@ public final class EstadoPaciente {
         return valores != null && valores.contains(respuesta);
     }
 
+    /**
+     * Copia de las respuestas por nodo en el orden en que se respondieron las
+     * preguntas. Es el historial del recorrido: el motor lo reproduce para
+     * volver a la pregunta anterior.
+     */
+    public Map<String, List<String>> respuestasEnOrden() {
+        Map<String, List<String>> copia = new LinkedHashMap<>();
+        for (Map.Entry<String, List<String>> e : respuestas.entrySet()) {
+            copia.put(e.getKey(), new ArrayList<>(e.getValue()));
+        }
+        return copia;
+    }
+
+    /** Id de la última pregunta respondida, o vacío si aún no hay respuestas. */
+    public Optional<String> ultimaPreguntaRespondida() {
+        String ultima = null;
+        for (String idNodo : respuestas.keySet()) {
+            ultima = idNodo;
+        }
+        return Optional.ofNullable(ultima);
+    }
+
     /** Marca una regla como ya disparada (no debe reevaluarse). */
     public void marcarReglaDisparada(String idRegla) {
         reglasDisparadas.add(idRegla);

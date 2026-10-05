@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 
@@ -17,6 +18,8 @@ import org.signbb.backend.reglas.modelo.NivelAlerta;
 import org.signbb.backend.reglas.modelo.ReglaClinica;
 import org.signbb.backend.reglas.modelo.ResultadoInferencia;
 import org.signbb.backend.reglas.servicios.ServicioReglas;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -54,9 +57,25 @@ import org.springframework.stereotype.Service;
  * nunca sea menos grave que el nodo que se muestra.
  *
  * <p>
+ * Para que ningún recorrido quede abierto indefinidamente, si el cuidador ya
+ * respondió {@code maxPreguntas} preguntas (10 por defecto, propiedad
+ * {@code signbb.navegacion.max-preguntas}) y el siguiente paso sería otra
+ * pregunta, el recorrido cierra en {@link #LIMITE_PREGUNTAS} con nivel
+ * {@link NivelAlerta#NORMAL}. Una regla o un terminal alcanzados en esa misma
+ * respuesta tienen prioridad sobre el límite.
+ *
+ * <p>
+ * {@link #retroceder} vuelve a la pregunta anterior para cambiar su
+ * respuesta. En vez de deshacer a mano, reinicia la memoria de trabajo y
+ * reproduce las respuestas que se conservan: así las respuestas deshechas y
+ * las reglas que dispararon por ellas desaparecen, y el estado queda igual al
+ * de un recorrido que nunca las hubiera dado.
+ *
+ * <p>
  * Como un backend REST es sin estado, el bucle {@code while} de la
  * formulación se descompone en dos operaciones: {@link #iniciar} (una vez por
- * recorrido) y {@link #paso} (una vez por respuesta del cuidador).
+ * recorrido), {@link #paso} (una vez por respuesta del cuidador) y
+ * {@link #retroceder} (cuando el cuidador vuelve atrás).
  *
  * <p>
  * MODIFICADO: se agrega
@@ -76,13 +95,44 @@ public class MotorNavegacion {
     /** Tipo de interacción que admite varias respuestas a la vez. */
     private static final String SELECCION_MULTIPLE = "SELECCION_MULTIPLE";
 
-    private final ServicioReglas servicioReglas;
+    /** Máximo de preguntas respondidas por defecto antes de cerrar el recorrido. */
+    public static final int MAX_PREGUNTAS_POR_DEFECTO = 10;
 
     /**
-     * Inyecta el servicio de reglas (forward chaining + resolución por severidad).
+     * Desenlace de sistema para un recorrido que alcanzó el máximo de
+     * preguntas sin llegar a un terminal. No pertenece al grafo clínico.
+     */
+    public static final Nodo LIMITE_PREGUNTAS = new Nodo("sistema/limite_preguntas", "recomendacion",
+            "Respondió el máximo de preguntas sin encontrar señales de alarma. Siga observando a su "
+                    + "bebé y coméntelo en su próximo control; si aparece algún signo de alarma, "
+                    + "consulte de inmediato.",
+            1);
+
+    private final ServicioReglas servicioReglas;
+    private final int maxPreguntas;
+
+    /**
+     * Inyecta el servicio de reglas (forward chaining + resolución por
+     * severidad) con el máximo de preguntas por defecto.
      */
     public MotorNavegacion(ServicioReglas servicioReglas) {
+        this(servicioReglas, MAX_PREGUNTAS_POR_DEFECTO);
+    }
+
+    /**
+     * Inyecta el servicio de reglas y el máximo de preguntas respondidas
+     * ({@code signbb.navegacion.max-preguntas}).
+     *
+     * @throws IllegalArgumentException si {@code maxPreguntas} es menor que 1.
+     */
+    @Autowired
+    public MotorNavegacion(ServicioReglas servicioReglas,
+            @Value("${signbb.navegacion.max-preguntas:" + MAX_PREGUNTAS_POR_DEFECTO + "}") int maxPreguntas) {
+        if (maxPreguntas < 1) {
+            throw new IllegalArgumentException("maxPreguntas debe ser al menos 1");
+        }
         this.servicioReglas = servicioReglas;
+        this.maxPreguntas = maxPreguntas;
     }
 
     /**
@@ -114,7 +164,7 @@ public class MotorNavegacion {
             Nodo nodoActual, String respuesta) {
         validarRespuestas(grafo, nodoActual, Collections.singletonList(respuesta));
         estado.registrarRespuesta(nodoActual.getId(), respuesta);
-        return resolver(grafo, base, estado, nodoActual, respuesta);
+        return aplicarLimite(grafo, estado, resolver(grafo, base, estado, nodoActual, respuesta));
     }
 
     /**
@@ -137,8 +187,59 @@ public class MotorNavegacion {
             Nodo nodoActual, List<String> respuestasMarcadas) {
         validarRespuestas(grafo, nodoActual, respuestasMarcadas);
         estado.registrarRespuestas(nodoActual.getId(), respuestasMarcadas);
-        return resolver(grafo, base, estado, nodoActual,
-                opcionMasGrave(grafo, nodoActual, respuestasMarcadas));
+        return aplicarLimite(grafo, estado, resolver(grafo, base, estado, nodoActual,
+                opcionMasGrave(grafo, nodoActual, respuestasMarcadas)));
+    }
+
+    /**
+     * Vuelve a la última pregunta respondida para que el cuidador cambie su
+     * respuesta. Funciona también con el recorrido finalizado (vuelve a la
+     * pregunta que lo cerró). La memoria de trabajo se reinicia y se
+     * reproducen, en orden, las respuestas anteriores a esa pregunta; así
+     * desaparecen su respuesta y las reglas que disparó, y el encadenamiento
+     * hacia adelante vuelve a evaluarse desde cero.
+     *
+     * @throws IllegalArgumentException si aún no hay ninguna respuesta.
+     * @throws IllegalStateException    si al reproducir el recorrido no se
+     *                                  vuelve a la misma pregunta (el
+     *                                  contenido clínico cambió).
+     */
+    public ResultadoPaso retroceder(GrafoClinico grafo, BaseReglas base, EstadoPaciente estado) {
+        String anterior = estado.ultimaPreguntaRespondida()
+                .orElseThrow(() -> new IllegalArgumentException("no hay pregunta anterior a la cual volver"));
+        Map<String, List<String>> conservadas = estado.respuestasEnOrden();
+        conservadas.remove(anterior);
+
+        estado.reiniciar();
+        ResultadoPaso reproducido = iniciar(estado, grafo);
+        for (Map.Entry<String, List<String>> e : conservadas.entrySet()) {
+            if (reproducido.finalizado() || !reproducido.preguntaActual().getId().equals(e.getKey())) {
+                throw new IllegalStateException(
+                        "no se pudo reproducir el recorrido hasta '" + anterior
+                                + "': el contenido clínico cambió");
+            }
+            reproducido = paso(grafo, base, estado, reproducido.preguntaActual(), e.getValue());
+        }
+        if (reproducido.finalizado() || !reproducido.preguntaActual().getId().equals(anterior)) {
+            throw new IllegalStateException(
+                    "no se pudo reproducir el recorrido hasta '" + anterior
+                            + "': el contenido clínico cambió");
+        }
+        return reproducido;
+    }
+
+    /**
+     * Cierra el recorrido en {@link #LIMITE_PREGUNTAS} si ya se respondieron
+     * {@code maxPreguntas} preguntas y {@code resultado} pide otra. Un
+     * resultado ya finalizado (por regla o terminal) se devuelve sin cambios.
+     * El camino causal llega hasta la pregunta que quedó sin responder.
+     */
+    private ResultadoPaso aplicarLimite(GrafoClinico grafo, EstadoPaciente estado, ResultadoPaso resultado) {
+        if (resultado.finalizado() || estado.size() < maxPreguntas) {
+            return resultado;
+        }
+        return ResultadoPaso.terminal(LIMITE_PREGUNTAS, NivelAlerta.NORMAL, List.of(),
+                grafo.obtenerCaminoCausal(resultado.preguntaActual()));
     }
 
     /**
