@@ -9,6 +9,8 @@ var hierarchy =
       [ "org.signbb.backend.DatabaseInit", "classorg_1_1signbb_1_1backend_1_1DatabaseInit.html", null ],
       [ "org.signbb.backend.DemoTriajeRunner", "classorg_1_1signbb_1_1backend_1_1DemoTriajeRunner.html", null ]
     ] ],
+    [ "org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1CompositorGrafoClinico.html", null ],
+    [ "org.signbb.backend.navegacion.datos.serializacion.ContenidoEjemplo", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1ContenidoEjemplo.html", null ],
     [ "org.signbb.backend.navegacion.modelo.Contexto", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html", null ],
     [ "org.signbb.backend.navegacion.modelo.ContextoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html", null ],
     [ "org.signbb.backend.observaciones.controladores.ControladorConsulta", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1ControladorConsulta.html", null ],

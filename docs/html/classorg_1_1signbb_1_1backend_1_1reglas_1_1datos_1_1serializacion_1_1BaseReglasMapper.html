@@ -112,22 +112,50 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 </div><!--header-->
 <div class="contents">
 
-<p>Conversión bidireccional entre el TAD <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html">BaseReglas</a></code> y su documento JSON <code><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion.html#ae6c31a3c29a4b509997cd4ec984bf8ee">BaseReglasJson</a></code>.  
+<p>Conversión bidireccional entre el TAD <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html">BaseReglas</a></code> y su documento JSON <code><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion.html#a9d5f998a118a8ea75cb48d25d1c44760">BaseReglasJson</a></code>.  
  <a href="#details">Más...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Métodos públicos estáticos</h2></td></tr>
 <tr class="memitem:a0bf04deacb43577dec69399f8f2bcd3c" id="r_a0bf04deacb43577dec69399f8f2bcd3c"><td class="memItemLeft"><a id="a0bf04deacb43577dec69399f8f2bcd3c" name="a0bf04deacb43577dec69399f8f2bcd3c"></a>
-static <a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html">BaseReglas</a>&#160;</td><td class="memItemRight"><b>desde</b> (<a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion.html#ae6c31a3c29a4b509997cd4ec984bf8ee">BaseReglasJson</a> documento, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html">GrafoClinico</a> grafo)</td></tr>
+static <a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html">BaseReglas</a>&#160;</td><td class="memItemRight"><b>desde</b> (<a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion.html#a9d5f998a118a8ea75cb48d25d1c44760">BaseReglasJson</a> documento, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html">GrafoClinico</a> grafo)</td></tr>
 <tr class="memdesc:a0bf04deacb43577dec69399f8f2bcd3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reconstruye el TAD desde el documento JSON, resolviendo destinos contra el grafo. <br /></td></tr>
-<tr class="memitem:abd14749ad5b5bba83758b06df23c3828" id="r_abd14749ad5b5bba83758b06df23c3828"><td class="memItemLeft"><a id="abd14749ad5b5bba83758b06df23c3828" name="abd14749ad5b5bba83758b06df23c3828"></a>
-static <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion.html#ae6c31a3c29a4b509997cd4ec984bf8ee">BaseReglasJson</a>&#160;</td><td class="memItemRight"><b>desde</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html">BaseReglas</a> tad)</td></tr>
-<tr class="memdesc:abd14749ad5b5bba83758b06df23c3828"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serializa el TAD al documento JSON, referenciando destinos por id. <br /></td></tr>
+<tr class="memitem:abd14749ad5b5bba83758b06df23c3828" id="r_abd14749ad5b5bba83758b06df23c3828"><td class="memItemLeft">static <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion.html#a9d5f998a118a8ea75cb48d25d1c44760">BaseReglasJson</a>&#160;</td><td class="memItemRight"><a class="el" href="#abd14749ad5b5bba83758b06df23c3828">desde</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html">BaseReglas</a> tad)</td></tr>
+<tr class="memdesc:abd14749ad5b5bba83758b06df23c3828"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serializa el TAD al documento JSON, referenciando destinos por id.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
-<div class="textblock"><p>Conversión bidireccional entre el TAD <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html">BaseReglas</a></code> y su documento JSON <code><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion.html#ae6c31a3c29a4b509997cd4ec984bf8ee">BaseReglasJson</a></code>. </p>
-<p>La premisa de cada regla se expresa en forma normal disyuntiva (FND): una lista de casos (disyunción) donde cada caso es una lista de condiciones (conjunción). El <code class="JavaDocCode">nodoDestino</code> de cada regla se persiste como id (referencia) y se resuelve contra el <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html">GrafoClinico</a></code> correspondiente al reconstruir el TAD, fallando de inmediato si el nodo no existe en el grafo. </p>
-</div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
+<div class="textblock"><p>Conversión bidireccional entre el TAD <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html">BaseReglas</a></code> y su documento JSON <code><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion.html#a9d5f998a118a8ea75cb48d25d1c44760">BaseReglasJson</a></code>. </p>
+<p>La premisa de cada regla se expresa en forma normal disyuntiva (FND): una lista de casos (disyunción) donde cada caso es una lista de condiciones (conjunción). El <code class="JavaDocCode">nodoDestino</code> de cada regla se persiste como id (referencia) y se resuelve contra el <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html">GrafoClinico</a></code> correspondiente al reconstruir el TAD, fallando de inmediato si el nodo no existe en el grafo. Cada condición se revisa también contra el grafo: su <code class="JavaDocCode">idNodo</code> debe ser una pregunta y su <code class="JavaDocCode">respuesta</code> una de las opciones de esa pregunta; si no, la regla nunca podría dispararse y se rechaza al cargarla. </p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
+<a id="abd14749ad5b5bba83758b06df23c3828" name="abd14749ad5b5bba83758b06df23c3828"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd14749ad5b5bba83758b06df23c3828">&#9670;&#160;</a></span>desde()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion.html#a9d5f998a118a8ea75cb48d25d1c44760">BaseReglasJson</a> org.signbb.backend.reglas.datos.serializacion.BaseReglasMapper.desde </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html">BaseReglas</a></td>          <td class="paramname"><span class="paramname"><em>tad</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Serializa el TAD al documento JSON, referenciando destinos por id. </p>
+<p>El documento resultante no declara <code class="JavaDocCode">grafoId</code>: el TAD no lo almacena. </p>
+
+</div>
+</div>
+<hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/main/java/org/signbb/backend/reglas/datos/serializacion/<b>BaseReglasMapper.java</b></li>
 </ul>
 </div><!-- contents -->

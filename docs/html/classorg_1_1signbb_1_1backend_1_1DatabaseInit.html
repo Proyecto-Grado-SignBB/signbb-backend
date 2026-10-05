@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 </div><!--header-->
 <div class="contents">
 
-<p>Inicialización de la base de datos: siembra el grafo clínico y la base de reglas de ejemplo (<code class="JavaDocCode">static/ejemplo_grafo.json</code> y <code class="JavaDocCode">static/ejemplo_reglas.json</code>) cuando sus tablas están vacías.  
+<p>Inicialización de la base de datos: siembra el contenido clínico de ejemplo (<code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1ContenidoEjemplo.html">ContenidoEjemplo</a></code>: grafo raíz, subgrafo de ictericia y su base de reglas) cuando aún no existe el grafo raíz.  
  <a href="#details">Más...</a></p>
 <div class="dynheader">
 Diagrama de herencia de org.signbb.backend.DatabaseInit</div>
@@ -128,11 +128,11 @@ Métodos públicos</h2></td></tr>
 <tr class="memdesc:aa9edc86c02b80cc56763463d9dbe79e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta los repositorios de grafos clínicos y bases de reglas. <br /></td></tr>
 <tr class="memitem:aa28a974f7934d651e009779df0ad6ca3" id="r_aa28a974f7934d651e009779df0ad6ca3"><td class="memItemLeft"><a id="aa28a974f7934d651e009779df0ad6ca3" name="aa28a974f7934d651e009779df0ad6ca3"></a>
 void&#160;</td><td class="memItemRight"><b>run</b> (String... args)</td></tr>
-<tr class="memdesc:aa28a974f7934d651e009779df0ad6ca3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Siembra grafo y reglas de ejemplo si sus tablas están vacías. <br /></td></tr>
+<tr class="memdesc:aa28a974f7934d651e009779df0ad6ca3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Siembra el contenido de ejemplo si el grafo raíz no existe. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
-<div class="textblock"><p>Inicialización de la base de datos: siembra el grafo clínico y la base de reglas de ejemplo (<code class="JavaDocCode">static/ejemplo_grafo.json</code> y <code class="JavaDocCode">static/ejemplo_reglas.json</code>) cuando sus tablas están vacías. </p>
-<p>Antes de guardar cada documento se reconstruye el TAD con los parsers, de modo que solo se persisten datos válidos (referencias colgantes, niveles inválidos o aristas rotas fallan aquí). El documento se guarda tal cual viene del JSON para conservar los metadatos de presentación (autor, categorías) que el TAD no almacena, completando el <code class="JavaDocCode">nodoInicial</code> explícito si el archivo no lo trae. La siembra es idempotente: si las tablas ya tienen filas, no hace nada. </p>
+<div class="textblock"><p>Inicialización de la base de datos: siembra el contenido clínico de ejemplo (<code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1ContenidoEjemplo.html">ContenidoEjemplo</a></code>: grafo raíz, subgrafo de ictericia y su base de reglas) cuando aún no existe el grafo raíz. </p>
+<p>Antes de guardar se compone el contenido y se reconstruyen los TAD, de modo que solo se persisten datos válidos (pesos fuera de 1–3, referencias colgantes, niveles inválidos o aristas rotas fallan aquí). Cada documento se guarda por separado y tal cual viene del JSON, para conservar los metadatos de presentación (autor, categoría) que el TAD no almacena; la composición se repite al resolver el contenido. La siembra es idempotente: si el grafo raíz ya está, no hace nada. Las filas del formato previo no se tocan; el resolvedor las ignora. </p>
 </div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/main/java/org/signbb/backend/<b>DatabaseInit.java</b></li>
 </ul>

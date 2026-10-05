@@ -1,5 +1,14 @@
 var searchData=
 [
-  ['tienearchivos_0',['tieneArchivos',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#a0bbd1689fdbcb6ee74e8a356911e7c12',1,'org::signbb::backend::navegacion::modelo::Nodo']]],
-  ['todaslasreglas_1',['todasLasReglas',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html#a0f732a5f2d06b14b51a5248d633b32fe',1,'org::signbb::backend::reglas::modelo::BaseReglas']]]
+  ['servicionavegacionimpl_0',['ServicioNavegacionImpl',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImpl.html#af5ec517c37203c610d1940ff6fa25222',1,'org::signbb::backend::navegacion::servicios::ServicioNavegacionImpl']]],
+  ['sesionactual_1',['sesionActual',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html#aa17edc93f856d756264c53d4f8ecd5a4',1,'org::signbb::backend::navegacion::modelo::Contexto']]],
+  ['sesiontriaje_2',['SesionTriaje',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html#aba74992fdcb348a59059f74dc4043339',1,'org::signbb::backend::navegacion::modelo::SesionTriaje']]],
+  ['setnodoinicial_3',['setNodoInicial',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#a03c7ca90ee903bec96923703ab4d8e1d',1,'org::signbb::backend::navegacion::modelo::GrafoClinico']]],
+  ['setultimopaso_4',['setUltimoPaso',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html#ad3932f05956f6033eb68485306c404f9',1,'org::signbb::backend::navegacion::modelo::SesionTriaje']]],
+  ['sintoma_5',['Sintoma',['../namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#a6d07b4c9c8333aa7b1c485f9f2ec8af8',1,'org::signbb::backend::navegacion::modelo']]],
+  ['sintomas_6',['sintomas',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a64696f31f73d34102f5d965db0ede57d',1,'org::signbb::backend::navegacion::modelo::EstadoPaciente']]],
+  ['size_7',['size',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html#ab0f46947165c03c9dd9e4fa721b4c103',1,'org.signbb.backend.navegacion.modelo.Contexto.size()'],['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a9059c481166e855a25805260afec2b3c',1,'org.signbb.backend.navegacion.modelo.EstadoPaciente.size()'],['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#a8193221f68c6db3b9b04fa4c0b5765b4',1,'org.signbb.backend.navegacion.modelo.GrafoClinico.size()'],['../classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html#adc890f0e29f89d4ebd8d20020fd8c267',1,'org.signbb.backend.reglas.modelo.BaseReglas.size()']]],
+  ['subgrafos_8',['subgrafos',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1ContenidoEjemplo.html#a5fc490d28921b61a11d6a264f5e32c63',1,'org::signbb::backend::navegacion::datos::serializacion::ContenidoEjemplo']]],
+  ['sumarpuntaje_9',['sumarPuntaje',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a3add1935843d981ff05b90ac1cfb9962',1,'org::signbb::backend::navegacion::modelo::EstadoPaciente']]],
+  ['sumarpuntajeglobal_10',['sumarPuntajeGlobal',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html#a8642c1a591f10f73b8ed8d470305fdd8',1,'org::signbb::backend::navegacion::modelo::Contexto']]]
 ];

@@ -118,20 +118,20 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('namespaceorg_1
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Clases</h2></td></tr>
 <tr class="memitem:BaseReglasMapper" id="r_BaseReglasMapper"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasMapper.html">BaseReglasMapper</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conversión bidireccional entre el TAD <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html">BaseReglas</a></code> y su documento JSON <code><a class="el" href="#ae6c31a3c29a4b509997cd4ec984bf8ee">BaseReglasJson</a></code>.  <a href="classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasMapper.html#details">Más...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conversión bidireccional entre el TAD <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html">BaseReglas</a></code> y su documento JSON <code><a class="el" href="#a9d5f998a118a8ea75cb48d25d1c44760">BaseReglasJson</a></code>.  <a href="classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasMapper.html#details">Más...</a><br /></td></tr>
 <tr class="memitem:BaseReglasParser" id="r_BaseReglasParser"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasParser.html">BaseReglasParser</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convierte el JSON de la base de reglas (<code class="JavaDocCode">rules</code>) en el TAD <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html">BaseReglas</a></code>.  <a href="classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasParser.html#details">Más...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Funciones</h2></td></tr>
-<tr class="memitem:ae6c31a3c29a4b509997cd4ec984bf8ee" id="r_ae6c31a3c29a4b509997cd4ec984bf8ee"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#ae6c31a3c29a4b509997cd4ec984bf8ee">BaseReglasJson</a> (Map&lt; String, ReglaJson &gt; rules)</td></tr>
-<tr class="memdesc:ae6c31a3c29a4b509997cd4ec984bf8ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Documento JSON de una base de reglas: el mismo formato de intercambio de <code class="JavaDocCode">static/ejemplo_reglas.json</code>, usado además como formato persistido en la columna <code class="JavaDocCode">estructura</code> de <code class="JavaDocCode">BaseReglasEntity</code>.  <br /></td></tr>
+<tr class="memitem:a9d5f998a118a8ea75cb48d25d1c44760" id="r_a9d5f998a118a8ea75cb48d25d1c44760"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a9d5f998a118a8ea75cb48d25d1c44760">BaseReglasJson</a> (String grafoId, Map&lt; String, ReglaJson &gt; rules)</td></tr>
+<tr class="memdesc:a9d5f998a118a8ea75cb48d25d1c44760"><td class="mdescLeft">&#160;</td><td class="mdescRight">Documento JSON de una base de reglas: el mismo formato de intercambio de <code class="JavaDocCode">static/ejemplo_reglas_piel_ictericia.json</code>, usado además como formato persistido en la columna <code class="JavaDocCode">estructura</code> de <code class="JavaDocCode">BaseReglasEntity</code>.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Serializacion de la base de reglas desde JSON para el modulo de reglas. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones</h2>
-<a id="ae6c31a3c29a4b509997cd4ec984bf8ee" name="ae6c31a3c29a4b509997cd4ec984bf8ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae6c31a3c29a4b509997cd4ec984bf8ee">&#9670;&#160;</a></span>BaseReglasJson()</h2>
+<a id="a9d5f998a118a8ea75cb48d25d1c44760" name="a9d5f998a118a8ea75cb48d25d1c44760"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d5f998a118a8ea75cb48d25d1c44760">&#9670;&#160;</a></span>BaseReglasJson()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -139,13 +139,18 @@ Funciones</h2></td></tr>
         <tr>
           <td class="memname">record org.signbb.backend.reglas.datos.serializacion.BaseReglasJson </td>
           <td>(</td>
-          <td class="paramtype">Map&lt; String, ReglaJson &gt;</td>          <td class="paramname"><span class="paramname"><em>rules</em></span></td><td>)</td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>grafoId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">Map&lt; String, ReglaJson &gt;</td>          <td class="paramname"><span class="paramname"><em>rules</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Documento JSON de una base de reglas: el mismo formato de intercambio de <code class="JavaDocCode">static/ejemplo_reglas.json</code>, usado además como formato persistido en la columna <code class="JavaDocCode">estructura</code> de <code class="JavaDocCode">BaseReglasEntity</code>. </p>
+<p>Documento JSON de una base de reglas: el mismo formato de intercambio de <code class="JavaDocCode">static/ejemplo_reglas_piel_ictericia.json</code>, usado además como formato persistido en la columna <code class="JavaDocCode">estructura</code> de <code class="JavaDocCode">BaseReglasEntity</code>. </p>
+<p><code class="JavaDocCode">grafoId</code> indica a qué grafo pertenece la base. Las reglas de un subgrafo usan los ids locales de sus nodos y <code class="JavaDocCode">CompositorGrafoClinico</code> los prefija al aplanar; las reglas del grafo raíz usan los ids ya prefijados y permiten combinar signos de varias categorías.</p>
 <p>Cada regla referencia su <code class="JavaDocCode">nodoDestino</code> por id (nunca embebe el nodo): el destino se resuelve contra el grafo clínico correspondiente al reconstruir el TAD, fallando de inmediato si la referencia queda colgando. El <code class="JavaDocCode">nivel</code> se mantiene como cadena para preservar el contrato de los parsers (valores inválidos lanzan <code><a class="el" href="">IllegalArgumentException</a></code>).</p>
 <p><code class="JavaDocCode">condiciones</code> se conserva como <code><a class="el" href="">JsonNode</a></code> porque la premisa se expresa en forma normal disyuntiva (FND): un arreglo de casos, donde cada caso es un arreglo de condiciones. El formato plano (arreglo de condiciones) se acepta como un único caso por compatibilidad; la expresión se interpreta y se reconstruye en <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasMapper.html">BaseReglasMapper</a></code>. </p>
 <p>Regla clínica en formato serializable.</p>

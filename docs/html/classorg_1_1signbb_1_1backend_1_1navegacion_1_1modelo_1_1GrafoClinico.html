@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 Métodos públicos</h2></td></tr>
 <tr class="memitem:a7f0e86a6e41914b98aa16ef85689a715" id="r_a7f0e86a6e41914b98aa16ef85689a715"><td class="memItemLeft"><a id="a7f0e86a6e41914b98aa16ef85689a715" name="a7f0e86a6e41914b98aa16ef85689a715"></a>
 &#160;</td><td class="memItemRight"><b>GrafoClinico</b> ()</td></tr>
-<tr class="memdesc:a7f0e86a6e41914b98aa16ef85689a715"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operación 1: crearGrafo() con umbrales por defecto (alto=8, bajo=3). <br /></td></tr>
+<tr class="memdesc:a7f0e86a6e41914b98aa16ef85689a715"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operación 1: crearGrafo() con umbrales por defecto para la escala de peso 1–3 (alto=3: un terminal urgente corta; bajo=1: no se descarta ninguno). <br /></td></tr>
 <tr class="memitem:a198df3cbf6d64405bc4032443da9acb1" id="r_a198df3cbf6d64405bc4032443da9acb1"><td class="memItemLeft"><a id="a198df3cbf6d64405bc4032443da9acb1" name="a198df3cbf6d64405bc4032443da9acb1"></a>
 &#160;</td><td class="memItemRight"><b>GrafoClinico</b> (int umbralAlto, int umbralBajo)</td></tr>
 <tr class="memdesc:a198df3cbf6d64405bc4032443da9acb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea el grafo con umbrales de peso explícitos. <br /></td></tr>
@@ -145,6 +145,8 @@ boolean&#160;</td><td class="memItemRight"><b>esNodoTerminal</b> (<a class="el" 
 <tr class="memitem:a7e76df3b2515d4a66b68f4c6f6c1a1ec" id="r_a7e76df3b2515d4a66b68f4c6f6c1a1ec"><td class="memItemLeft"><a id="a7e76df3b2515d4a66b68f4c6f6c1a1ec" name="a7e76df3b2515d4a66b68f4c6f6c1a1ec"></a>
 List&lt; <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html">Respuesta</a> &gt;&#160;</td><td class="memItemRight"><b>obtenerOpciones</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html">Nodo</a> nodoActual)</td></tr>
 <tr class="memdesc:a7e76df3b2515d4a66b68f4c6f6c1a1ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operación 8 — retorna copia para no exponer la estructura interna. <br /></td></tr>
+<tr class="memitem:acc527d1cbcf00cb03997ddc119eb8cd4" id="r_acc527d1cbcf00cb03997ddc119eb8cd4"><td class="memItemLeft">String&#160;</td><td class="memItemRight"><a class="el" href="#acc527d1cbcf00cb03997ddc119eb8cd4">tipoInteraccion</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html">Nodo</a> pregunta)</td></tr>
+<tr class="memdesc:acc527d1cbcf00cb03997ddc119eb8cd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operación adicional: tipo de interacción efectivo de una pregunta.  <br /></td></tr>
 <tr class="memitem:ab690fb26dcd5088d5852290769ac3baa" id="r_ab690fb26dcd5088d5852290769ac3baa"><td class="memItemLeft"><a id="ab690fb26dcd5088d5852290769ac3baa" name="ab690fb26dcd5088d5852290769ac3baa"></a>
 boolean&#160;</td><td class="memItemRight"><b>rutaValida</b> ()</td></tr>
 <tr class="memdesc:ab690fb26dcd5088d5852290769ac3baa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operación 9. <br /></td></tr>
@@ -243,6 +245,26 @@ nodo". Se usa LinkedHashMap para conservar el orden de inserción de los nodos (
 
 <p>Operación adicional (sección 5.1). </p>
 <p>BFS con cola de prioridad (max-heap por peso) para explorar primero las preguntas de mayor urgencia. El contador desempata de forma determinista respetando el orden de inserción. </p>
+
+</div>
+</div>
+<a id="acc527d1cbcf00cb03997ddc119eb8cd4" name="acc527d1cbcf00cb03997ddc119eb8cd4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc527d1cbcf00cb03997ddc119eb8cd4">&#9670;&#160;</a></span>tipoInteraccion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">String org.signbb.backend.navegacion.modelo.GrafoClinico.tipoInteraccion </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html">Nodo</a></td>          <td class="paramname"><span class="paramname"><em>pregunta</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Operación adicional: tipo de interacción efectivo de una pregunta. </p>
+<p>Usa el <code class="JavaDocCode">tipoInteraccion</code> declarado en el nodo si viene; si no, lo infiere de sus opciones: <code class="JavaDocCode">SI_NO</code> cuando son exactamente {SI, NO} y <code class="JavaDocCode">SELECCION_UNICA</code> en cualquier otro caso. <code class="JavaDocCode">SELECCION_MULTIPLE</code> solo se obtiene declarándolo en el nodo. Lo comparten el motor (que solo admite varias respuestas en <code class="JavaDocCode">SELECCION_MULTIPLE</code>) y la vista REST. </p>
 
 </div>
 </div>

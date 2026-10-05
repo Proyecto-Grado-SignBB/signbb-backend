@@ -133,13 +133,12 @@ String&#160;</td><td class="memItemRight"><b>getId</b> ()</td></tr>
 <tr class="memdesc:a65f237802a77131279b4b57f0928ee20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Id único del nodo. <br /></td></tr>
 <tr class="memitem:a37db948b982079b5211b41e7a4e14433" id="r_a37db948b982079b5211b41e7a4e14433"><td class="memItemLeft"><a id="a37db948b982079b5211b41e7a4e14433" name="a37db948b982079b5211b41e7a4e14433"></a>
 String&#160;</td><td class="memItemRight"><b>getTipo</b> ()</td></tr>
-<tr class="memdesc:a37db948b982079b5211b41e7a4e14433"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tipo del nodo: <code class="JavaDocCode">pregunta</code>, <code class="JavaDocCode">recomendacion</code>, <code class="JavaDocCode">bloqueo</code> o <code class="JavaDocCode">consulta_medica</code>. <br /></td></tr>
+<tr class="memdesc:a37db948b982079b5211b41e7a4e14433"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tipo del nodo: <code class="JavaDocCode">pregunta</code>, <code class="JavaDocCode">recomendacion</code>, <code class="JavaDocCode">consulta_medica</code> o <code class="JavaDocCode">urgencia</code>. <br /></td></tr>
 <tr class="memitem:a4674a825f21134246464313314a607b2" id="r_a4674a825f21134246464313314a607b2"><td class="memItemLeft"><a id="a4674a825f21134246464313314a607b2" name="a4674a825f21134246464313314a607b2"></a>
 String&#160;</td><td class="memItemRight"><b>getContenido</b> ()</td></tr>
 <tr class="memdesc:a4674a825f21134246464313314a607b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Texto mostrado al cuidador. <br /></td></tr>
-<tr class="memitem:a2c38f03b138bdb1a70865ac170c97561" id="r_a2c38f03b138bdb1a70865ac170c97561"><td class="memItemLeft"><a id="a2c38f03b138bdb1a70865ac170c97561" name="a2c38f03b138bdb1a70865ac170c97561"></a>
-int&#160;</td><td class="memItemRight"><b>getPeso</b> ()</td></tr>
-<tr class="memdesc:a2c38f03b138bdb1a70865ac170c97561"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peso de urgencia del nodo. <br /></td></tr>
+<tr class="memitem:a2c38f03b138bdb1a70865ac170c97561" id="r_a2c38f03b138bdb1a70865ac170c97561"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a2c38f03b138bdb1a70865ac170c97561">getPeso</a> ()</td></tr>
+<tr class="memdesc:a2c38f03b138bdb1a70865ac170c97561"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peso de urgencia del nodo.  <br /></td></tr>
 <tr class="memitem:a0bbd1689fdbcb6ee74e8a356911e7c12" id="r_a0bbd1689fdbcb6ee74e8a356911e7c12"><td class="memItemLeft"><a id="a0bbd1689fdbcb6ee74e8a356911e7c12" name="a0bbd1689fdbcb6ee74e8a356911e7c12"></a>
 boolean&#160;</td><td class="memItemRight"><b>tieneArchivos</b> ()</td></tr>
 <tr class="memdesc:a0bbd1689fdbcb6ee74e8a356911e7c12"><td class="mdescLeft">&#160;</td><td class="mdescRight">True si la pregunta tiene imágenes de apoyo asociadas (<code class="JavaDocCode">src</code>). <br /></td></tr>
@@ -148,7 +147,7 @@ List&lt; String &gt;&#160;</td><td class="memItemRight"><b>getSrc</b> ()</td></t
 <tr class="memdesc:a6cd8e440f3b8ba14473032f39610eb99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rutas de las imágenes de apoyo (vacía si <code><a class="el" href="#a0bbd1689fdbcb6ee74e8a356911e7c12">tieneArchivos()</a></code> es false). <br /></td></tr>
 <tr class="memitem:adef2f5061922890cd5d4ecad80f1894f" id="r_adef2f5061922890cd5d4ecad80f1894f"><td class="memItemLeft"><a id="adef2f5061922890cd5d4ecad80f1894f" name="adef2f5061922890cd5d4ecad80f1894f"></a>
 String&#160;</td><td class="memItemRight"><b>getTipoInteraccion</b> ()</td></tr>
-<tr class="memdesc:adef2f5061922890cd5d4ecad80f1894f"><td class="mdescLeft">&#160;</td><td class="mdescRight">MODIFICADO: override explícito de <code class="JavaDocCode">tipoInteraccion</code> declarado en la metadata del grafo para este nodo (<code class="JavaDocCode">SI_NO</code>, <code class="JavaDocCode">SELECCION_UNICA</code> o <code class="JavaDocCode">SELECCION_MULTIPLE</code>), o <code class="JavaDocCode">null</code> si el grafo no lo especifica (el valor por defecto se infiere en <code class="JavaDocCode">RecorridoDTO.desde</code> a partir de las opciones del nodo). <br /></td></tr>
+<tr class="memdesc:adef2f5061922890cd5d4ecad80f1894f"><td class="mdescLeft">&#160;</td><td class="mdescRight">MODIFICADO: override explícito de <code class="JavaDocCode">tipoInteraccion</code> declarado en la metadata del grafo para este nodo (<code class="JavaDocCode">SI_NO</code>, <code class="JavaDocCode">SELECCION_UNICA</code> o <code class="JavaDocCode">SELECCION_MULTIPLE</code>), o <code class="JavaDocCode">null</code> si el grafo no lo especifica (el valor por defecto se infiere en <code class="JavaDocCode">GrafoClinico#tipoInteraccion</code> a partir de las opciones del nodo). <br /></td></tr>
 <tr class="memitem:a74393acbe922e01e7cb89433be36f206" id="r_a74393acbe922e01e7cb89433be36f206"><td class="memItemLeft"><a id="a74393acbe922e01e7cb89433be36f206" name="a74393acbe922e01e7cb89433be36f206"></a>
 boolean&#160;</td><td class="memItemRight"><b>esTerminal</b> ()</td></tr>
 <tr class="memdesc:a74393acbe922e01e7cb89433be36f206"><td class="mdescLeft">&#160;</td><td class="mdescRight">Un nodo es terminal si no es una pregunta. <br /></td></tr>
@@ -161,15 +160,14 @@ String&#160;</td><td class="memItemRight"><b>toString</b> ()</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Atributos públicos estáticos</h2></td></tr>
-<tr class="memitem:a872eb074d51806c826829b2f869a8fdb" id="r_a872eb074d51806c826829b2f869a8fdb"><td class="memItemLeft"><a id="a872eb074d51806c826829b2f869a8fdb" name="a872eb074d51806c826829b2f869a8fdb"></a>
-static final Set&lt; String &gt;&#160;</td><td class="memItemRight"><b>TIPOS_VALIDOS</b> = Set.of(&quot;pregunta&quot;, &quot;recomendacion&quot;, &quot;bloqueo&quot;, &quot;consulta_medica&quot;)</td></tr>
-<tr class="memdesc:a872eb074d51806c826829b2f869a8fdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tipos de nodo admitidos. <br /></td></tr>
+<tr class="memitem:a872eb074d51806c826829b2f869a8fdb" id="r_a872eb074d51806c826829b2f869a8fdb"><td class="memItemLeft">static final Set&lt; String &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a872eb074d51806c826829b2f869a8fdb">TIPOS_VALIDOS</a></td></tr>
+<tr class="memdesc:a872eb074d51806c826829b2f869a8fdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tipos de nodo admitidos: <code class="JavaDocCode">pregunta</code> y los tres desenlaces de un terminal (<code class="JavaDocCode">recomendacion</code>, <code class="JavaDocCode">consulta_medica</code>, <code class="JavaDocCode">urgencia</code>).  <br /></td></tr>
 <tr class="memitem:aa3758f7b81004c118d2092459cb1e8ac" id="r_aa3758f7b81004c118d2092459cb1e8ac"><td class="memItemLeft">static final Set&lt; String &gt;&#160;</td><td class="memItemRight"><a class="el" href="#aa3758f7b81004c118d2092459cb1e8ac">TIPOS_INTERACCION_VALIDOS</a></td></tr>
 <tr class="memdesc:aa3758f7b81004c118d2092459cb1e8ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">MODIFICADO: valores válidos para el override opcional de <code class="JavaDocCode">tipoInteraccion</code> en la metadata del grafo.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>TAD <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html" title="TAD Nodo del Grafo Clínico (Sección 2 del documento de diseño).">Nodo</a> del Grafo Clínico (Sección 2 del documento de diseño). </p>
-<p>Representa una pregunta al padre o un nodo terminal (recomendación, bloqueo, consulta médica). La identidad de un <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html" title="TAD Nodo del Grafo Clínico (Sección 2 del documento de diseño).">Nodo</a> está dada únicamente por su <code class="JavaDocCode">id</code>: dos nodos con el mismo id se consideran iguales.</p>
+<p>Representa una pregunta al padre o un nodo terminal. En el TAD el tipo de un terminal es directamente su desenlace (<code class="JavaDocCode">recomendacion</code>, <code class="JavaDocCode">consulta_medica</code> o <code class="JavaDocCode">urgencia</code>); el documento JSON lo expresa como <code class="JavaDocCode">tipo: "terminal"</code> más <code class="JavaDocCode">desenlace</code> y <code class="JavaDocCode">GrafoClinicoMapper</code> hace la traducción. La identidad de un <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html" title="TAD Nodo del Grafo Clínico (Sección 2 del documento de diseño).">Nodo</a> está dada únicamente por su <code class="JavaDocCode">id</code>: dos nodos con el mismo id se consideran iguales.</p>
 <p>Migrado desde <code class="JavaDocCode">src/nodo.py</code>. </p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Documentación de constructores y destructores</h2>
 <a id="ad4256523919dbfb28cea16c82f749cb1" name="ad4256523919dbfb28cea16c82f749cb1"></a>
@@ -216,6 +214,27 @@ static final Set&lt; String &gt;&#160;</td><td class="memItemRight"><b>TIPOS_VAL
 
 </div>
 </div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
+<a id="a2c38f03b138bdb1a70865ac170c97561" name="a2c38f03b138bdb1a70865ac170c97561"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c38f03b138bdb1a70865ac170c97561">&#9670;&#160;</a></span>getPeso()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int org.signbb.backend.navegacion.modelo.Nodo.getPeso </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Peso de urgencia del nodo. </p>
+<p>En el formato de intercambio va de 1 a 3 (1 = baja, 2 = media, 3 = urgente); la escala se valida en <code class="JavaDocCode">GrafoClinicoMapper</code>, no en el TAD. </p>
+
+</div>
+</div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Documentación de datos miembro</h2>
 <a id="aa3758f7b81004c118d2092459cb1e8ac" name="aa3758f7b81004c118d2092459cb1e8ac"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa3758f7b81004c118d2092459cb1e8ac">&#9670;&#160;</a></span>TIPOS_INTERACCION_VALIDOS</h2>
@@ -240,7 +259,33 @@ static final Set&lt; String &gt;&#160;</td><td class="memItemRight"><b>TIPOS_VAL
 <div class="line"><span class="stringliteral">&quot;SELECCION_MULTIPLE&quot;</span>)</div>
 </div><!-- fragment -->
 <p>MODIFICADO: valores válidos para el override opcional de <code class="JavaDocCode">tipoInteraccion</code> en la metadata del grafo. </p>
-<p>Cuando es <code class="JavaDocCode">null</code>, <code class="JavaDocCode">RecorridoDTO.desde</code> lo infiere a partir de las opciones del nodo. </p>
+<p>Cuando es <code class="JavaDocCode">null</code>, <code class="JavaDocCode">GrafoClinico.tipoInteraccion</code> lo infiere a partir de las opciones del nodo. </p>
+
+</div>
+</div>
+<a id="a872eb074d51806c826829b2f869a8fdb" name="a872eb074d51806c826829b2f869a8fdb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a872eb074d51806c826829b2f869a8fdb">&#9670;&#160;</a></span>TIPOS_VALIDOS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">final Set&lt;String&gt; org.signbb.backend.navegacion.modelo.Nodo.TIPOS_VALIDOS</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Valor inicial:</b><div class="fragment"><div class="line">                              = Set.of(<span class="stringliteral">&quot;pregunta&quot;</span>, <span class="stringliteral">&quot;recomendacion&quot;</span>, <span class="stringliteral">&quot;consulta_medica&quot;</span>,</div>
+<div class="line"><span class="stringliteral">&quot;urgencia&quot;</span>)</div>
+</div><!-- fragment -->
+<p>Tipos de nodo admitidos: <code class="JavaDocCode">pregunta</code> y los tres desenlaces de un terminal (<code class="JavaDocCode">recomendacion</code>, <code class="JavaDocCode">consulta_medica</code>, <code class="JavaDocCode">urgencia</code>). </p>
 
 </div>
 </div>

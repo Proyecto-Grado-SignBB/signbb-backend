@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['tipos_5finteraccion_5fvalidos_0',['TIPOS_INTERACCION_VALIDOS',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#aa3758f7b81004c118d2092459cb1e8ac',1,'org::signbb::backend::navegacion::modelo::Nodo']]],
-  ['tipos_5fvalidos_1',['TIPOS_VALIDOS',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#a872eb074d51806c826829b2f869a8fdb',1,'org::signbb::backend::navegacion::modelo::Nodo']]]
+  ['peso_5fmaximo_0',['PESO_MAXIMO',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoMapper.html#a73e406cd30a0f557a21fa45cbae48671',1,'org::signbb::backend::navegacion::datos::serializacion::GrafoClinicoMapper']]],
+  ['peso_5fminimo_1',['PESO_MINIMO',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoMapper.html#a710870d9b6dbae4cb1e19ebc2d0df60e',1,'org::signbb::backend::navegacion::datos::serializacion::GrafoClinicoMapper']]],
+  ['prefijo_5fsesion_2',['PREFIJO_SESION',['../classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html#a821dcac19147c4a5b202a4c06adf7def',1,'org::signbb::backend::cache::RepositorioSesionRedis']]]
 ];

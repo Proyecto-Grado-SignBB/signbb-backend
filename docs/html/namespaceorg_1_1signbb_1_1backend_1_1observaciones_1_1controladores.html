@@ -215,7 +215,6 @@ record&#160;</td><td class="memItemRight"><b>PasoCausalDTO</b> (String nodoId, S
 <p>Vista REST de un recorrido de triaje. </p>
 <p>Si <code class="JavaDocCode">estado</code> es <code class="JavaDocCode">EN_CURSO</code>, lleva la <code class="JavaDocCode">pregunta</code> que debe responderse y <code class="JavaDocCode">resultado</code> es <code class="JavaDocCode">null</code>. Si es <code class="JavaDocCode">FINALIZADO</code>, lleva el <code class="JavaDocCode">resultado</code> y <code class="JavaDocCode">pregunta</code> es <code class="JavaDocCode">null</code>. </p>
 <p>Construye el DTO a partir de un <code><a class="el" href="">ResultadoPaso</a></code>, resolviendo las opciones de la pregunta actual contra el grafo.</p>
-<p>NUEVO: resuelve el <code class="JavaDocCode">tipoInteraccion</code> de la pregunta. Usa el override explícito de <code class="JavaDocCode">metadata.tipoInteraccion</code> del nodo si viene; si no, infiere <code class="JavaDocCode">SI_NO</code> cuando las opciones son exactamente {SI, NO}, y <code class="JavaDocCode">SELECCION_UNICA</code> en cualquier otro caso — así ningún grafo existente cambia de comportamiento. <code class="JavaDocCode">SELECCION_MULTIPLE</code> solo se obtiene marcándolo explícitamente en la metadata del nodo en el grafo JSON.</p>
 
 </div>
 </div>

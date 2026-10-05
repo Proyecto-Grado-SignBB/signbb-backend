@@ -20,5 +20,6 @@ var classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico =
     [ "rutaValida", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#ab690fb26dcd5088d5852290769ac3baa", null ],
     [ "setNodoInicial", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#a03c7ca90ee903bec96923703ab4d8e1d", null ],
     [ "size", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#a8193221f68c6db3b9b04fa4c0b5765b4", null ],
+    [ "tipoInteraccion", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#acc527d1cbcf00cb03997ddc119eb8cd4", null ],
     [ "validarCiclo", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#af2e8d6b9e6bf1cba0a16b21380ce2e26", null ]
 ];
