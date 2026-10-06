@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 </div><!--header-->
 <div class="contents">
 
-<p>Motor de navegación: recorrido guiado del grafo clínico con corto-circuito por reglas (bucle externo del Algoritmo 3).  
+<p>Motor de navegación: recorrido guiado del grafo clínico con corto-circuito por reglas (bucle externo del Algoritmo 3) y cola de opciones pendientes para la selección múltiple.  
  <a href="#details">Más...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -131,6 +131,17 @@ Métodos públicos</h2></td></tr>
 <tr class="memitem:a6a2ff82d97b0ed4a1c40dd6510254f01" id="r_a6a2ff82d97b0ed4a1c40dd6510254f01"><td class="memItemLeft">ResultadoPaso&#160;</td><td class="memItemRight"><a class="el" href="#a6a2ff82d97b0ed4a1c40dd6510254f01">retroceder</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html">GrafoClinico</a> grafo, <a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html">BaseReglas</a> base, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html">EstadoPaciente</a> estado)</td></tr>
 <tr class="memdesc:a6a2ff82d97b0ed4a1c40dd6510254f01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vuelve a la última pregunta respondida para que el cuidador cambie su respuesta.  <br /></td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Métodos públicos estáticos</h2></td></tr>
+<tr class="memitem:a7de9114384589d51c87a4a2c019d0182" id="r_a7de9114384589d51c87a4a2c019d0182"><td class="memItemLeft">static Comparator&lt; OpcionPendiente &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a7de9114384589d51c87a4a2c019d0182">ordenCola</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html">GrafoClinico</a> grafo)</td></tr>
+<tr class="memdesc:a7de9114384589d51c87a4a2c019d0182"><td class="mdescLeft">&#160;</td><td class="mdescRight">Orden de la cola de opciones pendientes: la primera es la que se debe seguir antes.  <br /></td></tr>
+<tr class="memitem:a635f0a7976d993792945536d0fcec2c5" id="r_a635f0a7976d993792945536d0fcec2c5"><td class="memItemLeft"><a id="a635f0a7976d993792945536d0fcec2c5" name="a635f0a7976d993792945536d0fcec2c5"></a>
+static int&#160;</td><td class="memItemRight"><b>severidadTerminal</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html">Nodo</a> nodo)</td></tr>
+<tr class="memdesc:a635f0a7976d993792945536d0fcec2c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Severidad de un nodo como destino de una opción: 2 si es un terminal de <code class="JavaDocCode">urgencia</code>, 1 si lo es de <code class="JavaDocCode">consulta_medica</code> y 0 en cualquier otro caso (preguntas y recomendaciones). <br /></td></tr>
+<tr class="memitem:a4977b9117cd4d1f12405eda6753cc280" id="r_a4977b9117cd4d1f12405eda6753cc280"><td class="memItemLeft"><a id="a4977b9117cd4d1f12405eda6753cc280" name="a4977b9117cd4d1f12405eda6753cc280"></a>
+static Optional&lt; OpcionPendiente &gt;&#160;</td><td class="memItemRight"><b>mejorOpcion</b> (List&lt; OpcionPendiente &gt; opciones, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html">GrafoClinico</a> grafo)</td></tr>
+<tr class="memdesc:a4977b9117cd4d1f12405eda6753cc280"><td class="mdescLeft">&#160;</td><td class="mdescRight">La opción que se debe seguir primero según <code><a class="el" href="#a7de9114384589d51c87a4a2c019d0182">ordenCola</a></code>, si hay alguna. <br /></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Atributos públicos estáticos</h2></td></tr>
 <tr class="memitem:a2071d6862ddd70da6031210ad242464f" id="r_a2071d6862ddd70da6031210ad242464f"><td class="memItemLeft"><a id="a2071d6862ddd70da6031210ad242464f" name="a2071d6862ddd70da6031210ad242464f"></a>
@@ -140,7 +151,7 @@ static final int&#160;</td><td class="memItemRight"><b>MAX_PREGUNTAS_POR_DEFECTO
 <tr class="memdesc:aba7da1b3e2ba599cde59fa5a2eb20aa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Desenlace de sistema para un recorrido que alcanzó el máximo de preguntas sin llegar a un terminal.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
-<div class="textblock"><p>Motor de navegación: recorrido guiado del grafo clínico con corto-circuito por reglas (bucle externo del Algoritmo 3). </p>
+<div class="textblock"><p>Motor de navegación: recorrido guiado del grafo clínico con corto-circuito por reglas (bucle externo del Algoritmo 3) y cola de opciones pendientes para la selección múltiple. </p>
 <p>El grafo (<code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html">GrafoClinico</a></code>) y la base de reglas (<code><a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html">BaseReglas</a></code>) son estructuras de datos separadas. El motor entrelaza ambas en cada respuesta del cuidador: </p><ol>
 <li>
 Valida la respuesta contra la pregunta pendiente (opciones del nodo y su tipo de interacción) <b>antes</b> de tocar el estado, de modo que una respuesta inválida no deja hechos falsos en la memoria de trabajo. </li>
@@ -149,13 +160,15 @@ Registra la respuesta como hecho <code class="JavaDocCode">(idNodo, respuesta)</
 <li>
 Ejecuta encadenamiento hacia adelante con <code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglas.html#a4d04a230b0026d1466a6830821be3d34">ServicioReglas#evaluar</a></code>: se buscan las reglas cuya premisa en FND (algún caso con todas sus condiciones presentes en la memoria) se satisface y que no hayan disparado antes en el recorrido. Como las condiciones solo leen respuestas y las conclusiones no agregan hechos nuevos, una pasada de emparejamiento ya alcanza el punto fijo. </li>
 <li>
-Si alguna regla dispara, gana la de mayor nivel. Si su destino es un terminal, el recorrido corta ahí; si es una pregunta (regla "compuerta"), el recorrido continúa desde ese nodo. Si ninguna dispara, se avanza por la arista de la respuesta. </li>
+Si alguna regla dispara, gana la de mayor nivel. Si su destino es un terminal, el recorrido corta ahí con esa alerta; si es una pregunta (regla "compuerta"), el recorrido continúa desde ese nodo sin tocar la cola de pendientes. Si ninguna dispara, se sigue por las opciones marcadas. </li>
 </ol>
+<p><b>Selección múltiple y cola de pendientes.</b> Todas las opciones marcadas quedan registradas como respuestas (así las reglas pueden combinarlas). El recorrido sigue a fondo por la mejor de las opciones nuevas y las demás se anotan en la cola de <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html">EstadoPaciente</a></code>. La cola solo se consulta cuando la rama actual termina en una <code class="JavaDocCode">recomendacion</code>: esa recomendación se guarda y se continúa con la mejor opción pendiente. El orden (ver <code><a class="el" href="#a7de9114384589d51c87a4a2c019d0182">ordenCola</a></code>) es: primero las que llevan directo a un terminal grave (<code class="JavaDocCode">urgencia</code> y luego <code class="JavaDocCode">consulta_medica</code>), después mayor <code class="JavaDocCode">peso</code> del nodo destino y, a igual peso, la que llegó antes. Las selecciones múltiples de ramas más profundas entran en la misma cola global. No se encola un destino repetido ni uno que ya se recorrió, y una pregunta ya respondida a la que se vuelve a llegar no se pregunta de nuevo: se siguen las respuestas guardadas.</p>
+<p><b>Cómo termina.</b> Un terminal <code class="JavaDocCode">urgencia</code> o <code class="JavaDocCode">consulta_medica</code>, o una regla con alerta, cierra el recorrido con esa alerta sola (sin las recomendaciones de ramas anteriores) y descarta la cola. Si la cola se agota, el recorrido cierra con nivel <code><a class="el" href="enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1NivelAlerta.html#ad20739cdb6a47e7f201d4a70aba3f5ae">NivelAlerta#NORMAL</a></code> y trae todas las recomendaciones alcanzadas, cada una con su propio camino.</p>
 <p>El nivel de un terminal sale de su desenlace (<code class="JavaDocCode">recomendacion</code> → <code><a class="el" href="enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1NivelAlerta.html#ad20739cdb6a47e7f201d4a70aba3f5ae">NivelAlerta#NORMAL</a></code>, <code class="JavaDocCode">consulta_medica</code> → <code><a class="el" href="enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1NivelAlerta.html#acf99b1d6e0fbafc4d69d09f7b5328945">NivelAlerta#CONSULTAR_MEDICO</a></code>, <code class="JavaDocCode">urgencia</code> → <code><a class="el" href="enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1NivelAlerta.html#a4d9b53c979b047a951ded62ec9965a98">NivelAlerta#URGENCIA</a></code>). Si se llegó por una regla, se reporta el mayor entre el nivel de la regla y el del desenlace, para que el resultado nunca sea menos grave que el nodo que se muestra.</p>
-<p>Para que ningún recorrido quede abierto indefinidamente, si el cuidador ya respondió <code class="JavaDocCode">maxPreguntas</code> preguntas (10 por defecto, propiedad <code class="JavaDocCode">signbb.navegacion.max-preguntas</code>) y el siguiente paso sería otra pregunta, el recorrido cierra en <code><a class="el" href="#aba7da1b3e2ba599cde59fa5a2eb20aa6">LIMITE_PREGUNTAS</a></code> con nivel <code><a class="el" href="enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1NivelAlerta.html#ad20739cdb6a47e7f201d4a70aba3f5ae">NivelAlerta#NORMAL</a></code>. Una regla o un terminal alcanzados en esa misma respuesta tienen prioridad sobre el límite.</p>
-<p><code><a class="el" href="#a6a2ff82d97b0ed4a1c40dd6510254f01">retroceder</a></code> vuelve a la pregunta anterior para cambiar su respuesta. En vez de deshacer a mano, reinicia la memoria de trabajo y reproduce las respuestas que se conservan: así las respuestas deshechas y las reglas que dispararon por ellas desaparecen, y el estado queda igual al de un recorrido que nunca las hubiera dado.</p>
-<p>Como un backend REST es sin estado, el bucle <code class="JavaDocCode">while</code> de la formulación se descompone en dos operaciones: <code><a class="el" href="#a7e7d5edee1874979bac0bd2f8d220444">iniciar</a></code> (una vez por recorrido), <code><a class="el" href="#a0bc97fb9a81b1c2fd375f680010940a4">paso</a></code> (una vez por respuesta del cuidador) y <code><a class="el" href="#a6a2ff82d97b0ed4a1c40dd6510254f01">retroceder</a></code> (cuando el cuidador vuelve atrás).</p>
-<p>MODIFICADO: se agrega <code><a class="el" href="">paso(GrafoClinico, BaseReglas, EstadoPaciente, Nodo, List)</a></code> para selección múltiple. Solo se admite en preguntas <code class="JavaDocCode">SELECCION_MULTIPLE</code>; si ninguna regla dispara, se avanza por la opción cuyo destino tiene mayor <code class="JavaDocCode">peso</code>. </p>
+<p>Para que ningún recorrido quede abierto indefinidamente, si el cuidador ya respondió <code class="JavaDocCode">maxPreguntas</code> preguntas (10 por defecto, propiedad <code class="JavaDocCode">signbb.navegacion.max-preguntas</code>) y el siguiente paso sería preguntar otra, el recorrido cierra en <code><a class="el" href="#aba7da1b3e2ba599cde59fa5a2eb20aa6">LIMITE_PREGUNTAS</a></code> con nivel <code><a class="el" href="enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1NivelAlerta.html#ad20739cdb6a47e7f201d4a70aba3f5ae">NivelAlerta#NORMAL</a></code>, junto con las recomendaciones alcanzadas hasta ahí. Las ramas pendientes que no se recorrieron no aportan mensaje. Una regla o un terminal alcanzados en esa misma respuesta tienen prioridad sobre el límite.</p>
+<p><b>Camino causal.</b> Se arma con el recorrido real de cada rama (no con una búsqueda en anchura sobre el grafo), de modo que cada recomendación explica por qué preguntas y respuestas se llegó a ella.</p>
+<p><code><a class="el" href="#a6a2ff82d97b0ed4a1c40dd6510254f01">retroceder</a></code> vuelve a la pregunta anterior para cambiar su respuesta. Cada <code><a class="el" href="#a0bc97fb9a81b1c2fd375f680010940a4">paso</a></code> apila en <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html">EstadoPaciente</a></code> un <code><a class="el" href="">PasoRecorrido</a></code> con la pregunta, las opciones, las reglas que esa respuesta marcó y una foto de la cola, la ruta y las recomendaciones tomada antes del paso; retroceder lo desapila y restaura esa foto, de modo que desaparecen exactamente esa respuesta, esas reglas y lo que el paso movió en la cola, sin reevaluar nada. Si el estado no trae pila (una sesión guardada antes de existir), se recurre a reproducir el recorrido desde cero.</p>
+<p>Como un backend REST es sin estado, el bucle <code class="JavaDocCode">while</code> de la formulación se descompone en operaciones: <code><a class="el" href="#a7e7d5edee1874979bac0bd2f8d220444">iniciar</a></code> (una vez por recorrido), <code><a class="el" href="#a0bc97fb9a81b1c2fd375f680010940a4">paso</a></code> (una vez por respuesta del cuidador, con una o varias opciones) y <code><a class="el" href="#a6a2ff82d97b0ed4a1c40dd6510254f01">retroceder</a></code> (cuando el cuidador vuelve atrás). </p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Documentación de constructores y destructores</h2>
 <a id="af8ec4a0ef50c2fd9c22568516d3ea524" name="af8ec4a0ef50c2fd9c22568516d3ea524"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af8ec4a0ef50c2fd9c22568516d3ea524">&#9670;&#160;</a></span>MotorNavegacion()</h2>
@@ -211,6 +224,47 @@ Si alguna regla dispara, gana la de mayor nivel. Si su destino es un terminal, e
 
 </div>
 </div>
+<a id="a7de9114384589d51c87a4a2c019d0182" name="a7de9114384589d51c87a4a2c019d0182"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7de9114384589d51c87a4a2c019d0182">&#9670;&#160;</a></span>ordenCola()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Comparator&lt; OpcionPendiente &gt; org.signbb.backend.navegacion.servicios.MotorNavegacion.ordenCola </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html">GrafoClinico</a></td>          <td class="paramname"><span class="paramname"><em>grafo</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Orden de la cola de opciones pendientes: la primera es la que se debe seguir antes. </p>
+<p>Tres criterios, en este orden: </p><ol>
+<li>
+Las que llevan directo a un terminal grave, porque terminan la navegación: primero <code class="JavaDocCode">urgencia</code>, luego <code class="JavaDocCode">consulta_medica</code>. </li>
+<li>
+Mayor <code class="JavaDocCode">peso</code> del nodo destino. </li>
+<li>
+Menor <code class="JavaDocCode">orden</code> de llegada (la más antigua). </li>
+</ol>
+<dl class="exception"><dt>Excepciones</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">IllegalStateException</td><td>al comparar si un destino ya no existe en el grafo. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a38cf9b8287b165eb3c89f8a475513d73" name="a38cf9b8287b165eb3c89f8a475513d73"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a38cf9b8287b165eb3c89f8a475513d73">&#9670;&#160;</a></span>paso() <span class="overload">[1/2]</span></h2>
 
@@ -246,7 +300,7 @@ Si alguna regla dispara, gana la de mayor nivel. Si su destino es un terminal, e
 </div><div class="memdoc">
 
 <p>Selección múltiple: el cuidador marcó varias opciones a la vez para <code class="JavaDocCode">nodoActual</code>. </p>
-<p>Se registran TODAS como respuestas del nodo (así las reglas que cruzan varias opciones de la misma pregunta pueden activarse y el recorrido se interrumpe en el terminal más grave). Si ninguna regla dispara, se avanza por la opción cuyo destino tiene mayor <code class="JavaDocCode">peso</code>; con una sola respuesta marcada el resultado es idéntico al <code class="JavaDocCode">paso</code> de un solo <code class="JavaDocCode">String</code>.</p>
+<p>Se registran TODAS como respuestas del nodo (así las reglas que cruzan varias opciones de la misma pregunta pueden activarse y el recorrido se interrumpe en el terminal más grave). Si ninguna regla dispara, se sigue por la mejor opción (ver <code><a class="el" href="#a7de9114384589d51c87a4a2c019d0182">ordenCola</a></code>) y las demás quedan en la cola de pendientes para retomarlas cuando la rama termine en una recomendación. Con una sola respuesta marcada el resultado es idéntico al <code class="JavaDocCode">paso</code> de un solo <code class="JavaDocCode">String</code>.</p>
 <dl class="exception"><dt>Excepciones</dt><dd>
   <table class="exception">
     <tr><td class="paramname">IllegalArgumentException</td><td>si <code class="JavaDocCode">respuestasMarcadas</code> es nula o vacía, repite opciones, contiene una opción que el nodo no tiene, o marca varias en una pregunta que no es <code class="JavaDocCode">SELECCION_MULTIPLE</code>. El estado no cambia. </td></tr>
@@ -325,11 +379,11 @@ Si alguna regla dispara, gana la de mayor nivel. Si su destino es un terminal, e
 </div><div class="memdoc">
 
 <p>Vuelve a la última pregunta respondida para que el cuidador cambie su respuesta. </p>
-<p>Funciona también con el recorrido finalizado (vuelve a la pregunta que lo cerró). La memoria de trabajo se reinicia y se reproducen, en orden, las respuestas anteriores a esa pregunta; así desaparecen su respuesta y las reglas que disparó, y el encadenamiento hacia adelante vuelve a evaluarse desde cero.</p>
+<p>Funciona también con el recorrido finalizado (vuelve a la pregunta que lo cerró). Desapila el último <code><a class="el" href="">PasoRecorrido</a></code>: se borra (o restaura) su respuesta y se desmarcan solo las reglas que ese paso marcó, sin reevaluar las reglas.</p>
 <dl class="exception"><dt>Excepciones</dt><dd>
   <table class="exception">
     <tr><td class="paramname">IllegalArgumentException</td><td>si aún no hay ninguna respuesta. </td></tr>
-    <tr><td class="paramname">IllegalStateException</td><td>si al reproducir el recorrido no se vuelve a la misma pregunta (el contenido clínico cambió). </td></tr>
+    <tr><td class="paramname">IllegalStateException</td><td>si la pregunta ya no existe en el contenido clínico, o si sin pila no se pudo reproducir el recorrido. </td></tr>
   </table>
   </dd>
 </dl>

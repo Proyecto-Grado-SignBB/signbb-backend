@@ -138,16 +138,121 @@ Clases</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Funciones</h2></td></tr>
+<tr class="memitem:ad0a916e226b0a74974b6aa0f13ad7ef4" id="r_ad0a916e226b0a74974b6aa0f13ad7ef4"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#ad0a916e226b0a74974b6aa0f13ad7ef4">FotoNavegacion</a> (List&lt; <a class="el" href="#a6d515ecc5fd241036d3a0c2e2bf0f8b8">OpcionPendiente</a> &gt; cola, List&lt; <a class="el" href="#acaf19b92952cd82a615634687146d7e0">PasoRuta</a> &gt; ruta, Map&lt; String, List&lt; <a class="el" href="#acaf19b92952cd82a615634687146d7e0">PasoRuta</a> &gt; &gt; recomendaciones, int siguienteOrden)</td></tr>
+<tr class="memdesc:ad0a916e226b0a74974b6aa0f13ad7ef4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copia inmutable del estado de navegación de una sesión en un instante: la cola de opciones pendientes, la ruta que se está siguiendo, las recomendaciones ya alcanzadas y el contador de orden de llegada.  <br /></td></tr>
+<tr class="memitem:a6d515ecc5fd241036d3a0c2e2bf0f8b8" id="r_a6d515ecc5fd241036d3a0c2e2bf0f8b8"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a6d515ecc5fd241036d3a0c2e2bf0f8b8">OpcionPendiente</a> (String idOrigen, String condicion, String idDestino, int orden, List&lt; <a class="el" href="#acaf19b92952cd82a615634687146d7e0">PasoRuta</a> &gt; camino)</td></tr>
+<tr class="memdesc:a6d515ecc5fd241036d3a0c2e2bf0f8b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Una opción que el cuidador marcó en una pregunta de selección múltiple pero que el recorrido todavía no ha seguido.  <br /></td></tr>
 <tr class="memitem:ae0d0f2b160e2acf823a23becd53010f6" id="r_ae0d0f2b160e2acf823a23becd53010f6"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#ae0d0f2b160e2acf823a23becd53010f6">PasoCausal</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html">Nodo</a> nodo, String condicion)</td></tr>
 <tr class="memdesc:ae0d0f2b160e2acf823a23becd53010f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Paso dentro del camino causal devuelto por <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#ade0cf32632e527001a52224798cb656f">GrafoClinico#obtenerCaminoCausal(Nodo)</a></code>: el <code class="JavaDocCode">nodo</code> alcanzado y la <code class="JavaDocCode">condicion</code> de la arista por la que se llegó (cadena vacía para el nodo inicial).  <br /></td></tr>
-<tr class="memitem:a0e47df8954dad697fc9805f0d1afbbc8" id="r_a0e47df8954dad697fc9805f0d1afbbc8"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a0e47df8954dad697fc9805f0d1afbbc8">ResultadoPaso</a> (Estado estado, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html">Nodo</a> preguntaActual, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1NivelAlerta.html">NivelAlerta</a> nivel, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html">Nodo</a> destino, List&lt; <a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html">ReglaClinica</a> &gt; razones, List&lt; <a class="el" href="#ae0d0f2b160e2acf823a23becd53010f6">PasoCausal</a> &gt; caminoCausal)</td></tr>
-<tr class="memdesc:a0e47df8954dad697fc9805f0d1afbbc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resultado de un paso del <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html">MotorNavegacion</a></code>: la descomposición por pasos del Algoritmo 3 (una iteración del bucle <code class="JavaDocCode">while</code>).  <br /></td></tr>
+<tr class="memitem:a7da30e7dd7e57c08db6f24b16e46290c" id="r_a7da30e7dd7e57c08db6f24b16e46290c"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a7da30e7dd7e57c08db6f24b16e46290c">PasoRecorrido</a> (String idPregunta, List&lt; String &gt; respuestas, List&lt; String &gt; respuestasPrevias, List&lt; String &gt; reglasMarcadas, <a class="el" href="#ad0a916e226b0a74974b6aa0f13ad7ef4">FotoNavegacion</a> navegacionPrevia)</td></tr>
+<tr class="memdesc:a7da30e7dd7e57c08db6f24b16e46290c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Una respuesta del cuidador tal como quedó anotada en la pila de pasos de <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html">EstadoPaciente</a></code>: qué pregunta respondió, con qué opciones y qué reglas marcó como disparadas esa respuesta.  <br /></td></tr>
+<tr class="memitem:acaf19b92952cd82a615634687146d7e0" id="r_acaf19b92952cd82a615634687146d7e0"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#acaf19b92952cd82a615634687146d7e0">PasoRuta</a> (String idNodo, String condicion)</td></tr>
+<tr class="memdesc:acaf19b92952cd82a615634687146d7e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Un paso del recorrido real del cuidador: el nodo al que llegó (por id) y la condición de la arista por la que llegó (cadena vacía para el primer nodo o para un salto de regla "compuerta").  <br /></td></tr>
+<tr class="memitem:aae181705f6b9ac8e6bb408b786fc7510" id="r_aae181705f6b9ac8e6bb408b786fc7510"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#aae181705f6b9ac8e6bb408b786fc7510">Recomendacion</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html">Nodo</a> nodo, List&lt; <a class="el" href="#ae0d0f2b160e2acf823a23becd53010f6">PasoCausal</a> &gt; camino)</td></tr>
+<tr class="memdesc:aae181705f6b9ac8e6bb408b786fc7510"><td class="mdescLeft">&#160;</td><td class="mdescRight">Una recomendación alcanzada durante el recorrido, con el camino real de preguntas y respuestas que llevó hasta ella.  <br /></td></tr>
+<tr class="memitem:ab8f6a0475c434d2561108b14ee97f6fc" id="r_ab8f6a0475c434d2561108b14ee97f6fc"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#ab8f6a0475c434d2561108b14ee97f6fc">ResultadoPaso</a> (Estado estado, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html">Nodo</a> preguntaActual, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1NivelAlerta.html">NivelAlerta</a> nivel, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html">Nodo</a> destino, List&lt; <a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html">ReglaClinica</a> &gt; razones, List&lt; <a class="el" href="#ae0d0f2b160e2acf823a23becd53010f6">PasoCausal</a> &gt; caminoCausal, List&lt; <a class="el" href="#aae181705f6b9ac8e6bb408b786fc7510">Recomendacion</a> &gt; recomendaciones)</td></tr>
+<tr class="memdesc:ab8f6a0475c434d2561108b14ee97f6fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resultado de un paso del <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html">MotorNavegacion</a></code>: la descomposición por pasos del Algoritmo 3 (una iteración del bucle <code class="JavaDocCode">while</code>).  <br /></td></tr>
 <tr class="memitem:a6d07b4c9c8333aa7b1c485f9f2ec8af8" id="r_a6d07b4c9c8333aa7b1c485f9f2ec8af8"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a6d07b4c9c8333aa7b1c485f9f2ec8af8">Sintoma</a> (String idNodo, String respuesta)</td></tr>
 <tr class="memdesc:a6d07b4c9c8333aa7b1c485f9f2ec8af8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Par (idNodo, respuesta) devuelto por <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a64696f31f73d34102f5d965db0ede57d">EstadoPaciente#sintomas()</a></code>.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Contiene las clases usadas para representar comportamientos y estados requeridos por las operaciones de navegacion. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones</h2>
+<a id="ad0a916e226b0a74974b6aa0f13ad7ef4" name="ad0a916e226b0a74974b6aa0f13ad7ef4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0a916e226b0a74974b6aa0f13ad7ef4">&#9670;&#160;</a></span>FotoNavegacion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">record org.signbb.backend.navegacion.modelo.FotoNavegacion </td>
+          <td>(</td>
+          <td class="paramtype">List&lt; <a class="el" href="#a6d515ecc5fd241036d3a0c2e2bf0f8b8">OpcionPendiente</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>cola</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">List&lt; <a class="el" href="#acaf19b92952cd82a615634687146d7e0">PasoRuta</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>ruta</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Map&lt; String, List&lt; <a class="el" href="#acaf19b92952cd82a615634687146d7e0">PasoRuta</a> &gt; &gt;</td>          <td class="paramname"><span class="paramname"><em>recomendaciones</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>siguienteOrden</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Copia inmutable del estado de navegación de una sesión en un instante: la cola de opciones pendientes, la ruta que se está siguiendo, las recomendaciones ya alcanzadas y el contador de orden de llegada. </p>
+<p>Cada <code><a class="el" href="#a7da30e7dd7e57c08db6f24b16e46290c">PasoRecorrido</a></code> guarda la foto tomada <b>antes</b> de ejecutarse; deshacer el paso es restaurarla, lo que es más seguro que calcular qué entró y qué salió de la cola.</p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cola</td><td>opciones pendientes, en el orden en que llegaron. </td></tr>
+    <tr><td class="paramname">ruta</td><td>recorrido real hasta la pregunta pendiente. </td></tr>
+    <tr><td class="paramname">recomendaciones</td><td>recomendaciones alcanzadas (id del nodo → camino), en el orden en que se alcanzaron. </td></tr>
+    <tr><td class="paramname">siguienteOrden</td><td>número de orden que recibirá la próxima opción encolada. </td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Guarda copias inmutables (el orden de las recomendaciones se conserva).</p>
+
+</div>
+</div>
+<a id="a6d515ecc5fd241036d3a0c2e2bf0f8b8" name="a6d515ecc5fd241036d3a0c2e2bf0f8b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d515ecc5fd241036d3a0c2e2bf0f8b8">&#9670;&#160;</a></span>OpcionPendiente()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">record org.signbb.backend.navegacion.modelo.OpcionPendiente </td>
+          <td>(</td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>idOrigen</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>condicion</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>idDestino</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>orden</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">List&lt; <a class="el" href="#acaf19b92952cd82a615634687146d7e0">PasoRuta</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>camino</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Una opción que el cuidador marcó en una pregunta de selección múltiple pero que el recorrido todavía no ha seguido. </p>
+<p>Se guarda en la cola de opciones pendientes de <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html">EstadoPaciente</a></code> para retomarla cuando la rama que se está siguiendo termine en una recomendación.</p>
+<p>La gravedad no se guarda: se calcula al ordenar, a partir del nodo destino (ver <code class="JavaDocCode">MotorNavegacion.ordenCola</code>). Lo que sí se guarda es <code class="JavaDocCode">orden</code>, el número de llegada, que desempata a igual gravedad (gana la más antigua) y que <code class="JavaDocCode">PriorityQueue</code> de Java no garantiza por sí sola.</p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idOrigen</td><td>pregunta en la que se marcó la opción. </td></tr>
+    <tr><td class="paramname">condicion</td><td>texto de la opción marcada. </td></tr>
+    <tr><td class="paramname">idDestino</td><td>nodo al que lleva la opción. </td></tr>
+    <tr><td class="paramname">orden</td><td>número de llegada a la cola (menor = más antigua). </td></tr>
+    <tr><td class="paramname">camino</td><td>recorrido real hasta el destino, incluido el destino, para retomarlo como camino causal si esta opción se sigue. </td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Valida los ids y guarda una copia inmutable del camino.</p>
+
+</div>
+</div>
 <a id="ae0d0f2b160e2acf823a23becd53010f6" name="ae0d0f2b160e2acf823a23becd53010f6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae0d0f2b160e2acf823a23becd53010f6">&#9670;&#160;</a></span>PasoCausal()</h2>
 
@@ -172,8 +277,122 @@ Funciones</h2></td></tr>
 
 </div>
 </div>
-<a id="a0e47df8954dad697fc9805f0d1afbbc8" name="a0e47df8954dad697fc9805f0d1afbbc8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0e47df8954dad697fc9805f0d1afbbc8">&#9670;&#160;</a></span>ResultadoPaso()</h2>
+<a id="a7da30e7dd7e57c08db6f24b16e46290c" name="a7da30e7dd7e57c08db6f24b16e46290c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7da30e7dd7e57c08db6f24b16e46290c">&#9670;&#160;</a></span>PasoRecorrido()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">record org.signbb.backend.navegacion.modelo.PasoRecorrido </td>
+          <td>(</td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>idPregunta</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">List&lt; String &gt;</td>          <td class="paramname"><span class="paramname"><em>respuestas</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">List&lt; String &gt;</td>          <td class="paramname"><span class="paramname"><em>respuestasPrevias</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">List&lt; String &gt;</td>          <td class="paramname"><span class="paramname"><em>reglasMarcadas</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#ad0a916e226b0a74974b6aa0f13ad7ef4">FotoNavegacion</a></td>          <td class="paramname"><span class="paramname"><em>navegacionPrevia</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Una respuesta del cuidador tal como quedó anotada en la pila de pasos de <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html">EstadoPaciente</a></code>: qué pregunta respondió, con qué opciones y qué reglas marcó como disparadas esa respuesta. </p>
+<p>Es lo que hace falta para deshacerla sin reevaluar las reglas.</p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idPregunta</td><td>pregunta respondida. </td></tr>
+    <tr><td class="paramname">respuestas</td><td>opciones marcadas en este paso. </td></tr>
+    <tr><td class="paramname">respuestasPrevias</td><td>lo que la pregunta tenía registrado antes de este paso (vacío si no tenía nada). Solo no es vacío si una regla "compuerta" llevó a una pregunta ya respondida; al deshacer se restaura. </td></tr>
+    <tr><td class="paramname">reglasMarcadas</td><td>reglas que este paso marcó como disparadas. </td></tr>
+    <tr><td class="paramname">navegacionPrevia</td><td>foto del estado de navegación (cola de opciones pendientes, ruta y recomendaciones) tomada antes de este paso; al deshacer se restaura. Es <code class="JavaDocCode">null</code> en pasos guardados antes de existir la cola, que entonces no tocan la navegación al deshacerse. </td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Valida el id y guarda copias inmutables de las listas.</p>
+<p>Paso sin foto de navegación (el formato anterior a la cola de opciones pendientes): al deshacerlo no se modifica la cola, la ruta ni las recomendaciones.</p>
+
+</div>
+</div>
+<a id="acaf19b92952cd82a615634687146d7e0" name="acaf19b92952cd82a615634687146d7e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acaf19b92952cd82a615634687146d7e0">&#9670;&#160;</a></span>PasoRuta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">record org.signbb.backend.navegacion.modelo.PasoRuta </td>
+          <td>(</td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>idNodo</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>condicion</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Un paso del recorrido real del cuidador: el nodo al que llegó (por id) y la condición de la arista por la que llegó (cadena vacía para el primer nodo o para un salto de regla "compuerta"). </p>
+<p>A diferencia de <code><a class="el" href="#ae0d0f2b160e2acf823a23becd53010f6">PasoCausal</a></code>, referencia el nodo por id y no por objeto, de modo que se puede guardar en la sesión (Redis) y deshacer al retroceder sin depender del grafo.</p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idNodo</td><td>id del nodo alcanzado. </td></tr>
+    <tr><td class="paramname">condicion</td><td>opción elegida en la arista que llevó a ese nodo. </td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Valida el id y normaliza una condición nula a cadena vacía.</p>
+
+</div>
+</div>
+<a id="aae181705f6b9ac8e6bb408b786fc7510" name="aae181705f6b9ac8e6bb408b786fc7510"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae181705f6b9ac8e6bb408b786fc7510">&#9670;&#160;</a></span>Recomendacion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">record org.signbb.backend.navegacion.modelo.Recomendacion </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html">Nodo</a></td>          <td class="paramname"><span class="paramname"><em>nodo</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">List&lt; <a class="el" href="#ae0d0f2b160e2acf823a23becd53010f6">PasoCausal</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>camino</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Una recomendación alcanzada durante el recorrido, con el camino real de preguntas y respuestas que llevó hasta ella. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nodo</td><td>nodo terminal de tipo <code class="JavaDocCode">recomendacion</code>. </td></tr>
+    <tr><td class="paramname">camino</td><td>recorrido real hasta ese nodo (explicación trazable). </td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Guarda una copia inmutable del camino.</p>
+
+</div>
+</div>
+<a id="ab8f6a0475c434d2561108b14ee97f6fc" name="ab8f6a0475c434d2561108b14ee97f6fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8f6a0475c434d2561108b14ee97f6fc">&#9670;&#160;</a></span>ResultadoPaso()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -206,18 +425,27 @@ Funciones</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">List&lt; <a class="el" href="#ae0d0f2b160e2acf823a23becd53010f6">PasoCausal</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>caminoCausal</em></span>&#160;)</td>
+          <td class="paramtype">List&lt; <a class="el" href="#ae0d0f2b160e2acf823a23becd53010f6">PasoCausal</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>caminoCausal</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">List&lt; <a class="el" href="#aae181705f6b9ac8e6bb408b786fc7510">Recomendacion</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>recomendaciones</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Resultado de un paso del <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html">MotorNavegacion</a></code>: la descomposición por pasos del Algoritmo 3 (una iteración del bucle <code class="JavaDocCode">while</code>). </p>
-<p>Cuando el recorrido sigue abierto (<code class="JavaDocCode">EN_CURSO</code>) el resultado lleva la <code class="JavaDocCode">preguntaActual</code> que debe responderse a continuación. Cuando el recorrido termina (<code class="JavaDocCode">FINALIZADO</code>) lleva el <code class="JavaDocCode">nivel</code> de alerta, el nodo <code class="JavaDocCode">destino</code> alcanzado, las <code class="JavaDocCode">razones</code> (reglas de nivel máximo que dispararon; vacío si el desenlace es NORMAL) y el <code class="JavaDocCode">caminoCausal</code> reconstruido hasta el destino. </p>
+<p>Cuando el recorrido sigue abierto (<code class="JavaDocCode">EN_CURSO</code>) el resultado lleva la <code class="JavaDocCode">preguntaActual</code> que debe responderse a continuación. Cuando el recorrido termina (<code class="JavaDocCode">FINALIZADO</code>) lleva el <code class="JavaDocCode">nivel</code> de alerta, el nodo <code class="JavaDocCode">destino</code> alcanzado, las <code class="JavaDocCode">razones</code> (reglas de nivel máximo que dispararon; vacío si el desenlace es NORMAL) y el <code class="JavaDocCode">caminoCausal</code> reconstruido hasta el destino.</p>
+<p>Cuando el recorrido termina sin alerta, <code class="JavaDocCode">recomendaciones</code> trae todas las recomendaciones alcanzadas, cada una con su propio camino; en un resultado con alerta, o con el recorrido en curso, está vacía. </p>
 <p>Estado de avance de un recorrido.</p>
 <p>Falta responder al menos una pregunta más.</p>
 <p>El recorrido terminó (por regla o por terminal del grafo).</p>
+<p>Guarda una copia inmutable de las recomendaciones (nula equivale a vacía).</p>
+<p>Resultado de un solo destino: sin lista de recomendaciones.</p>
 <p>Construye un resultado EN_CURSO que espera la respuesta a <code class="JavaDocCode">pregunta</code>.</p>
 <p>Construye un resultado FINALIZADO con su nivel, destino, razones y camino causal.</p>
+<p>Construye un resultado FINALIZADO que además lleva las recomendaciones alcanzadas durante el recorrido.</p>
 <p>True si el recorrido terminó.</p>
 
 </div>

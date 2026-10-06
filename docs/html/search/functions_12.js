@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['validarciclo_0',['validarCiclo',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#af2e8d6b9e6bf1cba0a16b21380ce2e26',1,'org::signbb::backend::navegacion::modelo::GrafoClinico']]]
+  ['ultimapreguntarespondida_0',['ultimaPreguntaRespondida',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#adc6e906cf92f61ccf825ef13ac7d2410',1,'org::signbb::backend::navegacion::modelo::EstadoPaciente']]]
 ];

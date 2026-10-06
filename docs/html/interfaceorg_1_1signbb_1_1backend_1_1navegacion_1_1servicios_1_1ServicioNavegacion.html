@@ -204,7 +204,7 @@ Métodos públicos</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Registra una o más respuestas marcadas a la vez para la misma pregunta (selección múltiple) y avanza el recorrido un paso. </p>
-<p>Con una sola respuesta, se comporta exactamente igual que <code><a class="el" href="#a129f8a32cea64590bfe65f6db56c16a6">responder(String, String)</a></code>. Cuando hay más de una, se avanza hacia el nodo destino de mayor <code class="JavaDocCode">peso</code> entre los candidatos (ver <code class="JavaDocCode">MotorNavegacion.paso</code>). </p>
+<p>Con una sola respuesta, se comporta exactamente igual que <code><a class="el" href="#a129f8a32cea64590bfe65f6db56c16a6">responder(String, String)</a></code>. Cuando hay más de una, se sigue a fondo la mejor opción (terminal grave, luego mayor <code class="JavaDocCode">peso</code> del destino, luego la marcada antes) y las demás quedan en una cola de pendientes que se retoma cuando la rama termina en una recomendación (ver <code class="JavaDocCode">MotorNavegacion.paso</code>). </p>
 
 <p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImpl.html#a6b0cb1249eb985e18241cd1b93995bb6">org.signbb.backend.navegacion.servicios.ServicioNavegacionImpl</a>.</p>
 
