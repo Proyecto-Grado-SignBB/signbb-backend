@@ -61,11 +61,31 @@ por eso en dev/CI aparecen como *skipped*, no como falla:
   perfil `dev` resuelve directo desde la base (H2), lo que verifica el
   camino de degradación de punta a punta.
 
+## ColaSeleccionMultipleRedisIntegracionTest — cola de la selección múltiple
+
+Usa un Redis real (servicio `cache` del compose, `localhost:6379`; se cambia
+con `-Dsignbb.test.redis.host` y `-Dsignbb.test.redis.port`) y un grafo
+pequeño de dos ramas armado en código (`q1` de selección múltiple con `qa`,
+peso 3, y `qb`, peso 2), de modo que la cola queda con una recomendación
+pendiente. No necesita Spring ni la base: se **salta sola** si Redis no
+responde. Cada paso se guarda y se relee con una instancia nueva del
+repositorio (reinicio simulado):
+
+- **La cola pendiente queda en Redis y sobrevive al reinicio**: se sigue `qa`,
+  `qb` queda en la cola, la ruta y las respuestas se recuperan y la clave
+  tiene TTL de hasta 24 h.
+- **Tras la primera recomendación se retoma la opción pendiente** y al final
+  salen ambas recomendaciones, cada una con su camino causal.
+- **Retroceder tras recargar** restaura la cola y descarta la recomendación
+  del paso deshecho.
+- **Una alerta en una rama** cierra con la alerta sola y vacía la cola
+  guardada, también tras retroceder y cambiar de rama.
+
 ## Cómo ejecutarlas
 
     ./mvnw test                                          # suite completa (perfil docker: contenedores arriba)
     ./mvnw test -Dspring.profiles.active=dev             # H2 en memoria; integración del cache se salta
-    ./mvnw test -Dtest=ResolvedorContenidoClinicoTest,RepositorioSesionRedisTest,CacheRedisIntegracionTest
+    ./mvnw test -Dtest=ResolvedorContenidoClinicoTest,RepositorioSesionRedisTest,CacheRedisIntegracionTest,ColaSeleccionMultipleRedisIntegracionTest
 
 ## Notas
 
