@@ -12,6 +12,7 @@ import org.signbb.backend.navegacion.modelo.EstadoPaciente;
 import org.signbb.backend.navegacion.modelo.Nodo;
 import org.signbb.backend.navegacion.modelo.PasoRecorrido;
 import org.signbb.backend.navegacion.modelo.PasoCausal;
+import org.signbb.backend.navegacion.modelo.Recomendacion;
 import org.signbb.backend.navegacion.modelo.RepositorioSesion;
 import org.signbb.backend.navegacion.modelo.ResultadoPaso;
 import org.signbb.backend.navegacion.modelo.SesionTriaje;
@@ -93,10 +94,14 @@ public class RepositorioSesionRedis implements RepositorioSesion {
             }
         }
         estado.sumarPuntaje(json.puntaje());
+        if (json.navegacion() != null) {
+            estado.restaurarNavegacion(json.navegacion().aFoto());
+        }
         if (json.historial() != null) {
             for (SesionJson.PasoRecorridoJson p : json.historial()) {
                 estado.apilarPaso(new PasoRecorrido(p.idPregunta(), p.respuestas(),
-                        p.respuestasPrevias(), p.reglasMarcadas()));
+                        p.respuestasPrevias(), p.reglasMarcadas(),
+                        p.navegacionPrevia() == null ? null : p.navegacionPrevia().aFoto()));
             }
         }
         return new SesionTriaje(json.id(), estado, reconstruirPaso(json.ultimoPaso()));
@@ -130,8 +135,27 @@ public class RepositorioSesionRedis implements RepositorioSesion {
         for (String idRegla : paso.razonesIds()) {
             razones.add(contexto.getBase().obtenerRegla(idRegla));
         }
+        List<Recomendacion> recomendaciones = new ArrayList<>();
+        if (paso.recomendaciones() != null) {
+            for (SesionJson.RecomendacionJson r : paso.recomendaciones()) {
+                Nodo nodo = contexto.getGrafo().obtenerNodoPorId(r.nodoId()).orElseThrow(
+                        () -> new IllegalStateException(
+                                "la sesión referencia la recomendación '" + r.nodoId()
+                                        + "' que ya no existe en el contenido clínico"));
+                recomendaciones.add(new Recomendacion(nodo, reconstruirCamino(r.camino())));
+            }
+        }
+        return ResultadoPaso.terminal(destino, nivel, razones, reconstruirCamino(paso.caminoCausal()),
+                recomendaciones);
+    }
+
+    /** Resuelve un camino guardado por ids contra el contenido clínico vigente. */
+    private List<PasoCausal> reconstruirCamino(List<SesionJson.CaminoJson> guardado) {
         List<PasoCausal> camino = new ArrayList<>();
-        for (SesionJson.CaminoJson c : paso.caminoCausal()) {
+        if (guardado == null) {
+            return camino;
+        }
+        for (SesionJson.CaminoJson c : guardado) {
             camino.add(new PasoCausal(
                     contexto.getGrafo().obtenerNodoPorId(c.nodoId()).orElseThrow(
                             () -> new IllegalStateException(
@@ -139,7 +163,7 @@ public class RepositorioSesionRedis implements RepositorioSesion {
                                             + "' que ya no existe en el contenido clínico")),
                     c.condicion()));
         }
-        return ResultadoPaso.terminal(destino, nivel, razones, camino);
+        return camino;
     }
 
     /** Lee una sesión; Redis caído se reporta como 503, no como sesión inexistente. */

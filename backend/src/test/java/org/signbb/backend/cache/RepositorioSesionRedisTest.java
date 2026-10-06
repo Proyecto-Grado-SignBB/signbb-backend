@@ -23,10 +23,14 @@ import org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico;
 import org.signbb.backend.navegacion.datos.serializacion.ContenidoEjemplo;
 import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoMapper;
 import org.signbb.backend.navegacion.modelo.ContextoClinico;
+import org.signbb.backend.navegacion.modelo.FotoNavegacion;
 import org.signbb.backend.navegacion.modelo.EstadoPaciente;
 import org.signbb.backend.navegacion.modelo.GrafoClinico;
 import org.signbb.backend.navegacion.modelo.Nodo;
+import org.signbb.backend.navegacion.modelo.OpcionPendiente;
 import org.signbb.backend.navegacion.modelo.PasoRecorrido;
+import org.signbb.backend.navegacion.modelo.PasoRuta;
+import org.signbb.backend.navegacion.modelo.Recomendacion;
 import org.signbb.backend.navegacion.modelo.RepositorioSesion;
 import org.signbb.backend.navegacion.modelo.ResultadoPaso;
 import org.signbb.backend.navegacion.modelo.SesionTriaje;
@@ -178,6 +182,69 @@ class RepositorioSesionRedisTest {
 
         assertTrue(estado.pasos().isEmpty());
         assertEquals(List.of("piel"), estado.getRespuestas("pregunta_inicial"));
+    }
+
+    @Test
+    void laColaLaRutaYLasRecomendacionesSobrevivenAGuardarYBuscar() {
+        String q = "grafo_piel_ictericia/pregunta_coloracion";
+        String signos = "grafo_piel_ictericia/pregunta_signos";
+        EstadoPaciente estado = new EstadoPaciente("s-redis-cola");
+        estado.registrarRespuestas(q, List.of("SI"));
+        FotoNavegacion antes = estado.fotografiarNavegacion();
+        estado.reemplazarRuta(List.of(new PasoRuta("inicio", ""), new PasoRuta(q, "inicia_navegacion")));
+        estado.encolarOpcion(q, "NO", signos, List.of(new PasoRuta("inicio", ""), new PasoRuta(signos, "NO")));
+        estado.registrarRecomendacion("grafo_piel_ictericia/recomendacion_lactancia",
+                List.of(new PasoRuta("inicio", "")));
+        estado.apilarPaso(new PasoRecorrido(q, List.of("SI"), List.of(), List.of(), antes));
+        Nodo pregunta = grafo.obtenerNodoPorId(signos).orElseThrow();
+
+        SesionTriaje sesion = repositorio.crear(estado, ResultadoPaso.pregunta(pregunta));
+        EstadoPaciente recuperado = repositorio.buscar(sesion.getId()).getEstado();
+
+        assertEquals(estado.fotografiarNavegacion(), recuperado.fotografiarNavegacion());
+        assertEquals(List.of(new OpcionPendiente(q, "NO", signos, 0,
+                List.of(new PasoRuta("inicio", ""), new PasoRuta(signos, "NO")))), recuperado.cola());
+        assertEquals(antes, recuperado.pasos().get(0).navegacionPrevia());
+    }
+
+    @Test
+    void elCierreSinAlertaConservaTodasLasRecomendaciones() {
+        Nodo lactancia = grafo.obtenerNodoPorId("grafo_piel_ictericia/recomendacion_lactancia").orElseThrow();
+        Nodo inicial = grafo.obtenerNodoInicial().orElseThrow();
+        EstadoPaciente estado = new EstadoPaciente("s-redis-reco");
+        List<Recomendacion> alcanzadas = List.of(
+                new Recomendacion(lactancia, grafo.obtenerCaminoCausal(lactancia)));
+
+        SesionTriaje sesion = new SesionTriaje("s-reco", estado, ResultadoPaso.terminal(
+                lactancia, NivelAlerta.NORMAL, List.of(), grafo.obtenerCaminoCausal(lactancia), alcanzadas));
+        repositorio.guardar(sesion);
+        ResultadoPaso recuperado = repositorio.buscar("s-reco").getUltimoPaso();
+
+        assertTrue(recuperado.finalizado());
+        assertEquals(1, recuperado.recomendaciones().size());
+        assertEquals(lactancia.getId(), recuperado.recomendaciones().get(0).nodo().getId());
+        assertEquals(alcanzadas.get(0).camino().size(), recuperado.recomendaciones().get(0).camino().size());
+        assertEquals(inicial.getId(), recuperado.recomendaciones().get(0).camino().get(0).nodo().getId());
+    }
+
+    @Test
+    void sesionGuardadaSinNavegacionCargaConLaColaVacia() {
+        // Formato anterior a la cola de pendientes: sin "navegacion" ni "recomendaciones".
+        almacen.put("signbb:sesion:s-sin-cola", """
+                {"id":"s-sin-cola","respuestas":{"pregunta_inicial":["piel"]},"reglasDisparadas":[],
+                 "puntaje":0,"ultimoPaso":{"estado":"EN_CURSO","preguntaId":"puente_piel",
+                 "nivel":null,"destinoId":null,"razonesIds":[],"caminoCausal":[]},
+                 "historial":[{"idPregunta":"pregunta_inicial","respuestas":["piel"],
+                 "respuestasPrevias":[],"reglasMarcadas":[]}]}
+                """);
+
+        EstadoPaciente estado = repositorio.buscar("s-sin-cola").getEstado();
+
+        assertTrue(estado.cola().isEmpty());
+        assertTrue(estado.ruta().isEmpty());
+        assertTrue(estado.recomendaciones().isEmpty());
+        assertEquals(1, estado.pasos().size());
+        assertEquals(null, estado.pasos().get(0).navegacionPrevia());
     }
 
     @Test

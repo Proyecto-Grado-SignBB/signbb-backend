@@ -35,8 +35,10 @@ public interface ServicioNavegacion {
      * (selección múltiple) y avanza el recorrido un paso. Con una sola
      * respuesta, se comporta exactamente igual que
      * {@link #responder(String, String)}.
-     * Cuando hay más de una, se avanza hacia el nodo destino de mayor
-     * {@code peso} entre los candidatos (ver {@code MotorNavegacion.paso}).
+     * Cuando hay más de una, se sigue a fondo la mejor opción (terminal grave,
+     * luego mayor {@code peso} del destino, luego la marcada antes) y las demás
+     * quedan en una cola de pendientes que se retoma cuando la rama termina en
+     * una recomendación (ver {@code MotorNavegacion.paso}).
      */
     RecorridoDTO responder(String recorridoId, List<String> respuestas);
 

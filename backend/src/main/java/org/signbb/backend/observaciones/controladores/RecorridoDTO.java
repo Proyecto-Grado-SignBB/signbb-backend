@@ -49,8 +49,18 @@ public record RecorridoDTO(
                 List<PasoCausalDTO> camino = paso.caminoCausal().stream()
                                 .map(p -> new PasoCausalDTO(p.nodo().getId(), p.condicion()))
                                 .toList();
+                List<RecomendacionDTO> recomendaciones = paso.recomendaciones().stream()
+                                .map(r -> new RecomendacionDTO(
+                                                r.nodo().getId(),
+                                                r.nodo().getContenido(),
+                                                r.camino().stream()
+                                                                .map(p -> new PasoCausalDTO(p.nodo().getId(),
+                                                                                p.condicion()))
+                                                                .toList()))
+                                .toList();
                 ResultadoDTO resultado = new ResultadoDTO(
-                                paso.nivel().name(), destino.getId(), destino.getContenido(), razones, camino);
+                                paso.nivel().name(), destino.getId(), destino.getContenido(), razones, camino,
+                                recomendaciones);
                 return new RecorridoDTO(recorridoId, paso.estado().name(), null, resultado);
         }
 }
