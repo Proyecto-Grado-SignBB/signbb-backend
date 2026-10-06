@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Métodos públicos</h2></td></tr>
 <tr class="memitem:aba74992fdcb348a59059f74dc4043339" id="r_aba74992fdcb348a59059f74dc4043339"><td class="memItemLeft"><a id="aba74992fdcb348a59059f74dc4043339" name="aba74992fdcb348a59059f74dc4043339"></a>
-&#160;</td><td class="memItemRight"><b>SesionTriaje</b> (String id, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html">EstadoPaciente</a> estado, <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#a0e47df8954dad697fc9805f0d1afbbc8">ResultadoPaso</a> ultimoPaso)</td></tr>
+&#160;</td><td class="memItemRight"><b>SesionTriaje</b> (String id, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html">EstadoPaciente</a> estado, <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#ab8f6a0475c434d2561108b14ee97f6fc">ResultadoPaso</a> ultimoPaso)</td></tr>
 <tr class="memdesc:aba74992fdcb348a59059f74dc4043339"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea la sesión con su id, su estado y el paso inicial del recorrido. <br /></td></tr>
 <tr class="memitem:aa8a05aba1167e6c1505cfd8357853f20" id="r_aa8a05aba1167e6c1505cfd8357853f20"><td class="memItemLeft"><a id="aa8a05aba1167e6c1505cfd8357853f20" name="aa8a05aba1167e6c1505cfd8357853f20"></a>
 String&#160;</td><td class="memItemRight"><b>getId</b> ()</td></tr>
@@ -127,15 +127,15 @@ String&#160;</td><td class="memItemRight"><b>getId</b> ()</td></tr>
 <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html">EstadoPaciente</a>&#160;</td><td class="memItemRight"><b>getEstado</b> ()</td></tr>
 <tr class="memdesc:a870241fd9a6caff9edfd9ff7a98a35a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Respuestas acumuladas del cuidador en esta sesión. <br /></td></tr>
 <tr class="memitem:a09e39ab3aea8c0d8df5abc9745b3cdbd" id="r_a09e39ab3aea8c0d8df5abc9745b3cdbd"><td class="memItemLeft"><a id="a09e39ab3aea8c0d8df5abc9745b3cdbd" name="a09e39ab3aea8c0d8df5abc9745b3cdbd"></a>
-<a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#a0e47df8954dad697fc9805f0d1afbbc8">ResultadoPaso</a>&#160;</td><td class="memItemRight"><b>getUltimoPaso</b> ()</td></tr>
+<a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#ab8f6a0475c434d2561108b14ee97f6fc">ResultadoPaso</a>&#160;</td><td class="memItemRight"><b>getUltimoPaso</b> ()</td></tr>
 <tr class="memdesc:a09e39ab3aea8c0d8df5abc9745b3cdbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Último resultado producido por el motor (pregunta pendiente o desenlace). <br /></td></tr>
 <tr class="memitem:ad3932f05956f6033eb68485306c404f9" id="r_ad3932f05956f6033eb68485306c404f9"><td class="memItemLeft"><a id="ad3932f05956f6033eb68485306c404f9" name="ad3932f05956f6033eb68485306c404f9"></a>
-void&#160;</td><td class="memItemRight"><b>setUltimoPaso</b> (<a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#a0e47df8954dad697fc9805f0d1afbbc8">ResultadoPaso</a> ultimoPaso)</td></tr>
+void&#160;</td><td class="memItemRight"><b>setUltimoPaso</b> (<a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#ab8f6a0475c434d2561108b14ee97f6fc">ResultadoPaso</a> ultimoPaso)</td></tr>
 <tr class="memdesc:ad3932f05956f6033eb68485306c404f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actualiza el último resultado tras avanzar el recorrido. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Estado persistente de un recorrido de triaje entre peticiones HTTP. </p>
-<p>Guarda el <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html">EstadoPaciente</a></code> con las respuestas acumuladas (que el encadenamiento hacia adelante necesita completas) y el <code><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#a0e47df8954dad697fc9805f0d1afbbc8">ResultadoPaso</a></code> más reciente, cuya <code class="JavaDocCode">preguntaActual</code> es el nodo que espera respuesta. </p>
+<p>Guarda el <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html">EstadoPaciente</a></code> con las respuestas acumuladas (que el encadenamiento hacia adelante necesita completas) y el <code><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#ab8f6a0475c434d2561108b14ee97f6fc">ResultadoPaso</a></code> más reciente, cuya <code class="JavaDocCode">preguntaActual</code> es el nodo que espera respuesta. </p>
 </div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/main/java/org/signbb/backend/navegacion/modelo/<b>SesionTriaje.java</b></li>
 </ul>

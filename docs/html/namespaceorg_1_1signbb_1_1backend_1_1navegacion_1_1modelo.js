@@ -9,7 +9,12 @@ var namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo =
     [ "RepositorioSesionMemoria", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesionMemoria.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesionMemoria" ],
     [ "Respuesta", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta" ],
     [ "SesionTriaje", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje" ],
+    [ "FotoNavegacion", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#ad0a916e226b0a74974b6aa0f13ad7ef4", null ],
+    [ "OpcionPendiente", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#a6d515ecc5fd241036d3a0c2e2bf0f8b8", null ],
     [ "PasoCausal", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#ae0d0f2b160e2acf823a23becd53010f6", null ],
-    [ "ResultadoPaso", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#a0e47df8954dad697fc9805f0d1afbbc8", null ],
+    [ "PasoRecorrido", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#a7da30e7dd7e57c08db6f24b16e46290c", null ],
+    [ "PasoRuta", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#acaf19b92952cd82a615634687146d7e0", null ],
+    [ "Recomendacion", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#aae181705f6b9ac8e6bb408b786fc7510", null ],
+    [ "ResultadoPaso", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#ab8f6a0475c434d2561108b14ee97f6fc", null ],
     [ "Sintoma", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#a6d07b4c9c8333aa7b1c485f9f2ec8af8", null ]
 ];

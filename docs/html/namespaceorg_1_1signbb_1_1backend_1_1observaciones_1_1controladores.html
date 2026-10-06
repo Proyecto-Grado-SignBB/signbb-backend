@@ -129,10 +129,13 @@ record&#160;</td><td class="memItemRight"><b>PasoCausalDTO</b> (String nodoId, S
 <tr class="memdesc:abf521345a643e096255cffb171039530"><td class="mdescLeft">&#160;</td><td class="mdescRight">Un paso del camino causal hacia el desenlace: el <code class="JavaDocCode">nodoId</code> alcanzado y la <code class="JavaDocCode">condicion</code> de la arista por la que se llegó (vacía para el nodo inicial). <br /></td></tr>
 <tr class="memitem:a7498ea9a8d28eb7b789e5eacb0604025" id="r_a7498ea9a8d28eb7b789e5eacb0604025"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a7498ea9a8d28eb7b789e5eacb0604025">PreguntaDTO</a> (String id, String texto, List&lt; String &gt; opciones, boolean tieneImagenes, List&lt; String &gt; imagenes, String tipoInteraccion)</td></tr>
 <tr class="memdesc:a7498ea9a8d28eb7b789e5eacb0604025"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pregunta que el recorrido presenta al cuidador mientras está EN_CURSO.  <br /></td></tr>
-<tr class="memitem:a2ac983908738dd31d3976f44024db3f6" id="r_a2ac983908738dd31d3976f44024db3f6"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a2ac983908738dd31d3976f44024db3f6">RecorridoDTO</a> (String recorridoId, String estado, <a class="el" href="#a7498ea9a8d28eb7b789e5eacb0604025">PreguntaDTO</a> pregunta, <a class="el" href="#ab52fb0d01199a0cc1c4cd4e3e821f6c1">ResultadoDTO</a> resultado)</td></tr>
+<tr class="memitem:a111029281b5c36a7877f7f7bbdbeafc8" id="r_a111029281b5c36a7877f7f7bbdbeafc8"><td class="memItemLeft"><a id="a111029281b5c36a7877f7f7bbdbeafc8" name="a111029281b5c36a7877f7f7bbdbeafc8"></a>
+record&#160;</td><td class="memItemRight"><b>RecomendacionDTO</b> (String nodoId, String mensaje, List&lt; <a class="el" href="#abf521345a643e096255cffb171039530">PasoCausalDTO</a> &gt; caminoCausal)</td></tr>
+<tr class="memdesc:a111029281b5c36a7877f7f7bbdbeafc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Una recomendación alcanzada durante el recorrido: el <code class="JavaDocCode">nodoId</code> y el <code class="JavaDocCode">mensaje</code> del nodo, y el <code class="JavaDocCode">caminoCausal</code> de preguntas y respuestas que llevó a ella (cada recomendación tiene el suyo). <br /></td></tr>
+<tr class="memitem:a2ac983908738dd31d3976f44024db3f6" id="r_a2ac983908738dd31d3976f44024db3f6"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a2ac983908738dd31d3976f44024db3f6">RecorridoDTO</a> (String recorridoId, String estado, <a class="el" href="#a7498ea9a8d28eb7b789e5eacb0604025">PreguntaDTO</a> pregunta, <a class="el" href="#abadc45eb731cfb02a9f5625b4a09cb8a">ResultadoDTO</a> resultado)</td></tr>
 <tr class="memdesc:a2ac983908738dd31d3976f44024db3f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vista REST de un recorrido de triaje.  <br /></td></tr>
-<tr class="memitem:ab52fb0d01199a0cc1c4cd4e3e821f6c1" id="r_ab52fb0d01199a0cc1c4cd4e3e821f6c1"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#ab52fb0d01199a0cc1c4cd4e3e821f6c1">ResultadoDTO</a> (String nivel, String destinoId, String mensaje, List&lt; String &gt; razones, List&lt; <a class="el" href="#abf521345a643e096255cffb171039530">PasoCausalDTO</a> &gt; caminoCausal)</td></tr>
-<tr class="memdesc:ab52fb0d01199a0cc1c4cd4e3e821f6c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Desenlace de un recorrido FINALIZADO.  <br /></td></tr>
+<tr class="memitem:abadc45eb731cfb02a9f5625b4a09cb8a" id="r_abadc45eb731cfb02a9f5625b4a09cb8a"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#abadc45eb731cfb02a9f5625b4a09cb8a">ResultadoDTO</a> (String nivel, String destinoId, String mensaje, List&lt; String &gt; razones, List&lt; <a class="el" href="#abf521345a643e096255cffb171039530">PasoCausalDTO</a> &gt; caminoCausal, List&lt; <a class="el" href="#a111029281b5c36a7877f7f7bbdbeafc8">RecomendacionDTO</a> &gt; recomendaciones)</td></tr>
+<tr class="memdesc:abadc45eb731cfb02a9f5625b4a09cb8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Desenlace de un recorrido FINALIZADO.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Controladores REST de las consultas guiadas. </p>
@@ -207,7 +210,7 @@ record&#160;</td><td class="memItemRight"><b>PasoCausalDTO</b> (String nodoId, S
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="#ab52fb0d01199a0cc1c4cd4e3e821f6c1">ResultadoDTO</a></td>          <td class="paramname"><span class="paramname"><em>resultado</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#abadc45eb731cfb02a9f5625b4a09cb8a">ResultadoDTO</a></td>          <td class="paramname"><span class="paramname"><em>resultado</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -218,8 +221,8 @@ record&#160;</td><td class="memItemRight"><b>PasoCausalDTO</b> (String nodoId, S
 
 </div>
 </div>
-<a id="ab52fb0d01199a0cc1c4cd4e3e821f6c1" name="ab52fb0d01199a0cc1c4cd4e3e821f6c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab52fb0d01199a0cc1c4cd4e3e821f6c1">&#9670;&#160;</a></span>ResultadoDTO()</h2>
+<a id="abadc45eb731cfb02a9f5625b4a09cb8a" name="abadc45eb731cfb02a9f5625b4a09cb8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abadc45eb731cfb02a9f5625b4a09cb8a">&#9670;&#160;</a></span>ResultadoDTO()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -247,13 +250,18 @@ record&#160;</td><td class="memItemRight"><b>PasoCausalDTO</b> (String nodoId, S
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">List&lt; <a class="el" href="#abf521345a643e096255cffb171039530">PasoCausalDTO</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>caminoCausal</em></span>&#160;)</td>
+          <td class="paramtype">List&lt; <a class="el" href="#abf521345a643e096255cffb171039530">PasoCausalDTO</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>caminoCausal</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">List&lt; <a class="el" href="#a111029281b5c36a7877f7f7bbdbeafc8">RecomendacionDTO</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>recomendaciones</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Desenlace de un recorrido FINALIZADO. </p>
-<p><code class="JavaDocCode">nivel</code> es el <code class="JavaDocCode">NivelAlerta</code> resultante (NORMAL si se llegó a un terminal del grafo sin disparar reglas); <code class="JavaDocCode">destinoId</code> y <code class="JavaDocCode">mensaje</code> son el id y el contenido del nodo terminal; <code class="JavaDocCode">razones</code> son los ids de las reglas de nivel máximo que dispararon (vacío si NORMAL); y <code class="JavaDocCode">caminoCausal</code> es la secuencia de nodos y condiciones hasta el destino. </p>
+<p><code class="JavaDocCode">nivel</code> es el <code class="JavaDocCode">NivelAlerta</code> resultante (NORMAL si se llegó a un terminal del grafo sin disparar reglas); <code class="JavaDocCode">destinoId</code> y <code class="JavaDocCode">mensaje</code> son el id y el contenido del nodo terminal; <code class="JavaDocCode">razones</code> son los ids de las reglas de nivel máximo que dispararon (vacío si NORMAL); <code class="JavaDocCode">caminoCausal</code> es la secuencia de nodos y condiciones hasta el destino; y <code class="JavaDocCode">recomendaciones</code> son todas las recomendaciones alcanzadas, cada una con su propio camino. Solo viene con datos cuando el recorrido cierra sin alerta (ramas de selección múltiple que terminaron en recomendación, con o sin el cierre por el máximo de preguntas); con una alerta, o si no hay ninguna, es una lista vacía. </p>
 
 </div>
 </div>
