@@ -1,0 +1,63 @@
+{
+  "graph": {
+    "id": "grafo_respiracion",
+    "label": "Evaluación de Respiración y Nariz",
+    "directed": true,
+    "category": [
+      "respiracion"
+    ],
+    "preguntaInicial": "q_resp_urgencia",
+    "metadata": {
+      "autor": "Sistema SignBB",
+      "fechaCreacion": "2026-10-07T18:00:00Z",
+      "descripcion": "Subgrafo de respiración con aristas por opción específica."
+    },
+    "nodes": {
+      "q_resp_urgencia": {
+        "label": "¿Observa alguno de estos signos de alarma?",
+        "metadata": { "tipo": "pregunta", "tipoInteraccion": "SELECCION_MULTIPLE", "peso": 3, "archivos": false, "src": [] }
+      },
+      "q_resp_consulta": {
+        "label": "¿Presenta alguno de estos signos de alerta media?",
+        "metadata": { "tipo": "pregunta", "tipoInteraccion": "SELECCION_MULTIPLE", "peso": 2, "archivos": false, "src": [] }
+      },
+      "q_resp_normal": {
+        "label": "¿Presenta alguna de estas condiciones comunes?",
+        "metadata": { "tipo": "pregunta", "tipoInteraccion": "SELECCION_MULTIPLE", "peso": 1, "archivos": false, "src": [] }
+      },
+      "urgencia_1": {
+        "label": "URGENCIA",
+        "metadata": { "tipo": "terminal", "desenlace": "urgencia", "peso": 3, "archivos": false, "src": [] }
+      },
+      "consulta_1": {
+        "label": "CONSULTAR_MEDICO",
+        "metadata": { "tipo": "terminal", "desenlace": "consulta_medica", "peso": 2, "archivos": false, "src": [] }
+      },
+      "normal_1": {
+        "label": "NORMAL",
+        "metadata": { "tipo": "terminal", "desenlace": "recomendacion", "peso": 1, "archivos": false, "src": [] }
+      }
+    },
+    "edges": [
+      { "source": "q_resp_urgencia", "relation": "Respira persistentemente rápido (≥60/min)", "target": "urgencia_1", "directed": true },
+      { "source": "q_resp_urgencia", "relation": "Quejido al respirar", "target": "urgencia_1", "directed": true },
+      { "source": "q_resp_urgencia", "relation": "Aleteo nasal", "target": "urgencia_1", "directed": true },
+      { "source": "q_resp_urgencia", "relation": "Se le hunde el pecho", "target": "urgencia_1", "directed": true },
+      { "source": "q_resp_urgencia", "relation": "Pausas o Apneas con cambio de color", "target": "urgencia_1", "directed": true },
+      { "source": "q_resp_urgencia", "relation": "Labios o cara azules/grises", "target": "urgencia_1", "directed": true },
+      { "source": "q_resp_urgencia", "relation": "No, ninguno de los anteriores", "target": "q_resp_consulta", "directed": true },
+
+      { "source": "q_resp_consulta", "relation": "Congestión que dificulta alimentarse", "target": "consulta_1", "directed": true },
+      { "source": "q_resp_consulta", "relation": "Ruido al respirar que antes no hacía", "target": "consulta_1", "directed": true },
+      { "source": "q_resp_consulta", "relation": "Respira diferente sin esfuerzo", "target": "consulta_1", "directed": true },
+      { "source": "q_resp_consulta", "relation": "Presenta tos pero respira tranquilo", "target": "consulta_1", "directed": true },
+      { "source": "q_resp_consulta", "relation": "No, ninguno de los anteriores", "target": "q_resp_normal", "directed": true },
+
+      { "source": "q_resp_normal", "relation": "Pausas cortas sin cambiar de color", "target": "normal_1", "directed": true },
+      { "source": "q_resp_normal", "relation": "Ruiditos pero respira tranquilo", "target": "normal_1", "directed": true },
+      { "source": "q_resp_normal", "relation": "Estornudos o hipo", "target": "normal_1", "directed": true },
+      { "source": "q_resp_normal", "relation": "Congestión nasal leve", "target": "normal_1", "directed": true },
+      { "source": "q_resp_normal", "relation": "No, no presenta anomalías", "target": "normal_1", "directed": true }
+    ]
+  }
+}

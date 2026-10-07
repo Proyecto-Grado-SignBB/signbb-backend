@@ -1,0 +1,29 @@
+{
+    "grafoId": "grafo_respiracion",
+    "rules": {
+        "R_RESP_URG": {
+            "nombre": "Regla Respiración Urgencia",
+            "condiciones": [
+                [ { "idNodo": "q_resp_urgencia", "respuesta": "Respira persistentemente rápido (≥60/min)" } ],
+                [ { "idNodo": "q_resp_urgencia", "respuesta": "Quejido al respirar" } ],
+                [ { "idNodo": "q_resp_urgencia", "respuesta": "Aleteo nasal" } ],
+                [ { "idNodo": "q_resp_urgencia", "respuesta": "Se le hunde el pecho" } ],
+                [ { "idNodo": "q_resp_urgencia", "respuesta": "Pausas o Apneas con cambio de color" } ],
+                [ { "idNodo": "q_resp_urgencia", "respuesta": "Labios o cara azules/grises" } ]
+            ],
+            "nodoDestino": "urgencia_1",
+            "nivel": "URGENCIA"
+        },
+        "R_RESP_CON": {
+            "nombre": "Regla Respiración Consulta",
+            "condiciones": [
+                [ { "idNodo": "q_resp_consulta", "respuesta": "Congestión que dificulta alimentarse" } ],
+                [ { "idNodo": "q_resp_consulta", "respuesta": "Ruido al respirar que antes no hacía" } ],
+                [ { "idNodo": "q_resp_consulta", "respuesta": "Respira diferente sin esfuerzo" } ],
+                [ { "idNodo": "q_resp_consulta", "respuesta": "Presenta tos pero respira tranquilo" } ]
+            ],
+            "nodoDestino": "consulta_1",
+            "nivel": "CONSULTAR_MEDICO"
+        }
+    }
+}

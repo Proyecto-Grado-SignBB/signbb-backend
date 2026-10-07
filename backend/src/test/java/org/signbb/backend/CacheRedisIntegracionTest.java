@@ -26,10 +26,10 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Tests de integración del cache Redis (perfil docker: requiere el servicio
- * `cache` de contenedores/compose.yaml). Sin Redis disponible se saltan con
- * una suposición — en el perfil dev/CI el contenido resuelve directo desde
- * la base, que es el camino de degradación que también interesa cubrir.
+ * Tests de integración del cache Redis (requiere el servicio `cache` de
+ * contenedores/compose.yaml). Sin Redis disponible se saltan con una
+ * suposición — sin cache el contenido resuelve directo desde la base, que es
+ * el camino de degradación que también interesa cubrir.
  */
 @SpringBootTest
 class CacheRedisIntegracionTest {
@@ -58,16 +58,15 @@ class CacheRedisIntegracionTest {
                     ResolvedorContenidoClinico.CLAVE_GRAFO,
                     ResolvedorContenidoClinico.CLAVE_REGLAS));
         } catch (DataAccessException ignorada) {
-            // sin Redis (perfil dev): nada que limpiar
+            // sin Redis: nada que limpiar
         }
     }
 
     /**
-     * True si el despliegue usa el modo cache (perfil docker: repositorio de
-     * sesiones Redis) y Redis responde. No basta con que Redis sea alcanzable:
-     * en una máquina con los contenedores arriba pero perfil {@code dev}, el
-     * bean de sesiones es el de memoria y las pruebas de integración del cache
-     * no aplican.
+     * True si el despliegue usa el modo cache (repositorio de sesiones Redis)
+     * y Redis responde. No basta con que Redis sea alcanzable: si el bean de
+     * sesiones no es el de Redis, las pruebas de integración del cache no
+     * aplican.
      */
     private boolean modoCacheActivo() {
         return sesiones instanceof RepositorioSesionRedis && redisResponde();
@@ -93,7 +92,7 @@ class CacheRedisIntegracionTest {
 
         GrafoClinicoJson documento = resolvedor.documentoGrafo();
 
-        assertEquals(7, GrafoClinicoMapper.desde(documento).size());
+        assertEquals(33, GrafoClinicoMapper.desde(documento).size());
         assertTrue(Boolean.TRUE.equals(redis.hasKey(ResolvedorContenidoClinico.CLAVE_GRAFO)));
     }
 
@@ -107,15 +106,16 @@ class CacheRedisIntegracionTest {
         grafos.deleteAll();
 
         GrafoClinicoJson documento = resolvedor.documentoGrafo();
-        assertEquals(7, GrafoClinicoMapper.desde(documento).size());
+        assertEquals(33, GrafoClinicoMapper.desde(documento).size());
     }
 
     @Test
     void laSesionSobreviveUnReinicioSimulado() {
         assumeTrue(modoCacheActivo(), "requiere el modo cache (perfil docker con contenedores arriba)");
         EstadoPaciente estado = new EstadoPaciente("cache-integracion");
-        estado.registrarRespuesta("grafo_piel_ictericia/pregunta_coloracion", "SI");
-        Nodo pregunta = contexto.getGrafo().obtenerNodoPorId("grafo_piel_ictericia/pregunta_signos").orElseThrow();
+        estado.registrarRespuesta("grafo_respiracion/q_resp_urgencia",
+                "No, ninguno de los anteriores");
+        Nodo pregunta = contexto.getGrafo().obtenerNodoPorId("grafo_respiracion/q_resp_consulta").orElseThrow();
         SesionTriaje sesion = sesiones.crear(estado, ResultadoPaso.pregunta(pregunta));
 
         // "reinicio": una instancia nueva del repositorio, como tras un arranque limpio
@@ -123,18 +123,19 @@ class CacheRedisIntegracionTest {
         SesionTriaje recuperada = trasReinicio.buscar(sesion.getId());
 
         assertEquals(sesion.getId(), recuperada.getId());
-        assertEquals("SI", recuperada.getEstado().getRespuesta("grafo_piel_ictericia/pregunta_coloracion").orElseThrow());
-        assertEquals("grafo_piel_ictericia/pregunta_signos", recuperada.getUltimoPaso().preguntaActual().getId());
+        assertEquals("No, ninguno de los anteriores",
+                recuperada.getEstado().getRespuesta("grafo_respiracion/q_resp_urgencia").orElseThrow());
+        assertEquals("grafo_respiracion/q_resp_consulta", recuperada.getUltimoPaso().preguntaActual().getId());
 
         redis.delete(RepositorioSesionRedis.PREFIJO_SESION + sesion.getId());
     }
 
     @Test
     void elContextoSirveContenidoCompleto() {
-        // No requiere Redis: en dev resuelve directo desde la base (H2), lo que
-        // verifica también el camino de degradación del cache de punta a punta.
-        // Raíz compuesta con el subgrafo de ictericia: 2 + 5 nodos, 3 reglas.
-        assertEquals(7, contexto.getGrafo().size());
-        assertEquals(3, contexto.getBase().size());
+        // No requiere Redis: si no responde, resuelve directo desde la base, lo
+        // que verifica también el camino de degradación del cache de punta a punta.
+        // Raíz + respiración + gastro + activo/color: 4 + 6 + 10 + 13 nodos, 6 reglas.
+        assertEquals(33, contexto.getGrafo().size());
+        assertEquals(6, contexto.getBase().size());
     }
 }

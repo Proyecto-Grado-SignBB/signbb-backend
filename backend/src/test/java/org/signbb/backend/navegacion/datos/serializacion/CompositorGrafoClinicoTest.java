@@ -220,11 +220,17 @@ class CompositorGrafoClinicoTest {
     GrafoClinico grafo = GrafoClinicoMapper.desde(contenido.grafo());
     BaseReglas reglas = BaseReglasMapper.desde(contenido.reglas(), grafo);
 
-    // Solo la categoría piel tiene un subgrafo publicado (ictericia).
-    assertEquals(7, grafo.size());
-    assertEquals(3, reglas.size());
-    assertEquals(List.of("piel"), grafo.obtenerOpciones(grafo.obtenerNodoInicial().orElseThrow())
-        .stream().map(r -> r.getCondicion()).toList());
+    // Raíz (4) + respiración (6) + gastro (10) + activo/color (13).
+    assertEquals(33, grafo.size());
+    // Dos reglas por subgrafo (las NORMAL son implícitas y no se siembran).
+    assertEquals(6, reglas.size());
+    assertEquals(List.of("respiracion", "gastrointestinal", "neurologico"),
+        grafo.obtenerOpciones(grafo.obtenerNodoInicial().orElseThrow())
+            .stream().map(r -> r.getCondicion()).toList());
+    // Cada subgrafo conserva su terminal normal (síntomas no dañinos).
+    assertTrue(grafo.obtenerNodoPorId("grafo_respiracion/normal_1").isPresent());
+    assertTrue(grafo.obtenerNodoPorId("grafo_gastro/normal_1").isPresent());
+    assertTrue(grafo.obtenerNodoPorId("grafo_activo_color/normal_1").isPresent());
     assertTrue(grafo.rutaValida());
     assertTrue(grafo.validarCiclo());
   }

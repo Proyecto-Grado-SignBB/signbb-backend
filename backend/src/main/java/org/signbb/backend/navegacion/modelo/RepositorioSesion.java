@@ -4,10 +4,10 @@ package org.signbb.backend.navegacion.modelo;
  * Almacén de las sesiones de triaje en curso.
  *
  * <p>
- * MODIFICADO (cache): pasa a interfaz con dos implementaciones — en memoria
- * (perfil {@code dev}, sin Docker) y Redis (perfil {@code docker}), según el
- * documento de diseño: las sesiones temporales de los padres viven en la
- * caché distribuida para que las consultas sobrevivan reinicios del backend.
+ * MODIFICADO (cache): pasa a interfaz cuya implementación es
+ * {@code RepositorioSesionRedis} (perfil {@code docker}), según el documento
+ * de diseño: las sesiones temporales de los padres viven en la caché
+ * distribuida para que las consultas sobrevivan reinicios del backend.
  */
 public interface RepositorioSesion {
 

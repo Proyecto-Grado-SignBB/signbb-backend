@@ -31,16 +31,19 @@ import org.signbb.backend.reglas.servicios.ServicioReglas;
 import org.signbb.backend.reglas.servicios.ServicioReglasImpl;
 
 /**
- * Tests del recorrido guiado del motor de navegación sobre el contenido de
- * ejemplo compuesto (grafo raíz + subgrafo de ictericia + sus reglas). Prueban
- * el motor puro, sin Spring ni base de datos, y ejercen las tres ramas del
- * Algoritmo 3 (corto-circuito por regla, avance por el grafo y cierre con el
- * nivel del desenlace) cruzando de la raíz al subgrafo, además de la
- * validación de respuestas antes de registrarlas.
+ * Tests del recorrido guiado del motor de navegación sobre el contenido
+ * compuesto (grafo raíz + subgrafos de respiración, gastrointestinal y
+ * actividad/color + sus reglas). Prueban el motor puro, sin Spring ni base de
+ * datos, y ejercen las tres ramas del Algoritmo 3 (corto-circuito por regla,
+ * avance por el grafo y cierre con el nivel del desenlace) cruzando de la raíz
+ * al subgrafo, además de la validación de respuestas antes de registrarlas.
  */
 class MotorNavegacionTest {
 
-    private static final String ICTERICIA = "grafo_piel_ictericia";
+    private static final String RESPIRACION = "grafo_respiracion";
+
+    /** Respuesta que descarta los signos de alarma y avanza a la alerta media. */
+    private static final String NINGUNO = "No, ninguno de los anteriores";
 
     private GrafoClinico grafo;
     private BaseReglas base;
@@ -55,18 +58,28 @@ class MotorNavegacionTest {
     }
 
     private static String id(String idLocal) {
-        return CompositorGrafoClinico.prefijar(ICTERICIA, idLocal);
+        return CompositorGrafoClinico.prefijar(RESPIRACION, idLocal);
     }
 
     private static List<String> idsRegla(List<ReglaClinica> reglas) {
         return reglas.stream().map(ReglaClinica::getIdRegla).toList();
     }
 
-    /** Recorre raíz → piel → coloración amarilla y devuelve la primera pregunta del subgrafo. */
-    private Nodo hastaColoracion(EstadoPaciente e) {
+    /** Recorre raíz → respiración y devuelve la primera pregunta del subgrafo. */
+    private Nodo hastaUrgencia(EstadoPaciente e) {
         Nodo inicial = motor.iniciar(e, grafo).preguntaActual();
-        Nodo puente = motor.paso(grafo, base, e, inicial, "piel").preguntaActual();
-        return motor.paso(grafo, base, e, puente, "coloracion_amarilla").preguntaActual();
+        Nodo puente = motor.paso(grafo, base, e, inicial, "respiracion").preguntaActual();
+        return motor.paso(grafo, base, e, puente, "iniciar").preguntaActual();
+    }
+
+    /** Encadena desde urgencia hasta la pregunta de signos de alerta media. */
+    private Nodo hastaConsulta(EstadoPaciente e) {
+        return motor.paso(grafo, base, e, hastaUrgencia(e), NINGUNO).preguntaActual();
+    }
+
+    /** Encadena hasta la pregunta de condiciones comunes. */
+    private Nodo hastaNormal(EstadoPaciente e) {
+        return motor.paso(grafo, base, e, hastaConsulta(e), NINGUNO).preguntaActual();
     }
 
     @Test
@@ -82,138 +95,109 @@ class MotorNavegacionTest {
         EstadoPaciente e = new EstadoPaciente("s");
         Nodo inicial = motor.iniciar(e, grafo).preguntaActual();
 
-        ResultadoPaso trasPiel = motor.paso(grafo, base, e, inicial, "piel");
-        assertEquals("puente_piel", trasPiel.preguntaActual().getId());
+        ResultadoPaso trasCategoria = motor.paso(grafo, base, e, inicial, "respiracion");
+        assertEquals("puente_respiracion", trasCategoria.preguntaActual().getId());
 
-        ResultadoPaso trasOpcion = motor.paso(grafo, base, e, trasPiel.preguntaActual(),
-                "coloracion_amarilla");
-        assertFalse(trasOpcion.finalizado());
-        assertEquals(id("pregunta_coloracion"), trasOpcion.preguntaActual().getId());
+        ResultadoPaso trasIniciar = motor.paso(grafo, base, e,
+                trasCategoria.preguntaActual(), "iniciar");
+        assertFalse(trasIniciar.finalizado());
+        assertEquals(id("q_resp_urgencia"), trasIniciar.preguntaActual().getId());
     }
 
     @Test
-    void sinColoracionTerminaEnNormal() {
+    void sinSignosDeAlarmaTerminaEnNormal() {
         EstadoPaciente e = new EstadoPaciente("s");
 
-        ResultadoPaso paso = motor.paso(grafo, base, e, hastaColoracion(e), "NO");
+        ResultadoPaso paso = motor.paso(grafo, base, e, hastaNormal(e), "Estornudos o hipo");
 
         assertTrue(paso.finalizado());
         assertEquals(NivelAlerta.NORMAL, paso.nivel());
-        assertEquals(id("recomendacion_lactancia"), paso.destino().getId());
+        assertEquals(id("normal_1"), paso.destino().getId());
         assertTrue(paso.razones().isEmpty());
     }
 
     @Test
-    void coloracionYSomnolenciaDisparaUrgenciaR1() {
+    void unSignoDeAlarmaDisparaUrgencia() {
         EstadoPaciente e = new EstadoPaciente("s");
-        ResultadoPaso tras1 = motor.paso(grafo, base, e, hastaColoracion(e), "SI");
-        assertFalse(tras1.finalizado(), "una sola condición no debe disparar ninguna regla");
-        assertEquals(id("pregunta_signos"), tras1.preguntaActual().getId());
 
-        ResultadoPaso paso = motor.paso(grafo, base, e, tras1.preguntaActual(), List.of("SOMNOLENCIA"));
+        ResultadoPaso paso = motor.paso(grafo, base, e, hastaUrgencia(e), "Quejido al respirar");
 
         assertTrue(paso.finalizado());
         assertEquals(NivelAlerta.URGENCIA, paso.nivel());
-        assertEquals(id("urgencia_inmediata"), paso.destino().getId());
-        assertEquals(List.of(id("R1")), idsRegla(paso.razones()));
+        assertEquals(id("urgencia_1"), paso.destino().getId());
+        assertEquals(List.of(id("R_RESP_URG")), idsRegla(paso.razones()));
     }
 
     @Test
-    void comeMenosYAmarilloSeExtiendeEscalanAUrgenciaR2() {
-        // Cada opción por separado lleva a consulta; juntas disparan R2 (URGENCIA)
-        // y R3 (CONSULTAR_MEDICO), y gana el nivel máximo.
+    void unSignoDeAlertaMediaDisparaConsulta() {
         EstadoPaciente e = new EstadoPaciente("s");
-        Nodo signos = motor.paso(grafo, base, e, hastaColoracion(e), "SI").preguntaActual();
 
-        ResultadoPaso paso = motor.paso(grafo, base, e, signos,
-                List.of("COME_MENOS", "AMARILLO_SE_EXTIENDE"));
-
-        assertTrue(paso.finalizado());
-        assertEquals(NivelAlerta.URGENCIA, paso.nivel());
-        assertEquals(id("urgencia_inmediata"), paso.destino().getId());
-        assertEquals(List.of(id("R2")), idsRegla(paso.razones()));
-    }
-
-    @Test
-    void amarilloSeExtiendeDisparaConsultarMedicoR3() {
-        EstadoPaciente e = new EstadoPaciente("s");
-        Nodo signos = motor.paso(grafo, base, e, hastaColoracion(e), "SI").preguntaActual();
-
-        ResultadoPaso paso = motor.paso(grafo, base, e, signos, List.of("AMARILLO_SE_EXTIENDE"));
+        ResultadoPaso paso = motor.paso(grafo, base, e, hastaConsulta(e),
+                "Presenta tos pero respira tranquilo");
 
         assertTrue(paso.finalizado());
         assertEquals(NivelAlerta.CONSULTAR_MEDICO, paso.nivel());
-        assertEquals(id("consulta_prioritaria"), paso.destino().getId());
-        assertEquals(List.of(id("R3")), idsRegla(paso.razones()));
+        assertEquals(id("consulta_1"), paso.destino().getId());
+        assertEquals(List.of(id("R_RESP_CON")), idsRegla(paso.razones()));
     }
 
     @Test
-    void ningunSignoLlegaATerminalSinAlarma() {
+    void laSeleccionMultipleSinReglasAvanzaPorLaMejorOpcionYEncolaElResto() {
+        // Las categorías no disparan reglas: se sigue la primera marcada (todas
+        // pesan igual) y la otra queda en la cola de pendientes.
         EstadoPaciente e = new EstadoPaciente("s");
-        Nodo signos = motor.paso(grafo, base, e, hastaColoracion(e), "SI").preguntaActual();
+        Nodo inicial = motor.iniciar(e, grafo).preguntaActual();
 
-        ResultadoPaso paso = motor.paso(grafo, base, e, signos, List.of("NINGUNO"));
+        ResultadoPaso paso = motor.paso(grafo, base, e, inicial,
+                List.of("gastrointestinal", "respiracion"));
 
-        assertTrue(paso.finalizado());
-        assertEquals(NivelAlerta.NORMAL, paso.nivel());
-        assertEquals(id("recomendacion_lactancia"), paso.destino().getId());
-        assertTrue(paso.razones().isEmpty());
-    }
-
-    @Test
-    void sinReglaLaSeleccionMultipleAvanzaPorLaOpcionMasGrave() {
-        // NINGUNO (peso 1) y COME_MENOS (peso 2) no disparan reglas: se avanza
-        // por la opción cuyo destino pesa más.
-        EstadoPaciente e = new EstadoPaciente("s");
-        Nodo signos = motor.paso(grafo, base, e, hastaColoracion(e), "SI").preguntaActual();
-
-        ResultadoPaso paso = motor.paso(grafo, base, e, signos, List.of("NINGUNO", "COME_MENOS"));
-
-        assertTrue(paso.finalizado());
-        assertEquals(id("consulta_prioritaria"), paso.destino().getId());
-        // Sin regla, el nivel sale del desenlace del terminal (consulta_medica).
-        assertEquals(NivelAlerta.CONSULTAR_MEDICO, paso.nivel());
+        assertFalse(paso.finalizado());
+        assertEquals("puente_gastro", paso.preguntaActual().getId());
         assertTrue(paso.razones().isEmpty());
     }
 
     @Test
     void respuestaQueNoEsOpcionSeRechazaSinTocarElEstado() {
         EstadoPaciente e = new EstadoPaciente("s");
-        Nodo coloracion = hastaColoracion(e);
+        Nodo urgencia = hastaUrgencia(e);
 
         assertThrows(IllegalArgumentException.class,
-                () -> motor.paso(grafo, base, e, coloracion, "QUIZAS"));
-        assertTrue(e.getRespuestas(coloracion.getId()).isEmpty());
+                () -> motor.paso(grafo, base, e, urgencia, "QUIZAS"));
+        assertTrue(e.getRespuestas(urgencia.getId()).isEmpty());
 
         // El recorrido sigue en la misma pregunta y acepta una respuesta válida.
-        assertEquals(id("pregunta_signos"),
-                motor.paso(grafo, base, e, coloracion, "SI").preguntaActual().getId());
+        assertEquals(id("q_resp_consulta"),
+                motor.paso(grafo, base, e, urgencia, NINGUNO).preguntaActual().getId());
     }
 
     @Test
     void variasRespuestasEnSeleccionUnicaSeRechazan() {
         EstadoPaciente e = new EstadoPaciente("s");
-        Nodo coloracion = hastaColoracion(e);
+        Nodo inicial = motor.iniciar(e, grafo).preguntaActual();
+        Nodo gastro = motor.paso(grafo, base, e, inicial, "gastrointestinal").preguntaActual();
+        Nodo multi = motor.paso(grafo, base, e, gastro, "iniciar").preguntaActual();
+        Nodo vomito = motor.paso(grafo, base, e, multi, "vomito").preguntaActual();
 
         assertThrows(IllegalArgumentException.class,
-                () -> motor.paso(grafo, base, e, coloracion, List.of("SI", "NO")));
-        assertTrue(e.getRespuestas(coloracion.getId()).isEmpty());
+                () -> motor.paso(grafo, base, e, vomito, List.of("SI", "NO")));
+        assertTrue(e.getRespuestas(vomito.getId()).isEmpty());
     }
 
     @Test
     void respuestaRepetidaSeRechaza() {
         EstadoPaciente e = new EstadoPaciente("s");
-        Nodo signos = motor.paso(grafo, base, e, hastaColoracion(e), "SI").preguntaActual();
+        Nodo urgencia = hastaUrgencia(e);
 
         assertThrows(IllegalArgumentException.class,
-                () -> motor.paso(grafo, base, e, signos, List.of("COME_MENOS", "COME_MENOS")));
-        assertTrue(e.getRespuestas(signos.getId()).isEmpty());
+                () -> motor.paso(grafo, base, e, urgencia,
+                        List.of("Quejido al respirar", "Quejido al respirar")));
+        assertTrue(e.getRespuestas(urgencia.getId()).isEmpty());
     }
 
     @Test
     void unTerminalNoAdmiteRespuestas() {
         EstadoPaciente e = new EstadoPaciente("s");
-        Nodo terminal = grafo.obtenerNodoPorId(id("recomendacion_lactancia")).orElseThrow();
+        Nodo terminal = grafo.obtenerNodoPorId(id("normal_1")).orElseThrow();
 
         assertThrows(IllegalArgumentException.class,
                 () -> motor.paso(grafo, base, e, terminal, "SI"));
@@ -222,53 +206,54 @@ class MotorNavegacionTest {
     @Test
     void retrocederVuelveALaPreguntaAnteriorYBorraSuRespuesta() {
         EstadoPaciente e = new EstadoPaciente("s");
-        Nodo coloracion = hastaColoracion(e);
-        Nodo signos = motor.paso(grafo, base, e, coloracion, "SI").preguntaActual();
-        assertEquals(id("pregunta_signos"), signos.getId());
+        Nodo urgencia = hastaUrgencia(e);
+        Nodo consulta = motor.paso(grafo, base, e, urgencia, NINGUNO).preguntaActual();
+        assertEquals(id("q_resp_consulta"), consulta.getId());
 
         ResultadoPaso atras = motor.retroceder(grafo, base, e);
 
         assertFalse(atras.finalizado());
-        assertEquals(id("pregunta_coloracion"), atras.preguntaActual().getId());
-        assertTrue(e.getRespuestas(coloracion.getId()).isEmpty());
-        assertEquals(List.of("piel"), e.getRespuestas("pregunta_inicial"));
+        assertEquals(id("q_resp_urgencia"), atras.preguntaActual().getId());
+        assertTrue(e.getRespuestas(urgencia.getId()).isEmpty());
+        assertEquals(List.of("respiracion"), e.getRespuestas("pregunta_inicial"));
 
         // Con otra respuesta el recorrido toma el otro camino.
-        ResultadoPaso paso = motor.paso(grafo, base, e, atras.preguntaActual(), "NO");
-        assertEquals(id("recomendacion_lactancia"), paso.destino().getId());
-        assertEquals(NivelAlerta.NORMAL, paso.nivel());
+        ResultadoPaso paso = motor.paso(grafo, base, e, atras.preguntaActual(),
+                "Quejido al respirar");
+        assertEquals(id("urgencia_1"), paso.destino().getId());
+        assertEquals(NivelAlerta.URGENCIA, paso.nivel());
     }
 
     @Test
     void retrocederTrasUnaReglaDeshaceSuDisparo() {
         EstadoPaciente e = new EstadoPaciente("s");
-        Nodo signos = motor.paso(grafo, base, e, hastaColoracion(e), "SI").preguntaActual();
-        ResultadoPaso urgencia = motor.paso(grafo, base, e, signos, List.of("SOMNOLENCIA"));
-        assertEquals(NivelAlerta.URGENCIA, urgencia.nivel());
-        assertTrue(e.reglaDisparada(id("R1")));
+        Nodo urgencia = hastaUrgencia(e);
+        ResultadoPaso alerta = motor.paso(grafo, base, e, urgencia, "Quejido al respirar");
+        assertEquals(NivelAlerta.URGENCIA, alerta.nivel());
+        assertTrue(e.reglaDisparada(id("R_RESP_URG")));
 
         ResultadoPaso atras = motor.retroceder(grafo, base, e);
 
-        assertEquals(id("pregunta_signos"), atras.preguntaActual().getId());
-        assertFalse(e.reglaDisparada(id("R1")), "la regla de la respuesta deshecha no debe seguir disparada");
-        assertTrue(e.getRespuestas(signos.getId()).isEmpty());
-        assertEquals(List.of("SI"), e.getRespuestas(id("pregunta_coloracion")));
+        assertEquals(id("q_resp_urgencia"), atras.preguntaActual().getId());
+        assertFalse(e.reglaDisparada(id("R_RESP_URG")),
+                "la regla de la respuesta deshecha no debe seguir disparada");
+        assertTrue(e.getRespuestas(urgencia.getId()).isEmpty());
 
-        ResultadoPaso paso = motor.paso(grafo, base, e, atras.preguntaActual(), List.of("NINGUNO"));
-        assertEquals(NivelAlerta.NORMAL, paso.nivel());
-        assertTrue(paso.razones().isEmpty());
+        ResultadoPaso paso = motor.paso(grafo, base, e, atras.preguntaActual(), NINGUNO);
+        assertEquals(id("q_resp_consulta"), paso.preguntaActual().getId());
     }
 
     @Test
     void retrocederDosVecesVuelveDosPreguntas() {
         EstadoPaciente e = new EstadoPaciente("s");
-        motor.paso(grafo, base, e, hastaColoracion(e), "SI");
+        Nodo urgencia = hastaUrgencia(e);
+        motor.paso(grafo, base, e, urgencia, NINGUNO);
 
         motor.retroceder(grafo, base, e);
         ResultadoPaso atras = motor.retroceder(grafo, base, e);
 
-        assertEquals("puente_piel", atras.preguntaActual().getId());
-        assertEquals(1, e.size());
+        assertEquals("puente_respiracion", atras.preguntaActual().getId());
+        assertEquals(1, e.pasos().size());
     }
 
     @Test
@@ -282,32 +267,33 @@ class MotorNavegacionTest {
     @Test
     void cadaRespuestaApilaUnPasoConLasReglasQueMarco() {
         EstadoPaciente e = new EstadoPaciente("s");
-        Nodo signos = motor.paso(grafo, base, e, hastaColoracion(e), "SI").preguntaActual();
-        motor.paso(grafo, base, e, signos, List.of("SOMNOLENCIA"));
+        Nodo urgencia = hastaUrgencia(e);
+        motor.paso(grafo, base, e, urgencia, "Quejido al respirar");
 
         List<PasoRecorrido> pasos = e.pasos();
-        assertEquals(4, pasos.size());
-        PasoRecorrido cima = pasos.get(3);
-        assertEquals(id("pregunta_signos"), cima.idPregunta());
-        assertEquals(List.of("SOMNOLENCIA"), cima.respuestas());
-        assertEquals(List.of(id("R1")), cima.reglasMarcadas());
+        assertEquals(3, pasos.size());
+        PasoRecorrido cima = pasos.get(2);
+        assertEquals(id("q_resp_urgencia"), cima.idPregunta());
+        assertEquals(List.of("Quejido al respirar"), cima.respuestas());
+        assertEquals(List.of(id("R_RESP_URG")), cima.reglasMarcadas());
         // Las respuestas anteriores no marcaron ninguna regla.
-        assertTrue(pasos.get(2).reglasMarcadas().isEmpty());
+        assertTrue(pasos.get(1).reglasMarcadas().isEmpty());
     }
 
     @Test
     void retrocederDesmarcaSoloLasReglasDeEsePasoYPermiteVolverADispararlas() {
         EstadoPaciente e = new EstadoPaciente("s");
-        Nodo signos = motor.paso(grafo, base, e, hastaColoracion(e), "SI").preguntaActual();
-        motor.paso(grafo, base, e, signos, List.of("SOMNOLENCIA"));
+        Nodo urgencia = hastaUrgencia(e);
+        motor.paso(grafo, base, e, urgencia, "Quejido al respirar");
 
         ResultadoPaso atras = motor.retroceder(grafo, base, e);
-        assertFalse(e.reglaDisparada(id("R1")));
-        assertEquals(3, e.pasos().size());
+        assertFalse(e.reglaDisparada(id("R_RESP_URG")));
+        assertEquals(2, e.pasos().size());
 
-        ResultadoPaso otraVez = motor.paso(grafo, base, e, atras.preguntaActual(), List.of("SOMNOLENCIA"));
+        ResultadoPaso otraVez = motor.paso(grafo, base, e, atras.preguntaActual(),
+                "Quejido al respirar");
         assertEquals(NivelAlerta.URGENCIA, otraVez.nivel());
-        assertEquals(List.of(id("R1")), idsRegla(otraVez.razones()));
+        assertEquals(List.of(id("R_RESP_URG")), idsRegla(otraVez.razones()));
     }
 
     @Test
@@ -316,14 +302,14 @@ class MotorNavegacionTest {
         MotorNavegacion conEspia = new MotorNavegacion(reglas);
         EstadoPaciente e = new EstadoPaciente("s");
         Nodo inicial = conEspia.iniciar(e, grafo).preguntaActual();
-        Nodo puente = conEspia.paso(grafo, base, e, inicial, "piel").preguntaActual();
-        Nodo coloracion = conEspia.paso(grafo, base, e, puente, "coloracion_amarilla").preguntaActual();
-        conEspia.paso(grafo, base, e, coloracion, "SI");
+        Nodo puente = conEspia.paso(grafo, base, e, inicial, "respiracion").preguntaActual();
+        Nodo urgencia = conEspia.paso(grafo, base, e, puente, "iniciar").preguntaActual();
+        conEspia.paso(grafo, base, e, urgencia, "Quejido al respirar");
         clearInvocations(reglas);
 
         ResultadoPaso atras = conEspia.retroceder(grafo, base, e);
 
-        assertEquals(id("pregunta_coloracion"), atras.preguntaActual().getId());
+        assertEquals(id("q_resp_urgencia"), atras.preguntaActual().getId());
         verify(reglas, never()).evaluar(any(), any());
     }
 
@@ -331,13 +317,13 @@ class MotorNavegacionTest {
     void sinPilaRetrocederReproduceElRecorrido() {
         // Estado armado a mano, como una sesión guardada antes de existir la pila.
         EstadoPaciente e = new EstadoPaciente("s");
-        e.registrarRespuesta("pregunta_inicial", "piel");
-        e.registrarRespuesta("puente_piel", "coloracion_amarilla");
+        e.registrarRespuesta("pregunta_inicial", "respiracion");
+        e.registrarRespuesta("puente_respiracion", "iniciar");
 
         ResultadoPaso atras = motor.retroceder(grafo, base, e);
 
-        assertEquals("puente_piel", atras.preguntaActual().getId());
-        assertTrue(e.getRespuestas("puente_piel").isEmpty());
+        assertEquals("puente_respiracion", atras.preguntaActual().getId());
+        assertTrue(e.getRespuestas("puente_respiracion").isEmpty());
         // La reproducción deja la pila reconstruida.
         assertEquals(1, e.pasos().size());
         assertEquals("pregunta_inicial", e.pasos().get(0).idPregunta());

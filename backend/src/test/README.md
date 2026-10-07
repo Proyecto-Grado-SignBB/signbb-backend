@@ -32,7 +32,7 @@ Con el template de Redis y los repositorios simulados (Mockito):
 ## RepositorioSesionRedisTest — sesiones en Redis
 
 Con un template simulado respaldado por un mapa en memoria y el contenido
-real de ejemplo (grafo y reglas de `static/ejemplo_*.json`):
+real (grafo y reglas de `static/grafo_sistema/`):
 
 - **Round-trip EN_CURSO**: crear y buscar restaura respuestas acumuladas y
   la pregunta pendiente (reconstruida por id contra el grafo vigente).
@@ -43,12 +43,12 @@ real de ejemplo (grafo y reglas de `static/ejemplo_*.json`):
   (el `ControllerAdvice` la responde como 503; nunca degrada a memoria para
   evitar sesiones que aparecen y desaparecen).
 
-## CacheRedisIntegracionTest — integración (perfil docker)
+## CacheRedisIntegracionTest — integración
 
 Requiere `contenedores/compose.yaml` levantado (db + cache). Las tres
 primeras se **saltan solas** (suposición `modoCacheActivo`: bean de sesiones
 Redis + Redis respondiendo) cuando el despliegue no está en modo cache —
-por eso en dev/CI aparecen como *skipped*, no como falla:
+entonces aparecen como *skipped*, no como falla:
 
 - **La primera resolución puebla el cache**: tras invalidar, resolver el
   grafo deja la clave en Redis verificable.
@@ -57,8 +57,8 @@ por eso en dev/CI aparecen como *skipped*, no como falla:
   rollback restaura la fila.
 - **La sesión sobrevive un reinicio simulado**: una instancia nueva del
   repositorio (como tras un arranque limpio) recupera la sesión completa.
-- **El contexto sirve contenido completo** (sin requisito de Redis): en el
-  perfil `dev` resuelve directo desde la base (H2), lo que verifica el
+- **El contexto sirve contenido completo** (sin requisito de Redis): si el
+  cache no responde, resuelve directo desde la base, lo que verifica el
   camino de degradación de punta a punta.
 
 ## ColaSeleccionMultipleRedisIntegracionTest — cola de la selección múltiple
@@ -83,8 +83,9 @@ repositorio (reinicio simulado):
 
 ## Cómo ejecutarlas
 
-    ./mvnw test                                          # suite completa (perfil docker: contenedores arriba)
-    ./mvnw test -Dspring.profiles.active=dev             # H2 en memoria; integración del cache se salta
+Requieren PostgreSQL y Redis arriba (`contenedores/compose.yaml`):
+
+    ./mvnw test                                          # suite completa (contenedores arriba)
     ./mvnw test -Dtest=ResolvedorContenidoClinicoTest,RepositorioSesionRedisTest,CacheRedisIntegracionTest,ColaSeleccionMultipleRedisIntegracionTest
 
 ## Notas
@@ -93,5 +94,5 @@ repositorio (reinicio simulado):
   `signbb:sesion:<id>` (TTL 24 h); inspección manual con
   `docker exec -it contenedores-cache-1 redis-cli`
   (ver `contenedores/MANUAL_CONTENEDORES.md`).
-- El CI (GitHub Actions) corre `verify` con perfil `dev`: las pruebas de
-  integración del cache requieren el compose local y no corren ahí.
+- El CI (GitHub Actions) corre `verify` con servicios PostgreSQL y Redis
+  efímeros (`build.yml`), de modo que la suite completa se ejecuta ahí.

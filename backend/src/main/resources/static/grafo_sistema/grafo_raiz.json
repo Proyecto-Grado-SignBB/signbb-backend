@@ -1,0 +1,52 @@
+{
+  "graph": {
+    "id": "grafo_raiz",
+    "label": "Grafo raíz de SignBB",
+    "directed": true,
+    "category": [],
+    "preguntaInicial": "pregunta_inicial",
+    "metadata": {
+      "autor": "Sistema SignBB",
+      "fechaCreacion": "2026-10-07T18:00:00Z",
+      "descripcion": "Orquestador principal"
+    },
+    "nodes": {
+      "pregunta_inicial": {
+        "label": "¿Sientes que tu bebé está diferente a como normalmente es?\nSeleccione las categorías a consultar",
+        "metadata": { "tipo": "pregunta", "tipoInteraccion": "SELECCION_MULTIPLE", "peso": 1, "archivos": false, "src": [] }
+      },
+      "puente_respiracion": {
+        "label": "¿Qué anomalía principal observa en la respiración o nariz?",
+        "metadata": { "tipo": "pregunta", "tipoInteraccion": "SELECCION_UNICA", "peso": 1, "archivos": false, "src": [] }
+      },
+      "puente_gastro": {
+        "label": "¿Qué anomalía observa en la alimentación, vómito, abdomen o deposiciones?",
+        "metadata": { "tipo": "pregunta", "tipoInteraccion": "SELECCION_UNICA", "peso": 1, "archivos": false, "src": [] }
+      },
+      "puente_neuro": {
+        "label": "¿Qué anomalía observa en la actividad, color, piel, temperatura o sentidos?",
+        "metadata": { "tipo": "pregunta", "tipoInteraccion": "SELECCION_UNICA", "peso": 1, "archivos": false, "src": [] }
+      },
+      "ref_grafo_respiracion": {
+        "label": "Grafo de Respiración y Nariz",
+        "metadata": { "tipo": "referencia", "grafoId": "grafo_respiracion", "peso": 1, "archivos": false, "src": [] }
+      },
+      "ref_grafo_gastro": {
+        "label": "Grafo Gastrointestinal",
+        "metadata": { "tipo": "referencia", "grafoId": "grafo_gastro", "peso": 1, "archivos": false, "src": [] }
+      },
+      "ref_grafo_neuro": {
+        "label": "Grafo Neurológico y Color",
+        "metadata": { "tipo": "referencia", "grafoId": "grafo_activo_color", "peso": 1, "archivos": false, "src": [] }
+      }
+    },
+    "edges": [
+      { "source": "pregunta_inicial", "relation": "respiracion", "target": "puente_respiracion", "directed": true },
+      { "source": "pregunta_inicial", "relation": "gastrointestinal", "target": "puente_gastro", "directed": true },
+      { "source": "pregunta_inicial", "relation": "neurologico", "target": "puente_neuro", "directed": true },
+      { "source": "puente_respiracion", "relation": "iniciar", "target": "ref_grafo_respiracion", "directed": true },
+      { "source": "puente_gastro", "relation": "iniciar", "target": "ref_grafo_gastro", "directed": true },
+      { "source": "puente_neuro", "relation": "iniciar", "target": "ref_grafo_neuro", "directed": true }
+    ]
+  }
+}

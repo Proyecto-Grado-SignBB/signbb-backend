@@ -55,8 +55,8 @@ import org.springframework.data.redis.core.StringRedisTemplate;
  * {@link RepositorioSesionRedis}, como tras un reinicio del backend, y se
  * comprueba que la cola, la ruta, las recomendaciones y la foto para
  * {@code retroceder} sobreviven a la ida y vuelta por Redis. No necesita
- * Spring ni la base de datos. Si Redis no responde (perfil dev, CI, sin
- * contenedores) las pruebas se saltan. Host y puerto se pueden cambiar con
+ * Spring ni la base de datos. Si Redis no responde (sin contenedores) las
+ * pruebas se saltan. Host y puerto se pueden cambiar con
  * {@code -Dsignbb.test.redis.host} y {@code -Dsignbb.test.redis.port}.
  */
 class ColaSeleccionMultipleRedisIntegracionTest {

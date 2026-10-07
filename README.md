@@ -6,8 +6,9 @@ y un motor de reglas.
 ## Requisitos
 
 - Java SDK 25
-- Spring Boot 4.1.1 (Web MVC, Data JPA, H2, Lombok)
+- Spring Boot 4.1.1 (Web MVC, Data JPA, Redis, Lombok)
 - Maven (se usa el wrapper `backend/mvnw`, no requiere instalación local)
+- Docker + Docker Compose (PostgreSQL y Redis de `contenedores/compose.yaml`)
 - Doxygen (solo para regenerar la documentación)
 
 ## Construcción y pruebas
@@ -18,36 +19,27 @@ Desde el directorio `backend`:
     ./mvnw spring-boot:run   # arranca la aplicación (demo de triaje por consola)
     ./mvnw verify            # build completo, igual que en CI (GitHub Actions)
 
-## Perfiles de base de datos
+## Perfil de base de datos
 
-El backend tiene dos perfiles; el activo se define en
-`backend/src/main/resources/application.properties` con la propiedad
-`spring.profiles.active` (hoy `docker` por defecto):
+El backend usa un único perfil, `docker` (definido en
+`backend/src/main/resources/application.properties` con
+`spring.profiles.active=docker`): **PostgreSQL** en `localhost:5432` (base
+`signbb`) y **Redis** en `localhost:6379`, ambos desde
+`contenedores/compose.yaml`. Los datos persisten en los volúmenes del compose.
+Ver `contenedores/MANUAL_CONTENEDORES.md` para levantar y administrar los
+servicios.
 
-- `dev` — **H2 en memoria** (`jdbc:h2:mem:dcbapp`): no necesita Docker y los
-  datos se pierden al detener la aplicación. Consola H2 en
-  `http://localhost:8080/h2-console` (usuario `sa`).
-- `docker` — **PostgreSQL** en `localhost:5432` (base `signbb`): requiere la
-  base de datos de `contenedores/compose.yaml` levantada y persiste los datos
-  en el volumen del compose. Ver `contenedores/MANUAL_CONTENEDORES.md` para
-  levantarla y administrarla.
-
-Para cambiar de perfil en un arranque puntual, sin editar archivos, se pasa
-como flag (ej. pasar de memoria a docker o viceversa):
-
-    ./mvnw spring-boot:run -Dspring-boot.run.profiles=dev     # H2 en memoria
-    ./mvnw spring-boot:run -Dspring-boot.run.profiles=docker  # PostgreSQL
-
-Para usar docker de forma permanente, dejar `spring.profiles.active=docker`
-en `application.properties` y levantar la base de datos:
+Antes de arrancar la aplicación o ejecutar las pruebas hay que levantar los
+servicios:
 
     cd ../contenedores && docker compose up -d
 
-Las pruebas usan el perfil activo: con `docker` la base de datos debe estar
-levantada; con `dev` corren contra H2 en memoria sin ningún requisito:
+    ./mvnw spring-boot:run   # arranca la aplicación (demo de triaje por consola)
+    ./mvnw test              # suite completa contra PostgreSQL y Redis
 
-    ./mvnw test                               # usa el perfil activo
-    ./mvnw test -Dspring.profiles.active=dev  # fuerza H2 en memoria
+> Si la base ya estaba sembrada con una versión previa del grafo, hay que
+> borrar los volúmenes (`docker compose down -v`) para que `DatabaseInit`
+> vuelva a sembrar el contenido nuevo: el grafo raíz conserva el mismo `id`.
 
 ## Documentación
 

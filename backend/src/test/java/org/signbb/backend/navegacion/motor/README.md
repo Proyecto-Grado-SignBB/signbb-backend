@@ -21,10 +21,9 @@ y ejercitan el motor paso a paso.
 
 ## Cómo ejecutarlas
 
-Desde `signbb-backend/backend` (el perfil por defecto es `docker`, que requiere
-PostgreSQL/Redis; estas pruebas no lo necesitan):
+Desde `signbb-backend/backend` (estas pruebas no necesitan PostgreSQL/Redis):
 
-    ./mvnw -Dtest='MotorNavegacion*Test' test -Dspring.profiles.active=dev
+    ./mvnw -Dtest='MotorNavegacion*Test' test
 
 ---
 

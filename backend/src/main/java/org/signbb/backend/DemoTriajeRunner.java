@@ -30,9 +30,9 @@ import org.springframework.stereotype.Component;
  * <li>El camino causal reconstruido hasta el diagnóstico.</li>
  * <li>Un recorrido paso a paso simulando respuestas del padre
  * ({@code evaluarPaso()}).</li>
- * <li>El grafo clínico y la base de reglas de ejemplo
- * ({@link ContenidoEjemplo}) ya compuestos: grafo raíz más el subgrafo de
- * ictericia, con los ids del subgrafo prefijados.</li>
+ * <li>El grafo clínico y la base de reglas
+ * ({@link ContenidoEjemplo}) ya compuestos: grafo raíz más los subgrafos de
+ * respiración, gastrointestinal y actividad/color, con los ids prefijados.</li>
  * <li>La evaluación de reglas sobre cuatro escenarios de estado del
  * paciente (forward chaining + resolución por severidad).</li>
  * </ul>
@@ -43,8 +43,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class DemoTriajeRunner implements CommandLineRunner {
 
-    /** Subgrafo de ejemplo cuyas preguntas usan los escenarios de la sección 6. */
-    private static final String SUBGRAFO_ICTERICIA = "grafo_piel_ictericia";
+    /** Subgrafo cuyas preguntas usan los escenarios de la sección 6. */
+    private static final String SUBGRAFO_RESPIRACION = "grafo_respiracion";
 
     private final ServicioReglas servicioReglas;
 
@@ -133,7 +133,7 @@ public class DemoTriajeRunner implements CommandLineRunner {
             }
         }
 
-        separador("5. Grafo compuesto: raíz + subgrafo de ictericia");
+        separador("5. Grafo compuesto: raíz + respiración, gastro y activo/color");
         CompositorGrafoClinico.Contenido contenido = ContenidoEjemplo.compuesto();
         GrafoClinico desdeJson = GrafoClinicoMapper.desde(contenido.grafo());
 
@@ -165,31 +165,25 @@ public class DemoTriajeRunner implements CommandLineRunner {
                     r.getNodoDestino().getId());
         }
 
-        String coloracion = CompositorGrafoClinico.prefijar(SUBGRAFO_ICTERICIA, "pregunta_coloracion");
-        String signos = CompositorGrafoClinico.prefijar(SUBGRAFO_ICTERICIA, "pregunta_signos");
+        String urgencia = CompositorGrafoClinico.prefijar(SUBGRAFO_RESPIRACION, "q_resp_urgencia");
+        String consulta = CompositorGrafoClinico.prefijar(SUBGRAFO_RESPIRACION, "q_resp_consulta");
+        String normal = CompositorGrafoClinico.prefijar(SUBGRAFO_RESPIRACION, "q_resp_normal");
 
-        System.out.println("\nEscenario 1: coloración amarilla + somnolencia");
-        EstadoPaciente preocupante = new EstadoPaciente("sesion-demo-1");
-        preocupante.registrarRespuesta(coloracion, "SI");
-        preocupante.registrarRespuestas(signos, List.of("SOMNOLENCIA"));
-        imprimirEvaluacion(base, preocupante);
+        System.out.println("\nEscenario 1: quejido al respirar (R_RESP_URG URGENCIA)");
+        EstadoPaciente grave = new EstadoPaciente("sesion-demo-1");
+        grave.registrarRespuesta(urgencia, "Quejido al respirar");
+        imprimirEvaluacion(base, grave);
 
-        System.out.println("\nEscenario 2: sin coloración amarilla");
-        EstadoPaciente tranquilo = new EstadoPaciente("sesion-demo-2");
-        tranquilo.registrarRespuesta(coloracion, "NO");
-        imprimirEvaluacion(base, tranquilo);
-
-        System.out.println("\nEscenario 3: come menos + el amarillo se extiende (R2 URGENCIA y R3 CONSULTAR_MEDICO)");
-        EstadoPaciente combinado = new EstadoPaciente("sesion-demo-3");
-        combinado.registrarRespuesta(coloracion, "SI");
-        combinado.registrarRespuestas(signos, List.of("COME_MENOS", "AMARILLO_SE_EXTIENDE"));
-        imprimirEvaluacion(base, combinado);
-
-        System.out.println("\nEscenario 4: el amarillo se extiende, sin otros signos (solo CONSULTAR_MEDICO)");
-        EstadoPaciente moderado = new EstadoPaciente("sesion-demo-4");
-        moderado.registrarRespuesta(coloracion, "SI");
-        moderado.registrarRespuestas(signos, List.of("AMARILLO_SE_EXTIENDE"));
+        System.out.println("\nEscenario 2: sin signos de alarma, tos con respiración tranquila (R_RESP_CON CONSULTAR_MEDICO)");
+        EstadoPaciente moderado = new EstadoPaciente("sesion-demo-2");
+        moderado.registrarRespuesta(urgencia, "No, ninguno de los anteriores");
+        moderado.registrarRespuesta(consulta, "Presenta tos pero respira tranquilo");
         imprimirEvaluacion(base, moderado);
+
+        System.out.println("\nEscenario 3: solo condiciones comunes (nivel implícito NORMAL)");
+        EstadoPaciente tranquilo = new EstadoPaciente("sesion-demo-3");
+        tranquilo.registrarRespuesta(normal, "Estornudos o hipo");
+        imprimirEvaluacion(base, tranquilo);
     }
 
     /** Imprime las reglas activadas, el nivel resultante y el corto-circuito. */

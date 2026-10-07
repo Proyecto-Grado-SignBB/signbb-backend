@@ -20,9 +20,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 /**
- * Inicialización de la base de datos: siembra el contenido clínico de ejemplo
- * ({@link ContenidoEjemplo}: grafo raíz, subgrafo de ictericia y su base de
- * reglas) cuando aún no existe el grafo raíz.
+ * Inicialización de la base de datos: siembra el contenido clínico
+ * ({@link ContenidoEjemplo}: grafo raíz, los subgrafos de respiración,
+ * gastrointestinal y actividad/color, cada uno con su base de reglas) cuando
+ * aún no existe el grafo raíz.
  *
  * <p>
  * Antes de guardar se compone el contenido y se reconstruyen los TAD, de modo

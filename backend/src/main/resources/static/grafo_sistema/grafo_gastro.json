@@ -1,0 +1,63 @@
+{
+  "graph": {
+    "id": "grafo_gastro",
+    "label": "Evaluación Gastrointestinal",
+    "directed": true,
+    "category": ["vómito", "abdomen", "deposiciones"],
+    "preguntaInicial": "q_multi_gastro",
+    "metadata": { "autor": "Sistema SignBB" },
+    "nodes": {
+      "q_multi_gastro": {
+        "label": "Seleccione anomalías en digestión",
+        "metadata": { "tipo": "pregunta", "tipoInteraccion": "SELECCION_MULTIPLE", "peso": 1, "archivos": false, "src": [] }
+      },
+      "q_intermedia_vomito": {
+        "label": "¿Vomita todo lo que ingiere o sale disparado?",
+        "metadata": { "tipo": "pregunta", "tipoInteraccion": "SELECCION_UNICA", "peso": 3, "archivos": false, "src": [] }
+      },
+      "q_vomito_frecuencia": {
+        "label": "¿Ha vomitado varias veces sin fuerza?",
+        "metadata": { "tipo": "pregunta", "tipoInteraccion": "SELECCION_UNICA", "peso": 2, "archivos": false, "src": [] }
+      },
+      "q_intermedia_abdomen": {
+        "label": "¿La barriga está muy hinchada y dura/tensa?",
+        "metadata": { "tipo": "pregunta", "tipoInteraccion": "SELECCION_UNICA", "peso": 3, "archivos": false, "src": [] }
+      },
+      "q_abdomen_blando": {
+        "label": "¿La barriga está más hinchada de lo habitual pero blanda?",
+        "metadata": { "tipo": "pregunta", "tipoInteraccion": "SELECCION_UNICA", "peso": 2, "archivos": false, "src": [] }
+      },
+      "q_intermedia_deposicion": {
+        "label": "¿El popó es blanco/gris claro o hay sangre?",
+        "metadata": { "tipo": "pregunta", "tipoInteraccion": "SELECCION_UNICA", "peso": 3, "archivos": false, "src": [] }
+      },
+      "q_popo_cambio": {
+        "label": "¿Cambió mucho la frecuencia o es más líquido?",
+        "metadata": { "tipo": "pregunta", "tipoInteraccion": "SELECCION_UNICA", "peso": 2, "archivos": false, "src": [] }
+      },
+      "urgencia_1": { "label": "URGENCIA", "metadata": { "tipo": "terminal", "desenlace": "urgencia", "peso": 3, "archivos": false, "src": [] } },
+      "consulta_1": { "label": "CONSULTA", "metadata": { "tipo": "terminal", "desenlace": "consulta_medica", "peso": 2, "archivos": false, "src": [] } },
+      "normal_1": { "label": "NORMAL", "metadata": { "tipo": "terminal", "desenlace": "recomendacion", "peso": 1, "archivos": false, "src": [] } }
+    },
+    "edges": [
+      { "source": "q_multi_gastro", "relation": "vomito", "target": "q_intermedia_vomito", "directed": true },
+      { "source": "q_multi_gastro", "relation": "abdomen", "target": "q_intermedia_abdomen", "directed": true },
+      { "source": "q_multi_gastro", "relation": "deposiciones", "target": "q_intermedia_deposicion", "directed": true },
+      
+      { "source": "q_intermedia_vomito", "relation": "SI", "target": "urgencia_1", "directed": true },
+      { "source": "q_intermedia_vomito", "relation": "NO", "target": "q_vomito_frecuencia", "directed": true },
+      { "source": "q_vomito_frecuencia", "relation": "SI", "target": "consulta_1", "directed": true },
+      { "source": "q_vomito_frecuencia", "relation": "NO", "target": "normal_1", "directed": true },
+
+      { "source": "q_intermedia_abdomen", "relation": "SI", "target": "urgencia_1", "directed": true },
+      { "source": "q_intermedia_abdomen", "relation": "NO", "target": "q_abdomen_blando", "directed": true },
+      { "source": "q_abdomen_blando", "relation": "SI", "target": "consulta_1", "directed": true },
+      { "source": "q_abdomen_blando", "relation": "NO", "target": "normal_1", "directed": true },
+
+      { "source": "q_intermedia_deposicion", "relation": "SI", "target": "urgencia_1", "directed": true },
+      { "source": "q_intermedia_deposicion", "relation": "NO", "target": "q_popo_cambio", "directed": true },
+      { "source": "q_popo_cambio", "relation": "SI", "target": "consulta_1", "directed": true },
+      { "source": "q_popo_cambio", "relation": "NO", "target": "normal_1", "directed": true }
+    ]
+  }
+}

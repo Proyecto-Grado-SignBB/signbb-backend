@@ -10,6 +10,32 @@ jobs:
     defaults:
       run:
         working-directory: backend
+    # Perfil único docker: los @SpringBootTest necesitan PostgreSQL y Redis,
+    # así que se levantan como servicios del runner (mismos puertos y
+    # credenciales que contenedores/compose.yaml).
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: example
+          POSTGRES_DB: signbb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U admin -d signbb"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis:8-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,7 +52,4 @@ jobs:
         run: chmod +x mvnw
 
       - name: Build and test
-        # Perfil dev (H2 en memoria): el runner no tiene el PostgreSQL del
-        # perfil docker (bd/compose.yaml). El perfil se fuerza por flag y no
-        # editando application.properties (alli el default es docker).
-        run: ./mvnw -B verify -Dspring.profiles.active=dev
+        run: ./mvnw -B verify

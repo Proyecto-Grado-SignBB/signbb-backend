@@ -9,8 +9,9 @@ import org.signbb.backend.reglas.datos.serializacion.BaseReglasParser;
 import org.springframework.core.io.ClassPathResource;
 
 /**
- * Contenido clínico de ejemplo del classpath ({@code static/}): el grafo raíz,
- * el subgrafo de ictericia y su base de reglas.
+ * Contenido clínico del classpath ({@code static/grafo_sistema/}): el grafo
+ * raíz del sistema y los tres subgrafos publicados (respiración,
+ * gastrointestinal y actividad/color), cada uno con su base de reglas.
  *
  * <p>
  * Es la semilla de {@code DatabaseInit} y el contenido de la demo y de los
@@ -20,15 +21,19 @@ import org.springframework.core.io.ClassPathResource;
 public final class ContenidoEjemplo {
 
     /** Grafo raíz del sistema. */
-    public static final String RUTA_RAIZ = "static/ejemplo_grafo_raiz.json";
+    public static final String RUTA_RAIZ = "static/grafo_sistema/grafo_raiz.json";
 
-    /** Subgrafos publicados de ejemplo. */
+    /** Subgrafos publicados, uno por categoría. */
     public static final List<String> RUTAS_SUBGRAFOS = List.of(
-            "static/ejemplo_subgrafo_piel_ictericia.json");
+            "static/grafo_sistema/grafo_respiracion.json",
+            "static/grafo_sistema/grafo_gastro.json",
+            "static/grafo_sistema/grafo_activo_color.json");
 
-    /** Bases de reglas de ejemplo, una por subgrafo. */
+    /** Bases de reglas, una por subgrafo. */
     public static final List<String> RUTAS_REGLAS = List.of(
-            "static/ejemplo_reglas_piel_ictericia.json");
+            "static/grafo_sistema/reglas_respiracion.json",
+            "static/grafo_sistema/reglas_gastro.json",
+            "static/grafo_sistema/reglas_activo_color.json");
 
     private ContenidoEjemplo() {
     }
@@ -38,21 +43,21 @@ public final class ContenidoEjemplo {
         return GrafoClinicoParser.parseJsonToDocumento(leerRecurso(RUTA_RAIZ));
     }
 
-    /** Documentos de los subgrafos de ejemplo. */
+    /** Documentos de los subgrafos publicados. */
     public static List<GrafoClinicoJson> subgrafos() {
         return RUTAS_SUBGRAFOS.stream()
                 .map(ruta -> GrafoClinicoParser.parseJsonToDocumento(leerRecurso(ruta)))
                 .toList();
     }
 
-    /** Documentos de las bases de reglas de ejemplo. */
+    /** Documentos de las bases de reglas, una por subgrafo. */
     public static List<BaseReglasJson> bases() {
         return RUTAS_REGLAS.stream()
                 .map(ruta -> BaseReglasParser.parseJsonToDocumento(leerRecurso(ruta)))
                 .toList();
     }
 
-    /** Grafo y reglas de ejemplo ya compuestos (planos, ids prefijados). */
+    /** Grafo y reglas ya compuestos (planos, ids prefijados). */
     public static CompositorGrafoClinico.Contenido compuesto() {
         return CompositorGrafoClinico.componer(raiz(), subgrafos(), bases());
     }

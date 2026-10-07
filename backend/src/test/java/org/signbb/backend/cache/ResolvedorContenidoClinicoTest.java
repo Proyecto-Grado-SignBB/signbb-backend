@@ -77,7 +77,7 @@ class ResolvedorContenidoClinicoTest {
         when(valores.get(ResolvedorContenidoClinico.CLAVE_GRAFO))
                 .thenReturn(new ObjectMapper().writeValueAsString(compuesto));
 
-        assertEquals(7, resolvedor.documentoGrafo().graph().nodes().size());
+        assertEquals(33, resolvedor.documentoGrafo().graph().nodes().size());
         verify(grafos, never()).findAll();
     }
 
@@ -88,9 +88,9 @@ class ResolvedorContenidoClinicoTest {
 
         GrafoClinicoJson documento = resolvedor.documentoGrafo();
 
-        // Raíz sin referencias ni puentes vacíos (2) + subgrafo de ictericia (5).
-        assertEquals(7, documento.graph().nodes().size());
-        assertTrue(documento.graph().nodes().containsKey("grafo_piel_ictericia/pregunta_coloracion"));
+        // Raíz sin referencias ni puentes vacíos (2) + subgrafo de respiración (6).
+        assertEquals(8, documento.graph().nodes().size());
+        assertTrue(documento.graph().nodes().containsKey("grafo_respiracion/q_resp_urgencia"));
         verify(valores).set(eq(ResolvedorContenidoClinico.CLAVE_GRAFO), anyString(),
                 eq(Duration.ofHours(24)));
         verify(valores).set(eq(ResolvedorContenidoClinico.CLAVE_REGLAS), anyString(),
@@ -104,7 +104,7 @@ class ResolvedorContenidoClinicoTest {
         when(grafos.findAll()).thenReturn(List.of(filaRaiz, filaSubgrafo));
         when(bases.findAll()).thenReturn(List.of(filaReglas));
 
-        assertEquals(7, resolvedor.documentoGrafo().graph().nodes().size());
+        assertEquals(8, resolvedor.documentoGrafo().graph().nodes().size());
     }
 
     @Test
@@ -117,8 +117,8 @@ class ResolvedorContenidoClinicoTest {
 
         BaseReglasJson reglas = resolvedor.documentoReglas();
 
-        assertEquals(3, reglas.rules().size());
-        assertTrue(reglas.rules().containsKey("grafo_piel_ictericia/R1"));
+        assertEquals(2, reglas.rules().size());
+        assertTrue(reglas.rules().containsKey("grafo_respiracion/R_RESP_URG"));
     }
 
     @Test
@@ -130,7 +130,7 @@ class ResolvedorContenidoClinicoTest {
         when(grafos.findAll()).thenReturn(List.of(filaGrafo(legado), filaRaiz, filaSubgrafo));
         when(bases.findAll()).thenReturn(List.of(reglasLegado, filaReglas));
 
-        assertEquals(7, resolvedor.documentoGrafo().graph().nodes().size());
+        assertEquals(8, resolvedor.documentoGrafo().graph().nodes().size());
     }
 
     @Test

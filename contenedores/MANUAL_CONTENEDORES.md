@@ -41,10 +41,15 @@ datos, objetos de silo y caché/sesiones de Redis):
 
 > Advertencia: el borrado es irreversible. Tras vaciar la base, el siguiente
 > arranque del backend vuelve a crear las tablas y siembra de nuevo el grafo
-> clínico y las reglas de ejemplo (`DatabaseInit`), pues la siembra solo se
-> omite cuando las tablas ya tienen filas. Las sesiones de recorridos en
-> curso guardadas en Redis y los objetos de silo no se recuperan de ninguna
-> otra fuente.
+> clínico y las reglas (`DatabaseInit`), pues la siembra solo se omite cuando
+> las tablas ya tienen filas. Las sesiones de recorridos en curso guardadas en
+> Redis y los objetos de silo no se recuperan de ninguna otra fuente.
+>
+> Actualizar el contenido clínico: `DatabaseInit` decide sembrar según el `id`
+> del grafo raíz (`grafo_raiz`). Si se cambian los archivos de
+> `backend/src/main/resources/static/grafo_sistema/` pero la base ya estaba
+> sembrada, hay que borrar los volúmenes (`docker compose down -v`) y volver a
+> levantar; de lo contrario se seguiría sirviendo el contenido anterior.
 
 ## Acceso rápido
 
