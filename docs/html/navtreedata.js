@@ -33,19 +33,19 @@ var NAVTREE =
       [ "Acceso rápido", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md9", null ],
       [ "Parámetros de conexión (perfil <span class=\"tt\">docker</span> del backend)", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md10", null ]
     ] ],
-    [ "Pruebas del motor de navegación — grafos de ejemplo", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html", [
-      [ "Cómo ejecutarlas", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md12", null ],
-      [ "Ejemplo 1 — Normalización de base de datos", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md13", [
-        [ "Estructura (<span class=\"tt\">ejemplo_grafo_norm.json</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md14", null ],
-        [ "Reglas (<span class=\"tt\">ejemplo_reglas_norm.json</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md15", null ],
-        [ "Pruebas — <span class=\"tt\">MotorNavegacionNormalizacionTest</span>", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md16", null ]
+    [ "Pruebas del módulo de navegación", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html", [
+      [ "Mapa de la suite", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md12", null ],
+      [ "Fixtures", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md13", null ],
+      [ "Qué se prueba y por qué importa", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md14", [
+        [ "Alertas y validación (<span class=\"tt\">MotorNavegacionTest</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md15", null ],
+        [ "Retroceder (<span class=\"tt\">MotorNavegacionRetrocederTest</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md16", null ],
+        [ "Límite de preguntas (<span class=\"tt\">MotorNavegacionLimiteTest</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md17", null ],
+        [ "Cola de la selección múltiple (<span class=\"tt\">MotorNavegacionColaTest</span>, <span class=\"tt\">OrdenColaTest</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md18", null ],
+        [ "Servicio (<span class=\"tt\">ServicioNavegacionImplTest</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md19", null ]
       ] ],
-      [ "Ejemplo 2 — Triaje de ciberseguridad", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md18", [
-        [ "Estructura (<span class=\"tt\">ejemplo_grafo_sec.json</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md19", null ],
-        [ "Reglas (<span class=\"tt\">ejemplo_reglas_sec.json</span>, todas <span class=\"tt\">URGENCIA</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md20", null ],
-        [ "Pruebas — <span class=\"tt\">MotorNavegacionSeguridadTest</span>", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md21", null ]
-      ] ],
-      [ "Convenciones del motor que asumen las pruebas", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md23", null ]
+      [ "Qué se quitó en la reorganización", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md20", null ],
+      [ "Cómo ejecutarlas", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md21", null ],
+      [ "Resultados en GitHub Actions", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md22", null ]
     ] ],
     [ "Paquetes", "namespaces.html", [
       [ "Lista de paquetes", "namespaces.html", "namespaces_dup" ],
@@ -71,7 +71,7 @@ var NAVTREEINDEX =
 [
 "annotated.html",
 "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#aae1e6b5a22c6314464aa82cf989bcd21",
-"namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#a6d515ecc5fd241036d3a0c2e2bf0f8b8"
+"namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#a6d07b4c9c8333aa7b1c485f9f2ec8af8"
 ];
 
 const SYNCONMSG = 'pulsar para deshabilitar sincronización';
