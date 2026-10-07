@@ -1,0 +1,33 @@
+digraph grafo_respiracion {
+// Generado desde grafo_respiracion.json — Evaluación de Respiración y Nariz
+// Configuración general
+node [fontname="Helvetica", style=filled, fillcolor=white];
+edge [fontname="Helvetica", fontsize=10];
+
+// NODOS
+q_resp_urgencia [label="¿Observa alguno de estos signos de alarma?", color=blue, fontcolor=blue];
+q_resp_consulta [label="¿Presenta alguno de estos signos de alerta media?", color=blue, fontcolor=blue];
+q_resp_normal [label="¿Presenta alguna de estas condiciones comunes?", color=blue, fontcolor=blue];
+urgencia_1 [label="URGENCIA", shape=doublecircle, color=red, fontcolor=red];
+consulta_1 [label="CONSULTAR_MEDICO", shape=doublecircle, color=yellow, fontcolor=darkgoldenrod];
+normal_1 [label="NORMAL", shape=doublecircle, color=green, fontcolor=darkgreen];
+
+// ARISTAS
+q_resp_urgencia -> urgencia_1 [label="\n   Respira persistentemente rápido (≥60/min)   \n"];
+q_resp_urgencia -> urgencia_1 [label="\n   Quejido al respirar   \n"];
+q_resp_urgencia -> urgencia_1 [label="\n   Aleteo nasal   \n"];
+q_resp_urgencia -> urgencia_1 [label="\n   Se le hunde el pecho   \n"];
+q_resp_urgencia -> urgencia_1 [label="\n   Pausas o Apneas con cambio de color   \n"];
+q_resp_urgencia -> urgencia_1 [label="\n   Labios o cara azules/grises   \n"];
+q_resp_urgencia -> q_resp_consulta [label="\n   No, ninguno de los anteriores   \n"];
+q_resp_consulta -> consulta_1 [label="\n   Congestión que dificulta alimentarse   \n"];
+q_resp_consulta -> consulta_1 [label="\n   Ruido al respirar que antes no hacía   \n"];
+q_resp_consulta -> consulta_1 [label="\n   Respira diferente sin esfuerzo   \n"];
+q_resp_consulta -> consulta_1 [label="\n   Presenta tos pero respira tranquilo   \n"];
+q_resp_consulta -> q_resp_normal [label="\n   No, ninguno de los anteriores   \n"];
+q_resp_normal -> normal_1 [label="\n   Pausas cortas sin cambiar de color   \n"];
+q_resp_normal -> normal_1 [label="\n   Ruiditos pero respira tranquilo   \n"];
+q_resp_normal -> normal_1 [label="\n   Estornudos o hipo   \n"];
+q_resp_normal -> normal_1 [label="\n   Congestión nasal leve   \n"];
+q_resp_normal -> normal_1 [label="\n   No, no presenta anomalías   \n"];
+}

@@ -1,0 +1,36 @@
+digraph grafo_gastro {
+// Generado desde grafo_gastro.json — Evaluación Gastrointestinal
+// Configuración general
+graph [ranksep=1.5, nodesep=1.2];
+node [fontname="Helvetica", style=filled, fillcolor=white, margin=0.2];
+edge [fontname="Helvetica", fontsize=11, minlen=2];
+
+// NODOS
+q_multi_gastro [label="Seleccione anomalías en digestión", color=blue, fontcolor=blue];
+q_intermedia_vomito [label="¿Vomita todo lo que ingiere o sale disparado?", color=black];
+q_vomito_frecuencia [label="¿Ha vomitado varias veces sin fuerza?", color=black];
+q_intermedia_abdomen [label="¿La barriga está muy hinchada y dura/tensa?", color=black];
+q_abdomen_blando [label="¿La barriga está más hinchada de lo habitual pero blanda?", color=black];
+q_intermedia_deposicion [label="¿El popó es blanco/gris claro o hay sangre?", color=black];
+q_popo_cambio [label="¿Cambió mucho la frecuencia o es más líquido?", color=black];
+urgencia_1 [label="URGENCIA", shape=doublecircle, color=red, fontcolor=red];
+consulta_1 [label="CONSULTA", shape=doublecircle, color=yellow, fontcolor=darkgoldenrod];
+normal_1 [label="NORMAL", shape=doublecircle, color=green, fontcolor=darkgreen];
+
+// ARISTAS
+q_multi_gastro -> q_intermedia_vomito [label="\n   vomito   \n"];
+q_multi_gastro -> q_intermedia_abdomen [label="\n   abdomen   \n"];
+q_multi_gastro -> q_intermedia_deposicion [label="\n   deposiciones   \n"];
+q_intermedia_vomito -> urgencia_1 [label="\n   SI   \n"];
+q_intermedia_vomito -> q_vomito_frecuencia [label="\n   NO   \n"];
+q_vomito_frecuencia -> consulta_1 [label="\n   SI   \n"];
+q_vomito_frecuencia -> normal_1 [label="\n   NO   \n"];
+q_intermedia_abdomen -> urgencia_1 [label="\n   SI   \n"];
+q_intermedia_abdomen -> q_abdomen_blando [label="\n   NO   \n"];
+q_abdomen_blando -> consulta_1 [label="\n   SI   \n"];
+q_abdomen_blando -> normal_1 [label="\n   NO   \n"];
+q_intermedia_deposicion -> urgencia_1 [label="\n   SI   \n"];
+q_intermedia_deposicion -> q_popo_cambio [label="\n   NO   \n"];
+q_popo_cambio -> consulta_1 [label="\n   SI   \n"];
+q_popo_cambio -> normal_1 [label="\n   NO   \n"];
+}

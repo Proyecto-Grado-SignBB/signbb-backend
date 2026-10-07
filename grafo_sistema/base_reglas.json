@@ -1,0 +1,103 @@
+{
+    "rules": {
+        "R_RESP_URG": {
+            "nombre": "Regla Respiración Urgencia",
+            "condiciones": [
+                [ { "idNodo": "q_resp_urgencia", "respuesta": "Respira persistentemente rápido (≥60/min)" } ],
+                [ { "idNodo": "q_resp_urgencia", "respuesta": "Quejido al respirar" } ],
+                [ { "idNodo": "q_resp_urgencia", "respuesta": "Aleteo nasal" } ],
+                [ { "idNodo": "q_resp_urgencia", "respuesta": "Se le hunde el pecho" } ],
+                [ { "idNodo": "q_resp_urgencia", "respuesta": "Pausas o Apneas con cambio de color" } ],
+                [ { "idNodo": "q_resp_urgencia", "respuesta": "Labios o cara azules/grises" } ]
+            ],
+            "nodoDestino": "urgencia_1",
+            "nivel": "URGENCIA"
+        },
+        "R_RESP_CON": {
+            "nombre": "Regla Respiración Consulta",
+            "condiciones": [
+                [ { "idNodo": "q_resp_consulta", "respuesta": "Congestión que dificulta alimentarse" } ],
+                [ { "idNodo": "q_resp_consulta", "respuesta": "Ruido al respirar que antes no hacía" } ],
+                [ { "idNodo": "q_resp_consulta", "respuesta": "Respira diferente sin esfuerzo" } ],
+                [ { "idNodo": "q_resp_consulta", "respuesta": "Presenta tos pero respira tranquilo" } ]
+            ],
+            "nodoDestino": "consulta_1",
+            "nivel": "CONSULTAR_MEDICO"
+        },
+        "R_RESP_NOR": {
+            "nombre": "Regla Respiración Normal",
+            "condiciones": [
+                [ { "idNodo": "q_resp_normal", "respuesta": "Pausas cortas sin cambiar de color" } ],
+                [ { "idNodo": "q_resp_normal", "respuesta": "Ruiditos pero respira tranquilo" } ],
+                [ { "idNodo": "q_resp_normal", "respuesta": "Estornudos o hipo" } ],
+                [ { "idNodo": "q_resp_normal", "respuesta": "Congestión nasal leve" } ],
+                [ { "idNodo": "q_resp_normal", "respuesta": "No, no presenta anomalías" } ]
+            ],
+            "nodoDestino": "normal_1",
+            "nivel": "NORMAL"
+        },
+        "R_GASTRO_URG": {
+            "nombre": "Regla Gastro Urgencia",
+            "condiciones": [
+                [ { "idNodo": "q_intermedia_vomito", "respuesta": "SI" } ],
+                [ { "idNodo": "q_intermedia_abdomen", "respuesta": "SI" } ],
+                [ { "idNodo": "q_intermedia_deposicion", "respuesta": "SI" } ]
+            ],
+            "nodoDestino": "urgencia_1",
+            "nivel": "URGENCIA"
+        },
+        "R_GASTRO_CON": {
+            "nombre": "Regla Gastro Consulta",
+            "condiciones": [
+                [ { "idNodo": "q_vomito_frecuencia", "respuesta": "SI" } ],
+                [ { "idNodo": "q_abdomen_blando", "respuesta": "SI" } ],
+                [ { "idNodo": "q_popo_cambio", "respuesta": "SI" } ]
+            ],
+            "nodoDestino": "consulta_1",
+            "nivel": "CONSULTAR_MEDICO"
+        },
+        "R_GASTRO_NOR": {
+            "nombre": "Regla Gastro Normal",
+            "condiciones": [
+                [ { "idNodo": "q_vomito_frecuencia", "respuesta": "NO" } ],
+                [ { "idNodo": "q_abdomen_blando", "respuesta": "NO" } ],
+                [ { "idNodo": "q_popo_cambio", "respuesta": "NO" } ]
+            ],
+            "nodoDestino": "normal_1",
+            "nivel": "NORMAL"
+        },
+        "R_NEURO_URG": {
+            "nombre": "Regla Neurológico y Color Urgencia",
+            "condiciones": [
+                [ { "idNodo": "q_tono_extremo", "respuesta": "SI" } ],
+                [ { "idNodo": "q_color_ictericia_cara", "respuesta": "SI" } ],
+                [ { "idNodo": "q_color_cianosis", "respuesta": "SI" } ],
+                [ { "idNodo": "q_llanto_calma", "respuesta": "NO" } ]
+            ],
+            "nodoDestino": "urgencia_1",
+            "nivel": "URGENCIA"
+        },
+        "R_NEURO_CON": {
+            "nombre": "Regla Neurológico y Color Consulta",
+            "condiciones": [
+                [ { "idNodo": "q_tono_extremo", "respuesta": "NO" } ],
+                [ { "idNodo": "q_tono_estimulo", "respuesta": "NO" } ],
+                [ { "idNodo": "q_color_ictericia_cara", "respuesta": "NO" } ],
+                [ { "idNodo": "q_llanto_calma", "respuesta": "SI" } ],
+                [ { "idNodo": "q_llanto_comun", "respuesta": "SI" } ]
+            ],
+            "nodoDestino": "consulta_1",
+            "nivel": "CONSULTAR_MEDICO"
+        },
+        "R_NEURO_NOR": {
+            "nombre": "Regla Neurológico y Color Normal",
+            "condiciones": [
+                [ { "idNodo": "q_tono_estimulo", "respuesta": "SI" } ],
+                [ { "idNodo": "q_color_cianosis", "respuesta": "NO" } ],
+                [ { "idNodo": "q_llanto_comun", "respuesta": "NO" } ]
+            ],
+            "nodoDestino": "normal_1",
+            "nivel": "NORMAL"
+        }
+    }
+}

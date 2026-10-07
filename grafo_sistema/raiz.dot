@@ -1,0 +1,28 @@
+digraph GrafoRaiz {
+// Configuración general del grafo
+node [fontname="Helvetica", style=filled, fillcolor=white];
+edge [fontname="Helvetica", fontsize=10];
+
+// NODO INICIAL (Opción múltiple, color azul)
+pregunta_inicial [label="¿Sientes que tu bebé está diferente a como normalmente es?\nSeleccione las categorías a consultar", color=blue];
+
+// NODOS PUENTE (Opción única, color negro)
+puente_respiracion [label="¿Qué anomalía principal observa en la respiración?", color=black];
+puente_gastro [label="¿Qué anomalía principal observa en la alimentación/estómago?", color=black];
+puente_neuro [label="¿Qué anomalía principal observa en su comportamiento/color?", color=black];
+
+// NODOS DE REFERENCIA (Subgrafos, color púrpura, forma caja)
+ref_grafo_respiracion [label="Grafo_Respiracion_y_Nariz", color=purple, fontcolor=purple];
+ref_grafo_gastro [label="Grafo_Vomito_Abdomen_Deposicion",  color=purple, fontcolor=purple];
+ref_grafo_neuro [label="Grafo_Actividad_Color_Piel", color=purple, fontcolor=purple];
+
+// RELACIONES RAÍZ -> PUENTES
+pregunta_inicial -> puente_respiracion [label="Problemas respiratorios"];
+pregunta_inicial -> puente_gastro [label="Problemas digestivos"];
+pregunta_inicial -> puente_neuro [label="Problemas de comportamiento o color"];
+
+// RELACIONES PUENTES -> REFERENCIAS
+puente_respiracion -> ref_grafo_respiracion [label="Iniciar tamizaje respiratorio"];
+puente_gastro -> ref_grafo_gastro [label="Iniciar tamizaje digestivo"];
+puente_neuro -> ref_grafo_neuro [label="Iniciar tamizaje neurológico"];
+}

@@ -1,0 +1,62 @@
+digraph GrafoGastrointestinalColaPrioridad {
+// Configuraciones globales para aumentar el espaciado
+graph [ranksep=1.5, nodesep=1.2];
+node [fontname="Helvetica", style=filled, fillcolor=white, margin=0.2];
+edge [fontname="Helvetica", fontsize=11, minlen=2];
+
+// NODO RAÍZ DEL SUBGRAFO (Selección múltiple, color azul)
+// (Motor usará Cola de Prioridad para evaluar las opciones seleccionadas)
+q_multi_gastro [label="¿Qué anomalías observa en la alimentación o digestión de su bebé?", color=blue, fontcolor=blue];
+
+// NODOS DE TERMINACIÓN
+// URGENCIA: Corta la ejecución de la cola y arroja resultado
+T_URGENCIA [label="URGENCIA", shape=doublecircle, color=red, fontcolor=red];
+// CONSULTA: Almacena estado y continúa con la siguiente rama en cola
+T_CONSULTA [label="CONSULTAR_MEDICO", shape=doublecircle, color=yellow, fontcolor=darkgoldenrod];
+// NORMAL: Descarta rama y evalúa la siguiente opción en la cola
+T_NORMAL [label="NORMAL", shape=doublecircle, color=green, fontcolor=darkgreen];
+
+// ==========================================
+// RAMA 1: VÓMITO Y ALIMENTACIÓN (Peso 3)
+// ==========================================
+q_vomito_fuerza [label="¿Vomita todo lo que ingiere o sale disparado con fuerza?", color=black];
+q_vomito_frecuencia [label="¿Ha vomitado varias veces pero sin hacer fuerza?", color=black];
+
+// ==========================================
+// RAMA 2: ABDOMEN (Peso 2)
+// ==========================================
+q_abdomen_duro [label="¿La barriga está muy hinchada y dura o tensa al tocarla?", color=black];
+q_abdomen_blando [label="¿La barriga está más hinchada de lo habitual pero se siente blanda?", color=black];
+
+// ==========================================
+// RAMA 3: DEPOSICIONES Y ORINA (Peso 1)
+// ==========================================
+q_popo_sangre [label="¿El popó es de color blanco/gris muy claro, o nota sangre roja en el pañal?", color=black];
+q_popo_cambio [label="¿Cambió mucho la frecuencia del popó, es más líquido de lo habitual o tiene mucho moco?", color=black];
+
+// CONEXIONES HACIA LAS RAMAS DESDE LA SELECCIÓN MÚLTIPLE
+q_multi_gastro -> q_vomito_fuerza [label="\n   Vómito o problemas al comer (Peso 3)   \n"];
+q_multi_gastro -> q_abdomen_duro [label="\n   Barriga hinchada (Peso 2)   \n"];
+q_multi_gastro -> q_popo_sangre [label="\n   Cambios en el popó u orina (Peso 1)   \n"];
+
+// FLUJO RAMA 1: VÓMITO Y ALIMENTACIÓN
+q_vomito_fuerza -> T_URGENCIA [label="\n   Sí, vomita todo o sale disparado   \n"];
+q_vomito_fuerza -> q_vomito_frecuencia [label="\n   No, devuelve cantidades menores   \n"];
+
+q_vomito_frecuencia -> T_CONSULTA [label="\n   Sí, ha vomitado varias veces   \n"];
+q_vomito_frecuencia -> T_NORMAL [label="\n   No, solo devuelve un poco de leche (regurgita)   \n"];
+
+// FLUJO RAMA 2: ABDOMEN
+q_abdomen_duro -> T_URGENCIA [label="\n   Sí, está muy hinchada y dura   \n"];
+q_abdomen_duro -> q_abdomen_blando [label="\n   No se siente dura o tensa   \n"];
+
+q_abdomen_blando -> T_CONSULTA [label="\n   Sí, hinchada pero sigue blanda   \n"];
+q_abdomen_blando -> T_NORMAL [label="\n   No, está redondita después de comer pero normal   \n"];
+
+// FLUJO RAMA 3: DEPOSICIONES Y ORINA
+q_popo_sangre -> T_URGENCIA [label="\n   Sí, popó blanco/gris o con sangre   \n"];
+q_popo_sangre -> q_popo_cambio [label="\n   No, los colores son normales (mostaza, verde, café)   \n"];
+
+q_popo_cambio -> T_CONSULTA [label="\n   Sí, un cambio drástico o mucho moco   \n"];
+q_popo_cambio -> T_NORMAL [label="\n   No, consistencia normal, hace fuerza pero es blando   \n"];
+}
