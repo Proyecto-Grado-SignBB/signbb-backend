@@ -117,8 +117,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('index.html',''
 Requisitos</h1>
 <ul>
 <li>Java SDK 25</li>
-<li>Spring Boot 4.1.1 (Web MVC, Data JPA, H2, Lombok)</li>
+<li>Spring Boot 4.1.1 (Web MVC, Data JPA, Redis, Lombok)</li>
 <li>Maven (se usa el wrapper <span class="tt">backend/mvnw</span>, no requiere instalación local)</li>
+<li>Docker + Docker Compose (PostgreSQL y Redis de <span class="tt">contenedores/compose.yaml</span>)</li>
 <li>Doxygen (solo para regenerar la documentación)</li>
 </ul>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
@@ -127,18 +128,16 @@ Construcción y pruebas</h1>
 ./mvnw spring-boot:run   # arranca la aplicación (demo de triaje por consola)
 ./mvnw verify            # build completo, igual que en CI (GitHub Actions)
 </pre><h1 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
-Perfiles de base de datos</h1>
-<p>El backend tiene dos perfiles; el activo se define en <span class="tt">backend/src/main/resources/application.properties</span> con la propiedad <span class="tt">spring.profiles.active</span> (hoy <span class="tt">docker</span> por defecto):</p>
-<ul>
-<li><span class="tt">dev</span> — <b>H2 en memoria</b> (<span class="tt">jdbc:h2:mem:dcbapp</span>): no necesita Docker y los datos se pierden al detener la aplicación. Consola H2 en <span class="tt"><a href="http://localhost:8080/h2-console">http://localhost:8080/h2-console</a></span> (usuario <span class="tt">sa</span>).</li>
-<li><span class="tt">docker</span> — <b>PostgreSQL</b> en <span class="tt">localhost:5432</span> (base <span class="tt">signbb</span>): requiere la base de datos de <span class="tt">contenedores/compose.yaml</span> levantada y persiste los datos en el volumen del compose. Ver <span class="tt">contenedores/MANUAL_CONTENEDORES.md</span> para levantarla y administrarla.</li>
-</ul>
-<p>Para cambiar de perfil en un arranque puntual, sin editar archivos, se pasa como flag (ej. pasar de memoria a docker o viceversa): </p><pre class="fragment">./mvnw spring-boot:run -Dspring-boot.run.profiles=dev     # H2 en memoria
-./mvnw spring-boot:run -Dspring-boot.run.profiles=docker  # PostgreSQL
-</pre><p>Para usar docker de forma permanente, dejar <span class="tt">spring.profiles.active=docker</span> en <span class="tt">application.properties</span> y levantar la base de datos: </p><pre class="fragment">cd ../contenedores &amp;&amp; docker compose up -d
-</pre><p>Las pruebas usan el perfil activo: con <span class="tt">docker</span> la base de datos debe estar levantada; con <span class="tt">dev</span> corren contra H2 en memoria sin ningún requisito: </p><pre class="fragment">./mvnw test                               # usa el perfil activo
-./mvnw test -Dspring.profiles.active=dev  # fuerza H2 en memoria
-</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
+Perfil de base de datos</h1>
+<p>El backend usa un único perfil, <span class="tt">docker</span> (definido en <span class="tt">backend/src/main/resources/application.properties</span> con <span class="tt">spring.profiles.active=docker</span>): <b>PostgreSQL</b> en <span class="tt">localhost:5432</span> (base <span class="tt">signbb</span>) y <b>Redis</b> en <span class="tt">localhost:6379</span>, ambos desde <span class="tt">contenedores/compose.yaml</span>. Los datos persisten en los volúmenes del compose. Ver <span class="tt">contenedores/MANUAL_CONTENEDORES.md</span> para levantar y administrar los servicios.</p>
+<p>Antes de arrancar la aplicación o ejecutar las pruebas hay que levantar los servicios: </p><pre class="fragment">cd ../contenedores &amp;&amp; docker compose up -d
+
+./mvnw spring-boot:run   # arranca la aplicación (demo de triaje por consola)
+./mvnw test              # suite completa contra PostgreSQL y Redis
+</pre><blockquote class="doxtable">
+<p>Si la base ya estaba sembrada con una versión previa del grafo, hay que borrar los volúmenes (<span class="tt">docker compose down -v</span>) para que <span class="tt">DatabaseInit</span> vuelva a sembrar el contenido nuevo: el grafo raíz conserva el mismo <span class="tt">id</span>. </p>
+</blockquote>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
 Documentación</h1>
 <p>La documentación del código se genera con Doxygen desde la raíz del repositorio: </p><pre class="fragment">doxygen Doxyfile
 </pre><p>El HTML resultante queda en <span class="tt">docs/html</span> (abrir <span class="tt">docs/html/index.html</span>). La fuente es <span class="tt">backend/src/main/java</span>, configurada en el <span class="tt">Doxyfile</span>.</p>

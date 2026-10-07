@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('md_backend_2sr
 <p>Son JUnit 5 <b>puro</b> (sin Spring ni base de datos): cargan el grafo y la base de reglas con <span class="tt">GrafoClinicoParser</span> / <span class="tt">BaseReglasParser</span> usando <span class="tt">ClassPathResource</span>, y ejercitan el motor paso a paso.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md12"></a>
 Cómo ejecutarlas</h1>
-<p>Desde <span class="tt">signbb-backend/backend</span> (el perfil por defecto es <span class="tt">docker</span>, que requiere PostgreSQL/Redis; estas pruebas no lo necesitan): </p><pre class="fragment">./mvnw -Dtest='MotorNavegacion*Test' test -Dspring.profiles.active=dev
+<p>Desde <span class="tt">signbb-backend/backend</span> (estas pruebas no necesitan PostgreSQL/Redis): </p><pre class="fragment">./mvnw -Dtest='MotorNavegacion*Test' test
 </pre><hr  />
 <h1 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
 Ejemplo 1 — Normalización de base de datos</h1>

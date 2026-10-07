@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 </div><!--header-->
 <div class="contents">
 
-<p>Contenido clínico de ejemplo del classpath (<code class="JavaDocCode">static/</code>): el grafo raíz, el subgrafo de ictericia y su base de reglas.  
+<p>Contenido clínico del classpath (<code class="JavaDocCode">static/grafo_sistema/</code>): el grafo raíz del sistema y los tres subgrafos publicados (respiración, gastrointestinal y actividad/color), cada uno con su base de reglas.  
  <a href="#details">Más...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
@@ -122,13 +122,13 @@ static <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1da
 <tr class="memdesc:a7aa187e97d8a3af41762a2f2849ae4a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Documento del grafo raíz. <br /></td></tr>
 <tr class="memitem:a5fc490d28921b61a11d6a264f5e32c63" id="r_a5fc490d28921b61a11d6a264f5e32c63"><td class="memItemLeft"><a id="a5fc490d28921b61a11d6a264f5e32c63" name="a5fc490d28921b61a11d6a264f5e32c63"></a>
 static List&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion.html#a542aa5e19744a44057ea8f0e570e9680">GrafoClinicoJson</a> &gt;&#160;</td><td class="memItemRight"><b>subgrafos</b> ()</td></tr>
-<tr class="memdesc:a5fc490d28921b61a11d6a264f5e32c63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Documentos de los subgrafos de ejemplo. <br /></td></tr>
+<tr class="memdesc:a5fc490d28921b61a11d6a264f5e32c63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Documentos de los subgrafos publicados. <br /></td></tr>
 <tr class="memitem:a1f3c0f00a7c0127d62b627430f7040a5" id="r_a1f3c0f00a7c0127d62b627430f7040a5"><td class="memItemLeft"><a id="a1f3c0f00a7c0127d62b627430f7040a5" name="a1f3c0f00a7c0127d62b627430f7040a5"></a>
 static List&lt; BaseReglasJson &gt;&#160;</td><td class="memItemRight"><b>bases</b> ()</td></tr>
-<tr class="memdesc:a1f3c0f00a7c0127d62b627430f7040a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Documentos de las bases de reglas de ejemplo. <br /></td></tr>
+<tr class="memdesc:a1f3c0f00a7c0127d62b627430f7040a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Documentos de las bases de reglas, una por subgrafo. <br /></td></tr>
 <tr class="memitem:abe61b5cf5c8c7893d72d9f0c4ae10cf8" id="r_abe61b5cf5c8c7893d72d9f0c4ae10cf8"><td class="memItemLeft"><a id="abe61b5cf5c8c7893d72d9f0c4ae10cf8" name="abe61b5cf5c8c7893d72d9f0c4ae10cf8"></a>
 static <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1CompositorGrafoClinico.html#ac45f77a6fba2567fba2331ec17264af7">CompositorGrafoClinico.Contenido</a>&#160;</td><td class="memItemRight"><b>compuesto</b> ()</td></tr>
-<tr class="memdesc:abe61b5cf5c8c7893d72d9f0c4ae10cf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Grafo y reglas de ejemplo ya compuestos (planos, ids prefijados). <br /></td></tr>
+<tr class="memdesc:abe61b5cf5c8c7893d72d9f0c4ae10cf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Grafo y reglas ya compuestos (planos, ids prefijados). <br /></td></tr>
 <tr class="memitem:afed65d670f1a78ad68e14a28f56b77a6" id="r_afed65d670f1a78ad68e14a28f56b77a6"><td class="memItemLeft"><a id="afed65d670f1a78ad68e14a28f56b77a6" name="afed65d670f1a78ad68e14a28f56b77a6"></a>
 static String&#160;</td><td class="memItemRight"><b>leerRecurso</b> (String ruta)</td></tr>
 <tr class="memdesc:afed65d670f1a78ad68e14a28f56b77a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lee un recurso del classpath como texto UTF-8. <br /></td></tr>
@@ -136,15 +136,15 @@ static String&#160;</td><td class="memItemRight"><b>leerRecurso</b> (String ruta
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Atributos públicos estáticos</h2></td></tr>
 <tr class="memitem:a7be4a8023852932c6b579b6bd6334ae4" id="r_a7be4a8023852932c6b579b6bd6334ae4"><td class="memItemLeft"><a id="a7be4a8023852932c6b579b6bd6334ae4" name="a7be4a8023852932c6b579b6bd6334ae4"></a>
-static final String&#160;</td><td class="memItemRight"><b>RUTA_RAIZ</b> = &quot;static/ejemplo_grafo_raiz.json&quot;</td></tr>
+static final String&#160;</td><td class="memItemRight"><b>RUTA_RAIZ</b> = &quot;static/grafo_sistema/grafo_raiz.json&quot;</td></tr>
 <tr class="memdesc:a7be4a8023852932c6b579b6bd6334ae4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Grafo raíz del sistema. <br /></td></tr>
 <tr class="memitem:a0ffb4628b295d39f9561a30258b6a313" id="r_a0ffb4628b295d39f9561a30258b6a313"><td class="memItemLeft">static final List&lt; String &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a0ffb4628b295d39f9561a30258b6a313">RUTAS_SUBGRAFOS</a></td></tr>
-<tr class="memdesc:a0ffb4628b295d39f9561a30258b6a313"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subgrafos publicados de ejemplo.  <br /></td></tr>
+<tr class="memdesc:a0ffb4628b295d39f9561a30258b6a313"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subgrafos publicados, uno por categoría.  <br /></td></tr>
 <tr class="memitem:af46c3fb53def17c4375332bc495bf8b8" id="r_af46c3fb53def17c4375332bc495bf8b8"><td class="memItemLeft">static final List&lt; String &gt;&#160;</td><td class="memItemRight"><a class="el" href="#af46c3fb53def17c4375332bc495bf8b8">RUTAS_REGLAS</a></td></tr>
-<tr class="memdesc:af46c3fb53def17c4375332bc495bf8b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bases de reglas de ejemplo, una por subgrafo.  <br /></td></tr>
+<tr class="memdesc:af46c3fb53def17c4375332bc495bf8b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bases de reglas, una por subgrafo.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
-<div class="textblock"><p>Contenido clínico de ejemplo del classpath (<code class="JavaDocCode">static/</code>): el grafo raíz, el subgrafo de ictericia y su base de reglas. </p>
+<div class="textblock"><p>Contenido clínico del classpath (<code class="JavaDocCode">static/grafo_sistema/</code>): el grafo raíz del sistema y los tres subgrafos publicados (respiración, gastrointestinal y actividad/color), cada uno con su base de reglas. </p>
 <p>Es la semilla de <code class="JavaDocCode">DatabaseInit</code> y el contenido de la demo y de los tests; el runtime no lo lee (resuelve desde la base de datos). Reúne en un solo lugar las rutas y la composición para que todos usen el mismo grafo. </p>
 </div><a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Documentación de datos miembro</h2>
 <a id="af46c3fb53def17c4375332bc495bf8b8" name="af46c3fb53def17c4375332bc495bf8b8"></a>
@@ -167,9 +167,11 @@ static final String&#160;</td><td class="memItemRight"><b>RUTA_RAIZ</b> = &quot;
 </table>
 </div><div class="memdoc">
 <b>Valor inicial:</b><div class="fragment"><div class="line">                              = List.of(</div>
-<div class="line"><span class="stringliteral">&quot;static/ejemplo_reglas_piel_ictericia.json&quot;</span>)</div>
+<div class="line"><span class="stringliteral">&quot;static/grafo_sistema/reglas_respiracion.json&quot;</span>,</div>
+<div class="line"><span class="stringliteral">&quot;static/grafo_sistema/reglas_gastro.json&quot;</span>,</div>
+<div class="line"><span class="stringliteral">&quot;static/grafo_sistema/reglas_activo_color.json&quot;</span>)</div>
 </div><!-- fragment -->
-<p>Bases de reglas de ejemplo, una por subgrafo. </p>
+<p>Bases de reglas, una por subgrafo. </p>
 
 </div>
 </div>
@@ -193,9 +195,11 @@ static final String&#160;</td><td class="memItemRight"><b>RUTA_RAIZ</b> = &quot;
 </table>
 </div><div class="memdoc">
 <b>Valor inicial:</b><div class="fragment"><div class="line">                                 = List.of(</div>
-<div class="line"><span class="stringliteral">&quot;static/ejemplo_subgrafo_piel_ictericia.json&quot;</span>)</div>
+<div class="line"><span class="stringliteral">&quot;static/grafo_sistema/grafo_respiracion.json&quot;</span>,</div>
+<div class="line"><span class="stringliteral">&quot;static/grafo_sistema/grafo_gastro.json&quot;</span>,</div>
+<div class="line"><span class="stringliteral">&quot;static/grafo_sistema/grafo_activo_color.json&quot;</span>)</div>
 </div><!-- fragment -->
-<p>Subgrafos publicados de ejemplo. </p>
+<p>Subgrafos publicados, uno por categoría. </p>
 
 </div>
 </div>

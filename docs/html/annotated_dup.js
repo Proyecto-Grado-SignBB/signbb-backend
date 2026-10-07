@@ -35,7 +35,6 @@ var annotated_dup =
               [ "GrafoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico" ],
               [ "Nodo", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo" ],
               [ "RepositorioSesion", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion" ],
-              [ "RepositorioSesionMemoria", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesionMemoria.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesionMemoria" ],
               [ "Respuesta", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta" ],
               [ "SesionTriaje", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje" ]
             ] ],

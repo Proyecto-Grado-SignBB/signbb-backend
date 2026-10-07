@@ -120,8 +120,7 @@ Diagrama de herencia de org.signbb.backend.navegacion.modelo.RepositorioSesion</
  <div class="center">
   <img src="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.png" usemap="#org_2Esignbb_2Ebackend_2Enavegacion_2Emodelo_2ERepositorioSesion_map" alt=""/>
   <map id="org_2Esignbb_2Ebackend_2Enavegacion_2Emodelo_2ERepositorioSesion_map" name="org_2Esignbb_2Ebackend_2Enavegacion_2Emodelo_2ERepositorioSesion_map">
-<area href="classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html" title="Almacén de sesiones en Redis (perfil docker), según el documento de diseño: las sesiones temporales d..." alt="org.signbb.backend.cache.RepositorioSesionRedis" shape="rect" coords="0,56,392,80"/>
-<area href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesionMemoria.html" title="Almacén en memoria de las sesiones (perfil dev, sin Docker): el estado del recorrido vive mientras la..." alt="org.signbb.backend.navegacion.modelo.RepositorioSesionMemoria" shape="rect" coords="402,56,794,80"/>
+<area href="classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html" title="Almacén de sesiones en Redis (perfil docker), según el documento de diseño: las sesiones temporales d..." alt="org.signbb.backend.cache.RepositorioSesionRedis" shape="rect" coords="0,56,343,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -136,7 +135,7 @@ Métodos públicos</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Almacén de las sesiones de triaje en curso. </p>
-<p>MODIFICADO (cache): pasa a interfaz con dos implementaciones — en memoria (perfil <code class="JavaDocCode">dev</code>, sin Docker) y Redis (perfil <code class="JavaDocCode">docker</code>), según el documento de diseño: las sesiones temporales de los padres viven en la caché distribuida para que las consultas sobrevivan reinicios del backend. </p>
+<p>MODIFICADO (cache): pasa a interfaz cuya implementación es <code class="JavaDocCode">RepositorioSesionRedis</code> (perfil <code class="JavaDocCode">docker</code>), según el documento de diseño: las sesiones temporales de los padres viven en la caché distribuida para que las consultas sobrevivan reinicios del backend. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
 <a id="a0269f24b995c4409bc97a23ec23a6514" name="a0269f24b995c4409bc97a23ec23a6514"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0269f24b995c4409bc97a23ec23a6514">&#9670;&#160;</a></span>buscar()</h2>
@@ -155,7 +154,7 @@ Métodos públicos</h2></td></tr>
 
 <p>Busca una sesión por id; falla con 404 si no existe. </p>
 
-<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html#a8d8bcc1535814ae66ee8717202e4fc7a">org.signbb.backend.cache.RepositorioSesionRedis</a> y <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesionMemoria.html#a1119e47a6822d968f1a97cfb0f43756f">org.signbb.backend.navegacion.modelo.RepositorioSesionMemoria</a>.</p>
+<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html#a8d8bcc1535814ae66ee8717202e4fc7a">org.signbb.backend.cache.RepositorioSesionRedis</a>.</p>
 
 </div>
 </div>
@@ -180,7 +179,7 @@ Métodos públicos</h2></td></tr>
 
 <p>Crea y almacena una sesión nueva con un id generado. </p>
 
-<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html#aee98b51a775022bdf10c5c6a8297c4fe">org.signbb.backend.cache.RepositorioSesionRedis</a> y <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesionMemoria.html#a4a4ce0213c458a89c50996597c46546f">org.signbb.backend.navegacion.modelo.RepositorioSesionMemoria</a>.</p>
+<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html#aee98b51a775022bdf10c5c6a8297c4fe">org.signbb.backend.cache.RepositorioSesionRedis</a>.</p>
 
 </div>
 </div>
@@ -201,7 +200,7 @@ Métodos públicos</h2></td></tr>
 
 <p>Persiste el estado actualizado de una sesión. </p>
 
-<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html#a729ae735b80ba5657d98d85b90d3ac27">org.signbb.backend.cache.RepositorioSesionRedis</a> y <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesionMemoria.html#a6f2761464665d2e95b84109a9fc08bb4">org.signbb.backend.navegacion.modelo.RepositorioSesionMemoria</a>.</p>
+<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html#a729ae735b80ba5657d98d85b90d3ac27">org.signbb.backend.cache.RepositorioSesionRedis</a>.</p>
 
 </div>
 </div>

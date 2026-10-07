@@ -47,6 +47,18 @@ var NAVTREE =
       ] ],
       [ "Convenciones del motor que asumen las pruebas", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md23", null ]
     ] ],
+    [ "Grafo sistema", "md_grafo__sistema_2reporte__grafo.html", [
+      [ "Indice", "md_grafo__sistema_2reporte__grafo.html#autotoc_md25", null ],
+      [ "Grafo Raíz", "md_grafo__sistema_2reporte__grafo.html#autotoc_md26", null ],
+      [ "Grafo Gastrointestinal", "md_grafo__sistema_2reporte__grafo.html#autotoc_md27", null ],
+      [ "Grafo Respiración", "md_grafo__sistema_2reporte__grafo.html#autotoc_md28", null ],
+      [ "Grafo Activo y color", "md_grafo__sistema_2reporte__grafo.html#autotoc_md29", null ],
+      [ "Herramientas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md30", [
+        [ "Construir grafos visualmente", "md_grafo__sistema_2reporte__grafo.html#autotoc_md31", null ],
+        [ "Representacion visual de base de reglas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md32", null ],
+        [ "Representacion visual de grafo", "md_grafo__sistema_2reporte__grafo.html#autotoc_md33", null ]
+      ] ]
+    ] ],
     [ "Paquetes", "namespaces.html", [
       [ "Lista de paquetes", "namespaces.html", "namespaces_dup" ],
       [ "Miembros de paquete", "namespacemembers.html", [
@@ -71,7 +83,7 @@ var NAVTREEINDEX =
 [
 "annotated.html",
 "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#aae1e6b5a22c6314464aa82cf989bcd21",
-"namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#a6d515ecc5fd241036d3a0c2e2bf0f8b8"
+"namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html"
 ];
 
 const SYNCONMSG = 'pulsar para deshabilitar sincronización';
