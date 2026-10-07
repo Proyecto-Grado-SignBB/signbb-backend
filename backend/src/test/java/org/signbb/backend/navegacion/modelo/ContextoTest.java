@@ -1,4 +1,4 @@
-package org.signbb.backend.model;
+package org.signbb.backend.navegacion.modelo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.signbb.backend.navegacion.modelo.Contexto;
-import org.signbb.backend.navegacion.modelo.EstadoPaciente;
 
 /** Tests del TAD Contexto (migrados de tests/test_contexto.py). */
 class ContextoTest {

@@ -10,7 +10,7 @@ on:
       - 'Doxyfile'
       - 'README.md'
       - 'contenedores/MANUAL_CONTENEDORES.md'
-      - 'backend/src/test/java/org/signbb/backend/navegacion/motor/README.md'
+      - 'backend/src/test/java/org/signbb/backend/navegacion/README.md'
       - 'docs/img/**'
       - '.github/workflows/docs.yml'
 

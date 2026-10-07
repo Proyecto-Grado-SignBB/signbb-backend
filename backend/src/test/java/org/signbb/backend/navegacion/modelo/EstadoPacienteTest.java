@@ -1,4 +1,4 @@
-package org.signbb.backend.model;
+package org.signbb.backend.navegacion.modelo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -8,9 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
-import org.signbb.backend.navegacion.modelo.EstadoPaciente;
-import org.signbb.backend.navegacion.modelo.PasoRecorrido;
-import org.signbb.backend.navegacion.modelo.Sintoma;
 
 /** Tests del TAD EstadoPaciente (migrados de tests/test_estado_paciente.py). */
 class EstadoPacienteTest {

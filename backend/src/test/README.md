@@ -1,9 +1,9 @@
 # Pruebas del backend
 
 Este README documenta las **pruebas del cache Redis** (contenido clínico y
-sesiones de los recorridos). El resto de la suite — TADs del dominio, motor
-de navegación, parsers, persistencia jsonb — no cambia respecto a lo que ya
-existía.
+sesiones de los recorridos). Las pruebas del módulo de navegación (TADs,
+parsers, motor y servicio) están documentadas en
+[`java/org/signbb/backend/navegacion/README.md`](java/org/signbb/backend/navegacion/README.md).
 
 ## Ubicación
 

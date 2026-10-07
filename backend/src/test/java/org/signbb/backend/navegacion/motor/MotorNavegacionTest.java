@@ -4,11 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.clearInvocations;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
 
 import java.util.List;
 
@@ -20,14 +15,12 @@ import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoMapper;
 import org.signbb.backend.navegacion.modelo.EstadoPaciente;
 import org.signbb.backend.navegacion.modelo.GrafoClinico;
 import org.signbb.backend.navegacion.modelo.Nodo;
-import org.signbb.backend.navegacion.modelo.PasoRecorrido;
 import org.signbb.backend.navegacion.modelo.ResultadoPaso;
 import org.signbb.backend.navegacion.servicios.MotorNavegacion;
 import org.signbb.backend.reglas.datos.serializacion.BaseReglasMapper;
 import org.signbb.backend.reglas.modelo.BaseReglas;
 import org.signbb.backend.reglas.modelo.NivelAlerta;
 import org.signbb.backend.reglas.modelo.ReglaClinica;
-import org.signbb.backend.reglas.servicios.ServicioReglas;
 import org.signbb.backend.reglas.servicios.ServicioReglasImpl;
 
 /**
@@ -36,7 +29,10 @@ import org.signbb.backend.reglas.servicios.ServicioReglasImpl;
  * el motor puro, sin Spring ni base de datos, y ejercen las tres ramas del
  * Algoritmo 3 (corto-circuito por regla, avance por el grafo y cierre con el
  * nivel del desenlace) cruzando de la raíz al subgrafo, además de la
- * validación de respuestas antes de registrarlas.
+ * validación de respuestas antes de registrarlas. Volver a la pregunta
+ * anterior se prueba en {@link MotorNavegacionRetrocederTest}; el máximo de
+ * preguntas en {@link MotorNavegacionLimiteTest} y la cola de la selección
+ * múltiple en {@link MotorNavegacionColaTest}.
  */
 class MotorNavegacionTest {
 
@@ -217,129 +213,5 @@ class MotorNavegacionTest {
 
         assertThrows(IllegalArgumentException.class,
                 () -> motor.paso(grafo, base, e, terminal, "SI"));
-    }
-
-    @Test
-    void retrocederVuelveALaPreguntaAnteriorYBorraSuRespuesta() {
-        EstadoPaciente e = new EstadoPaciente("s");
-        Nodo coloracion = hastaColoracion(e);
-        Nodo signos = motor.paso(grafo, base, e, coloracion, "SI").preguntaActual();
-        assertEquals(id("pregunta_signos"), signos.getId());
-
-        ResultadoPaso atras = motor.retroceder(grafo, base, e);
-
-        assertFalse(atras.finalizado());
-        assertEquals(id("pregunta_coloracion"), atras.preguntaActual().getId());
-        assertTrue(e.getRespuestas(coloracion.getId()).isEmpty());
-        assertEquals(List.of("piel"), e.getRespuestas("pregunta_inicial"));
-
-        // Con otra respuesta el recorrido toma el otro camino.
-        ResultadoPaso paso = motor.paso(grafo, base, e, atras.preguntaActual(), "NO");
-        assertEquals(id("recomendacion_lactancia"), paso.destino().getId());
-        assertEquals(NivelAlerta.NORMAL, paso.nivel());
-    }
-
-    @Test
-    void retrocederTrasUnaReglaDeshaceSuDisparo() {
-        EstadoPaciente e = new EstadoPaciente("s");
-        Nodo signos = motor.paso(grafo, base, e, hastaColoracion(e), "SI").preguntaActual();
-        ResultadoPaso urgencia = motor.paso(grafo, base, e, signos, List.of("SOMNOLENCIA"));
-        assertEquals(NivelAlerta.URGENCIA, urgencia.nivel());
-        assertTrue(e.reglaDisparada(id("R1")));
-
-        ResultadoPaso atras = motor.retroceder(grafo, base, e);
-
-        assertEquals(id("pregunta_signos"), atras.preguntaActual().getId());
-        assertFalse(e.reglaDisparada(id("R1")), "la regla de la respuesta deshecha no debe seguir disparada");
-        assertTrue(e.getRespuestas(signos.getId()).isEmpty());
-        assertEquals(List.of("SI"), e.getRespuestas(id("pregunta_coloracion")));
-
-        ResultadoPaso paso = motor.paso(grafo, base, e, atras.preguntaActual(), List.of("NINGUNO"));
-        assertEquals(NivelAlerta.NORMAL, paso.nivel());
-        assertTrue(paso.razones().isEmpty());
-    }
-
-    @Test
-    void retrocederDosVecesVuelveDosPreguntas() {
-        EstadoPaciente e = new EstadoPaciente("s");
-        motor.paso(grafo, base, e, hastaColoracion(e), "SI");
-
-        motor.retroceder(grafo, base, e);
-        ResultadoPaso atras = motor.retroceder(grafo, base, e);
-
-        assertEquals("puente_piel", atras.preguntaActual().getId());
-        assertEquals(1, e.size());
-    }
-
-    @Test
-    void retrocederSinRespuestasSeRechaza() {
-        EstadoPaciente e = new EstadoPaciente("s");
-        motor.iniciar(e, grafo);
-
-        assertThrows(IllegalArgumentException.class, () -> motor.retroceder(grafo, base, e));
-    }
-
-    @Test
-    void cadaRespuestaApilaUnPasoConLasReglasQueMarco() {
-        EstadoPaciente e = new EstadoPaciente("s");
-        Nodo signos = motor.paso(grafo, base, e, hastaColoracion(e), "SI").preguntaActual();
-        motor.paso(grafo, base, e, signos, List.of("SOMNOLENCIA"));
-
-        List<PasoRecorrido> pasos = e.pasos();
-        assertEquals(4, pasos.size());
-        PasoRecorrido cima = pasos.get(3);
-        assertEquals(id("pregunta_signos"), cima.idPregunta());
-        assertEquals(List.of("SOMNOLENCIA"), cima.respuestas());
-        assertEquals(List.of(id("R1")), cima.reglasMarcadas());
-        // Las respuestas anteriores no marcaron ninguna regla.
-        assertTrue(pasos.get(2).reglasMarcadas().isEmpty());
-    }
-
-    @Test
-    void retrocederDesmarcaSoloLasReglasDeEsePasoYPermiteVolverADispararlas() {
-        EstadoPaciente e = new EstadoPaciente("s");
-        Nodo signos = motor.paso(grafo, base, e, hastaColoracion(e), "SI").preguntaActual();
-        motor.paso(grafo, base, e, signos, List.of("SOMNOLENCIA"));
-
-        ResultadoPaso atras = motor.retroceder(grafo, base, e);
-        assertFalse(e.reglaDisparada(id("R1")));
-        assertEquals(3, e.pasos().size());
-
-        ResultadoPaso otraVez = motor.paso(grafo, base, e, atras.preguntaActual(), List.of("SOMNOLENCIA"));
-        assertEquals(NivelAlerta.URGENCIA, otraVez.nivel());
-        assertEquals(List.of(id("R1")), idsRegla(otraVez.razones()));
-    }
-
-    @Test
-    void retrocederNoReevaluaLasReglas() {
-        ServicioReglas reglas = spy(new ServicioReglasImpl());
-        MotorNavegacion conEspia = new MotorNavegacion(reglas);
-        EstadoPaciente e = new EstadoPaciente("s");
-        Nodo inicial = conEspia.iniciar(e, grafo).preguntaActual();
-        Nodo puente = conEspia.paso(grafo, base, e, inicial, "piel").preguntaActual();
-        Nodo coloracion = conEspia.paso(grafo, base, e, puente, "coloracion_amarilla").preguntaActual();
-        conEspia.paso(grafo, base, e, coloracion, "SI");
-        clearInvocations(reglas);
-
-        ResultadoPaso atras = conEspia.retroceder(grafo, base, e);
-
-        assertEquals(id("pregunta_coloracion"), atras.preguntaActual().getId());
-        verify(reglas, never()).evaluar(any(), any());
-    }
-
-    @Test
-    void sinPilaRetrocederReproduceElRecorrido() {
-        // Estado armado a mano, como una sesión guardada antes de existir la pila.
-        EstadoPaciente e = new EstadoPaciente("s");
-        e.registrarRespuesta("pregunta_inicial", "piel");
-        e.registrarRespuesta("puente_piel", "coloracion_amarilla");
-
-        ResultadoPaso atras = motor.retroceder(grafo, base, e);
-
-        assertEquals("puente_piel", atras.preguntaActual().getId());
-        assertTrue(e.getRespuestas("puente_piel").isEmpty());
-        // La reproducción deja la pila reconstruida.
-        assertEquals(1, e.pasos().size());
-        assertEquals("pregunta_inicial", e.pasos().get(0).idPregunta());
     }
 }

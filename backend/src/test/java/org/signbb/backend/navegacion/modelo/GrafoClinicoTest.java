@@ -1,4 +1,4 @@
-package org.signbb.backend.model;
+package org.signbb.backend.navegacion.modelo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -8,10 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.signbb.backend.navegacion.modelo.GrafoClinico;
-import org.signbb.backend.navegacion.modelo.Nodo;
-import org.signbb.backend.navegacion.modelo.PasoCausal;
-import org.signbb.backend.navegacion.modelo.Respuesta;
 
 /** Tests del TAD GrafoClinico (migrados de tests/test_grafo_clinico.py). */
 class GrafoClinicoTest {
