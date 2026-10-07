@@ -136,4 +136,32 @@ Desde `backend/`:
 
 ## Resultados en GitHub Actions
 
-_Pendiente: se completa con el run del CI._
+Corrida del workflow `build` (`./mvnw -B verify -Dspring.profiles.active=dev`)
+sobre el commit `1849ef7` de la rama `tests-navegacion`, el 7 de octubre de 2026:
+[run 37561459160](https://github.com/Proyecto-Grado-SignBB/signbb-backend/actions/runs/37561459160).
+**BUILD SUCCESS.**
+
+| Clase | Tests | Fallos | Errores |
+|---|---:|---:|---:|
+| `modelo.EstadoPacienteTest` | 10 | 0 | 0 |
+| `modelo.EstadoPacienteNavegacionTest` | 10 | 0 | 0 |
+| `modelo.GrafoClinicoTest` | 25 | 0 | 0 |
+| `modelo.NodoTest` | 6 | 0 | 0 |
+| `modelo.RespuestaTest` | 4 | 0 | 0 |
+| `modelo.ContextoTest` | 7 | 0 | 0 |
+| `modelo.ResultadoPasoRecomendacionesTest` | 3 | 0 | 0 |
+| `datos.serializacion.GrafoClinicoMapperTest` | 15 | 0 | 0 |
+| `datos.serializacion.CompositorGrafoClinicoTest` | 14 | 0 | 0 |
+| `datos.serializacion.JsonParserTest` | 11 | 0 | 0 |
+| `motor.MotorNavegacionTest` | 12 | 0 | 0 |
+| `motor.MotorNavegacionRetrocederTest` | 9 | 0 | 0 |
+| `motor.MotorNavegacionLimiteTest` | 8 | 0 | 0 |
+| `motor.MotorNavegacionColaTest` | 23 | 0 | 0 |
+| `motor.OrdenColaTest` | 7 | 0 | 0 |
+| `servicios.ServicioNavegacionImplTest` | 9 | 0 | 0 |
+| **Módulo de navegación** | **173** | **0** | **0** |
+
+La suite completa del backend corrió **231 pruebas, 0 fallos, 0 errores y 3
+omitidas**. Las omitidas son las de integración con Redis de
+`CacheRedisIntegracionTest`, que se saltan solas en el perfil `dev` del CI.
+
