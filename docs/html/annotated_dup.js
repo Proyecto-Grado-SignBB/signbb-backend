@@ -3,6 +3,41 @@ var annotated_dup =
     [ "org", "namespaceorg.html", [
       [ "signbb", "namespaceorg_1_1signbb.html", [
         [ "backend", "namespaceorg_1_1signbb_1_1backend.html", [
+          [ "autoria", "namespaceorg_1_1signbb_1_1backend_1_1autoria.html", [
+            [ "controladores", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html", [
+              [ "ControladorAutoria", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1_controlador_autoria.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1_controlador_autoria" ],
+              [ "DespuesDeRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1_despues_de_request.html", null ],
+              [ "DestinoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1_destino_request.html", null ],
+              [ "ManejadorErroresAutoria", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1_manejador_errores_autoria.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1_manejador_errores_autoria" ],
+              [ "NodoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1_nodo_request.html", null ],
+              [ "OpcionRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1_opcion_request.html", null ],
+              [ "SubgrafoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1_subgrafo_request.html", null ]
+            ] ],
+            [ "datos", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos.html", [
+              [ "entidades", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1entidades.html", [
+                [ "BorradorSubgrafoEntity", "classorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1entidades_1_1_borrador_subgrafo_entity.html", null ]
+              ] ],
+              [ "repositorios", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios.html", [
+                [ "RepositorioBorradorSubgrafo", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1_repositorio_borrador_subgrafo.html", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1_repositorio_borrador_subgrafo" ]
+              ] ]
+            ] ],
+            [ "modelo", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1modelo.html", [
+              [ "Desenlace", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1_desenlace.html", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1_desenlace" ],
+              [ "EstadoBorrador", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1_estado_borrador.html", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1_estado_borrador" ],
+              [ "Gravedad", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1_gravedad.html", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1_gravedad" ],
+              [ "TipoNodo", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1_tipo_nodo.html", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1_tipo_nodo" ]
+            ] ],
+            [ "servicios", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios.html", [
+              [ "CompiladorSubgrafo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1_compilador_subgrafo.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1_compilador_subgrafo" ],
+              [ "ContenidoInvalidoException", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1_contenido_invalido_exception.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1_contenido_invalido_exception" ],
+              [ "EdicionInvalidaException", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1_edicion_invalida_exception.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1_edicion_invalida_exception" ],
+              [ "EditorLienzo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1_editor_lienzo.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1_editor_lienzo" ],
+              [ "PublicadorSubgrafo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1_publicador_subgrafo.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1_publicador_subgrafo" ],
+              [ "ServicioAutoria", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1_servicio_autoria.html", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1_servicio_autoria" ],
+              [ "ServicioAutoriaImpl", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1_servicio_autoria_impl.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1_servicio_autoria_impl" ],
+              [ "ValidadorLienzo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1_validador_lienzo.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1_validador_lienzo" ]
+            ] ]
+          ] ],
           [ "cache", null, [
             [ "CacheNoDisponibleException", "classorg_1_1signbb_1_1backend_1_1cache_1_1_cache_no_disponible_exception.html", null ],
             [ "RepositorioSesionRedis", "classorg_1_1signbb_1_1backend_1_1cache_1_1_repositorio_sesion_redis.html", "classorg_1_1signbb_1_1backend_1_1cache_1_1_repositorio_sesion_redis" ],

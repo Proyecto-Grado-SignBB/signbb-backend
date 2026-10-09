@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['leerrecurso_0',['leerRecurso',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1_contenido_ejemplo.html#afed65d670f1a78ad68e14a28f56b77a6',1,'org::signbb::backend::navegacion::datos::serializacion::ContenidoEjemplo']]]
+  ['leerrecurso_0',['leerRecurso',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1_contenido_ejemplo.html#afed65d670f1a78ad68e14a28f56b77a6',1,'org::signbb::backend::navegacion::datos::serializacion::ContenidoEjemplo']]],
+  ['listar_1',['listar',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1_controlador_autoria.html#a232620debba18ebe5af23d029f41e20c',1,'org.signbb.backend.autoria.controladores.ControladorAutoria.listar()'],['../interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1_servicio_autoria.html#addb8dabe2e6174fe8184a6060febbf61',1,'org.signbb.backend.autoria.servicios.ServicioAutoria.listar()'],['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1_servicio_autoria_impl.html#a323add019d5aa69f5910f78fc11a9017',1,'org.signbb.backend.autoria.servicios.ServicioAutoriaImpl.listar()']]]
 ];

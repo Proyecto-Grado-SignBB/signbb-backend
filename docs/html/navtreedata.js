@@ -47,16 +47,30 @@ var NAVTREE =
       [ "Cómo ejecutarlas", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2_r_e_a_d_m_e.html#autotoc_md21", null ],
       [ "Resultados en GitHub Actions", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2_r_e_a_d_m_e.html#autotoc_md22", null ]
     ] ],
+    [ "Pruebas del módulo de autoría", "md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2_r_e_a_d_m_e.html", [
+      [ "Mapa de la suite", "md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2_r_e_a_d_m_e.html#autotoc_md24", null ],
+      [ "Fixture", "md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2_r_e_a_d_m_e.html#autotoc_md25", null ],
+      [ "Qué se prueba y por qué importa", "md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2_r_e_a_d_m_e.html#autotoc_md26", [
+        [ "Edición (<span class=\"tt\">EditorLienzoTest</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2_r_e_a_d_m_e.html#autotoc_md27", null ],
+        [ "Avisos (<span class=\"tt\">ValidadorLienzoTest</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2_r_e_a_d_m_e.html#autotoc_md28", null ],
+        [ "Compilar (<span class=\"tt\">CompiladorSubgrafoTest</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2_r_e_a_d_m_e.html#autotoc_md29", null ],
+        [ "Publicar (<span class=\"tt\">PublicadorSubgrafoTest</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2_r_e_a_d_m_e.html#autotoc_md30", null ],
+        [ "Servicio (<span class=\"tt\">ServicioAutoriaImplTest</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2_r_e_a_d_m_e.html#autotoc_md31", null ],
+        [ "API (<span class=\"tt\">ControladorAutoriaTest</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2_r_e_a_d_m_e.html#autotoc_md32", null ],
+        [ "Punta a punta (<span class=\"tt\">AutoriaIntegracionTest</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2_r_e_a_d_m_e.html#autotoc_md33", null ]
+      ] ],
+      [ "Cómo ejecutarlas", "md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2_r_e_a_d_m_e.html#autotoc_md34", null ]
+    ] ],
     [ "Grafo sistema", "md_grafo__sistema_2reporte__grafo.html", [
-      [ "Indice", "md_grafo__sistema_2reporte__grafo.html#autotoc_md24", null ],
-      [ "Grafo Raíz", "md_grafo__sistema_2reporte__grafo.html#autotoc_md25", null ],
-      [ "Grafo Gastrointestinal", "md_grafo__sistema_2reporte__grafo.html#autotoc_md26", null ],
-      [ "Grafo Respiración", "md_grafo__sistema_2reporte__grafo.html#autotoc_md27", null ],
-      [ "Grafo Activo y color", "md_grafo__sistema_2reporte__grafo.html#autotoc_md28", null ],
-      [ "Herramientas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md29", [
-        [ "Construir grafos visualmente", "md_grafo__sistema_2reporte__grafo.html#autotoc_md30", null ],
-        [ "Representacion visual de base de reglas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md31", null ],
-        [ "Representacion visual de grafo", "md_grafo__sistema_2reporte__grafo.html#autotoc_md32", null ]
+      [ "Indice", "md_grafo__sistema_2reporte__grafo.html#autotoc_md36", null ],
+      [ "Grafo Raíz", "md_grafo__sistema_2reporte__grafo.html#autotoc_md37", null ],
+      [ "Grafo Gastrointestinal", "md_grafo__sistema_2reporte__grafo.html#autotoc_md38", null ],
+      [ "Grafo Respiración", "md_grafo__sistema_2reporte__grafo.html#autotoc_md39", null ],
+      [ "Grafo Activo y color", "md_grafo__sistema_2reporte__grafo.html#autotoc_md40", null ],
+      [ "Herramientas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md41", [
+        [ "Construir grafos visualmente", "md_grafo__sistema_2reporte__grafo.html#autotoc_md42", null ],
+        [ "Representacion visual de base de reglas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md43", null ],
+        [ "Representacion visual de grafo", "md_grafo__sistema_2reporte__grafo.html#autotoc_md44", null ]
       ] ]
     ] ],
     [ "Paquetes", "namespaces.html", [
@@ -71,8 +85,8 @@ var NAVTREE =
       [ "Índice de clases", "classes.html", null ],
       [ "Jerarquía de clases", "hierarchy.html", "hierarchy" ],
       [ "Miembros de clases", "functions.html", [
-        [ "Todos", "functions.html", null ],
-        [ "Funciones", "functions_func.html", null ],
+        [ "Todos", "functions.html", "functions_dup" ],
+        [ "Funciones", "functions_func.html", "functions_func" ],
         [ "Variables", "functions_vars.html", null ]
       ] ]
     ] ]
@@ -82,8 +96,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1_nodo.html#aae1e6b5a22c6314464aa82cf989bcd21",
-"namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion.html#a542aa5e19744a44057ea8f0e570e9680"
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1_estado_paciente.html#a394598fc9388a323db8a905d374a2593",
+"classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1_regla_clinica.html#a5adcc4094019e96306b4f337419498a9",
+"namespaceorg_1_1signbb_1_1backend_1_1navegacion.html"
 ];
 
 const SYNCONMSG = 'pulsar para deshabilitar sincronización';

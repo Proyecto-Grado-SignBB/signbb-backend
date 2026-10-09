@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['clave_5fgrafo_0',['CLAVE_GRAFO',['../classorg_1_1signbb_1_1backend_1_1cache_1_1_resolvedor_contenido_clinico.html#a21363e324f99818ccbcb908b35b96406',1,'org::signbb::backend::cache::ResolvedorContenidoClinico']]],
-  ['clave_5freglas_1',['CLAVE_REGLAS',['../classorg_1_1signbb_1_1backend_1_1cache_1_1_resolvedor_contenido_clinico.html#a4762a98adcfc4dc2217bfe34fdcac413',1,'org::signbb::backend::cache::ResolvedorContenidoClinico']]],
-  ['consultar_5fmedico_2',['CONSULTAR_MEDICO',['../enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1_nivel_alerta.html#acf99b1d6e0fbafc4d69d09f7b5328945',1,'org::signbb::backend::reglas::modelo::NivelAlerta']]]
+  ['borrador_0',['BORRADOR',['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1_estado_borrador.html#a5e4cb3763078ac9a4963f667db5bb538',1,'org::signbb::backend::autoria::modelo::EstadoBorrador']]]
 ];
