@@ -226,7 +226,7 @@ Cómo ejecutarlas</h1>
 ./mvnw verify                                           # suite completa, como el CI (contenedores arriba)
 </pre><h1 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
 Resultados en GitHub Actions</h1>
-<p>Corrida del workflow <span class="tt">build</span> (<span class="tt">./mvnw -B verify -Dspring.profiles.active=dev</span>) sobre el commit <span class="tt">1849ef7</span> de la rama <span class="tt">tests-navegacion</span>, el 7 de octubre de 2026: <a href="https://github.com/Proyecto-Grado-SignBB/signbb-backend/actions/runs/37561459160">run 37561459160</a>. <b>BUILD SUCCESS.</b></p>
+<p>Corrida del workflow <span class="tt">build</span> (<span class="tt">./mvnw -B verify</span>, con PostgreSQL y Redis como servicios) sobre el commit <span class="tt">518f775</span>, el merge de <span class="tt">tests-navegacion</span> en <span class="tt">navegacion</span>, el 9 de octubre de 2026: <a href="https://github.com/Proyecto-Grado-SignBB/signbb-backend/actions/runs/37948316527">run 37948316527</a>. <b>BUILD SUCCESS.</b></p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Clase  </th><th class="markdownTableHeadRight">Tests  </th><th class="markdownTableHeadRight">Fallos  </th><th class="markdownTableHeadRight">Errores  </th></tr>
@@ -251,7 +251,7 @@ Resultados en GitHub Actions</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">datos.serializacion.JsonParserTest</span>  </td><td class="markdownTableBodyRight">11  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">motor.MotorNavegacionTest</span>  </td><td class="markdownTableBodyRight">12  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">motor.MotorNavegacionTest</span>  </td><td class="markdownTableBodyRight">10  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">motor.MotorNavegacionRetrocederTest</span>  </td><td class="markdownTableBodyRight">9  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
 <tr class="markdownTableRowOdd">
@@ -263,9 +263,9 @@ Resultados en GitHub Actions</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">servicios.ServicioNavegacionImplTest</span>  </td><td class="markdownTableBodyRight">9  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>Módulo de navegación</b>  </td><td class="markdownTableBodyRight"><b>173</b>  </td><td class="markdownTableBodyRight"><b>0</b>  </td><td class="markdownTableBodyRight"><b>0</b>  </td></tr>
+<td class="markdownTableBodyNone"><b>Módulo de navegación</b>  </td><td class="markdownTableBodyRight"><b>171</b>  </td><td class="markdownTableBodyRight"><b>0</b>  </td><td class="markdownTableBodyRight"><b>0</b>  </td></tr>
 </table>
-<p>La suite completa del backend corrió <b>231 pruebas, 0 fallos, 0 errores y 3 omitidas</b>. Las omitidas son las de integración con Redis de <span class="tt">CacheRedisIntegracionTest</span>, que se saltan solas en el perfil <span class="tt">dev</span> del CI. </p>
+<p>La suite completa del backend corrió <b>234 pruebas, 0 fallos, 0 errores y 0 omitidas</b>: con Redis como servicio del CI, las de integración de <span class="tt">CacheRedisIntegracionTest</span> ya no se saltan. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
