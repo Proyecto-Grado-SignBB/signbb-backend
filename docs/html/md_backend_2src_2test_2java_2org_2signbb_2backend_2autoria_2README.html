@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SignBB: Pruebas del módulo de autoría</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SignBB
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2README.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Pruebas del módulo de autoría </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md23"></a></p>
+<p>Pruebas del paquete <span class="tt"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1autoria.html" title="Módulo de autoría: el médico arma un subgrafo clínico en un lienzo (una pregunta y un &quot;+&quot; por cada re...">org.signbb.backend.autoria</a></span>, el que permite que un médico arme un subgrafo clínico en el lienzo (un "+" en cada respuesta), vea los avisos y lo publique para que quede navegable en la app de la cuidadora. Esta entrega cubre subgrafos <b>sin reglas</b>.</p>
+<p>Las unitarias son JUnit 5 y Mockito, sin Spring, base de datos ni Redis. La de integración (<span class="tt">AutoriaIntegracionTest</span>) levanta la aplicación completa con PostgreSQL y Redis, como el CI.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md24"></a>
+Mapa de la suite</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Paquete  </th><th class="markdownTableHeadNone">Clase  </th><th class="markdownTableHeadRight">Tests  </th><th class="markdownTableHeadNone">Qué cubre  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">EditorLienzoTest</span>  </td><td class="markdownTableBodyRight">18  </td><td class="markdownTableBodyNone">el "+", enlazar a una pregunta existente, editar y eliminar nodos; lo que el editor rechaza  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ValidadorLienzoTest</span>  </td><td class="markdownTableBodyRight">10  </td><td class="markdownTableBodyNone">un caso por cada aviso; nodos sueltos y choque de gravedades  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">CompiladorSubgrafoTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyNone">lienzo → <span class="tt">GrafoClinicoJson</span>: pesos, tipos, aristas y metadata  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">PublicadorSubgrafoTest</span>  </td><td class="markdownTableBodyRight">8  </td><td class="markdownTableBodyNone">upsert del subgrafo y de la opción en la raíz; invalidar el contenido; rechazos  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioAutoriaImplTest</span>  </td><td class="markdownTableBodyRight">10  </td><td class="markdownTableBodyNone">categorías, ids de grafo, datos del subgrafo, estados y errores  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">controladores</span>  </td><td class="markdownTableBodyNone"><span class="tt">ControladorAutoriaTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyNone">códigos HTTP y cuerpos de error de la API <span class="tt">/api/autoria</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">(raíz)  </td><td class="markdownTableBodyNone"><span class="tt">AutoriaIntegracionTest</span>  </td><td class="markdownTableBodyRight">1  </td><td class="markdownTableBodyNone">de punta a punta: armar, publicar y recorrer como cuidadora  </td></tr>
+</table>
+<p>En total son <b>61 pruebas</b>.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md25"></a>
+Fixture</h1>
+<p><span class="tt">servicios/LienzoFiebre</span> arma, con las mismas operaciones del editor, el lienzo de fiebre del deck: </p><pre class="fragment">¿Cuánto marca el termómetro?
+├─ Menos de 38 °C (LEVE) ──────┐
+├─ Entre 38 y 39 °C (MODERADA) ┴→ ¿Está decaído o no quiere comer?
+│                                  ├─ Sí (MODERADA) → Consultar al médico
+│                                  └─ No (LEVE) → Recomendación
+└─ Más de 39 °C (GRAVE) → Lleve al bebé a urgencias ahora.
+</pre><p>"Menos de 38 °C" llega a una pregunta que ya existía (la opción "Pregunta
+existente" del panel), así que esa pregunta recibe dos respuestas de distinta gravedad. El borrador de prueba es <span class="tt">grafo_fiebre</span>, de la categoría neurológica (<span class="tt">puente_neuro</span>).</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md26"></a>
+Qué se prueba y por qué importa</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md27"></a>
+Edición (<span class="tt">EditorLienzoTest</span>)</h2>
+<ul>
+<li><b>El "+".</b> Crea el nodo y conecta la respuesta. Sin respuesta crea la primera pregunta; una segunda primera pregunta, o empezar con una conclusión, se rechaza. Una respuesta que ya tiene camino no acepta otro.</li>
+<li><b>Pregunta existente.</b> Solo se puede ir a una pregunta, no a la misma, y nunca a una que ya lleva de vuelta al origen: <b>no se pueden crear círculos</b>. Quitar el enlace deja la respuesta como "+" otra vez.</li>
+<li><b>Editar.</b> Las respuestas que vienen con id conservan su destino, las nuevas nacen como "+" y el tipo del nodo no cambia.</li>
+<li><b>Eliminar.</b> Las respuestas que llegaban vuelven a ser "+" y se poda solo la rama que quedó sin camino; lo que ya estaba suelto se conserva.</li>
+<li>Los ids los genera el servidor (<span class="tt">pregunta_N</span>, <span class="tt">conclusion_N</span>, <span class="tt">r_N</span>) y no se reutilizan.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md28"></a>
+Avisos (<span class="tt">ValidadorLienzoTest</span>)</h2>
+<ul>
+<li><b>Bloquean la publicación:</b> sin primera pregunta, texto vacío, menos de 2 respuestas, respuesta repetida, respuesta sin camino, conclusión sin desenlace y círculo.</li>
+<li>Los mensajes están en lenguaje humano, por ejemplo: «La respuesta "Más de
+  39 °C" de "¿Cuánto marca el termómetro?" todavía no dice qué pasa después.».</li>
+<li><b>No bloquea:</b> un nodo suelto. Avisa que no se publicará.</li>
+<li><b>No se avisa</b> el choque de gravedades: se resuelve al compilar con la mayor, como se acordó.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md29"></a>
+Compilar (<span class="tt">CompiladorSubgrafoTest</span>)</h2>
+<ul>
+<li>El <span class="tt">peso</span> de un nodo es la <b>mayor gravedad</b> de las respuestas que llegan a él; la primera pregunta lleva 1.</li>
+<li>"¿Puede marcar varias?" da <span class="tt">SELECCION_MULTIPLE</span>; si no, <span class="tt">SELECCION_UNICA</span>.</li>
+<li>Las conclusiones quedan como <span class="tt">terminal</span> con su desenlace y el mensaje como <span class="tt">label</span>.</li>
+<li>Los nodos sueltos no se publican.</li>
+<li>La salida pasa por <span class="tt">GrafoClinicoMapper.desde</span>, la misma validación estricta que el contenido del sistema.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
+Publicar (<span class="tt">PublicadorSubgrafoTest</span>)</h2>
+<ul>
+<li>Guarda el subgrafo y agrega, en la pregunta puente del grafo raíz, la opción del subgrafo y su nodo <span class="tt">ref_&lt;grafoId&gt;</span>. <b>Republicar no duplica</b> ni la opción ni el nodo.</li>
+<li>Después del commit invalida el contenido en Redis y recarga el que está en memoria (<span class="tt">ContextoClinico.recargar()</span>), en ese orden.</li>
+<li><b>No guarda nada</b> si hay avisos bloqueantes, si la opción ya existe en la pregunta puente (por ejemplo "Iniciar"), si la pregunta puente no está o si el contenido compuesto no pasa la validación.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
+Servicio (<span class="tt">ServicioAutoriaImplTest</span>)</h2>
+<ul>
+<li>Las categorías salen de las preguntas puente del grafo raíz.</li>
+<li>El <span class="tt">grafoId</span> se arma con el nombre, sin tildes ni signos (<span class="tt">grafo_fiebre_en_ninos_pequenos</span>) y con sufijo si ya existe (<span class="tt">grafo_respiracion_3</span>).</li>
+<li>Editar un subgrafo publicado lo deja en <b>CAMBIOS_SIN_PUBLICAR</b>; publicar lo vuelve a <b>PUBLICADO</b>.</li>
+<li>Un borrador publicado no se puede borrar; un id inexistente da 404.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md32"></a>
+API (<span class="tt">ControladorAutoriaTest</span>)</h2>
+<ul>
+<li>Crear responde 201 y borrar 204.</li>
+<li>Una edición inválida responde <b>422 con <span class="tt">{mensaje, avisos: []}</span></b> y publicar con avisos responde 422 con la lista.</li>
+<li>Un id inexistente da 404 y una edición concurrente (<span class="tt">@Version</span>) da 409.</li>
+<li>Quitar el destino de una respuesta acepta <span class="tt">{"nodoId": null}</span>.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md33"></a>
+Punta a punta (<span class="tt">AutoriaIntegracionTest</span>)</h2>
+<p>Arma con el servicio un subgrafo de fiebre (una pregunta y dos conclusiones), lo publica y lo recorre con <span class="tt">ServicioNavegacion</span>: <span class="tt">pregunta_inicial → neurologico → puente_neuro → opción nueva → pregunta
+del subgrafo → "Más de 39 °C" → URGENCIA</span>. En <span class="tt">puente_neuro</span> siguen las opciones del sistema y aparece la nueva. No es <span class="tt">@Transactional</span>, porque la recarga del contenido ocurre después del commit; al terminar borra lo que creó, restaura el grafo raíz e invalida el contenido.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md34"></a>
+Cómo ejecutarlas</h1>
+<p>Desde <span class="tt">backend/</span>: </p><pre class="fragment">./mvnw test -Dtest='org.signbb.backend.autoria.**'   # unitarias (no necesitan PostgreSQL ni Redis)
+./mvnw verify                                        # suite completa, como el CI (contenedores arriba)
+</pre> </div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
+  </ul>
+</div>
+</body>
+</html>

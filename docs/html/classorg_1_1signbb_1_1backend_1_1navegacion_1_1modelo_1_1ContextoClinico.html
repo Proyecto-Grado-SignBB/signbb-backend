@@ -126,11 +126,34 @@ synchronized <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1
 <tr class="memitem:a81a1376e12179a5b9ed00d50086d8b02" id="r_a81a1376e12179a5b9ed00d50086d8b02"><td class="memItemLeft"><a id="a81a1376e12179a5b9ed00d50086d8b02" name="a81a1376e12179a5b9ed00d50086d8b02"></a>
 synchronized <a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html">BaseReglas</a>&#160;</td><td class="memItemRight"><b>getBase</b> ()</td></tr>
 <tr class="memdesc:a81a1376e12179a5b9ed00d50086d8b02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base de reglas en memoria; la resuelve del cache/BD en el primer uso. <br /></td></tr>
+<tr class="memitem:a0ecbc0c6c7d015c1b44caf5ae06b1dba" id="r_a0ecbc0c6c7d015c1b44caf5ae06b1dba"><td class="memItemLeft">synchronized void&#160;</td><td class="memItemRight"><a class="el" href="#a0ecbc0c6c7d015c1b44caf5ae06b1dba">recargar</a> ()</td></tr>
+<tr class="memdesc:a0ecbc0c6c7d015c1b44caf5ae06b1dba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Descarta el contenido en memoria para que el próximo uso lo vuelva a resolver.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Conserva en memoria el grafo clínico y la base de reglas usados por el módulo de navegación. </p>
 <p>MODIFICADO (cache): el contenido ya no se lee del classpath en el constructor. Se resuelve perezosamente en el primer uso a través de <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico.html">ResolvedorContenidoClinico</a></code> (Redis como copia caliente, base de datos como fuente de verdad) y el TAD resultante queda en memoria para atender las peticiones: Redis nunca está en el camino de cada request, y la pereza garantiza que la siembra inicial (<code class="JavaDocCode">DatabaseInit</code>) haya corrido antes de la primera resolución. </p>
-</div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
+<a id="a0ecbc0c6c7d015c1b44caf5ae06b1dba" name="a0ecbc0c6c7d015c1b44caf5ae06b1dba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ecbc0c6c7d015c1b44caf5ae06b1dba">&#9670;&#160;</a></span>recargar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">synchronized void org.signbb.backend.navegacion.modelo.ContextoClinico.recargar </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Descarta el contenido en memoria para que el próximo uso lo vuelva a resolver. </p>
+<p>Lo llama el módulo de autoría después de publicar un subgrafo, junto con <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico.html#aa5c8527bcef0cf207884d06a71f355db">ResolvedorContenidoClinico#invalidar()</a></code>. </p>
+
+</div>
+</div>
+<hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/main/java/org/signbb/backend/navegacion/modelo/<b>ContextoClinico.java</b></li>
 </ul>
 </div><!-- contents -->

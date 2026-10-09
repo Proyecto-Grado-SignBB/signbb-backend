@@ -137,7 +137,7 @@ Mapa de la suite</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">datos.serializacion</span>  </td><td class="markdownTableBodyNone"><span class="tt">JsonParserTest</span>  </td><td class="markdownTableBodyRight">11  </td><td class="markdownTableBodyNone">lectura de reglas en FND y rechazo de reglas mal formadas  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">motor</span>  </td><td class="markdownTableBodyNone"><span class="tt">MotorNavegacionTest</span>  </td><td class="markdownTableBodyRight">12  </td><td class="markdownTableBodyNone">recorrido sobre el contenido clínico real: alertas por reglas y validación de respuestas  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">motor</span>  </td><td class="markdownTableBodyNone"><span class="tt">MotorNavegacionTest</span>  </td><td class="markdownTableBodyRight">10  </td><td class="markdownTableBodyNone">recorrido sobre el contenido del sistema: alertas por reglas y validación de respuestas  </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">motor</span>  </td><td class="markdownTableBodyNone"><span class="tt">MotorNavegacionRetrocederTest</span>  </td><td class="markdownTableBodyRight">9  </td><td class="markdownTableBodyNone">volver a la pregunta anterior con la pila de pasos  </td></tr>
 <tr class="markdownTableRowEven">
@@ -149,12 +149,12 @@ Mapa de la suite</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioNavegacionImplTest</span>  </td><td class="markdownTableBodyRight">9  </td><td class="markdownTableBodyNone">la fachada de la API: iniciar, responder, consultar, retroceder y errores  </td></tr>
 </table>
-<p>En total son <b>173 pruebas</b>. Las pruebas de la sesión en Redis (<span class="tt">cache/RepositorioSesionRedisTest</span> y <span class="tt">cache/ColaSeleccionMultipleRedisIntegracionTest</span>) están documentadas en <span class="tt">backend/src/test/README.md</span>.</p>
+<p>En total son <b>171 pruebas</b>. Las pruebas de la sesión en Redis (<span class="tt">cache/RepositorioSesionRedisTest</span> y <span class="tt">cache/ColaSeleccionMultipleRedisIntegracionTest</span>) están documentadas en <span class="tt">backend/src/test/README.md</span>.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
 Fixtures</h1>
 <ul>
-<li><b>Contenido clínico real.</b> Es el que usan <span class="tt">MotorNavegacionTest</span>, <span class="tt">MotorNavegacionRetrocederTest</span> y <span class="tt">ServicioNavegacionImplTest</span>: <span class="tt">ContenidoEjemplo.compuesto()</span>, que une el grafo raíz con el subgrafo de ictericia y sus reglas, tal como lo siembra <span class="tt">DatabaseInit</span>. El camino que se prueba es <span class="tt">pregunta_inicial → puente_piel → pregunta_coloracion →
-  pregunta_signos</span>. En las reglas, R1 (coloración + somnolencia) da URGENCIA, R2 (come menos + el amarillo se extiende) da URGENCIA y R3 (el amarillo se extiende) da CONSULTAR_MEDICO.</li>
+<li><b>Contenido del sistema.</b> Es el que usan <span class="tt">MotorNavegacionTest</span>, <span class="tt">MotorNavegacionRetrocederTest</span> y <span class="tt">ServicioNavegacionImplTest</span>: <span class="tt">ContenidoEjemplo.compuesto()</span>, que une el grafo raíz con los subgrafos de respiración, gastrointestinal y actividad/color (<span class="tt">static/grafo_sistema/</span>) y sus reglas, tal como lo siembra <span class="tt">DatabaseInit</span>. El camino que más se prueba es <span class="tt">pregunta_inicial → puente_respiracion → q_resp_urgencia →
+  q_resp_consulta → q_resp_normal</span>. En las reglas, un signo de alarma (por ejemplo "Quejido al respirar") dispara R_RESP_URG (URGENCIA) y uno de alerta media dispara R_RESP_CON (CONSULTAR_MEDICO); sin signos se cierra en NORMAL.</li>
 <li><b>Grafos mínimos armados en código.</b> Los usan <span class="tt">MotorNavegacionLimiteTest</span> (una cadena de 12 preguntas), <span class="tt">MotorNavegacionColaTest</span> y <span class="tt">OrdenColaTest</span>. Sirven para casos que el contenido real no muestra, como recorridos largos o varias ramas pendientes.</li>
 </ul>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
@@ -163,14 +163,14 @@ Qué se prueba y por qué importa</h1>
 Alertas y validación (<span class="tt">MotorNavegacionTest</span>)</h2>
 <ul>
 <li>El recorrido cruza de la raíz al subgrafo y una respuesta sin signos de alarma cierra en <b>NORMAL</b>.</li>
-<li>Cada regla clínica lleva a su desenlace. Si se disparan dos reglas a la vez (R2 y R3), <b>gana el nivel más grave</b>: el resultado nunca es menos grave de lo que indica la evidencia.</li>
+<li>Cada regla clínica lleva a su desenlace: un signo de alarma da URGENCIA y uno de alerta media da CONSULTAR_MEDICO. Que <b>gane el nivel más grave</b> cuando se disparan varias reglas se prueba en <span class="tt">OrdenColaTest</span> y <span class="tt">MotorNavegacionColaTest</span>.</li>
 <li>Una respuesta inválida (que no es una opción de la pregunta, varias opciones en una pregunta de selección única, una opción repetida o una respuesta sobre un terminal) se <b>rechaza antes de tocar el estado</b>. Así no quedan hechos falsos que después disparen reglas.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
 Retroceder (<span class="tt">MotorNavegacionRetrocederTest</span>)</h2>
 <p>Cada respuesta apila un paso con la pregunta, las opciones y las reglas que disparó. Retroceder lo desapila.</p><ul>
 <li>Vuelve a la pregunta anterior, borra solo esa respuesta y permite tomar otro camino.</li>
-<li><b>Deshace solo las reglas de la respuesta descartada.</b> Después de retroceder desde una URGENCIA, responder "NINGUNO" da NORMAL, y volver a marcar el signo dispara la regla de nuevo.</li>
+<li><b>Deshace solo las reglas de la respuesta descartada.</b> Después de retroceder desde una URGENCIA, responder "No, ninguno de los anteriores" sigue a la siguiente pregunta sin alerta, y volver a marcar el signo dispara la regla de nuevo.</li>
 <li><b>No reevalúa las reglas.</b> Se comprueba con un <em>spy</em> que <span class="tt">evaluar</span> no se llama al retroceder.</li>
 <li>Se puede retroceder varias veces seguidas. Retroceder sin respuestas es un error de la petición (<span class="tt">IllegalArgumentException</span>, HTTP 400).</li>
 <li><b>Contenido cambiado.</b> Si la pregunta a la que se vuelve ya no existe en el contenido clínico, se lanza <span class="tt">IllegalStateException</span> en lugar de devolver un nodo inexistente.</li>
@@ -222,11 +222,50 @@ Qué se quitó en la reorganización</h1>
 <p>Se descartó un caso: restaurar las respuestas previas cuando una regla compuerta vuelve a preguntar algo ya respondido. Con la cola, el motor ya no vuelve a preguntar una pregunta respondida (sigue las respuestas guardadas), así que ese caso ya no se alcanza por el motor. Lo que sí se mantiene probado a nivel del TAD es que restaurar las previas funciona, en <span class="tt">EstadoPacienteTest.desapilarRestauraLasRespuestasPrevias</span>.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
 Cómo ejecutarlas</h1>
-<p>Desde <span class="tt">backend/</span>: </p><pre class="fragment">./mvnw test -Dspring.profiles.active=dev -Dtest='org.signbb.backend.navegacion.**'   # solo el módulo
-./mvnw verify -Dspring.profiles.active=dev                                           # suite completa, como el CI
+<p>Desde <span class="tt">backend/</span>: </p><pre class="fragment">./mvnw test -Dtest='org.signbb.backend.navegacion.**'   # solo el módulo (no necesita PostgreSQL ni Redis)
+./mvnw verify                                           # suite completa, como el CI (contenedores arriba)
 </pre><h1 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
 Resultados en GitHub Actions</h1>
-<p><em>Pendiente: se completa con el run del CI.</em> </p>
+<p>Corrida del workflow <span class="tt">build</span> (<span class="tt">./mvnw -B verify</span>, con PostgreSQL y Redis como servicios) sobre el commit <span class="tt">518f775</span>, el merge de <span class="tt">tests-navegacion</span> en <span class="tt">navegacion</span>, el 9 de octubre de 2026: <a href="https://github.com/Proyecto-Grado-SignBB/signbb-backend/actions/runs/37948316527">run 37948316527</a>. <b>BUILD SUCCESS.</b></p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Clase  </th><th class="markdownTableHeadRight">Tests  </th><th class="markdownTableHeadRight">Fallos  </th><th class="markdownTableHeadRight">Errores  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">modelo.EstadoPacienteTest</span>  </td><td class="markdownTableBodyRight">10  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">modelo.EstadoPacienteNavegacionTest</span>  </td><td class="markdownTableBodyRight">10  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">modelo.GrafoClinicoTest</span>  </td><td class="markdownTableBodyRight">25  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">modelo.NodoTest</span>  </td><td class="markdownTableBodyRight">6  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">modelo.RespuestaTest</span>  </td><td class="markdownTableBodyRight">4  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">modelo.ContextoTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">modelo.ResultadoPasoRecomendacionesTest</span>  </td><td class="markdownTableBodyRight">3  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">datos.serializacion.GrafoClinicoMapperTest</span>  </td><td class="markdownTableBodyRight">15  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">datos.serializacion.CompositorGrafoClinicoTest</span>  </td><td class="markdownTableBodyRight">14  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">datos.serializacion.JsonParserTest</span>  </td><td class="markdownTableBodyRight">11  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">motor.MotorNavegacionTest</span>  </td><td class="markdownTableBodyRight">10  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">motor.MotorNavegacionRetrocederTest</span>  </td><td class="markdownTableBodyRight">9  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">motor.MotorNavegacionLimiteTest</span>  </td><td class="markdownTableBodyRight">8  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">motor.MotorNavegacionColaTest</span>  </td><td class="markdownTableBodyRight">23  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">motor.OrdenColaTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">servicios.ServicioNavegacionImplTest</span>  </td><td class="markdownTableBodyRight">9  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Módulo de navegación</b>  </td><td class="markdownTableBodyRight"><b>171</b>  </td><td class="markdownTableBodyRight"><b>0</b>  </td><td class="markdownTableBodyRight"><b>0</b>  </td></tr>
+</table>
+<p>La suite completa del backend corrió <b>234 pruebas, 0 fallos, 0 errores y 0 omitidas</b>: con Redis como servicio del CI, las de integración de <span class="tt">CacheRedisIntegracionTest</span> ya no se saltan. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
