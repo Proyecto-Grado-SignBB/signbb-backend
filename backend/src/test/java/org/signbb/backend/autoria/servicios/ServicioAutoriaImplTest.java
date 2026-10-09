@@ -78,10 +78,12 @@ class ServicioAutoriaImplTest {
     void lasCategoriasSonLasPreguntasPuenteDeLaRaiz() {
         List<CategoriaDTO> categorias = servicio.categorias();
 
-        assertEquals(List.of("puente_respiracion", "puente_gastro", "puente_neuro"),
-                categorias.stream().map(CategoriaDTO::puenteId).toList());
-        assertEquals("neurologico", categorias.get(2).nombre());
-        assertTrue(categorias.get(2).pregunta().startsWith("¿Qué anomalía observa en la actividad"));
+        // Piel y temperatura se ofrecen aunque todavía no tengan subgrafos.
+        assertEquals(List.of("puente_piel", "puente_temperatura", "puente_respiracion", "puente_gastro",
+                "puente_neuro"), categorias.stream().map(CategoriaDTO::puenteId).toList());
+        assertEquals(List.of("piel", "temperatura", "respiracion", "gastrointestinal", "neurologico"),
+                categorias.stream().map(CategoriaDTO::nombre).toList());
+        assertTrue(categorias.get(0).pregunta().startsWith("¿Qué cambio observa en la piel"));
     }
 
     @Test

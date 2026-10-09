@@ -125,6 +125,26 @@ class PublicadorSubgrafoTest {
     }
 
     @Test
+    void publicarEnUnaCategoriaSinSubgrafosLaMuestraALaCuidadora() {
+        BorradorSubgrafoEntity borrador = LienzoFiebre.borrador(LienzoFiebre.completo());
+        borrador.setPuenteId("puente_piel");
+        borrador.setCategoria("piel");
+        publicador.publicar(borrador, FECHA);
+
+        List<GrafoClinicoJson> subgrafos = filas.stream().map(GrafoClinicoEntity::getEstructura)
+                .filter(d -> !CompositorGrafoClinico.ID_RAIZ.equals(d.graph().id())).toList();
+        GrafoClinico tad = GrafoClinicoMapper.desde(CompositorGrafoClinico.componer(
+                documento(CompositorGrafoClinico.ID_RAIZ), subgrafos, ContenidoEjemplo.bases()).grafo());
+
+        assertEquals(List.of("piel", "respiracion", "gastrointestinal", "neurologico"),
+                tad.obtenerOpciones(tad.obtenerNodoInicial().orElseThrow()).stream()
+                        .map(Respuesta::getCondicion).toList());
+        Nodo puente = tad.obtenerNodoPorId("puente_piel").orElseThrow();
+        assertEquals(List.of(ETIQUETA), tad.obtenerOpciones(puente).stream()
+                .map(Respuesta::getCondicion).toList());
+    }
+
+    @Test
     void despuesDeGuardarInvalidaElCacheYRecargaElContexto() {
         publicador.publicar(LienzoFiebre.borrador(LienzoFiebre.completo()), FECHA);
 

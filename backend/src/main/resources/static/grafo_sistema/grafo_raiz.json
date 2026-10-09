@@ -15,6 +15,14 @@
         "label": "¿Sientes que tu bebé está diferente a como normalmente es?\nSeleccione las categorías a consultar",
         "metadata": { "tipo": "pregunta", "tipoInteraccion": "SELECCION_MULTIPLE", "peso": 1, "archivos": false, "src": [] }
       },
+      "puente_piel": {
+        "label": "¿Qué cambio observa en la piel o los ojos del bebé?",
+        "metadata": { "tipo": "pregunta", "tipoInteraccion": "SELECCION_UNICA", "peso": 1, "archivos": false, "src": [] }
+      },
+      "puente_temperatura": {
+        "label": "¿Qué observa en la temperatura del bebé?",
+        "metadata": { "tipo": "pregunta", "tipoInteraccion": "SELECCION_UNICA", "peso": 1, "archivos": false, "src": [] }
+      },
       "puente_respiracion": {
         "label": "¿Qué anomalía principal observa en la respiración o nariz?",
         "metadata": { "tipo": "pregunta", "tipoInteraccion": "SELECCION_UNICA", "peso": 1, "archivos": false, "src": [] }
@@ -41,6 +49,8 @@
       }
     },
     "edges": [
+      { "source": "pregunta_inicial", "relation": "piel", "target": "puente_piel", "directed": true },
+      { "source": "pregunta_inicial", "relation": "temperatura", "target": "puente_temperatura", "directed": true },
       { "source": "pregunta_inicial", "relation": "respiracion", "target": "puente_respiracion", "directed": true },
       { "source": "pregunta_inicial", "relation": "gastrointestinal", "target": "puente_gastro", "directed": true },
       { "source": "pregunta_inicial", "relation": "neurologico", "target": "puente_neuro", "directed": true },

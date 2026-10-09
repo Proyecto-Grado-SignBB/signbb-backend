@@ -224,9 +224,13 @@ class CompositorGrafoClinicoTest {
     assertEquals(33, grafo.size());
     // Dos reglas por subgrafo (las NORMAL son implícitas y no se siembran).
     assertEquals(6, reglas.size());
+    // Piel y temperatura todavía no tienen subgrafos: sus puentes se podan y
+    // la cuidadora no ve esas categorías hasta que se publique uno.
     assertEquals(List.of("respiracion", "gastrointestinal", "neurologico"),
         grafo.obtenerOpciones(grafo.obtenerNodoInicial().orElseThrow())
             .stream().map(r -> r.getCondicion()).toList());
+    assertTrue(grafo.obtenerNodoPorId("puente_piel").isEmpty());
+    assertTrue(grafo.obtenerNodoPorId("puente_temperatura").isEmpty());
     // Cada subgrafo conserva su terminal normal (síntomas no dañinos).
     assertTrue(grafo.obtenerNodoPorId("grafo_respiracion/normal_1").isPresent());
     assertTrue(grafo.obtenerNodoPorId("grafo_gastro/normal_1").isPresent());

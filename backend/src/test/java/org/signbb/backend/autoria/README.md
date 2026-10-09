@@ -16,12 +16,12 @@ PostgreSQL y Redis, como el CI.
 | `servicios` | `EditorLienzoTest` | 18 | el "+", enlazar a una pregunta existente, editar y eliminar nodos; lo que el editor rechaza |
 | `servicios` | `ValidadorLienzoTest` | 10 | un caso por cada aviso; nodos sueltos y choque de gravedades |
 | `servicios` | `CompiladorSubgrafoTest` | 7 | lienzo → `GrafoClinicoJson`: pesos, tipos, aristas y metadata |
-| `servicios` | `PublicadorSubgrafoTest` | 8 | upsert del subgrafo y de la opción en la raíz; invalidar el contenido; rechazos |
+| `servicios` | `PublicadorSubgrafoTest` | 9 | upsert del subgrafo y de la opción en la raíz; categoría nueva visible; invalidar el contenido; rechazos |
 | `servicios` | `ServicioAutoriaImplTest` | 10 | categorías, ids de grafo, datos del subgrafo, estados y errores |
 | `controladores` | `ControladorAutoriaTest` | 7 | códigos HTTP y cuerpos de error de la API `/api/autoria` |
 | (raíz) | `AutoriaIntegracionTest` | 1 | de punta a punta: armar, publicar y recorrer como cuidadora |
 
-En total son **61 pruebas**.
+En total son **62 pruebas**.
 
 ## Fixture
 
@@ -81,6 +81,8 @@ neurológica (`puente_neuro`).
 - Guarda el subgrafo y agrega, en la pregunta puente del grafo raíz, la
   opción del subgrafo y su nodo `ref_<grafoId>`. **Republicar no duplica**
   ni la opción ni el nodo.
+- Publicar en una categoría que todavía no tenía subgrafos (piel o
+  temperatura) la hace aparecer en la pregunta inicial de la cuidadora.
 - Después del commit invalida el contenido en Redis y recarga el que está en
   memoria (`ContextoClinico.recargar()`), en ese orden.
 - **No guarda nada** si hay avisos bloqueantes, si la opción ya existe en la
@@ -88,7 +90,9 @@ neurológica (`puente_neuro`).
   el contenido compuesto no pasa la validación.
 
 ### Servicio (`ServicioAutoriaImplTest`)
-- Las categorías salen de las preguntas puente del grafo raíz.
+- Las categorías salen de las preguntas puente del grafo raíz: piel,
+  temperatura, respiración, gastrointestinal y neurológico. Piel y
+  temperatura se ofrecen aunque todavía no tengan subgrafos.
 - El `grafoId` se arma con el nombre, sin tildes ni signos
   (`grafo_fiebre_en_ninos_pequenos`) y con sufijo si ya existe
   (`grafo_respiracion_3`).

@@ -25,6 +25,8 @@ Se definieron tres categorías para los grafos:
 2. Respiración: preguntas relacionadas con esta función corporal.
 3. Activo y color: preguntas sobre cambios comportamentales y de tono en la piel.
 
+Además, la raíz ofrece **Piel** y **Temperatura** como categorías todavía sin subgrafos, para que los médicos publiquen los suyos desde autoría. Mientras no tengan ninguno, sus preguntas puente se podan al componer y la cuidadora no las ve.
+
 ![Grafo Raíz](raiz.svg)
 
 ## Grafo Gastrointestinal
