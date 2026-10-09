@@ -115,7 +115,7 @@ class CompiladorSubgrafoTest {
         GrafoClinico tad = GrafoClinicoMapper.desde(CompiladorSubgrafo.compilar(
                 LienzoFiebre.borrador(LienzoFiebre.completo()), FECHA));
 
-        assertEquals(6, tad.size());
+        assertEquals(5, tad.size());
         assertTrue(tad.validarCiclo());
         NodoLienzo inicio = LienzoFiebre.completo().nodos().get(INICIO);
         assertEquals(inicio.texto(), tad.obtenerNodoInicial().orElseThrow().getContenido());

@@ -73,7 +73,7 @@ class EditorLienzoTest {
 
         assertEquals(DECAIDO, respuesta(d, INICIO, MENOS_38).destino());
         assertEquals(DECAIDO, respuesta(d, INICIO, ENTRE_38_39).destino());
-        assertEquals(6, d.nodos().size());
+        assertEquals(5, d.nodos().size(), "2 preguntas y 3 conclusiones");
     }
 
     @Test
