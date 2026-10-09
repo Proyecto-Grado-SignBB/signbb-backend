@@ -48,6 +48,16 @@ public class ContextoClinico {
         return base;
     }
 
+    /**
+     * Descarta el contenido en memoria para que el próximo uso lo vuelva a
+     * resolver. Lo llama el módulo de autoría después de publicar un
+     * subgrafo, junto con {@link ResolvedorContenidoClinico#invalidar()}.
+     */
+    public synchronized void recargar() {
+        grafo = null;
+        base = null;
+    }
+
     /** Resuelve y valida el contenido una sola vez (perezoso). */
     private void asegurarContenido() {
         if (grafo != null) {
