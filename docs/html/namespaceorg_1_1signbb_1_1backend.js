@@ -6,7 +6,7 @@ var namespaceorg_1_1signbb_1_1backend =
     [ "observaciones", "namespaceorg_1_1signbb_1_1backend_1_1observaciones.html", "namespaceorg_1_1signbb_1_1backend_1_1observaciones" ],
     [ "reglas", "namespaceorg_1_1signbb_1_1backend_1_1reglas.html", "namespaceorg_1_1signbb_1_1backend_1_1reglas" ],
     [ "seguridad", "namespaceorg_1_1signbb_1_1backend_1_1seguridad.html", null ],
-    [ "BackendApplication", "classorg_1_1signbb_1_1backend_1_1BackendApplication.html", null ],
-    [ "DatabaseInit", "classorg_1_1signbb_1_1backend_1_1DatabaseInit.html", "classorg_1_1signbb_1_1backend_1_1DatabaseInit" ],
-    [ "DemoTriajeRunner", "classorg_1_1signbb_1_1backend_1_1DemoTriajeRunner.html", "classorg_1_1signbb_1_1backend_1_1DemoTriajeRunner" ]
+    [ "BackendApplication", "classorg_1_1signbb_1_1backend_1_1_backend_application.html", null ],
+    [ "DatabaseInit", "classorg_1_1signbb_1_1backend_1_1_database_init.html", "classorg_1_1signbb_1_1backend_1_1_database_init" ],
+    [ "DemoTriajeRunner", "classorg_1_1signbb_1_1backend_1_1_demo_triaje_runner.html", "classorg_1_1signbb_1_1backend_1_1_demo_triaje_runner" ]
 ];

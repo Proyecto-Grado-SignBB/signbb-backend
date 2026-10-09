@@ -1,8 +1,8 @@
 var namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion =
 [
-    [ "CompositorGrafoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1CompositorGrafoClinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1CompositorGrafoClinico" ],
-    [ "ContenidoEjemplo", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1ContenidoEjemplo.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1ContenidoEjemplo" ],
-    [ "GrafoClinicoMapper", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoMapper.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoMapper" ],
-    [ "GrafoClinicoParser", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoParser.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoParser" ],
+    [ "CompositorGrafoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1_compositor_grafo_clinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1_compositor_grafo_clinico" ],
+    [ "ContenidoEjemplo", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1_contenido_ejemplo.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1_contenido_ejemplo" ],
+    [ "GrafoClinicoMapper", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1_grafo_clinico_mapper.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1_grafo_clinico_mapper" ],
+    [ "GrafoClinicoParser", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1_grafo_clinico_parser.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1_grafo_clinico_parser" ],
     [ "GrafoClinicoJson", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion.html#a542aa5e19744a44057ea8f0e570e9680", null ]
 ];

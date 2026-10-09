@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SignBB: Referencia de la clase org.signbb.backend.cache.ResolvedorContenidoClinico</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SignBB
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1signbb_1_1backend_1_1cache_1_1_resolvedor_contenido_clinico.html','','classorg_1_1signbb_1_1backend_1_1cache_1_1_resolvedor_contenido_clinico-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Referencia de la clase org.signbb.backend.cache.ResolvedorContenidoClinico</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Resuelve el contenido clínico (grafo y base de reglas) con patrón cache-aside: Redis como copia caliente y la base de datos relacional como fuente de verdad, según el documento de diseño.  
+ <a href="#details">Más...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Métodos públicos</h2></td></tr>
+<tr class="memitem:af71ead997bb1a610f3dd0ac5b0eeef12" id="r_af71ead997bb1a610f3dd0ac5b0eeef12"><td class="memItemLeft"><a id="af71ead997bb1a610f3dd0ac5b0eeef12" name="af71ead997bb1a610f3dd0ac5b0eeef12"></a>
+&#160;</td><td class="memItemRight"><b>ResolvedorContenidoClinico</b> (StringRedisTemplate redis, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1_repositorio_grafo_clinico.html">RepositorioGrafoClinico</a> grafos, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1repositorios_1_1_repositorio_base_reglas.html">RepositorioBaseReglas</a> bases)</td></tr>
+<tr class="memdesc:af71ead997bb1a610f3dd0ac5b0eeef12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta el template de Redis y los repositorios de contenido clínico. <br /></td></tr>
+<tr class="memitem:acd018344179ca11a0149c7c145ce52c7" id="r_acd018344179ca11a0149c7c145ce52c7"><td class="memItemLeft"><a id="acd018344179ca11a0149c7c145ce52c7" name="acd018344179ca11a0149c7c145ce52c7"></a>
+GrafoClinicoJson&#160;</td><td class="memItemRight"><b>documentoGrafo</b> ()</td></tr>
+<tr class="memdesc:acd018344179ca11a0149c7c145ce52c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Grafo clínico compuesto (raíz + subgrafos, sin referencias): cache Redis → base de datos. <br /></td></tr>
+<tr class="memitem:ab29e65ac075b074375ec9b068542c8b3" id="r_ab29e65ac075b074375ec9b068542c8b3"><td class="memItemLeft"><a id="ab29e65ac075b074375ec9b068542c8b3" name="ab29e65ac075b074375ec9b068542c8b3"></a>
+BaseReglasJson&#160;</td><td class="memItemRight"><b>documentoReglas</b> ()</td></tr>
+<tr class="memdesc:ab29e65ac075b074375ec9b068542c8b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base de reglas compuesta (todas las bases, ids prefijados): cache Redis → base de datos. <br /></td></tr>
+<tr class="memitem:aa5c8527bcef0cf207884d06a71f355db" id="r_aa5c8527bcef0cf207884d06a71f355db"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa5c8527bcef0cf207884d06a71f355db">invalidar</a> ()</td></tr>
+<tr class="memdesc:aa5c8527bcef0cf207884d06a71f355db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalida la copia en caliente (borra las claves).  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Atributos públicos estáticos</h2></td></tr>
+<tr class="memitem:a21363e324f99818ccbcb908b35b96406" id="r_a21363e324f99818ccbcb908b35b96406"><td class="memItemLeft">static final String&#160;</td><td class="memItemRight"><a class="el" href="#a21363e324f99818ccbcb908b35b96406">CLAVE_GRAFO</a> = &quot;signbb:contenido:v2:grafo&quot;</td></tr>
+<tr class="memdesc:a21363e324f99818ccbcb908b35b96406"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clave del grafo clínico ya compuesto en Redis.  <br /></td></tr>
+<tr class="memitem:a4762a98adcfc4dc2217bfe34fdcac413" id="r_a4762a98adcfc4dc2217bfe34fdcac413"><td class="memItemLeft"><a id="a4762a98adcfc4dc2217bfe34fdcac413" name="a4762a98adcfc4dc2217bfe34fdcac413"></a>
+static final String&#160;</td><td class="memItemRight"><b>CLAVE_REGLAS</b> = &quot;signbb:contenido:v2:reglas&quot;</td></tr>
+<tr class="memdesc:a4762a98adcfc4dc2217bfe34fdcac413"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clave de la base de reglas ya compuesta en Redis. <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
+<div class="textblock"><p>Resuelve el contenido clínico (grafo y base de reglas) con patrón cache-aside: Redis como copia caliente y la base de datos relacional como fuente de verdad, según el documento de diseño. </p>
+<p>El classpath NO participa del runtime: los JSON de ejemplo son solo la semilla de <code class="JavaDocCode">DatabaseInit</code>. Si Redis no responde se degrada a la base de datos (Redis nunca es dependencia dura del arranque ni de la consulta); si la base no tiene contenido, falla con un error explícito.</p>
+<p>La base de datos guarda cada grafo por separado (el raíz del sistema y un subgrafo por médico) y cada base de reglas con su <code class="JavaDocCode">grafoId</code>. Este resolvedor los compone con <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1_compositor_grafo_clinico.html">CompositorGrafoClinico</a></code> y cachea el resultado plano, que es lo único que ven <code class="JavaDocCode">ContextoClinico</code> y el motor. </p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
+<a id="aa5c8527bcef0cf207884d06a71f355db" name="aa5c8527bcef0cf207884d06a71f355db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5c8527bcef0cf207884d06a71f355db">&#9670;&#160;</a></span>invalidar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void org.signbb.backend.cache.ResolvedorContenidoClinico.invalidar </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Invalida la copia en caliente (borra las claves). </p>
+<p>Pensado para el módulo de Autoría: cuando el contenido cambie en la base de datos, se invoca y la siguiente resolución refresca el cache. Esta eliminacion solo se sede hacer si no hay sesiones activas </p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Documentación de datos miembro</h2>
+<a id="a21363e324f99818ccbcb908b35b96406" name="a21363e324f99818ccbcb908b35b96406"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21363e324f99818ccbcb908b35b96406">&#9670;&#160;</a></span>CLAVE_GRAFO</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">final String org.signbb.backend.cache.ResolvedorContenidoClinico.CLAVE_GRAFO = &quot;signbb:contenido:v2:grafo&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Clave del grafo clínico ya compuesto en Redis. </p>
+<p>Lleva <code class="JavaDocCode">v2</code> para no leer el documento único del formato previo que pudiera seguir cacheado. </p>
+
+</div>
+</div>
+<hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
+<li>backend/src/main/java/org/signbb/backend/cache/<b>ResolvedorContenidoClinico.java</b></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespaceorg.html">org</a></li><li class="navelem"><a href="namespaceorg_1_1signbb.html">signbb</a></li><li class="navelem"><a href="namespaceorg_1_1signbb_1_1backend.html">backend</a></li><li class="navelem"><b>cache</b></li><li class="navelem"><a href="classorg_1_1signbb_1_1backend_1_1cache_1_1_resolvedor_contenido_clinico.html">ResolvedorContenidoClinico</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
+  </ul>
+</div>
+</body>
+</html>

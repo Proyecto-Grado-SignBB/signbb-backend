@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion.html#a542aa5e19744a44057ea8f0e570e9680":[4,0,0,0,0,2,0,2,4],
 "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html":[4,0,0,0,0,2,1],
 "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#a6d07b4c9c8333aa7b1c485f9f2ec8af8":[4,0,0,0,0,2,1,15],
 "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#a6d515ecc5fd241036d3a0c2e2bf0f8b8":[4,0,0,0,0,2,1,9],

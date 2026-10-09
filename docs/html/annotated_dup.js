@@ -4,94 +4,94 @@ var annotated_dup =
       [ "signbb", "namespaceorg_1_1signbb.html", [
         [ "backend", "namespaceorg_1_1signbb_1_1backend.html", [
           [ "cache", null, [
-            [ "CacheNoDisponibleException", "classorg_1_1signbb_1_1backend_1_1cache_1_1CacheNoDisponibleException.html", null ],
-            [ "RepositorioSesionRedis", "classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html", "classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis" ],
-            [ "ResolvedorContenidoClinico", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico.html", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico" ]
+            [ "CacheNoDisponibleException", "classorg_1_1signbb_1_1backend_1_1cache_1_1_cache_no_disponible_exception.html", null ],
+            [ "RepositorioSesionRedis", "classorg_1_1signbb_1_1backend_1_1cache_1_1_repositorio_sesion_redis.html", "classorg_1_1signbb_1_1backend_1_1cache_1_1_repositorio_sesion_redis" ],
+            [ "ResolvedorContenidoClinico", "classorg_1_1signbb_1_1backend_1_1cache_1_1_resolvedor_contenido_clinico.html", "classorg_1_1signbb_1_1backend_1_1cache_1_1_resolvedor_contenido_clinico" ]
           ] ],
           [ "config", "namespaceorg_1_1signbb_1_1backend_1_1config.html", [
-            [ "ConfiguracionCors", "classorg_1_1signbb_1_1backend_1_1config_1_1ConfiguracionCors.html", null ],
-            [ "ManejadorExcepciones", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorExcepciones.html", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorExcepciones" ],
-            [ "RecursoNoEncontradoException", "classorg_1_1signbb_1_1backend_1_1config_1_1RecursoNoEncontradoException.html", null ]
+            [ "ConfiguracionCors", "classorg_1_1signbb_1_1backend_1_1config_1_1_configuracion_cors.html", null ],
+            [ "ManejadorExcepciones", "classorg_1_1signbb_1_1backend_1_1config_1_1_manejador_excepciones.html", "classorg_1_1signbb_1_1backend_1_1config_1_1_manejador_excepciones" ],
+            [ "RecursoNoEncontradoException", "classorg_1_1signbb_1_1backend_1_1config_1_1_recurso_no_encontrado_exception.html", null ]
           ] ],
           [ "navegacion", "namespaceorg_1_1signbb_1_1backend_1_1navegacion.html", [
             [ "datos", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos.html", [
               [ "entidades", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades.html", [
-                [ "GrafoClinicoEntity", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1GrafoClinicoEntity.html", null ]
+                [ "GrafoClinicoEntity", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1_grafo_clinico_entity.html", null ]
               ] ],
               [ "repositorios", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios.html", [
-                [ "RepositorioGrafoClinico", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafoClinico.html", null ]
+                [ "RepositorioGrafoClinico", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1_repositorio_grafo_clinico.html", null ]
               ] ],
               [ "serializacion", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion.html", [
-                [ "CompositorGrafoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1CompositorGrafoClinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1CompositorGrafoClinico" ],
-                [ "ContenidoEjemplo", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1ContenidoEjemplo.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1ContenidoEjemplo" ],
-                [ "GrafoClinicoMapper", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoMapper.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoMapper" ],
-                [ "GrafoClinicoParser", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoParser.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoParser" ]
+                [ "CompositorGrafoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1_compositor_grafo_clinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1_compositor_grafo_clinico" ],
+                [ "ContenidoEjemplo", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1_contenido_ejemplo.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1_contenido_ejemplo" ],
+                [ "GrafoClinicoMapper", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1_grafo_clinico_mapper.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1_grafo_clinico_mapper" ],
+                [ "GrafoClinicoParser", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1_grafo_clinico_parser.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1_grafo_clinico_parser" ]
               ] ]
             ] ],
             [ "modelo", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html", [
-              [ "Contexto", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto" ],
-              [ "ContextoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico" ],
-              [ "EstadoPaciente", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente" ],
-              [ "GrafoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico" ],
-              [ "Nodo", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo" ],
-              [ "RepositorioSesion", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion" ],
-              [ "Respuesta", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta" ],
-              [ "SesionTriaje", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje" ]
+              [ "Contexto", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1_contexto.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1_contexto" ],
+              [ "ContextoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1_contexto_clinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1_contexto_clinico" ],
+              [ "EstadoPaciente", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1_estado_paciente.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1_estado_paciente" ],
+              [ "GrafoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1_grafo_clinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1_grafo_clinico" ],
+              [ "Nodo", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1_nodo.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1_nodo" ],
+              [ "RepositorioSesion", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1_repositorio_sesion.html", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1_repositorio_sesion" ],
+              [ "Respuesta", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1_respuesta.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1_respuesta" ],
+              [ "SesionTriaje", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1_sesion_triaje.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1_sesion_triaje" ]
             ] ],
             [ "servicios", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios.html", [
-              [ "MotorNavegacion", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion" ],
-              [ "ServicioNavegacion", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion" ],
-              [ "ServicioNavegacionImpl", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImpl.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImpl" ]
+              [ "MotorNavegacion", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1_motor_navegacion.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1_motor_navegacion" ],
+              [ "ServicioNavegacion", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1_servicio_navegacion.html", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1_servicio_navegacion" ],
+              [ "ServicioNavegacionImpl", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1_servicio_navegacion_impl.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1_servicio_navegacion_impl" ]
             ] ]
           ] ],
           [ "observaciones", "namespaceorg_1_1signbb_1_1backend_1_1observaciones.html", [
             [ "controladores", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html", [
-              [ "ControladorConsulta", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1ControladorConsulta.html", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1ControladorConsulta" ],
-              [ "RespuestaRequest", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1RespuestaRequest.html", null ]
+              [ "ControladorConsulta", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1_controlador_consulta.html", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1_controlador_consulta" ],
+              [ "RespuestaRequest", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1_respuesta_request.html", null ]
             ] ],
             [ "datos", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos.html", [
               [ "entidades", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1entidades.html", [
-                [ "ObservacionEntity", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1entidades_1_1ObservacionEntity.html", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1entidades_1_1ObservacionEntity" ]
+                [ "ObservacionEntity", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1entidades_1_1_observacion_entity.html", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1entidades_1_1_observacion_entity" ]
               ] ],
               [ "repositorios", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios.html", [
-                [ "RepositorioObservaciones", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioObservaciones.html", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioObservaciones" ]
+                [ "RepositorioObservaciones", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1_repositorio_observaciones.html", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1_repositorio_observaciones" ]
               ] ]
             ] ],
             [ "modelo", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo.html", [
-              [ "SeleccionCuidador", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1SeleccionCuidador.html", null ],
-              [ "TipoInteraccion", "enumorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1TipoInteraccion.html", null ]
+              [ "SeleccionCuidador", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1_seleccion_cuidador.html", null ],
+              [ "TipoInteraccion", "enumorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1_tipo_interaccion.html", null ]
             ] ],
             [ "servicios", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios.html", [
-              [ "ServicioCaptura", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCaptura.html", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCaptura" ],
-              [ "ServicioCapturaImpl", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl.html", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl" ]
+              [ "ServicioCaptura", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1_servicio_captura.html", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1_servicio_captura" ],
+              [ "ServicioCapturaImpl", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1_servicio_captura_impl.html", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1_servicio_captura_impl" ]
             ] ]
           ] ],
           [ "reglas", "namespaceorg_1_1signbb_1_1backend_1_1reglas.html", [
             [ "datos", "namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos.html", [
               [ "entidades", "namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1entidades.html", [
-                [ "BaseReglasEntity", "classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1entidades_1_1BaseReglasEntity.html", null ]
+                [ "BaseReglasEntity", "classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1entidades_1_1_base_reglas_entity.html", null ]
               ] ],
               [ "repositorios", "namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1repositorios.html", [
-                [ "RepositorioBaseReglas", "interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1repositorios_1_1RepositorioBaseReglas.html", null ]
+                [ "RepositorioBaseReglas", "interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1repositorios_1_1_repositorio_base_reglas.html", null ]
               ] ],
               [ "serializacion", "namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion.html", [
-                [ "BaseReglasMapper", "classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasMapper.html", "classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasMapper" ],
-                [ "BaseReglasParser", "classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasParser.html", "classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasParser" ]
+                [ "BaseReglasMapper", "classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1_base_reglas_mapper.html", "classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1_base_reglas_mapper" ],
+                [ "BaseReglasParser", "classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1_base_reglas_parser.html", "classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1_base_reglas_parser" ]
               ] ]
             ] ],
             [ "modelo", "namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1modelo.html", [
-              [ "BaseReglas", "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html", "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas" ],
-              [ "NivelAlerta", "enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1NivelAlerta.html", "enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1NivelAlerta" ],
-              [ "ReglaClinica", "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html", "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica" ]
+              [ "BaseReglas", "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1_base_reglas.html", "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1_base_reglas" ],
+              [ "NivelAlerta", "enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1_nivel_alerta.html", "enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1_nivel_alerta" ],
+              [ "ReglaClinica", "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1_regla_clinica.html", "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1_regla_clinica" ]
             ] ],
             [ "servicios", "namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1servicios.html", [
-              [ "ServicioReglas", "interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglas.html", "interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglas" ],
-              [ "ServicioReglasImpl", "classorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglasImpl.html", "classorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglasImpl" ]
+              [ "ServicioReglas", "interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1_servicio_reglas.html", "interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1_servicio_reglas" ],
+              [ "ServicioReglasImpl", "classorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1_servicio_reglas_impl.html", "classorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1_servicio_reglas_impl" ]
             ] ]
           ] ],
-          [ "BackendApplication", "classorg_1_1signbb_1_1backend_1_1BackendApplication.html", null ],
-          [ "DatabaseInit", "classorg_1_1signbb_1_1backend_1_1DatabaseInit.html", "classorg_1_1signbb_1_1backend_1_1DatabaseInit" ],
-          [ "DemoTriajeRunner", "classorg_1_1signbb_1_1backend_1_1DemoTriajeRunner.html", "classorg_1_1signbb_1_1backend_1_1DemoTriajeRunner" ]
+          [ "BackendApplication", "classorg_1_1signbb_1_1backend_1_1_backend_application.html", null ],
+          [ "DatabaseInit", "classorg_1_1signbb_1_1backend_1_1_database_init.html", "classorg_1_1signbb_1_1backend_1_1_database_init" ],
+          [ "DemoTriajeRunner", "classorg_1_1signbb_1_1backend_1_1_demo_triaje_runner.html", "classorg_1_1signbb_1_1backend_1_1_demo_triaje_runner" ]
         ] ]
       ] ]
     ] ]

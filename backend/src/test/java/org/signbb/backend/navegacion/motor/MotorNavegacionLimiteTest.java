@@ -123,6 +123,21 @@ class MotorNavegacionLimiteTest {
     }
 
     @Test
+    void lasRespuestasDeshechasNoCuentanParaElLimite() {
+        EstadoPaciente e = new EstadoPaciente("s");
+        responderSi(motor, sinReglas, e, 9);
+        Nodo p9 = motor.retroceder(grafo, sinReglas, e).preguntaActual();
+
+        // Al responder de nuevo p9 van 9 respondidas, no 10: el recorrido sigue.
+        ResultadoPaso p10 = motor.paso(grafo, sinReglas, e, p9, "SI");
+        assertFalse(p10.finalizado());
+        assertEquals("p10", p10.preguntaActual().getId());
+
+        assertEquals(MotorNavegacion.LIMITE_PREGUNTAS,
+                motor.paso(grafo, sinReglas, e, p10.preguntaActual(), "SI").destino());
+    }
+
+    @Test
     void retrocederDesdeElLimiteVuelveALaDecimaPregunta() {
         EstadoPaciente e = new EstadoPaciente("s");
         responderSi(motor, sinReglas, e, 10);

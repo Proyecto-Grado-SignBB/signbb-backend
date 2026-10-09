@@ -26,37 +26,37 @@ var NAVTREE =
 [
   [ "SignBB", "index.html", [
     [ "SignBB — Backend", "index.html", "index" ],
-    [ "Manual de contenedores", "md_contenedores_2MANUAL__CONTENEDORES.html", [
-      [ "Levantar", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md6", null ],
-      [ "Dar de baja", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md7", null ],
-      [ "Eliminar los datos persistentes", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md8", null ],
-      [ "Acceso rápido", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md9", null ],
-      [ "Parámetros de conexión (perfil <span class=\"tt\">docker</span> del backend)", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md10", null ]
+    [ "Manual de contenedores", "md_contenedores_2_m_a_n_u_a_l___c_o_n_t_e_n_e_d_o_r_e_s.html", [
+      [ "Levantar", "md_contenedores_2_m_a_n_u_a_l___c_o_n_t_e_n_e_d_o_r_e_s.html#autotoc_md6", null ],
+      [ "Dar de baja", "md_contenedores_2_m_a_n_u_a_l___c_o_n_t_e_n_e_d_o_r_e_s.html#autotoc_md7", null ],
+      [ "Eliminar los datos persistentes", "md_contenedores_2_m_a_n_u_a_l___c_o_n_t_e_n_e_d_o_r_e_s.html#autotoc_md8", null ],
+      [ "Acceso rápido", "md_contenedores_2_m_a_n_u_a_l___c_o_n_t_e_n_e_d_o_r_e_s.html#autotoc_md9", null ],
+      [ "Parámetros de conexión (perfil <span class=\"tt\">docker</span> del backend)", "md_contenedores_2_m_a_n_u_a_l___c_o_n_t_e_n_e_d_o_r_e_s.html#autotoc_md10", null ]
     ] ],
-    [ "Pruebas del motor de navegación — grafos de ejemplo", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html", [
-      [ "Cómo ejecutarlas", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md12", null ],
-      [ "Ejemplo 1 — Normalización de base de datos", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md13", [
-        [ "Estructura (<span class=\"tt\">ejemplo_grafo_norm.json</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md14", null ],
-        [ "Reglas (<span class=\"tt\">ejemplo_reglas_norm.json</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md15", null ],
-        [ "Pruebas — <span class=\"tt\">MotorNavegacionNormalizacionTest</span>", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md16", null ]
+    [ "Pruebas del módulo de navegación", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2_r_e_a_d_m_e.html", [
+      [ "Mapa de la suite", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2_r_e_a_d_m_e.html#autotoc_md12", null ],
+      [ "Fixtures", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2_r_e_a_d_m_e.html#autotoc_md13", null ],
+      [ "Qué se prueba y por qué importa", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2_r_e_a_d_m_e.html#autotoc_md14", [
+        [ "Alertas y validación (<span class=\"tt\">MotorNavegacionTest</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2_r_e_a_d_m_e.html#autotoc_md15", null ],
+        [ "Retroceder (<span class=\"tt\">MotorNavegacionRetrocederTest</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2_r_e_a_d_m_e.html#autotoc_md16", null ],
+        [ "Límite de preguntas (<span class=\"tt\">MotorNavegacionLimiteTest</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2_r_e_a_d_m_e.html#autotoc_md17", null ],
+        [ "Cola de la selección múltiple (<span class=\"tt\">MotorNavegacionColaTest</span>, <span class=\"tt\">OrdenColaTest</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2_r_e_a_d_m_e.html#autotoc_md18", null ],
+        [ "Servicio (<span class=\"tt\">ServicioNavegacionImplTest</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2_r_e_a_d_m_e.html#autotoc_md19", null ]
       ] ],
-      [ "Ejemplo 2 — Triaje de ciberseguridad", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md18", [
-        [ "Estructura (<span class=\"tt\">ejemplo_grafo_sec.json</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md19", null ],
-        [ "Reglas (<span class=\"tt\">ejemplo_reglas_sec.json</span>, todas <span class=\"tt\">URGENCIA</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md20", null ],
-        [ "Pruebas — <span class=\"tt\">MotorNavegacionSeguridadTest</span>", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md21", null ]
-      ] ],
-      [ "Convenciones del motor que asumen las pruebas", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2motor_2README.html#autotoc_md23", null ]
+      [ "Qué se quitó en la reorganización", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2_r_e_a_d_m_e.html#autotoc_md20", null ],
+      [ "Cómo ejecutarlas", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2_r_e_a_d_m_e.html#autotoc_md21", null ],
+      [ "Resultados en GitHub Actions", "md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2_r_e_a_d_m_e.html#autotoc_md22", null ]
     ] ],
     [ "Grafo sistema", "md_grafo__sistema_2reporte__grafo.html", [
-      [ "Indice", "md_grafo__sistema_2reporte__grafo.html#autotoc_md25", null ],
-      [ "Grafo Raíz", "md_grafo__sistema_2reporte__grafo.html#autotoc_md26", null ],
-      [ "Grafo Gastrointestinal", "md_grafo__sistema_2reporte__grafo.html#autotoc_md27", null ],
-      [ "Grafo Respiración", "md_grafo__sistema_2reporte__grafo.html#autotoc_md28", null ],
-      [ "Grafo Activo y color", "md_grafo__sistema_2reporte__grafo.html#autotoc_md29", null ],
-      [ "Herramientas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md30", [
-        [ "Construir grafos visualmente", "md_grafo__sistema_2reporte__grafo.html#autotoc_md31", null ],
-        [ "Representacion visual de base de reglas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md32", null ],
-        [ "Representacion visual de grafo", "md_grafo__sistema_2reporte__grafo.html#autotoc_md33", null ]
+      [ "Indice", "md_grafo__sistema_2reporte__grafo.html#autotoc_md24", null ],
+      [ "Grafo Raíz", "md_grafo__sistema_2reporte__grafo.html#autotoc_md25", null ],
+      [ "Grafo Gastrointestinal", "md_grafo__sistema_2reporte__grafo.html#autotoc_md26", null ],
+      [ "Grafo Respiración", "md_grafo__sistema_2reporte__grafo.html#autotoc_md27", null ],
+      [ "Grafo Activo y color", "md_grafo__sistema_2reporte__grafo.html#autotoc_md28", null ],
+      [ "Herramientas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md29", [
+        [ "Construir grafos visualmente", "md_grafo__sistema_2reporte__grafo.html#autotoc_md30", null ],
+        [ "Representacion visual de base de reglas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md31", null ],
+        [ "Representacion visual de grafo", "md_grafo__sistema_2reporte__grafo.html#autotoc_md32", null ]
       ] ]
     ] ],
     [ "Paquetes", "namespaces.html", [
@@ -82,8 +82,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#aae1e6b5a22c6314464aa82cf989bcd21",
-"namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html"
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1_nodo.html#aae1e6b5a22c6314464aa82cf989bcd21",
+"namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion.html#a542aa5e19744a44057ea8f0e570e9680"
 ];
 
 const SYNCONMSG = 'pulsar para deshabilitar sincronización';

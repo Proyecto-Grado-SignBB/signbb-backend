@@ -1,10 +1,12 @@
 package org.signbb.backend.navegacion.servicios;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -27,14 +29,17 @@ import org.signbb.backend.reglas.modelo.BaseReglas;
 import org.signbb.backend.reglas.servicios.ServicioReglasImpl;
 
 /**
- * Tests del servicio de navegación sobre el contenido compuesto y un almacén
- * de sesiones en memoria de prueba: comprueban que volver atrás deja guardado
- * el estado recalculado, de modo que la consulta y la siguiente respuesta lo
- * ven.
+ * Tests del servicio de navegación (la fachada que usa el controlador REST)
+ * sobre el contenido compuesto y un almacén de sesiones en memoria de prueba:
+ * abrir un recorrido, responder, consultar y volver atrás guardando siempre la
+ * sesión, más los errores de un recorrido inexistente o una respuesta vacía.
  */
 class ServicioNavegacionImplTest {
 
     private static final String URGENCIA = "grafo_respiracion/q_resp_urgencia";
+
+    /** Respuesta que descarta los signos de alarma y avanza a la alerta media. */
+    private static final String NINGUNO = "No, ninguno de los anteriores";
 
     private ServicioNavegacion servicio;
 
@@ -88,9 +93,63 @@ class ServicioNavegacionImplTest {
     }
 
     @Test
+    void iniciarAbreUnRecorridoEnCursoConLaPreguntaInicial() {
+        RecorridoDTO inicio = servicio.iniciar();
+
+        assertEquals("EN_CURSO", inicio.estado());
+        assertEquals("pregunta_inicial", inicio.pregunta().id());
+        assertNull(inicio.resultado());
+    }
+
+    @Test
+    void cadaRespuestaQuedaGuardadaYLaConsultaLaRefleja() {
+        String id = hastaUrgencia();
+
+        assertEquals(URGENCIA, servicio.consultar(id).pregunta().id());
+        assertEquals("grafo_respiracion/q_resp_consulta", servicio.responder(id, NINGUNO).pregunta().id());
+        assertEquals("grafo_respiracion/q_resp_consulta", servicio.consultar(id).pregunta().id());
+    }
+
+    @Test
+    void seleccionMultipleConUnaAlertaCierraEnUrgencia() {
+        String id = hastaUrgencia();
+
+        RecorridoDTO urgencia = servicio.responder(id, List.of("Quejido al respirar", "Aleteo nasal"));
+
+        assertEquals("FINALIZADO", urgencia.estado());
+        assertEquals("URGENCIA", urgencia.resultado().nivel());
+        assertEquals("FINALIZADO", servicio.consultar(id).estado());
+    }
+
+    @Test
+    void unRecorridoFinalizadoNoAceptaMasRespuestas() {
+        String id = hastaUrgencia();
+        RecorridoDTO cierre = servicio.responder(id, "Quejido al respirar");
+
+        RecorridoDTO otraVez = servicio.responder(id, NINGUNO);
+
+        assertEquals("FINALIZADO", otraVez.estado());
+        assertEquals(cierre.resultado().destinoId(), otraVez.resultado().destinoId());
+    }
+
+    @Test
+    void unRecorridoInexistenteDa404() {
+        assertThrows(RecursoNoEncontradoException.class, () -> servicio.consultar("no-existe"));
+        assertThrows(RecursoNoEncontradoException.class, () -> servicio.responder("no-existe", "SI"));
+        assertThrows(RecursoNoEncontradoException.class, () -> servicio.retroceder("no-existe"));
+    }
+
+    @Test
+    void unaListaDeRespuestasVaciaSeRechaza() {
+        String id = servicio.iniciar().recorridoId();
+
+        assertThrows(IllegalArgumentException.class, () -> servicio.responder(id, List.of()));
+    }
+
+    @Test
     void retrocederQuedaGuardadoYLaConsultaLoRefleja() {
         String id = hastaUrgencia();
-        servicio.responder(id, "No, ninguno de los anteriores");
+        servicio.responder(id, NINGUNO);
 
         RecorridoDTO atras = servicio.retroceder(id);
 
@@ -102,7 +161,7 @@ class ServicioNavegacionImplTest {
     @Test
     void trasRetrocederSePuedeCambiarLaRespuesta() {
         String id = hastaUrgencia();
-        assertEquals("EN_CURSO", servicio.responder(id, "No, ninguno de los anteriores").estado());
+        assertEquals("EN_CURSO", servicio.responder(id, NINGUNO).estado());
         servicio.retroceder(id);
 
         RecorridoDTO conUrgencia = servicio.responder(id, "Quejido al respirar");
