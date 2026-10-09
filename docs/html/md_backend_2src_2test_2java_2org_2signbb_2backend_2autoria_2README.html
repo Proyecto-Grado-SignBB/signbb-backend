@@ -126,7 +126,7 @@ Mapa de la suite</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">CompiladorSubgrafoTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyNone">lienzo → <span class="tt">GrafoClinicoJson</span>: pesos, tipos, aristas y metadata  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">PublicadorSubgrafoTest</span>  </td><td class="markdownTableBodyRight">8  </td><td class="markdownTableBodyNone">upsert del subgrafo y de la opción en la raíz; invalidar el contenido; rechazos  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">PublicadorSubgrafoTest</span>  </td><td class="markdownTableBodyRight">9  </td><td class="markdownTableBodyNone">upsert del subgrafo y de la opción en la raíz; categoría nueva visible; invalidar el contenido; rechazos  </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioAutoriaImplTest</span>  </td><td class="markdownTableBodyRight">10  </td><td class="markdownTableBodyNone">categorías, ids de grafo, datos del subgrafo, estados y errores  </td></tr>
 <tr class="markdownTableRowEven">
@@ -134,7 +134,7 @@ Mapa de la suite</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">(raíz)  </td><td class="markdownTableBodyNone"><span class="tt">AutoriaIntegracionTest</span>  </td><td class="markdownTableBodyRight">1  </td><td class="markdownTableBodyNone">de punta a punta: armar, publicar y recorrer como cuidadora  </td></tr>
 </table>
-<p>En total son <b>61 pruebas</b>.</p>
+<p>En total son <b>62 pruebas</b>.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md25"></a>
 Fixture</h1>
 <p><span class="tt">servicios/LienzoFiebre</span> arma, con las mismas operaciones del editor, el lienzo de fiebre del deck: </p><pre class="fragment">¿Cuánto marca el termómetro?
@@ -178,13 +178,14 @@ Compilar (<span class="tt">CompiladorSubgrafoTest</span>)</h2>
 Publicar (<span class="tt">PublicadorSubgrafoTest</span>)</h2>
 <ul>
 <li>Guarda el subgrafo y agrega, en la pregunta puente del grafo raíz, la opción del subgrafo y su nodo <span class="tt">ref_&lt;grafoId&gt;</span>. <b>Republicar no duplica</b> ni la opción ni el nodo.</li>
+<li>Publicar en una categoría que todavía no tenía subgrafos (piel o temperatura) la hace aparecer en la pregunta inicial de la cuidadora.</li>
 <li>Después del commit invalida el contenido en Redis y recarga el que está en memoria (<span class="tt">ContextoClinico.recargar()</span>), en ese orden.</li>
 <li><b>No guarda nada</b> si hay avisos bloqueantes, si la opción ya existe en la pregunta puente (por ejemplo "Iniciar"), si la pregunta puente no está o si el contenido compuesto no pasa la validación.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
 Servicio (<span class="tt">ServicioAutoriaImplTest</span>)</h2>
 <ul>
-<li>Las categorías salen de las preguntas puente del grafo raíz.</li>
+<li>Las categorías salen de las preguntas puente del grafo raíz: piel, temperatura, respiración, gastrointestinal y neurológico. Piel y temperatura se ofrecen aunque todavía no tengan subgrafos.</li>
 <li>El <span class="tt">grafoId</span> se arma con el nombre, sin tildes ni signos (<span class="tt">grafo_fiebre_en_ninos_pequenos</span>) y con sufijo si ya existe (<span class="tt">grafo_respiracion_3</span>).</li>
 <li>Editar un subgrafo publicado lo deja en <b>CAMBIOS_SIN_PUBLICAR</b>; publicar lo vuelve a <b>PUBLICADO</b>.</li>
 <li>Un borrador publicado no se puede borrar; un id inexistente da 404.</li>
