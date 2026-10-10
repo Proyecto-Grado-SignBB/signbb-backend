@@ -190,10 +190,14 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
                 .findFirst()
                 .orElseThrow(() -> new EdicionInvalidaException("Elige una de las categorías del grafo raíz."));
         String etiqueta = limpio(datos.getEtiquetaOpcion());
+        if (etiqueta == null) {
+            throw new EdicionInvalidaException("Escribe cómo verán este signo las familias, con palabras "
+                    + "sencillas (por ejemplo «Piel u ojos amarillos»).");
+        }
         b.setNombre(nombre);
         b.setPuenteId(categoria.puenteId());
         b.setCategoria(categoria.nombre());
-        b.setEtiquetaOpcion(etiqueta == null ? nombre : etiqueta);
+        b.setEtiquetaOpcion(etiqueta);
         b.setAutor(limpio(datos.getAutor()));
         b.setInstitucion(limpio(datos.getInstitucion()));
     }

@@ -88,13 +88,13 @@ class ServicioAutoriaImplTest {
 
     @Test
     void crearArmaUnBorradorVacioConUnGrafoIdSinTildes() {
-        SubgrafoDTO dto = servicio.crear(new SubgrafoRequest("  Fiebre en niños pequeños ", "puente_neuro", null,
-                "Dra. Prueba", ""));
+        SubgrafoDTO dto = servicio.crear(new SubgrafoRequest("  Fiebre en niños pequeños ", "puente_neuro",
+                " Fiebre o calentura ", "Dra. Prueba", ""));
 
         assertEquals("grafo_fiebre_en_ninos_pequenos", dto.grafoId());
         assertEquals("Fiebre en niños pequeños", dto.nombre());
         assertEquals("neurologico", dto.categoria());
-        assertEquals("Fiebre en niños pequeños", dto.etiquetaOpcion(), "sin etiqueta se usa el nombre");
+        assertEquals("Fiebre o calentura", dto.etiquetaOpcion());
         assertEquals(EstadoBorrador.BORRADOR, dto.estado());
         assertTrue(dto.nodos().isEmpty());
         assertEquals(1, dto.avisos().size(), "solo falta la primera pregunta");
@@ -105,7 +105,7 @@ class ServicioAutoriaImplTest {
     void elGrafoIdNoChocaConLosGrafosNiLosBorradores() {
         when(borradores.existsByGrafoId("grafo_respiracion_2")).thenReturn(true);
 
-        SubgrafoDTO dto = servicio.crear(new SubgrafoRequest("Respiración", "puente_respiracion", null, null, null));
+        SubgrafoDTO dto = servicio.crear(new SubgrafoRequest("Respiración", "puente_respiracion", "Le cuesta respirar", null, null));
 
         assertEquals("grafo_respiracion_3", dto.grafoId());
     }
@@ -113,9 +113,18 @@ class ServicioAutoriaImplTest {
     @Test
     void crearSinNombreOConUnaCategoriaQueNoExisteSeRechaza() {
         assertThrows(EdicionInvalidaException.class,
-                () -> servicio.crear(new SubgrafoRequest(" ", "puente_neuro", null, null, null)));
+                () -> servicio.crear(new SubgrafoRequest(" ", "puente_neuro", "Fiebre", null, null)));
         assertThrows(EdicionInvalidaException.class,
-                () -> servicio.crear(new SubgrafoRequest("Fiebre", "puente_x", null, null, null)));
+                () -> servicio.crear(new SubgrafoRequest("Fiebre", "puente_x", "Fiebre", null, null)));
+        verify(borradores, never()).save(any());
+    }
+
+    @Test
+    void sinNombreParaLaFamiliaSeRechaza() {
+        EdicionInvalidaException e = assertThrows(EdicionInvalidaException.class,
+                () -> servicio.crear(new SubgrafoRequest("Ictericia en la piel", "puente_piel", "  ", null, null)));
+
+        assertTrue(e.getMessage().contains("familias"));
         verify(borradores, never()).save(any());
     }
 

@@ -17,11 +17,11 @@ PostgreSQL y Redis, como el CI.
 | `servicios` | `ValidadorLienzoTest` | 10 | un caso por cada aviso; nodos sueltos y choque de gravedades |
 | `servicios` | `CompiladorSubgrafoTest` | 7 | lienzo → `GrafoClinicoJson`: pesos, tipos, aristas y metadata |
 | `servicios` | `PublicadorSubgrafoTest` | 9 | upsert del subgrafo y de la opción en la raíz; categoría nueva visible; invalidar el contenido; rechazos |
-| `servicios` | `ServicioAutoriaImplTest` | 10 | categorías, ids de grafo, datos del subgrafo, estados y errores |
+| `servicios` | `ServicioAutoriaImplTest` | 11 | categorías, ids de grafo, datos del subgrafo (nombre para la familia obligatorio), estados y errores |
 | `controladores` | `ControladorAutoriaTest` | 7 | códigos HTTP y cuerpos de error de la API `/api/autoria` |
 | (raíz) | `AutoriaIntegracionTest` | 1 | de punta a punta: armar, publicar y recorrer como cuidadora |
 
-En total son **62 pruebas**.
+En total son **63 pruebas**.
 
 ## Fixture
 
@@ -98,6 +98,8 @@ neurológica (`puente_neuro`).
   (`grafo_respiracion_3`).
 - Editar un subgrafo publicado lo deja en **CAMBIOS_SIN_PUBLICAR**; publicar
   lo vuelve a **PUBLICADO**.
+- El nombre para la familia (`etiquetaOpcion`) es obligatorio: sin él, crear
+  o editar responde 422.
 - Un borrador publicado no se puede borrar; un id inexistente da 404.
 
 ### API (`ControladorAutoriaTest`)
