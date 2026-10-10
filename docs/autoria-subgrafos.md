@@ -74,20 +74,127 @@ Esta entrega cubre subgrafos **sin reglas clínicas**. El desenlace lo decide la
 
 ## 5. Cómo probarlo en local
 
-1. **Back:** `git checkout autoria && git pull`.
-   - Si la base ya existía, **hay que borrar el volumen** (`docker compose down -v`). `DatabaseInit` solo siembra si no hay grafo raíz; si no se borra, siguen saliendo las categorías viejas.
-   - Después se levanta todo con docker compose.
-2. **Front:** `git checkout autoria-lienzo && git pull`, luego `npm install` y `npx ng serve ui-autoria`.
-3. **Prueba sugerida, «Ictericia en la piel»:**
-   1. En el tablero, crea un subgrafo con la categoría **Piel** y el nombre para la familia «Piel u ojos amarillos».
-   2. Arma una pregunta con sus respuestas y conclusiones usando los "+".
-   3. Publica.
-   4. En la app de la cuidadora, entra a Piel y verifica que aparece «Piel u ojos amarillos» y que se recorre hasta la conclusión.
-4. **Errores a verificar:**
-   - Crear sin nombre para la familia no debe dejar.
-   - Eliminar debe mostrar el diálogo de la app.
-   - Con el back apagado, el error debe salir dentro del diálogo.
-5. **Pruebas del front:** `npx ng test ui-autoria --watch=false --browsers=ChromeHeadless`.
+**Requisitos:** Java 25, Docker Desktop (encendido), Node.js con npm y Git. Maven no hace falta, porque se usa el wrapper (`mvnw` / `mvnw.cmd`).
+
+**Puertos:**
+
+| Qué | Dónde |
+|---|---|
+| Back (API) | `http://localhost:8080/api` |
+| Autoría (médico) | `http://localhost:4300` |
+| Consulta (cuidadora) | `http://localhost:4200` |
+| PostgreSQL | `localhost:5432` |
+| Redis | `localhost:6379` |
+
+Las rutas son relativas a la raíz de cada repo.
+
+### Mac (Terminal, zsh)
+
+**Back:**
+```bash
+cd signbb-backend
+git fetch origin && git checkout autoria && git pull
+
+cd contenedores
+docker compose down -v      # solo si ya tenías la base: borra los datos y vuelve a sembrar el grafo raíz
+docker compose up -d
+
+cd ../backend
+./mvnw spring-boot:run      # deja esta terminal abierta
+```
+
+**Front.** Abre otra terminal:
+```bash
+cd signbb-frontend
+git fetch origin && git checkout autoria-lienzo && git pull
+npm install
+npx ng build ui-compartida  # librería compartida; hay que compilarla antes que las apps
+npx ng serve ui-autoria     # http://localhost:4300
+```
+
+**App de la cuidadora.** Abre una tercera terminal:
+```bash
+cd signbb-frontend
+npx ng serve ui-consulta    # http://localhost:4200
+```
+
+**Pruebas:**
+```bash
+# Back. Necesita los contenedores arriba
+cd signbb-backend/backend && ./mvnw verify
+
+# Front
+cd signbb-frontend
+CHROME_BIN="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+  npx ng test ui-autoria --watch=false --browsers=ChromeHeadless
+```
+
+### Windows (PowerShell)
+
+**Back:**
+```powershell
+cd signbb-backend
+git fetch origin; git checkout autoria; git pull
+
+cd contenedores
+docker compose down -v      # solo si ya tenías la base: borra los datos y vuelve a sembrar el grafo raíz
+docker compose up -d
+
+cd ..\backend
+.\mvnw.cmd spring-boot:run  # deja esta ventana abierta
+```
+
+**Front.** Abre otra ventana de PowerShell:
+```powershell
+cd signbb-frontend
+git fetch origin; git checkout autoria-lienzo; git pull
+npm install
+npx ng build ui-compartida
+npx ng serve ui-autoria     # http://localhost:4300
+```
+
+**App de la cuidadora.** Abre una tercera ventana:
+```powershell
+cd signbb-frontend
+npx ng serve ui-consulta    # http://localhost:4200
+```
+
+**Pruebas:**
+```powershell
+# Back. Necesita los contenedores arriba
+cd signbb-backend\backend; .\mvnw.cmd verify
+
+# Front. Si Karma no encuentra Chrome, define CHROME_BIN
+cd signbb-frontend
+$env:CHROME_BIN = "C:\Program Files\Google\Chrome\Application\chrome.exe"
+npx ng test ui-autoria --watch=false --browsers=ChromeHeadless
+```
+
+**Problemas comunes en Windows:**
+- **PowerShell bloquea `npx`** con el error «la ejecución de scripts está deshabilitada». Ejecuta una vez `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
+- **Necesitas `curl`.** Usa `curl.exe`; en PowerShell, `curl` es un alias de `Invoke-WebRequest`.
+- **Errores de `JAVA_HOME`.** Verifica que `java -version` muestre la 25.
+
+### Verificar que el back responde (Mac y Windows)
+
+```bash
+curl http://localhost:8080/api/autoria/categorias     # en Windows: curl.exe ...
+```
+
+Debe listar piel, temperatura, respiración, gastrointestinal y neurológico. **Si salen las categorías viejas**, falta el `docker compose down -v`. `DatabaseInit` solo siembra si no existe un grafo raíz.
+
+### Prueba sugerida: «Ictericia en la piel»
+
+1. En `http://localhost:4300`, crea un subgrafo con la categoría **Piel** y el nombre para la familia «Piel u ojos amarillos».
+2. Arma una pregunta con sus respuestas y conclusiones usando los "+".
+3. Publica.
+4. En `http://localhost:4200` (cuidadora), entra a Piel y verifica que aparece «Piel u ojos amarillos» y que se recorre hasta la conclusión.
+
+### Errores a verificar
+
+- Crear sin nombre para la familia no debe dejar.
+- Eliminar debe mostrar el diálogo de la app, no el del navegador.
+- Con el back apagado (Ctrl+C en su terminal), el error debe salir dentro del diálogo.
 
 ## 6. Pendientes para tener completa la parte de subgrafos clínicos
 
