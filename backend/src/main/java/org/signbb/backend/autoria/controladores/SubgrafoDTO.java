@@ -9,6 +9,8 @@ import org.signbb.backend.autoria.modelo.EstadoBorrador;
 import org.signbb.backend.autoria.modelo.NodoLienzo;
 import org.signbb.backend.autoria.servicios.ValidadorLienzo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * Borrador completo: sus datos, el lienzo y los avisos. Lo devuelven todas las
  * operaciones que editan, para que el front solo tenga que redibujar.
@@ -29,22 +31,24 @@ import org.signbb.backend.autoria.servicios.ValidadorLienzo;
  * @param actualizadoEn  fecha de la última edición
  * @param publicadoEn    fecha de la última publicación, o {@code null}
  */
+@Schema(description = "Borrador completo: sus datos, el lienzo y los avisos. Lo devuelven "
+        + "todas las operaciones que editan.")
 public record SubgrafoDTO(
-        Long id,
-        String grafoId,
-        String nombre,
-        String puenteId,
-        String categoria,
-        String etiquetaOpcion,
-        String autor,
-        String institucion,
-        EstadoBorrador estado,
-        String inicio,
-        List<NodoLienzo> nodos,
-        List<Aviso> avisos,
-        Instant creadoEn,
-        Instant actualizadoEn,
-        Instant publicadoEn) {
+        @Schema(description = "Id del borrador") Long id,
+        @Schema(description = "Id del subgrafo publicado (grafo_...)") String grafoId,
+        @Schema(description = "Nombre técnico del subgrafo") String nombre,
+        @Schema(description = "Pregunta puente del grafo raíz donde se ofrece") String puenteId,
+        @Schema(description = "Categoría del subgrafo") String categoria,
+        @Schema(description = "Texto de la opción en la pregunta puente") String etiquetaOpcion,
+        @Schema(description = "Autor del contenido") String autor,
+        @Schema(description = "Institución del autor") String institucion,
+        @Schema(description = "Estado: BORRADOR, PUBLICADO o CAMBIOS_SIN_PUBLICAR") EstadoBorrador estado,
+        @Schema(description = "Id de la primera pregunta, o nulo") String inicio,
+        @Schema(description = "Nodos del lienzo en el orden en que se crearon") List<NodoLienzo> nodos,
+        @Schema(description = "Avisos actuales del lienzo") List<Aviso> avisos,
+        @Schema(description = "Fecha de creación") Instant creadoEn,
+        @Schema(description = "Fecha de la última edición") Instant actualizadoEn,
+        @Schema(description = "Fecha de la última publicación, o nula") Instant publicadoEn) {
 
     /** DTO de un borrador, con sus avisos calculados en el momento. */
     public static SubgrafoDTO desde(BorradorSubgrafoEntity b) {

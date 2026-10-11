@@ -2,6 +2,8 @@ package org.signbb.backend.observaciones.controladores;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * Pregunta que el recorrido presenta al cuidador mientras está EN_CURSO.
  *
@@ -21,11 +23,13 @@ import java.util.List;
  * frontend sepa qué pantalla renderizar sin tener que inferirlo del número
  * de opciones. Se resuelve en {@link RecorridoDTO#desde}.
  */
+@Schema(description = "Pregunta que el recorrido presenta al cuidador mientras está en curso.")
 public record PreguntaDTO(
-        String id,
-        String texto,
-        List<String> opciones,
-        boolean tieneImagenes,
-        List<String> imagenes,
+        @Schema(description = "Id del nodo pregunta") String id,
+        @Schema(description = "Contenido de la pregunta") String texto,
+        @Schema(description = "Etiquetas de las respuestas válidas") List<String> opciones,
+        @Schema(description = "Si la pregunta tiene imágenes de apoyo") boolean tieneImagenes,
+        @Schema(description = "Rutas de las imágenes; vacía si no tiene") List<String> imagenes,
+        @Schema(description = "Tipo de interacción: SI_NO, SELECCION_UNICA o SELECCION_MULTIPLE")
         String tipoInteraccion) {
 }

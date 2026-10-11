@@ -14,6 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 /**
  * Controlador REST de la consulta guiada del cuidador.
  *
@@ -25,6 +31,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api")
+@Tag(name = "Consulta", description = "Recorrido guiado del cuidador: inicia el triaje, "
+        + "responde cada pregunta y consulta el estado. Toda respuesta queda auditada.")
 public class ControladorConsulta {
 
     /** Servicio de navegación (motor real: grafo + reglas). */
@@ -39,6 +47,14 @@ public class ControladorConsulta {
      * {@code POST /api/recorridos}: inicia un recorrido y devuelve la primera
      * pregunta.
      */
+    @Operation(summary = "Inicia un recorrido de triaje",
+            description = "Crea una sesión y devuelve la primera pregunta. El id del "
+                    + "recorrido se envía en el cuerpo y se usa en las operaciones siguientes.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Recorrido creado con su primera pregunta"),
+            @ApiResponse(responseCode = "503", description = "Caché de sesiones (Redis) no disponible",
+                    content = @Content)
+    })
     @PostMapping("/recorridos")
     public ResponseEntity<RecorridoDTO> iniciar() {
         return ResponseEntity.ok(servicioNavegacion.iniciar());
@@ -49,6 +65,19 @@ public class ControladorConsulta {
      * y avanza. Acepta tanto el formato existente ({@code respuesta}, una sola
      * opción) como selección múltiple ({@code opciones}, varias).
      */
+    @Operation(summary = "Responde la pregunta actual",
+            description = "Acepta tanto el formato de una sola opción (respuesta) como la "
+                    + "selección múltiple (opciones); tipo es una pista opcional del cliente "
+                    + "para la auditoría. Devuelve el recorrido actualizado.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Respuesta registrada y recorrido actualizado"),
+            @ApiResponse(responseCode = "400", description = "La opción enviada no es válida para la pregunta actual",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "El recorrido no existe",
+                    content = @Content),
+            @ApiResponse(responseCode = "503", description = "Caché de sesiones (Redis) no disponible",
+                    content = @Content)
+    })
     @PostMapping("/recorridos/{recorridoId}/respuestas")
     public ResponseEntity<RecorridoDTO> responder(@PathVariable String recorridoId,
             @RequestBody RespuestaRequest request) {
@@ -65,12 +94,34 @@ public class ControladorConsulta {
      * {@code POST /api/recorridos/{id}/retroceder}: vuelve a la pregunta
      * anterior para cambiar su respuesta (400 si aún no hay respuestas).
      */
+    @Operation(summary = "Retrocede a la pregunta anterior",
+            description = "Vuelve atrás para cambiar la última respuesta. Falla con 400 si "
+                    + "el recorrido aún no tiene respuestas.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Recorrido actualizado en la pregunta anterior"),
+            @ApiResponse(responseCode = "400", description = "El recorrido no tiene respuestas que deshacer",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "El recorrido no existe",
+                    content = @Content),
+            @ApiResponse(responseCode = "503", description = "Caché de sesiones (Redis) no disponible",
+                    content = @Content)
+    })
     @PostMapping("/recorridos/{recorridoId}/retroceder")
     public ResponseEntity<RecorridoDTO> retroceder(@PathVariable String recorridoId) {
         return ResponseEntity.ok(servicioNavegacion.retroceder(recorridoId));
     }
 
     /** {@code GET /api/recorridos/{id}}: consulta el estado del recorrido. */
+    @Operation(summary = "Consulta el estado del recorrido",
+            description = "Devuelve la pregunta actual si sigue en curso, o el resultado "
+                    + "final si ya terminó.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Estado actual del recorrido"),
+            @ApiResponse(responseCode = "404", description = "El recorrido no existe",
+                    content = @Content),
+            @ApiResponse(responseCode = "503", description = "Caché de sesiones (Redis) no disponible",
+                    content = @Content)
+    })
     @GetMapping("/recorridos/{recorridoId}")
     public ResponseEntity<RecorridoDTO> consultar(@PathVariable String recorridoId) {
         return ResponseEntity.ok(servicioNavegacion.consultar(recorridoId));

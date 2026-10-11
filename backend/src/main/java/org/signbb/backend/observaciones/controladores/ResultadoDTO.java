@@ -2,6 +2,8 @@ package org.signbb.backend.observaciones.controladores;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * Desenlace de un recorrido FINALIZADO.
  *
@@ -17,11 +19,16 @@ import java.util.List;
  * sin el cierre por el máximo de preguntas); con una alerta, o si no hay
  * ninguna, es una lista vacía.
  */
+@Schema(description = "Desenlace de un recorrido finalizado.")
 public record ResultadoDTO(
+                @Schema(description = "Nivel de alerta resultante; NORMAL si no disparó reglas")
                 String nivel,
-                String destinoId,
-                String mensaje,
+                @Schema(description = "Id del nodo terminal") String destinoId,
+                @Schema(description = "Contenido del nodo terminal") String mensaje,
+                @Schema(description = "Ids de las reglas de nivel máximo que dispararon; vacío si NORMAL")
                 List<String> razones,
+                @Schema(description = "Secuencia de nodos y condiciones hasta el destino")
                 List<PasoCausalDTO> caminoCausal,
+                @Schema(description = "Recomendaciones alcanzadas; vacía si hubo alerta")
                 List<RecomendacionDTO> recomendaciones) {
 }

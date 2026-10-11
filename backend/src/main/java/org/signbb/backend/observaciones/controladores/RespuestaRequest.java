@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * Cuerpo de la petición que responde la pregunta actual.
  *
@@ -30,7 +32,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RespuestaRequest {
+    @Schema(description = "Opción seleccionada (formato de una sola opción)")
     private String respuesta;
+
+    @Schema(description = "Todas las opciones marcadas (selección múltiple); deja respuesta nulo")
     private List<String> opciones;
+
+    @Schema(description = "Pista opcional para la auditoría: SI_NO, SELECCION_UNICA o SELECCION_MULTIPLE")
     private String tipo;
 }

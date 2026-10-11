@@ -8,6 +8,8 @@ import org.signbb.backend.navegacion.modelo.Respuesta;
 import org.signbb.backend.navegacion.modelo.ResultadoPaso;
 import org.signbb.backend.reglas.modelo.ReglaClinica;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * Vista REST de un recorrido de triaje.
  *
@@ -16,10 +18,14 @@ import org.signbb.backend.reglas.modelo.ReglaClinica;
  * responderse y {@code resultado} es {@code null}. Si es {@code FINALIZADO},
  * lleva el {@code resultado} y {@code pregunta} es {@code null}.
  */
+@Schema(description = "Vista de un recorrido de triaje. Si estado es EN_CURSO lleva "
+                + "pregunta y resultado es nulo; si es FINALIZADO lleva resultado y pregunta es nulo.")
 public record RecorridoDTO(
-                String recorridoId,
-                String estado,
+                @Schema(description = "Id de la sesión de recorrido") String recorridoId,
+                @Schema(description = "EN_CURSO o FINALIZADO") String estado,
+                @Schema(description = "Pregunta actual; solo si el recorrido está en curso")
                 PreguntaDTO pregunta,
+                @Schema(description = "Desenlace; solo si el recorrido finalizó")
                 ResultadoDTO resultado) {
 
         /**

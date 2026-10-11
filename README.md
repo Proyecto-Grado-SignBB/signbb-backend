@@ -55,3 +55,21 @@ El diagrama de arquitectura por módulos (`docs/diagramas/arquitectura_modulos.s
 se regenera desde su fuente PlantUML:
 
     java -jar plantuml.jar -tsvg docs/diagramas/arquitectura_modulos.puml
+
+### API REST (OpenAPI)
+
+La API se documenta con **springdoc-openapi** a partir de los controladores.
+Con la aplicación arriba:
+
+- Swagger UI: `http://localhost:8080/swagger-ui.html`
+- Contrato JSON: `http://localhost:8080/v3/api-docs`
+- Contrato YAML: `http://localhost:8080/v3/api-docs.yaml`
+
+La copia versionada del contrato vive en `docs/api/openapi.yaml`. Para
+regenerarla tras cambiar los controladores o los DTOs:
+
+    ./mvnw spring-boot:run   # en una terminal; esperar "Started BackendApplication"
+    curl -o docs/api/openapi.yaml http://localhost:8080/v3/api-docs.yaml
+
+Las descripciones de operaciones y esquemas se toman de las anotaciones
+`@Tag`, `@Operation`, `@ApiResponse` y `@Schema` en los controladores y DTOs.

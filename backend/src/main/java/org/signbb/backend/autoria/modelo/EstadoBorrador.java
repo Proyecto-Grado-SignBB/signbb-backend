@@ -1,14 +1,20 @@
 package org.signbb.backend.autoria.modelo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /** Estado de un borrador respecto a lo que ve la cuidadora. */
+@Schema(description = "Estado de un borrador respecto a lo que ve la cuidadora.")
 public enum EstadoBorrador {
 
     /** Nunca se publicó. */
+    @Schema(description = "Nunca se publicó.")
     BORRADOR,
 
     /** Lo publicado coincide con el borrador. */
+    @Schema(description = "Lo publicado coincide con el borrador.")
     PUBLICADO,
 
     /** Se publicó y después se editó: la cuidadora sigue viendo la versión anterior. */
+    @Schema(description = "Se publicó y después se editó: la cuidadora sigue viendo la versión anterior.")
     CAMBIOS_SIN_PUBLICAR
 }

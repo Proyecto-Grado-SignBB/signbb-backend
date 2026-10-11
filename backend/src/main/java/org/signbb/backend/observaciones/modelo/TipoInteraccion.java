@@ -1,5 +1,7 @@
 package org.signbb.backend.observaciones.modelo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * Cómo se le presenta la pregunta al cuidador y cómo debe interpretarse su
  * respuesta.
@@ -12,6 +14,7 @@ package org.signbb.backend.observaciones.modelo;
  * documento de diseño): la validación real solo distingue "una opción" de
  * "varias opciones".
  */
+@Schema(description = "Cómo se presenta la pregunta y cómo se interpreta la respuesta.")
 public enum TipoInteraccion {
     SI_NO,
     SELECCION_UNICA,
