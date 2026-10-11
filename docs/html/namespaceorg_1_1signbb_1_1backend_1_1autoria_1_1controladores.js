@@ -4,7 +4,7 @@ var namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores =
     [ "DespuesDeRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1DespuesDeRequest.html", null ],
     [ "DestinoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1DestinoRequest.html", null ],
     [ "ManejadorErroresAutoria", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ManejadorErroresAutoria.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ManejadorErroresAutoria" ],
-    [ "NodoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1NodoRequest.html", null ],
+    [ "NodoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1NodoRequest.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1NodoRequest" ],
     [ "OpcionRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1OpcionRequest.html", null ],
     [ "SubgrafoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1SubgrafoRequest.html", null ],
     [ "CategoriaDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a71d9ce3685c380760b07f5143660f7fb", null ],

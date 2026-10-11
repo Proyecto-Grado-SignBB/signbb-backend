@@ -118,11 +118,33 @@ Métodos públicos</h2></td></tr>
 ResponseEntity&lt; Void &gt;&#160;</td><td class="memItemRight"><b>manejarNoEncontrado</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1config_1_1RecursoNoEncontradoException.html">RecursoNoEncontradoException</a> ex)</td></tr>
 <tr class="memitem:a58bc95da503481f07e0a513f6a32c9e8" id="r_a58bc95da503481f07e0a513f6a32c9e8"><td class="memItemLeft">ResponseEntity&lt; Void &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a58bc95da503481f07e0a513f6a32c9e8">manejarArgumentoInvalido</a> (IllegalArgumentException ex)</td></tr>
 <tr class="memdesc:a58bc95da503481f07e0a513f6a32c9e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">MODIFICADO: agregado para que las opciones inválidas del cuidador (validadas en <code class="JavaDocCode">ServicioCapturaImpl</code>) respondan 400 en vez de caer como 500 sin manejar.  <br /></td></tr>
+<tr class="memitem:a85cb802d12bf33ec69fa8b6b7e88df71" id="r_a85cb802d12bf33ec69fa8b6b7e88df71"><td class="memItemLeft">ResponseEntity&lt; ErrorAutoriaDTO &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a85cb802d12bf33ec69fa8b6b7e88df71">manejarArchivoGrande</a> (MaxUploadSizeExceededException ex)</td></tr>
+<tr class="memdesc:a85cb802d12bf33ec69fa8b6b7e88df71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Archivo subido por encima del límite del servidor (imágenes de las preguntas).  <br /></td></tr>
 <tr class="memitem:a47da4350124a737dd82b564443c76571" id="r_a47da4350124a737dd82b564443c76571"><td class="memItemLeft"><a id="a47da4350124a737dd82b564443c76571" name="a47da4350124a737dd82b564443c76571"></a>
 ResponseEntity&lt; Void &gt;&#160;</td><td class="memItemRight"><b>manejarCacheNoDisponible</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1CacheNoDisponibleException.html">CacheNoDisponibleException</a> ex)</td></tr>
 <tr class="memdesc:a47da4350124a737dd82b564443c76571"><td class="mdescLeft">&#160;</td><td class="mdescRight">MODIFICADO (cache): Redis no disponible para sesiones — 503 para que el cliente sepa que es transitorio y reintente; degradar a memoria crearía inconsistencias entre sesiones. <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
+<a id="a85cb802d12bf33ec69fa8b6b7e88df71" name="a85cb802d12bf33ec69fa8b6b7e88df71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85cb802d12bf33ec69fa8b6b7e88df71">&#9670;&#160;</a></span>manejarArchivoGrande()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ResponseEntity&lt; ErrorAutoriaDTO &gt; org.signbb.backend.config.ManejadorExcepciones.manejarArchivoGrande </td>
+          <td>(</td>
+          <td class="paramtype">MaxUploadSizeExceededException</td>          <td class="paramname"><span class="paramname"><em>ex</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Archivo subido por encima del límite del servidor (imágenes de las preguntas). </p>
+<p>Este error ocurre antes de llegar al controlador, por eso no lo atiende <code class="JavaDocCode">ManejadorErroresAutoria</code>. </p>
+
+</div>
+</div>
 <a id="a58bc95da503481f07e0a513f6a32c9e8" name="a58bc95da503481f07e0a513f6a32c9e8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a58bc95da503481f07e0a513f6a32c9e8">&#9670;&#160;</a></span>manejarArgumentoInvalido()</h2>
 

@@ -1,5 +1,8 @@
 var hierarchy =
 [
+    [ "org.signbb.backend.media.AlmacenImagenes", "interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html", [
+      [ "org.signbb.backend.media.AlmacenImagenesS3", "classorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenesS3.html", null ]
+    ] ],
     [ "org.signbb.backend.BackendApplication", "classorg_1_1signbb_1_1backend_1_1BackendApplication.html", null ],
     [ "org.signbb.backend.reglas.modelo.BaseReglas", "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html", null ],
     [ "org.signbb.backend.reglas.datos.entidades.BaseReglasEntity", "classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1entidades_1_1BaseReglasEntity.html", null ],
@@ -17,6 +20,7 @@ var hierarchy =
     [ "org.signbb.backend.navegacion.modelo.ContextoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html", null ],
     [ "org.signbb.backend.autoria.controladores.ControladorAutoria", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html", null ],
     [ "org.signbb.backend.observaciones.controladores.ControladorConsulta", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1ControladorConsulta.html", null ],
+    [ "org.signbb.backend.media.ControladorImagenes", "classorg_1_1signbb_1_1backend_1_1media_1_1ControladorImagenes.html", null ],
     [ "org.signbb.backend.autoria.modelo.Desenlace", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Desenlace.html", null ],
     [ "org.signbb.backend.autoria.controladores.DespuesDeRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1DespuesDeRequest.html", null ],
     [ "org.signbb.backend.autoria.controladores.DestinoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1DestinoRequest.html", null ],
@@ -54,7 +58,9 @@ var hierarchy =
       [ "org.signbb.backend.autoria.servicios.ContenidoInvalidoException", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ContenidoInvalidoException.html", null ],
       [ "org.signbb.backend.autoria.servicios.EdicionInvalidaException", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EdicionInvalidaException.html", null ],
       [ "org.signbb.backend.cache.CacheNoDisponibleException", "classorg_1_1signbb_1_1backend_1_1cache_1_1CacheNoDisponibleException.html", null ],
-      [ "org.signbb.backend.config.RecursoNoEncontradoException", "classorg_1_1signbb_1_1backend_1_1config_1_1RecursoNoEncontradoException.html", null ]
+      [ "org.signbb.backend.config.RecursoNoEncontradoException", "classorg_1_1signbb_1_1backend_1_1config_1_1RecursoNoEncontradoException.html", null ],
+      [ "org.signbb.backend.media.AlmacenNoDisponibleException", "classorg_1_1signbb_1_1backend_1_1media_1_1AlmacenNoDisponibleException.html", null ],
+      [ "org.signbb.backend.media.ImagenInvalidaException", "classorg_1_1signbb_1_1backend_1_1media_1_1ImagenInvalidaException.html", null ]
     ] ],
     [ "org.signbb.backend.observaciones.modelo.SeleccionCuidador", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1SeleccionCuidador.html", null ],
     [ "org.signbb.backend.autoria.servicios.ServicioAutoria", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html", [
@@ -63,6 +69,7 @@ var hierarchy =
     [ "org.signbb.backend.observaciones.servicios.ServicioCaptura", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCaptura.html", [
       [ "org.signbb.backend.observaciones.servicios.ServicioCapturaImpl", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl.html", null ]
     ] ],
+    [ "org.signbb.backend.media.ServicioImagenes", "classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenes.html", null ],
     [ "org.signbb.backend.navegacion.servicios.ServicioNavegacion", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html", [
       [ "org.signbb.backend.navegacion.servicios.ServicioNavegacionImpl", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImpl.html", null ]
     ] ],

@@ -9,7 +9,7 @@ var annotated_dup =
               [ "DespuesDeRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1DespuesDeRequest.html", null ],
               [ "DestinoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1DestinoRequest.html", null ],
               [ "ManejadorErroresAutoria", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ManejadorErroresAutoria.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ManejadorErroresAutoria" ],
-              [ "NodoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1NodoRequest.html", null ],
+              [ "NodoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1NodoRequest.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1NodoRequest" ],
               [ "OpcionRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1OpcionRequest.html", null ],
               [ "SubgrafoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1SubgrafoRequest.html", null ]
             ] ],
@@ -47,6 +47,14 @@ var annotated_dup =
             [ "ConfiguracionCors", "classorg_1_1signbb_1_1backend_1_1config_1_1ConfiguracionCors.html", null ],
             [ "ManejadorExcepciones", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorExcepciones.html", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorExcepciones" ],
             [ "RecursoNoEncontradoException", "classorg_1_1signbb_1_1backend_1_1config_1_1RecursoNoEncontradoException.html", null ]
+          ] ],
+          [ "media", "namespaceorg_1_1signbb_1_1backend_1_1media.html", [
+            [ "AlmacenImagenes", "interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html", "interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes" ],
+            [ "AlmacenImagenesS3", "classorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenesS3.html", "classorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenesS3" ],
+            [ "AlmacenNoDisponibleException", "classorg_1_1signbb_1_1backend_1_1media_1_1AlmacenNoDisponibleException.html", "classorg_1_1signbb_1_1backend_1_1media_1_1AlmacenNoDisponibleException" ],
+            [ "ControladorImagenes", "classorg_1_1signbb_1_1backend_1_1media_1_1ControladorImagenes.html", "classorg_1_1signbb_1_1backend_1_1media_1_1ControladorImagenes" ],
+            [ "ImagenInvalidaException", "classorg_1_1signbb_1_1backend_1_1media_1_1ImagenInvalidaException.html", "classorg_1_1signbb_1_1backend_1_1media_1_1ImagenInvalidaException" ],
+            [ "ServicioImagenes", "classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenes.html", "classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenes" ]
           ] ],
           [ "navegacion", "namespaceorg_1_1signbb_1_1backend_1_1navegacion.html", [
             [ "datos", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos.html", [

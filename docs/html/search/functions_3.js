@@ -1,7 +1,7 @@
 var searchData=
 [
   ['databaseinit_0',['DatabaseInit',['../classorg_1_1signbb_1_1backend_1_1DatabaseInit.html#aa9edc86c02b80cc56763463d9dbe79e8',1,'org::signbb::backend::DatabaseInit']]],
-  ['datosnodo_1',['DatosNodo',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorLienzo.html#ad6b2b98da8e9a7e2c7ec463c7fc1c466',1,'org::signbb::backend::autoria::servicios::EditorLienzo']]],
+  ['datosnodo_1',['DatosNodo',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorLienzo.html#a287df682baa214390ccdaa7f93c08074',1,'org::signbb::backend::autoria::servicios::EditorLienzo']]],
   ['datosrespuesta_2',['DatosRespuesta',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorLienzo.html#affc40b47b703e80ee64236d14ee16528',1,'org::signbb::backend::autoria::servicios::EditorLienzo']]],
   ['demotriajerunner_3',['DemoTriajeRunner',['../classorg_1_1signbb_1_1backend_1_1DemoTriajeRunner.html#a6657a9aef6afeac6df0705bf5b2f1afc',1,'org::signbb::backend::DemoTriajeRunner']]],
   ['desapilarpaso_4',['desapilarPaso',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#abe0217d4542dabcb0cdfddc041f6afdc',1,'org::signbb::backend::navegacion::modelo::EstadoPaciente']]],
