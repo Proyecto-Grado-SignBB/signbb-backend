@@ -10,12 +10,12 @@ var namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores =
     [ "OpcionRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1OpcionRequest.html", null ],
     [ "ReglaRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ReglaRequest.html", null ],
     [ "SubgrafoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1SubgrafoRequest.html", null ],
-    [ "BaseReglaDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a2cbce3f9a690a1fc13009654196a99ca", null ],
+    [ "BaseReglaDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a90b6ccc8469479c444ed4758eaec61c0", null ],
     [ "CatalogoDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#ae0be934ddd85661b524b1f8501af947c", null ],
     [ "CategoriaDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a7420e3d4b075ae4109765b53ca6ec7a2", null ],
     [ "ErrorAutoriaDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a8d967bf6f3a34ce10dbeebd1aa35634d", null ],
     [ "ReglaDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#ae0a0bcf1970f11d102a4c5fbaeff86aa", null ],
-    [ "ResumenBaseReglaDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#aea42b585ff49edbab6ca72f6c1dc3cbd", null ],
+    [ "ResumenBaseReglaDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#ac31940c3c47dee5f6cfd558c27fb39cd", null ],
     [ "ResumenSubgrafoDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a19d567cf8e54e9034f75ef3340f0ed7b", null ],
     [ "SubgrafoDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#accdf5eab199da17d831c4aed3fbb6920", null ]
 ];

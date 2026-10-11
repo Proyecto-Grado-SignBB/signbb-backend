@@ -6,7 +6,7 @@ var searchData=
   ['baja_3',['Dar de baja',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md8',1,'']]],
   ['base_20de_20datos_4',['Perfil de base de datos',['../index.html#autotoc_md3',1,'']]],
   ['base_20de_20reglas_5',['Representacion visual de base de reglas',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md44',1,'']]],
-  ['baseregladto_6',['BaseReglaDTO',['../namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a2cbce3f9a690a1fc13009654196a99ca',1,'org::signbb::backend::autoria::controladores']]],
+  ['baseregladto_6',['BaseReglaDTO',['../namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a90b6ccc8469479c444ed4758eaec61c0',1,'org::signbb::backend::autoria::controladores']]],
   ['basereglarequest_7',['BaseReglaRequest',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1BaseReglaRequest.html',1,'org::signbb::backend::autoria::controladores']]],
   ['basereglas_8',['BaseReglas',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html',1,'org::signbb::backend::reglas::modelo']]],
   ['basereglasentity_9',['BaseReglasEntity',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1entidades_1_1BaseReglasEntity.html',1,'org::signbb::backend::reglas::datos::entidades']]],
