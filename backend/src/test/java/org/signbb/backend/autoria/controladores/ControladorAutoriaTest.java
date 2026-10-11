@@ -59,7 +59,7 @@ class ControladorAutoriaTest {
 
     private static SubgrafoDTO vacio() {
         return new SubgrafoDTO(1L, "grafo_fiebre", "Fiebre", "puente_neuro", "neurologico", "Fiebre", null, null,
-                EstadoBorrador.BORRADOR, null, List.of(), List.of(), null, null, null);
+                EstadoBorrador.BORRADOR, null, List.of(), List.of(), null, null, null, false);
     }
 
     @Test
@@ -120,6 +120,27 @@ class ControladorAutoriaTest {
         assertEquals(422, r.getStatus());
         assertTrue(cuerpo(r).contains("\"codigo\":\"RESPUESTA_SIN_CAMINO\""));
         assertTrue(cuerpo(r).contains("\"respuestaId\":\"r_2\""));
+    }
+
+    @Test
+    void descartarResponde200ConElBorrador() throws Exception {
+        when(servicio.descartarCambios(1L)).thenReturn(vacio());
+
+        MockHttpServletResponse r = ejecutar(post("/api/autoria/subgrafos/1/descartar"));
+
+        assertEquals(200, r.getStatus());
+        verify(servicio).descartarCambios(1L);
+    }
+
+    @Test
+    void descartarUnSubgrafoQueNoSePuedeVolverAtrasResponde422() throws Exception {
+        when(servicio.descartarCambios(1L))
+                .thenThrow(new EdicionInvalidaException("No hay una versión publicada a la que volver."));
+
+        MockHttpServletResponse r = ejecutar(post("/api/autoria/subgrafos/1/descartar"));
+
+        assertEquals(422, r.getStatus());
+        assertTrue(cuerpo(r).contains("No hay una versión publicada a la que volver."));
     }
 
     @Test

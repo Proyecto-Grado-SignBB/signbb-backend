@@ -4,6 +4,7 @@ import java.time.Instant;
 
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
+import org.signbb.backend.autoria.modelo.CopiaPublicada;
 import org.signbb.backend.autoria.modelo.DocumentoLienzo;
 import org.signbb.backend.autoria.modelo.EstadoBorrador;
 
@@ -71,6 +72,14 @@ public class BorradorSubgrafoEntity {
 
     /** Última publicación, o {@code null} si nunca se publicó. */
     private Instant publicadoEn;
+
+    /**
+     * Cómo estaba el borrador en su última publicación, o {@code null} si nunca
+     * se publicó o se publicó antes de que existiera la copia.
+     */
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "copia_publicada")
+    private CopiaPublicada copiaPublicada;
 
     /** Bloqueo optimista: dos ediciones simultáneas no se pisan. */
     @Version

@@ -110,4 +110,13 @@ public class ControladorAutoria {
     public SubgrafoDTO publicar(@PathVariable Long id) {
         return servicio.publicar(id);
     }
+
+    /**
+     * {@code POST /api/autoria/subgrafos/{id}/descartar}: descarta los cambios
+     * sin publicar y devuelve el borrador a su última publicación.
+     */
+    @PostMapping("/subgrafos/{id}/descartar")
+    public SubgrafoDTO descartar(@PathVariable Long id) {
+        return servicio.descartarCambios(id);
+    }
 }

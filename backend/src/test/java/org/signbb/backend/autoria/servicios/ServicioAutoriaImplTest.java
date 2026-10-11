@@ -9,6 +9,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -27,6 +28,7 @@ import org.signbb.backend.autoria.controladores.SubgrafoDTO;
 import org.signbb.backend.autoria.controladores.SubgrafoRequest;
 import org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo;
+import org.signbb.backend.autoria.modelo.CopiaPublicada;
 import org.signbb.backend.autoria.modelo.Desenlace;
 import org.signbb.backend.autoria.modelo.DocumentoLienzo;
 import org.signbb.backend.autoria.modelo.EstadoBorrador;
@@ -172,6 +174,70 @@ class ServicioAutoriaImplTest {
         verify(publicador).publicar(eq(b), any(Instant.class));
         assertEquals(EstadoBorrador.PUBLICADO, dto.estado());
         assertNotNull(dto.publicadoEn());
+    }
+
+    @Test
+    void publicarGuardaUnaCopiaDeLoPublicado() {
+        BorradorSubgrafoEntity b = guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
+
+        SubgrafoDTO dto = servicio.publicar(1L);
+
+        assertTrue(dto.puedeDescartar());
+        CopiaPublicada copia = b.getCopiaPublicada();
+        assertEquals(LienzoFiebre.completo(), copia.documento());
+        assertEquals("Fiebre", copia.nombre());
+        assertEquals("puente_neuro", copia.puenteId());
+        assertEquals("Fiebre o temperatura alta", copia.etiquetaOpcion());
+    }
+
+    @Test
+    void descartarDevuelveElLienzoYLosDatosAComoEstabanPublicados() {
+        BorradorSubgrafoEntity b = guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
+        servicio.publicar(1L);
+        servicio.enlazar(1L, LienzoFiebre.MENOS_38, null);
+        servicio.actualizar(1L, new SubgrafoRequest("Otro nombre", "puente_respiracion", "Otra opción", null, null));
+        assertEquals(EstadoBorrador.CAMBIOS_SIN_PUBLICAR, b.getEstado());
+
+        SubgrafoDTO dto = servicio.descartarCambios(1L);
+
+        assertEquals(EstadoBorrador.PUBLICADO, dto.estado());
+        assertEquals(LienzoFiebre.completo(), b.getDocumento());
+        assertEquals("Fiebre", dto.nombre());
+        assertEquals("puente_neuro", dto.puenteId());
+        assertEquals("neurologico", dto.categoria());
+        assertEquals("Fiebre o temperatura alta", dto.etiquetaOpcion());
+    }
+
+    @Test
+    void descartarSinCambiosSinPublicarDevuelveElBorradorIgual() {
+        BorradorSubgrafoEntity b = guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
+        servicio.publicar(1L);
+
+        SubgrafoDTO dto = servicio.descartarCambios(1L);
+
+        assertEquals(EstadoBorrador.PUBLICADO, dto.estado());
+        assertEquals(LienzoFiebre.completo(), b.getDocumento());
+        verify(borradores, times(1)).save(any(BorradorSubgrafoEntity.class)); // solo el de publicar
+    }
+
+    @Test
+    void descartarUnBorradorQueNuncaSePublicoSeRechaza() {
+        guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
+
+        assertThrows(EdicionInvalidaException.class, () -> servicio.descartarCambios(1L));
+        verify(borradores, never()).save(any());
+    }
+
+    @Test
+    void descartarUnPublicadoSinCopiaSeRechazaYNoCambiaNada() {
+        // Publicado antes de que existiera la copia: no hay a qué volver.
+        BorradorSubgrafoEntity b = guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
+        b.setEstado(EstadoBorrador.CAMBIOS_SIN_PUBLICAR);
+        b.setPublicadoEn(Instant.parse("2026-10-01T00:00:00Z"));
+
+        assertThrows(EdicionInvalidaException.class, () -> servicio.descartarCambios(1L));
+        assertEquals(EstadoBorrador.CAMBIOS_SIN_PUBLICAR, b.getEstado());
+        verify(borradores, never()).save(any());
     }
 
     @Test

@@ -17,11 +17,11 @@ PostgreSQL y Redis, como el CI.
 | `servicios` | `ValidadorLienzoTest` | 10 | un caso por cada aviso; nodos sueltos y choque de gravedades |
 | `servicios` | `CompiladorSubgrafoTest` | 7 | lienzo → `GrafoClinicoJson`: pesos, tipos, aristas y metadata |
 | `servicios` | `PublicadorSubgrafoTest` | 9 | upsert del subgrafo y de la opción en la raíz; categoría nueva visible; invalidar el contenido; rechazos |
-| `servicios` | `ServicioAutoriaImplTest` | 11 | categorías, ids de grafo, datos del subgrafo (nombre para la familia obligatorio), estados y errores |
-| `controladores` | `ControladorAutoriaTest` | 7 | códigos HTTP y cuerpos de error de la API `/api/autoria` |
+| `servicios` | `ServicioAutoriaImplTest` | 16 | categorías, ids de grafo, datos del subgrafo (nombre para la familia obligatorio), estados y errores |
+| `controladores` | `ControladorAutoriaTest` | 9 | códigos HTTP y cuerpos de error de la API `/api/autoria` |
 | (raíz) | `AutoriaIntegracionTest` | 1 | de punta a punta: armar, publicar y recorrer como cuidadora |
 
-En total son **63 pruebas**.
+En total son **70 pruebas**.
 
 ## Fixture
 

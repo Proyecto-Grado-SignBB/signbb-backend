@@ -28,6 +28,7 @@ import org.signbb.backend.autoria.servicios.ValidadorLienzo;
  * @param creadoEn       fecha de creación
  * @param actualizadoEn  fecha de la última edición
  * @param publicadoEn    fecha de la última publicación, o {@code null}
+ * @param puedeDescartar {@code true} si hay una copia de lo publicado a la que se puede volver
  */
 public record SubgrafoDTO(
         Long id,
@@ -44,7 +45,8 @@ public record SubgrafoDTO(
         List<Aviso> avisos,
         Instant creadoEn,
         Instant actualizadoEn,
-        Instant publicadoEn) {
+        Instant publicadoEn,
+        boolean puedeDescartar) {
 
     /** DTO de un borrador, con sus avisos calculados en el momento. */
     public static SubgrafoDTO desde(BorradorSubgrafoEntity b) {
@@ -52,6 +54,6 @@ public record SubgrafoDTO(
                 b.getEtiquetaOpcion(), b.getAutor(), b.getInstitucion(), b.getEstado(),
                 b.getDocumento().inicio(), List.copyOf(b.getDocumento().nodos().values()),
                 ValidadorLienzo.validar(b.getDocumento()), b.getCreadoEn(), b.getActualizadoEn(),
-                b.getPublicadoEn());
+                b.getPublicadoEn(), b.getCopiaPublicada() != null);
     }
 }

@@ -1,16 +1,20 @@
 package org.signbb.backend;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.signbb.backend.cache.ResolvedorContenidoClinico;
 import org.signbb.backend.cache.RepositorioSesionRedis;
+import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
 import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico;
+import org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico;
 import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoJson;
 import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoMapper;
 import org.signbb.backend.navegacion.modelo.ContextoClinico;
@@ -19,6 +23,10 @@ import org.signbb.backend.navegacion.modelo.Nodo;
 import org.signbb.backend.navegacion.modelo.RepositorioSesion;
 import org.signbb.backend.navegacion.modelo.ResultadoPaso;
 import org.signbb.backend.navegacion.modelo.SesionTriaje;
+import org.signbb.backend.reglas.datos.entidades.BaseReglasEntity;
+import org.signbb.backend.reglas.datos.repositorios.RepositorioBaseReglas;
+import org.signbb.backend.reglas.datos.serializacion.BaseReglasJson;
+import org.signbb.backend.reglas.datos.serializacion.BaseReglasMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataAccessException;
@@ -30,6 +38,11 @@ import org.springframework.transaction.annotation.Transactional;
  * contenedores/compose.yaml). Sin Redis disponible se saltan con una
  * suposición — sin cache el contenido resuelve directo desde la base, que es
  * el camino de degradación que también interesa cubrir.
+ *
+ * <p>
+ * Corren contra la base de datos real del entorno, que puede tener más
+ * subgrafos publicados que la siembra inicial. Por eso los conteos esperados
+ * no están escritos a mano: se calculan componiendo las filas guardadas.
  */
 @SpringBootTest
 class CacheRedisIntegracionTest {
@@ -39,6 +52,9 @@ class CacheRedisIntegracionTest {
 
     @Autowired
     private RepositorioGrafoClinico grafos;
+
+    @Autowired
+    private RepositorioBaseReglas bases;
 
     @Autowired
     private StringRedisTemplate redis;
@@ -60,6 +76,42 @@ class CacheRedisIntegracionTest {
         } catch (DataAccessException ignorada) {
             // sin Redis: nada que limpiar
         }
+    }
+
+    /**
+     * Contenido que debe resolverse: se compone directamente de las filas que
+     * hay en la base de datos en este momento, sin pasar por el cache ni por el
+     * contexto, así el valor esperado sigue lo que haya publicado.
+     */
+    private CompositorGrafoClinico.Contenido contenidoGuardado() {
+        GrafoClinicoJson raiz = null;
+        List<GrafoClinicoJson> subgrafos = new ArrayList<>();
+        for (GrafoClinicoEntity fila : grafos.findAll()) {
+            GrafoClinicoJson documento = fila.getEstructura();
+            String id = documento == null || documento.graph() == null ? null : documento.graph().id();
+            if (id == null || id.isBlank()) {
+                continue;
+            }
+            if (CompositorGrafoClinico.ID_RAIZ.equals(id)) {
+                raiz = documento;
+            } else {
+                subgrafos.add(documento);
+            }
+        }
+        assertNotNull(raiz, "la base de datos no tiene el grafo raíz: falta la siembra inicial");
+        List<BaseReglasJson> reglas = new ArrayList<>();
+        for (BaseReglasEntity fila : bases.findAll()) {
+            BaseReglasJson documento = fila.getEstructura();
+            if (documento != null && documento.grafoId() != null && !documento.grafoId().isBlank()) {
+                reglas.add(documento);
+            }
+        }
+        return CompositorGrafoClinico.componer(raiz, subgrafos, reglas);
+    }
+
+    /** Nodos del grafo compuesto con lo que hay guardado ahora mismo. */
+    private int nodosEsperados() {
+        return GrafoClinicoMapper.desde(contenidoGuardado().grafo()).size();
     }
 
     /**
@@ -88,11 +140,12 @@ class CacheRedisIntegracionTest {
     @Test
     void laPrimeraResolucionPueblaElCache() {
         assumeTrue(modoCacheActivo(), "requiere el modo cache (perfil docker con contenedores arriba)");
+        int esperados = nodosEsperados();
         resolvedor.invalidar();
 
         GrafoClinicoJson documento = resolvedor.documentoGrafo();
 
-        assertEquals(33, GrafoClinicoMapper.desde(documento).size());
+        assertEquals(esperados, GrafoClinicoMapper.desde(documento).size());
         assertTrue(Boolean.TRUE.equals(redis.hasKey(ResolvedorContenidoClinico.CLAVE_GRAFO)));
     }
 
@@ -100,13 +153,14 @@ class CacheRedisIntegracionTest {
     @Transactional
     void sirveDelCacheAunqueSeBorreLaFilaDeLaBase() {
         assumeTrue(modoCacheActivo(), "requiere el modo cache (perfil docker con contenedores arriba)");
+        int esperados = nodosEsperados(); // antes de borrar las filas
         resolvedor.invalidar();
         resolvedor.documentoGrafo();
 
         grafos.deleteAll();
 
         GrafoClinicoJson documento = resolvedor.documentoGrafo();
-        assertEquals(33, GrafoClinicoMapper.desde(documento).size());
+        assertEquals(esperados, GrafoClinicoMapper.desde(documento).size());
     }
 
     @Test
@@ -134,8 +188,15 @@ class CacheRedisIntegracionTest {
     void elContextoSirveContenidoCompleto() {
         // No requiere Redis: si no responde, resuelve directo desde la base, lo
         // que verifica también el camino de degradación del cache de punta a punta.
-        // Raíz + respiración + gastro + activo/color: 4 + 6 + 10 + 13 nodos, 6 reglas.
-        assertEquals(33, contexto.getGrafo().size());
-        assertEquals(6, contexto.getBase().size());
+        // Los conteos salen de componer lo guardado (la siembra inicial más lo
+        // que se haya publicado después), no de números fijos.
+        CompositorGrafoClinico.Contenido guardado = contenidoGuardado();
+        var grafoEsperado = GrafoClinicoMapper.desde(guardado.grafo());
+        int reglasEsperadas = BaseReglasMapper.desde(guardado.reglas(), grafoEsperado).size();
+        resolvedor.invalidar();
+        contexto.recargar(); // descarta lo que otra prueba haya dejado en memoria
+
+        assertEquals(grafoEsperado.size(), contexto.getGrafo().size());
+        assertEquals(reglasEsperadas, contexto.getBase().size());
     }
 }

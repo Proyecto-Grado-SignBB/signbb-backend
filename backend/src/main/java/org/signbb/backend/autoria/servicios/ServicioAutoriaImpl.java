@@ -18,6 +18,7 @@ import org.signbb.backend.autoria.controladores.SubgrafoRequest;
 import org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo;
 import org.signbb.backend.autoria.modelo.Aviso;
+import org.signbb.backend.autoria.modelo.CopiaPublicada;
 import org.signbb.backend.autoria.modelo.DocumentoLienzo;
 import org.signbb.backend.autoria.modelo.EstadoBorrador;
 import org.signbb.backend.config.RecursoNoEncontradoException;
@@ -156,6 +157,36 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
         publicador.publicar(b, ahora);
         b.setEstado(EstadoBorrador.PUBLICADO);
         b.setPublicadoEn(ahora);
+        b.setCopiaPublicada(new CopiaPublicada(b.getDocumento(), b.getNombre(), b.getPuenteId(),
+                b.getCategoria(), b.getEtiquetaOpcion(), b.getAutor(), b.getInstitucion()));
+        return SubgrafoDTO.desde(borradores.save(b));
+    }
+
+    @Override
+    @Transactional
+    public SubgrafoDTO descartarCambios(Long id) {
+        BorradorSubgrafoEntity b = buscar(id);
+        if (b.getPublicadoEn() == null) {
+            throw new EdicionInvalidaException("Este subgrafo todavía no se ha publicado, así que no hay una "
+                    + "versión publicada a la que volver. Si ya no lo quieres, puedes eliminarlo.");
+        }
+        if (b.getEstado() == EstadoBorrador.PUBLICADO) {
+            return SubgrafoDTO.desde(b);
+        }
+        CopiaPublicada copia = b.getCopiaPublicada();
+        if (copia == null) {
+            throw new EdicionInvalidaException("Este subgrafo se publicó antes de que se guardara una copia de "
+                    + "lo publicado. Podrás descartar cambios a partir de su próxima publicación.");
+        }
+        b.setDocumento(copia.documento());
+        b.setNombre(copia.nombre());
+        b.setPuenteId(copia.puenteId());
+        b.setCategoria(copia.categoria());
+        b.setEtiquetaOpcion(copia.etiquetaOpcion());
+        b.setAutor(copia.autor());
+        b.setInstitucion(copia.institucion());
+        b.setEstado(EstadoBorrador.PUBLICADO);
+        b.setActualizadoEn(Instant.now());
         return SubgrafoDTO.desde(borradores.save(b));
     }
 
