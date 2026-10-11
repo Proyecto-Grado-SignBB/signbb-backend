@@ -1,5 +1,9 @@
 var NAVTREEINDEX1 =
 {
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a2987dbc31ec74d124ec2ab4eb06a3d99":[5,0,0,0,0,3,1,2,23],
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a2987dbc31ec74d124ec2ab4eb06a3d99":[6,0,0,0,0,3,1,2,23],
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a33b186021195f345c6ce390a0d361735":[5,0,0,0,0,3,1,2,21],
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a33b186021195f345c6ce390a0d361735":[6,0,0,0,0,3,1,2,21],
 "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a394598fc9388a323db8a905d374a2593":[5,0,0,0,0,3,1,2,16],
 "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a394598fc9388a323db8a905d374a2593":[6,0,0,0,0,3,1,2,16],
 "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a3add1935843d981ff05b90ac1cfb9962":[5,0,0,0,0,3,1,2,29],
@@ -245,9 +249,5 @@ var NAVTREEINDEX1 =
 "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a1a4d690fd63b5e391ed360cec3f729fc":[5,0,0,0,0,5,1,2,3],
 "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a1a4d690fd63b5e391ed360cec3f729fc":[6,0,0,0,0,5,1,2,3],
 "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a33ce3899c7c45aa9d6d648fde82e4f01":[5,0,0,0,0,5,1,2,9],
-"classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a33ce3899c7c45aa9d6d648fde82e4f01":[6,0,0,0,0,5,1,2,9],
-"classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a4a6b85be8d0e591ee472612d26ec5c35":[5,0,0,0,0,5,1,2,0],
-"classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a4a6b85be8d0e591ee472612d26ec5c35":[6,0,0,0,0,5,1,2,0],
-"classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a568b484c581e2b1363fa1ad6d654a03f":[5,0,0,0,0,5,1,2,4],
-"classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a568b484c581e2b1363fa1ad6d654a03f":[6,0,0,0,0,5,1,2,4]
+"classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a33ce3899c7c45aa9d6d648fde82e4f01":[6,0,0,0,0,5,1,2,9]
 };

@@ -150,6 +150,8 @@ Métodos públicos</h2></td></tr>
 <tr class="memdesc:ac36cd7fe0acfde52ee6de8f8477b96fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Avisos del lienzo.  <br /></td></tr>
 <tr class="memitem:acf50df8a6470610818994b1582ad5aff" id="r_acf50df8a6470610818994b1582ad5aff"><td class="memItemLeft">SubgrafoDTO&#160;</td><td class="memItemRight"><a class="el" href="#acf50df8a6470610818994b1582ad5aff">publicar</a> (Long id)</td></tr>
 <tr class="memdesc:acf50df8a6470610818994b1582ad5aff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publica el borrador.  <br /></td></tr>
+<tr class="memitem:aa117090fe043fece573ef0c0f1824cf5" id="r_aa117090fe043fece573ef0c0f1824cf5"><td class="memItemLeft">SubgrafoDTO&#160;</td><td class="memItemRight"><a class="el" href="#aa117090fe043fece573ef0c0f1824cf5">descartarCambios</a> (Long id)</td></tr>
+<tr class="memdesc:aa117090fe043fece573ef0c0f1824cf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Descarta los cambios sin publicar: el borrador vuelve a como estaba en su última publicación.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Fachada del módulo de autoría que usa la API REST. </p>
@@ -265,6 +267,34 @@ Métodos públicos</h2></td></tr>
 <p>Crea un borrador con el lienzo vacío. </p>
 
 <p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#a7c1f6b427ed191d1e04d1aa72de37153">org.signbb.backend.autoria.servicios.ServicioAutoriaImpl</a>.</p>
+
+</div>
+</div>
+<a id="aa117090fe043fece573ef0c0f1824cf5" name="aa117090fe043fece573ef0c0f1824cf5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa117090fe043fece573ef0c0f1824cf5">&#9670;&#160;</a></span>descartarCambios()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SubgrafoDTO org.signbb.backend.autoria.servicios.ServicioAutoria.descartarCambios </td>
+          <td>(</td>
+          <td class="paramtype">Long</td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Descarta los cambios sin publicar: el borrador vuelve a como estaba en su última publicación. </p>
+<p>Si no tiene cambios sin publicar, lo devuelve igual.</p>
+<dl class="exception"><dt>Excepciones</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EdicionInvalidaException.html" title="Una edición del lienzo que no se puede aplicar (por ejemplo, una segunda primera pregunta o un enlace...">EdicionInvalidaException</a></td><td>si nunca se publicó o no tiene copia de lo publicado (422) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#ae1b07bd5b151b12d3ca5956f11147c72">org.signbb.backend.autoria.servicios.ServicioAutoriaImpl</a>.</p>
 
 </div>
 </div>

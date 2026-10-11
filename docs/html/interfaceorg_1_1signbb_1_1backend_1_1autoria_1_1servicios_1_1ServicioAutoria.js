@@ -5,6 +5,7 @@ var interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria
     [ "avisos", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#ac36cd7fe0acfde52ee6de8f8477b96fc", null ],
     [ "categorias", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#a53324a47657439038def928719277027", null ],
     [ "crear", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#a044daef187e8a31703a401aabe4ba981", null ],
+    [ "descartarCambios", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#aa117090fe043fece573ef0c0f1824cf5", null ],
     [ "editarNodo", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#a5a2c4fcb9cb7f5ee5c117dee291794b7", null ],
     [ "eliminar", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#a4ee1ea40dbcd0a8fbe113fc513f4e87a", null ],
     [ "eliminarNodo", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#a0c698512bff035e7a51064344329c156", null ],

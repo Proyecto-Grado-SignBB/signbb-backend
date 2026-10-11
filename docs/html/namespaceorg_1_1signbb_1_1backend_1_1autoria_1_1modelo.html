@@ -130,6 +130,8 @@ Clases</h2></td></tr>
 Funciones</h2></td></tr>
 <tr class="memitem:a5e3f094237666821410399f21259bfe2" id="r_a5e3f094237666821410399f21259bfe2"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a5e3f094237666821410399f21259bfe2">Aviso</a> (Codigo codigo, boolean bloqueante, String mensaje, String nodoId, String respuestaId)</td></tr>
 <tr class="memdesc:a5e3f094237666821410399f21259bfe2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aviso sobre el lienzo, escrito para el médico.  <br /></td></tr>
+<tr class="memitem:acd54de863402fca55cf6217d9b11fd51" id="r_acd54de863402fca55cf6217d9b11fd51"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#acd54de863402fca55cf6217d9b11fd51">CopiaPublicada</a> (<a class="el" href="#ac4af53f37093be19ec3ab07663e8ee7d">DocumentoLienzo</a> documento, String nombre, String puenteId, String categoria, String etiquetaOpcion, String autor, String institucion)</td></tr>
+<tr class="memdesc:acd54de863402fca55cf6217d9b11fd51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copia de un borrador tal como estaba en su última publicación: el lienzo y los datos que también viajan al grafo publicado (nombre, categoría y texto de la opción).  <br /></td></tr>
 <tr class="memitem:ac4af53f37093be19ec3ab07663e8ee7d" id="r_ac4af53f37093be19ec3ab07663e8ee7d"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#ac4af53f37093be19ec3ab07663e8ee7d">DocumentoLienzo</a> (String inicio, int secuencia, Map&lt; String, <a class="el" href="#ab923686c321e98e48c552e9bb9c24843">NodoLienzo</a> &gt; nodos)</td></tr>
 <tr class="memdesc:ac4af53f37093be19ec3ab07663e8ee7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Documento de un borrador: lo que el médico armó en el lienzo.  <br /></td></tr>
 <tr class="memitem:ab923686c321e98e48c552e9bb9c24843" id="r_ab923686c321e98e48c552e9bb9c24843"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#ab923686c321e98e48c552e9bb9c24843">NodoLienzo</a> (String id, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1TipoNodo.html">TipoNodo</a> tipo, String texto, boolean variasRespuestas, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Desenlace.html">Desenlace</a> desenlace, List&lt; <a class="el" href="#ad3b711fdb2c15d348e54253a1a96c089">RespuestaLienzo</a> &gt; respuestas)</td></tr>
@@ -195,6 +197,67 @@ Funciones</h2></td></tr>
 <p>Una conclusión sin desenlace.</p>
 <p>Un camino que vuelve a una pregunta anterior.</p>
 <p>Un nodo al que no llega ninguna respuesta; no se publica.</p>
+
+</div>
+</div>
+<a id="acd54de863402fca55cf6217d9b11fd51" name="acd54de863402fca55cf6217d9b11fd51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd54de863402fca55cf6217d9b11fd51">&#9670;&#160;</a></span>CopiaPublicada()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">record org.signbb.backend.autoria.modelo.CopiaPublicada </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#ac4af53f37093be19ec3ab07663e8ee7d">DocumentoLienzo</a></td>          <td class="paramname"><span class="paramname"><em>documento</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>nombre</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>puenteId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>categoria</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>etiquetaOpcion</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>autor</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>institucion</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Copia de un borrador tal como estaba en su última publicación: el lienzo y los datos que también viajan al grafo publicado (nombre, categoría y texto de la opción). </p>
+<p>Permite que el médico descarte sus cambios sin publicar y vuelva a lo que las cuidadoras ven. Se guarda como JSON en la columna <code class="JavaDocCode">copia_publicada</code> de <code class="JavaDocCode">BorradorSubgrafoEntity</code>.</p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">documento</td><td>lienzo publicado </td></tr>
+    <tr><td class="paramname">nombre</td><td>nombre del subgrafo </td></tr>
+    <tr><td class="paramname">puenteId</td><td>pregunta puente del grafo raíz </td></tr>
+    <tr><td class="paramname">categoria</td><td>categoría de la pregunta puente </td></tr>
+    <tr><td class="paramname">etiquetaOpcion</td><td>texto de la opción en la pregunta puente </td></tr>
+    <tr><td class="paramname">autor</td><td>autor del contenido </td></tr>
+    <tr><td class="paramname">institucion</td><td>institución del autor </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
