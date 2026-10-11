@@ -1,6 +1,7 @@
 package org.signbb.backend.autoria.servicios;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.signbb.backend.autoria.modelo.NodoLienzo;
 import org.signbb.backend.autoria.modelo.RespuestaLienzo;
 import org.signbb.backend.autoria.modelo.TipoNodo;
 import org.signbb.backend.config.RecursoNoEncontradoException;
+import org.signbb.backend.media.FormatoImagen;
 
 /**
  * Operaciones de edición del lienzo. Cada una recibe el documento y devuelve
@@ -43,13 +45,22 @@ public final class EditorLienzo {
      * @param variasRespuestas si se pueden marcar varias (solo preguntas)
      * @param desenlace        desenlace (solo conclusiones, obligatorio)
      * @param respuestas       respuestas de la pregunta
+     * @param imagenes         nombres de las imágenes de la pregunta (máximo
+     *                         3); {@code null} al editar conserva las actuales
      */
     public record DatosNodo(TipoNodo tipo, String texto, boolean variasRespuestas, Desenlace desenlace,
-            List<DatosRespuesta> respuestas) {
+            List<DatosRespuesta> respuestas, List<String> imagenes) {
 
-        /** Normaliza la lista de respuestas ausente a una vacía. */
+        /** Normaliza la lista de respuestas ausente a una vacía; {@code imagenes} nulo se respeta. */
         public DatosNodo {
             respuestas = respuestas == null ? List.of() : List.copyOf(respuestas);
+            imagenes = imagenes == null ? null : Collections.unmodifiableList(new ArrayList<>(imagenes));
+        }
+
+        /** Datos sin tocar las imágenes. */
+        public DatosNodo(TipoNodo tipo, String texto, boolean variasRespuestas, Desenlace desenlace,
+                List<DatosRespuesta> respuestas) {
+            this(tipo, texto, variasRespuestas, desenlace, respuestas, null);
         }
     }
 
@@ -109,7 +120,7 @@ public final class EditorLienzo {
             }
             nodos.put(origen.id(), conDestino(origen, respuestaId, id));
         }
-        nodos.put(id, construir(id, datos.tipo(), datos, Map.of(), ids));
+        nodos.put(id, construir(id, datos.tipo(), datos, Map.of(), List.of(), ids));
         return new DocumentoLienzo(inicio, ids.valor(), nodos);
     }
 
@@ -168,7 +179,7 @@ public final class EditorLienzo {
 
         Secuencia ids = new Secuencia(documento.secuencia());
         Map<String, NodoLienzo> nodos = new LinkedHashMap<>(documento.nodos());
-        nodos.put(nodoId, construir(nodoId, actual.tipo(), datos, previas, ids));
+        nodos.put(nodoId, construir(nodoId, actual.tipo(), datos, previas, actual.imagenes(), ids));
         return new DocumentoLienzo(documento.inicio(), ids.valor(), nodos);
     }
 
@@ -214,7 +225,7 @@ public final class EditorLienzo {
 
     /** Arma el nodo validando los datos según su tipo. */
     private static NodoLienzo construir(String id, TipoNodo tipo, DatosNodo datos,
-            Map<String, RespuestaLienzo> previas, Secuencia ids) {
+            Map<String, RespuestaLienzo> previas, List<String> imagenesActuales, Secuencia ids) {
         String texto = limpio(datos.texto());
         if (tipo == TipoNodo.CONCLUSION) {
             if (datos.desenlace() == null) {
@@ -223,6 +234,9 @@ public final class EditorLienzo {
             }
             if (!datos.respuestas().isEmpty()) {
                 throw new EdicionInvalidaException("Una conclusión cierra el recorrido: no lleva respuestas.");
+            }
+            if (datos.imagenes() != null && !datos.imagenes().isEmpty()) {
+                throw new EdicionInvalidaException("Las imágenes son solo para preguntas.");
             }
             return new NodoLienzo(id, tipo, texto, false, datos.desenlace(), List.of());
         }
@@ -252,7 +266,26 @@ public final class EditorLienzo {
             }
             respuestas.add(new RespuestaLienzo(idRespuesta, textoRespuesta, d.gravedad(), destino));
         }
-        return new NodoLienzo(id, tipo, texto, datos.variasRespuestas(), null, respuestas);
+        List<String> imagenes = datos.imagenes() == null ? imagenesActuales : imagenesValidas(datos.imagenes());
+        return new NodoLienzo(id, tipo, texto, datos.variasRespuestas(), null, respuestas, imagenes);
+    }
+
+    /** Máximo de imágenes por pregunta; sin repetidas y con nombres que dio el servidor al subirlas. */
+    private static List<String> imagenesValidas(List<String> imagenes) {
+        if (imagenes.size() > FormatoImagen.MAXIMO_POR_PREGUNTA) {
+            throw new EdicionInvalidaException(
+                    "Una pregunta puede tener hasta " + FormatoImagen.MAXIMO_POR_PREGUNTA + " imágenes.");
+        }
+        Set<String> vistas = new HashSet<>();
+        for (String nombre : imagenes) {
+            if (!FormatoImagen.nombreValido(nombre)) {
+                throw new EdicionInvalidaException("Una de las imágenes no es válida: súbela de nuevo.");
+            }
+            if (!vistas.add(nombre)) {
+                throw new EdicionInvalidaException("La misma imagen está repetida en la pregunta.");
+            }
+        }
+        return List.copyOf(imagenes);
     }
 
     /** Nodo dueño de una respuesta. */

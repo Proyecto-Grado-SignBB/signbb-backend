@@ -101,7 +101,9 @@ public final class CompiladorSubgrafo {
                     nodo.desenlace() == null ? null : nodo.desenlace().valor(), null, peso, false, List.of());
         }
         String interaccion = nodo.variasRespuestas() ? "SELECCION_MULTIPLE" : "SELECCION_UNICA";
-        return new GrafoClinicoJson.MetadataNodo("pregunta", interaccion, null, null, peso, false, List.of());
+        boolean conImagenes = !nodo.imagenes().isEmpty();
+        return new GrafoClinicoJson.MetadataNodo("pregunta", interaccion, null, null, peso, conImagenes,
+                nodo.imagenes());
     }
 
     /** Metadata del grafo; los campos vacíos no se escriben. */

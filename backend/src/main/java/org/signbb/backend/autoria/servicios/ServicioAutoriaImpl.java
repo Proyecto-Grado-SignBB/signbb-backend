@@ -247,7 +247,8 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
             }
         }
         return new EditorLienzo.DatosNodo(nodo.getTipo(), nodo.getTexto(),
-                Boolean.TRUE.equals(nodo.getVariasRespuestas()), nodo.getDesenlace(), respuestas);
+                Boolean.TRUE.equals(nodo.getVariasRespuestas()), nodo.getDesenlace(), respuestas,
+                nodo.getImagenes());
     }
 
     /**

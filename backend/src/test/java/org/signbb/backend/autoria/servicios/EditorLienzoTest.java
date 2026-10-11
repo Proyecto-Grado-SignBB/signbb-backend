@@ -211,4 +211,77 @@ class EditorLienzoTest {
 
         assertTrue(d.nodos().get(d.inicio()).respuestas().stream().allMatch(r -> r.gravedad() == Gravedad.LEVE));
     }
+
+    private static final String IMG_1 = "11111111-1111-1111-1111-111111111111.png";
+    private static final String IMG_2 = "22222222-2222-2222-2222-222222222222.jpg";
+    private static final String IMG_3 = "33333333-3333-3333-3333-333333333333.webp";
+    private static final String IMG_4 = "44444444-4444-4444-4444-444444444444.gif";
+
+    /** Edita la primera pregunta conservando sus tres respuestas y poniendo estas imágenes. */
+    private static DocumentoLienzo conImagenes(DocumentoLienzo d, List<String> imagenes) {
+        return EditorLienzo.editarNodo(d, INICIO, new DatosNodo(null, "¿Cuánto marca el termómetro?", false, null,
+                List.of(new DatosRespuesta(MENOS_38, "Menos de 38 °C", Gravedad.LEVE),
+                        new DatosRespuesta(ENTRE_38_39, "Entre 38 y 39 °C", Gravedad.MODERADA),
+                        new DatosRespuesta(MAS_39, "Más de 39 °C", Gravedad.GRAVE)),
+                imagenes));
+    }
+
+    @Test
+    void unaPreguntaPuedeLlevarHastaTresImagenesEnOrden() {
+        DocumentoLienzo d = conImagenes(LienzoFiebre.primeraPregunta(), List.of(IMG_2, IMG_1, IMG_3));
+
+        assertEquals(List.of(IMG_2, IMG_1, IMG_3), d.nodos().get(INICIO).imagenes());
+        assertEquals(3, d.nodos().get(INICIO).respuestas().size());
+    }
+
+    @Test
+    void masDeTresImagenesSeRechaza() {
+        DocumentoLienzo d = LienzoFiebre.primeraPregunta();
+
+        assertThrows(EdicionInvalidaException.class, () -> conImagenes(d, List.of(IMG_1, IMG_2, IMG_3, IMG_4)));
+    }
+
+    @Test
+    void imagenesRepetidasOConNombreAjenoSeRechazan() {
+        DocumentoLienzo d = LienzoFiebre.primeraPregunta();
+
+        assertThrows(EdicionInvalidaException.class, () -> conImagenes(d, List.of(IMG_1, IMG_1)));
+        assertThrows(EdicionInvalidaException.class, () -> conImagenes(d, List.of("../secreto.png")));
+        assertThrows(EdicionInvalidaException.class, () -> conImagenes(d, List.of("foto.png")));
+    }
+
+    @Test
+    void editarSinMandarImagenesConservaLasQueTenia() {
+        DocumentoLienzo d = conImagenes(LienzoFiebre.primeraPregunta(), List.of(IMG_1));
+
+        DocumentoLienzo editado = EditorLienzo.editarNodo(d, INICIO, new DatosNodo(null, "Otro texto", false, null,
+                List.of(new DatosRespuesta(MENOS_38, "Menos de 38 °C", Gravedad.LEVE),
+                        new DatosRespuesta(ENTRE_38_39, "Entre 38 y 39 °C", Gravedad.MODERADA),
+                        new DatosRespuesta(MAS_39, "Más de 39 °C", Gravedad.GRAVE))));
+
+        assertEquals(List.of(IMG_1), editado.nodos().get(INICIO).imagenes());
+    }
+
+    @Test
+    void mandarUnaListaVaciaQuitaLasImagenes() {
+        DocumentoLienzo d = conImagenes(LienzoFiebre.primeraPregunta(), List.of(IMG_1, IMG_2));
+
+        assertTrue(conImagenes(d, List.of()).nodos().get(INICIO).imagenes().isEmpty());
+    }
+
+    @Test
+    void lasConclusionesNoLlevanImagenes() {
+        assertThrows(EdicionInvalidaException.class, () -> EditorLienzo.agregarNodo(LienzoFiebre.primeraPregunta(),
+                INICIO, MAS_39, new DatosNodo(TipoNodo.CONCLUSION, "x", false, Desenlace.URGENCIA, List.of(),
+                        List.of(IMG_1))));
+    }
+
+    @Test
+    void lasImagenesSobrevivenAEnlazarYAEliminarOtrosNodos() {
+        DocumentoLienzo d = conImagenes(LienzoFiebre.completo(), List.of(IMG_1));
+
+        DocumentoLienzo sin = EditorLienzo.eliminarNodo(d, DECAIDO);
+
+        assertEquals(List.of(IMG_1), sin.nodos().get(INICIO).imagenes());
+    }
 }

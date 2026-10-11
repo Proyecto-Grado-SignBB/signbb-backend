@@ -120,4 +120,22 @@ class CompiladorSubgrafoTest {
         NodoLienzo inicio = LienzoFiebre.completo().nodos().get(INICIO);
         assertEquals(inicio.texto(), tad.obtenerNodoInicial().orElseThrow().getContenido());
     }
+
+    @Test
+    void lasImagenesDeUnaPreguntaVanEnSuMetadata() {
+        String imagen = "11111111-1111-1111-1111-111111111111.png";
+        DocumentoLienzo d = EditorLienzo.editarNodo(LienzoFiebre.completo(), INICIO, new DatosNodo(null,
+                "¿Cuánto marca el termómetro?", false, null,
+                List.of(new DatosRespuesta("r_2", "Menos de 38 °C", Gravedad.LEVE),
+                        new DatosRespuesta("r_3", "Entre 38 y 39 °C", Gravedad.MODERADA),
+                        new DatosRespuesta("r_4", "Más de 39 °C", Gravedad.GRAVE)),
+                List.of(imagen)));
+
+        GrafoClinicoJson.Grafo g = compilar(d);
+
+        assertTrue(meta(g, INICIO).archivos());
+        assertEquals(List.of(imagen), meta(g, INICIO).src());
+        assertFalse(meta(g, DECAIDO).archivos());
+        assertTrue(meta(g, DECAIDO).src().isEmpty());
+    }
 }

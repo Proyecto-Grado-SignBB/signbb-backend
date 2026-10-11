@@ -118,6 +118,19 @@ opciones del sistema y aparece la nueva. No es `@Transactional`, porque la
 recarga del contenido ocurre después del commit; al terminar borra lo que
 creó, restaura el grafo raíz e invalida el contenido.
 
+### Imágenes de las preguntas
+- `EditorLienzoTest`: una pregunta admite hasta 3 imágenes; se rechazan más de
+  3, repetidas y nombres que no dio el servidor; editar sin mandar `imagenes`
+  conserva las actuales y mandar `[]` las quita; una conclusión no lleva.
+- `CompiladorSubgrafoTest`: las imágenes salen en `metadata.archivos` y
+  `metadata.src` de la pregunta.
+- `NodoLienzoTest`: un lienzo guardado antes de las imágenes se sigue leyendo.
+- `media/ServicioImagenesTest` y `media/ControladorImagenesTest`: formato
+  (por la firma del archivo, no por el nombre), tope de 1 MB, 201 / 422 / 503
+  al subir y 200 / 404 al ver. Usan un almacén en memoria: **no necesitan
+  Silo**. Con Silo levantado se prueba a mano subiendo una imagen desde el
+  lienzo.
+
 ## Cómo ejecutarlas
 
 Desde `backend/`:

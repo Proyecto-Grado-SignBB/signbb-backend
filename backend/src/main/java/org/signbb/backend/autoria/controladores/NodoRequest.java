@@ -20,6 +20,8 @@ import lombok.Setter;
  * <li>{@code desenlace}: solo conclusiones.</li>
  * <li>{@code respuestas}: solo preguntas; al editar, las que traen
  * {@code id} conservan su destino.</li>
+ * <li>{@code imagenes}: solo preguntas; nombres devueltos al subir cada
+ * imagen (máximo 3). Al editar, si se omite se conservan las actuales.</li>
  * </ul>
  */
 @Getter
@@ -33,4 +35,11 @@ public class NodoRequest {
     private Boolean variasRespuestas;
     private Desenlace desenlace;
     private List<OpcionRequest> respuestas;
+    private List<String> imagenes;
+
+    /** Nodo sin imágenes. */
+    public NodoRequest(DespuesDeRequest despuesDe, TipoNodo tipo, String texto, Boolean variasRespuestas,
+            Desenlace desenlace, List<OpcionRequest> respuestas) {
+        this(despuesDe, tipo, texto, variasRespuestas, desenlace, respuestas, null);
+    }
 }
