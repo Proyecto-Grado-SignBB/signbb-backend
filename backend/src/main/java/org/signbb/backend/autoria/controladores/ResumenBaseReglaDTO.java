@@ -13,6 +13,7 @@ public record ResumenBaseReglaDTO(
         @Schema(description = "Id del borrador") Long id,
         @Schema(description = "Grafo publicado al que pertenecen las reglas") String grafoId,
         @Schema(description = "Nombre de la base de reglas") String nombre,
+        @Schema(description = "Descripción de la base de reglas") String descripcion,
         @Schema(description = "Autor del contenido") String autor,
         @Schema(description = "Estado: BORRADOR, PUBLICADO o CAMBIOS_SIN_PUBLICAR") EstadoBorrador estado,
         @Schema(description = "Número de reglas") int reglas,
@@ -21,7 +22,8 @@ public record ResumenBaseReglaDTO(
 
     /** Resumen de un borrador. */
     public static ResumenBaseReglaDTO desde(BorradorBaseReglaEntity b) {
-        return new ResumenBaseReglaDTO(b.getId(), b.getGrafoId(), b.getNombre(), b.getAutor(), b.getEstado(),
-                b.getDocumento().reglas().size(), b.getActualizadoEn(), b.getPublicadoEn());
+        return new ResumenBaseReglaDTO(b.getId(), b.getGrafoId(), b.getNombre(), b.getDescripcion(),
+                b.getAutor(), b.getEstado(), b.getDocumento().reglas().size(), b.getActualizadoEn(),
+                b.getPublicadoEn());
     }
 }

@@ -19,6 +19,7 @@ public record BaseReglaDTO(
         @Schema(description = "Id del borrador") Long id,
         @Schema(description = "Grafo publicado al que pertenecen las reglas") String grafoId,
         @Schema(description = "Nombre de la base de reglas") String nombre,
+        @Schema(description = "Descripción de la base de reglas") String descripcion,
         @Schema(description = "Autor del contenido") String autor,
         @Schema(description = "Institución del autor") String institucion,
         @Schema(description = "Estado: BORRADOR, PUBLICADO o CAMBIOS_SIN_PUBLICAR") EstadoBorrador estado,
@@ -33,8 +34,8 @@ public record BaseReglaDTO(
         List<ReglaDTO> reglas = b.getDocumento().reglas().entrySet().stream()
                 .map(e -> ReglaDTO.desde(e.getKey(), e.getValue()))
                 .toList();
-        return new BaseReglaDTO(b.getId(), b.getGrafoId(), b.getNombre(), b.getAutor(), b.getInstitucion(),
-                b.getEstado(), reglas, ValidadorReglas.validar(b.getDocumento()), b.getCreadoEn(),
-                b.getActualizadoEn(), b.getPublicadoEn());
+        return new BaseReglaDTO(b.getId(), b.getGrafoId(), b.getNombre(), b.getDescripcion(), b.getAutor(),
+                b.getInstitucion(), b.getEstado(), reglas, ValidadorReglas.validar(b.getDocumento()),
+                b.getCreadoEn(), b.getActualizadoEn(), b.getPublicadoEn());
     }
 }

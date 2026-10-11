@@ -47,6 +47,9 @@ public class BorradorBaseReglaEntity {
     @Column(nullable = false)
     private String nombre;
 
+    /** Descripción de la base de reglas, para el tablero; no va al JSON publicado. */
+    private String descripcion;
+
     private String autor;
 
     private String institucion;

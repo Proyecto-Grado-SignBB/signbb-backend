@@ -171,6 +171,7 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
             throw new EdicionInvalidaException("La base de reglas necesita un nombre.");
         }
         b.setNombre(nombre);
+        b.setDescripcion(limpio(datos.getDescripcion()));
         b.setAutor(limpio(datos.getAutor()));
         b.setInstitucion(limpio(datos.getInstitucion()));
     }

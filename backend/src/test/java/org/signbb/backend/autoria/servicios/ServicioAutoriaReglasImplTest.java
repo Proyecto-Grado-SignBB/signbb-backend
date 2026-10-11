@@ -71,7 +71,7 @@ class ServicioAutoriaReglasImplTest {
     }
 
     private static BaseReglaRequest peticion(String nombre, String grafoId) {
-        return new BaseReglaRequest(nombre, grafoId, "Dra. Prueba", "Hospital");
+        return new BaseReglaRequest(nombre, "Descripción de prueba", grafoId, "Dra. Prueba", "Hospital");
     }
 
     @Test

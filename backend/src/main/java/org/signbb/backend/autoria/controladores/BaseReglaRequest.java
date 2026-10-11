@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Datos de una base de reglas, para crearla o cambiar su nombre. {@code grafoId}
- * es el grafo publicado al que pertenecen las reglas ({@code grafo_raiz} o un
- * subgrafo) y se fija al crear.
+ * Datos de una base de reglas, para crearla o cambiar su nombre y descripción.
+ * {@code grafoId} es el grafo publicado al que pertenecen las reglas
+ * ({@code grafo_raiz} o un subgrafo) y se fija al crear.
  */
 @Getter
 @Setter
@@ -18,6 +18,9 @@ import lombok.Setter;
 public class BaseReglaRequest {
     @Schema(description = "Nombre de la base de reglas, para el tablero")
     private String nombre;
+
+    @Schema(description = "Descripción de la base de reglas, para el tablero")
+    private String descripcion;
 
     @Schema(description = "Grafo publicado al que pertenecen las reglas (grafo_raiz o un subgrafo)")
     private String grafoId;

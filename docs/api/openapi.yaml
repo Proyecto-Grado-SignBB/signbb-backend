@@ -1060,6 +1060,9 @@ components:
         nombre:
           type: string
           description: "Nombre de la base de reglas, para el tablero"
+        descripcion:
+          type: string
+          description: "Descripción de la base de reglas, para el tablero"
         grafoId:
           type: string
           description: Grafo publicado al que pertenecen las reglas (grafo_raiz o
@@ -1084,6 +1087,9 @@ components:
         nombre:
           type: string
           description: Nombre de la base de reglas
+        descripcion:
+          type: string
+          description: Descripción de la base de reglas
         autor:
           type: string
           description: Autor del contenido
@@ -1370,6 +1376,9 @@ components:
         nombre:
           type: string
           description: Nombre de la base de reglas
+        descripcion:
+          type: string
+          description: Descripción de la base de reglas
         autor:
           type: string
           description: Autor del contenido
