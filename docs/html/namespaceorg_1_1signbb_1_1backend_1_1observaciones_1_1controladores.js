@@ -2,9 +2,9 @@ var namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores =
 [
     [ "ControladorConsulta", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1ControladorConsulta.html", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1ControladorConsulta" ],
     [ "RespuestaRequest", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1RespuestaRequest.html", null ],
-    [ "PasoCausalDTO", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#abf521345a643e096255cffb171039530", null ],
-    [ "PreguntaDTO", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#a7498ea9a8d28eb7b789e5eacb0604025", null ],
-    [ "RecomendacionDTO", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#a111029281b5c36a7877f7f7bbdbeafc8", null ],
-    [ "RecorridoDTO", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#a2ac983908738dd31d3976f44024db3f6", null ],
-    [ "ResultadoDTO", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#abadc45eb731cfb02a9f5625b4a09cb8a", null ]
+    [ "PasoCausalDTO", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#a9da139933c21f2a0601c2a022ece3608", null ],
+    [ "PreguntaDTO", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#ae74b565ebb1b3c310c943c6178db09ea", null ],
+    [ "RecomendacionDTO", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#ab643e40096639e8da210ecbb6be97891", null ],
+    [ "RecorridoDTO", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#a9da8fa006ec65b04cc12de8f45952e05", null ],
+    [ "ResultadoDTO", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#af5ce12c3bd3ada0c77918cbdce8c0e49", null ]
 ];

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['gastrointestinal_0',['Grafo Gastrointestinal',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md38',1,'']]],
+  ['gastrointestinal_0',['Grafo Gastrointestinal',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md39',1,'']]],
   ['getavisos_1',['getAvisos',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ContenidoInvalidoException.html#af755d437f0bcd57950f263f8f69a660a',1,'org::signbb::backend::autoria::servicios::ContenidoInvalidoException']]],
   ['getbase_2',['getBase',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html#a81a1376e12179a5b9ed00d50086d8b02',1,'org::signbb::backend::navegacion::modelo::ContextoClinico']]],
   ['getcasos_3',['getCasos',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a568b484c581e2b1363fa1ad6d654a03f',1,'org::signbb::backend::reglas::modelo::ReglaClinica']]],
@@ -27,20 +27,19 @@ var searchData=
   ['gettipo_24',['getTipo',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#a37db948b982079b5211b41e7a4e14433',1,'org::signbb::backend::navegacion::modelo::Nodo']]],
   ['gettipointeraccion_25',['getTipoInteraccion',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#adef2f5061922890cd5d4ecad80f1894f',1,'org::signbb::backend::navegacion::modelo::Nodo']]],
   ['getultimopaso_26',['getUltimoPaso',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html#a09e39ab3aea8c0d8df5abc9745b3cdbd',1,'org::signbb::backend::navegacion::modelo::SesionTriaje']]],
-  ['github_20actions_27',['Resultados en GitHub Actions',['../md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md22',1,'']]],
-  ['grafo_28',['Representacion visual de grafo',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md44',1,'']]],
-  ['grafo_20activo_20y_20color_29',['Grafo Activo y color',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md40',1,'']]],
-  ['grafo_20gastrointestinal_30',['Grafo Gastrointestinal',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md38',1,'']]],
-  ['grafo_20raíz_31',['Grafo Raíz',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md37',1,'']]],
-  ['grafo_20respiración_32',['Grafo Respiración',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md39',1,'']]],
+  ['github_20actions_27',['Resultados en GitHub Actions',['../md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md23',1,'']]],
+  ['grafo_28',['Representacion visual de grafo',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md45',1,'']]],
+  ['grafo_20activo_20y_20color_29',['Grafo Activo y color',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md41',1,'']]],
+  ['grafo_20gastrointestinal_30',['Grafo Gastrointestinal',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md39',1,'']]],
+  ['grafo_20raíz_31',['Grafo Raíz',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md38',1,'']]],
+  ['grafo_20respiración_32',['Grafo Respiración',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md40',1,'']]],
   ['grafo_20sistema_33',['Grafo sistema',['../md_grafo__sistema_2reporte__grafo.html',1,'']]],
   ['grafoclinico_34',['GrafoClinico',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html',1,'org.signbb.backend.navegacion.modelo.GrafoClinico'],['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#a7f0e86a6e41914b98aa16ef85689a715',1,'org.signbb.backend.navegacion.modelo.GrafoClinico.GrafoClinico()'],['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#a198df3cbf6d64405bc4032443da9acb1',1,'org.signbb.backend.navegacion.modelo.GrafoClinico.GrafoClinico(int umbralAlto, int umbralBajo)']]],
   ['grafoclinicoentity_35',['GrafoClinicoEntity',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1GrafoClinicoEntity.html',1,'org::signbb::backend::navegacion::datos::entidades']]],
   ['grafoclinicojson_36',['GrafoClinicoJson',['../namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion.html#a542aa5e19744a44057ea8f0e570e9680',1,'org::signbb::backend::navegacion::datos::serializacion']]],
   ['grafoclinicomapper_37',['GrafoClinicoMapper',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoMapper.html',1,'org::signbb::backend::navegacion::datos::serializacion']]],
   ['grafoclinicoparser_38',['GrafoClinicoParser',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoParser.html',1,'org::signbb::backend::navegacion::datos::serializacion']]],
-  ['grafos_20visualmente_39',['Construir grafos visualmente',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md42',1,'']]],
-  ['grave_40',['GRAVE',['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Gravedad.html#a326953193633e90010b2d65382ec0d2f',1,'org::signbb::backend::autoria::modelo::Gravedad']]],
-  ['gravedad_41',['Gravedad',['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Gravedad.html',1,'org.signbb.backend.autoria.modelo.Gravedad'],['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Gravedad.html#a92d5df61d1ba15011abf3d2d4a08145a',1,'org.signbb.backend.autoria.modelo.Gravedad.Gravedad()']]],
-  ['guardar_42',['guardar',['../classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html#a729ae735b80ba5657d98d85b90d3ac27',1,'org.signbb.backend.cache.RepositorioSesionRedis.guardar()'],['../interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html#a4dfd943b7a34ac405e62906b3b3b11d2',1,'org.signbb.backend.navegacion.modelo.RepositorioSesion.guardar()']]]
+  ['grafos_20visualmente_39',['Construir grafos visualmente',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md43',1,'']]],
+  ['gravedad_40',['Gravedad',['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Gravedad.html',1,'org.signbb.backend.autoria.modelo.Gravedad'],['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Gravedad.html#a92d5df61d1ba15011abf3d2d4a08145a',1,'org.signbb.backend.autoria.modelo.Gravedad.Gravedad()']]],
+  ['guardar_41',['guardar',['../classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html#a729ae735b80ba5657d98d85b90d3ac27',1,'org.signbb.backend.cache.RepositorioSesionRedis.guardar()'],['../interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html#a4dfd943b7a34ac405e62906b3b3b11d2',1,'org.signbb.backend.navegacion.modelo.RepositorioSesion.guardar()']]]
 ];

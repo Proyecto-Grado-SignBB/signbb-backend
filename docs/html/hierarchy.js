@@ -1,15 +1,18 @@
 var hierarchy =
 [
     [ "org.signbb.backend.BackendApplication", "classorg_1_1signbb_1_1backend_1_1BackendApplication.html", null ],
+    [ "org.signbb.backend.autoria.controladores.BaseReglaRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1BaseReglaRequest.html", null ],
     [ "org.signbb.backend.reglas.modelo.BaseReglas", "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html", null ],
     [ "org.signbb.backend.reglas.datos.entidades.BaseReglasEntity", "classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1entidades_1_1BaseReglasEntity.html", null ],
     [ "org.signbb.backend.reglas.datos.serializacion.BaseReglasMapper", "classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasMapper.html", null ],
     [ "org.signbb.backend.reglas.datos.serializacion.BaseReglasParser", "classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasParser.html", null ],
+    [ "org.signbb.backend.autoria.datos.entidades.BorradorBaseReglaEntity", "classorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1entidades_1_1BorradorBaseReglaEntity.html", null ],
     [ "org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity", "classorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1entidades_1_1BorradorSubgrafoEntity.html", null ],
     [ "CommandLineRunner", null, [
       [ "org.signbb.backend.DatabaseInit", "classorg_1_1signbb_1_1backend_1_1DatabaseInit.html", null ],
       [ "org.signbb.backend.DemoTriajeRunner", "classorg_1_1signbb_1_1backend_1_1DemoTriajeRunner.html", null ]
     ] ],
+    [ "org.signbb.backend.autoria.servicios.CompiladorReglas", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1CompiladorReglas.html", null ],
     [ "org.signbb.backend.autoria.servicios.CompiladorSubgrafo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1CompiladorSubgrafo.html", null ],
     [ "org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1CompositorGrafoClinico.html", null ],
     [ "org.signbb.backend.navegacion.datos.serializacion.ContenidoEjemplo", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1ContenidoEjemplo.html", null ],
@@ -17,10 +20,12 @@ var hierarchy =
     [ "org.signbb.backend.navegacion.modelo.ContextoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html", null ],
     [ "org.signbb.backend.autoria.controladores.ControladorAutoria", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html", null ],
     [ "org.signbb.backend.observaciones.controladores.ControladorConsulta", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1ControladorConsulta.html", null ],
+    [ "org.signbb.backend.autoria.controladores.ControladorReglas", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html", null ],
     [ "org.signbb.backend.autoria.modelo.Desenlace", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Desenlace.html", null ],
     [ "org.signbb.backend.autoria.controladores.DespuesDeRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1DespuesDeRequest.html", null ],
     [ "org.signbb.backend.autoria.controladores.DestinoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1DestinoRequest.html", null ],
     [ "org.signbb.backend.autoria.servicios.EditorLienzo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorLienzo.html", null ],
+    [ "org.signbb.backend.autoria.servicios.EditorReglas", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorReglas.html", null ],
     [ "org.signbb.backend.autoria.modelo.EstadoBorrador", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1EstadoBorrador.html", null ],
     [ "org.signbb.backend.navegacion.modelo.EstadoPaciente", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html", null ],
     [ "org.signbb.backend.navegacion.modelo.GrafoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html", null ],
@@ -29,6 +34,7 @@ var hierarchy =
     [ "org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoParser", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoParser.html", null ],
     [ "org.signbb.backend.autoria.modelo.Gravedad", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Gravedad.html", null ],
     [ "JpaRepository", null, [
+      [ "org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorBaseRegla", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorBaseRegla.html", null ],
       [ "org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorSubgrafo.html", null ],
       [ "org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafoClinico.html", null ],
       [ "org.signbb.backend.observaciones.datos.repositorios.RepositorioObservaciones", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioObservaciones.html", null ],
@@ -42,11 +48,16 @@ var hierarchy =
     [ "org.signbb.backend.autoria.controladores.NodoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1NodoRequest.html", null ],
     [ "org.signbb.backend.observaciones.datos.entidades.ObservacionEntity", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1entidades_1_1ObservacionEntity.html", null ],
     [ "org.signbb.backend.autoria.controladores.OpcionRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1OpcionRequest.html", null ],
+    [ "org.signbb.backend.config.OpenApiConfig", "classorg_1_1signbb_1_1backend_1_1config_1_1OpenApiConfig.html", null ],
+    [ "org.signbb.backend.autoria.servicios.PublicacionContenido", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicacionContenido.html", null ],
+    [ "org.signbb.backend.autoria.servicios.PublicadorRegla", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorRegla.html", null ],
     [ "org.signbb.backend.autoria.servicios.PublicadorSubgrafo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorSubgrafo.html", null ],
     [ "org.signbb.backend.reglas.modelo.ReglaClinica", "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html", null ],
+    [ "org.signbb.backend.autoria.controladores.ReglaRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ReglaRequest.html", null ],
     [ "org.signbb.backend.navegacion.modelo.RepositorioSesion", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html", [
       [ "org.signbb.backend.cache.RepositorioSesionRedis", "classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html", null ]
     ] ],
+    [ "org.signbb.backend.autoria.servicios.ResolutorCatalogoNodos", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ResolutorCatalogoNodos.html", null ],
     [ "org.signbb.backend.cache.ResolvedorContenidoClinico", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico.html", null ],
     [ "org.signbb.backend.navegacion.modelo.Respuesta", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html", null ],
     [ "org.signbb.backend.observaciones.controladores.RespuestaRequest", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1RespuestaRequest.html", null ],
@@ -59,6 +70,9 @@ var hierarchy =
     [ "org.signbb.backend.observaciones.modelo.SeleccionCuidador", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1SeleccionCuidador.html", null ],
     [ "org.signbb.backend.autoria.servicios.ServicioAutoria", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html", [
       [ "org.signbb.backend.autoria.servicios.ServicioAutoriaImpl", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html", null ]
+    ] ],
+    [ "org.signbb.backend.autoria.servicios.ServicioAutoriaReglas", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html", [
+      [ "org.signbb.backend.autoria.servicios.ServicioAutoriaReglasImpl", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImpl.html", null ]
     ] ],
     [ "org.signbb.backend.observaciones.servicios.ServicioCaptura", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCaptura.html", [
       [ "org.signbb.backend.observaciones.servicios.ServicioCapturaImpl", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl.html", null ]
@@ -74,6 +88,7 @@ var hierarchy =
     [ "org.signbb.backend.observaciones.modelo.TipoInteraccion", "enumorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1TipoInteraccion.html", null ],
     [ "org.signbb.backend.autoria.modelo.TipoNodo", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1TipoNodo.html", null ],
     [ "org.signbb.backend.autoria.servicios.ValidadorLienzo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzo.html", null ],
+    [ "org.signbb.backend.autoria.servicios.ValidadorReglas", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorReglas.html", null ],
     [ "WebMvcConfigurer", null, [
       [ "org.signbb.backend.config.ConfiguracionCors", "classorg_1_1signbb_1_1backend_1_1config_1_1ConfiguracionCors.html", null ]
     ] ]

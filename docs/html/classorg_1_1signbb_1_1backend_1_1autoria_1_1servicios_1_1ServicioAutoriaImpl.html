@@ -126,9 +126,9 @@ Diagrama de herencia de org.signbb.backend.autoria.servicios.ServicioAutoriaImpl
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Métodos públicos</h2></td></tr>
-<tr class="memitem:a7997550613fe391b45c71723bb9b492e" id="r_a7997550613fe391b45c71723bb9b492e"><td class="memItemLeft"><a id="a7997550613fe391b45c71723bb9b492e" name="a7997550613fe391b45c71723bb9b492e"></a>
-&#160;</td><td class="memItemRight"><b>ServicioAutoriaImpl</b> (<a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorSubgrafo.html">RepositorioBorradorSubgrafo</a> borradores, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafoClinico.html">RepositorioGrafoClinico</a> grafos, <a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorSubgrafo.html">PublicadorSubgrafo</a> publicador)</td></tr>
-<tr class="memdesc:a7997550613fe391b45c71723bb9b492e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta los repositorios y el publicador. <br /></td></tr>
+<tr class="memitem:a774199114cc5435708177d63461c1f96" id="r_a774199114cc5435708177d63461c1f96"><td class="memItemLeft"><a id="a774199114cc5435708177d63461c1f96" name="a774199114cc5435708177d63461c1f96"></a>
+&#160;</td><td class="memItemRight"><b>ServicioAutoriaImpl</b> (<a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorSubgrafo.html">RepositorioBorradorSubgrafo</a> borradores, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorBaseRegla.html">RepositorioBorradorBaseRegla</a> basesReglas, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafoClinico.html">RepositorioGrafoClinico</a> grafos, <a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorSubgrafo.html">PublicadorSubgrafo</a> publicador)</td></tr>
+<tr class="memdesc:a774199114cc5435708177d63461c1f96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta los repositorios y el publicador. <br /></td></tr>
 <tr class="memitem:ad828b113762acbebeb802fe3ee674f76" id="r_ad828b113762acbebeb802fe3ee674f76"><td class="memItemLeft">List&lt; CategoriaDTO &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ad828b113762acbebeb802fe3ee674f76">categorias</a> ()</td></tr>
 <tr class="memdesc:ad828b113762acbebeb802fe3ee674f76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Categorías del grafo raíz en las que se puede publicar.  <br /></td></tr>
 <tr class="memitem:a323add019d5aa69f5910f78fc11a9017" id="r_a323add019d5aa69f5910f78fc11a9017"><td class="memItemLeft">List&lt; ResumenSubgrafoDTO &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a323add019d5aa69f5910f78fc11a9017">listar</a> ()</td></tr>
@@ -156,7 +156,7 @@ Métodos públicos</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Implementación de <code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html">ServicioAutoria</a></code>: carga el borrador, aplica la operación de <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorLienzo.html">EditorLienzo</a></code> y lo guarda. </p>
-<p>Editar un borrador ya publicado lo deja en <code><a class="el" href="enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1EstadoBorrador.html#ad82ed9a5cfa87cd6735ba2f47a1eb446">EstadoBorrador#CAMBIOS_SIN_PUBLICAR</a></code>. </p>
+<p>Editar un borrador ya publicado lo deja en <code><a class="el" href="">EstadoBorrador#CAMBIOS_SIN_PUBLICAR</a></code>. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
 <a id="aa85f404a94586270ebb0ceebf849e7f6" name="aa85f404a94586270ebb0ceebf849e7f6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa85f404a94586270ebb0ceebf849e7f6">&#9670;&#160;</a></span>actualizar()</h2>

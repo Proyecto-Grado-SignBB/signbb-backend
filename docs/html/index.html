@@ -142,7 +142,18 @@ Documentación</h1>
 <p>La documentación del código se genera con Doxygen desde la raíz del repositorio: </p><pre class="fragment">doxygen Doxyfile
 </pre><p>El HTML resultante queda en <span class="tt">docs/html</span> (abrir <span class="tt">docs/html/index.html</span>). La fuente es <span class="tt">backend/src/main/java</span>, configurada en el <span class="tt">Doxyfile</span>.</p>
 <p>El diagrama de arquitectura por módulos (<span class="tt">docs/diagramas/arquitectura_modulos.svg</span>) se regenera desde su fuente PlantUML: </p><pre class="fragment">java -jar plantuml.jar -tsvg docs/diagramas/arquitectura_modulos.puml
-</pre> </div></div><!-- PageDoc -->
+</pre><h2 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
+API REST (OpenAPI)</h2>
+<p>La API se documenta con <b>springdoc-openapi</b> a partir de los controladores. Con la aplicación arriba:</p>
+<ul>
+<li>Swagger UI: <span class="tt"><a href="http://localhost:8080/swagger-ui.html">http://localhost:8080/swagger-ui.html</a></span></li>
+<li>Contrato JSON: <span class="tt"><a href="http://localhost:8080/v3/api-docs">http://localhost:8080/v3/api-docs</a></span></li>
+<li>Contrato YAML: <span class="tt"><a href="http://localhost:8080/v3/api-docs.yaml">http://localhost:8080/v3/api-docs.yaml</a></span></li>
+</ul>
+<p>La copia versionada del contrato vive en <span class="tt">docs/api/openapi.yaml</span>. Para regenerarla tras cambiar los controladores o los DTOs: </p><pre class="fragment">./mvnw spring-boot:run   # en una terminal; esperar "Started BackendApplication"
+curl -o docs/api/openapi.yaml http://localhost:8080/v3/api-docs.yaml
+</pre><p>Las descripciones de operaciones y esquemas se toman de las anotaciones <span class="tt">@Tag</span>, <span class="tt">@Operation</span>, <span class="tt">@ApiResponse</span> y <span class="tt">@Schema</span> en los controladores y DTOs. </p>
+</div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>
 </div><!-- contents -->
 </div><!-- doc-content -->

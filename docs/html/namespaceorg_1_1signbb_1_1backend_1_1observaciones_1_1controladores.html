@@ -124,24 +124,24 @@ Clases</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Funciones</h2></td></tr>
-<tr class="memitem:abf521345a643e096255cffb171039530" id="r_abf521345a643e096255cffb171039530"><td class="memItemLeft"><a id="abf521345a643e096255cffb171039530" name="abf521345a643e096255cffb171039530"></a>
-record&#160;</td><td class="memItemRight"><b>PasoCausalDTO</b> (String nodoId, String condicion)</td></tr>
-<tr class="memdesc:abf521345a643e096255cffb171039530"><td class="mdescLeft">&#160;</td><td class="mdescRight">Un paso del camino causal hacia el desenlace: el <code class="JavaDocCode">nodoId</code> alcanzado y la <code class="JavaDocCode">condicion</code> de la arista por la que se llegó (vacía para el nodo inicial). <br /></td></tr>
-<tr class="memitem:a7498ea9a8d28eb7b789e5eacb0604025" id="r_a7498ea9a8d28eb7b789e5eacb0604025"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a7498ea9a8d28eb7b789e5eacb0604025">PreguntaDTO</a> (String id, String texto, List&lt; String &gt; opciones, boolean tieneImagenes, List&lt; String &gt; imagenes, String tipoInteraccion)</td></tr>
-<tr class="memdesc:a7498ea9a8d28eb7b789e5eacb0604025"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pregunta que el recorrido presenta al cuidador mientras está EN_CURSO.  <br /></td></tr>
-<tr class="memitem:a111029281b5c36a7877f7f7bbdbeafc8" id="r_a111029281b5c36a7877f7f7bbdbeafc8"><td class="memItemLeft"><a id="a111029281b5c36a7877f7f7bbdbeafc8" name="a111029281b5c36a7877f7f7bbdbeafc8"></a>
-record&#160;</td><td class="memItemRight"><b>RecomendacionDTO</b> (String nodoId, String mensaje, List&lt; <a class="el" href="#abf521345a643e096255cffb171039530">PasoCausalDTO</a> &gt; caminoCausal)</td></tr>
-<tr class="memdesc:a111029281b5c36a7877f7f7bbdbeafc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Una recomendación alcanzada durante el recorrido: el <code class="JavaDocCode">nodoId</code> y el <code class="JavaDocCode">mensaje</code> del nodo, y el <code class="JavaDocCode">caminoCausal</code> de preguntas y respuestas que llevó a ella (cada recomendación tiene el suyo). <br /></td></tr>
-<tr class="memitem:a2ac983908738dd31d3976f44024db3f6" id="r_a2ac983908738dd31d3976f44024db3f6"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a2ac983908738dd31d3976f44024db3f6">RecorridoDTO</a> (String recorridoId, String estado, <a class="el" href="#a7498ea9a8d28eb7b789e5eacb0604025">PreguntaDTO</a> pregunta, <a class="el" href="#abadc45eb731cfb02a9f5625b4a09cb8a">ResultadoDTO</a> resultado)</td></tr>
-<tr class="memdesc:a2ac983908738dd31d3976f44024db3f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vista REST de un recorrido de triaje.  <br /></td></tr>
-<tr class="memitem:abadc45eb731cfb02a9f5625b4a09cb8a" id="r_abadc45eb731cfb02a9f5625b4a09cb8a"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#abadc45eb731cfb02a9f5625b4a09cb8a">ResultadoDTO</a> (String nivel, String destinoId, String mensaje, List&lt; String &gt; razones, List&lt; <a class="el" href="#abf521345a643e096255cffb171039530">PasoCausalDTO</a> &gt; caminoCausal, List&lt; <a class="el" href="#a111029281b5c36a7877f7f7bbdbeafc8">RecomendacionDTO</a> &gt; recomendaciones)</td></tr>
-<tr class="memdesc:abadc45eb731cfb02a9f5625b4a09cb8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Desenlace de un recorrido FINALIZADO.  <br /></td></tr>
+<tr class="memitem:a9da139933c21f2a0601c2a022ece3608" id="r_a9da139933c21f2a0601c2a022ece3608"><td class="memItemLeft"><a id="a9da139933c21f2a0601c2a022ece3608" name="a9da139933c21f2a0601c2a022ece3608"></a>
+record&#160;</td><td class="memItemRight"><b>PasoCausalDTO</b> ( @Schema(description=&quot;Id del nodo alcanzado&quot;) String nodoId, @Schema(description=&quot;Condición de la arista por la que se llegó; vacía para el nodo inicial&quot;) String condicion)</td></tr>
+<tr class="memdesc:a9da139933c21f2a0601c2a022ece3608"><td class="mdescLeft">&#160;</td><td class="mdescRight">Un paso del camino causal hacia el desenlace: el <code class="JavaDocCode">nodoId</code> alcanzado y la <code class="JavaDocCode">condicion</code> de la arista por la que se llegó (vacía para el nodo inicial). <br /></td></tr>
+<tr class="memitem:ae74b565ebb1b3c310c943c6178db09ea" id="r_ae74b565ebb1b3c310c943c6178db09ea"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#ae74b565ebb1b3c310c943c6178db09ea">PreguntaDTO</a> ( @Schema(description=&quot;Id del nodo pregunta&quot;) String id, @Schema(description=&quot;Contenido de la pregunta&quot;) String texto, @Schema(description=&quot;Etiquetas de las respuestas válidas&quot;) List&lt; String &gt; opciones, @Schema(description=&quot;Si la pregunta tiene imágenes de apoyo&quot;) boolean tieneImagenes, @Schema(description=&quot;Rutas de las imágenes; vacía si no tiene&quot;) List&lt; String &gt; imagenes, @Schema(description=&quot;Tipo de interacción: SI_NO, SELECCION_UNICA o SELECCION_MULTIPLE&quot;) String tipoInteraccion)</td></tr>
+<tr class="memdesc:ae74b565ebb1b3c310c943c6178db09ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pregunta que el recorrido presenta al cuidador mientras está EN_CURSO.  <br /></td></tr>
+<tr class="memitem:ab643e40096639e8da210ecbb6be97891" id="r_ab643e40096639e8da210ecbb6be97891"><td class="memItemLeft"><a id="ab643e40096639e8da210ecbb6be97891" name="ab643e40096639e8da210ecbb6be97891"></a>
+record&#160;</td><td class="memItemRight"><b>RecomendacionDTO</b> ( @Schema(description=&quot;Id del nodo de recomendación&quot;) String nodoId, @Schema(description=&quot;Contenido de la recomendación&quot;) String mensaje, @Schema(description=&quot;Camino de preguntas y respuestas que llevó a ella&quot;) List&lt; <a class="el" href="#a9da139933c21f2a0601c2a022ece3608">PasoCausalDTO</a> &gt; caminoCausal)</td></tr>
+<tr class="memdesc:ab643e40096639e8da210ecbb6be97891"><td class="mdescLeft">&#160;</td><td class="mdescRight">Una recomendación alcanzada durante el recorrido: el <code class="JavaDocCode">nodoId</code> y el <code class="JavaDocCode">mensaje</code> del nodo, y el <code class="JavaDocCode">caminoCausal</code> de preguntas y respuestas que llevó a ella (cada recomendación tiene el suyo). <br /></td></tr>
+<tr class="memitem:a9da8fa006ec65b04cc12de8f45952e05" id="r_a9da8fa006ec65b04cc12de8f45952e05"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a9da8fa006ec65b04cc12de8f45952e05">RecorridoDTO</a> ( @Schema(description=&quot;Id de la sesión de recorrido&quot;) String recorridoId, @Schema(description=&quot;EN_CURSO o FINALIZADO&quot;) String estado, @Schema(description=&quot;Pregunta actual; solo si el recorrido está en curso&quot;) <a class="el" href="#ae74b565ebb1b3c310c943c6178db09ea">PreguntaDTO</a> pregunta, @Schema(description=&quot;Desenlace; solo si el recorrido finalizó&quot;) <a class="el" href="#af5ce12c3bd3ada0c77918cbdce8c0e49">ResultadoDTO</a> resultado)</td></tr>
+<tr class="memdesc:a9da8fa006ec65b04cc12de8f45952e05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vista REST de un recorrido de triaje.  <br /></td></tr>
+<tr class="memitem:af5ce12c3bd3ada0c77918cbdce8c0e49" id="r_af5ce12c3bd3ada0c77918cbdce8c0e49"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#af5ce12c3bd3ada0c77918cbdce8c0e49">ResultadoDTO</a> ( @Schema(description=&quot;Nivel de alerta resultante; NORMAL si no disparó reglas&quot;) String nivel, @Schema(description=&quot;Id del nodo terminal&quot;) String destinoId, @Schema(description=&quot;Contenido del nodo terminal&quot;) String mensaje, @Schema(description=&quot;Ids de las <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1reglas.html">reglas</a> de nivel máximo que dispararon; vacío si NORMAL&quot;) List&lt; String &gt; razones, @Schema(description=&quot;Secuencia de nodos y condiciones hasta el destino&quot;) List&lt; <a class="el" href="#a9da139933c21f2a0601c2a022ece3608">PasoCausalDTO</a> &gt; caminoCausal, @Schema(description=&quot;Recomendaciones alcanzadas; vacía si hubo alerta&quot;) List&lt; <a class="el" href="#ab643e40096639e8da210ecbb6be97891">RecomendacionDTO</a> &gt; recomendaciones)</td></tr>
+<tr class="memdesc:af5ce12c3bd3ada0c77918cbdce8c0e49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Desenlace de un recorrido FINALIZADO.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Controladores REST de las consultas guiadas. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones</h2>
-<a id="a7498ea9a8d28eb7b789e5eacb0604025" name="a7498ea9a8d28eb7b789e5eacb0604025"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7498ea9a8d28eb7b789e5eacb0604025">&#9670;&#160;</a></span>PreguntaDTO()</h2>
+<a id="ae74b565ebb1b3c310c943c6178db09ea" name="ae74b565ebb1b3c310c943c6178db09ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae74b565ebb1b3c310c943c6178db09ea">&#9670;&#160;</a></span>PreguntaDTO()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -149,32 +149,32 @@ record&#160;</td><td class="memItemRight"><b>RecomendacionDTO</b> (String nodoId
         <tr>
           <td class="memname">record org.signbb.backend.observaciones.controladores.PreguntaDTO </td>
           <td>(</td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>id</em></span>, </td>
+          <td class="paramtype">@Schema(description=&quot;Id del nodo pregunta&quot;) String</td>          <td class="paramname"><span class="paramname"><em>id</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>texto</em></span>, </td>
+          <td class="paramtype">@Schema(description=&quot;Contenido de la pregunta&quot;) String</td>          <td class="paramname"><span class="paramname"><em>texto</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">List&lt; String &gt;</td>          <td class="paramname"><span class="paramname"><em>opciones</em></span>, </td>
+          <td class="paramtype">@Schema(description=&quot;Etiquetas de las respuestas válidas&quot;) List&lt; String &gt;</td>          <td class="paramname"><span class="paramname"><em>opciones</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">boolean</td>          <td class="paramname"><span class="paramname"><em>tieneImagenes</em></span>, </td>
+          <td class="paramtype">@Schema(description=&quot;Si la pregunta tiene imágenes de apoyo&quot;) boolean</td>          <td class="paramname"><span class="paramname"><em>tieneImagenes</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">List&lt; String &gt;</td>          <td class="paramname"><span class="paramname"><em>imagenes</em></span>, </td>
+          <td class="paramtype">@Schema(description=&quot;Rutas de las imágenes; vacía si no tiene&quot;) List&lt; String &gt;</td>          <td class="paramname"><span class="paramname"><em>imagenes</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>tipoInteraccion</em></span>&#160;)</td>
+          <td class="paramtype">@Schema(description=&quot;Tipo de interacción: SI_NO, SELECCION_UNICA o SELECCION_MULTIPLE&quot;) String</td>          <td class="paramname"><span class="paramname"><em>tipoInteraccion</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -186,8 +186,8 @@ record&#160;</td><td class="memItemRight"><b>RecomendacionDTO</b> (String nodoId
 
 </div>
 </div>
-<a id="a2ac983908738dd31d3976f44024db3f6" name="a2ac983908738dd31d3976f44024db3f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ac983908738dd31d3976f44024db3f6">&#9670;&#160;</a></span>RecorridoDTO()</h2>
+<a id="a9da8fa006ec65b04cc12de8f45952e05" name="a9da8fa006ec65b04cc12de8f45952e05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9da8fa006ec65b04cc12de8f45952e05">&#9670;&#160;</a></span>RecorridoDTO()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -195,22 +195,22 @@ record&#160;</td><td class="memItemRight"><b>RecomendacionDTO</b> (String nodoId
         <tr>
           <td class="memname">record org.signbb.backend.observaciones.controladores.RecorridoDTO </td>
           <td>(</td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>recorridoId</em></span>, </td>
+          <td class="paramtype">@Schema(description=&quot;Id de la sesión de recorrido&quot;) String</td>          <td class="paramname"><span class="paramname"><em>recorridoId</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>estado</em></span>, </td>
+          <td class="paramtype">@Schema(description=&quot;EN_CURSO o FINALIZADO&quot;) String</td>          <td class="paramname"><span class="paramname"><em>estado</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="#a7498ea9a8d28eb7b789e5eacb0604025">PreguntaDTO</a></td>          <td class="paramname"><span class="paramname"><em>pregunta</em></span>, </td>
+          <td class="paramtype">@Schema(description=&quot;Pregunta actual; solo si el recorrido está en curso&quot;) <a class="el" href="#ae74b565ebb1b3c310c943c6178db09ea">PreguntaDTO</a></td>          <td class="paramname"><span class="paramname"><em>pregunta</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="#abadc45eb731cfb02a9f5625b4a09cb8a">ResultadoDTO</a></td>          <td class="paramname"><span class="paramname"><em>resultado</em></span>&#160;)</td>
+          <td class="paramtype">@Schema(description=&quot;Desenlace; solo si el recorrido finalizó&quot;) <a class="el" href="#af5ce12c3bd3ada0c77918cbdce8c0e49">ResultadoDTO</a></td>          <td class="paramname"><span class="paramname"><em>resultado</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -221,8 +221,8 @@ record&#160;</td><td class="memItemRight"><b>RecomendacionDTO</b> (String nodoId
 
 </div>
 </div>
-<a id="abadc45eb731cfb02a9f5625b4a09cb8a" name="abadc45eb731cfb02a9f5625b4a09cb8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abadc45eb731cfb02a9f5625b4a09cb8a">&#9670;&#160;</a></span>ResultadoDTO()</h2>
+<a id="af5ce12c3bd3ada0c77918cbdce8c0e49" name="af5ce12c3bd3ada0c77918cbdce8c0e49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5ce12c3bd3ada0c77918cbdce8c0e49">&#9670;&#160;</a></span>ResultadoDTO()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -230,32 +230,32 @@ record&#160;</td><td class="memItemRight"><b>RecomendacionDTO</b> (String nodoId
         <tr>
           <td class="memname">record org.signbb.backend.observaciones.controladores.ResultadoDTO </td>
           <td>(</td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>nivel</em></span>, </td>
+          <td class="paramtype">@Schema(description=&quot;Nivel de alerta resultante; NORMAL si no disparó reglas&quot;) String</td>          <td class="paramname"><span class="paramname"><em>nivel</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>destinoId</em></span>, </td>
+          <td class="paramtype">@Schema(description=&quot;Id del nodo terminal&quot;) String</td>          <td class="paramname"><span class="paramname"><em>destinoId</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>mensaje</em></span>, </td>
+          <td class="paramtype">@Schema(description=&quot;Contenido del nodo terminal&quot;) String</td>          <td class="paramname"><span class="paramname"><em>mensaje</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">List&lt; String &gt;</td>          <td class="paramname"><span class="paramname"><em>razones</em></span>, </td>
+          <td class="paramtype">@Schema(description=&quot;Ids de las <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1reglas.html">reglas</a> de nivel máximo que dispararon; vacío si NORMAL&quot;) List&lt; String &gt;</td>          <td class="paramname"><span class="paramname"><em>razones</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">List&lt; <a class="el" href="#abf521345a643e096255cffb171039530">PasoCausalDTO</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>caminoCausal</em></span>, </td>
+          <td class="paramtype">@Schema(description=&quot;Secuencia de nodos y condiciones hasta el destino&quot;) List&lt; <a class="el" href="#a9da139933c21f2a0601c2a022ece3608">PasoCausalDTO</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>caminoCausal</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">List&lt; <a class="el" href="#a111029281b5c36a7877f7f7bbdbeafc8">RecomendacionDTO</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>recomendaciones</em></span>&#160;)</td>
+          <td class="paramtype">@Schema(description=&quot;Recomendaciones alcanzadas; vacía si hubo alerta&quot;) List&lt; <a class="el" href="#ab643e40096639e8da210ecbb6be97891">RecomendacionDTO</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>recomendaciones</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">

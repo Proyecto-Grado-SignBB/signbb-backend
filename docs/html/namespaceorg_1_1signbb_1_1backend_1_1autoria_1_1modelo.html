@@ -128,8 +128,12 @@ Clases</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Funciones</h2></td></tr>
-<tr class="memitem:a5e3f094237666821410399f21259bfe2" id="r_a5e3f094237666821410399f21259bfe2"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a5e3f094237666821410399f21259bfe2">Aviso</a> (Codigo codigo, boolean bloqueante, String mensaje, String nodoId, String respuestaId)</td></tr>
-<tr class="memdesc:a5e3f094237666821410399f21259bfe2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aviso sobre el lienzo, escrito para el médico.  <br /></td></tr>
+<tr class="memitem:a93561d85dcd8b4627efed007961f5d03" id="r_a93561d85dcd8b4627efed007961f5d03"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a93561d85dcd8b4627efed007961f5d03">Aviso</a> ( @Schema(description=&quot;Clase de aviso&quot;) Codigo codigo, @Schema(description=&quot;Si impide publicar&quot;) boolean bloqueante, @Schema(description=&quot;Texto en lenguaje humano&quot;) String mensaje, @Schema(description=&quot;Nodo al que se refiere, o nulo&quot;) String nodoId, @Schema(description=&quot;Respuesta a la que se refiere, o nula&quot;) String respuestaId)</td></tr>
+<tr class="memdesc:a93561d85dcd8b4627efed007961f5d03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aviso sobre el lienzo, escrito para el médico.  <br /></td></tr>
+<tr class="memitem:ad877808e981157f30a3a0c5956f6183c" id="r_ad877808e981157f30a3a0c5956f6183c"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#ad877808e981157f30a3a0c5956f6183c">BorradorRegla</a> (String nombre, String descripcion, List&lt; Caso &gt; casos, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1NivelAlerta.html">NivelAlerta</a> nivel, String nodoDestino)</td></tr>
+<tr class="memdesc:ad877808e981157f30a3a0c5956f6183c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Regla de un borrador de base de reglas, tal como la edita el médico.  <br /></td></tr>
+<tr class="memitem:aacdec638daf4aef95fe4c47d86d1f537" id="r_aacdec638daf4aef95fe4c47d86d1f537"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#aacdec638daf4aef95fe4c47d86d1f537">DocumentoBaseRegla</a> (int secuencia, Map&lt; String, <a class="el" href="#ad877808e981157f30a3a0c5956f6183c">BorradorRegla</a> &gt; reglas)</td></tr>
+<tr class="memdesc:aacdec638daf4aef95fe4c47d86d1f537"><td class="mdescLeft">&#160;</td><td class="mdescRight">Documento de un borrador de base de reglas: las reglas que el médico definió.  <br /></td></tr>
 <tr class="memitem:ac4af53f37093be19ec3ab07663e8ee7d" id="r_ac4af53f37093be19ec3ab07663e8ee7d"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#ac4af53f37093be19ec3ab07663e8ee7d">DocumentoLienzo</a> (String inicio, int secuencia, Map&lt; String, <a class="el" href="#ab923686c321e98e48c552e9bb9c24843">NodoLienzo</a> &gt; nodos)</td></tr>
 <tr class="memdesc:ac4af53f37093be19ec3ab07663e8ee7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Documento de un borrador: lo que el médico armó en el lienzo.  <br /></td></tr>
 <tr class="memitem:ab923686c321e98e48c552e9bb9c24843" id="r_ab923686c321e98e48c552e9bb9c24843"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#ab923686c321e98e48c552e9bb9c24843">NodoLienzo</a> (String id, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1TipoNodo.html">TipoNodo</a> tipo, String texto, boolean variasRespuestas, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Desenlace.html">Desenlace</a> desenlace, List&lt; <a class="el" href="#ad3b711fdb2c15d348e54253a1a96c089">RespuestaLienzo</a> &gt; respuestas)</td></tr>
@@ -141,8 +145,8 @@ Funciones</h2></td></tr>
 <div class="textblock"><p>Formato propio del lienzo de autoría: el documento del borrador, sus nodos y respuestas, y los avisos que se le muestran al médico. </p>
 <p>No depende de Spring ni de la base de datos. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones</h2>
-<a id="a5e3f094237666821410399f21259bfe2" name="a5e3f094237666821410399f21259bfe2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e3f094237666821410399f21259bfe2">&#9670;&#160;</a></span>Aviso()</h2>
+<a id="a93561d85dcd8b4627efed007961f5d03" name="a93561d85dcd8b4627efed007961f5d03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93561d85dcd8b4627efed007961f5d03">&#9670;&#160;</a></span>Aviso()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -150,27 +154,27 @@ Funciones</h2></td></tr>
         <tr>
           <td class="memname">record org.signbb.backend.autoria.modelo.Aviso </td>
           <td>(</td>
-          <td class="paramtype">Codigo</td>          <td class="paramname"><span class="paramname"><em>codigo</em></span>, </td>
+          <td class="paramtype">@Schema(description=&quot;Clase de aviso&quot;) Codigo</td>          <td class="paramname"><span class="paramname"><em>codigo</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">boolean</td>          <td class="paramname"><span class="paramname"><em>bloqueante</em></span>, </td>
+          <td class="paramtype">@Schema(description=&quot;Si impide publicar&quot;) boolean</td>          <td class="paramname"><span class="paramname"><em>bloqueante</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>mensaje</em></span>, </td>
+          <td class="paramtype">@Schema(description=&quot;Texto en lenguaje humano&quot;) String</td>          <td class="paramname"><span class="paramname"><em>mensaje</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>nodoId</em></span>, </td>
+          <td class="paramtype">@Schema(description=&quot;Nodo al que se refiere, o nulo&quot;) String</td>          <td class="paramname"><span class="paramname"><em>nodoId</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>respuestaId</em></span>&#160;)</td>
+          <td class="paramtype">@Schema(description=&quot;Respuesta a la que se refiere, o nula&quot;) String</td>          <td class="paramname"><span class="paramname"><em>respuestaId</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -186,7 +190,7 @@ Funciones</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>Clases de aviso. Todas bloquean la publicación salvo <code class="JavaDocCode">NODO_SUELTO</code>.</p>
+<p>Clases de aviso del lienzo y de las reglas. Del lienzo, todas bloquean la publicación salvo <code class="JavaDocCode">NODO_SUELTO</code>; de las reglas, todas bloquean.</p>
 <p>El lienzo no tiene primera pregunta.</p>
 <p>Una pregunta, respuesta o conclusión sin texto.</p>
 <p>Una pregunta con menos de dos respuestas.</p>
@@ -195,6 +199,96 @@ Funciones</h2></td></tr>
 <p>Una conclusión sin desenlace.</p>
 <p>Un camino que vuelve a una pregunta anterior.</p>
 <p>Un nodo al que no llega ninguna respuesta; no se publica.</p>
+<p>Una regla sin nombre.</p>
+<p>Una regla sin condiciones (FND vacía).</p>
+<p>Una regla sin nodo destino.</p>
+<p>Una regla con nivel NORMAL, que no es una alerta válida.</p>
+<p>Una condición que referencia un nodo o una respuesta inexistente.</p>
+<p>El nodo destino de una regla no existe en el grafo.</p>
+
+</div>
+</div>
+<a id="ad877808e981157f30a3a0c5956f6183c" name="ad877808e981157f30a3a0c5956f6183c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad877808e981157f30a3a0c5956f6183c">&#9670;&#160;</a></span>BorradorRegla()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">record org.signbb.backend.autoria.modelo.BorradorRegla </td>
+          <td>(</td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>nombre</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>descripcion</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">List&lt; Caso &gt;</td>          <td class="paramname"><span class="paramname"><em>casos</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1NivelAlerta.html">NivelAlerta</a></td>          <td class="paramname"><span class="paramname"><em>nivel</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>nodoDestino</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Regla de un borrador de base de reglas, tal como la edita el médico. </p>
+<p>Reutiliza el TAD del dominio: los <code><a class="el" href="">Caso</a></code> son la forma normal disjuntiva (OR de casos, AND dentro de cada caso) y <code class="JavaDocCode">nodoDestino</code> referencia un nodo del grafo al que pertenece la base, por id local (el compositor lo prefija al publicar).</p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nombre</td><td>texto descriptivo de la regla </td></tr>
+    <tr><td class="paramname">descripcion</td><td>explicación para el médico, opcional </td></tr>
+    <tr><td class="paramname">casos</td><td>FND de la regla; puede estar vacía mientras se edita </td></tr>
+    <tr><td class="paramname">nivel</td><td>severidad al dispararse; <code><a class="el" href="enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1NivelAlerta.html#ad20739cdb6a47e7f201d4a70aba3f5ae">NivelAlerta#NORMAL</a></code> no es válido para una regla </td></tr>
+    <tr><td class="paramname">nodoDestino</td><td>id del nodo destino, o <code class="JavaDocCode">null</code> mientras se edita </td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Normaliza los casos ausentes a una lista vacía inmutable.</p>
+
+</div>
+</div>
+<a id="aacdec638daf4aef95fe4c47d86d1f537" name="aacdec638daf4aef95fe4c47d86d1f537"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacdec638daf4aef95fe4c47d86d1f537">&#9670;&#160;</a></span>DocumentoBaseRegla()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">record org.signbb.backend.autoria.modelo.DocumentoBaseRegla </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>secuencia</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Map&lt; String, <a class="el" href="#ad877808e981157f30a3a0c5956f6183c">BorradorRegla</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>reglas</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Documento de un borrador de base de reglas: las reglas que el médico definió. </p>
+<p>Se guarda tal cual en la columna <code class="JavaDocCode">documento</code> de <code class="JavaDocCode">BorradorBaseReglaEntity</code>.</p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">secuencia</td><td>último número usado para generar ids; los ids no se reutilizan aunque se borre una regla </td></tr>
+    <tr><td class="paramname">reglas</td><td>reglas indexadas por id, en el orden en que se crearon </td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Normaliza el mapa ausente a uno vacío y lo deja inmutable conservando el orden.</p>
+<p>Base vacía, la de un borrador recién creado.</p>
+<p>Regla por id.</p>
 
 </div>
 </div>
@@ -329,12 +423,12 @@ Funciones</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">id</td><td>id generado por el servidor (<code class="JavaDocCode">r_N</code>) </td></tr>
     <tr><td class="paramname">texto</td><td>texto que ve la cuidadora; al compilar es la <code class="JavaDocCode">relation</code> de la arista </td></tr>
-    <tr><td class="paramname">gravedad</td><td>semáforo de la respuesta; si llega nula se toma <code><a class="el" href="enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Gravedad.html#a817ca277e5b28735af64acdf2f59e878">Gravedad#LEVE</a></code> </td></tr>
+    <tr><td class="paramname">gravedad</td><td>semáforo de la respuesta; si llega nula se toma <code><a class="el" href="">Gravedad#LEVE</a></code> </td></tr>
     <tr><td class="paramname">destino</td><td>id del nodo al que lleva, o <code class="JavaDocCode">null</code> si todavía es un "+" pendiente </td></tr>
   </table>
   </dd>
 </dl>
-<p>Normaliza la gravedad ausente a <code><a class="el" href="enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Gravedad.html#a817ca277e5b28735af64acdf2f59e878">Gravedad#LEVE</a></code>.</p>
+<p>Normaliza la gravedad ausente a <code><a class="el" href="">Gravedad#LEVE</a></code>.</p>
 <p>Copia con otro destino.</p>
 
 </div>

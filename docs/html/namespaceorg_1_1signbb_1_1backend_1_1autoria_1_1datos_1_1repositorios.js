@@ -1,4 +1,5 @@
 var namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios =
 [
+    [ "RepositorioBorradorBaseRegla", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorBaseRegla.html", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorBaseRegla" ],
     [ "RepositorioBorradorSubgrafo", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorSubgrafo.html", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorSubgrafo" ]
 ];

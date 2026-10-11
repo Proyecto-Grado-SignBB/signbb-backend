@@ -1,6 +1,6 @@
 var classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl =
 [
-    [ "ServicioAutoriaImpl", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#a7997550613fe391b45c71723bb9b492e", null ],
+    [ "ServicioAutoriaImpl", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#a774199114cc5435708177d63461c1f96", null ],
     [ "actualizar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#aa85f404a94586270ebb0ceebf849e7f6", null ],
     [ "agregarNodo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#a0837997e2f848db8c33a2848376f5429", null ],
     [ "avisos", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#af4d95fca5828977091adf9f311102f70", null ],

@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['peso_5fmaximo_0',['PESO_MAXIMO',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoMapper.html#a73e406cd30a0f557a21fa45cbae48671',1,'org::signbb::backend::navegacion::datos::serializacion::GrafoClinicoMapper']]],
-  ['peso_5fminimo_1',['PESO_MINIMO',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoMapper.html#a710870d9b6dbae4cb1e19ebc2d0df60e',1,'org::signbb::backend::navegacion::datos::serializacion::GrafoClinicoMapper']]],
-  ['prefijo_5freferencia_2',['PREFIJO_REFERENCIA',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorSubgrafo.html#a88f309281f8377a18ef1efe3deb8ae6c',1,'org::signbb::backend::autoria::servicios::PublicadorSubgrafo']]],
-  ['prefijo_5fsesion_3',['PREFIJO_SESION',['../classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html#a821dcac19147c4a5b202a4c06adf7def',1,'org::signbb::backend::cache::RepositorioSesionRedis']]],
-  ['pregunta_4',['PREGUNTA',['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1TipoNodo.html#a601f135648c7c6ede4742755baa11541',1,'org::signbb::backend::autoria::modelo::TipoNodo']]],
-  ['publicado_5',['PUBLICADO',['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1EstadoBorrador.html#a3fc34c3da98040167a3c2a2b11187539',1,'org::signbb::backend::autoria::modelo::EstadoBorrador']]]
+  ['schema_0',['Schema',['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Desenlace.html#a9640fbec930cc6175c47a15eed5b2da0',1,'org.signbb.backend.autoria.modelo.Desenlace.Schema'],['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1EstadoBorrador.html#a43b9a3edaf1c1377531bf0dd07d757eb',1,'org.signbb.backend.autoria.modelo.EstadoBorrador.Schema'],['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Gravedad.html#a8d7873e2827630b99df79e106a629054',1,'org.signbb.backend.autoria.modelo.Gravedad.Schema'],['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1TipoNodo.html#a142ea6bafa4b1f78274e0eadb304b248',1,'org.signbb.backend.autoria.modelo.TipoNodo.Schema']]],
+  ['separador_1',['SEPARADOR',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1CompositorGrafoClinico.html#a599e207b31a5858528a0e68e1f20431a',1,'org::signbb::backend::navegacion::datos::serializacion::CompositorGrafoClinico']]]
 ];
