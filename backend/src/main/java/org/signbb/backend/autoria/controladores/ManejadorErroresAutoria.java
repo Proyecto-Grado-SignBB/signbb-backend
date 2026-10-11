@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * responden con cuerpo ({@link ErrorAutoriaDTO}) porque el mensaje es para el
  * médico. El 404 sigue a cargo de {@code ManejadorExcepciones}.
  */
-@RestControllerAdvice(assignableTypes = ControladorAutoria.class)
+@RestControllerAdvice(assignableTypes = { ControladorAutoria.class, ControladorReglas.class })
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class ManejadorErroresAutoria {
 

@@ -26,6 +26,7 @@ import org.signbb.backend.autoria.controladores.OpcionRequest;
 import org.signbb.backend.autoria.controladores.SubgrafoDTO;
 import org.signbb.backend.autoria.controladores.SubgrafoRequest;
 import org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity;
+import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorBaseRegla;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo;
 import org.signbb.backend.autoria.modelo.Desenlace;
 import org.signbb.backend.autoria.modelo.DocumentoLienzo;
@@ -59,8 +60,10 @@ class ServicioAutoriaImplTest {
         borradores = mock(RepositorioBorradorSubgrafo.class);
         when(borradores.save(any(BorradorSubgrafoEntity.class))).thenAnswer(i -> i.getArgument(0));
         when(borradores.existsByGrafoId(anyString())).thenReturn(false);
+        RepositorioBorradorBaseRegla basesReglas = mock(RepositorioBorradorBaseRegla.class);
+        when(basesReglas.findByGrafoId(anyString())).thenReturn(Optional.empty());
         publicador = mock(PublicadorSubgrafo.class);
-        servicio = new ServicioAutoriaImpl(borradores, grafos, publicador);
+        servicio = new ServicioAutoriaImpl(borradores, basesReglas, grafos, publicador);
     }
 
     private static GrafoClinicoEntity fila(GrafoClinicoJson documento) {

@@ -15,16 +15,12 @@ import org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico;
 import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoJson;
 import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoMapper;
 import org.signbb.backend.navegacion.modelo.ContextoClinico;
-import org.signbb.backend.navegacion.modelo.GrafoClinico;
 import org.signbb.backend.reglas.datos.repositorios.RepositorioBaseReglas;
 import org.signbb.backend.reglas.datos.serializacion.BaseReglasJson;
-import org.signbb.backend.reglas.datos.serializacion.BaseReglasMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionSynchronization;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 /**
  * Publica un borrador: lo deja navegable para la cuidadora.
@@ -110,7 +106,7 @@ public class PublicadorSubgrafo {
         }
         GrafoClinicoJson raiz = conReferencia(filaRaiz.getEstructura(), borrador);
         subgrafos.add(subgrafo);
-        validarComposicion(raiz, subgrafos, reglas());
+        PublicacionContenido.validarComposicion("El subgrafo no se pudo publicar", raiz, subgrafos, reglas());
 
         if (filaSubgrafo == null) {
             filaSubgrafo = new GrafoClinicoEntity();
@@ -122,7 +118,7 @@ public class PublicadorSubgrafo {
         log.info("Subgrafo '{}' publicado en '{}' con {} nodos.", borrador.getGrafoId(),
                 borrador.getPuenteId(), subgrafo.graph().nodes().size());
 
-        despuesDelCommit(() -> {
+        PublicacionContenido.despuesDelCommit(() -> {
             resolvedor.invalidar();
             contexto.recargar();
         });
@@ -182,32 +178,6 @@ public class PublicadorSubgrafo {
                 .map(fila -> fila.getEstructura())
                 .filter(b -> b != null && b.grafoId() != null && !b.grafoId().isBlank())
                 .toList();
-    }
-
-    /** Compone y reconstruye los TAD; cualquier fallo se responde al médico. */
-    private static void validarComposicion(GrafoClinicoJson raiz, List<GrafoClinicoJson> subgrafos,
-            List<BaseReglasJson> reglas) {
-        try {
-            CompositorGrafoClinico.Contenido contenido = CompositorGrafoClinico.componer(raiz, subgrafos, reglas);
-            GrafoClinico grafo = GrafoClinicoMapper.desde(contenido.grafo());
-            BaseReglasMapper.desde(contenido.reglas(), grafo);
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            throw new ContenidoInvalidoException("El subgrafo no se pudo publicar: " + e.getMessage(), List.of());
-        }
-    }
-
-    /** Ejecuta la acción cuando la transacción confirma, o ya si no hay transacción. */
-    private static void despuesDelCommit(Runnable accion) {
-        if (TransactionSynchronizationManager.isSynchronizationActive()) {
-            TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
-                @Override
-                public void afterCommit() {
-                    accion.run();
-                }
-            });
-        } else {
-            accion.run();
-        }
     }
 
     private static String idDe(GrafoClinicoJson documento) {

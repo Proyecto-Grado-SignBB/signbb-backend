@@ -1,0 +1,1424 @@
+openapi: 3.1.0
+info:
+  title: SignBB API
+  description: "API REST del sistema de apoyo al triaje clínico SignBB: consulta guiada\
+    \ del cuidador (recorridos) y autoría de subgrafos clínicos. Los endpoints de\
+    \ edición de reglas se documentarán en este mismo contrato cuando estén disponibles."
+  version: 0.0.1
+servers:
+- url: http://localhost:8080
+  description: Servidor local (perfil docker)
+tags:
+- name: Consulta
+  description: "Recorrido guiado del cuidador: inicia el triaje, responde cada pregunta\
+    \ y consulta el estado. Toda respuesta queda auditada."
+- name: Reglas
+  description: "Panel de reglas del médico: arma y publica las bases de reglas asociadas\
+    \ a un grafo. Las operaciones que editan devuelven el borrador completo. Errores:\
+    \ 404 si el recurso no existe; 422 con {mensaje, avisos} si la edición no es vá\
+    lida o la base no se puede publicar; 409 si otra persona la cambió."
+- name: Autoría
+  description: "Lienzo del médico para armar, validar y publicar subgrafos clínicos.\
+    \ Las operaciones que editan devuelven el borrador completo. Errores: 404 si el\
+    \ recurso no existe; 422 con {mensaje, avisos} si la edición no es válida o el\
+    \ borrador no se puede publicar; 409 si otra persona lo cambió."
+paths:
+  /api/autoria/subgrafos/{id}:
+    get:
+      tags:
+      - Autoría
+      summary: Obtiene un borrador completo
+      description: Incluye el lienzo y los avisos calculados en el momento.
+      operationId: obtener
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Borrador completo
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SubgrafoDTO"
+        "404":
+          description: El borrador no existe
+    put:
+      tags:
+      - Autoría
+      summary: Actualiza los datos del subgrafo
+      description: "Cambia nombre, categoría, texto de la opción, autor o institució\
+        n."
+      operationId: actualizar
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubgrafoRequest"
+        required: true
+      responses:
+        "200":
+          description: Borrador actualizado
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SubgrafoDTO"
+        "404":
+          description: El borrador no existe
+        "409":
+          description: Otra persona lo cambió al mismo tiempo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+        "422":
+          description: Datos inválidos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+    delete:
+      tags:
+      - Autoría
+      summary: Elimina un borrador
+      description: Solo si nunca se publicó.
+      operationId: eliminar
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "204":
+          description: Borrador eliminado
+        "404":
+          description: El borrador no existe
+        "409":
+          description: Otra persona lo cambió al mismo tiempo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+  /api/autoria/subgrafos/{id}/respuestas/{respuestaId}/destino:
+    put:
+      tags:
+      - Autoría
+      summary: Enlaza una respuesta a una pregunta existente
+      description: La opción "Pregunta existente". Enviar nodoId nulo quita el enlace.
+      operationId: enlazar
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: respuestaId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DestinoRequest"
+        required: true
+      responses:
+        "200":
+          description: Borrador actualizado
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SubgrafoDTO"
+        "404":
+          description: "El borrador, la respuesta o el nodo destino no existe"
+        "422":
+          description: "La edición no es válida (por ejemplo, crearía un círculo)"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+  /api/autoria/subgrafos/{id}/nodos/{nodoId}:
+    put:
+      tags:
+      - Autoría
+      summary: Edita un nodo
+      operationId: editarNodo
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: nodoId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NodoRequest"
+        required: true
+      responses:
+        "200":
+          description: Borrador actualizado
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SubgrafoDTO"
+        "404":
+          description: El borrador o el nodo no existe
+        "409":
+          description: Otra persona lo cambió al mismo tiempo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+        "422":
+          description: La edición no es válida
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+    delete:
+      tags:
+      - Autoría
+      summary: Elimina un nodo y su rama
+      description: Las respuestas que llegaban vuelven a quedar como "+".
+      operationId: eliminarNodo
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: nodoId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Borrador actualizado
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SubgrafoDTO"
+        "404":
+          description: El borrador o el nodo no existe
+        "409":
+          description: Otra persona lo cambió al mismo tiempo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+  /api/autoria/bases/{id}:
+    get:
+      tags:
+      - Reglas
+      summary: Obtiene un borrador de reglas completo
+      description: Incluye las reglas y los avisos calculados en el momento.
+      operationId: obtener_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Borrador completo
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseReglaDTO"
+        "404":
+          description: El borrador no existe
+    put:
+      tags:
+      - Reglas
+      summary: Actualiza los datos de la base de reglas
+      description: "Cambia nombre, autor o institución; el grafo no cambia."
+      operationId: actualizar_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BaseReglaRequest"
+        required: true
+      responses:
+        "200":
+          description: Borrador actualizado
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseReglaDTO"
+        "404":
+          description: El borrador no existe
+        "409":
+          description: Otra persona lo cambió al mismo tiempo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+        "422":
+          description: Datos inválidos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+    delete:
+      tags:
+      - Reglas
+      summary: Elimina un borrador de reglas
+      description: Solo si nunca se publicó.
+      operationId: eliminar_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "204":
+          description: Borrador eliminado
+        "404":
+          description: El borrador no existe
+        "409":
+          description: Otra persona lo cambió al mismo tiempo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+        "422":
+          description: La base ya está publicada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+  /api/autoria/bases/{id}/reglas/{reglaId}:
+    put:
+      tags:
+      - Reglas
+      summary: Edita una regla del borrador
+      operationId: editarRegla
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: reglaId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReglaRequest"
+        required: true
+      responses:
+        "200":
+          description: Borrador actualizado
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseReglaDTO"
+        "404":
+          description: El borrador o la regla no existe
+        "409":
+          description: Otra persona lo cambió al mismo tiempo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+        "422":
+          description: La regla no es válida
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+    delete:
+      tags:
+      - Reglas
+      summary: Elimina una regla del borrador
+      operationId: eliminarRegla
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: reglaId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Borrador actualizado
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseReglaDTO"
+        "404":
+          description: El borrador o la regla no existe
+        "409":
+          description: Otra persona lo cambió al mismo tiempo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+  /api/recorridos:
+    post:
+      tags:
+      - Consulta
+      summary: Inicia un recorrido de triaje
+      description: Crea una sesión y devuelve la primera pregunta. El id del recorrido
+        se envía en el cuerpo y se usa en las operaciones siguientes.
+      operationId: iniciar
+      responses:
+        "200":
+          description: Recorrido creado con su primera pregunta
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/RecorridoDTO"
+        "503":
+          description: Caché de sesiones (Redis) no disponible
+  /api/recorridos/{recorridoId}/retroceder:
+    post:
+      tags:
+      - Consulta
+      summary: Retrocede a la pregunta anterior
+      description: Vuelve atrás para cambiar la última respuesta. Falla con 400 si
+        el recorrido aún no tiene respuestas.
+      operationId: retroceder
+      parameters:
+      - name: recorridoId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Recorrido actualizado en la pregunta anterior
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/RecorridoDTO"
+        "400":
+          description: El recorrido no tiene respuestas que deshacer
+        "404":
+          description: El recorrido no existe
+        "503":
+          description: Caché de sesiones (Redis) no disponible
+  /api/recorridos/{recorridoId}/respuestas:
+    post:
+      tags:
+      - Consulta
+      summary: Responde la pregunta actual
+      description: Acepta tanto el formato de una sola opción (respuesta) como la
+        selección múltiple (opciones); tipo es una pista opcional del cliente para
+        la auditoría. Devuelve el recorrido actualizado.
+      operationId: responder
+      parameters:
+      - name: recorridoId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RespuestaRequest"
+        required: true
+      responses:
+        "200":
+          description: Respuesta registrada y recorrido actualizado
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/RecorridoDTO"
+        "400":
+          description: La opción enviada no es válida para la pregunta actual
+        "404":
+          description: El recorrido no existe
+        "503":
+          description: Caché de sesiones (Redis) no disponible
+  /api/autoria/subgrafos:
+    get:
+      tags:
+      - Autoría
+      summary: Lista los borradores de subgrafos
+      description: Del último editado al primero.
+      operationId: listar
+      responses:
+        "200":
+          description: Resumen de cada borrador
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ResumenSubgrafoDTO"
+    post:
+      tags:
+      - Autoría
+      summary: Crea un borrador de subgrafo
+      description: Crea el borrador con el lienzo vacío.
+      operationId: crear
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubgrafoRequest"
+        required: true
+      responses:
+        "201":
+          description: Borrador creado
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SubgrafoDTO"
+        "422":
+          description: "Datos inválidos (por ejemplo, etiquetaOpcion vacía)"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+  /api/autoria/subgrafos/{id}/publicar:
+    post:
+      tags:
+      - Autoría
+      summary: Publica el borrador
+      description: Si hay avisos bloqueantes responde 422 con ellos en el cuerpo.
+      operationId: publicar
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Subgrafo publicado y navegable por la cuidadora
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SubgrafoDTO"
+        "404":
+          description: El borrador no existe
+        "409":
+          description: Otra persona lo cambió al mismo tiempo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+        "422":
+          description: "No se puede publicar: el cuerpo trae los avisos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+  /api/autoria/subgrafos/{id}/nodos:
+    post:
+      tags:
+      - Autoría
+      summary: Agrega un nodo (el "+")
+      description: Crea la primera pregunta o un nodo después de una respuesta sin
+        camino.
+      operationId: agregarNodo
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NodoRequest"
+        required: true
+      responses:
+        "200":
+          description: Borrador actualizado con el nodo nuevo
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SubgrafoDTO"
+        "404":
+          description: El borrador no existe
+        "422":
+          description: La edición no es válida
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+  /api/autoria/bases:
+    get:
+      tags:
+      - Reglas
+      summary: Lista los borradores de reglas
+      description: Del último editado al primero.
+      operationId: listar_1
+      responses:
+        "200":
+          description: Resumen de cada borrador
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ResumenBaseReglaDTO"
+    post:
+      tags:
+      - Reglas
+      summary: Crea un borrador de reglas
+      description: Crea la base vacía para el grafo indicado.
+      operationId: crear_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BaseReglaRequest"
+        required: true
+      responses:
+        "201":
+          description: Borrador creado
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseReglaDTO"
+        "422":
+          description: Datos inválidos o ya hay una base para ese grafo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+  /api/autoria/bases/{id}/reglas:
+    post:
+      tags:
+      - Reglas
+      summary: Agrega una regla al borrador
+      operationId: agregarRegla
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReglaRequest"
+        required: true
+      responses:
+        "200":
+          description: Borrador actualizado con la regla nueva
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseReglaDTO"
+        "404":
+          description: El borrador no existe
+        "422":
+          description: La regla no es válida
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+  /api/autoria/bases/{id}/publicar:
+    post:
+      tags:
+      - Reglas
+      summary: Publica el borrador de reglas
+      description: "Deja la base como la activa del grafo. Si el lienzo del subgrafo\
+        \ cambió sin publicar, responde 422 pidiendo republicar el subgrafo primero."
+      operationId: publicar_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Base publicada y activa para la cuidadora
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseReglaDTO"
+        "404":
+          description: El borrador no existe
+        "409":
+          description: Otra persona lo cambió al mismo tiempo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+        "422":
+          description: "No se puede publicar: el cuerpo trae el motivo o los avisos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+  /api/recorridos/{recorridoId}:
+    get:
+      tags:
+      - Consulta
+      summary: Consulta el estado del recorrido
+      description: "Devuelve la pregunta actual si sigue en curso, o el resultado\
+        \ final si ya terminó."
+      operationId: consultar
+      parameters:
+      - name: recorridoId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Estado actual del recorrido
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/RecorridoDTO"
+        "404":
+          description: El recorrido no existe
+        "503":
+          description: Caché de sesiones (Redis) no disponible
+  /api/autoria/subgrafos/{id}/avisos:
+    get:
+      tags:
+      - Autoría
+      summary: Avisos del lienzo
+      description: Algunos bloquean la publicación y otros solo advierten.
+      operationId: avisos
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Avisos actuales
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Aviso"
+        "404":
+          description: El borrador no existe
+  /api/autoria/categorias:
+    get:
+      tags:
+      - Autoría
+      summary: Categorías del grafo raíz
+      description: Preguntas puente en las que se puede publicar un subgrafo.
+      operationId: categorias
+      responses:
+        "200":
+          description: Lista de categorías
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CategoriaDTO"
+  /api/autoria/bases/{id}/avisos:
+    get:
+      tags:
+      - Reglas
+      summary: Avisos del borrador de reglas
+      operationId: avisos_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Avisos actuales
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Aviso"
+        "404":
+          description: El borrador no existe
+  /api/autoria/bases/catalogo:
+    get:
+      tags:
+      - Reglas
+      summary: Catálogo de nodos de un grafo
+      description: Nodos y respuestas válidos para el editor de reglas. Para un subgrafo
+        son ids locales; para el grafo raíz vienen prefijados.
+      operationId: catalogo
+      parameters:
+      - name: grafoId
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Catálogo del grafo
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CatalogoDTO"
+        "404":
+          description: El grafo no existe
+        "422":
+          description: No se indicó el grafo
+components:
+  schemas:
+    SubgrafoRequest:
+      type: object
+      properties:
+        nombre:
+          type: string
+          description: "Nombre técnico, que solo ven los médicos"
+        puenteId:
+          type: string
+          description: Una de las categorías de GET /api/autoria/categorias
+        etiquetaOpcion:
+          type: string
+          description: "Nombre para la familia, obligatorio: lo que verá la cuidadora"
+        autor:
+          type: string
+          description: Autor del contenido
+        institucion:
+          type: string
+          description: Institución del autor
+      required:
+      - etiquetaOpcion
+    Aviso:
+      type: object
+      description: "Aviso sobre el lienzo, escrito para el médico."
+      properties:
+        codigo:
+          type: string
+          description: Clase de aviso
+          enum:
+          - SIN_INICIO
+          - TEXTO_VACIO
+          - POCAS_RESPUESTAS
+          - RESPUESTA_REPETIDA
+          - RESPUESTA_SIN_CAMINO
+          - SIN_DESENLACE
+          - CICLO
+          - NODO_SUELTO
+          - REGLA_SIN_NOMBRE
+          - REGLA_SIN_CONDICIONES
+          - REGLA_SIN_DESTINO
+          - REGLA_NIVEL_NORMAL
+          - REGLA_CONDICION_INVALIDA
+          - REGLA_DESTINO_INEXISTENTE
+        bloqueante:
+          type: boolean
+          description: Si impide publicar
+        mensaje:
+          type: string
+          description: Texto en lenguaje humano
+        nodoId:
+          type: string
+          description: "Nodo al que se refiere, o nulo"
+        respuestaId:
+          type: string
+          description: "Respuesta a la que se refiere, o nula"
+    ErrorAutoriaDTO:
+      type: object
+      description: Cuerpo de un error de autoría (422 o 409).
+      properties:
+        mensaje:
+          type: string
+          description: Texto para el médico
+        avisos:
+          type: array
+          description: Avisos que lo causan; vacía si no aplica
+          items:
+            $ref: "#/components/schemas/Aviso"
+    NodoLienzo:
+      type: object
+      properties:
+        id:
+          type: string
+        tipo:
+          type: string
+          description: Clase de nodo del lienzo.
+          enum:
+          - PREGUNTA
+          - CONCLUSION
+        texto:
+          type: string
+        variasRespuestas:
+          type: boolean
+        desenlace:
+          type: string
+          description: Desenlace de una conclusión.
+          enum:
+          - RECOMENDACION
+          - CONSULTA_MEDICA
+          - URGENCIA
+        respuestas:
+          type: array
+          items:
+            $ref: "#/components/schemas/RespuestaLienzo"
+    RespuestaLienzo:
+      type: object
+      properties:
+        id:
+          type: string
+        texto:
+          type: string
+        gravedad:
+          type: string
+          description: Gravedad de una respuesta (semáforo del lienzo).
+          enum:
+          - LEVE
+          - MODERADA
+          - GRAVE
+        destino:
+          type: string
+    SubgrafoDTO:
+      type: object
+      description: "Borrador completo: sus datos, el lienzo y los avisos. Lo devuelven\
+        \ todas las operaciones que editan."
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Id del borrador
+        grafoId:
+          type: string
+          description: Id del subgrafo publicado (grafo_...)
+        nombre:
+          type: string
+          description: Nombre técnico del subgrafo
+        puenteId:
+          type: string
+          description: Pregunta puente del grafo raíz donde se ofrece
+        categoria:
+          type: string
+          description: Categoría del subgrafo
+        etiquetaOpcion:
+          type: string
+          description: Texto de la opción en la pregunta puente
+        autor:
+          type: string
+          description: Autor del contenido
+        institucion:
+          type: string
+          description: Institución del autor
+        estado:
+          type: string
+          description: "Estado: BORRADOR, PUBLICADO o CAMBIOS_SIN_PUBLICAR"
+          enum:
+          - BORRADOR
+          - PUBLICADO
+          - CAMBIOS_SIN_PUBLICAR
+        inicio:
+          type: string
+          description: "Id de la primera pregunta, o nulo"
+        nodos:
+          type: array
+          description: Nodos del lienzo en el orden en que se crearon
+          items:
+            $ref: "#/components/schemas/NodoLienzo"
+        avisos:
+          type: array
+          description: Avisos actuales del lienzo
+          items:
+            $ref: "#/components/schemas/Aviso"
+        creadoEn:
+          type: string
+          format: date-time
+          description: Fecha de creación
+        actualizadoEn:
+          type: string
+          format: date-time
+          description: Fecha de la última edición
+        publicadoEn:
+          type: string
+          format: date-time
+          description: "Fecha de la última publicación, o nula"
+    DestinoRequest:
+      type: object
+      description: Pregunta existente destino de una respuesta; nodoId nulo quita
+        el enlace.
+      properties:
+        nodoId:
+          type: string
+          description: "Id de la pregunta existente, o nulo para quitar el enlace"
+    DespuesDeRequest:
+      type: object
+      description: Respuesta del lienzo después de la cual se agrega un nodo.
+      properties:
+        nodoId:
+          type: string
+          description: Id del nodo que contiene la respuesta
+        respuestaId:
+          type: string
+          description: Id de la respuesta cuyo "+" se tocó
+    NodoRequest:
+      type: object
+      properties:
+        despuesDe:
+          $ref: "#/components/schemas/DespuesDeRequest"
+          description: "Al crear, la respuesta cuyo \"+\" se tocó; nulo para la primera\
+            \ pregunta. Al editar se ignora."
+        tipo:
+          type: string
+          description: "Tipo de nodo; obligatorio al crear, puede omitirse al editar"
+          enum:
+          - PREGUNTA
+          - CONCLUSION
+        texto:
+          type: string
+          description: Texto de la pregunta o conclusión
+        variasRespuestas:
+          type: boolean
+          description: Si la pregunta admite selección múltiple
+        desenlace:
+          type: string
+          description: Desenlace; solo para conclusiones
+          enum:
+          - RECOMENDACION
+          - CONSULTA_MEDICA
+          - URGENCIA
+        respuestas:
+          type: array
+          description: "Respuestas; solo para preguntas. Al editar, las que traen\
+            \ id conservan su destino"
+          items:
+            $ref: "#/components/schemas/OpcionRequest"
+    OpcionRequest:
+      type: object
+      description: Respuesta de una pregunta.
+      properties:
+        id:
+          type: string
+          description: Id de la respuesta; solo al editar una que ya existe
+        texto:
+          type: string
+          description: Texto de la opción
+        gravedad:
+          type: string
+          description: Gravedad asociada a la opción
+          enum:
+          - LEVE
+          - MODERADA
+          - GRAVE
+    BaseReglaRequest:
+      type: object
+      properties:
+        nombre:
+          type: string
+          description: "Nombre de la base de reglas, para el tablero"
+        grafoId:
+          type: string
+          description: Grafo publicado al que pertenecen las reglas (grafo_raiz o
+            un subgrafo)
+        autor:
+          type: string
+          description: Autor del contenido
+        institucion:
+          type: string
+          description: Institución del autor
+    BaseReglaDTO:
+      type: object
+      description: Borrador completo de una base de reglas.
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Id del borrador
+        grafoId:
+          type: string
+          description: Grafo publicado al que pertenecen las reglas
+        nombre:
+          type: string
+          description: Nombre de la base de reglas
+        autor:
+          type: string
+          description: Autor del contenido
+        institucion:
+          type: string
+          description: Institución del autor
+        estado:
+          type: string
+          description: "Estado: BORRADOR, PUBLICADO o CAMBIOS_SIN_PUBLICAR"
+          enum:
+          - BORRADOR
+          - PUBLICADO
+          - CAMBIOS_SIN_PUBLICAR
+        reglas:
+          type: array
+          description: "Reglas del borrador, en orden"
+          items:
+            $ref: "#/components/schemas/ReglaDTO"
+        avisos:
+          type: array
+          description: Avisos actuales
+          items:
+            $ref: "#/components/schemas/Aviso"
+        creadoEn:
+          type: string
+          format: date-time
+          description: Fecha de creación
+        actualizadoEn:
+          type: string
+          format: date-time
+          description: Fecha de la última edición
+        publicadoEn:
+          type: string
+          format: date-time
+          description: "Fecha de la última publicación, o nula"
+    Condicion:
+      type: object
+      properties:
+        idNodo:
+          type: string
+        respuesta:
+          type: string
+    ReglaDTO:
+      type: object
+      description: Regla de una base de reglas.
+      properties:
+        id:
+          type: string
+          description: Id de la regla
+        nombre:
+          type: string
+          description: Nombre de la regla
+        descripcion:
+          type: string
+          description: Explicación para el médico
+        casos:
+          type: array
+          description: "FND: lista de casos (OR), cada caso una lista de condiciones\
+            \ (AND)"
+          items:
+            type: array
+            items:
+              $ref: "#/components/schemas/Condicion"
+        nivel:
+          type: string
+          description: Nivel de alerta
+          enum:
+          - NORMAL
+          - CONSULTAR_MEDICO
+          - URGENCIA
+        nodoDestino:
+          type: string
+          description: Id del nodo destino
+    ReglaRequest:
+      type: object
+      properties:
+        nombre:
+          type: string
+          description: Nombre de la regla
+        descripcion:
+          type: string
+          description: Explicación para el médico
+        casos:
+          type: array
+          description: "FND: lista de casos (OR), cada caso una lista de condiciones\
+            \ (AND)"
+          items:
+            type: array
+            items:
+              $ref: "#/components/schemas/Condicion"
+        nivel:
+          type: string
+          description: "Nivel de alerta al dispararse: CONSULTAR_MEDICO o URGENCIA"
+          enum:
+          - NORMAL
+          - CONSULTAR_MEDICO
+          - URGENCIA
+        nodoDestino:
+          type: string
+          description: Id del nodo destino
+    PasoCausalDTO:
+      type: object
+      description: Un paso del camino causal hacia el desenlace.
+      properties:
+        nodoId:
+          type: string
+          description: Id del nodo alcanzado
+        condicion:
+          type: string
+          description: Condición de la arista por la que se llegó; vacía para el nodo
+            inicial
+    PreguntaDTO:
+      type: object
+      description: Pregunta que el recorrido presenta al cuidador mientras está en
+        curso.
+      properties:
+        id:
+          type: string
+          description: Id del nodo pregunta
+        texto:
+          type: string
+          description: Contenido de la pregunta
+        opciones:
+          type: array
+          description: Etiquetas de las respuestas válidas
+          items:
+            type: string
+        tieneImagenes:
+          type: boolean
+          description: Si la pregunta tiene imágenes de apoyo
+        imagenes:
+          type: array
+          description: Rutas de las imágenes; vacía si no tiene
+          items:
+            type: string
+        tipoInteraccion:
+          type: string
+          description: "Tipo de interacción: SI_NO, SELECCION_UNICA o SELECCION_MULTIPLE"
+    RecomendacionDTO:
+      type: object
+      description: "Una recomendación alcanzada durante el recorrido, con su propio\
+        \ camino causal."
+      properties:
+        nodoId:
+          type: string
+          description: Id del nodo de recomendación
+        mensaje:
+          type: string
+          description: Contenido de la recomendación
+        caminoCausal:
+          type: array
+          description: Camino de preguntas y respuestas que llevó a ella
+          items:
+            $ref: "#/components/schemas/PasoCausalDTO"
+    RecorridoDTO:
+      type: object
+      description: Vista de un recorrido de triaje. Si estado es EN_CURSO lleva pregunta
+        y resultado es nulo; si es FINALIZADO lleva resultado y pregunta es nulo.
+      properties:
+        recorridoId:
+          type: string
+          description: Id de la sesión de recorrido
+        estado:
+          type: string
+          description: EN_CURSO o FINALIZADO
+        pregunta:
+          $ref: "#/components/schemas/PreguntaDTO"
+          description: Pregunta actual; solo si el recorrido está en curso
+        resultado:
+          $ref: "#/components/schemas/ResultadoDTO"
+          description: Desenlace; solo si el recorrido finalizó
+    ResultadoDTO:
+      type: object
+      description: Desenlace de un recorrido finalizado.
+      properties:
+        nivel:
+          type: string
+          description: Nivel de alerta resultante; NORMAL si no disparó reglas
+        destinoId:
+          type: string
+          description: Id del nodo terminal
+        mensaje:
+          type: string
+          description: Contenido del nodo terminal
+        razones:
+          type: array
+          description: Ids de las reglas de nivel máximo que dispararon; vacío si
+            NORMAL
+          items:
+            type: string
+        caminoCausal:
+          type: array
+          description: Secuencia de nodos y condiciones hasta el destino
+          items:
+            $ref: "#/components/schemas/PasoCausalDTO"
+        recomendaciones:
+          type: array
+          description: Recomendaciones alcanzadas; vacía si hubo alerta
+          items:
+            $ref: "#/components/schemas/RecomendacionDTO"
+    RespuestaRequest:
+      type: object
+      properties:
+        respuesta:
+          type: string
+          description: Opción seleccionada (formato de una sola opción)
+        opciones:
+          type: array
+          description: Todas las opciones marcadas (selección múltiple); deja respuesta
+            nulo
+          items:
+            type: string
+        tipo:
+          type: string
+          description: "Pista opcional para la auditoría: SI_NO, SELECCION_UNICA o\
+            \ SELECCION_MULTIPLE"
+    ResumenSubgrafoDTO:
+      type: object
+      description: Fila del tablero de subgrafos.
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Id del borrador
+        grafoId:
+          type: string
+          description: Id del subgrafo publicado
+        nombre:
+          type: string
+          description: Nombre técnico del subgrafo
+        categoria:
+          type: string
+          description: Categoría (pregunta puente) donde se publica
+        etiquetaOpcion:
+          type: string
+          description: Nombre para la familia que verá la cuidadora
+        autor:
+          type: string
+          description: Autor del contenido
+        estado:
+          type: string
+          description: "Estado: BORRADOR, PUBLICADO o CAMBIOS_SIN_PUBLICAR"
+          enum:
+          - BORRADOR
+          - PUBLICADO
+          - CAMBIOS_SIN_PUBLICAR
+        nodos:
+          type: integer
+          format: int32
+          description: Número de nodos del lienzo
+        actualizadoEn:
+          type: string
+          format: date-time
+          description: Fecha de la última edición
+        publicadoEn:
+          type: string
+          format: date-time
+          description: "Fecha de la última publicación, o nulo"
+    CategoriaDTO:
+      type: object
+      description: "Categoría en la que se puede publicar un subgrafo: una pregunta\
+        \ puente del grafo raíz."
+      properties:
+        puenteId:
+          type: string
+          description: Id de la pregunta puente
+        nombre:
+          type: string
+          description: Opción de la pregunta inicial que lleva a ella
+        pregunta:
+          type: string
+          description: Texto de la pregunta puente
+    ResumenBaseReglaDTO:
+      type: object
+      description: Fila del tablero de bases de reglas.
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Id del borrador
+        grafoId:
+          type: string
+          description: Grafo publicado al que pertenecen las reglas
+        nombre:
+          type: string
+          description: Nombre de la base de reglas
+        autor:
+          type: string
+          description: Autor del contenido
+        estado:
+          type: string
+          description: "Estado: BORRADOR, PUBLICADO o CAMBIOS_SIN_PUBLICAR"
+          enum:
+          - BORRADOR
+          - PUBLICADO
+          - CAMBIOS_SIN_PUBLICAR
+        reglas:
+          type: integer
+          format: int32
+          description: Número de reglas
+        actualizadoEn:
+          type: string
+          format: date-time
+          description: Fecha de la última edición
+        publicadoEn:
+          type: string
+          format: date-time
+          description: "Fecha de la última publicación, o nula"
+    CatalogoDTO:
+      type: object
+      description: Catálogo de nodos y respuestas de un grafo.
+      properties:
+        grafoId:
+          type: string
+          description: Grafo del catálogo
+        nodos:
+          type: array
+          description: Nodos del grafo
+          items:
+            $ref: "#/components/schemas/NodoCatalogoDTO"
+    NodoCatalogoDTO:
+      type: object
+      description: Nodo del catálogo con sus respuestas.
+      properties:
+        id:
+          type: string
+          description: Id del nodo
+        texto:
+          type: string
+          description: Texto del nodo
+        tipo:
+          type: string
+          description: pregunta o terminal
+        opciones:
+          type: array
+          description: Respuestas válidas; vacía en un terminal
+          items:
+            type: string

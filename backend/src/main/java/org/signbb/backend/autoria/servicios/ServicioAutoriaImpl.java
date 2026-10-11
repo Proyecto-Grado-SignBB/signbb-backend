@@ -16,6 +16,7 @@ import org.signbb.backend.autoria.controladores.ResumenSubgrafoDTO;
 import org.signbb.backend.autoria.controladores.SubgrafoDTO;
 import org.signbb.backend.autoria.controladores.SubgrafoRequest;
 import org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity;
+import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorBaseRegla;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo;
 import org.signbb.backend.autoria.modelo.Aviso;
 import org.signbb.backend.autoria.modelo.DocumentoLienzo;
@@ -41,13 +42,16 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
     private static final int LARGO_SLUG = 40;
 
     private final RepositorioBorradorSubgrafo borradores;
+    private final RepositorioBorradorBaseRegla basesReglas;
     private final RepositorioGrafoClinico grafos;
     private final PublicadorSubgrafo publicador;
 
     /** Inyecta los repositorios y el publicador. */
-    public ServicioAutoriaImpl(RepositorioBorradorSubgrafo borradores, RepositorioGrafoClinico grafos,
+    public ServicioAutoriaImpl(RepositorioBorradorSubgrafo borradores,
+            RepositorioBorradorBaseRegla basesReglas, RepositorioGrafoClinico grafos,
             PublicadorSubgrafo publicador) {
         this.borradores = borradores;
+        this.basesReglas = basesReglas;
         this.grafos = grafos;
         this.publicador = publicador;
     }
@@ -112,6 +116,7 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
             throw new EdicionInvalidaException(
                     "Este subgrafo ya está publicado y las cuidadoras lo usan: no se puede borrar.");
         }
+        basesReglas.findByGrafoId(b.getGrafoId()).ifPresent(basesReglas::delete);
         borradores.delete(b);
     }
 

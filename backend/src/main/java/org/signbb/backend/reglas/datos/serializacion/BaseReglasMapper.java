@@ -157,8 +157,11 @@ public final class BaseReglasMapper {
         return new Caso(condiciones);
     }
 
-    /** Serializa la FND de una regla al formato JSON de {@code condiciones}. */
-    private static ArrayNode casosAJson(List<Caso> casos) {
+    /**
+     * Serializa la FND de una regla al formato JSON de {@code condiciones}:
+     * arreglo de casos, cada caso un arreglo de {@code {idNodo, respuesta}}.
+     */
+    public static ArrayNode casosAJson(List<Caso> casos) {
         ArrayNode arreglo = NODOS.arrayNode();
         for (Caso caso : casos) {
             ArrayNode casoJson = NODOS.arrayNode();
