@@ -96,9 +96,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a394598fc9388a323db8a905d374a2593",
-"classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a5adcc4094019e96306b4f337419498a9",
-"namespaceorg_1_1signbb_1_1backend_1_1navegacion.html"
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a2987dbc31ec74d124ec2ab4eb06a3d99",
+"classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a4a6b85be8d0e591ee472612d26ec5c35",
+"namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1modelo.html#a5e3f094237666821410399f21259bfe2"
 ];
 
 const SYNCONMSG = 'pulsar para deshabilitar sincronización';

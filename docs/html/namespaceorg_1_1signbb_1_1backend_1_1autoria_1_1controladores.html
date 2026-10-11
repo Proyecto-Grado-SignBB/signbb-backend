@@ -140,8 +140,8 @@ Funciones</h2></td></tr>
 <tr class="memdesc:a12baf3c8d7894385e50ea0f9d26dbab6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cuerpo de un error de autoría.  <br /></td></tr>
 <tr class="memitem:aa920b865bf3ef8c996ca99836e6ffe38" id="r_aa920b865bf3ef8c996ca99836e6ffe38"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#aa920b865bf3ef8c996ca99836e6ffe38">ResumenSubgrafoDTO</a> (Long id, String grafoId, String nombre, String categoria, String etiquetaOpcion, String autor, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1EstadoBorrador.html">EstadoBorrador</a> estado, int nodos, Instant actualizadoEn, Instant publicadoEn)</td></tr>
 <tr class="memdesc:aa920b865bf3ef8c996ca99836e6ffe38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fila del tablero de subgrafos.  <br /></td></tr>
-<tr class="memitem:abe8e98a8f1a5c18eac67bfd260794050" id="r_abe8e98a8f1a5c18eac67bfd260794050"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#abe8e98a8f1a5c18eac67bfd260794050">SubgrafoDTO</a> (Long id, String grafoId, String nombre, String puenteId, String categoria, String etiquetaOpcion, String autor, String institucion, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1EstadoBorrador.html">EstadoBorrador</a> estado, String inicio, List&lt; NodoLienzo &gt; nodos, List&lt; Aviso &gt; avisos, Instant creadoEn, Instant actualizadoEn, Instant publicadoEn)</td></tr>
-<tr class="memdesc:abe8e98a8f1a5c18eac67bfd260794050"><td class="mdescLeft">&#160;</td><td class="mdescRight">Borrador completo: sus datos, el lienzo y los avisos.  <br /></td></tr>
+<tr class="memitem:a45b780fab4e96e6983e4e10ad01a8f6d" id="r_a45b780fab4e96e6983e4e10ad01a8f6d"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a45b780fab4e96e6983e4e10ad01a8f6d">SubgrafoDTO</a> (Long id, String grafoId, String nombre, String puenteId, String categoria, String etiquetaOpcion, String autor, String institucion, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1EstadoBorrador.html">EstadoBorrador</a> estado, String inicio, List&lt; NodoLienzo &gt; nodos, List&lt; Aviso &gt; avisos, Instant creadoEn, Instant actualizadoEn, Instant publicadoEn, boolean puedeDescartar)</td></tr>
+<tr class="memdesc:a45b780fab4e96e6983e4e10ad01a8f6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Borrador completo: sus datos, el lienzo y los avisos.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>API REST del módulo de autoría (<code class="JavaDocCode">/api/autoria</code>): DTOs de respuesta (records), cuerpos de petición (Lombok) y el manejo de errores propio, que responde 422 con un mensaje para el médico. </p>
@@ -276,8 +276,8 @@ Funciones</h2></td></tr>
 
 </div>
 </div>
-<a id="abe8e98a8f1a5c18eac67bfd260794050" name="abe8e98a8f1a5c18eac67bfd260794050"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe8e98a8f1a5c18eac67bfd260794050">&#9670;&#160;</a></span>SubgrafoDTO()</h2>
+<a id="a45b780fab4e96e6983e4e10ad01a8f6d" name="a45b780fab4e96e6983e4e10ad01a8f6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45b780fab4e96e6983e4e10ad01a8f6d">&#9670;&#160;</a></span>SubgrafoDTO()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -355,7 +355,12 @@ Funciones</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Instant</td>          <td class="paramname"><span class="paramname"><em>publicadoEn</em></span>&#160;)</td>
+          <td class="paramtype">Instant</td>          <td class="paramname"><span class="paramname"><em>publicadoEn</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">boolean</td>          <td class="paramname"><span class="paramname"><em>puedeDescartar</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -379,6 +384,7 @@ Funciones</h2></td></tr>
     <tr><td class="paramname">creadoEn</td><td>fecha de creación </td></tr>
     <tr><td class="paramname">actualizadoEn</td><td>fecha de la última edición </td></tr>
     <tr><td class="paramname">publicadoEn</td><td>fecha de la última publicación, o <code class="JavaDocCode">null</code> </td></tr>
+    <tr><td class="paramname">puedeDescartar</td><td><code class="JavaDocCode">true</code> si hay una copia de lo publicado a la que se puede volver </td></tr>
   </table>
   </dd>
 </dl>
