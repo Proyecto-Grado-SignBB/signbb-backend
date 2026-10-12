@@ -204,6 +204,14 @@ Punta a punta (<span class="tt">AutoriaIntegracionTest</span>)</h2>
 <p>Arma con el servicio un subgrafo de fiebre (una pregunta y dos conclusiones), lo publica y lo recorre con <span class="tt">ServicioNavegacion</span>: <span class="tt">pregunta_inicial → neurologico → puente_neuro → opción nueva → pregunta
 del subgrafo → "Más de 39 °C" → URGENCIA</span>. En <span class="tt">puente_neuro</span> siguen las opciones del sistema y aparece la nueva. No es <span class="tt">@Transactional</span>, porque la recarga del contenido ocurre después del commit; al terminar borra lo que creó, restaura el grafo raíz e invalida el contenido.</p>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md34"></a>
+Versiones del contenido (republicar sin romper recorridos en curso)</h2>
+<ul>
+<li><span class="tt">PublicadorSubgrafoTest</span>: cada publicación guarda una versión con el grafo compuesto (el subgrafo nuevo y el resto del contenido); republicar guarda otra; si no se puede publicar no se guarda ninguna.</li>
+<li><span class="tt">cache/ResolvedorVersionesTest</span>: la vigente es la más reciente; sin versiones la primera es una foto del contenido actual; una clave de Redis por versión; si Redis no responde se lee de la base.</li>
+<li><span class="tt">navegacion/modelo/ContextoClinicoTest</span>: cada versión tiene su propio grafo, se carga una sola vez y <span class="tt">recargar()</span> hace que lo nuevo use la versión nueva.</li>
+<li><span class="tt">navegacion/servicios/ServicioNavegacionVersionesTest</span>: un recorrido en curso sigue con su versión aunque se publique otra; los nuevos usan la nueva; una sesión guardada antes de las versiones usa la vigente.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md35"></a>
 Imágenes de las preguntas</h2>
 <ul>
 <li><span class="tt">EditorLienzoTest</span>: una pregunta admite hasta 3 imágenes; se rechazan más de 3, repetidas y nombres que no dio el servidor; editar sin mandar <span class="tt">imagenes</span> conserva las actuales y mandar <span class="tt">[]</span> las quita; una conclusión no lleva.</li>
@@ -211,7 +219,7 @@ Imágenes de las preguntas</h2>
 <li><span class="tt">NodoLienzoTest</span>: un lienzo guardado antes de las imágenes se sigue leyendo.</li>
 <li><span class="tt">media/ServicioImagenesTest</span> y <span class="tt">media/ControladorImagenesTest</span>: formato (por la firma del archivo, no por el nombre), tope de 1 MB, 201 / 422 / 503 al subir y 200 / 404 al ver. Usan un almacén en memoria: <b>no necesitan Silo</b>. Con Silo levantado se prueba a mano subiendo una imagen desde el lienzo.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md35"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md36"></a>
 Cómo ejecutarlas</h1>
 <p>Desde <span class="tt">backend/</span>: </p><pre class="fragment">./mvnw test -Dtest='org.signbb.backend.autoria.**'   # unitarias (no necesitan PostgreSQL ni Redis)
 ./mvnw verify                                        # suite completa, como el CI (contenedores arriba)

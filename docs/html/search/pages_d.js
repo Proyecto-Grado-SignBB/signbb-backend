@@ -5,7 +5,7 @@ var searchData=
   ['perfil_20docker_20del_20backend_2',['Parámetros de conexión (perfil &lt;span class=&quot;tt&quot;&gt;docker&lt;/span&gt; del backend)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md10',1,'']]],
   ['persistentes_3',['Eliminar los datos persistentes',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md8',1,'']]],
   ['por_20qué_20importa_4',['por qué importa',['../md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md14',1,'Qué se prueba y por qué importa'],['../md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2README.html#autotoc_md26',1,'Qué se prueba y por qué importa']]],
-  ['preguntas_5',['Imágenes de las preguntas',['../md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2README.html#autotoc_md34',1,'']]],
+  ['preguntas_5',['Imágenes de las preguntas',['../md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2README.html#autotoc_md35',1,'']]],
   ['preguntas_20motornavegacionlimitetest_6',['Límite de preguntas (&lt;span class=&quot;tt&quot;&gt;MotorNavegacionLimiteTest&lt;/span&gt;)',['../md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md17',1,'']]],
   ['prueba_20y_20por_20qué_20importa_7',['prueba y por qué importa',['../md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md14',1,'Qué se prueba y por qué importa'],['../md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2README.html#autotoc_md26',1,'Qué se prueba y por qué importa']]],
   ['pruebas_8',['Construcción y pruebas',['../index.html#autotoc_md2',1,'']]],

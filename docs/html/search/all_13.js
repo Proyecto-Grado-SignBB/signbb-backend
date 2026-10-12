@@ -8,7 +8,9 @@ var searchData=
   ['validarciclo_5',['validarCiclo',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#af2e8d6b9e6bf1cba0a16b21380ce2e26',1,'org::signbb::backend::navegacion::modelo::GrafoClinico']]],
   ['valor_6',['valor',['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Desenlace.html#ac303f890d1d89a68dd242a05fbf69851',1,'org::signbb::backend::autoria::modelo::Desenlace']]],
   ['ver_7',['ver',['../classorg_1_1signbb_1_1backend_1_1media_1_1ControladorImagenes.html#ade793cd5d2398e14e3f03f79a2a0b67e',1,'org::signbb::backend::media::ControladorImagenes']]],
-  ['visual_20de_20base_20de_20reglas_8',['Representacion visual de base de reglas',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md44',1,'']]],
-  ['visual_20de_20grafo_9',['Representacion visual de grafo',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md45',1,'']]],
-  ['visualmente_10',['Construir grafos visualmente',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md43',1,'']]]
+  ['versioncontenidoentity_8',['VersionContenidoEntity',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1VersionContenidoEntity.html',1,'org.signbb.backend.navegacion.datos.entidades.VersionContenidoEntity'],['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1VersionContenidoEntity.html#a06439b23039e37d014d22e26fa0be5d9',1,'org.signbb.backend.navegacion.datos.entidades.VersionContenidoEntity.VersionContenidoEntity()']]],
+  ['versiones_20del_20contenido_20republicar_20sin_20romper_20recorridos_20en_20curso_9',['Versiones del contenido (republicar sin romper recorridos en curso)',['../md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2README.html#autotoc_md34',1,'']]],
+  ['visual_20de_20base_20de_20reglas_10',['Representacion visual de base de reglas',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md45',1,'']]],
+  ['visual_20de_20grafo_11',['Representacion visual de grafo',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md46',1,'']]],
+  ['visualmente_12',['Construir grafos visualmente',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md44',1,'']]]
 ];

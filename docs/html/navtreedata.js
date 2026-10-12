@@ -58,20 +58,21 @@ var NAVTREE =
         [ "Servicio (<span class=\"tt\">ServicioAutoriaImplTest</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2README.html#autotoc_md31", null ],
         [ "API (<span class=\"tt\">ControladorAutoriaTest</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2README.html#autotoc_md32", null ],
         [ "Punta a punta (<span class=\"tt\">AutoriaIntegracionTest</span>)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2README.html#autotoc_md33", null ],
-        [ "Imágenes de las preguntas", "md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2README.html#autotoc_md34", null ]
+        [ "Versiones del contenido (republicar sin romper recorridos en curso)", "md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2README.html#autotoc_md34", null ],
+        [ "Imágenes de las preguntas", "md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2README.html#autotoc_md35", null ]
       ] ],
-      [ "Cómo ejecutarlas", "md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2README.html#autotoc_md35", null ]
+      [ "Cómo ejecutarlas", "md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2README.html#autotoc_md36", null ]
     ] ],
     [ "Grafo sistema", "md_grafo__sistema_2reporte__grafo.html", [
-      [ "Indice", "md_grafo__sistema_2reporte__grafo.html#autotoc_md37", null ],
-      [ "Grafo Raíz", "md_grafo__sistema_2reporte__grafo.html#autotoc_md38", null ],
-      [ "Grafo Gastrointestinal", "md_grafo__sistema_2reporte__grafo.html#autotoc_md39", null ],
-      [ "Grafo Respiración", "md_grafo__sistema_2reporte__grafo.html#autotoc_md40", null ],
-      [ "Grafo Activo y color", "md_grafo__sistema_2reporte__grafo.html#autotoc_md41", null ],
-      [ "Herramientas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md42", [
-        [ "Construir grafos visualmente", "md_grafo__sistema_2reporte__grafo.html#autotoc_md43", null ],
-        [ "Representacion visual de base de reglas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md44", null ],
-        [ "Representacion visual de grafo", "md_grafo__sistema_2reporte__grafo.html#autotoc_md45", null ]
+      [ "Indice", "md_grafo__sistema_2reporte__grafo.html#autotoc_md38", null ],
+      [ "Grafo Raíz", "md_grafo__sistema_2reporte__grafo.html#autotoc_md39", null ],
+      [ "Grafo Gastrointestinal", "md_grafo__sistema_2reporte__grafo.html#autotoc_md40", null ],
+      [ "Grafo Respiración", "md_grafo__sistema_2reporte__grafo.html#autotoc_md41", null ],
+      [ "Grafo Activo y color", "md_grafo__sistema_2reporte__grafo.html#autotoc_md42", null ],
+      [ "Herramientas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md43", [
+        [ "Construir grafos visualmente", "md_grafo__sistema_2reporte__grafo.html#autotoc_md44", null ],
+        [ "Representacion visual de base de reglas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md45", null ],
+        [ "Representacion visual de grafo", "md_grafo__sistema_2reporte__grafo.html#autotoc_md46", null ]
       ] ]
     ] ],
     [ "Paquetes", "namespaces.html", [
@@ -97,9 +98,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html",
-"classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl.html#ad047af2ad2ab550f5df9725b9f2219ee",
-"md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md12"
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoMapper.html#a710870d9b6dbae4cb1e19ebc2d0df60e",
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImpl.html#af5ec517c37203c610d1940ff6fa25222",
+"interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioObservaciones.html#a0171765ec8dae0207ab421704ccf5749"
 ];
 
 const SYNCONMSG = 'pulsar para deshabilitar sincronización';

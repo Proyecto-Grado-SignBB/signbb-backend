@@ -129,12 +129,16 @@ Métodos públicos</h2></td></tr>
 <tr class="memitem:a14fc6226cc6b93c1a9f255efd0a7ac2f" id="r_a14fc6226cc6b93c1a9f255efd0a7ac2f"><td class="memItemLeft"><a id="a14fc6226cc6b93c1a9f255efd0a7ac2f" name="a14fc6226cc6b93c1a9f255efd0a7ac2f"></a>
 &#160;</td><td class="memItemRight"><b>RepositorioSesionRedis</b> (StringRedisTemplate redis, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html">ContextoClinico</a> contexto)</td></tr>
 <tr class="memdesc:a14fc6226cc6b93c1a9f255efd0a7ac2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta el template de Redis y el contexto clínico para reconstruir pasos. <br /></td></tr>
-<tr class="memitem:aee98b51a775022bdf10c5c6a8297c4fe" id="r_aee98b51a775022bdf10c5c6a8297c4fe"><td class="memItemLeft"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html">SesionTriaje</a>&#160;</td><td class="memItemRight"><a class="el" href="#aee98b51a775022bdf10c5c6a8297c4fe">crear</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html">EstadoPaciente</a> estado, ResultadoPaso pasoInicial)</td></tr>
-<tr class="memdesc:aee98b51a775022bdf10c5c6a8297c4fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea y almacena una sesión nueva con un id generado.  <br /></td></tr>
+<tr class="memitem:a34eb56ee12a019ebe8e3f48e6c7c0dae" id="r_a34eb56ee12a019ebe8e3f48e6c7c0dae"><td class="memItemLeft"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html">SesionTriaje</a>&#160;</td><td class="memItemRight"><a class="el" href="#a34eb56ee12a019ebe8e3f48e6c7c0dae">crear</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html">EstadoPaciente</a> estado, ResultadoPaso pasoInicial, Long versionId)</td></tr>
+<tr class="memdesc:a34eb56ee12a019ebe8e3f48e6c7c0dae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea y almacena una sesión nueva con un id generado, atada a la versión del contenido clínico con la que empieza el recorrido.  <br /></td></tr>
 <tr class="memitem:a8d8bcc1535814ae66ee8717202e4fc7a" id="r_a8d8bcc1535814ae66ee8717202e4fc7a"><td class="memItemLeft"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html">SesionTriaje</a>&#160;</td><td class="memItemRight"><a class="el" href="#a8d8bcc1535814ae66ee8717202e4fc7a">buscar</a> (String id)</td></tr>
 <tr class="memdesc:a8d8bcc1535814ae66ee8717202e4fc7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busca una sesión por id; falla con 404 si no existe.  <br /></td></tr>
 <tr class="memitem:a729ae735b80ba5657d98d85b90d3ac27" id="r_a729ae735b80ba5657d98d85b90d3ac27"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a729ae735b80ba5657d98d85b90d3ac27">guardar</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html">SesionTriaje</a> sesion)</td></tr>
 <tr class="memdesc:a729ae735b80ba5657d98d85b90d3ac27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Persiste el estado actualizado de una sesión.  <br /></td></tr>
+<tr class="inherit_header pub_methods_interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion"><td colspan="2">Métodos públicos heredados de <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html">org.signbb.backend.navegacion.modelo.RepositorioSesion</a></td></tr>
+<tr class="memitem:a08322de8aeb03a60ed86053c54a7a24f pub_methods_interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion" id="r_a08322de8aeb03a60ed86053c54a7a24f"><td class="memItemLeft">
+default <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html">SesionTriaje</a>&#160;</td><td class="memItemRight"><b>crear</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html">EstadoPaciente</a> estado, <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#ab8f6a0475c434d2561108b14ee97f6fc">ResultadoPaso</a> pasoInicial)</td></tr>
+<tr class="memdesc:a08322de8aeb03a60ed86053c54a7a24f pub_methods_interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea una sesión sin versión: usa siempre la vigente (para pruebas y sesiones antiguas). <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Atributos públicos estáticos</h2></td></tr>
@@ -144,7 +148,7 @@ static final String&#160;</td><td class="memItemRight"><b>PREFIJO_SESION</b> = &
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Almacén de sesiones en Redis (perfil <code class="JavaDocCode">docker</code>), según el documento de diseño: las sesiones temporales de los padres viven en la caché para que una consulta en curso sobreviva reinicios del backend y pueda compartirse entre instancias. </p>
-<p>Se persiste el estado reconstruible (respuestas acumuladas + referencias por id, ver <code><a class="el" href="">SesionJson</a></code>) y el <code class="JavaDocCode">ResultadoPaso</code> se reconstruye al cargar resolviendo esas referencias contra el contenido clínico vigente del <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html">ContextoClinico</a></code>. Si Redis no está disponible, falla con <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1CacheNoDisponibleException.html">CacheNoDisponibleException</a></code> (503): degradar a memoria crearía inconsistencias entre sesiones que aparecen y desaparecen. </p>
+<p>Se persiste el estado reconstruible (respuestas acumuladas + referencias por id, ver <code><a class="el" href="">SesionJson</a></code>) y el <code class="JavaDocCode">ResultadoPaso</code> se reconstruye al cargar resolviendo esas referencias contra la versión del contenido clínico con la que empezó el recorrido (<code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html#a21614470c12cf34f5a30f0e47be2a86f">ContextoClinico#grafoDe</a></code>). Si Redis no está disponible, falla con <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1CacheNoDisponibleException.html">CacheNoDisponibleException</a></code> (503): degradar a memoria crearía inconsistencias entre sesiones que aparecen y desaparecen. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
 <a id="a8d8bcc1535814ae66ee8717202e4fc7a" name="a8d8bcc1535814ae66ee8717202e4fc7a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8d8bcc1535814ae66ee8717202e4fc7a">&#9670;&#160;</a></span>buscar()</h2>
@@ -167,8 +171,8 @@ static final String&#160;</td><td class="memItemRight"><b>PREFIJO_SESION</b> = &
 
 </div>
 </div>
-<a id="aee98b51a775022bdf10c5c6a8297c4fe" name="aee98b51a775022bdf10c5c6a8297c4fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aee98b51a775022bdf10c5c6a8297c4fe">&#9670;&#160;</a></span>crear()</h2>
+<a id="a34eb56ee12a019ebe8e3f48e6c7c0dae" name="a34eb56ee12a019ebe8e3f48e6c7c0dae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34eb56ee12a019ebe8e3f48e6c7c0dae">&#9670;&#160;</a></span>crear()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -181,14 +185,19 @@ static final String&#160;</td><td class="memItemRight"><b>PREFIJO_SESION</b> = &
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ResultadoPaso</td>          <td class="paramname"><span class="paramname"><em>pasoInicial</em></span>&#160;)</td>
+          <td class="paramtype">ResultadoPaso</td>          <td class="paramname"><span class="paramname"><em>pasoInicial</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Long</td>          <td class="paramname"><span class="paramname"><em>versionId</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Crea y almacena una sesión nueva con un id generado. </p>
+<p>Crea y almacena una sesión nueva con un id generado, atada a la versión del contenido clínico con la que empieza el recorrido. </p>
 
-<p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html#acf396f7e7df2134f1684908017af7c97">org.signbb.backend.navegacion.modelo.RepositorioSesion</a>.</p>
+<p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html#a2a5c0db139430d0f5e7b13e9701e0f2e">org.signbb.backend.navegacion.modelo.RepositorioSesion</a>.</p>
 
 </div>
 </div>

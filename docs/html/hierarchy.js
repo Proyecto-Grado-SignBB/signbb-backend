@@ -35,6 +35,7 @@ var hierarchy =
     [ "JpaRepository", null, [
       [ "org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorSubgrafo.html", null ],
       [ "org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafoClinico.html", null ],
+      [ "org.signbb.backend.navegacion.datos.repositorios.RepositorioVersionContenido", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioVersionContenido.html", null ],
       [ "org.signbb.backend.observaciones.datos.repositorios.RepositorioObservaciones", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioObservaciones.html", null ],
       [ "org.signbb.backend.reglas.datos.repositorios.RepositorioBaseReglas", "interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1repositorios_1_1RepositorioBaseReglas.html", null ]
     ] ],
@@ -52,6 +53,7 @@ var hierarchy =
       [ "org.signbb.backend.cache.RepositorioSesionRedis", "classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html", null ]
     ] ],
     [ "org.signbb.backend.cache.ResolvedorContenidoClinico", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico.html", null ],
+    [ "org.signbb.backend.cache.ResolvedorVersiones", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorVersiones.html", null ],
     [ "org.signbb.backend.navegacion.modelo.Respuesta", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html", null ],
     [ "org.signbb.backend.observaciones.controladores.RespuestaRequest", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1RespuestaRequest.html", null ],
     [ "RuntimeException", null, [
@@ -81,6 +83,7 @@ var hierarchy =
     [ "org.signbb.backend.observaciones.modelo.TipoInteraccion", "enumorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1TipoInteraccion.html", null ],
     [ "org.signbb.backend.autoria.modelo.TipoNodo", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1TipoNodo.html", null ],
     [ "org.signbb.backend.autoria.servicios.ValidadorLienzo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzo.html", null ],
+    [ "org.signbb.backend.navegacion.datos.entidades.VersionContenidoEntity", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1VersionContenidoEntity.html", null ],
     [ "WebMvcConfigurer", null, [
       [ "org.signbb.backend.config.ConfiguracionCors", "classorg_1_1signbb_1_1backend_1_1config_1_1ConfiguracionCors.html", null ]
     ] ]

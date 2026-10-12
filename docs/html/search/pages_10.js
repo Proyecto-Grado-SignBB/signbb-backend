@@ -8,6 +8,7 @@ var searchData=
   ['servicioautoriaimpltest_5',['Servicio (&lt;span class=&quot;tt&quot;&gt;ServicioAutoriaImplTest&lt;/span&gt;)',['../md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2README.html#autotoc_md31',1,'']]],
   ['servicionavegacionimpltest_6',['Servicio (&lt;span class=&quot;tt&quot;&gt;ServicioNavegacionImplTest&lt;/span&gt;)',['../md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md19',1,'']]],
   ['signbb_20—_20backend_7',['SignBB — Backend',['../index.html',1,'']]],
-  ['sistema_8',['Grafo sistema',['../md_grafo__sistema_2reporte__grafo.html',1,'']]],
-  ['suite_9',['suite',['../md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md12',1,'Mapa de la suite'],['../md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2README.html#autotoc_md24',1,'Mapa de la suite']]]
+  ['sin_20romper_20recorridos_20en_20curso_8',['Versiones del contenido (republicar sin romper recorridos en curso)',['../md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2README.html#autotoc_md34',1,'']]],
+  ['sistema_9',['Grafo sistema',['../md_grafo__sistema_2reporte__grafo.html',1,'']]],
+  ['suite_10',['suite',['../md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md12',1,'Mapa de la suite'],['../md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2README.html#autotoc_md24',1,'Mapa de la suite']]]
 ];

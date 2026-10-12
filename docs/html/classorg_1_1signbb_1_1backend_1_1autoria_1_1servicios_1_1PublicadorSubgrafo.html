@@ -117,9 +117,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Métodos públicos</h2></td></tr>
-<tr class="memitem:a5826c72309ad7bb89f9505459c6b8719" id="r_a5826c72309ad7bb89f9505459c6b8719"><td class="memItemLeft"><a id="a5826c72309ad7bb89f9505459c6b8719" name="a5826c72309ad7bb89f9505459c6b8719"></a>
-&#160;</td><td class="memItemRight"><b>PublicadorSubgrafo</b> (<a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafoClinico.html">RepositorioGrafoClinico</a> grafos, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1repositorios_1_1RepositorioBaseReglas.html">RepositorioBaseReglas</a> bases, <a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico.html">ResolvedorContenidoClinico</a> resolvedor, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html">ContextoClinico</a> contexto)</td></tr>
-<tr class="memdesc:a5826c72309ad7bb89f9505459c6b8719"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta los repositorios del contenido clínico, el cache y el contexto en memoria. <br /></td></tr>
+<tr class="memitem:a8418e8e587c8ac071d3adec2c3d3352c" id="r_a8418e8e587c8ac071d3adec2c3d3352c"><td class="memItemLeft"><a id="a8418e8e587c8ac071d3adec2c3d3352c" name="a8418e8e587c8ac071d3adec2c3d3352c"></a>
+&#160;</td><td class="memItemRight"><b>PublicadorSubgrafo</b> (<a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafoClinico.html">RepositorioGrafoClinico</a> grafos, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1repositorios_1_1RepositorioBaseReglas.html">RepositorioBaseReglas</a> bases, <a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico.html">ResolvedorContenidoClinico</a> resolvedor, <a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorVersiones.html">ResolvedorVersiones</a> versiones, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html">ContextoClinico</a> contexto)</td></tr>
+<tr class="memdesc:a8418e8e587c8ac071d3adec2c3d3352c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta los repositorios del contenido clínico, el cache, las versiones y el contexto en memoria. <br /></td></tr>
 <tr class="memitem:a4d4fcc9001295d4c9854b1e16c74e328" id="r_a4d4fcc9001295d4c9854b1e16c74e328"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a4d4fcc9001295d4c9854b1e16c74e328">publicar</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1entidades_1_1BorradorSubgrafoEntity.html">BorradorSubgrafoEntity</a> borrador, Instant fecha)</td></tr>
 <tr class="memdesc:a4d4fcc9001295d4c9854b1e16c74e328"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publica el borrador.  <br /></td></tr>
 </table><table class="memberdecls">
@@ -141,11 +141,11 @@ Arma el grafo raíz nuevo: un nodo <code class="JavaDocCode">referencia</code> <
 <li>
 Compone la raíz nueva con los demás subgrafos y todas las bases de reglas y reconstruye los TAD (<code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoMapper.html">GrafoClinicoMapper</a></code>, <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasMapper.html">BaseReglasMapper</a></code>), igual que <code class="JavaDocCode">ContextoClinico</code>. Si algo falla no se guarda nada. </li>
 <li>
-Guarda (o actualiza) la fila del subgrafo y la del grafo raíz. </li>
+Guarda (o actualiza) la fila del subgrafo y la del grafo raíz, y una versión nueva e inmutable del grafo compuesto (<code><a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorVersiones.html">ResolvedorVersiones</a></code>). </li>
 <li>
 Cuando la transacción confirma, invalida el cache de Redis y hace que <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html">ContextoClinico</a></code> vuelva a resolver el contenido. </li>
 </ol>
-<p>Los recorridos en curso siguen funcionando: publicar agrega nodos y no cambia los ids de los que ya existían. </p>
+<p>Los recorridos en curso no se ven afectados: cada uno está atado a la versión con la que empezó y la termina con ella; los recorridos nuevos usan la versión recién publicada. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
 <a id="a4d4fcc9001295d4c9854b1e16c74e328" name="a4d4fcc9001295d4c9854b1e16c74e328"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4d4fcc9001295d4c9854b1e16c74e328">&#9670;&#160;</a></span>publicar()</h2>

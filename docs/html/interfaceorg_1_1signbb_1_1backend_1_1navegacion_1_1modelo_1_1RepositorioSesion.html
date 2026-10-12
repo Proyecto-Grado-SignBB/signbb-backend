@@ -126,8 +126,11 @@ Diagrama de herencia de org.signbb.backend.navegacion.modelo.RepositorioSesion</
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Métodos públicos</h2></td></tr>
-<tr class="memitem:acf396f7e7df2134f1684908017af7c97" id="r_acf396f7e7df2134f1684908017af7c97"><td class="memItemLeft"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html">SesionTriaje</a>&#160;</td><td class="memItemRight"><a class="el" href="#acf396f7e7df2134f1684908017af7c97">crear</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html">EstadoPaciente</a> estado, <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#ab8f6a0475c434d2561108b14ee97f6fc">ResultadoPaso</a> pasoInicial)</td></tr>
-<tr class="memdesc:acf396f7e7df2134f1684908017af7c97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea y almacena una sesión nueva con un id generado.  <br /></td></tr>
+<tr class="memitem:a2a5c0db139430d0f5e7b13e9701e0f2e" id="r_a2a5c0db139430d0f5e7b13e9701e0f2e"><td class="memItemLeft"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html">SesionTriaje</a>&#160;</td><td class="memItemRight"><a class="el" href="#a2a5c0db139430d0f5e7b13e9701e0f2e">crear</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html">EstadoPaciente</a> estado, <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#ab8f6a0475c434d2561108b14ee97f6fc">ResultadoPaso</a> pasoInicial, Long versionId)</td></tr>
+<tr class="memdesc:a2a5c0db139430d0f5e7b13e9701e0f2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea y almacena una sesión nueva con un id generado, atada a la versión del contenido clínico con la que empieza el recorrido.  <br /></td></tr>
+<tr class="memitem:a08322de8aeb03a60ed86053c54a7a24f" id="r_a08322de8aeb03a60ed86053c54a7a24f"><td class="memItemLeft"><a id="a08322de8aeb03a60ed86053c54a7a24f" name="a08322de8aeb03a60ed86053c54a7a24f"></a>
+default <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html">SesionTriaje</a>&#160;</td><td class="memItemRight"><b>crear</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html">EstadoPaciente</a> estado, <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#ab8f6a0475c434d2561108b14ee97f6fc">ResultadoPaso</a> pasoInicial)</td></tr>
+<tr class="memdesc:a08322de8aeb03a60ed86053c54a7a24f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea una sesión sin versión: usa siempre la vigente (para pruebas y sesiones antiguas). <br /></td></tr>
 <tr class="memitem:a0269f24b995c4409bc97a23ec23a6514" id="r_a0269f24b995c4409bc97a23ec23a6514"><td class="memItemLeft"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html">SesionTriaje</a>&#160;</td><td class="memItemRight"><a class="el" href="#a0269f24b995c4409bc97a23ec23a6514">buscar</a> (String id)</td></tr>
 <tr class="memdesc:a0269f24b995c4409bc97a23ec23a6514"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busca una sesión por id; falla con 404 si no existe.  <br /></td></tr>
 <tr class="memitem:a4dfd943b7a34ac405e62906b3b3b11d2" id="r_a4dfd943b7a34ac405e62906b3b3b11d2"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a4dfd943b7a34ac405e62906b3b3b11d2">guardar</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html">SesionTriaje</a> sesion)</td></tr>
@@ -158,8 +161,8 @@ Métodos públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="acf396f7e7df2134f1684908017af7c97" name="acf396f7e7df2134f1684908017af7c97"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acf396f7e7df2134f1684908017af7c97">&#9670;&#160;</a></span>crear()</h2>
+<a id="a2a5c0db139430d0f5e7b13e9701e0f2e" name="a2a5c0db139430d0f5e7b13e9701e0f2e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a5c0db139430d0f5e7b13e9701e0f2e">&#9670;&#160;</a></span>crear()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -172,14 +175,19 @@ Métodos públicos</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#ab8f6a0475c434d2561108b14ee97f6fc">ResultadoPaso</a></td>          <td class="paramname"><span class="paramname"><em>pasoInicial</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#ab8f6a0475c434d2561108b14ee97f6fc">ResultadoPaso</a></td>          <td class="paramname"><span class="paramname"><em>pasoInicial</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Long</td>          <td class="paramname"><span class="paramname"><em>versionId</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Crea y almacena una sesión nueva con un id generado. </p>
+<p>Crea y almacena una sesión nueva con un id generado, atada a la versión del contenido clínico con la que empieza el recorrido. </p>
 
-<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html#aee98b51a775022bdf10c5c6a8297c4fe">org.signbb.backend.cache.RepositorioSesionRedis</a>.</p>
+<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html#a34eb56ee12a019ebe8e3f48e6c7c0dae">org.signbb.backend.cache.RepositorioSesionRedis</a>.</p>
 
 </div>
 </div>

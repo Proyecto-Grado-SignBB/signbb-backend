@@ -41,7 +41,8 @@ var annotated_dup =
           [ "cache", null, [
             [ "CacheNoDisponibleException", "classorg_1_1signbb_1_1backend_1_1cache_1_1CacheNoDisponibleException.html", null ],
             [ "RepositorioSesionRedis", "classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html", "classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis" ],
-            [ "ResolvedorContenidoClinico", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico.html", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico" ]
+            [ "ResolvedorContenidoClinico", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico.html", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico" ],
+            [ "ResolvedorVersiones", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorVersiones.html", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorVersiones" ]
           ] ],
           [ "config", "namespaceorg_1_1signbb_1_1backend_1_1config.html", [
             [ "ConfiguracionCors", "classorg_1_1signbb_1_1backend_1_1config_1_1ConfiguracionCors.html", null ],
@@ -59,10 +60,12 @@ var annotated_dup =
           [ "navegacion", "namespaceorg_1_1signbb_1_1backend_1_1navegacion.html", [
             [ "datos", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos.html", [
               [ "entidades", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades.html", [
-                [ "GrafoClinicoEntity", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1GrafoClinicoEntity.html", null ]
+                [ "GrafoClinicoEntity", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1GrafoClinicoEntity.html", null ],
+                [ "VersionContenidoEntity", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1VersionContenidoEntity.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1VersionContenidoEntity" ]
               ] ],
               [ "repositorios", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios.html", [
-                [ "RepositorioGrafoClinico", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafoClinico.html", null ]
+                [ "RepositorioGrafoClinico", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafoClinico.html", null ],
+                [ "RepositorioVersionContenido", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioVersionContenido.html", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioVersionContenido" ]
               ] ],
               [ "serializacion", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion.html", [
                 [ "CompositorGrafoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1CompositorGrafoClinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1CompositorGrafoClinico" ],
