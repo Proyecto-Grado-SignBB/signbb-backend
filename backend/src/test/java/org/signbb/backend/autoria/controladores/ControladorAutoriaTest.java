@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isNull;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -130,6 +131,34 @@ class ControladorAutoriaTest {
 
         assertEquals(200, r.getStatus());
         verify(servicio).descartarCambios(1L);
+    }
+
+    @Test
+    void borrarUnSubgrafoPublicadoResponde422ConElMensaje() throws Exception {
+        doThrow(new EdicionInvalidaException(
+                "Este subgrafo ya está publicado y las cuidadoras lo usan: no se puede borrar."))
+                .when(servicio).eliminar(1L);
+
+        MockHttpServletResponse r = ejecutar(delete("/api/autoria/subgrafos/1"));
+
+        assertEquals(422, r.getStatus());
+        assertTrue(cuerpo(r).contains("ya está publicado y las cuidadoras lo usan: no se puede borrar."));
+        assertTrue(cuerpo(r).contains("\"avisos\":[]"));
+    }
+
+    @Test
+    void borrarUnBorradorQueNuncaSePublicoResponde204() throws Exception {
+        MockHttpServletResponse r = ejecutar(delete("/api/autoria/subgrafos/1"));
+
+        assertEquals(204, r.getStatus());
+        verify(servicio).eliminar(1L);
+    }
+
+    @Test
+    void borrarUnSubgrafoQueNoExisteResponde404() throws Exception {
+        doThrow(new RecursoNoEncontradoException("subgrafo 9")).when(servicio).eliminar(9L);
+
+        assertEquals(404, ejecutar(delete("/api/autoria/subgrafos/9")).getStatus());
     }
 
     @Test
