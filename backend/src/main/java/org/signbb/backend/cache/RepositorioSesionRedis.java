@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.signbb.backend.config.RecursoNoEncontradoException;
 import org.signbb.backend.navegacion.modelo.ContextoClinico;
 import org.signbb.backend.navegacion.modelo.EstadoPaciente;
+import org.signbb.backend.navegacion.modelo.GrafoClinico;
 import org.signbb.backend.navegacion.modelo.Nodo;
 import org.signbb.backend.navegacion.modelo.PasoRecorrido;
 import org.signbb.backend.navegacion.modelo.PasoCausal;
@@ -17,6 +18,7 @@ import org.signbb.backend.navegacion.modelo.RepositorioSesion;
 import org.signbb.backend.navegacion.modelo.ResultadoPaso;
 import org.signbb.backend.navegacion.modelo.SesionTriaje;
 import org.signbb.backend.navegacion.servicios.MotorNavegacion;
+import org.signbb.backend.reglas.modelo.BaseReglas;
 import org.signbb.backend.reglas.modelo.NivelAlerta;
 import org.signbb.backend.reglas.modelo.ReglaClinica;
 import org.springframework.context.annotation.Profile;
@@ -35,8 +37,9 @@ import tools.jackson.databind.ObjectMapper;
  * <p>
  * Se persiste el estado reconstruible (respuestas acumuladas + referencias
  * por id, ver {@link SesionJson}) y el {@code ResultadoPaso} se reconstruye
- * al cargar resolviendo esas referencias contra el contenido clínico vigente
- * del {@link ContextoClinico}. Si Redis no está disponible, falla con
+ * al cargar resolviendo esas referencias contra la versión del contenido
+ * clínico con la que empezó el recorrido ({@link ContextoClinico#grafoDe}).
+ * Si Redis no está disponible, falla con
  * {@link CacheNoDisponibleException} (503): degradar a memoria crearía
  * inconsistencias entre sesiones que aparecen y desaparecen.
  */
@@ -61,11 +64,12 @@ public class RepositorioSesionRedis implements RepositorioSesion {
     }
 
     @Override
-    public SesionTriaje crear(EstadoPaciente estado, ResultadoPaso pasoInicial) {
-        SesionTriaje sesion = new SesionTriaje(UUID.randomUUID().toString(), estado, pasoInicial);
+    public SesionTriaje crear(EstadoPaciente estado, ResultadoPaso pasoInicial, Long versionId) {
+        SesionTriaje sesion = new SesionTriaje(UUID.randomUUID().toString(), estado, pasoInicial, versionId);
         guardar(sesion);
         return sesion;
     }
+
 
     @Override
     public SesionTriaje buscar(String id) {
@@ -104,7 +108,11 @@ public class RepositorioSesionRedis implements RepositorioSesion {
                         p.navegacionPrevia() == null ? null : p.navegacionPrevia().aFoto()));
             }
         }
-        return new SesionTriaje(json.id(), estado, reconstruirPaso(json.ultimoPaso()));
+        // El paso se reconstruye contra la versión con la que empezó el recorrido
+        GrafoClinico grafo = contexto.grafoDe(json.versionId());
+        BaseReglas base = contexto.baseDe(json.versionId());
+        return new SesionTriaje(json.id(), estado, reconstruirPaso(json.ultimoPaso(), grafo, base),
+                json.versionId());
     }
 
     /**
@@ -113,9 +121,9 @@ public class RepositorioSesionRedis implements RepositorioSesion {
      * {@code MotorNavegacion.LIMITE_PREGUNTAS} no está en el grafo y se
      * resuelve por su id.
      */
-    private ResultadoPaso reconstruirPaso(SesionJson.PasoJson paso) {
+    private ResultadoPaso reconstruirPaso(SesionJson.PasoJson paso, GrafoClinico grafo, BaseReglas base) {
         if (ResultadoPaso.Estado.EN_CURSO.name().equals(paso.estado())) {
-            Nodo pregunta = contexto.getGrafo().obtenerNodoPorId(paso.preguntaId())
+            Nodo pregunta = grafo.obtenerNodoPorId(paso.preguntaId())
                     .orElseThrow(() -> new IllegalStateException(
                             "la sesión referencia la pregunta '" + paso.preguntaId()
                                     + "' que ya no existe en el contenido clínico"));
@@ -124,7 +132,7 @@ public class RepositorioSesionRedis implements RepositorioSesion {
 
         Nodo destino = MotorNavegacion.LIMITE_PREGUNTAS.getId().equals(paso.destinoId())
                 ? MotorNavegacion.LIMITE_PREGUNTAS
-                : contexto.getGrafo().obtenerNodoPorId(paso.destinoId())
+                : grafo.obtenerNodoPorId(paso.destinoId())
                         .orElseThrow(() -> new IllegalStateException(
                                 "la sesión referencia el nodo '" + paso.destinoId()
                                         + "' que ya no existe en el contenido clínico"));
@@ -133,31 +141,31 @@ public class RepositorioSesionRedis implements RepositorioSesion {
 
         List<ReglaClinica> razones = new ArrayList<>();
         for (String idRegla : paso.razonesIds()) {
-            razones.add(contexto.getBase().obtenerRegla(idRegla));
+            razones.add(base.obtenerRegla(idRegla));
         }
         List<Recomendacion> recomendaciones = new ArrayList<>();
         if (paso.recomendaciones() != null) {
             for (SesionJson.RecomendacionJson r : paso.recomendaciones()) {
-                Nodo nodo = contexto.getGrafo().obtenerNodoPorId(r.nodoId()).orElseThrow(
+                Nodo nodo = grafo.obtenerNodoPorId(r.nodoId()).orElseThrow(
                         () -> new IllegalStateException(
                                 "la sesión referencia la recomendación '" + r.nodoId()
                                         + "' que ya no existe en el contenido clínico"));
-                recomendaciones.add(new Recomendacion(nodo, reconstruirCamino(r.camino())));
+                recomendaciones.add(new Recomendacion(nodo, reconstruirCamino(r.camino(), grafo)));
             }
         }
-        return ResultadoPaso.terminal(destino, nivel, razones, reconstruirCamino(paso.caminoCausal()),
+        return ResultadoPaso.terminal(destino, nivel, razones, reconstruirCamino(paso.caminoCausal(), grafo),
                 recomendaciones);
     }
 
     /** Resuelve un camino guardado por ids contra el contenido clínico vigente. */
-    private List<PasoCausal> reconstruirCamino(List<SesionJson.CaminoJson> guardado) {
+    private List<PasoCausal> reconstruirCamino(List<SesionJson.CaminoJson> guardado, GrafoClinico grafo) {
         List<PasoCausal> camino = new ArrayList<>();
         if (guardado == null) {
             return camino;
         }
         for (SesionJson.CaminoJson c : guardado) {
             camino.add(new PasoCausal(
-                    contexto.getGrafo().obtenerNodoPorId(c.nodoId()).orElseThrow(
+                    grafo.obtenerNodoPorId(c.nodoId()).orElseThrow(
                             () -> new IllegalStateException(
                                     "el camino causal referencia el nodo '" + c.nodoId()
                                             + "' que ya no existe en el contenido clínico")),

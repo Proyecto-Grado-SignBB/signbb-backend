@@ -17,9 +17,11 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 import org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity;
 import org.signbb.backend.cache.ResolvedorContenidoClinico;
+import org.signbb.backend.cache.ResolvedorVersiones;
 import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
 import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico;
 import org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico;
@@ -48,6 +50,7 @@ class PublicadorSubgrafoTest {
     private final List<GrafoClinicoEntity> filas = new ArrayList<>();
     private RepositorioGrafoClinico grafos;
     private ResolvedorContenidoClinico resolvedor;
+    private ResolvedorVersiones versiones;
     private ContextoClinico contexto;
     private PublicadorSubgrafo publicador;
 
@@ -74,8 +77,9 @@ class PublicadorSubgrafoTest {
         when(bases.findAll()).thenReturn(reglas);
 
         resolvedor = mock(ResolvedorContenidoClinico.class);
+        versiones = mock(ResolvedorVersiones.class);
         contexto = mock(ContextoClinico.class);
-        publicador = new PublicadorSubgrafo(grafos, bases, resolvedor, contexto);
+        publicador = new PublicadorSubgrafo(grafos, bases, resolvedor, versiones, contexto);
     }
 
     private static GrafoClinicoEntity fila(GrafoClinicoJson documento) {
@@ -211,5 +215,39 @@ class PublicadorSubgrafoTest {
         assertTrue(e.getMessage().startsWith("El subgrafo no se pudo publicar"));
         verify(grafos, never()).save(any());
         verify(resolvedor, never()).invalidar();
+    }
+
+    @Test
+    void cadaPublicacionGuardaUnaVersionConElGrafoCompuesto() {
+        publicador.publicar(LienzoFiebre.borrador(LienzoFiebre.completo()), FECHA);
+
+        ArgumentCaptor<GrafoClinicoJson> grafo = ArgumentCaptor.forClass(GrafoClinicoJson.class);
+        ArgumentCaptor<String> origen = ArgumentCaptor.forClass(String.class);
+        verify(versiones).registrar(grafo.capture(), origen.capture());
+        assertTrue(grafo.getValue().graph().nodes().containsKey("grafo_fiebre/" + LienzoFiebre.INICIO),
+                "la versión trae el subgrafo recién publicado");
+        assertTrue(grafo.getValue().graph().nodes().containsKey("grafo_respiracion/q_resp_urgencia"),
+                "y el resto del contenido");
+        assertTrue(origen.getValue().contains("grafo_fiebre"));
+    }
+
+    @Test
+    void republicarGuardaOtraVersionSinTocarLaAnterior() {
+        BorradorSubgrafoEntity borrador = LienzoFiebre.borrador(LienzoFiebre.completo());
+        publicador.publicar(borrador, FECHA);
+        publicador.publicar(borrador, FECHA);
+
+        verify(versiones, times(2)).registrar(any(GrafoClinicoJson.class), any(String.class));
+    }
+
+    @Test
+    void siNoSePuedePublicarNoSeGuardaVersion() {
+        assertThrows(ContenidoInvalidoException.class, () -> publicador
+                .publicar(LienzoFiebre.borrador(LienzoFiebre.primeraPregunta()), FECHA));
+        BorradorSubgrafoEntity borrador = LienzoFiebre.borrador(LienzoFiebre.completo());
+        borrador.setGrafoId("grafo/fiebre");
+        assertThrows(ContenidoInvalidoException.class, () -> publicador.publicar(borrador, FECHA));
+
+        verify(versiones, never()).registrar(any(), any());
     }
 }

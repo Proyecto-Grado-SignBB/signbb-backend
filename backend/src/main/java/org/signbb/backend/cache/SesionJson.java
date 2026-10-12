@@ -32,6 +32,11 @@ import org.signbb.backend.reglas.modelo.ReglaClinica;
  * no trae estos campos ({@code null}): sin historial el motor retrocede
  * reproduciendo el recorrido, y sin navegación arranca con la cola vacía y
  * reconstruye la ruta cuando la necesita.
+ *
+ * <p>
+ * {@code versionId} es la versión del contenido clínico con la que empezó el
+ * recorrido; las sesiones anteriores a las versiones no la traen ({@code null})
+ * y usan la vigente.
  */
 public record SesionJson(
         String id,
@@ -40,7 +45,8 @@ public record SesionJson(
         int puntaje,
         PasoJson ultimoPaso,
         List<PasoRecorridoJson> historial,
-        NavegacionJson navegacion) {
+        NavegacionJson navegacion,
+        Long versionId) {
 
     /**
      * Un paso de la pila del recorrido (ver {@code PasoRecorrido}).
@@ -165,7 +171,8 @@ public record SesionJson(
                                 p.navegacionPrevia() == null ? null
                                         : NavegacionJson.desde(p.navegacionPrevia())))
                         .toList(),
-                NavegacionJson.desde(sesion.getEstado().fotografiarNavegacion()));
+                NavegacionJson.desde(sesion.getEstado().fotografiarNavegacion()),
+                sesion.getVersionId());
     }
 
     private static List<CaminoJson> caminoJson(List<PasoCausal> camino) {

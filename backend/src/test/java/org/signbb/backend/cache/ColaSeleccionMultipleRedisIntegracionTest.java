@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -106,8 +107,8 @@ class ColaSeleccionMultipleRedisIntegracionTest {
         base = new BaseReglas();
         motor = new MotorNavegacion(new ServicioReglasImpl());
         contexto = mock(ContextoClinico.class);
-        when(contexto.getGrafo()).thenReturn(grafo);
-        when(contexto.getBase()).thenReturn(base);
+        when(contexto.grafoDe(any())).thenReturn(grafo);
+        when(contexto.baseDe(any())).thenReturn(base);
 
         agregar(new Nodo("inicio", "pregunta", "inicio", 0));
         agregar(new Nodo("q1", "pregunta", "q1", 1, false, List.of(), "SELECCION_MULTIPLE"));

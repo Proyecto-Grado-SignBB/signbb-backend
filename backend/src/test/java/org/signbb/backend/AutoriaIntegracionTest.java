@@ -1,6 +1,7 @@
 package org.signbb.backend;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -23,6 +24,7 @@ import org.signbb.backend.autoria.servicios.ServicioAutoria;
 import org.signbb.backend.cache.ResolvedorContenidoClinico;
 import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
 import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico;
+import org.signbb.backend.navegacion.datos.repositorios.RepositorioVersionContenido;
 import org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico;
 import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoJson;
 import org.signbb.backend.navegacion.modelo.ContextoClinico;
@@ -57,18 +59,23 @@ class AutoriaIntegracionTest {
     private RepositorioGrafoClinico grafos;
 
     @Autowired
+    private RepositorioVersionContenido versiones;
+
+    @Autowired
     private ResolvedorContenidoClinico resolvedor;
 
     @Autowired
     private ContextoClinico contexto;
 
     private GrafoClinicoJson raizOriginal;
+    private Long ultimaVersionAntes;
     private Long borradorId;
     private String grafoId;
 
     @BeforeEach
     void guardarRaiz() {
         raizOriginal = filaRaiz().getEstructura();
+        ultimaVersionAntes = versiones.idMasReciente();
     }
 
     @AfterEach
@@ -82,6 +89,10 @@ class AutoriaIntegracionTest {
                 grafos.delete(fila);
             }
         }
+        // Las versiones que creó la prueba se borran: la vigente tiene que volver a ser la de antes
+        versiones.findAll().stream()
+                .filter(v -> ultimaVersionAntes == null || v.getId() > ultimaVersionAntes)
+                .forEach(versiones::delete);
         GrafoClinicoEntity raiz = filaRaiz();
         raiz.setEstructura(raizOriginal);
         grafos.save(raiz);
@@ -120,6 +131,9 @@ class AutoriaIntegracionTest {
 
         s = autoria.publicar(borradorId);
         assertEquals(EstadoBorrador.PUBLICADO, s.estado());
+        Long versionNueva = versiones.idMasReciente();
+        assertNotNull(versionNueva, "publicar guarda una versión del contenido");
+        assertTrue(ultimaVersionAntes == null || versionNueva > ultimaVersionAntes);
 
         RecorridoDTO r = navegacion.iniciar();
         String id = r.recorridoId();

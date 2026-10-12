@@ -118,6 +118,20 @@ opciones del sistema y aparece la nueva. No es `@Transactional`, porque la
 recarga del contenido ocurre después del commit; al terminar borra lo que
 creó, restaura el grafo raíz e invalida el contenido.
 
+### Versiones del contenido (republicar sin romper recorridos en curso)
+- `PublicadorSubgrafoTest`: cada publicación guarda una versión con el grafo
+  compuesto (el subgrafo nuevo y el resto del contenido); republicar guarda
+  otra; si no se puede publicar no se guarda ninguna.
+- `cache/ResolvedorVersionesTest`: la vigente es la más reciente; sin
+  versiones la primera es una foto del contenido actual; una clave de Redis
+  por versión; si Redis no responde se lee de la base.
+- `navegacion/modelo/ContextoClinicoTest`: cada versión tiene su propio
+  grafo, se carga una sola vez y `recargar()` hace que lo nuevo use la
+  versión nueva.
+- `navegacion/servicios/ServicioNavegacionVersionesTest`: un recorrido en
+  curso sigue con su versión aunque se publique otra; los nuevos usan la
+  nueva; una sesión guardada antes de las versiones usa la vigente.
+
 ### Imágenes de las preguntas
 - `EditorLienzoTest`: una pregunta admite hasta 3 imágenes; se rechazan más de
   3, repetidas y nombres que no dio el servidor; editar sin mandar `imagenes`

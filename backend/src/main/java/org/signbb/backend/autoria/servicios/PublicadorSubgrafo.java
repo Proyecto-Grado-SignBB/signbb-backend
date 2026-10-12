@@ -9,6 +9,7 @@ import java.util.Map;
 import org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity;
 import org.signbb.backend.autoria.modelo.Aviso;
 import org.signbb.backend.cache.ResolvedorContenidoClinico;
+import org.signbb.backend.cache.ResolvedorVersiones;
 import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
 import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico;
 import org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico;
@@ -40,14 +41,16 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
  * reglas y reconstruye los TAD ({@link GrafoClinicoMapper},
  * {@link BaseReglasMapper}), igual que {@code ContextoClinico}. Si algo
  * falla no se guarda nada.</li>
- * <li>Guarda (o actualiza) la fila del subgrafo y la del grafo raíz.</li>
+ * <li>Guarda (o actualiza) la fila del subgrafo y la del grafo raíz, y una
+ * versión nueva e inmutable del grafo compuesto ({@link ResolvedorVersiones}).</li>
  * <li>Cuando la transacción confirma, invalida el cache de Redis y hace que
  * {@link ContextoClinico} vuelva a resolver el contenido.</li>
  * </ol>
  *
  * <p>
- * Los recorridos en curso siguen funcionando: publicar agrega nodos y no
- * cambia los ids de los que ya existían.
+ * Los recorridos en curso no se ven afectados: cada uno está atado a la
+ * versión con la que empezó y la termina con ella; los recorridos nuevos
+ * usan la versión recién publicada.
  */
 @Component
 public class PublicadorSubgrafo {
@@ -60,14 +63,16 @@ public class PublicadorSubgrafo {
     private final RepositorioGrafoClinico grafos;
     private final RepositorioBaseReglas bases;
     private final ResolvedorContenidoClinico resolvedor;
+    private final ResolvedorVersiones versiones;
     private final ContextoClinico contexto;
 
-    /** Inyecta los repositorios del contenido clínico, el cache y el contexto en memoria. */
+    /** Inyecta los repositorios del contenido clínico, el cache, las versiones y el contexto en memoria. */
     public PublicadorSubgrafo(RepositorioGrafoClinico grafos, RepositorioBaseReglas bases,
-            ResolvedorContenidoClinico resolvedor, ContextoClinico contexto) {
+            ResolvedorContenidoClinico resolvedor, ResolvedorVersiones versiones, ContextoClinico contexto) {
         this.grafos = grafos;
         this.bases = bases;
         this.resolvedor = resolvedor;
+        this.versiones = versiones;
         this.contexto = contexto;
     }
 
@@ -110,7 +115,7 @@ public class PublicadorSubgrafo {
         }
         GrafoClinicoJson raiz = conReferencia(filaRaiz.getEstructura(), borrador);
         subgrafos.add(subgrafo);
-        validarComposicion(raiz, subgrafos, reglas());
+        GrafoClinicoJson compuesto = validarComposicion(raiz, subgrafos, reglas());
 
         if (filaSubgrafo == null) {
             filaSubgrafo = new GrafoClinicoEntity();
@@ -119,8 +124,9 @@ public class PublicadorSubgrafo {
         grafos.save(filaSubgrafo);
         filaRaiz.setEstructura(raiz);
         grafos.save(filaRaiz);
-        log.info("Subgrafo '{}' publicado en '{}' con {} nodos.", borrador.getGrafoId(),
-                borrador.getPuenteId(), subgrafo.graph().nodes().size());
+        Long version = versiones.registrar(compuesto, "Publicación de '" + borrador.getGrafoId() + "'");
+        log.info("Subgrafo '{}' publicado en '{}' con {} nodos (versión {} del contenido).",
+                borrador.getGrafoId(), borrador.getPuenteId(), subgrafo.graph().nodes().size(), version);
 
         despuesDelCommit(() -> {
             resolvedor.invalidar();
@@ -184,13 +190,17 @@ public class PublicadorSubgrafo {
                 .toList();
     }
 
-    /** Compone y reconstruye los TAD; cualquier fallo se responde al médico. */
-    private static void validarComposicion(GrafoClinicoJson raiz, List<GrafoClinicoJson> subgrafos,
+    /**
+     * Compone y reconstruye los TAD; cualquier fallo se responde al médico.
+     * Devuelve el grafo compuesto, que es el que se guarda como versión.
+     */
+    private static GrafoClinicoJson validarComposicion(GrafoClinicoJson raiz, List<GrafoClinicoJson> subgrafos,
             List<BaseReglasJson> reglas) {
         try {
             CompositorGrafoClinico.Contenido contenido = CompositorGrafoClinico.componer(raiz, subgrafos, reglas);
             GrafoClinico grafo = GrafoClinicoMapper.desde(contenido.grafo());
             BaseReglasMapper.desde(contenido.reglas(), grafo);
+            return contenido.grafo();
         } catch (IllegalArgumentException | IllegalStateException e) {
             throw new ContenidoInvalidoException("El subgrafo no se pudo publicar: " + e.getMessage(), List.of());
         }

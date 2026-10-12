@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.signbb.backend.navegacion.modelo.ContextoClinico;
 import org.signbb.backend.navegacion.modelo.EstadoPaciente;
+import org.signbb.backend.navegacion.modelo.GrafoClinico;
 import org.signbb.backend.navegacion.modelo.RepositorioSesion;
 import org.signbb.backend.navegacion.modelo.ResultadoPaso;
 import org.signbb.backend.navegacion.modelo.SesionTriaje;
@@ -16,6 +17,11 @@ import org.springframework.stereotype.Service;
  * {@link MotorNavegacion} (recorrido guiado + reglas) con el
  * {@link ContextoClinico} (grafo y reglas en memoria) y el
  * {@link RepositorioSesion} (estado del recorrido entre peticiones).
+ *
+ * <p>
+ * Cada recorrido queda atado a la versión del contenido clínico vigente cuando
+ * empieza ({@link ContextoClinico#idVersionActual()}) y la usa hasta terminar,
+ * aunque el médico publique cambios mientras tanto.
  *
  * <p>
  * MODIFICADO: se agrega {@link #responder(String, List)} para selección
@@ -40,27 +46,31 @@ public class ServicioNavegacionImpl implements ServicioNavegacion {
     /** Abre una sesión nueva y devuelve la primera pregunta del recorrido. */
     @Override
     public RecorridoDTO iniciar() {
+        // El recorrido queda atado a la versión vigente y la termina con ella
+        Long version = contexto.idVersionActual();
+        GrafoClinico grafo = contexto.grafoDe(version);
         EstadoPaciente estado = new EstadoPaciente(UUID.randomUUID().toString());
-        ResultadoPaso paso = motor.iniciar(estado, contexto.getGrafo());
-        SesionTriaje sesion = repositorioSesion.crear(estado, paso);
-        return RecorridoDTO.desde(sesion.getId(), contexto.getGrafo(), paso);
+        ResultadoPaso paso = motor.iniciar(estado, grafo);
+        SesionTriaje sesion = repositorioSesion.crear(estado, paso, version);
+        return RecorridoDTO.desde(sesion.getId(), grafo, paso);
     }
 
     /** Registra la respuesta sobre la pregunta pendiente y avanza un paso. */
     @Override
     public RecorridoDTO responder(String recorridoId, String respuesta) {
         SesionTriaje sesion = repositorioSesion.buscar(recorridoId);
+        GrafoClinico grafo = contexto.grafoDe(sesion.getVersionId());
         ResultadoPaso ultimo = sesion.getUltimoPaso();
         if (ultimo.finalizado()) {
-            return RecorridoDTO.desde(recorridoId, contexto.getGrafo(), ultimo);
+            return RecorridoDTO.desde(recorridoId, grafo, ultimo);
         }
 
         var nodoActual = ultimo.preguntaActual();
         ResultadoPaso paso = motor.paso(
-                contexto.getGrafo(), contexto.getBase(), sesion.getEstado(), nodoActual, respuesta);
+                grafo, contexto.baseDe(sesion.getVersionId()), sesion.getEstado(), nodoActual, respuesta);
         sesion.setUltimoPaso(paso);
         repositorioSesion.guardar(sesion);
-        return RecorridoDTO.desde(recorridoId, contexto.getGrafo(), paso);
+        return RecorridoDTO.desde(recorridoId, grafo, paso);
     }
 
     /**
@@ -79,17 +89,18 @@ public class ServicioNavegacionImpl implements ServicioNavegacion {
         }
 
         SesionTriaje sesion = repositorioSesion.buscar(recorridoId);
+        GrafoClinico grafo = contexto.grafoDe(sesion.getVersionId());
         ResultadoPaso ultimo = sesion.getUltimoPaso();
         if (ultimo.finalizado()) {
-            return RecorridoDTO.desde(recorridoId, contexto.getGrafo(), ultimo);
+            return RecorridoDTO.desde(recorridoId, grafo, ultimo);
         }
 
         var nodoActual = ultimo.preguntaActual();
         ResultadoPaso paso = motor.paso(
-                contexto.getGrafo(), contexto.getBase(), sesion.getEstado(), nodoActual, respuestas);
+                grafo, contexto.baseDe(sesion.getVersionId()), sesion.getEstado(), nodoActual, respuestas);
         sesion.setUltimoPaso(paso);
         repositorioSesion.guardar(sesion);
-        return RecorridoDTO.desde(recorridoId, contexto.getGrafo(), paso);
+        return RecorridoDTO.desde(recorridoId, grafo, paso);
     }
 
     /**
@@ -99,16 +110,17 @@ public class ServicioNavegacionImpl implements ServicioNavegacion {
     @Override
     public RecorridoDTO retroceder(String recorridoId) {
         SesionTriaje sesion = repositorioSesion.buscar(recorridoId);
-        ResultadoPaso paso = motor.retroceder(contexto.getGrafo(), contexto.getBase(), sesion.getEstado());
+        GrafoClinico grafo = contexto.grafoDe(sesion.getVersionId());
+        ResultadoPaso paso = motor.retroceder(grafo, contexto.baseDe(sesion.getVersionId()), sesion.getEstado());
         sesion.setUltimoPaso(paso);
         repositorioSesion.guardar(sesion);
-        return RecorridoDTO.desde(recorridoId, contexto.getGrafo(), paso);
+        return RecorridoDTO.desde(recorridoId, grafo, paso);
     }
 
     /** Devuelve el estado actual del recorrido (pregunta pendiente o desenlace). */
     @Override
     public RecorridoDTO consultar(String recorridoId) {
         SesionTriaje sesion = repositorioSesion.buscar(recorridoId);
-        return RecorridoDTO.desde(recorridoId, contexto.getGrafo(), sesion.getUltimoPaso());
+        return RecorridoDTO.desde(recorridoId, contexto.grafoDe(sesion.getVersionId()), sesion.getUltimoPaso());
     }
 }
