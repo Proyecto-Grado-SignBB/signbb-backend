@@ -128,6 +128,11 @@ Atributos públicos estáticos</h2></td></tr>
 <tr class="memitem:a88f309281f8377a18ef1efe3deb8ae6c" id="r_a88f309281f8377a18ef1efe3deb8ae6c"><td class="memItemLeft"><a id="a88f309281f8377a18ef1efe3deb8ae6c" name="a88f309281f8377a18ef1efe3deb8ae6c"></a>
 static final String&#160;</td><td class="memItemRight"><b>PREFIJO_REFERENCIA</b> = &quot;ref_&quot;</td></tr>
 <tr class="memdesc:a88f309281f8377a18ef1efe3deb8ae6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefijo del nodo <code class="JavaDocCode">referencia</code> de un subgrafo en el grafo raíz. <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pac-static-methods" class="groupheader"><a id="pac-static-methods" name="pac-static-methods"></a>
+Funciones estáticas de paquete</h2></td></tr>
+<tr class="memitem:a80b83f035aeefb9363127e8a41ae4a3b" id="r_a80b83f035aeefb9363127e8a41ae4a3b"><td class="memItemLeft">static GrafoClinicoJson&#160;</td><td class="memItemRight"><a class="el" href="#a80b83f035aeefb9363127e8a41ae4a3b">conReferencia</a> (GrafoClinicoJson raiz, <a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1entidades_1_1BorradorSubgrafoEntity.html">BorradorSubgrafoEntity</a> borrador)</td></tr>
+<tr class="memdesc:a80b83f035aeefb9363127e8a41ae4a3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copia del grafo raíz con la referencia al subgrafo y la arista desde su pregunta puente.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Publica un borrador: lo deja navegable para la cuidadora. </p>
@@ -147,6 +152,44 @@ Cuando la transacción confirma, invalida el cache de Redis y hace que <code><a 
 </ol>
 <p>Los recorridos en curso siguen funcionando: publicar agrega nodos y no cambia los ids de los que ya existían. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
+<a id="a80b83f035aeefb9363127e8a41ae4a3b" name="a80b83f035aeefb9363127e8a41ae4a3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a80b83f035aeefb9363127e8a41ae4a3b">&#9670;&#160;</a></span>conReferencia()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GrafoClinicoJson org.signbb.backend.autoria.servicios.PublicadorSubgrafo.conReferencia </td>
+          <td>(</td>
+          <td class="paramtype">GrafoClinicoJson</td>          <td class="paramname"><span class="paramname"><em>raiz</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1entidades_1_1BorradorSubgrafoEntity.html">BorradorSubgrafoEntity</a></td>          <td class="paramname"><span class="paramname"><em>borrador</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel package">package</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Copia del grafo raíz con la referencia al subgrafo y la arista desde su pregunta puente. </p>
+<p>Las aristas que ya llegaban a la referencia se reemplazan, por si cambió la pregunta puente o el texto de la opción.</p>
+<dl class="exception"><dt>Excepciones</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ContenidoInvalidoException.html" title="El borrador no se puede publicar: tiene avisos bloqueantes o el contenido compuesto (raíz + subgrafos...">ContenidoInvalidoException</a></td><td>si la pregunta puente no existe o ya tiene otra opción con el mismo texto </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a4d4fcc9001295d4c9854b1e16c74e328" name="a4d4fcc9001295d4c9854b1e16c74e328"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4d4fcc9001295d4c9854b1e16c74e328">&#9670;&#160;</a></span>publicar()</h2>
 

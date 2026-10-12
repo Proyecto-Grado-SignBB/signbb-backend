@@ -1,11 +1,12 @@
-# Pruebas del backend
+# Pruebas del cache {#pruebas_cache}
+
+> Índice general de la suite: \ref pruebas.
 
 Este README documenta las **pruebas del cache Redis** (contenido clínico y
 sesiones de los recorridos). Las pruebas del módulo de navegación (TADs,
 parsers, motor y servicio) están documentadas en
-[`java/org/signbb/backend/navegacion/README.md`](java/org/signbb/backend/navegacion/README.md).
-Las del módulo de autoría (lienzo, avisos y publicación de subgrafos) están en
-[`java/org/signbb/backend/autoria/README.md`](java/org/signbb/backend/autoria/README.md).
+\ref pruebas_navegacion. Las del módulo de autoría (lienzo, subgrafos y
+reglas) están en \ref pruebas_autoria.
 
 ## Ubicación
 

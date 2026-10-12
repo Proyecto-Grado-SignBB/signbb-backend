@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', codefold.init);
   </div>
 </div>
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded',() => { initNavTree('md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2README.html','',''); });
+document.addEventListener('DOMContentLoaded',() => { initNavTree('pruebas_autoria.html','',''); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -111,10 +111,13 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('md_backend_2sr
   <div class="headertitle"><div class="title">Pruebas del módulo de autoría </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md24"></a></p>
-<p>Pruebas del paquete <span class="tt"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1autoria.html" title="Módulo de autoría: el médico arma un subgrafo clínico en un lienzo (una pregunta y un &quot;+&quot; por cada re...">org.signbb.backend.autoria</a></span>, el que permite que un médico arme un subgrafo clínico en el lienzo (un "+" en cada respuesta), vea los avisos y lo publique para que quede navegable en la app de la cuidadora. Esta entrega cubre subgrafos <b>sin reglas</b>.</p>
+<div class="textblock"><p><a class="anchor" id="md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2README"></a></p>
+<blockquote class="doxtable">
+<p>Índice general de la suite: <a class="el" href="pruebas.html" title="Pruebas del sistema">Pruebas del sistema</a>. </p>
+</blockquote>
+<p>Pruebas del paquete <span class="tt"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1autoria.html" title="Módulo de autoría: el médico arma un subgrafo clínico en un lienzo (una pregunta y un &quot;+&quot; por cada re...">org.signbb.backend.autoria</a></span>, el que permite que un médico arme un subgrafo clínico en el lienzo (un "+" en cada respuesta), vea los avisos y lo publique para que quede navegable en la app de la cuidadora; y definir la <b>base de reglas</b> de un grafo (CRUD del borrador y publicación).</p>
 <p>Las unitarias son JUnit 5 y Mockito, sin Spring, base de datos ni Redis. La de integración (<span class="tt">AutoriaIntegracionTest</span>) levanta la aplicación completa con PostgreSQL y Redis, como el CI.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md25"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md0"></a>
 Mapa de la suite</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -132,10 +135,20 @@ Mapa de la suite</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">controladores</span>  </td><td class="markdownTableBodyNone"><span class="tt">ControladorAutoriaTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyNone">códigos HTTP y cuerpos de error de la API <span class="tt">/api/autoria</span>  </td></tr>
 <tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">CompiladorReglasTest</span>  </td><td class="markdownTableBodyRight">3  </td><td class="markdownTableBodyNone">borrador de reglas → <span class="tt">BaseReglasJson</span> (FND, niveles)  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ValidadorReglasTest</span>  </td><td class="markdownTableBodyRight">6  </td><td class="markdownTableBodyNone">un aviso por cada problema del borrador de reglas  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">PublicadorReglaTest</span>  </td><td class="markdownTableBodyRight">5  </td><td class="markdownTableBodyNone">publica/reemplaza la base de reglas de un grafo y recompone el contenido  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioAutoriaReglasImplTest</span>  </td><td class="markdownTableBodyRight">8  </td><td class="markdownTableBodyNone">CRUD de la base de reglas y publicación (lienzo publicado, estados)  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioAutoriaReglasAbstractoTest</span>  </td><td class="markdownTableBodyRight">11  </td><td class="markdownTableBodyNone">CRUD y publicación con datos abstractos y colaboradores simulados (Mockito)  </td></tr>
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">(raíz)  </td><td class="markdownTableBodyNone"><span class="tt">AutoriaIntegracionTest</span>  </td><td class="markdownTableBodyRight">1  </td><td class="markdownTableBodyNone">de punta a punta: armar, publicar y recorrer como cuidadora  </td></tr>
 </table>
-<p>En total son <b>63 pruebas</b>.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md26"></a>
+<p>En total son <b>96 pruebas</b>.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md1"></a>
 Fixture</h1>
 <p><span class="tt">servicios/LienzoFiebre</span> arma, con las mismas operaciones del editor, el lienzo de fiebre del deck: </p><pre class="fragment">¿Cuánto marca el termómetro?
 ├─ Menos de 38 °C (LEVE) ──────┐
@@ -145,9 +158,9 @@ Fixture</h1>
 └─ Más de 39 °C (GRAVE) → Lleve al bebé a urgencias ahora.
 </pre><p>"Menos de 38 °C" llega a una pregunta que ya existía (la opción "Pregunta
 existente" del panel), así que esa pregunta recibe dos respuestas de distinta gravedad. El borrador de prueba es <span class="tt">grafo_fiebre</span>, de la categoría neurológica (<span class="tt">puente_neuro</span>).</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md27"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
 Qué se prueba y por qué importa</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md28"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
 Edición (<span class="tt">EditorLienzoTest</span>)</h2>
 <ul>
 <li><b>El "+".</b> Crea el nodo y conecta la respuesta. Sin respuesta crea la primera pregunta; una segunda primera pregunta, o empezar con una conclusión, se rechaza. Una respuesta que ya tiene camino no acepta otro.</li>
@@ -156,7 +169,7 @@ Edición (<span class="tt">EditorLienzoTest</span>)</h2>
 <li><b>Eliminar.</b> Las respuestas que llegaban vuelven a ser "+" y se poda solo la rama que quedó sin camino; lo que ya estaba suelto se conserva.</li>
 <li>Los ids los genera el servidor (<span class="tt">pregunta_N</span>, <span class="tt">conclusion_N</span>, <span class="tt">r_N</span>) y no se reutilizan.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md29"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
 Avisos (<span class="tt">ValidadorLienzoTest</span>)</h2>
 <ul>
 <li><b>Bloquean la publicación:</b> sin primera pregunta, texto vacío, menos de 2 respuestas, respuesta repetida, respuesta sin camino, conclusión sin desenlace y círculo.</li>
@@ -165,7 +178,7 @@ Avisos (<span class="tt">ValidadorLienzoTest</span>)</h2>
 <li><b>No bloquea:</b> un nodo suelto. Avisa que no se publicará.</li>
 <li><b>No se avisa</b> el choque de gravedades: se resuelve al compilar con la mayor, como se acordó.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
 Compilar (<span class="tt">CompiladorSubgrafoTest</span>)</h2>
 <ul>
 <li>El <span class="tt">peso</span> de un nodo es la <b>mayor gravedad</b> de las respuestas que llegan a él; la primera pregunta lleva 1.</li>
@@ -174,7 +187,7 @@ Compilar (<span class="tt">CompiladorSubgrafoTest</span>)</h2>
 <li>Los nodos sueltos no se publican.</li>
 <li>La salida pasa por <span class="tt">GrafoClinicoMapper.desde</span>, la misma validación estricta que el contenido del sistema.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
 Publicar (<span class="tt">PublicadorSubgrafoTest</span>)</h2>
 <ul>
 <li>Guarda el subgrafo y agrega, en la pregunta puente del grafo raíz, la opción del subgrafo y su nodo <span class="tt">ref_&lt;grafoId&gt;</span>. <b>Republicar no duplica</b> ni la opción ni el nodo.</li>
@@ -182,7 +195,7 @@ Publicar (<span class="tt">PublicadorSubgrafoTest</span>)</h2>
 <li>Después del commit invalida el contenido en Redis y recarga el que está en memoria (<span class="tt">ContextoClinico.recargar()</span>), en ese orden.</li>
 <li><b>No guarda nada</b> si hay avisos bloqueantes, si la opción ya existe en la pregunta puente (por ejemplo "Iniciar"), si la pregunta puente no está o si el contenido compuesto no pasa la validación.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md32"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
 Servicio (<span class="tt">ServicioAutoriaImplTest</span>)</h2>
 <ul>
 <li>Las categorías salen de las preguntas puente del grafo raíz: piel, temperatura, respiración, gastrointestinal y neurológico. Piel y temperatura se ofrecen aunque todavía no tengan subgrafos.</li>
@@ -191,7 +204,22 @@ Servicio (<span class="tt">ServicioAutoriaImplTest</span>)</h2>
 <li>El nombre para la familia (<span class="tt">etiquetaOpcion</span>) es obligatorio: sin él, crear o editar responde 422.</li>
 <li>Un borrador publicado no se puede borrar; un id inexistente da 404.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md33"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
+Reglas: compilar, validar y publicar (<span class="tt">CompiladorReglasTest</span>, <span class="tt">ValidadorReglasTest</span>, <span class="tt">PublicadorReglaTest</span>)</h2>
+<ul>
+<li>La base de reglas del borrador se compila a <span class="tt">BaseReglasJson</span> conservando la <b>FND</b> (casos y condiciones), el nivel y el <span class="tt">nodoDestino</span>.</li>
+<li><span class="tt">ValidadorReglas</span> produce un aviso por cada problema del borrador (sin nombre, sin destino, con nodos inexistentes, etc.).</li>
+<li>Al publicar se <b>reemplaza</b> la base del grafo en el conjunto de bases, se recompone el contenido (grafo + reglas) y, tras el commit, se invalida el cache y se recarga el contexto. No se guarda nada si la composición no es válida.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
+Reglas: CRUD y publicación (<span class="tt">ServicioAutoriaReglasImplTest</span>, <span class="tt">ServicioAutoriaReglasAbstractoTest</span>)</h2>
+<ul>
+<li><b>CRUD del borrador:</b> crear la base de un grafo, agregar/editar/eliminar reglas (ids <span class="tt">R_N</span> no reutilizados) y listar.</li>
+<li><b>Estados:</b> editar una base publicada la deja en <span class="tt">CAMBIOS_SIN_PUBLICAR</span>; una base publicada no se puede borrar.</li>
+<li><b>Publicación:</b> exige que el lienzo del subgrafo esté publicado (sin <span class="tt">CAMBIOS_SIN_PUBLICAR</span>) y delega en <span class="tt">PublicadorRegla</span>.</li>
+<li>La suite <b>abstracta</b> repite el CRUD con datos <span class="tt">op1/op2/op3</span> y todos los colaboradores simulados con Mockito, sin depender del dominio.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md10"></a>
 API (<span class="tt">ControladorAutoriaTest</span>)</h2>
 <ul>
 <li>Crear responde 201 y borrar 204.</li>
@@ -199,11 +227,11 @@ API (<span class="tt">ControladorAutoriaTest</span>)</h2>
 <li>Un id inexistente da 404 y una edición concurrente (<span class="tt">@Version</span>) da 409.</li>
 <li>Quitar el destino de una respuesta acepta <span class="tt">{"nodoId": null}</span>.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md34"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md11"></a>
 Punta a punta (<span class="tt">AutoriaIntegracionTest</span>)</h2>
 <p>Arma con el servicio un subgrafo de fiebre (una pregunta y dos conclusiones), lo publica y lo recorre con <span class="tt">ServicioNavegacion</span>: <span class="tt">pregunta_inicial → neurologico → puente_neuro → opción nueva → pregunta
 del subgrafo → "Más de 39 °C" → URGENCIA</span>. En <span class="tt">puente_neuro</span> siguen las opciones del sistema y aparece la nueva. No es <span class="tt">@Transactional</span>, porque la recarga del contenido ocurre después del commit; al terminar borra lo que creó, restaura el grafo raíz e invalida el contenido.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md35"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md12"></a>
 Cómo ejecutarlas</h1>
 <p>Desde <span class="tt">backend/</span>: </p><pre class="fragment">./mvnw test -Dtest='org.signbb.backend.autoria.**'   # unitarias (no necesitan PostgreSQL ni Redis)
 ./mvnw verify                                        # suite completa, como el CI (contenedores arriba)

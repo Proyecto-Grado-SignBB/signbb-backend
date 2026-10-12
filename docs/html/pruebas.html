@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SignBB: Pruebas del sistema</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SignBB
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('pruebas.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Pruebas del sistema </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="md_backend_2src_2test_2PRUEBAS"></a></p>
+<p>Esta sección reúne la documentación de la <b>suite de pruebas del backend</b> (Spring Boot 4.1.1, Java 25). Cubre los TADs clínicos, el motor de navegación, el motor de reglas, la autoría (lienzo y reglas) y la captura de observaciones.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md37"></a>
+Cómo ejecutarlas</h1>
+<p>Desde el directorio <span class="tt">backend</span>: </p><pre class="fragment">./mvnw test              # compila y ejecuta la suite completa
+./mvnw verify            # build completo, igual que en CI (GitHub Actions)
+./mvnw -Dtest=Clase test # una sola clase
+./mvnw -Dtest=Clase#metodo test
+</pre><p>Las pruebas unitarias son <b>JUnit 5 puro</b> y, cuando hace falta simular colaboradores, <b>Mockito</b> (5.x, con el <em>inline mock maker</em>, de modo que también se pueden simular clases <span class="tt">final</span>). No necesitan Spring, PostgreSQL ni Redis.</p>
+<p>Las pruebas de integración usan <span class="tt">@SpringBootTest</span> y <b>requieren PostgreSQL y Redis</b> arriba (<span class="tt">contenedores/compose.yaml</span>); el CI los levanta como servicios efímeros (<span class="tt">signbb-backend/.github/workflows/build.yml</span>).</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md38"></a>
+Tipos de prueba</h1>
+<ul>
+<li><b>Unitarias (JUnit 5 ± Mockito):</b> no arrancan el contexto de Spring. Son la mayoría y corren en local sin contenedores.</li>
+<li>**Integración (<span class="tt">@SpringBootTest</span>):** arrancan la aplicación completa y verifican persistencia (<span class="tt">jsonb</span>), cache (Redis) y el recorrido de punta a punta. Se ejecutan en <span class="tt">./mvnw verify</span>.</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md39"></a>
+Suite por módulo</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Módulo  </th><th class="markdownTableHeadRight">Pruebas  </th><th class="markdownTableHeadNone">Tipo  </th><th class="markdownTableHeadNone">Documentación  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Navegación: TADs, parsers, motor y servicio  </td><td class="markdownTableBodyRight">171  </td><td class="markdownTableBodyNone">JUnit 5  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_navegacion.html" title="Pruebas del módulo de navegación">Ver página</a>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Reglas: TAD, evaluación, servicio y mapeo JSON  </td><td class="markdownTableBodyRight">28  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_reglas.html" title="Pruebas del módulo de reglas">Ver página</a>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Autoría: lienzo, subgrafos y reglas  </td><td class="markdownTableBodyRight">63 + 11  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_autoria.html" title="Pruebas del módulo de autoría">Ver página</a>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Observaciones: captura y validación de respuestas  </td><td class="markdownTableBodyRight">10  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_observaciones.html" title="Pruebas del módulo de observaciones">Ver página</a>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Cache: contenido clínico y sesiones en Redis  </td><td class="markdownTableBodyRight">—  </td><td class="markdownTableBodyNone">Mockito / <span class="tt">@SpringBootTest</span>  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_cache.html" title="Pruebas del cache">Ver página</a>  </td></tr>
+</table>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md40"></a>
+Pruebas de integración de la raíz</h1>
+<p>En <span class="tt">backend/src/test/java/org/signbb/backend/</span> viven las pruebas que arrancan el contexto completo:</p>
+<ul>
+<li><span class="tt">BackendApplicationTests</span> — <em>smoke test</em>: el contexto de la aplicación carga.</li>
+<li><span class="tt">PersistenciaEstructuraJsonTest</span> — ida y vuelta de los documentos JSON por la columna <span class="tt">estructura</span> (<span class="tt">jsonb</span>) y verificación de la siembra de <span class="tt">DatabaseInit</span>.</li>
+<li><span class="tt">AutoriaIntegracionTest</span> — de punta a punta: armar un subgrafo con el servicio, publicarlo y recorrerlo como la cuidadora (ver <a class="el" href="pruebas_autoria.html" title="Pruebas del módulo de autoría">Pruebas del módulo de autoría</a>).</li>
+<li><span class="tt">CacheRedisIntegracionTest</span> — cache-aside con Redis real; se salta sola si el servicio <span class="tt">cache</span> no responde (ver <a class="el" href="pruebas_cache.html" title="Pruebas del cache">Pruebas del cache</a>).</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md41"></a>
+Resultados en CI</h1>
+<p>El workflow <span class="tt">build</span> corre <span class="tt">./mvnw -B verify</span> con PostgreSQL y Redis como servicios. Las corridas y los conteos por clase se detallan en las páginas de cada módulo.</p>
+<blockquote class="doxtable">
+<p>Nota: para leer reportes frescos, ejecutar <span class="tt">./mvnw clean</span> antes: <span class="tt">target/surefire-reports</span> puede conservar reportes de clases que ya no existen. </p>
+</blockquote>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
+  </ul>
+</div>
+</body>
+</html>

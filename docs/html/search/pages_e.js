@@ -1,7 +1,28 @@
 var searchData=
 [
-  ['qué_20importa_0',['qué importa',['../md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md15',1,'Qué se prueba y por qué importa'],['../md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2README.html#autotoc_md27',1,'Qué se prueba y por qué importa']]],
-  ['qué_20se_20prueba_20y_20por_20qué_20importa_1',['Qué se prueba y por qué importa',['../md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md15',1,'Qué se prueba y por qué importa'],['../md_backend_2src_2test_2java_2org_2signbb_2backend_2autoria_2README.html#autotoc_md27',1,'Qué se prueba y por qué importa']]],
-  ['qué_20se_20quitó_20en_20la_20reorganización_2',['Qué se quitó en la reorganización',['../md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md21',1,'']]],
-  ['quitó_20en_20la_20reorganización_3',['Qué se quitó en la reorganización',['../md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html#autotoc_md21',1,'']]]
+  ['parámetros_20de_20conexión_20perfil_20docker_20del_20backend_0',['Parámetros de conexión (perfil &lt;span class=&quot;tt&quot;&gt;docker&lt;/span&gt; del backend)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md61',1,'']]],
+  ['perfil_20de_20base_20de_20datos_1',['Perfil de base de datos',['../index.html#autotoc_md52',1,'']]],
+  ['perfil_20docker_20del_20backend_2',['Parámetros de conexión (perfil &lt;span class=&quot;tt&quot;&gt;docker&lt;/span&gt; del backend)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md61',1,'']]],
+  ['persistentes_3',['Eliminar los datos persistentes',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md59',1,'']]],
+  ['por_20módulo_4',['Suite por módulo',['../pruebas.html#autotoc_md39',1,'']]],
+  ['por_20qué_20importa_5',['por qué importa',['../pruebas_autoria.html#autotoc_md2',1,'Qué se prueba y por qué importa'],['../pruebas_navegacion.html#autotoc_md15',1,'Qué se prueba y por qué importa'],['../pruebas_observaciones.html#autotoc_md25',1,'Qué se prueba y por qué importa']]],
+  ['preguntas_20motornavegacionlimitetest_6',['Límite de preguntas (&lt;span class=&quot;tt&quot;&gt;MotorNavegacionLimiteTest&lt;/span&gt;)',['../pruebas_navegacion.html#autotoc_md18',1,'']]],
+  ['prueba_7',['Tipos de prueba',['../pruebas.html#autotoc_md38',1,'']]],
+  ['prueba_20y_20por_20qué_20importa_8',['prueba y por qué importa',['../pruebas_autoria.html#autotoc_md2',1,'Qué se prueba y por qué importa'],['../pruebas_navegacion.html#autotoc_md15',1,'Qué se prueba y por qué importa'],['../pruebas_observaciones.html#autotoc_md25',1,'Qué se prueba y por qué importa']]],
+  ['pruebas_9',['Pruebas',['../index.html#autotoc_md54',1,'']]],
+  ['pruebas_10',['Construcción y pruebas',['../index.html#autotoc_md51',1,'']]],
+  ['pruebas_20de_20integración_20de_20la_20raíz_11',['Pruebas de integración de la raíz',['../pruebas.html#autotoc_md40',1,'']]],
+  ['pruebas_20del_20cache_12',['Pruebas del cache',['../pruebas_cache.html',1,'']]],
+  ['pruebas_20del_20módulo_20de_20autoría_13',['Pruebas del módulo de autoría',['../pruebas_autoria.html',1,'']]],
+  ['pruebas_20del_20módulo_20de_20navegación_14',['Pruebas del módulo de navegación',['../pruebas_navegacion.html',1,'']]],
+  ['pruebas_20del_20módulo_20de_20observaciones_15',['Pruebas del módulo de observaciones',['../pruebas_observaciones.html',1,'']]],
+  ['pruebas_20del_20módulo_20de_20reglas_16',['Pruebas del módulo de reglas',['../pruebas_reglas.html',1,'']]],
+  ['pruebas_20del_20sistema_17',['Pruebas del sistema',['../pruebas.html',1,'']]],
+  ['publicación_20servicioautoriareglasimpltest_20servicioautoriareglasabstractotest_18',['Reglas: CRUD y publicación (&lt;span class=&quot;tt&quot;&gt;ServicioAutoriaReglasImplTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;ServicioAutoriaReglasAbstractoTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md9',1,'']]],
+  ['publicadorreglatest_19',['Reglas: compilar, validar y publicar (&lt;span class=&quot;tt&quot;&gt;CompiladorReglasTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;ValidadorReglasTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;PublicadorReglaTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md8',1,'']]],
+  ['publicadorsubgrafotest_20',['Publicar (&lt;span class=&quot;tt&quot;&gt;PublicadorSubgrafoTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md6',1,'']]],
+  ['publicar_20compiladorreglastest_20validadorreglastest_20publicadorreglatest_21',['Reglas: compilar, validar y publicar (&lt;span class=&quot;tt&quot;&gt;CompiladorReglasTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;ValidadorReglasTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;PublicadorReglaTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md8',1,'']]],
+  ['publicar_20publicadorsubgrafotest_22',['Publicar (&lt;span class=&quot;tt&quot;&gt;PublicadorSubgrafoTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md6',1,'']]],
+  ['punta_20a_20punta_20autoriaintegraciontest_23',['Punta a punta (&lt;span class=&quot;tt&quot;&gt;AutoriaIntegracionTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md11',1,'']]],
+  ['punta_20autoriaintegraciontest_24',['Punta a punta (&lt;span class=&quot;tt&quot;&gt;AutoriaIntegracionTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md11',1,'']]]
 ];

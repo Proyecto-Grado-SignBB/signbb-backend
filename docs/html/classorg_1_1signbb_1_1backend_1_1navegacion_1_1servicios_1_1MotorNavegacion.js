@@ -4,6 +4,7 @@ var classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion 
     [ "MotorNavegacion", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html#af8ec4a0ef50c2fd9c22568516d3ea524", null ],
     [ "iniciar", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html#a7e7d5edee1874979bac0bd2f8d220444", null ],
     [ "mejorOpcion", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html#a4977b9117cd4d1f12405eda6753cc280", null ],
+    [ "nivelDelDesenlace", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html#a3e003da3c44ac4b0df6b3fc6d11f32ff", null ],
     [ "ordenCola", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html#a7de9114384589d51c87a4a2c019d0182", null ],
     [ "paso", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html#a38cf9b8287b165eb3c89f8a475513d73", null ],
     [ "paso", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html#a0bc97fb9a81b1c2fd375f680010940a4", null ],

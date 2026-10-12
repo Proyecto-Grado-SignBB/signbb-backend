@@ -1,4 +1,6 @@
-# Pruebas del módulo de navegación
+# Pruebas del módulo de navegación {#pruebas_navegacion}
+
+> Índice general de la suite: \ref pruebas.
 
 Pruebas unitarias del paquete `org.signbb.backend.navegacion`: los TADs del
 recorrido, la lectura del contenido clínico, el motor de navegación y el
@@ -121,8 +123,8 @@ disparó. Retroceder lo desapila.
 
 Los tests que estaban en el paquete viejo `org.signbb.backend.model` se
 movieron a `navegacion.modelo` y `navegacion.datos.serializacion` sin cambiar
-su contenido. Los de reglas (`BaseReglasTest` y `ReglaClinicaTest`) siguen en
-`model/`.
+su contenido. Los de reglas (`BaseReglasTest`, `ReglaClinicaTest` y
+`EvaluacionReglasAbstractaTest`) están en `reglas.modelo` (ver \ref pruebas_model).
 
 Se descartó un caso: restaurar las respuestas previas cuando una regla
 compuerta vuelve a preguntar algo ya respondido. Con la cola, el motor ya no

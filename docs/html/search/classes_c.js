@@ -1,5 +1,22 @@
 var searchData=
 [
-  ['validadorlienzo_0',['ValidadorLienzo',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzo.html',1,'org::signbb::backend::autoria::servicios']]],
-  ['validadorreglas_1',['ValidadorReglas',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorReglas.html',1,'org::signbb::backend::autoria::servicios']]]
+  ['recursonoencontradoexception_0',['RecursoNoEncontradoException',['../classorg_1_1signbb_1_1backend_1_1config_1_1RecursoNoEncontradoException.html',1,'org::signbb::backend::config']]],
+  ['reglaclinica_1',['ReglaClinica',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html',1,'org::signbb::backend::reglas::modelo']]],
+  ['reglaclinicatest_2',['ReglaClinicaTest',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinicaTest.html',1,'org::signbb::backend::reglas::modelo']]],
+  ['reglarequest_3',['ReglaRequest',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ReglaRequest.html',1,'org::signbb::backend::autoria::controladores']]],
+  ['repositoriobasereglas_4',['RepositorioBaseReglas',['../interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1repositorios_1_1RepositorioBaseReglas.html',1,'org::signbb::backend::reglas::datos::repositorios']]],
+  ['repositorioborradorbaseregla_5',['RepositorioBorradorBaseRegla',['../interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorBaseRegla.html',1,'org::signbb::backend::autoria::datos::repositorios']]],
+  ['repositorioborradorsubgrafo_6',['RepositorioBorradorSubgrafo',['../interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorSubgrafo.html',1,'org::signbb::backend::autoria::datos::repositorios']]],
+  ['repositoriografoclinico_7',['RepositorioGrafoClinico',['../interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafoClinico.html',1,'org::signbb::backend::navegacion::datos::repositorios']]],
+  ['repositorioobservaciones_8',['RepositorioObservaciones',['../interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioObservaciones.html',1,'org::signbb::backend::observaciones::datos::repositorios']]],
+  ['repositoriosesion_9',['RepositorioSesion',['../interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html',1,'org::signbb::backend::navegacion::modelo']]],
+  ['repositoriosesionredis_10',['RepositorioSesionRedis',['../classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html',1,'org::signbb::backend::cache']]],
+  ['repositoriosesionredistest_11',['RepositorioSesionRedisTest',['../classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedisTest.html',1,'org::signbb::backend::cache']]],
+  ['resolutorcatalogonodos_12',['ResolutorCatalogoNodos',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ResolutorCatalogoNodos.html',1,'org::signbb::backend::autoria::servicios']]],
+  ['resolvedorcontenidoclinico_13',['ResolvedorContenidoClinico',['../classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico.html',1,'org::signbb::backend::cache']]],
+  ['resolvedorcontenidoclinicotest_14',['ResolvedorContenidoClinicoTest',['../classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinicoTest.html',1,'org::signbb::backend::cache']]],
+  ['respuesta_15',['Respuesta',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html',1,'org::signbb::backend::navegacion::modelo']]],
+  ['respuestarequest_16',['RespuestaRequest',['../classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1RespuestaRequest.html',1,'org::signbb::backend::observaciones::controladores']]],
+  ['respuestatest_17',['RespuestaTest',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RespuestaTest.html',1,'org::signbb::backend::navegacion::modelo']]],
+  ['resultadopasorecomendacionestest_18',['ResultadoPasoRecomendacionesTest',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ResultadoPasoRecomendacionesTest.html',1,'org::signbb::backend::navegacion::modelo']]]
 ];

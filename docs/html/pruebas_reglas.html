@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SignBB: Pruebas del módulo de reglas</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SignBB
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('pruebas_reglas.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Pruebas del módulo de reglas </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="md_backend_2src_2test_2java_2org_2signbb_2backend_2reglas_2README"></a></p>
+<blockquote class="doxtable">
+<p>Índice general de la suite: <a class="el" href="pruebas.html" title="Pruebas del sistema">Pruebas del sistema</a>. </p>
+</blockquote>
+<p>Pruebas del paquete <span class="tt"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1reglas.html" title="Módulo del motor de reglas clínicas.">org.signbb.backend.reglas</a></span>: los <b>TAD</b> de reglas (<span class="tt">reglas.modelo</span>), el <b>servicio de inferencia</b> (<span class="tt">reglas.servicios</span>) y el <b>mapeo JSON</b> de la base de reglas (<span class="tt">reglas.datos.serializacion</span>). Son <b>JUnit 5 puro</b> y, en la suite abstracta, <b>Mockito</b> para simular los TADs <span class="tt">EstadoPaciente</span> y <span class="tt">Nodo</span>.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md29"></a>
+Mapa de la suite</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Paquete  </th><th class="markdownTableHeadNone">Clase  </th><th class="markdownTableHeadRight">Tests  </th><th class="markdownTableHeadNone">Qué cubre  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">ReglaClinicaTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyNone">creación y validación de <span class="tt">ReglaClinica</span>; condiciones AND cumplidas/incumplidas; igualdad por <span class="tt">idRegla</span>; copia defensiva  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">BaseReglasTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyNone">alta/baja de reglas, duplicados, <span class="tt">obtenerRegla</span> y <span class="tt">reglasActivadas</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">EvaluacionReglasAbstractaTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyNone">evaluación con datos abstractos (<span class="tt">resp1/op1/op2/op3</span>) y TADs simulados con Mockito  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioReglasImplTest</span>  </td><td class="markdownTableBodyRight">4  </td><td class="markdownTableBodyNone">resolución por severidad: nivel máximo, razones combinadas y desempate por peso del destino  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">datos.serializacion</span>  </td><td class="markdownTableBodyNone"><span class="tt">BaseReglasMapperTest</span>  </td><td class="markdownTableBodyRight">3  </td><td class="markdownTableBodyNone">ida y vuelta TAD ↔ documento JSON y rechazo de un <span class="tt">nodoDestino</span> colgante  </td></tr>
+</table>
+<p>En total son <b>28 pruebas</b>.</p>
+<h1 class="doxsection"><a class="anchor" id="pruebas_model"></a>
+Modelo de reglas (TAD)</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
+TAD <span class="tt">ReglaClinica</span> (<span class="tt">ReglaClinicaTest</span>)</h2>
+<p>La premisa es una fórmula en <b>forma normal disyuntiva</b> (FND): un caso es una conjunción (AND) de condiciones y la regla se satisface si <b>al menos un</b> caso se cumple (OR). El constructor plano (lista de <span class="tt">Condicion</span>) equivale a un único caso (AND). Se verifica que:</p>
+<ul>
+<li>una regla sin condiciones o con componentes nulos se rechaza;</li>
+<li><span class="tt">condicionesCumplidas</span> exige <b>todas</b> las condiciones del caso;</li>
+<li>el destino, el nivel y las condiciones hoja se exponen como copias;</li>
+<li>la identidad de la regla está dada por <span class="tt">idRegla</span>.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
+TAD <span class="tt">BaseReglas</span> (<span class="tt">BaseReglasTest</span>)</h2>
+<p>Colección indexada por <span class="tt">idRegla</span>. Se verifica el alta y la baja, el rechazo de duplicados y que <span class="tt">reglasActivadas</span> devuelve solo las reglas cuya premisa se satisface en el estado.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md32"></a>
+Evaluación abstracta (<span class="tt">EvaluacionReglasAbstractaTest</span>)</h2>
+<p>Complementa a las anteriores con datos <b>abstractos</b> (<span class="tt">resp1/op1/op2/op3</span>) y los TADs <span class="tt">EstadoPaciente</span> y <span class="tt">Nodo</span> <b>simulados con Mockito</b>, de modo que la prueba no depende del dominio. Cubre:</p>
+<ul>
+<li>una sola condición;</li>
+<li>varias condiciones en un caso (AND): se cumple si están todas y falla si falta una;</li>
+<li>varios casos (OR) armados con <span class="tt">ReglaClinica.conCasos</span>;</li>
+<li>varias opciones de la <b>misma pregunta</b> combinadas con AND (selección múltiple);</li>
+<li><span class="tt">ServicioReglasImpl.evaluar</span> eligiendo el nivel más severo;</li>
+<li>sin reglas activadas, el resultado es <span class="tt">NORMAL</span>.</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md33"></a>
+Servicio de inferencia y mapeo JSON</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md34"></a>
+Servicio de inferencia (<span class="tt">ServicioReglasImplTest</span>)</h2>
+<p>Implementa la fase de <b>resolución de conflicto</b> del motor de reglas (Algoritmo 3 del diseño): cuando varias reglas se activan a la vez, gana el <b>nivel más severo</b> (<span class="tt">NORMAL &lt; CONSULTAR_MEDICO &lt; URGENCIA</span>); entre las del nivel máximo se <b>combinan todas como razones</b> y el destino es el de <b>mayor peso</b> (el signo más crítico). Se cubre:</p>
+<ul>
+<li>dos reglas del mismo nivel que combinan sus razones;</li>
+<li>ninguna regla activa → resultado <span class="tt">NORMAL</span> sin destino;</li>
+<li>niveles mixtos → gana el más severo;</li>
+<li>empate de nivel con destinos de distinto peso → gana el de mayor peso.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md35"></a>
+Mapeo JSON (<span class="tt">BaseReglasMapperTest</span>)</h2>
+<p>Verifica la ida y vuelta entre el TAD <span class="tt">BaseReglas</span> y el documento JSON de intercambio, que conserva la <b>forma normal disyuntiva</b> en <span class="tt">condiciones</span>:</p>
+<ul>
+<li>reconstrucción fiel desde el contenido compuesto del sistema (tamaño, nombre, nivel, destino y condiciones de cada regla);</li>
+<li>el <span class="tt">nodoDestino</span> se serializa <b>por id</b> (nunca se embebe el nodo);</li>
+<li>un <span class="tt">nodoDestino</span> que no existe en el grafo se <b>rechaza</b> al reconstruir.</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md36"></a>
+Cómo ejecutarlas</h1>
+<pre class="fragment">./mvnw test -Dtest='org.signbb.backend.reglas.**'
+</pre><p>No requieren PostgreSQL ni Redis.</p>
+<blockquote class="doxtable">
+<p>La autoría de reglas (CRUD del borrador y publicación) está en <a class="el" href="pruebas_autoria.html" title="Pruebas del módulo de autoría">Pruebas del módulo de autoría</a>. </p>
+</blockquote>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
+  </ul>
+</div>
+</body>
+</html>

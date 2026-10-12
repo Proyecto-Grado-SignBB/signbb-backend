@@ -7,11 +7,10 @@ on:
   push:
     paths:
       - 'backend/src/main/java/**'
+      - 'backend/src/test/**'
       - 'Doxyfile'
       - 'README.md'
       - 'contenedores/MANUAL_CONTENEDORES.md'
-      - 'backend/src/test/java/org/signbb/backend/navegacion/README.md'
-      - 'backend/src/test/java/org/signbb/backend/autoria/README.md'
       - 'grafo_sistema/**'
       - 'docs/img/**'
       - '.github/workflows/docs.yml'

@@ -1,19 +1,32 @@
 var namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios =
 [
+    [ "Alcance", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1Alcance.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1Alcance" ],
+    [ "BaseReglasFiebre", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1BaseReglasFiebre.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1BaseReglasFiebre" ],
     [ "CompiladorReglas", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1CompiladorReglas.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1CompiladorReglas" ],
+    [ "CompiladorReglasTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1CompiladorReglasTest.html", null ],
     [ "CompiladorSubgrafo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1CompiladorSubgrafo.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1CompiladorSubgrafo" ],
+    [ "CompiladorSubgrafoTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1CompiladorSubgrafoTest.html", null ],
     [ "ContenidoInvalidoException", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ContenidoInvalidoException.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ContenidoInvalidoException" ],
     [ "EdicionInvalidaException", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EdicionInvalidaException.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EdicionInvalidaException" ],
     [ "EditorLienzo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorLienzo.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorLienzo" ],
+    [ "EditorLienzoTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorLienzoTest.html", null ],
     [ "EditorReglas", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorReglas.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorReglas" ],
+    [ "LienzoFiebre", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1LienzoFiebre.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1LienzoFiebre" ],
     [ "PublicacionContenido", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicacionContenido.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicacionContenido" ],
     [ "PublicadorRegla", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorRegla.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorRegla" ],
+    [ "PublicadorReglaTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorReglaTest.html", null ],
     [ "PublicadorSubgrafo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorSubgrafo.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorSubgrafo" ],
+    [ "PublicadorSubgrafoTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorSubgrafoTest.html", null ],
     [ "ResolutorCatalogoNodos", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ResolutorCatalogoNodos.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ResolutorCatalogoNodos" ],
     [ "ServicioAutoria", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria" ],
     [ "ServicioAutoriaImpl", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl" ],
+    [ "ServicioAutoriaImplTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImplTest.html", null ],
     [ "ServicioAutoriaReglas", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas" ],
+    [ "ServicioAutoriaReglasAbstractoTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasAbstractoTest.html", null ],
     [ "ServicioAutoriaReglasImpl", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImpl.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImpl" ],
+    [ "ServicioAutoriaReglasImplTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImplTest.html", null ],
     [ "ValidadorLienzo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzo.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzo" ],
-    [ "ValidadorReglas", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorReglas.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorReglas" ]
+    [ "ValidadorLienzoTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzoTest.html", null ],
+    [ "ValidadorReglas", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorReglas.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorReglas" ],
+    [ "ValidadorReglasTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorReglasTest.html", null ]
 ];

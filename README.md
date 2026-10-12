@@ -49,7 +49,14 @@ repositorio:
     doxygen Doxyfile
 
 El HTML resultante queda en `docs/html` (abrir `docs/html/index.html`).
-La fuente es `backend/src/main/java`, configurada en el `Doxyfile`.
+La fuente es `backend/src/main/java` y `backend/src/test/java`, configurada en
+el `Doxyfile`.
+
+### Pruebas
+
+La suite de pruebas está documentada en la sección \ref pruebas del Doxygen:
+tipos de prueba, cómo ejecutarlas y el detalle por módulo (navegación, reglas,
+modelo de reglas, autoría, observaciones y cache).
 
 El diagrama de arquitectura por módulos (`docs/diagramas/arquitectura_modulos.svg`)
 se regenera desde su fuente PlantUML:

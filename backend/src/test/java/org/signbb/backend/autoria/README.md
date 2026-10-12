@@ -1,9 +1,11 @@
-# Pruebas del módulo de autoría
+# Pruebas del módulo de autoría {#pruebas_autoria}
+
+> Índice general de la suite: \ref pruebas.
 
 Pruebas del paquete `org.signbb.backend.autoria`, el que permite que un médico
 arme un subgrafo clínico en el lienzo (un "+" en cada respuesta), vea los
-avisos y lo publique para que quede navegable en la app de la cuidadora. Esta
-entrega cubre subgrafos **sin reglas**.
+avisos y lo publique para que quede navegable en la app de la cuidadora; y
+definir la **base de reglas** de un grafo (CRUD del borrador y publicación).
 
 Las unitarias son JUnit 5 y Mockito, sin Spring, base de datos ni Redis. La
 de integración (`AutoriaIntegracionTest`) levanta la aplicación completa con
@@ -19,9 +21,14 @@ PostgreSQL y Redis, como el CI.
 | `servicios` | `PublicadorSubgrafoTest` | 9 | upsert del subgrafo y de la opción en la raíz; categoría nueva visible; invalidar el contenido; rechazos |
 | `servicios` | `ServicioAutoriaImplTest` | 11 | categorías, ids de grafo, datos del subgrafo (nombre para la familia obligatorio), estados y errores |
 | `controladores` | `ControladorAutoriaTest` | 7 | códigos HTTP y cuerpos de error de la API `/api/autoria` |
+| `servicios` | `CompiladorReglasTest` | 3 | borrador de reglas → `BaseReglasJson` (FND, niveles) |
+| `servicios` | `ValidadorReglasTest` | 6 | un aviso por cada problema del borrador de reglas |
+| `servicios` | `PublicadorReglaTest` | 5 | publica/reemplaza la base de reglas de un grafo y recompone el contenido |
+| `servicios` | `ServicioAutoriaReglasImplTest` | 8 | CRUD de la base de reglas y publicación (lienzo publicado, estados) |
+| `servicios` | `ServicioAutoriaReglasAbstractoTest` | 11 | CRUD y publicación con datos abstractos y colaboradores simulados (Mockito) |
 | (raíz) | `AutoriaIntegracionTest` | 1 | de punta a punta: armar, publicar y recorrer como cuidadora |
 
-En total son **63 pruebas**.
+En total son **96 pruebas**.
 
 ## Fixture
 
@@ -101,6 +108,26 @@ neurológica (`puente_neuro`).
 - El nombre para la familia (`etiquetaOpcion`) es obligatorio: sin él, crear
   o editar responde 422.
 - Un borrador publicado no se puede borrar; un id inexistente da 404.
+
+### Reglas: compilar, validar y publicar (`CompiladorReglasTest`, `ValidadorReglasTest`, `PublicadorReglaTest`)
+- La base de reglas del borrador se compila a `BaseReglasJson` conservando la
+  **FND** (casos y condiciones), el nivel y el `nodoDestino`.
+- `ValidadorReglas` produce un aviso por cada problema del borrador (sin
+  nombre, sin destino, con nodos inexistentes, etc.).
+- Al publicar se **reemplaza** la base del grafo en el conjunto de bases, se
+  recompone el contenido (grafo + reglas) y, tras el commit, se invalida el
+  cache y se recarga el contexto. No se guarda nada si la composición no es
+  válida.
+
+### Reglas: CRUD y publicación (`ServicioAutoriaReglasImplTest`, `ServicioAutoriaReglasAbstractoTest`)
+- **CRUD del borrador:** crear la base de un grafo, agregar/editar/eliminar
+  reglas (ids `R_N` no reutilizados) y listar.
+- **Estados:** editar una base publicada la deja en `CAMBIOS_SIN_PUBLICAR`;
+  una base publicada no se puede borrar.
+- **Publicación:** exige que el lienzo del subgrafo esté publicado (sin
+  `CAMBIOS_SIN_PUBLICAR`) y delega en `PublicadorRegla`.
+- La suite **abstracta** repite el CRUD con datos `op1/op2/op3` y todos los
+  colaboradores simulados con Mockito, sin depender del dominio.
 
 ### API (`ControladorAutoriaTest`)
 - Crear responde 201 y borrar 204.

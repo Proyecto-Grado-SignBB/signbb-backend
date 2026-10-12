@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', codefold.init);
   </div>
 </div>
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded',() => { initNavTree('md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README.html','',''); });
+document.addEventListener('DOMContentLoaded',() => { initNavTree('pruebas_navegacion.html','',''); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -111,7 +111,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('md_backend_2sr
   <div class="headertitle"><div class="title">Pruebas del módulo de navegación </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md12"></a></p>
+<div class="textblock"><p><a class="anchor" id="md_backend_2src_2test_2java_2org_2signbb_2backend_2navegacion_2README"></a></p>
+<blockquote class="doxtable">
+<p>Índice general de la suite: <a class="el" href="pruebas.html" title="Pruebas del sistema">Pruebas del sistema</a>. </p>
+</blockquote>
 <p>Pruebas unitarias del paquete <span class="tt"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion.html" title="Módulo de navegación de recorridos por el grafo clínico (en construcción).">org.signbb.backend.navegacion</a></span>: los TADs del recorrido, la lectura del contenido clínico, el motor de navegación y el servicio que usa la API REST. Son JUnit 5 <b>puro</b> (sin Spring, sin base de datos y sin Redis), así que corren igual en local y en GitHub Actions.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
 Mapa de la suite</h1>
@@ -149,7 +152,7 @@ Mapa de la suite</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioNavegacionImplTest</span>  </td><td class="markdownTableBodyRight">9  </td><td class="markdownTableBodyNone">la fachada de la API: iniciar, responder, consultar, retroceder y errores  </td></tr>
 </table>
-<p>En total son <b>171 pruebas</b>. Las pruebas de la sesión en Redis (<span class="tt">cache/RepositorioSesionRedisTest</span> y <span class="tt">cache/ColaSeleccionMultipleRedisIntegracionTest</span>) están documentadas en <span class="tt">backend/src/test/README.md</span>.</p>
+<p>En total son <b>171 pruebas</b>. Las pruebas de la sesión en Redis (<span class="tt">cache/RepositorioSesionRedisTest</span> y <span class="tt">cache/ColaSeleccionMultipleRedisIntegracionTest</span>) están documentadas en <a class="el" href="pruebas_cache.html#md_backend_2src_2test_2README" title="backend/src/test/README.md"><span class="tt">backend/src/test/README.md</span></a>.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
 Fixtures</h1>
 <ul>
@@ -218,7 +221,7 @@ Qué se quitó en la reorganización</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Dos tests de retroceder solapados en <span class="tt">MotorNavegacionTest</span>  </td><td class="markdownTableBodyNone">Se fundieron en uno al pasar a <span class="tt">MotorNavegacionRetrocederTest</span>.  </td></tr>
 </table>
-<p>Los tests que estaban en el paquete viejo <span class="tt">org.signbb.backend.model</span> se movieron a <span class="tt">navegacion.modelo</span> y <span class="tt">navegacion.datos.serializacion</span> sin cambiar su contenido. Los de reglas (<span class="tt">BaseReglasTest</span> y <span class="tt">ReglaClinicaTest</span>) siguen en <span class="tt">model/</span>.</p>
+<p>Los tests que estaban en el paquete viejo <span class="tt">org.signbb.backend.model</span> se movieron a <span class="tt">navegacion.modelo</span> y <span class="tt">navegacion.datos.serializacion</span> sin cambiar su contenido. Los de reglas (<span class="tt">BaseReglasTest</span>, <span class="tt">ReglaClinicaTest</span> y <span class="tt">EvaluacionReglasAbstractaTest</span>) están en <span class="tt">reglas.modelo</span> (ver <a class="el" href="pruebas_reglas.html#pruebas_model" title="Modelo de reglas (TAD)">Modelo de reglas (TAD)</a>).</p>
 <p>Se descartó un caso: restaurar las respuestas previas cuando una regla compuerta vuelve a preguntar algo ya respondido. Con la cola, el motor ya no vuelve a preguntar una pregunta respondida (sigue las respuestas guardadas), así que ese caso ya no se alcanza por el motor. Lo que sí se mantiene probado a nivel del TAD es que restaurar las previas funciona, en <span class="tt">EstadoPacienteTest.desapilarRestauraLasRespuestasPrevias</span>.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
 Cómo ejecutarlas</h1>

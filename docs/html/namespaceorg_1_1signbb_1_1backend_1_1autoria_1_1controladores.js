@@ -2,6 +2,7 @@ var namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores =
 [
     [ "BaseReglaRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1BaseReglaRequest.html", null ],
     [ "ControladorAutoria", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria" ],
+    [ "ControladorAutoriaTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoriaTest.html", null ],
     [ "ControladorReglas", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas" ],
     [ "DespuesDeRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1DespuesDeRequest.html", null ],
     [ "DestinoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1DestinoRequest.html", null ],
