@@ -121,7 +121,8 @@ public class PublicadorSubgrafo {
         grafos.save(filaSubgrafo);
         filaRaiz.setEstructura(raiz);
         grafos.save(filaRaiz);
-        Long version = versiones.registrar(compuesto.grafo(), "Publicación de '" + borrador.getGrafoId() + "'");
+        Long version = versiones.registrar(compuesto.grafo(), compuesto.reglas(),
+                "Publicación de '" + borrador.getGrafoId() + "'");
         log.info("Subgrafo '{}' publicado en '{}' con {} nodos (versión {} del contenido).",
                 borrador.getGrafoId(), borrador.getPuenteId(), subgrafo.graph().nodes().size(), version);
 

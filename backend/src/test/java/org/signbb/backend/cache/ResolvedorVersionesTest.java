@@ -22,6 +22,7 @@ import org.signbb.backend.navegacion.datos.entidades.VersionContenidoEntity;
 import org.signbb.backend.navegacion.datos.repositorios.RepositorioVersionContenido;
 import org.signbb.backend.navegacion.datos.serializacion.ContenidoEjemplo;
 import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoJson;
+import org.signbb.backend.reglas.datos.serializacion.BaseReglasJson;
 import org.springframework.dao.QueryTimeoutException;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -38,6 +39,7 @@ class ResolvedorVersionesTest {
     private ResolvedorVersiones resolvedor;
 
     private final GrafoClinicoJson grafo = ContenidoEjemplo.compuesto().grafo();
+    private final BaseReglasJson reglas = ContenidoEjemplo.compuesto().reglas();
 
     @BeforeEach
     @SuppressWarnings("unchecked")
@@ -51,7 +53,7 @@ class ResolvedorVersionesTest {
     }
 
     private VersionContenidoEntity fila(GrafoClinicoJson g) {
-        return new VersionContenidoEntity(g, "prueba");
+        return new VersionContenidoEntity(g, reglas, "prueba");
     }
 
     @Test
@@ -66,6 +68,7 @@ class ResolvedorVersionesTest {
     void sinVersionesLaPrimeraEsUnaFotoDelContenidoVigente() throws Exception {
         when(repositorio.idMasReciente()).thenReturn(null);
         when(contenido.documentoGrafo()).thenReturn(grafo);
+        when(contenido.documentoReglas()).thenReturn(reglas);
         VersionContenidoEntity guardada = mock(VersionContenidoEntity.class);
         when(guardada.getId()).thenReturn(1L);
         when(repositorio.save(any(VersionContenidoEntity.class))).thenReturn(guardada);
@@ -75,6 +78,7 @@ class ResolvedorVersionesTest {
         ArgumentCaptor<VersionContenidoEntity> captor = ArgumentCaptor.forClass(VersionContenidoEntity.class);
         verify(repositorio).save(captor.capture());
         assertEquals(grafo.graph().nodes().size(), captor.getValue().getGrafo().graph().nodes().size());
+        assertEquals(reglas.rules().size(), captor.getValue().getReglas().rules().size());
         assertEquals("Contenido inicial", captor.getValue().getOrigen());
     }
 
@@ -84,12 +88,30 @@ class ResolvedorVersionesTest {
         when(guardada.getId()).thenReturn(5L);
         when(repositorio.save(any(VersionContenidoEntity.class))).thenReturn(guardada);
 
-        assertEquals(5L, resolvedor.registrar(grafo, "Publicación de 'grafo_x'"));
+        assertEquals(5L, resolvedor.registrar(grafo, reglas, "Publicación de 'grafo_x'"));
 
         ArgumentCaptor<VersionContenidoEntity> captor = ArgumentCaptor.forClass(VersionContenidoEntity.class);
         verify(repositorio).save(captor.capture());
         assertEquals("Publicación de 'grafo_x'", captor.getValue().getOrigen());
+        assertEquals(reglas.rules().size(), captor.getValue().getReglas().rules().size());
         assertTrue(captor.getValue().getCreadaEn() != null);
+    }
+
+    @Test
+    void lasReglasDeUnaVersionSeCacheanYSeLeenDeLaBase() {
+        when(repositorio.findById(4L)).thenReturn(Optional.of(fila(grafo)));
+
+        assertEquals(reglas.rules().size(), resolvedor.documentoReglas(4L).rules().size());
+
+        verify(valores).set(eq("signbb:contenido:v3:version:4:reglas"), anyString(), eq(Duration.ofHours(24)));
+    }
+
+    @Test
+    void unaVersionSinReglasDevuelveNullParaUsarLasVigentes() {
+        VersionContenidoEntity sinReglas = new VersionContenidoEntity(grafo, null, "previa");
+        when(repositorio.findById(8L)).thenReturn(Optional.of(sinReglas));
+
+        assertEquals(null, resolvedor.documentoReglas(8L));
     }
 
     @Test

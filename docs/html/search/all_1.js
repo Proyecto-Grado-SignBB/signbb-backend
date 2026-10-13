@@ -8,7 +8,7 @@ var searchData=
   ['base_20de_20datos_5',['Perfil de base de datos',['../index.html#autotoc_md54',1,'']]],
   ['base_20de_20reglas_6',['Representacion visual de base de reglas',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md72',1,'']]],
   ['basede_7',['baseDe',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html#a795d4cb8317af18d3cdf4d8782aadd92',1,'org::signbb::backend::navegacion::modelo::ContextoClinico']]],
-  ['baseregladto_8',['BaseReglaDTO',['../namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a90b6ccc8469479c444ed4758eaec61c0',1,'org::signbb::backend::autoria::controladores']]],
+  ['baseregladto_8',['BaseReglaDTO',['../namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a3453c8362bf3c4fa9704a169b3c35294',1,'org::signbb::backend::autoria::controladores']]],
   ['basereglarequest_9',['BaseReglaRequest',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1BaseReglaRequest.html',1,'org::signbb::backend::autoria::controladores']]],
   ['basereglas_10',['BaseReglas',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html',1,'org::signbb::backend::reglas::modelo']]],
   ['basereglas_20basereglastest_11',['TAD &lt;span class=&quot;tt&quot;&gt;BaseReglas&lt;/span&gt; (&lt;span class=&quot;tt&quot;&gt;BaseReglasTest&lt;/span&gt;)',['../pruebas_reglas.html#autotoc_md33',1,'']]],

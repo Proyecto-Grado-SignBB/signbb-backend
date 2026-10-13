@@ -11,7 +11,7 @@ var namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores =
     [ "OpcionRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1OpcionRequest.html", null ],
     [ "ReglaRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ReglaRequest.html", null ],
     [ "SubgrafoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1SubgrafoRequest.html", null ],
-    [ "BaseReglaDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a90b6ccc8469479c444ed4758eaec61c0", null ],
+    [ "BaseReglaDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a3453c8362bf3c4fa9704a169b3c35294", null ],
     [ "CatalogoDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#ae0be934ddd85661b524b1f8501af947c", null ],
     [ "CategoriaDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a7420e3d4b075ae4109765b53ca6ec7a2", null ],
     [ "ErrorAutoriaDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a8d967bf6f3a34ce10dbeebd1aa35634d", null ],

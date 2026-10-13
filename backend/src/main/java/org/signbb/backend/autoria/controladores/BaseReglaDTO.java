@@ -27,7 +27,9 @@ public record BaseReglaDTO(
         @Schema(description = "Avisos actuales") List<Aviso> avisos,
         @Schema(description = "Fecha de creación") Instant creadoEn,
         @Schema(description = "Fecha de la última edición") Instant actualizadoEn,
-        @Schema(description = "Fecha de la última publicación, o nula") Instant publicadoEn) {
+        @Schema(description = "Fecha de la última publicación, o nula") Instant publicadoEn,
+        @Schema(description = "true si hay una copia de lo publicado a la que se puede volver")
+        boolean puedeDescartar) {
 
     /** DTO de un borrador, con sus avisos calculados en el momento. */
     public static BaseReglaDTO desde(BorradorBaseReglaEntity b) {
@@ -36,6 +38,6 @@ public record BaseReglaDTO(
                 .toList();
         return new BaseReglaDTO(b.getId(), b.getGrafoId(), b.getNombre(), b.getDescripcion(), b.getAutor(),
                 b.getInstitucion(), b.getEstado(), reglas, ValidadorReglas.validar(b.getDocumento()),
-                b.getCreadoEn(), b.getActualizadoEn(), b.getPublicadoEn());
+                b.getCreadoEn(), b.getActualizadoEn(), b.getPublicadoEn(), b.getCopiaPublicada() != null);
     }
 }

@@ -223,7 +223,7 @@ class PublicadorSubgrafoTest {
 
         ArgumentCaptor<GrafoClinicoJson> grafo = ArgumentCaptor.forClass(GrafoClinicoJson.class);
         ArgumentCaptor<String> origen = ArgumentCaptor.forClass(String.class);
-        verify(versiones).registrar(grafo.capture(), origen.capture());
+        verify(versiones).registrar(grafo.capture(), any(), origen.capture());
         assertTrue(grafo.getValue().graph().nodes().containsKey("grafo_fiebre/" + LienzoFiebre.INICIO),
                 "la versión trae el subgrafo recién publicado");
         assertTrue(grafo.getValue().graph().nodes().containsKey("grafo_respiracion/q_resp_urgencia"),
@@ -237,7 +237,7 @@ class PublicadorSubgrafoTest {
         publicador.publicar(borrador, FECHA);
         publicador.publicar(borrador, FECHA);
 
-        verify(versiones, times(2)).registrar(any(GrafoClinicoJson.class), any(String.class));
+        verify(versiones, times(2)).registrar(any(GrafoClinicoJson.class), any(), any(String.class));
     }
 
     @Test
@@ -248,6 +248,6 @@ class PublicadorSubgrafoTest {
         borrador.setGrafoId("grafo/fiebre");
         assertThrows(ContenidoInvalidoException.class, () -> publicador.publicar(borrador, FECHA));
 
-        verify(versiones, never()).registrar(any(), any());
+        verify(versiones, never()).registrar(any(), any(), any());
     }
 }

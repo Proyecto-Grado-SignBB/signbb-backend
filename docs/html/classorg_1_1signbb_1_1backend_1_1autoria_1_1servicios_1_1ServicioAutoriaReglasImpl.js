@@ -6,6 +6,7 @@ var classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaRegl
     [ "avisos", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImpl.html#ac074648d3019d76cfed4359653c4d387", null ],
     [ "catalogo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImpl.html#a9dd709a20d7fb9712d245848c6ce2d5b", null ],
     [ "crear", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImpl.html#aad4af49b9a9b52f1346c09b6619a04d6", null ],
+    [ "descartarCambios", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImpl.html#af7172f96c84616ca6426fc61071b13e7", null ],
     [ "editarRegla", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImpl.html#ac24f83041387fbb4479a797a07564bd6", null ],
     [ "eliminar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImpl.html#abeaa74838dd7af44dd042f6854e792f8", null ],
     [ "eliminarRegla", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImpl.html#a83adc77eaaa7e99c3a82f4a8dfafbdcf", null ],

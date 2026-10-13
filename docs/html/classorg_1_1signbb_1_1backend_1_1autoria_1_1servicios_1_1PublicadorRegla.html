@@ -117,9 +117,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Métodos públicos</h2></td></tr>
-<tr class="memitem:a8422edb7a7f685aa29c2a6fcff02fa35" id="r_a8422edb7a7f685aa29c2a6fcff02fa35"><td class="memItemLeft"><a id="a8422edb7a7f685aa29c2a6fcff02fa35" name="a8422edb7a7f685aa29c2a6fcff02fa35"></a>
-&#160;</td><td class="memItemRight"><b>PublicadorRegla</b> (<a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafoClinico.html">RepositorioGrafoClinico</a> grafos, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1repositorios_1_1RepositorioBaseReglas.html">RepositorioBaseReglas</a> bases, <a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico.html">ResolvedorContenidoClinico</a> resolvedor, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html">ContextoClinico</a> contexto)</td></tr>
-<tr class="memdesc:a8422edb7a7f685aa29c2a6fcff02fa35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta los repositorios del contenido clínico, el cache y el contexto en memoria. <br /></td></tr>
+<tr class="memitem:ac31c7c9624e12baf3cf8a22ec9924481" id="r_ac31c7c9624e12baf3cf8a22ec9924481"><td class="memItemLeft"><a id="ac31c7c9624e12baf3cf8a22ec9924481" name="ac31c7c9624e12baf3cf8a22ec9924481"></a>
+&#160;</td><td class="memItemRight"><b>PublicadorRegla</b> (<a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafoClinico.html">RepositorioGrafoClinico</a> grafos, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1repositorios_1_1RepositorioBaseReglas.html">RepositorioBaseReglas</a> bases, <a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico.html">ResolvedorContenidoClinico</a> resolvedor, <a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorVersiones.html">ResolvedorVersiones</a> versiones, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html">ContextoClinico</a> contexto)</td></tr>
+<tr class="memdesc:ac31c7c9624e12baf3cf8a22ec9924481"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta los repositorios del contenido clínico, el cache, las versiones y el contexto en memoria. <br /></td></tr>
 <tr class="memitem:ab3500c918380829d799dcc13779ac00b" id="r_ab3500c918380829d799dcc13779ac00b"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab3500c918380829d799dcc13779ac00b">publicar</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1entidades_1_1BorradorBaseReglaEntity.html">BorradorBaseReglaEntity</a> borrador, Instant fecha)</td></tr>
 <tr class="memdesc:ab3500c918380829d799dcc13779ac00b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publica el borrador.  <br /></td></tr>
 </table>
@@ -136,6 +136,8 @@ Lo compila con <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1autori
 Reemplaza la base de ese grafo en el conjunto de bases y compone con los subgrafos y todas las bases, reconstruyendo los TAD (<code class="JavaDocCode">GrafoClinicoMapper</code>, <code class="JavaDocCode">BaseReglasMapper</code>). Si algo falla no se guarda nada. </li>
 <li>
 Guarda (o actualiza) la fila de la base de reglas de ese grafo. </li>
+<li>
+Guarda una versión nueva e inmutable del grafo y las reglas compuestos (<code><a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorVersiones.html">ResolvedorVersiones</a></code>): los recorridos nuevos usan estas reglas y los recorridos en curso conservan las de su versión. </li>
 <li>
 Cuando la transacción confirma, invalida el cache de Redis y hace que <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html">ContextoClinico</a></code> vuelva a resolver el contenido. </li>
 </ol>

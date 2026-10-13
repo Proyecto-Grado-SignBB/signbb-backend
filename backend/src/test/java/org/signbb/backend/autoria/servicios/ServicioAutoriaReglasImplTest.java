@@ -2,6 +2,7 @@ package org.signbb.backend.autoria.servicios;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -22,6 +23,7 @@ import org.signbb.backend.autoria.datos.entidades.BorradorBaseReglaEntity;
 import org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorBaseRegla;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo;
+import org.signbb.backend.autoria.modelo.CopiaBaseReglaPublicada;
 import org.signbb.backend.autoria.modelo.DocumentoBaseRegla;
 import org.signbb.backend.autoria.modelo.EstadoBorrador;
 import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
@@ -133,6 +135,38 @@ class ServicioAutoriaReglasImplTest {
 
         assertEquals(EstadoBorrador.PUBLICADO, dto.estado());
         verify(publicador).publicar(any(BorradorBaseReglaEntity.class), any(Instant.class));
+    }
+
+    @Test
+    void publicarGuardaLaCopiaParaDescartar() {
+        BorradorBaseReglaEntity b = guardado(BaseReglasFiebre.borrador(BaseReglasFiebre.conUrgencia()));
+
+        BaseReglaDTO dto = servicio.publicar(b.getId());
+
+        assertTrue(dto.puedeDescartar(), "tras publicar hay una copia a la que volver");
+    }
+
+    @Test
+    void descartarCambiosSinPublicarSeRechaza() {
+        BorradorBaseReglaEntity b = guardado(BaseReglasFiebre.borrador(BaseReglasFiebre.conUrgencia()));
+
+        assertThrows(EdicionInvalidaException.class, () -> servicio.descartarCambios(b.getId()));
+    }
+
+    @Test
+    void descartarCambiosVuelveALaCopiaPublicada() {
+        BorradorBaseReglaEntity b = BaseReglasFiebre.borrador(BaseReglasFiebre.conUrgencia());
+        b.setEstado(EstadoBorrador.CAMBIOS_SIN_PUBLICAR);
+        b.setPublicadoEn(Instant.now());
+        b.setDocumento(DocumentoBaseRegla.vacio());
+        b.setCopiaPublicada(new CopiaBaseReglaPublicada(BaseReglasFiebre.conUrgencia(), "Reglas",
+                "descripción", "Dra. Prueba", "Hospital"));
+        guardado(b);
+
+        BaseReglaDTO dto = servicio.descartarCambios(b.getId());
+
+        assertEquals(EstadoBorrador.PUBLICADO, dto.estado());
+        assertEquals(1, dto.reglas().size());
     }
 
     @Test

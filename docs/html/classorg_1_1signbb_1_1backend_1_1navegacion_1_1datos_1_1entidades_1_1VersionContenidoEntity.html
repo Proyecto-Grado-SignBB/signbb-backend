@@ -117,14 +117,14 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Métodos públicos</h2></td></tr>
-<tr class="memitem:a06439b23039e37d014d22e26fa0be5d9" id="r_a06439b23039e37d014d22e26fa0be5d9"><td class="memItemLeft"><a id="a06439b23039e37d014d22e26fa0be5d9" name="a06439b23039e37d014d22e26fa0be5d9"></a>
-&#160;</td><td class="memItemRight"><b>VersionContenidoEntity</b> (GrafoClinicoJson grafo, String origen)</td></tr>
-<tr class="memdesc:a06439b23039e37d014d22e26fa0be5d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea la versión con el grafo compuesto y el motivo; la fecha es la actual. <br /></td></tr>
+<tr class="memitem:afb2dc003e489f4534a641c600cb99780" id="r_afb2dc003e489f4534a641c600cb99780"><td class="memItemLeft"><a id="afb2dc003e489f4534a641c600cb99780" name="afb2dc003e489f4534a641c600cb99780"></a>
+&#160;</td><td class="memItemRight"><b>VersionContenidoEntity</b> (GrafoClinicoJson grafo, BaseReglasJson reglas, String origen)</td></tr>
+<tr class="memdesc:afb2dc003e489f4534a641c600cb99780"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea la versión con el grafo y las reglas compuestas, y el motivo; la fecha es la actual. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Una versión del contenido clínico: la foto del grafo completo (raíz y todos los subgrafos ya compuestos) tal como quedó en una publicación. </p>
 <p>Es inmutable: una vez guardada no se modifica ni se borra. Un recorrido de la cuidadora se ata al <code class="JavaDocCode">id</code> de la versión con la que empezó y la termina con ella aunque el médico publique cambios mientras tanto. La versión vigente para los recorridos nuevos es la de mayor <code class="JavaDocCode">id</code>.</p>
-<p>En esta primera entrega solo se guarda el grafo; las reglas siguen siendo las vigentes. </p>
+<p>La foto incluye el grafo compuesto y la base de reglas compuesta: así un recorrido en curso conserva tanto el grafo como las reglas con las que empezó. En versiones creadas antes de versionar las reglas, <code class="JavaDocCode">reglas</code> es <code class="JavaDocCode">null</code> y se usan las vigentes. </p>
 </div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/main/java/org/signbb/backend/navegacion/datos/entidades/<b>VersionContenidoEntity.java</b></li>
 </ul>

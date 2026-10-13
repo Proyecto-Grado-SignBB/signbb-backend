@@ -134,6 +134,8 @@ Funciones</h2></td></tr>
 <tr class="memdesc:a93561d85dcd8b4627efed007961f5d03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aviso sobre el lienzo, escrito para el médico.  <br /></td></tr>
 <tr class="memitem:ad877808e981157f30a3a0c5956f6183c" id="r_ad877808e981157f30a3a0c5956f6183c"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#ad877808e981157f30a3a0c5956f6183c">BorradorRegla</a> (String nombre, String descripcion, List&lt; Caso &gt; casos, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1NivelAlerta.html">NivelAlerta</a> nivel, String nodoDestino)</td></tr>
 <tr class="memdesc:ad877808e981157f30a3a0c5956f6183c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Regla de un borrador de base de reglas, tal como la edita el médico.  <br /></td></tr>
+<tr class="memitem:a868661946496d54d45711fe2593035f1" id="r_a868661946496d54d45711fe2593035f1"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a868661946496d54d45711fe2593035f1">CopiaBaseReglaPublicada</a> (<a class="el" href="#aacdec638daf4aef95fe4c47d86d1f537">DocumentoBaseRegla</a> documento, String nombre, String descripcion, String autor, String institucion)</td></tr>
+<tr class="memdesc:a868661946496d54d45711fe2593035f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copia de un borrador de base de reglas tal como estaba en su última publicación: el documento con las reglas y los datos que también viajan al contenido publicado (nombre, descripción, autor e institución).  <br /></td></tr>
 <tr class="memitem:acd54de863402fca55cf6217d9b11fd51" id="r_acd54de863402fca55cf6217d9b11fd51"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#acd54de863402fca55cf6217d9b11fd51">CopiaPublicada</a> (<a class="el" href="#ac4af53f37093be19ec3ab07663e8ee7d">DocumentoLienzo</a> documento, String nombre, String puenteId, String categoria, String etiquetaOpcion, String autor, String institucion)</td></tr>
 <tr class="memdesc:acd54de863402fca55cf6217d9b11fd51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copia de un borrador tal como estaba en su última publicación: el lienzo y los datos que también viajan al grafo publicado (nombre, categoría y texto de la opción).  <br /></td></tr>
 <tr class="memitem:aacdec638daf4aef95fe4c47d86d1f537" id="r_aacdec638daf4aef95fe4c47d86d1f537"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#aacdec638daf4aef95fe4c47d86d1f537">DocumentoBaseRegla</a> (int secuencia, Map&lt; String, <a class="el" href="#ad877808e981157f30a3a0c5956f6183c">BorradorRegla</a> &gt; reglas)</td></tr>
@@ -259,6 +261,55 @@ Funciones</h2></td></tr>
   </dd>
 </dl>
 <p>Normaliza los casos ausentes a una lista vacía inmutable.</p>
+
+</div>
+</div>
+<a id="a868661946496d54d45711fe2593035f1" name="a868661946496d54d45711fe2593035f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a868661946496d54d45711fe2593035f1">&#9670;&#160;</a></span>CopiaBaseReglaPublicada()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">record org.signbb.backend.autoria.modelo.CopiaBaseReglaPublicada </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#aacdec638daf4aef95fe4c47d86d1f537">DocumentoBaseRegla</a></td>          <td class="paramname"><span class="paramname"><em>documento</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>nombre</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>descripcion</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>autor</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>institucion</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Copia de un borrador de base de reglas tal como estaba en su última publicación: el documento con las reglas y los datos que también viajan al contenido publicado (nombre, descripción, autor e institución). </p>
+<p>Permite que el médico descarte sus cambios sin publicar y vuelva a lo que las cuidadoras ven. Se guarda como JSON en la columna <code class="JavaDocCode">copia_publicada</code> de <code class="JavaDocCode">BorradorBaseReglaEntity</code>.</p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">documento</td><td>reglas publicadas </td></tr>
+    <tr><td class="paramname">nombre</td><td>nombre de la base de reglas </td></tr>
+    <tr><td class="paramname">descripcion</td><td>descripción de la base de reglas </td></tr>
+    <tr><td class="paramname">autor</td><td>autor del contenido </td></tr>
+    <tr><td class="paramname">institucion</td><td>institución del autor </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

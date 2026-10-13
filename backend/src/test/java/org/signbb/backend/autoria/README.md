@@ -23,12 +23,12 @@ PostgreSQL y Redis, como el CI.
 | `controladores` | `ControladorAutoriaTest` | 9 | códigos HTTP y cuerpos de error de la API `/api/autoria` |
 | `servicios` | `CompiladorReglasTest` | 3 | borrador de reglas → `BaseReglasJson` (FND, niveles) |
 | `servicios` | `ValidadorReglasTest` | 6 | un aviso por cada problema del borrador de reglas |
-| `servicios` | `PublicadorReglaTest` | 5 | publica/reemplaza la base de reglas de un grafo y recompone el contenido |
-| `servicios` | `ServicioAutoriaReglasImplTest` | 8 | CRUD de la base de reglas y publicación (lienzo publicado, estados) |
+| `servicios` | `PublicadorReglaTest` | 6 | publica/reemplaza la base de reglas de un grafo, recompone el contenido y registra una versión |
+| `servicios` | `ServicioAutoriaReglasImplTest` | 11 | CRUD de la base de reglas, publicación y descartar cambios |
 | `servicios` | `ServicioAutoriaReglasAbstractoTest` | 11 | CRUD y publicación con datos abstractos y colaboradores simulados (Mockito) |
 | (raíz) | `AutoriaIntegracionTest` | 1 | de punta a punta: armar, publicar y recorrer como cuidadora |
 
-En total son **103 pruebas**.
+En total son **107 pruebas**.
 
 ## Fixture
 

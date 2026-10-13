@@ -1,5 +1,11 @@
 var NAVTREEINDEX2 =
 {
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a27335a5b97fc21155783f7a729231f71":[10,0,0,0,0,4,1,4,12],
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a2987dbc31ec74d124ec2ab4eb06a3d99":[9,0,0,0,0,4,1,4,23],
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a2987dbc31ec74d124ec2ab4eb06a3d99":[10,0,0,0,0,4,1,4,23],
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a33b186021195f345c6ce390a0d361735":[9,0,0,0,0,4,1,4,21],
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a33b186021195f345c6ce390a0d361735":[10,0,0,0,0,4,1,4,21],
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a394598fc9388a323db8a905d374a2593":[9,0,0,0,0,4,1,4,16],
 "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a394598fc9388a323db8a905d374a2593":[10,0,0,0,0,4,1,4,16],
 "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a3add1935843d981ff05b90ac1cfb9962":[9,0,0,0,0,4,1,4,29],
 "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a3add1935843d981ff05b90ac1cfb9962":[10,0,0,0,0,4,1,4,29],
@@ -243,11 +249,5 @@ var NAVTREEINDEX2 =
 "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl.html#ad047af2ad2ab550f5df9725b9f2219ee":[9,0,0,0,0,5,3,1,0],
 "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl.html#ad047af2ad2ab550f5df9725b9f2219ee":[10,0,0,0,0,5,3,1,0],
 "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImplTest.html":[9,0,0,0,0,5,3,2],
-"classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImplTest.html":[10,0,0,0,0,5,3,2],
-"classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1entidades_1_1BaseReglasEntity.html":[9,0,0,0,0,6,0,0,0],
-"classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1entidades_1_1BaseReglasEntity.html":[10,0,0,0,0,6,0,0,0],
-"classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasMapper.html":[9,0,0,0,0,6,0,2,0],
-"classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasMapper.html":[10,0,0,0,0,6,0,2,0],
-"classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasMapper.html#a0bf04deacb43577dec69399f8f2bcd3c":[9,0,0,0,0,6,0,2,0,2],
-"classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasMapper.html#a0bf04deacb43577dec69399f8f2bcd3c":[10,0,0,0,0,6,0,2,0,2]
+"classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImplTest.html":[10,0,0,0,0,5,3,2]
 };

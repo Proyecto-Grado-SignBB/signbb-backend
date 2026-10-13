@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 </div><!--header-->
 <div class="contents">
 
-<p>Versiones del contenido clínico: cada publicación guarda una foto del grafo compuesto y los recorridos se atan a la que tenían al empezar.  
+<p>Versiones del contenido clínico: cada publicación guarda una foto del grafo compuesto y de la base de reglas compuesta, y los recorridos se atan a la que tenían al empezar.  
  <a href="#details">Más...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -122,16 +122,21 @@ Métodos públicos</h2></td></tr>
 <tr class="memdesc:a6801621a2f0178daf5aac2899ad52020"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta Redis, el repositorio de versiones y el resolvedor del contenido vigente. <br /></td></tr>
 <tr class="memitem:ae6b5d1011e56a223ce5df36192ced7b0" id="r_ae6b5d1011e56a223ce5df36192ced7b0"><td class="memItemLeft">synchronized Long&#160;</td><td class="memItemRight"><a class="el" href="#ae6b5d1011e56a223ce5df36192ced7b0">idActual</a> ()</td></tr>
 <tr class="memdesc:ae6b5d1011e56a223ce5df36192ced7b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Id de la versión vigente (la más reciente).  <br /></td></tr>
-<tr class="memitem:a1875b9ec2286a3e829f2fa57aad1a9ba" id="r_a1875b9ec2286a3e829f2fa57aad1a9ba"><td class="memItemLeft">Long&#160;</td><td class="memItemRight"><a class="el" href="#a1875b9ec2286a3e829f2fa57aad1a9ba">registrar</a> (GrafoClinicoJson grafo, String origen)</td></tr>
-<tr class="memdesc:a1875b9ec2286a3e829f2fa57aad1a9ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Guarda una versión nueva y devuelve su id.  <br /></td></tr>
+<tr class="memitem:af5e5802ace9444ae2e084141aa0394f8" id="r_af5e5802ace9444ae2e084141aa0394f8"><td class="memItemLeft">Long&#160;</td><td class="memItemRight"><a class="el" href="#af5e5802ace9444ae2e084141aa0394f8">registrar</a> (GrafoClinicoJson grafo, BaseReglasJson reglas, String origen)</td></tr>
+<tr class="memdesc:af5e5802ace9444ae2e084141aa0394f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Guarda una versión nueva (grafo y reglas compuestos) y devuelve su id.  <br /></td></tr>
 <tr class="memitem:ac520ea8d8949527494866551103efe3c" id="r_ac520ea8d8949527494866551103efe3c"><td class="memItemLeft">GrafoClinicoJson&#160;</td><td class="memItemRight"><a class="el" href="#ac520ea8d8949527494866551103efe3c">documentoGrafo</a> (Long id)</td></tr>
 <tr class="memdesc:ac520ea8d8949527494866551103efe3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Grafo compuesto de una versión: Redis, y si no está, la base de datos.  <br /></td></tr>
+<tr class="memitem:a78d5317b904613389a97a76f72e35d3d" id="r_a78d5317b904613389a97a76f72e35d3d"><td class="memItemLeft">BaseReglasJson&#160;</td><td class="memItemRight"><a class="el" href="#a78d5317b904613389a97a76f72e35d3d">documentoReglas</a> (Long id)</td></tr>
+<tr class="memdesc:a78d5317b904613389a97a76f72e35d3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base de reglas compuesta de una versión, o <code class="JavaDocCode">null</code> si la versión es anterior a que las reglas se versionaran (el que llama usa entonces las vigentes).  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Métodos públicos estáticos</h2></td></tr>
 <tr class="memitem:ae821ebc2db0da3ac4764e64210b8ceed" id="r_ae821ebc2db0da3ac4764e64210b8ceed"><td class="memItemLeft"><a id="ae821ebc2db0da3ac4764e64210b8ceed" name="ae821ebc2db0da3ac4764e64210b8ceed"></a>
 static String&#160;</td><td class="memItemRight"><b>clave</b> (Long id)</td></tr>
 <tr class="memdesc:ae821ebc2db0da3ac4764e64210b8ceed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clave en Redis del grafo de una versión. <br /></td></tr>
+<tr class="memitem:a9a8f28cd06c42bf6714aa194096faab7" id="r_a9a8f28cd06c42bf6714aa194096faab7"><td class="memItemLeft"><a id="a9a8f28cd06c42bf6714aa194096faab7" name="a9a8f28cd06c42bf6714aa194096faab7"></a>
+static String&#160;</td><td class="memItemRight"><b>claveReglas</b> (Long id)</td></tr>
+<tr class="memdesc:a9a8f28cd06c42bf6714aa194096faab7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clave en Redis de las reglas de una versión. <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Atributos públicos estáticos</h2></td></tr>
@@ -140,8 +145,8 @@ static final String&#160;</td><td class="memItemRight"><b>PREFIJO_CLAVE</b> = &q
 <tr class="memdesc:a63f28bb830ac8a7fa7ece3eb416f7e36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefijo de la clave de cada versión (le sigue el id): <code class="JavaDocCode">signbb:contenido:v3:version:7:grafo</code>. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
-<div class="textblock"><p>Versiones del contenido clínico: cada publicación guarda una foto del grafo compuesto y los recorridos se atan a la que tenían al empezar. </p>
-<p>La base de datos es la fuente de verdad y Redis la copia caliente, con una clave por versión. Como una versión nunca cambia, su copia en Redis nunca hay que invalidarla; el TTL es solo higiene. Si Redis no responde se lee de la base de datos. </p>
+<div class="textblock"><p>Versiones del contenido clínico: cada publicación guarda una foto del grafo compuesto y de la base de reglas compuesta, y los recorridos se atan a la que tenían al empezar. </p>
+<p>La base de datos es la fuente de verdad y Redis la copia caliente, con una clave por versión y por contenido (grafo y reglas). Como una versión nunca cambia, su copia en Redis nunca hay que invalidarla; el TTL es solo higiene. Si Redis no responde se lee de la base de datos. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
 <a id="ac520ea8d8949527494866551103efe3c" name="ac520ea8d8949527494866551103efe3c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac520ea8d8949527494866551103efe3c">&#9670;&#160;</a></span>documentoGrafo()</h2>
@@ -159,6 +164,32 @@ static final String&#160;</td><td class="memItemRight"><b>PREFIJO_CLAVE</b> = &q
 </div><div class="memdoc">
 
 <p>Grafo compuesto de una versión: Redis, y si no está, la base de datos. </p>
+<dl class="exception"><dt>Excepciones</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">IllegalStateException</td><td>si la versión no existe </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a78d5317b904613389a97a76f72e35d3d" name="a78d5317b904613389a97a76f72e35d3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78d5317b904613389a97a76f72e35d3d">&#9670;&#160;</a></span>documentoReglas()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">BaseReglasJson org.signbb.backend.cache.ResolvedorVersiones.documentoReglas </td>
+          <td>(</td>
+          <td class="paramtype">Long</td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Base de reglas compuesta de una versión, o <code class="JavaDocCode">null</code> si la versión es anterior a que las reglas se versionaran (el que llama usa entonces las vigentes). </p>
+<p>Redis es la copia caliente; la base de datos, la fuente.</p>
 <dl class="exception"><dt>Excepciones</dt><dd>
   <table class="exception">
     <tr><td class="paramname">IllegalStateException</td><td>si la versión no existe </td></tr>
@@ -188,8 +219,8 @@ static final String&#160;</td><td class="memItemRight"><b>PREFIJO_CLAVE</b> = &q
 
 </div>
 </div>
-<a id="a1875b9ec2286a3e829f2fa57aad1a9ba" name="a1875b9ec2286a3e829f2fa57aad1a9ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1875b9ec2286a3e829f2fa57aad1a9ba">&#9670;&#160;</a></span>registrar()</h2>
+<a id="af5e5802ace9444ae2e084141aa0394f8" name="af5e5802ace9444ae2e084141aa0394f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5e5802ace9444ae2e084141aa0394f8">&#9670;&#160;</a></span>registrar()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -202,12 +233,17 @@ static final String&#160;</td><td class="memItemRight"><b>PREFIJO_CLAVE</b> = &q
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">BaseReglasJson</td>          <td class="paramname"><span class="paramname"><em>reglas</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>origen</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Guarda una versión nueva y devuelve su id. </p>
+<p>Guarda una versión nueva (grafo y reglas compuestos) y devuelve su id. </p>
 <p>Se llama dentro de la transacción de la publicación, para que se guarden juntas o ninguna. </p>
 
 </div>

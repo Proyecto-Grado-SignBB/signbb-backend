@@ -207,4 +207,22 @@ public class ControladorReglas {
     public BaseReglaDTO publicar(@PathVariable Long id) {
         return servicio.publicar(id);
     }
+
+    /** {@code POST /api/autoria/bases/{id}/descartar}: descarta los cambios sin publicar. */
+    @Operation(summary = "Descarta los cambios sin publicar de la base de reglas",
+            description = "Vuelve a la última versión publicada; la cuidadora ya veía esa versión.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Borrador restaurado a lo publicado"),
+            @ApiResponse(responseCode = "404", description = "El borrador no existe", content = @Content),
+            @ApiResponse(responseCode = "409", description = "Otra persona lo cambió al mismo tiempo",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAutoriaDTO.class))),
+            @ApiResponse(responseCode = "422", description = "No hay una versión publicada a la que volver",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAutoriaDTO.class)))
+    })
+    @PostMapping("/{id}/descartar")
+    public BaseReglaDTO descartar(@PathVariable Long id) {
+        return servicio.descartarCambios(id);
+    }
 }

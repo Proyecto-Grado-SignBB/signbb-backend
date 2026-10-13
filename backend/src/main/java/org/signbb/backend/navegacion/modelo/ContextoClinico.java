@@ -6,6 +6,7 @@ import java.util.Map;
 import org.signbb.backend.cache.ResolvedorContenidoClinico;
 import org.signbb.backend.cache.ResolvedorVersiones;
 import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoMapper;
+import org.signbb.backend.reglas.datos.serializacion.BaseReglasJson;
 import org.signbb.backend.reglas.datos.serializacion.BaseReglasMapper;
 import org.signbb.backend.reglas.modelo.BaseReglas;
 import org.slf4j.Logger;
@@ -24,11 +25,12 @@ import org.springframework.stereotype.Component;
  * {@link #getGrafo()} y {@link #getBase()} son los de la versión vigente.
  *
  * <p>
- * En esta primera entrega solo el grafo está versionado: la base de reglas es
- * siempre la vigente, reconstruida sobre el grafo de la versión pedida. Las
- * versiones se cargan perezosamente (Redis como copia caliente, base de datos
- * como fuente de verdad) y la pereza garantiza que la siembra inicial
- * ({@code DatabaseInit}) haya corrido antes de la primera resolución.
+ * Cada versión guarda el grafo y la base de reglas compuestos: un recorrido en
+ * curso usa los de su versión. En versiones anteriores a versionar las reglas,
+ * se usan las vigentes. Las versiones se cargan perezosamente (Redis como
+ * copia caliente, base de datos como fuente de verdad) y la pereza garantiza
+ * que la siembra inicial ({@code DatabaseInit}) haya corrido antes de la
+ * primera resolución.
  */
 @Component
 public class ContextoClinico {
@@ -102,10 +104,12 @@ public class ContextoClinico {
         return c;
     }
 
-    /** Reconstruye y valida el grafo de la versión y la base de reglas vigente sobre él. */
+    /** Reconstruye y valida el grafo de la versión y las reglas de esa versión (o las vigentes). */
     private Contenido cargar(Long id) {
         GrafoClinico g = GrafoClinicoMapper.desde(versiones.documentoGrafo(id));
-        BaseReglas b = BaseReglasMapper.desde(resolvedor.documentoReglas(), g);
+        BaseReglasJson reglasDeVersion = versiones.documentoReglas(id);
+        BaseReglas b = BaseReglasMapper.desde(
+                reglasDeVersion != null ? reglasDeVersion : resolvedor.documentoReglas(), g);
 
         if (!g.rutaValida()) {
             log.warn("El grafo clínico (versión {}) no cumple rutaValida(): puede haber nodos huérfanos "

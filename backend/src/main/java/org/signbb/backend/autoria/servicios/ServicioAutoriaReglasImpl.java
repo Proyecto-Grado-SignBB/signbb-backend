@@ -14,6 +14,7 @@ import org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorBaseRegla;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo;
 import org.signbb.backend.autoria.modelo.Aviso;
+import org.signbb.backend.autoria.modelo.CopiaBaseReglaPublicada;
 import org.signbb.backend.autoria.modelo.DocumentoBaseRegla;
 import org.signbb.backend.autoria.modelo.EstadoBorrador;
 import org.signbb.backend.config.RecursoNoEncontradoException;
@@ -135,6 +136,34 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
         publicador.publicar(b, ahora);
         b.setEstado(EstadoBorrador.PUBLICADO);
         b.setPublicadoEn(ahora);
+        b.setCopiaPublicada(new CopiaBaseReglaPublicada(b.getDocumento(), b.getNombre(),
+                b.getDescripcion(), b.getAutor(), b.getInstitucion()));
+        return BaseReglaDTO.desde(borradores.save(b));
+    }
+
+    @Override
+    @Transactional
+    public BaseReglaDTO descartarCambios(Long id) {
+        BorradorBaseReglaEntity b = buscar(id);
+        if (b.getPublicadoEn() == null) {
+            throw new EdicionInvalidaException("Esta base de reglas todavía no se ha publicado, así que no hay "
+                    + "una versión publicada a la que volver. Si ya no la quieres, puedes eliminarla.");
+        }
+        if (b.getEstado() == EstadoBorrador.PUBLICADO) {
+            return BaseReglaDTO.desde(b);
+        }
+        CopiaBaseReglaPublicada copia = b.getCopiaPublicada();
+        if (copia == null) {
+            throw new EdicionInvalidaException("Esta base de reglas se publicó antes de que se guardara una "
+                    + "copia de lo publicado. Podrás descartar cambios a partir de su próxima publicación.");
+        }
+        b.setDocumento(copia.documento());
+        b.setNombre(copia.nombre());
+        b.setDescripcion(copia.descripcion());
+        b.setAutor(copia.autor());
+        b.setInstitucion(copia.institucion());
+        b.setEstado(EstadoBorrador.PUBLICADO);
+        b.setActualizadoEn(Instant.now());
         return BaseReglaDTO.desde(borradores.save(b));
     }
 

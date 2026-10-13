@@ -5,6 +5,7 @@ import java.time.Instant;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoJson;
+import org.signbb.backend.reglas.datos.serializacion.BaseReglasJson;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,8 +28,10 @@ import lombok.NoArgsConstructor;
  * versión vigente para los recorridos nuevos es la de mayor {@code id}.
  *
  * <p>
- * En esta primera entrega solo se guarda el grafo; las reglas siguen siendo
- * las vigentes.
+ * La foto incluye el grafo compuesto y la base de reglas compuesta: así un
+ * recorrido en curso conserva tanto el grafo como las reglas con las que
+ * empezó. En versiones creadas antes de versionar las reglas, {@code reglas}
+ * es {@code null} y se usan las vigentes.
  */
 @Entity
 @Table(name = "version_contenido")
@@ -45,6 +48,14 @@ public class VersionContenidoEntity {
     @Column(name = "grafo", nullable = false, updatable = false)
     private GrafoClinicoJson grafo;
 
+    /**
+     * Base de reglas compuesta de esta versión, o {@code null} en versiones
+     * creadas antes de versionar las reglas.
+     */
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "reglas", updatable = false)
+    private BaseReglasJson reglas;
+
     /** Cuándo se guardó la versión. */
     @Column(name = "creada_en", nullable = false, updatable = false)
     private Instant creadaEn;
@@ -53,9 +64,10 @@ public class VersionContenidoEntity {
     @Column(name = "origen", nullable = false, updatable = false, length = 255)
     private String origen;
 
-    /** Crea la versión con el grafo compuesto y el motivo; la fecha es la actual. */
-    public VersionContenidoEntity(GrafoClinicoJson grafo, String origen) {
+    /** Crea la versión con el grafo y las reglas compuestas, y el motivo; la fecha es la actual. */
+    public VersionContenidoEntity(GrafoClinicoJson grafo, BaseReglasJson reglas, String origen) {
         this.grafo = grafo;
+        this.reglas = reglas;
         this.origen = origen;
         this.creadaEn = Instant.now();
     }

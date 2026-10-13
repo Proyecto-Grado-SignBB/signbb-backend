@@ -1,7 +1,7 @@
 var searchData=
 [
   ['basede_0',['baseDe',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html#a795d4cb8317af18d3cdf4d8782aadd92',1,'org::signbb::backend::navegacion::modelo::ContextoClinico']]],
-  ['baseregladto_1',['BaseReglaDTO',['../namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a90b6ccc8469479c444ed4758eaec61c0',1,'org::signbb::backend::autoria::controladores']]],
+  ['baseregladto_1',['BaseReglaDTO',['../namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a3453c8362bf3c4fa9704a169b3c35294',1,'org::signbb::backend::autoria::controladores']]],
   ['basereglasjson_2',['BaseReglasJson',['../namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion.html#a9d5f998a118a8ea75cb48d25d1c44760',1,'org::signbb::backend::reglas::datos::serializacion']]],
   ['bases_3',['bases',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1ContenidoEjemplo.html#a1f3c0f00a7c0127d62b627430f7040a5',1,'org::signbb::backend::navegacion::datos::serializacion::ContenidoEjemplo']]],
   ['bloquearruta_4',['bloquearRuta',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#a612bdd6d0d822ea5be85c367bb50edcf',1,'org::signbb::backend::navegacion::modelo::GrafoClinico']]],

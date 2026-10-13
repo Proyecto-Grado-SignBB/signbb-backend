@@ -142,8 +142,8 @@ Clases</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Funciones</h2></td></tr>
-<tr class="memitem:a90b6ccc8469479c444ed4758eaec61c0" id="r_a90b6ccc8469479c444ed4758eaec61c0"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a90b6ccc8469479c444ed4758eaec61c0">BaseReglaDTO</a> ( @Schema(description=&quot;Id del borrador&quot;) Long id, @Schema(description=&quot;Grafo publicado al que pertenecen las reglas&quot;) String grafoId, @Schema(description=&quot;Nombre de la base de reglas&quot;) String nombre, @Schema(description=&quot;Descripción de la base de reglas&quot;) String descripcion, @Schema(description=&quot;Autor del contenido&quot;) String autor, @Schema(description=&quot;Institución del autor&quot;) String institucion, @Schema(description=&quot;Estado: BORRADOR, PUBLICADO o CAMBIOS_SIN_PUBLICAR&quot;) <a class="el" href="enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1EstadoBorrador.html">EstadoBorrador</a> estado, @Schema(description=&quot;Reglas del borrador, en orden&quot;) List&lt; <a class="el" href="#ae0a0bcf1970f11d102a4c5fbaeff86aa">ReglaDTO</a> &gt; reglas, @Schema(description=&quot;Avisos actuales&quot;) List&lt; Aviso &gt; avisos, @Schema(description=&quot;Fecha de creación&quot;) Instant creadoEn, @Schema(description=&quot;Fecha de la última edición&quot;) Instant actualizadoEn, @Schema(description=&quot;Fecha de la última publicación, o nula&quot;) Instant publicadoEn)</td></tr>
-<tr class="memdesc:a90b6ccc8469479c444ed4758eaec61c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Borrador completo de una base de reglas: sus datos, las reglas y los avisos.  <br /></td></tr>
+<tr class="memitem:a3453c8362bf3c4fa9704a169b3c35294" id="r_a3453c8362bf3c4fa9704a169b3c35294"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a3453c8362bf3c4fa9704a169b3c35294">BaseReglaDTO</a> ( @Schema(description=&quot;Id del borrador&quot;) Long id, @Schema(description=&quot;Grafo publicado al que pertenecen las reglas&quot;) String grafoId, @Schema(description=&quot;Nombre de la base de reglas&quot;) String nombre, @Schema(description=&quot;Descripción de la base de reglas&quot;) String descripcion, @Schema(description=&quot;Autor del contenido&quot;) String autor, @Schema(description=&quot;Institución del autor&quot;) String institucion, @Schema(description=&quot;Estado: BORRADOR, PUBLICADO o CAMBIOS_SIN_PUBLICAR&quot;) <a class="el" href="enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1EstadoBorrador.html">EstadoBorrador</a> estado, @Schema(description=&quot;Reglas del borrador, en orden&quot;) List&lt; <a class="el" href="#ae0a0bcf1970f11d102a4c5fbaeff86aa">ReglaDTO</a> &gt; reglas, @Schema(description=&quot;Avisos actuales&quot;) List&lt; Aviso &gt; avisos, @Schema(description=&quot;Fecha de creación&quot;) Instant creadoEn, @Schema(description=&quot;Fecha de la última edición&quot;) Instant actualizadoEn, @Schema(description=&quot;Fecha de la última publicación, o nula&quot;) Instant publicadoEn, @Schema(description=&quot;true si hay una copia de lo publicado a la que se puede volver&quot;) boolean puedeDescartar)</td></tr>
+<tr class="memdesc:a3453c8362bf3c4fa9704a169b3c35294"><td class="mdescLeft">&#160;</td><td class="mdescRight">Borrador completo de una base de reglas: sus datos, las reglas y los avisos.  <br /></td></tr>
 <tr class="memitem:ae0be934ddd85661b524b1f8501af947c" id="r_ae0be934ddd85661b524b1f8501af947c"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#ae0be934ddd85661b524b1f8501af947c">CatalogoDTO</a> ( @Schema(description=&quot;Grafo del catálogo&quot;) String grafoId, @Schema(description=&quot;Nodos del grafo&quot;) List&lt; NodoCatalogoDTO &gt; nodos)</td></tr>
 <tr class="memdesc:ae0be934ddd85661b524b1f8501af947c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Catálogo de nodos de un grafo, para que el editor de reglas ofrezca nodos y respuestas válidos.  <br /></td></tr>
 <tr class="memitem:a7420e3d4b075ae4109765b53ca6ec7a2" id="r_a7420e3d4b075ae4109765b53ca6ec7a2"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a7420e3d4b075ae4109765b53ca6ec7a2">CategoriaDTO</a> ( @Schema(description=&quot;Id de la pregunta puente&quot;) String puenteId, @Schema(description=&quot;Opción de la pregunta inicial que lleva a ella&quot;) String nombre, @Schema(description=&quot;Texto de la pregunta puente&quot;) String pregunta)</td></tr>
@@ -163,8 +163,8 @@ Funciones</h2></td></tr>
 <div class="textblock"><p>API REST del módulo de autoría: subgrafos en <code class="JavaDocCode">/api/autoria</code> y bases de reglas en <code class="JavaDocCode">/api/autoria/bases</code>. </p>
 <p>Incluye los DTOs de respuesta (records), los cuerpos de petición (Lombok) y el manejo de errores propio, que responde 422 con un mensaje para el médico. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones</h2>
-<a id="a90b6ccc8469479c444ed4758eaec61c0" name="a90b6ccc8469479c444ed4758eaec61c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a90b6ccc8469479c444ed4758eaec61c0">&#9670;&#160;</a></span>BaseReglaDTO()</h2>
+<a id="a3453c8362bf3c4fa9704a169b3c35294" name="a3453c8362bf3c4fa9704a169b3c35294"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3453c8362bf3c4fa9704a169b3c35294">&#9670;&#160;</a></span>BaseReglaDTO()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -227,7 +227,12 @@ Funciones</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">@Schema(description=&quot;Fecha de la última publicación, o nula&quot;) Instant</td>          <td class="paramname"><span class="paramname"><em>publicadoEn</em></span>&#160;)</td>
+          <td class="paramtype">@Schema(description=&quot;Fecha de la última publicación, o nula&quot;) Instant</td>          <td class="paramname"><span class="paramname"><em>publicadoEn</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">@Schema(description=&quot;true si hay una copia de lo publicado a la que se puede volver&quot;) boolean</td>          <td class="paramname"><span class="paramname"><em>puedeDescartar</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">

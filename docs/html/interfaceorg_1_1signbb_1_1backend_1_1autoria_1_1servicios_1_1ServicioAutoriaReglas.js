@@ -5,6 +5,7 @@ var interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria
     [ "avisos", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html#a0082039d04cbbf5e37b4bed9276f6d11", null ],
     [ "catalogo", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html#a2cd53b0b435e3b8907d02de01c3c7062", null ],
     [ "crear", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html#a1dd72aca33dd4e59c35faf08f2ce3795", null ],
+    [ "descartarCambios", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html#a55a1cb8bea9cbfdfcb17fb69ba90fbd1", null ],
     [ "editarRegla", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html#a213237257b7d9674a0505a63e917ec0d", null ],
     [ "eliminar", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html#a4e9d048018b247773dacf280573bff9c", null ],
     [ "eliminarRegla", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html#abbfb3327651489067cad262e129458a2", null ],

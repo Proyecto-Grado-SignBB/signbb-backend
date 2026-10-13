@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
@@ -47,6 +48,7 @@ class PublicadorReglaTest {
     private final List<BaseReglasEntity> baseFilas = new ArrayList<>();
     private RepositorioBaseReglas bases;
     private ResolvedorContenidoClinico resolvedor;
+    private ResolvedorVersiones versiones;
     private ContextoClinico contexto;
     private PublicadorRegla publicador;
 
@@ -82,13 +84,14 @@ class PublicadorReglaTest {
 
         resolvedor = mock(ResolvedorContenidoClinico.class);
         contexto = mock(ContextoClinico.class);
+        versiones = mock(ResolvedorVersiones.class);
 
         // Publica el subgrafo de fiebre para que su grafo exista y la raíz lo referencie.
         new PublicadorSubgrafo(grafos, bases, resolvedor, mock(ResolvedorVersiones.class), contexto)
                 .publicar(LienzoFiebre.borrador(LienzoFiebre.completo()), FECHA);
         clearInvocations(resolvedor, contexto);
 
-        publicador = new PublicadorRegla(grafos, bases, resolvedor, contexto);
+        publicador = new PublicadorRegla(grafos, bases, resolvedor, versiones, contexto);
     }
 
     private static GrafoClinicoEntity fila(GrafoClinicoJson documento) {
@@ -153,6 +156,13 @@ class PublicadorReglaTest {
         assertEquals(4, e.getAvisos().size(), "sin nombre, sin condiciones, sin destino y nivel NORMAL");
         verify(bases, never()).save(any());
         verify(resolvedor, never()).invalidar();
+    }
+
+    @Test
+    void publicarRegistraUnaVersionConGrafoYReglas() {
+        publicador.publicar(BaseReglasFiebre.borrador(BaseReglasFiebre.conUrgencia()), FECHA);
+
+        verify(versiones).registrar(any(GrafoClinicoJson.class), any(BaseReglasJson.class), anyString());
     }
 
     @Test

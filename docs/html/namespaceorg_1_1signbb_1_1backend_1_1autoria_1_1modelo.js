@@ -7,6 +7,7 @@ var namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1modelo =
     [ "TipoNodo", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1TipoNodo.html", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1TipoNodo" ],
     [ "Aviso", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1modelo.html#a93561d85dcd8b4627efed007961f5d03", null ],
     [ "BorradorRegla", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1modelo.html#ad877808e981157f30a3a0c5956f6183c", null ],
+    [ "CopiaBaseReglaPublicada", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1modelo.html#a868661946496d54d45711fe2593035f1", null ],
     [ "CopiaPublicada", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1modelo.html#acd54de863402fca55cf6217d9b11fd51", null ],
     [ "DocumentoBaseRegla", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1modelo.html#aacdec638daf4aef95fe4c47d86d1f537", null ],
     [ "DocumentoLienzo", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1modelo.html#ac4af53f37093be19ec3ab07663e8ee7d", null ],
