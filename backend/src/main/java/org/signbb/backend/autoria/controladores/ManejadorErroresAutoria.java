@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.signbb.backend.autoria.servicios.ContenidoInvalidoException;
 import org.signbb.backend.autoria.servicios.EdicionInvalidaException;
+import org.signbb.backend.media.AlmacenNoDisponibleException;
+import org.signbb.backend.media.ControladorImagenes;
+import org.signbb.backend.media.ImagenInvalidaException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -15,9 +18,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
  * Errores del módulo de autoría. A diferencia de {@code ManejadorExcepciones},
  * responden con cuerpo ({@link ErrorAutoriaDTO}) porque el mensaje es para el
- * médico. El 404 sigue a cargo de {@code ManejadorExcepciones}.
+ * médico. También cubre las imágenes ({@link ControladorImagenes}). El 404
+ * sigue a cargo de {@code ManejadorExcepciones}.
  */
-@RestControllerAdvice(assignableTypes = { ControladorAutoria.class, ControladorReglas.class })
+@RestControllerAdvice(assignableTypes = { ControladorAutoria.class, ControladorReglas.class,
+        ControladorImagenes.class })
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class ManejadorErroresAutoria {
 
@@ -34,6 +39,19 @@ public class ManejadorErroresAutoria {
     @ExceptionHandler(ContenidoInvalidoException.class)
     public ResponseEntity<ErrorAutoriaDTO> contenidoInvalido(ContenidoInvalidoException ex) {
         return ResponseEntity.status(UNPROCESSABLE).body(new ErrorAutoriaDTO(ex.getMessage(), ex.getAvisos()));
+    }
+
+    /** Imagen que no se puede aceptar (formato, tamaño): 422. */
+    @ExceptionHandler(ImagenInvalidaException.class)
+    public ResponseEntity<ErrorAutoriaDTO> imagenInvalida(ImagenInvalidaException ex) {
+        return ResponseEntity.status(UNPROCESSABLE).body(new ErrorAutoriaDTO(ex.getMessage(), List.of()));
+    }
+
+    /** Silo no responde: 503, transitorio. */
+    @ExceptionHandler(AlmacenNoDisponibleException.class)
+    public ResponseEntity<ErrorAutoriaDTO> almacenNoDisponible(AlmacenNoDisponibleException ex) {
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new ErrorAutoriaDTO(
+                "El almacén de imágenes no responde. Intenta de nuevo en un momento.", List.of()));
     }
 
     /** Dos ediciones simultáneas del mismo borrador: 409. */

@@ -1,0 +1,112 @@
+package org.signbb.backend.cache;
+
+import java.time.Duration;
+
+import org.signbb.backend.navegacion.datos.entidades.VersionContenidoEntity;
+import org.signbb.backend.navegacion.datos.repositorios.RepositorioVersionContenido;
+import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoJson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Component;
+
+import tools.jackson.databind.ObjectMapper;
+
+/**
+ * Versiones del contenido clínico: cada publicación guarda una foto del grafo
+ * compuesto y los recorridos se atan a la que tenían al empezar.
+ *
+ * <p>
+ * La base de datos es la fuente de verdad y Redis la copia caliente, con una
+ * clave por versión. Como una versión nunca cambia, su copia en Redis nunca
+ * hay que invalidarla; el TTL es solo higiene. Si Redis no responde se lee de
+ * la base de datos.
+ */
+@Component
+public class ResolvedorVersiones {
+
+    private static final Logger log = LoggerFactory.getLogger(ResolvedorVersiones.class);
+
+    /** Prefijo de la clave de cada versión (le sigue el id): {@code signbb:contenido:v3:version:7:grafo}. */
+    public static final String PREFIJO_CLAVE = "signbb:contenido:v3:version:";
+
+    private static final Duration TTL = Duration.ofHours(24);
+
+    private final StringRedisTemplate redis;
+    private final RepositorioVersionContenido versiones;
+    private final ResolvedorContenidoClinico contenido;
+    private final ObjectMapper mapper = new ObjectMapper();
+
+    /** Inyecta Redis, el repositorio de versiones y el resolvedor del contenido vigente. */
+    public ResolvedorVersiones(StringRedisTemplate redis, RepositorioVersionContenido versiones,
+            ResolvedorContenidoClinico contenido) {
+        this.redis = redis;
+        this.versiones = versiones;
+        this.contenido = contenido;
+    }
+
+    /** Clave en Redis del grafo de una versión. */
+    public static String clave(Long id) {
+        return PREFIJO_CLAVE + id + ":grafo";
+    }
+
+    /**
+     * Id de la versión vigente (la más reciente). Si todavía no hay ninguna
+     * (contenido sembrado o publicado antes de existir las versiones), la
+     * primera es una foto del contenido vigente en ese momento.
+     */
+    public synchronized Long idActual() {
+        Long id = versiones.idMasReciente();
+        if (id == null) {
+            id = registrar(contenido.documentoGrafo(), "Contenido inicial");
+            log.info("Primera versión del contenido clínico creada (id {}).", id);
+        }
+        return id;
+    }
+
+    /**
+     * Guarda una versión nueva y devuelve su id. Se llama dentro de la
+     * transacción de la publicación, para que se guarden juntas o ninguna.
+     */
+    public Long registrar(GrafoClinicoJson grafo, String origen) {
+        return versiones.save(new VersionContenidoEntity(grafo, origen)).getId();
+    }
+
+    /**
+     * Grafo compuesto de una versión: Redis, y si no está, la base de datos.
+     *
+     * @throws IllegalStateException si la versión no existe
+     */
+    public GrafoClinicoJson documentoGrafo(Long id) {
+        String clave = clave(id);
+        String cacheado = leer(clave);
+        if (cacheado != null) {
+            return mapper.readValue(cacheado, GrafoClinicoJson.class);
+        }
+        GrafoClinicoJson grafo = versiones.findById(id)
+                .orElseThrow(() -> new IllegalStateException(
+                        "la versión " + id + " del contenido clínico no existe en la base de datos"))
+                .getGrafo();
+        escribir(clave, mapper.writeValueAsString(grafo));
+        return grafo;
+    }
+
+    private String leer(String clave) {
+        try {
+            return redis.opsForValue().get(clave);
+        } catch (DataAccessException e) {
+            log.warn("Redis no disponible para leer '{}' ({}): se lee de la base de datos.", clave,
+                    e.getClass().getSimpleName());
+            return null;
+        }
+    }
+
+    private void escribir(String clave, String json) {
+        try {
+            redis.opsForValue().set(clave, json, TTL);
+        } catch (DataAccessException e) {
+            log.warn("Redis no disponible para escribir '{}' ({}).", clave, e.getClass().getSimpleName());
+        }
+    }
+}

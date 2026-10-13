@@ -2,6 +2,7 @@ var namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo =
 [
     [ "Contexto", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto" ],
     [ "ContextoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico" ],
+    [ "ContextoClinicoTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinicoTest.html", null ],
     [ "ContextoTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoTest.html", null ],
     [ "EstadoPaciente", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente" ],
     [ "EstadoPacienteNavegacionTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPacienteNavegacionTest.html", null ],
@@ -15,6 +16,7 @@ var namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo =
     [ "RespuestaTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RespuestaTest.html", null ],
     [ "ResultadoPasoRecomendacionesTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ResultadoPasoRecomendacionesTest.html", null ],
     [ "SesionTriaje", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje" ],
+    [ "VersionesDePrueba", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1VersionesDePrueba.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1VersionesDePrueba" ],
     [ "FotoNavegacion", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#ad0a916e226b0a74974b6aa0f13ad7ef4", null ],
     [ "OpcionPendiente", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#a6d515ecc5fd241036d3a0c2e2bf0f8b8", null ],
     [ "PasoCausal", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#ae0d0f2b160e2acf823a23becd53010f6", null ],

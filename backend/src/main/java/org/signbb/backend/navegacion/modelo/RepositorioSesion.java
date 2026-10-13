@@ -11,8 +11,16 @@ package org.signbb.backend.navegacion.modelo;
  */
 public interface RepositorioSesion {
 
-    /** Crea y almacena una sesión nueva con un id generado. */
-    SesionTriaje crear(EstadoPaciente estado, ResultadoPaso pasoInicial);
+    /**
+     * Crea y almacena una sesión nueva con un id generado, atada a la versión
+     * del contenido clínico con la que empieza el recorrido.
+     */
+    SesionTriaje crear(EstadoPaciente estado, ResultadoPaso pasoInicial, Long versionId);
+
+    /** Crea una sesión sin versión: usa siempre la vigente (para pruebas y sesiones antiguas). */
+    default SesionTriaje crear(EstadoPaciente estado, ResultadoPaso pasoInicial) {
+        return crear(estado, pasoInicial, null);
+    }
 
     /** Busca una sesión por id; falla con 404 si no existe. */
     SesionTriaje buscar(String id);

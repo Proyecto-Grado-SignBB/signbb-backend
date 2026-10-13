@@ -12,7 +12,7 @@ var annotated_dup =
               [ "DespuesDeRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1DespuesDeRequest.html", null ],
               [ "DestinoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1DestinoRequest.html", null ],
               [ "ManejadorErroresAutoria", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ManejadorErroresAutoria.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ManejadorErroresAutoria" ],
-              [ "NodoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1NodoRequest.html", null ],
+              [ "NodoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1NodoRequest.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1NodoRequest" ],
               [ "OpcionRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1OpcionRequest.html", null ],
               [ "ReglaRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ReglaRequest.html", null ],
               [ "SubgrafoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1SubgrafoRequest.html", null ]
@@ -31,6 +31,7 @@ var annotated_dup =
               [ "Desenlace", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Desenlace.html", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Desenlace" ],
               [ "EstadoBorrador", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1EstadoBorrador.html", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1EstadoBorrador" ],
               [ "Gravedad", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Gravedad.html", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Gravedad" ],
+              [ "NodoLienzoTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1NodoLienzoTest.html", null ],
               [ "TipoNodo", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1TipoNodo.html", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1TipoNodo" ]
             ] ],
             [ "servicios", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios.html", [
@@ -71,7 +72,9 @@ var annotated_dup =
             [ "RepositorioSesionRedis", "classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html", "classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis" ],
             [ "RepositorioSesionRedisTest", "classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedisTest.html", null ],
             [ "ResolvedorContenidoClinico", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico.html", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico" ],
-            [ "ResolvedorContenidoClinicoTest", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinicoTest.html", null ]
+            [ "ResolvedorContenidoClinicoTest", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinicoTest.html", null ],
+            [ "ResolvedorVersiones", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorVersiones.html", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorVersiones" ],
+            [ "ResolvedorVersionesTest", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorVersionesTest.html", null ]
           ] ],
           [ "config", "namespaceorg_1_1signbb_1_1backend_1_1config.html", [
             [ "ConfiguracionCors", "classorg_1_1signbb_1_1backend_1_1config_1_1ConfiguracionCors.html", null ],
@@ -79,13 +82,25 @@ var annotated_dup =
             [ "OpenApiConfig", "classorg_1_1signbb_1_1backend_1_1config_1_1OpenApiConfig.html", "classorg_1_1signbb_1_1backend_1_1config_1_1OpenApiConfig" ],
             [ "RecursoNoEncontradoException", "classorg_1_1signbb_1_1backend_1_1config_1_1RecursoNoEncontradoException.html", null ]
           ] ],
+          [ "media", "namespaceorg_1_1signbb_1_1backend_1_1media.html", [
+            [ "AlmacenImagenes", "interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html", "interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes" ],
+            [ "AlmacenImagenesS3", "classorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenesS3.html", "classorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenesS3" ],
+            [ "AlmacenNoDisponibleException", "classorg_1_1signbb_1_1backend_1_1media_1_1AlmacenNoDisponibleException.html", "classorg_1_1signbb_1_1backend_1_1media_1_1AlmacenNoDisponibleException" ],
+            [ "ControladorImagenes", "classorg_1_1signbb_1_1backend_1_1media_1_1ControladorImagenes.html", "classorg_1_1signbb_1_1backend_1_1media_1_1ControladorImagenes" ],
+            [ "ControladorImagenesTest", "classorg_1_1signbb_1_1backend_1_1media_1_1ControladorImagenesTest.html", null ],
+            [ "ImagenInvalidaException", "classorg_1_1signbb_1_1backend_1_1media_1_1ImagenInvalidaException.html", "classorg_1_1signbb_1_1backend_1_1media_1_1ImagenInvalidaException" ],
+            [ "ServicioImagenes", "classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenes.html", "classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenes" ],
+            [ "ServicioImagenesTest", "classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenesTest.html", null ]
+          ] ],
           [ "navegacion", "namespaceorg_1_1signbb_1_1backend_1_1navegacion.html", [
             [ "datos", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos.html", [
               [ "entidades", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades.html", [
-                [ "GrafoClinicoEntity", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1GrafoClinicoEntity.html", null ]
+                [ "GrafoClinicoEntity", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1GrafoClinicoEntity.html", null ],
+                [ "VersionContenidoEntity", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1VersionContenidoEntity.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1VersionContenidoEntity" ]
               ] ],
               [ "repositorios", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios.html", [
-                [ "RepositorioGrafoClinico", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafoClinico.html", null ]
+                [ "RepositorioGrafoClinico", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafoClinico.html", null ],
+                [ "RepositorioVersionContenido", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioVersionContenido.html", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioVersionContenido" ]
               ] ],
               [ "serializacion", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion.html", [
                 [ "CompositorGrafoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1CompositorGrafoClinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1CompositorGrafoClinico" ],
@@ -100,6 +115,7 @@ var annotated_dup =
             [ "modelo", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html", [
               [ "Contexto", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto" ],
               [ "ContextoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico" ],
+              [ "ContextoClinicoTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinicoTest.html", null ],
               [ "ContextoTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoTest.html", null ],
               [ "EstadoPaciente", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente" ],
               [ "EstadoPacienteNavegacionTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPacienteNavegacionTest.html", null ],
@@ -112,7 +128,8 @@ var annotated_dup =
               [ "Respuesta", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta" ],
               [ "RespuestaTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RespuestaTest.html", null ],
               [ "ResultadoPasoRecomendacionesTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ResultadoPasoRecomendacionesTest.html", null ],
-              [ "SesionTriaje", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje" ]
+              [ "SesionTriaje", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje" ],
+              [ "VersionesDePrueba", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1VersionesDePrueba.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1VersionesDePrueba" ]
             ] ],
             [ "motor", null, [
               [ "MotorNavegacionColaTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1motor_1_1MotorNavegacionColaTest.html", null ],
@@ -125,7 +142,8 @@ var annotated_dup =
               [ "MotorNavegacion", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion" ],
               [ "ServicioNavegacion", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion" ],
               [ "ServicioNavegacionImpl", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImpl.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImpl" ],
-              [ "ServicioNavegacionImplTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImplTest.html", null ]
+              [ "ServicioNavegacionImplTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImplTest.html", null ],
+              [ "ServicioNavegacionVersionesTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionVersionesTest.html", null ]
             ] ]
           ] ],
           [ "observaciones", "namespaceorg_1_1signbb_1_1backend_1_1observaciones.html", [

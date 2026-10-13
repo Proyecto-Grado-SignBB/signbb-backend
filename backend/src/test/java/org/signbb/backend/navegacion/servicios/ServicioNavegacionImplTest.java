@@ -3,6 +3,7 @@ package org.signbb.backend.navegacion.servicios;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -49,9 +50,9 @@ class ServicioNavegacionImplTest {
         private final Map<String, SesionTriaje> sesiones = new ConcurrentHashMap<>();
 
         @Override
-        public SesionTriaje crear(EstadoPaciente estado, ResultadoPaso pasoInicial) {
+        public SesionTriaje crear(EstadoPaciente estado, ResultadoPaso pasoInicial, Long versionId) {
             String id = UUID.randomUUID().toString();
-            SesionTriaje sesion = new SesionTriaje(id, estado, pasoInicial);
+            SesionTriaje sesion = new SesionTriaje(id, estado, pasoInicial, versionId);
             sesiones.put(id, sesion);
             return sesion;
         }
@@ -77,8 +78,9 @@ class ServicioNavegacionImplTest {
         GrafoClinico grafo = GrafoClinicoMapper.desde(contenido.grafo());
         BaseReglas base = BaseReglasMapper.desde(contenido.reglas(), grafo);
         ContextoClinico contexto = mock(ContextoClinico.class);
-        when(contexto.getGrafo()).thenReturn(grafo);
-        when(contexto.getBase()).thenReturn(base);
+        when(contexto.idVersionActual()).thenReturn(1L);
+        when(contexto.grafoDe(any())).thenReturn(grafo);
+        when(contexto.baseDe(any())).thenReturn(base);
 
         servicio = new ServicioNavegacionImpl(contexto, new MotorNavegacion(new ServicioReglasImpl()),
                 new RepositorioSesionEnMemoria());

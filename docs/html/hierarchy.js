@@ -1,6 +1,9 @@
 var hierarchy =
 [
     [ "org.signbb.backend.autoria.servicios.Alcance", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1Alcance.html", null ],
+    [ "org.signbb.backend.media.AlmacenImagenes", "interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html", [
+      [ "org.signbb.backend.media.AlmacenImagenesS3", "classorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenesS3.html", null ]
+    ] ],
     [ "org.signbb.backend.AutoriaIntegracionTest", "classorg_1_1signbb_1_1backend_1_1AutoriaIntegracionTest.html", null ],
     [ "org.signbb.backend.BackendApplication", "classorg_1_1signbb_1_1backend_1_1BackendApplication.html", null ],
     [ "org.signbb.backend.BackendApplicationTests", "classorg_1_1signbb_1_1backend_1_1BackendApplicationTests.html", null ],
@@ -29,10 +32,13 @@ var hierarchy =
     [ "org.signbb.backend.navegacion.datos.serializacion.ContenidoEjemplo", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1ContenidoEjemplo.html", null ],
     [ "org.signbb.backend.navegacion.modelo.Contexto", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html", null ],
     [ "org.signbb.backend.navegacion.modelo.ContextoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html", null ],
+    [ "org.signbb.backend.navegacion.modelo.ContextoClinicoTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinicoTest.html", null ],
     [ "org.signbb.backend.navegacion.modelo.ContextoTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoTest.html", null ],
     [ "org.signbb.backend.autoria.controladores.ControladorAutoria", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html", null ],
     [ "org.signbb.backend.autoria.controladores.ControladorAutoriaTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoriaTest.html", null ],
     [ "org.signbb.backend.observaciones.controladores.ControladorConsulta", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1ControladorConsulta.html", null ],
+    [ "org.signbb.backend.media.ControladorImagenes", "classorg_1_1signbb_1_1backend_1_1media_1_1ControladorImagenes.html", null ],
+    [ "org.signbb.backend.media.ControladorImagenesTest", "classorg_1_1signbb_1_1backend_1_1media_1_1ControladorImagenesTest.html", null ],
     [ "org.signbb.backend.autoria.controladores.ControladorReglas", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html", null ],
     [ "org.signbb.backend.autoria.modelo.Desenlace", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Desenlace.html", null ],
     [ "org.signbb.backend.autoria.controladores.DespuesDeRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1DespuesDeRequest.html", null ],
@@ -56,6 +62,7 @@ var hierarchy =
       [ "org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorBaseRegla", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorBaseRegla.html", null ],
       [ "org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorSubgrafo.html", null ],
       [ "org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafoClinico.html", null ],
+      [ "org.signbb.backend.navegacion.datos.repositorios.RepositorioVersionContenido", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioVersionContenido.html", null ],
       [ "org.signbb.backend.observaciones.datos.repositorios.RepositorioObservaciones", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioObservaciones.html", null ],
       [ "org.signbb.backend.reglas.datos.repositorios.RepositorioBaseReglas", "interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1repositorios_1_1RepositorioBaseReglas.html", null ]
     ] ],
@@ -70,6 +77,7 @@ var hierarchy =
     [ "org.signbb.backend.navegacion.motor.MotorNavegacionTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1motor_1_1MotorNavegacionTest.html", null ],
     [ "org.signbb.backend.reglas.modelo.NivelAlerta", "enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1NivelAlerta.html", null ],
     [ "org.signbb.backend.navegacion.modelo.Nodo", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html", null ],
+    [ "org.signbb.backend.autoria.modelo.NodoLienzoTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1NodoLienzoTest.html", null ],
     [ "org.signbb.backend.autoria.controladores.NodoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1NodoRequest.html", null ],
     [ "org.signbb.backend.navegacion.modelo.NodoTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1NodoTest.html", null ],
     [ "org.signbb.backend.observaciones.datos.entidades.ObservacionEntity", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1entidades_1_1ObservacionEntity.html", null ],
@@ -92,6 +100,8 @@ var hierarchy =
     [ "org.signbb.backend.autoria.servicios.ResolutorCatalogoNodos", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ResolutorCatalogoNodos.html", null ],
     [ "org.signbb.backend.cache.ResolvedorContenidoClinico", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico.html", null ],
     [ "org.signbb.backend.cache.ResolvedorContenidoClinicoTest", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinicoTest.html", null ],
+    [ "org.signbb.backend.cache.ResolvedorVersiones", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorVersiones.html", null ],
+    [ "org.signbb.backend.cache.ResolvedorVersionesTest", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorVersionesTest.html", null ],
     [ "org.signbb.backend.navegacion.modelo.Respuesta", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html", null ],
     [ "org.signbb.backend.observaciones.controladores.RespuestaRequest", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1RespuestaRequest.html", null ],
     [ "org.signbb.backend.navegacion.modelo.RespuestaTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RespuestaTest.html", null ],
@@ -100,7 +110,9 @@ var hierarchy =
       [ "org.signbb.backend.autoria.servicios.ContenidoInvalidoException", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ContenidoInvalidoException.html", null ],
       [ "org.signbb.backend.autoria.servicios.EdicionInvalidaException", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EdicionInvalidaException.html", null ],
       [ "org.signbb.backend.cache.CacheNoDisponibleException", "classorg_1_1signbb_1_1backend_1_1cache_1_1CacheNoDisponibleException.html", null ],
-      [ "org.signbb.backend.config.RecursoNoEncontradoException", "classorg_1_1signbb_1_1backend_1_1config_1_1RecursoNoEncontradoException.html", null ]
+      [ "org.signbb.backend.config.RecursoNoEncontradoException", "classorg_1_1signbb_1_1backend_1_1config_1_1RecursoNoEncontradoException.html", null ],
+      [ "org.signbb.backend.media.AlmacenNoDisponibleException", "classorg_1_1signbb_1_1backend_1_1media_1_1AlmacenNoDisponibleException.html", null ],
+      [ "org.signbb.backend.media.ImagenInvalidaException", "classorg_1_1signbb_1_1backend_1_1media_1_1ImagenInvalidaException.html", null ]
     ] ],
     [ "org.signbb.backend.observaciones.modelo.SeleccionCuidador", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1SeleccionCuidador.html", null ],
     [ "org.signbb.backend.observaciones.modelo.SeleccionCuidadorTest", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1SeleccionCuidadorTest.html", null ],
@@ -117,10 +129,13 @@ var hierarchy =
       [ "org.signbb.backend.observaciones.servicios.ServicioCapturaImpl", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl.html", null ]
     ] ],
     [ "org.signbb.backend.observaciones.servicios.ServicioCapturaImplTest", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImplTest.html", null ],
+    [ "org.signbb.backend.media.ServicioImagenes", "classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenes.html", null ],
+    [ "org.signbb.backend.media.ServicioImagenesTest", "classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenesTest.html", null ],
     [ "org.signbb.backend.navegacion.servicios.ServicioNavegacion", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html", [
       [ "org.signbb.backend.navegacion.servicios.ServicioNavegacionImpl", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImpl.html", null ]
     ] ],
     [ "org.signbb.backend.navegacion.servicios.ServicioNavegacionImplTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImplTest.html", null ],
+    [ "org.signbb.backend.navegacion.servicios.ServicioNavegacionVersionesTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionVersionesTest.html", null ],
     [ "org.signbb.backend.reglas.servicios.ServicioReglas", "interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglas.html", [
       [ "org.signbb.backend.reglas.servicios.ServicioReglasImpl", "classorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglasImpl.html", null ]
     ] ],
@@ -133,6 +148,8 @@ var hierarchy =
     [ "org.signbb.backend.autoria.servicios.ValidadorLienzoTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzoTest.html", null ],
     [ "org.signbb.backend.autoria.servicios.ValidadorReglas", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorReglas.html", null ],
     [ "org.signbb.backend.autoria.servicios.ValidadorReglasTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorReglasTest.html", null ],
+    [ "org.signbb.backend.navegacion.datos.entidades.VersionContenidoEntity", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1VersionContenidoEntity.html", null ],
+    [ "org.signbb.backend.navegacion.modelo.VersionesDePrueba", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1VersionesDePrueba.html", null ],
     [ "WebMvcConfigurer", null, [
       [ "org.signbb.backend.config.ConfiguracionCors", "classorg_1_1signbb_1_1backend_1_1config_1_1ConfiguracionCors.html", null ]
     ] ]

@@ -130,7 +130,8 @@ void&#160;</td><td class="memItemRight"><b>elContextoSirveContenidoCompleto</b> 
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Tests de integración del cache Redis (requiere el servicio <span class="tt">cache</span> de contenedores/compose.yaml). </p>
-<p>Sin Redis disponible se saltan con una suposición — sin cache el contenido resuelve directo desde la base, que es el camino de degradación que también interesa cubrir. </p>
+<p>Sin Redis disponible se saltan con una suposición — sin cache el contenido resuelve directo desde la base, que es el camino de degradación que también interesa cubrir.</p>
+<p>Corren contra la base de datos real del entorno, que puede tener más subgrafos publicados que la siembra inicial. Por eso los conteos esperados no están escritos a mano: se calculan componiendo las filas guardadas. </p>
 </div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/test/java/org/signbb/backend/<b>CacheRedisIntegracionTest.java</b></li>
 </ul>

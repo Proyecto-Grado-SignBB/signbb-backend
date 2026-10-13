@@ -71,8 +71,8 @@ class RepositorioSesionRedisTest {
         base = BaseReglasMapper.desde(contenido.reglas(), grafo);
 
         ContextoClinico contexto = mock(ContextoClinico.class);
-        when(contexto.getGrafo()).thenReturn(grafo);
-        when(contexto.getBase()).thenReturn(base);
+        when(contexto.grafoDe(any())).thenReturn(grafo);
+        when(contexto.baseDe(any())).thenReturn(base);
 
         repositorio = new RepositorioSesionRedis(redis, contexto);
     }

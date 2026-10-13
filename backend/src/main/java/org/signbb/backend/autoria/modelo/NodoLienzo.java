@@ -16,6 +16,9 @@ import java.util.List;
  *                         pregunta)
  * @param respuestas       respuestas de la pregunta, en el orden en que se
  *                         muestran (vacía en una conclusión)
+ * @param imagenes         nombres de las imágenes de apoyo de la pregunta,
+ *                         máximo 3, en el orden en que se muestran (vacía en
+ *                         una conclusión)
  */
 public record NodoLienzo(
         String id,
@@ -23,11 +26,22 @@ public record NodoLienzo(
         String texto,
         boolean variasRespuestas,
         Desenlace desenlace,
-        List<RespuestaLienzo> respuestas) {
+        List<RespuestaLienzo> respuestas,
+        List<String> imagenes) {
 
-    /** Normaliza la lista de respuestas ausente a una lista vacía inmutable. */
+    /**
+     * Normaliza las listas ausentes a una lista vacía inmutable. Los lienzos
+     * guardados antes de las imágenes no tienen {@code imagenes}.
+     */
     public NodoLienzo {
         respuestas = respuestas == null ? List.of() : List.copyOf(respuestas);
+        imagenes = imagenes == null ? List.of() : List.copyOf(imagenes);
+    }
+
+    /** Nodo sin imágenes. */
+    public NodoLienzo(String id, TipoNodo tipo, String texto, boolean variasRespuestas, Desenlace desenlace,
+            List<RespuestaLienzo> respuestas) {
+        this(id, tipo, texto, variasRespuestas, desenlace, respuestas, List.of());
     }
 
     /** True si es una pregunta. */
@@ -37,6 +51,6 @@ public record NodoLienzo(
 
     /** Copia con otras respuestas. */
     public NodoLienzo conRespuestas(List<RespuestaLienzo> nuevas) {
-        return new NodoLienzo(id, tipo, texto, variasRespuestas, desenlace, nuevas);
+        return new NodoLienzo(id, tipo, texto, variasRespuestas, desenlace, nuevas, imagenes);
     }
 }

@@ -56,4 +56,12 @@ public interface ServicioAutoria {
      * @throws ContenidoInvalidoException si no se puede publicar (422 con los avisos)
      */
     SubgrafoDTO publicar(Long id);
+
+    /**
+     * Descarta los cambios sin publicar: el borrador vuelve a como estaba en su
+     * última publicación. Si no tiene cambios sin publicar, lo devuelve igual.
+     *
+     * @throws EdicionInvalidaException si nunca se publicó o no tiene copia de lo publicado (422)
+     */
+    SubgrafoDTO descartarCambios(Long id);
 }

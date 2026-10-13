@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('pruebas.html',
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_backend_2src_2test_2PRUEBAS"></a></p>
 <p>Esta sección reúne la documentación de la <b>suite de pruebas del backend</b> (Spring Boot 4.1.1, Java 25). Cubre los TADs clínicos, el motor de navegación, el motor de reglas, la autoría (lienzo y reglas) y la captura de observaciones.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md37"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md39"></a>
 Cómo ejecutarlas</h1>
 <p>Desde el directorio <span class="tt">backend</span>: </p><pre class="fragment">./mvnw test              # compila y ejecuta la suite completa
 ./mvnw verify            # build completo, igual que en CI (GitHub Actions)
@@ -121,13 +121,13 @@ Cómo ejecutarlas</h1>
 ./mvnw -Dtest=Clase#metodo test
 </pre><p>Las pruebas unitarias son <b>JUnit 5 puro</b> y, cuando hace falta simular colaboradores, <b>Mockito</b> (5.x, con el <em>inline mock maker</em>, de modo que también se pueden simular clases <span class="tt">final</span>). No necesitan Spring, PostgreSQL ni Redis.</p>
 <p>Las pruebas de integración usan <span class="tt">@SpringBootTest</span> y <b>requieren PostgreSQL y Redis</b> arriba (<span class="tt">contenedores/compose.yaml</span>); el CI los levanta como servicios efímeros (<span class="tt">signbb-backend/.github/workflows/build.yml</span>).</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md38"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md40"></a>
 Tipos de prueba</h1>
 <ul>
 <li><b>Unitarias (JUnit 5 ± Mockito):</b> no arrancan el contexto de Spring. Son la mayoría y corren en local sin contenedores.</li>
 <li>**Integración (<span class="tt">@SpringBootTest</span>):** arrancan la aplicación completa y verifican persistencia (<span class="tt">jsonb</span>), cache (Redis) y el recorrido de punta a punta. Se ejecutan en <span class="tt">./mvnw verify</span>.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md39"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md41"></a>
 Suite por módulo</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -143,7 +143,7 @@ Suite por módulo</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Cache: contenido clínico y sesiones en Redis  </td><td class="markdownTableBodyRight">—  </td><td class="markdownTableBodyNone">Mockito / <span class="tt">@SpringBootTest</span>  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_cache.html" title="Pruebas del cache">Ver página</a>  </td></tr>
 </table>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md40"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md42"></a>
 Pruebas de integración de la raíz</h1>
 <p>En <span class="tt">backend/src/test/java/org/signbb/backend/</span> viven las pruebas que arrancan el contexto completo:</p>
 <ul>
@@ -152,7 +152,7 @@ Pruebas de integración de la raíz</h1>
 <li><span class="tt">AutoriaIntegracionTest</span> — de punta a punta: armar un subgrafo con el servicio, publicarlo y recorrerlo como la cuidadora (ver <a class="el" href="pruebas_autoria.html" title="Pruebas del módulo de autoría">Pruebas del módulo de autoría</a>).</li>
 <li><span class="tt">CacheRedisIntegracionTest</span> — cache-aside con Redis real; se salta sola si el servicio <span class="tt">cache</span> no responde (ver <a class="el" href="pruebas_cache.html" title="Pruebas del cache">Pruebas del cache</a>).</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md41"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md43"></a>
 Resultados en CI</h1>
 <p>El workflow <span class="tt">build</span> corre <span class="tt">./mvnw -B verify</span> con PostgreSQL y Redis como servicios. Las corridas y los conteos por clase se detallan en las páginas de cada módulo.</p>
 <blockquote class="doxtable">

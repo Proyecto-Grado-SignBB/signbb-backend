@@ -24,16 +24,18 @@ public final class PublicacionContenido {
 
     /**
      * Compone raíz, subgrafos y bases de reglas y reconstruye los TAD; si algo
-     * falla, se responde al médico con un 422.
+     * falla, se responde al médico con un 422. Devuelve el contenido compuesto
+     * (grafo y reglas) para quien necesite guardarlo como versión.
      *
      * @param contexto prefijo del mensaje (p. ej. "El subgrafo no se pudo publicar")
      */
-    public static void validarComposicion(String contexto, GrafoClinicoJson raiz,
+    public static CompositorGrafoClinico.Contenido validarComposicion(String contexto, GrafoClinicoJson raiz,
             List<GrafoClinicoJson> subgrafos, List<BaseReglasJson> reglas) {
         try {
             CompositorGrafoClinico.Contenido contenido = CompositorGrafoClinico.componer(raiz, subgrafos, reglas);
             GrafoClinico grafo = GrafoClinicoMapper.desde(contenido.grafo());
             BaseReglasMapper.desde(contenido.reglas(), grafo);
+            return contenido;
         } catch (IllegalArgumentException | IllegalStateException e) {
             throw new ContenidoInvalidoException(contexto + ": " + e.getMessage(), List.of());
         }

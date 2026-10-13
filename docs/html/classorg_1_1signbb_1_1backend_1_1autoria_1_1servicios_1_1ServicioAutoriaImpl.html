@@ -153,6 +153,8 @@ Métodos públicos</h2></td></tr>
 <tr class="memdesc:af4d95fca5828977091adf9f311102f70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Avisos del lienzo.  <br /></td></tr>
 <tr class="memitem:aaecd85995e59fcdf0b3ba95a7b505b15" id="r_aaecd85995e59fcdf0b3ba95a7b505b15"><td class="memItemLeft">SubgrafoDTO&#160;</td><td class="memItemRight"><a class="el" href="#aaecd85995e59fcdf0b3ba95a7b505b15">publicar</a> (Long id)</td></tr>
 <tr class="memdesc:aaecd85995e59fcdf0b3ba95a7b505b15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publica el borrador.  <br /></td></tr>
+<tr class="memitem:ae1b07bd5b151b12d3ca5956f11147c72" id="r_ae1b07bd5b151b12d3ca5956f11147c72"><td class="memItemLeft">SubgrafoDTO&#160;</td><td class="memItemRight"><a class="el" href="#ae1b07bd5b151b12d3ca5956f11147c72">descartarCambios</a> (Long id)</td></tr>
+<tr class="memdesc:ae1b07bd5b151b12d3ca5956f11147c72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Descarta los cambios sin publicar: el borrador vuelve a como estaba en su última publicación.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Implementación de <code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html">ServicioAutoria</a></code>: carga el borrador, aplica la operación de <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorLienzo.html">EditorLienzo</a></code> y lo guarda. </p>
@@ -268,6 +270,34 @@ Métodos públicos</h2></td></tr>
 <p>Crea un borrador con el lienzo vacío. </p>
 
 <p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#a044daef187e8a31703a401aabe4ba981">org.signbb.backend.autoria.servicios.ServicioAutoria</a>.</p>
+
+</div>
+</div>
+<a id="ae1b07bd5b151b12d3ca5956f11147c72" name="ae1b07bd5b151b12d3ca5956f11147c72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1b07bd5b151b12d3ca5956f11147c72">&#9670;&#160;</a></span>descartarCambios()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SubgrafoDTO org.signbb.backend.autoria.servicios.ServicioAutoriaImpl.descartarCambios </td>
+          <td>(</td>
+          <td class="paramtype">Long</td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Descarta los cambios sin publicar: el borrador vuelve a como estaba en su última publicación. </p>
+<p>Si no tiene cambios sin publicar, lo devuelve igual.</p>
+<dl class="exception"><dt>Excepciones</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EdicionInvalidaException.html" title="Una edición del lienzo que no se puede aplicar (por ejemplo, una segunda primera pregunta o un enlace...">EdicionInvalidaException</a></td><td>si nunca se publicó o no tiene copia de lo publicado (422) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#aa117090fe043fece573ef0c0f1824cf5">org.signbb.backend.autoria.servicios.ServicioAutoria</a>.</p>
 
 </div>
 </div>

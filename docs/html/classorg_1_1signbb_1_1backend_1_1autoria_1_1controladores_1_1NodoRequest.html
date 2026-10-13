@@ -114,6 +114,13 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 
 <p><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html" title="TAD Nodo del Grafo Clínico (Sección 2 del documento de diseño).">Nodo</a> que manda el panel del lienzo, para crearlo (el "+") o editarlo.  
  <a href="#details">Más...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Métodos públicos</h2></td></tr>
+<tr class="memitem:a42af4abbc88a73de0818376c8b1ad37e" id="r_a42af4abbc88a73de0818376c8b1ad37e"><td class="memItemLeft"><a id="a42af4abbc88a73de0818376c8b1ad37e" name="a42af4abbc88a73de0818376c8b1ad37e"></a>
+&#160;</td><td class="memItemRight"><b>NodoRequest</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1DespuesDeRequest.html">DespuesDeRequest</a> despuesDe, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1TipoNodo.html">TipoNodo</a> tipo, String texto, Boolean variasRespuestas, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Desenlace.html">Desenlace</a> desenlace, List&lt; <a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1OpcionRequest.html">OpcionRequest</a> &gt; respuestas)</td></tr>
+<tr class="memdesc:a42af4abbc88a73de0818376c8b1ad37e"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html" title="TAD Nodo del Grafo Clínico (Sección 2 del documento de diseño).">Nodo</a> sin imágenes. <br /></td></tr>
+</table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html" title="TAD Nodo del Grafo Clínico (Sección 2 del documento de diseño).">Nodo</a> que manda el panel del lienzo, para crearlo (el "+") o editarlo. </p>
 <ul>
@@ -125,6 +132,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 <code class="JavaDocCode">desenlace</code>: solo conclusiones. </li>
 <li>
 <code class="JavaDocCode">respuestas</code>: solo preguntas; al editar, las que traen <code class="JavaDocCode">id</code> conservan su destino. </li>
+<li>
+<code class="JavaDocCode">imagenes</code>: solo preguntas; nombres devueltos al subir cada imagen (máximo 3). Al editar, si se omite se conservan las actuales. </li>
 </ul>
 </div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/main/java/org/signbb/backend/autoria/controladores/<b>NodoRequest.java</b></li>

@@ -12,13 +12,29 @@ public class SesionTriaje {
 
     private final String id;
     private final EstadoPaciente estado;
+    private final Long versionId;
     private ResultadoPaso ultimoPaso;
 
-    /** Crea la sesión con su id, su estado y el paso inicial del recorrido. */
+    /** Crea la sesión con su id, su estado y el paso inicial; sin versión (usa la vigente). */
     public SesionTriaje(String id, EstadoPaciente estado, ResultadoPaso ultimoPaso) {
+        this(id, estado, ultimoPaso, null);
+    }
+
+    /** Crea la sesión atada a la versión del contenido con la que empezó el recorrido. */
+    public SesionTriaje(String id, EstadoPaciente estado, ResultadoPaso ultimoPaso, Long versionId) {
         this.id = id;
         this.estado = estado;
         this.ultimoPaso = ultimoPaso;
+        this.versionId = versionId;
+    }
+
+    /**
+     * Versión del contenido clínico con la que empezó el recorrido, que sigue
+     * hasta terminar. {@code null} en sesiones guardadas antes de existir las
+     * versiones: usan la vigente.
+     */
+    public Long getVersionId() {
+        return versionId;
     }
 
     /** Identificador único de la sesión (UUID). */

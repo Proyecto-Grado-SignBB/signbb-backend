@@ -22,6 +22,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * <li>{@code desenlace}: solo conclusiones.</li>
  * <li>{@code respuestas}: solo preguntas; al editar, las que traen
  * {@code id} conservan su destino.</li>
+ * <li>{@code imagenes}: solo preguntas; nombres devueltos al subir cada
+ * imagen (máximo 3). Al editar, si se omite se conservan las actuales.</li>
  * </ul>
  */
 @Getter
@@ -46,4 +48,11 @@ public class NodoRequest {
 
     @Schema(description = "Respuestas; solo para preguntas. Al editar, las que traen id conservan su destino")
     private List<OpcionRequest> respuestas;
+    private List<String> imagenes;
+
+    /** Nodo sin imágenes. */
+    public NodoRequest(DespuesDeRequest despuesDe, TipoNodo tipo, String texto, Boolean variasRespuestas,
+            Desenlace desenlace, List<OpcionRequest> respuestas) {
+        this(despuesDe, tipo, texto, variasRespuestas, desenlace, respuestas, null);
+    }
 }

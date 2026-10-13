@@ -156,8 +156,8 @@ Funciones</h2></td></tr>
 <tr class="memdesc:ac31940c3c47dee5f6cfd558c27fb39cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fila del tablero de bases de reglas.  <br /></td></tr>
 <tr class="memitem:a19d567cf8e54e9034f75ef3340f0ed7b" id="r_a19d567cf8e54e9034f75ef3340f0ed7b"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a19d567cf8e54e9034f75ef3340f0ed7b">ResumenSubgrafoDTO</a> ( @Schema(description=&quot;Id del borrador&quot;) Long id, @Schema(description=&quot;Id del subgrafo publicado&quot;) String grafoId, @Schema(description=&quot;Nombre técnico del subgrafo&quot;) String nombre, @Schema(description=&quot;Categoría (pregunta puente) donde se publica&quot;) String categoria, @Schema(description=&quot;Nombre para la familia que verá la cuidadora&quot;) String etiquetaOpcion, @Schema(description=&quot;Autor del contenido&quot;) String autor, @Schema(description=&quot;Estado: BORRADOR, PUBLICADO o CAMBIOS_SIN_PUBLICAR&quot;) <a class="el" href="enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1EstadoBorrador.html">EstadoBorrador</a> estado, @Schema(description=&quot;Número de nodos del lienzo&quot;) int nodos, @Schema(description=&quot;Fecha de la última edición&quot;) Instant actualizadoEn, @Schema(description=&quot;Fecha de la última publicación, o nulo&quot;) Instant publicadoEn)</td></tr>
 <tr class="memdesc:a19d567cf8e54e9034f75ef3340f0ed7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fila del tablero de subgrafos.  <br /></td></tr>
-<tr class="memitem:accdf5eab199da17d831c4aed3fbb6920" id="r_accdf5eab199da17d831c4aed3fbb6920"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#accdf5eab199da17d831c4aed3fbb6920">SubgrafoDTO</a> ( @Schema(description=&quot;Id del borrador&quot;) Long id, @Schema(description=&quot;Id del subgrafo publicado (grafo_...)&quot;) String grafoId, @Schema(description=&quot;Nombre técnico del subgrafo&quot;) String nombre, @Schema(description=&quot;Pregunta puente del grafo raíz donde se ofrece&quot;) String puenteId, @Schema(description=&quot;Categoría del subgrafo&quot;) String categoria, @Schema(description=&quot;Texto de la opción en la pregunta puente&quot;) String etiquetaOpcion, @Schema(description=&quot;Autor del contenido&quot;) String autor, @Schema(description=&quot;Institución del autor&quot;) String institucion, @Schema(description=&quot;Estado: BORRADOR, PUBLICADO o CAMBIOS_SIN_PUBLICAR&quot;) <a class="el" href="enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1EstadoBorrador.html">EstadoBorrador</a> estado, @Schema(description=&quot;Id de la primera pregunta, o nulo&quot;) String inicio, @Schema(description=&quot;Nodos del lienzo en el orden en que se crearon&quot;) List&lt; NodoLienzo &gt; nodos, @Schema(description=&quot;Avisos actuales del lienzo&quot;) List&lt; Aviso &gt; avisos, @Schema(description=&quot;Fecha de creación&quot;) Instant creadoEn, @Schema(description=&quot;Fecha de la última edición&quot;) Instant actualizadoEn, @Schema(description=&quot;Fecha de la última publicación, o nula&quot;) Instant publicadoEn)</td></tr>
-<tr class="memdesc:accdf5eab199da17d831c4aed3fbb6920"><td class="mdescLeft">&#160;</td><td class="mdescRight">Borrador completo: sus datos, el lienzo y los avisos.  <br /></td></tr>
+<tr class="memitem:a792a841e8ed9d66b50a99745557d71de" id="r_a792a841e8ed9d66b50a99745557d71de"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a792a841e8ed9d66b50a99745557d71de">SubgrafoDTO</a> ( @Schema(description=&quot;Id del borrador&quot;) Long id, @Schema(description=&quot;Id del subgrafo publicado (grafo_...)&quot;) String grafoId, @Schema(description=&quot;Nombre técnico del subgrafo&quot;) String nombre, @Schema(description=&quot;Pregunta puente del grafo raíz donde se ofrece&quot;) String puenteId, @Schema(description=&quot;Categoría del subgrafo&quot;) String categoria, @Schema(description=&quot;Texto de la opción en la pregunta puente&quot;) String etiquetaOpcion, @Schema(description=&quot;Autor del contenido&quot;) String autor, @Schema(description=&quot;Institución del autor&quot;) String institucion, @Schema(description=&quot;Estado: BORRADOR, PUBLICADO o CAMBIOS_SIN_PUBLICAR&quot;) <a class="el" href="enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1EstadoBorrador.html">EstadoBorrador</a> estado, @Schema(description=&quot;Id de la primera pregunta, o nulo&quot;) String inicio, @Schema(description=&quot;Nodos del lienzo en el orden en que se crearon&quot;) List&lt; NodoLienzo &gt; nodos, @Schema(description=&quot;Avisos actuales del lienzo&quot;) List&lt; Aviso &gt; avisos, @Schema(description=&quot;Fecha de creación&quot;) Instant creadoEn, @Schema(description=&quot;Fecha de la última edición&quot;) Instant actualizadoEn, @Schema(description=&quot;Fecha de la última publicación, o nula&quot;) Instant publicadoEn, @Schema(description=&quot;true si hay una copia de lo publicado a la que se puede volver&quot;) boolean puedeDescartar)</td></tr>
+<tr class="memdesc:a792a841e8ed9d66b50a99745557d71de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Borrador completo: sus datos, el lienzo y los avisos.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>API REST del módulo de autoría: subgrafos en <code class="JavaDocCode">/api/autoria</code> y bases de reglas en <code class="JavaDocCode">/api/autoria/bases</code>. </p>
@@ -497,8 +497,8 @@ Funciones</h2></td></tr>
 
 </div>
 </div>
-<a id="accdf5eab199da17d831c4aed3fbb6920" name="accdf5eab199da17d831c4aed3fbb6920"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#accdf5eab199da17d831c4aed3fbb6920">&#9670;&#160;</a></span>SubgrafoDTO()</h2>
+<a id="a792a841e8ed9d66b50a99745557d71de" name="a792a841e8ed9d66b50a99745557d71de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a792a841e8ed9d66b50a99745557d71de">&#9670;&#160;</a></span>SubgrafoDTO()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -576,7 +576,12 @@ Funciones</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">@Schema(description=&quot;Fecha de la última publicación, o nula&quot;) Instant</td>          <td class="paramname"><span class="paramname"><em>publicadoEn</em></span>&#160;)</td>
+          <td class="paramtype">@Schema(description=&quot;Fecha de la última publicación, o nula&quot;) Instant</td>          <td class="paramname"><span class="paramname"><em>publicadoEn</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">@Schema(description=&quot;true si hay una copia de lo publicado a la que se puede volver&quot;) boolean</td>          <td class="paramname"><span class="paramname"><em>puedeDescartar</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -600,6 +605,7 @@ Funciones</h2></td></tr>
     <tr><td class="paramname">creadoEn</td><td>fecha de creación </td></tr>
     <tr><td class="paramname">actualizadoEn</td><td>fecha de la última edición </td></tr>
     <tr><td class="paramname">publicadoEn</td><td>fecha de la última publicación, o <code class="JavaDocCode">null</code> </td></tr>
+    <tr><td class="paramname">puedeDescartar</td><td><code class="JavaDocCode">true</code> si hay una copia de lo publicado a la que se puede volver </td></tr>
   </table>
   </dd>
 </dl>

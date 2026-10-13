@@ -117,8 +117,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Métodos públicos estáticos</h2></td></tr>
-<tr class="memitem:aa58787246149b1b4bc05e1a282c5a3f4" id="r_aa58787246149b1b4bc05e1a282c5a3f4"><td class="memItemLeft">static void&#160;</td><td class="memItemRight"><a class="el" href="#aa58787246149b1b4bc05e1a282c5a3f4">validarComposicion</a> (String contexto, GrafoClinicoJson raiz, List&lt; GrafoClinicoJson &gt; subgrafos, List&lt; BaseReglasJson &gt; reglas)</td></tr>
-<tr class="memdesc:aa58787246149b1b4bc05e1a282c5a3f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compone raíz, subgrafos y bases de reglas y reconstruye los TAD; si algo falla, se responde al médico con un 422.  <br /></td></tr>
+<tr class="memitem:af687f4a58f75dbd8da6fd209368809e4" id="r_af687f4a58f75dbd8da6fd209368809e4"><td class="memItemLeft">static <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1CompositorGrafoClinico.html#ac45f77a6fba2567fba2331ec17264af7">CompositorGrafoClinico.Contenido</a>&#160;</td><td class="memItemRight"><a class="el" href="#af687f4a58f75dbd8da6fd209368809e4">validarComposicion</a> (String contexto, GrafoClinicoJson raiz, List&lt; GrafoClinicoJson &gt; subgrafos, List&lt; BaseReglasJson &gt; reglas)</td></tr>
+<tr class="memdesc:af687f4a58f75dbd8da6fd209368809e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compone raíz, subgrafos y bases de reglas y reconstruye los TAD; si algo falla, se responde al médico con un 422.  <br /></td></tr>
 <tr class="memitem:aaeae45121c670112bc5c6bda98a41db4" id="r_aaeae45121c670112bc5c6bda98a41db4"><td class="memItemLeft"><a id="aaeae45121c670112bc5c6bda98a41db4" name="aaeae45121c670112bc5c6bda98a41db4"></a>
 static void&#160;</td><td class="memItemRight"><b>despuesDelCommit</b> (Runnable accion)</td></tr>
 <tr class="memdesc:aaeae45121c670112bc5c6bda98a41db4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ejecuta la acción cuando la transacción confirma, o ya si no hay transacción. <br /></td></tr>
@@ -126,8 +126,8 @@ static void&#160;</td><td class="memItemRight"><b>despuesDelCommit</b> (Runnable
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Utilidades compartidas por <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorSubgrafo.html">PublicadorSubgrafo</a></code> y <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorRegla.html">PublicadorRegla</a></code>: componer y validar el contenido clínico antes de guardarlo, y ejecutar la recarga del cache solo cuando la transacción confirma. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
-<a id="aa58787246149b1b4bc05e1a282c5a3f4" name="aa58787246149b1b4bc05e1a282c5a3f4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa58787246149b1b4bc05e1a282c5a3f4">&#9670;&#160;</a></span>validarComposicion()</h2>
+<a id="af687f4a58f75dbd8da6fd209368809e4" name="af687f4a58f75dbd8da6fd209368809e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af687f4a58f75dbd8da6fd209368809e4">&#9670;&#160;</a></span>validarComposicion()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -136,7 +136,7 @@ static void&#160;</td><td class="memItemRight"><b>despuesDelCommit</b> (Runnable
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void org.signbb.backend.autoria.servicios.PublicacionContenido.validarComposicion </td>
+          <td class="memname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1CompositorGrafoClinico.html#ac45f77a6fba2567fba2331ec17264af7">CompositorGrafoClinico.Contenido</a> org.signbb.backend.autoria.servicios.PublicacionContenido.validarComposicion </td>
           <td>(</td>
           <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>contexto</em></span>, </td>
         </tr>
@@ -164,6 +164,7 @@ static void&#160;</td><td class="memItemRight"><b>despuesDelCommit</b> (Runnable
 </div><div class="memdoc">
 
 <p>Compone raíz, subgrafos y bases de reglas y reconstruye los TAD; si algo falla, se responde al médico con un 422. </p>
+<p>Devuelve el contenido compuesto (grafo y reglas) para quien necesite guardarlo como versión.</p>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">contexto</td><td>prefijo del mensaje (p. ej. "El subgrafo no se pudo publicar") </td></tr>

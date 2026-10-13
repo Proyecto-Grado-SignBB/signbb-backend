@@ -19,8 +19,8 @@ PostgreSQL y Redis, como el CI.
 | `servicios` | `ValidadorLienzoTest` | 10 | un caso por cada aviso; nodos sueltos y choque de gravedades |
 | `servicios` | `CompiladorSubgrafoTest` | 7 | lienzo → `GrafoClinicoJson`: pesos, tipos, aristas y metadata |
 | `servicios` | `PublicadorSubgrafoTest` | 9 | upsert del subgrafo y de la opción en la raíz; categoría nueva visible; invalidar el contenido; rechazos |
-| `servicios` | `ServicioAutoriaImplTest` | 11 | categorías, ids de grafo, datos del subgrafo (nombre para la familia obligatorio), estados y errores |
-| `controladores` | `ControladorAutoriaTest` | 7 | códigos HTTP y cuerpos de error de la API `/api/autoria` |
+| `servicios` | `ServicioAutoriaImplTest` | 16 | categorías, ids de grafo, datos del subgrafo (nombre para la familia obligatorio), estados, descartar cambios y errores |
+| `controladores` | `ControladorAutoriaTest` | 9 | códigos HTTP y cuerpos de error de la API `/api/autoria` |
 | `servicios` | `CompiladorReglasTest` | 3 | borrador de reglas → `BaseReglasJson` (FND, niveles) |
 | `servicios` | `ValidadorReglasTest` | 6 | un aviso por cada problema del borrador de reglas |
 | `servicios` | `PublicadorReglaTest` | 5 | publica/reemplaza la base de reglas de un grafo y recompone el contenido |
@@ -28,7 +28,7 @@ PostgreSQL y Redis, como el CI.
 | `servicios` | `ServicioAutoriaReglasAbstractoTest` | 11 | CRUD y publicación con datos abstractos y colaboradores simulados (Mockito) |
 | (raíz) | `AutoriaIntegracionTest` | 1 | de punta a punta: armar, publicar y recorrer como cuidadora |
 
-En total son **96 pruebas**.
+En total son **103 pruebas**.
 
 ## Fixture
 
@@ -144,6 +144,33 @@ del subgrafo → "Más de 39 °C" → URGENCIA`. En `puente_neuro` siguen las
 opciones del sistema y aparece la nueva. No es `@Transactional`, porque la
 recarga del contenido ocurre después del commit; al terminar borra lo que
 creó, restaura el grafo raíz e invalida el contenido.
+
+### Versiones del contenido (republicar sin romper recorridos en curso)
+- `PublicadorSubgrafoTest`: cada publicación guarda una versión con el grafo
+  compuesto (el subgrafo nuevo y el resto del contenido); republicar guarda
+  otra; si no se puede publicar no se guarda ninguna.
+- `cache/ResolvedorVersionesTest`: la vigente es la más reciente; sin
+  versiones la primera es una foto del contenido actual; una clave de Redis
+  por versión; si Redis no responde se lee de la base.
+- `navegacion/modelo/ContextoClinicoTest`: cada versión tiene su propio
+  grafo, se carga una sola vez y `recargar()` hace que lo nuevo use la
+  versión nueva.
+- `navegacion/servicios/ServicioNavegacionVersionesTest`: un recorrido en
+  curso sigue con su versión aunque se publique otra; los nuevos usan la
+  nueva; una sesión guardada antes de las versiones usa la vigente.
+
+### Imágenes de las preguntas
+- `EditorLienzoTest`: una pregunta admite hasta 3 imágenes; se rechazan más de
+  3, repetidas y nombres que no dio el servidor; editar sin mandar `imagenes`
+  conserva las actuales y mandar `[]` las quita; una conclusión no lleva.
+- `CompiladorSubgrafoTest`: las imágenes salen en `metadata.archivos` y
+  `metadata.src` de la pregunta.
+- `NodoLienzoTest`: un lienzo guardado antes de las imágenes se sigue leyendo.
+- `media/ServicioImagenesTest` y `media/ControladorImagenesTest`: formato
+  (por la firma del archivo, no por el nombre), tope de 1 MB, 201 / 422 / 503
+  al subir y 200 / 404 al ver. Usan un almacén en memoria: **no necesitan
+  Silo**. Con Silo levantado se prueba a mano subiendo una imagen desde el
+  lienzo.
 
 ## Cómo ejecutarlas
 
