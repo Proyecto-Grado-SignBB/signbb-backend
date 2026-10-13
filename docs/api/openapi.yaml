@@ -1431,3 +1431,7 @@ components:
           description: Respuestas válidas; vacía en un terminal
           items:
             type: string
+        desenlace:
+          type: string
+          description: Desenlace del terminal (RECOMENDACION, CONSULTA_MEDICA o URGENCIA);
+            nulo en las preguntas

@@ -98,6 +98,7 @@ var hierarchy =
     ] ],
     [ "org.signbb.backend.cache.RepositorioSesionRedisTest", "classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedisTest.html", null ],
     [ "org.signbb.backend.autoria.servicios.ResolutorCatalogoNodos", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ResolutorCatalogoNodos.html", null ],
+    [ "org.signbb.backend.autoria.servicios.ResolutorCatalogoNodosTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ResolutorCatalogoNodosTest.html", null ],
     [ "org.signbb.backend.cache.ResolvedorContenidoClinico", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico.html", null ],
     [ "org.signbb.backend.cache.ResolvedorContenidoClinicoTest", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinicoTest.html", null ],
     [ "org.signbb.backend.cache.ResolvedorVersiones", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorVersiones.html", null ],

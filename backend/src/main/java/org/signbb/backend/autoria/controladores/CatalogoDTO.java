@@ -20,6 +20,9 @@ public record CatalogoDTO(
             @Schema(description = "Id del nodo") String id,
             @Schema(description = "Texto del nodo") String texto,
             @Schema(description = "pregunta o terminal") String tipo,
-            @Schema(description = "Respuestas válidas; vacía en un terminal") List<String> opciones) {
+            @Schema(description = "Respuestas válidas; vacía en un terminal") List<String> opciones,
+            @Schema(description = "Desenlace del terminal (RECOMENDACION, CONSULTA_MEDICA o URGENCIA); "
+                    + "nulo en las preguntas")
+            String desenlace) {
     }
 }

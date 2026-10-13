@@ -2,6 +2,7 @@ package org.signbb.backend.autoria.servicios;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import org.signbb.backend.autoria.controladores.CatalogoDTO;
@@ -80,8 +81,9 @@ public class ResolutorCatalogoNodos {
         for (Nodo nodo : grafo.obtenerNodos()) {
             List<String> opciones = nodo.esTerminal() ? List.of()
                     : grafo.obtenerOpciones(nodo).stream().map(Respuesta::getCondicion).toList();
+            String desenlace = nodo.esTerminal() ? nodo.getTipo().toUpperCase(Locale.ROOT) : null;
             nodos.add(new NodoCatalogoDTO(nodo.getId(), nodo.getContenido(),
-                    nodo.esTerminal() ? "terminal" : "pregunta", opciones));
+                    nodo.esTerminal() ? "terminal" : "pregunta", opciones, desenlace));
         }
         return new CatalogoDTO(grafoId, nodos);
     }
@@ -92,8 +94,11 @@ public class ResolutorCatalogoNodos {
             List<String> opciones = nodo.tipo() == TipoNodo.PREGUNTA
                     ? nodo.respuestas().stream().map(RespuestaLienzo::texto).toList()
                     : List.of();
+            String desenlace = nodo.tipo() == TipoNodo.CONCLUSION && nodo.desenlace() != null
+                    ? nodo.desenlace().name()
+                    : null;
             nodos.add(new NodoCatalogoDTO(nodo.id(), nodo.texto(),
-                    nodo.tipo() == TipoNodo.PREGUNTA ? "pregunta" : "terminal", opciones));
+                    nodo.tipo() == TipoNodo.PREGUNTA ? "pregunta" : "terminal", opciones, desenlace));
         }
         return new CatalogoDTO(grafoId, nodos);
     }

@@ -14,12 +14,13 @@ var searchData=
   ['repositoriosesionredistest_11',['RepositorioSesionRedisTest',['../classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedisTest.html',1,'org::signbb::backend::cache']]],
   ['repositorioversioncontenido_12',['RepositorioVersionContenido',['../interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioVersionContenido.html',1,'org::signbb::backend::navegacion::datos::repositorios']]],
   ['resolutorcatalogonodos_13',['ResolutorCatalogoNodos',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ResolutorCatalogoNodos.html',1,'org::signbb::backend::autoria::servicios']]],
-  ['resolvedorcontenidoclinico_14',['ResolvedorContenidoClinico',['../classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico.html',1,'org::signbb::backend::cache']]],
-  ['resolvedorcontenidoclinicotest_15',['ResolvedorContenidoClinicoTest',['../classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinicoTest.html',1,'org::signbb::backend::cache']]],
-  ['resolvedorversiones_16',['ResolvedorVersiones',['../classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorVersiones.html',1,'org::signbb::backend::cache']]],
-  ['resolvedorversionestest_17',['ResolvedorVersionesTest',['../classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorVersionesTest.html',1,'org::signbb::backend::cache']]],
-  ['respuesta_18',['Respuesta',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html',1,'org::signbb::backend::navegacion::modelo']]],
-  ['respuestarequest_19',['RespuestaRequest',['../classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1RespuestaRequest.html',1,'org::signbb::backend::observaciones::controladores']]],
-  ['respuestatest_20',['RespuestaTest',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RespuestaTest.html',1,'org::signbb::backend::navegacion::modelo']]],
-  ['resultadopasorecomendacionestest_21',['ResultadoPasoRecomendacionesTest',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ResultadoPasoRecomendacionesTest.html',1,'org::signbb::backend::navegacion::modelo']]]
+  ['resolutorcatalogonodostest_14',['ResolutorCatalogoNodosTest',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ResolutorCatalogoNodosTest.html',1,'org::signbb::backend::autoria::servicios']]],
+  ['resolvedorcontenidoclinico_15',['ResolvedorContenidoClinico',['../classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico.html',1,'org::signbb::backend::cache']]],
+  ['resolvedorcontenidoclinicotest_16',['ResolvedorContenidoClinicoTest',['../classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinicoTest.html',1,'org::signbb::backend::cache']]],
+  ['resolvedorversiones_17',['ResolvedorVersiones',['../classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorVersiones.html',1,'org::signbb::backend::cache']]],
+  ['resolvedorversionestest_18',['ResolvedorVersionesTest',['../classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorVersionesTest.html',1,'org::signbb::backend::cache']]],
+  ['respuesta_19',['Respuesta',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html',1,'org::signbb::backend::navegacion::modelo']]],
+  ['respuestarequest_20',['RespuestaRequest',['../classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1RespuestaRequest.html',1,'org::signbb::backend::observaciones::controladores']]],
+  ['respuestatest_21',['RespuestaTest',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RespuestaTest.html',1,'org::signbb::backend::navegacion::modelo']]],
+  ['resultadopasorecomendacionestest_22',['ResultadoPasoRecomendacionesTest',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ResultadoPasoRecomendacionesTest.html',1,'org::signbb::backend::navegacion::modelo']]]
 ];

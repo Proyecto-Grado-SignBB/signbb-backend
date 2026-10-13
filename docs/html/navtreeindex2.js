@@ -1,5 +1,7 @@
 var NAVTREEINDEX2 =
 {
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a1d2f57bfa6a76787ba621bb8a3e3b3cd":[10,0,0,0,0,4,1,4,10],
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a27335a5b97fc21155783f7a729231f71":[9,0,0,0,0,4,1,4,12],
 "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a27335a5b97fc21155783f7a729231f71":[10,0,0,0,0,4,1,4,12],
 "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a2987dbc31ec74d124ec2ab4eb06a3d99":[9,0,0,0,0,4,1,4,23],
 "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a2987dbc31ec74d124ec2ab4eb06a3d99":[10,0,0,0,0,4,1,4,23],
@@ -247,7 +249,5 @@ var NAVTREEINDEX2 =
 "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl.html":[9,0,0,0,0,5,3,1],
 "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl.html":[10,0,0,0,0,5,3,1],
 "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl.html#ad047af2ad2ab550f5df9725b9f2219ee":[9,0,0,0,0,5,3,1,0],
-"classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl.html#ad047af2ad2ab550f5df9725b9f2219ee":[10,0,0,0,0,5,3,1,0],
-"classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImplTest.html":[9,0,0,0,0,5,3,2],
-"classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImplTest.html":[10,0,0,0,0,5,3,2]
+"classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl.html#ad047af2ad2ab550f5df9725b9f2219ee":[10,0,0,0,0,5,3,1,0]
 };

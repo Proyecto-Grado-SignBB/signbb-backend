@@ -18,6 +18,7 @@ var namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios =
     [ "PublicadorSubgrafo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorSubgrafo.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorSubgrafo" ],
     [ "PublicadorSubgrafoTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorSubgrafoTest.html", null ],
     [ "ResolutorCatalogoNodos", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ResolutorCatalogoNodos.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ResolutorCatalogoNodos" ],
+    [ "ResolutorCatalogoNodosTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ResolutorCatalogoNodosTest.html", null ],
     [ "ServicioAutoria", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria" ],
     [ "ServicioAutoriaImpl", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl" ],
     [ "ServicioAutoriaImplTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImplTest.html", null ],
