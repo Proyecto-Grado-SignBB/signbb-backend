@@ -128,6 +128,8 @@ Métodos públicos</h2></td></tr>
 <tr class="memdesc:ac520ea8d8949527494866551103efe3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Grafo compuesto de una versión: Redis, y si no está, la base de datos.  <br /></td></tr>
 <tr class="memitem:a78d5317b904613389a97a76f72e35d3d" id="r_a78d5317b904613389a97a76f72e35d3d"><td class="memItemLeft">BaseReglasJson&#160;</td><td class="memItemRight"><a class="el" href="#a78d5317b904613389a97a76f72e35d3d">documentoReglas</a> (Long id)</td></tr>
 <tr class="memdesc:a78d5317b904613389a97a76f72e35d3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base de reglas compuesta de una versión, o <code class="JavaDocCode">null</code> si la versión es anterior a que las reglas se versionaran (el que llama usa entonces las vigentes).  <br /></td></tr>
+<tr class="memitem:a189e407e5b1a53c06acf78fe2e0873f6" id="r_a189e407e5b1a53c06acf78fe2e0873f6"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a189e407e5b1a53c06acf78fe2e0873f6">olvidar</a> (Collection&lt; Long &gt; ids)</td></tr>
+<tr class="memdesc:a189e407e5b1a53c06acf78fe2e0873f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Borra de Redis la copia de estas versiones (grafo y reglas).  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Métodos públicos estáticos</h2></td></tr>
@@ -216,6 +218,26 @@ static final String&#160;</td><td class="memItemRight"><b>PREFIJO_CLAVE</b> = &q
 
 <p>Id de la versión vigente (la más reciente). </p>
 <p>Si todavía no hay ninguna (contenido sembrado o publicado antes de existir las versiones), la primera es una foto del contenido vigente en ese momento. </p>
+
+</div>
+</div>
+<a id="a189e407e5b1a53c06acf78fe2e0873f6" name="a189e407e5b1a53c06acf78fe2e0873f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a189e407e5b1a53c06acf78fe2e0873f6">&#9670;&#160;</a></span>olvidar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void org.signbb.backend.cache.ResolvedorVersiones.olvidar </td>
+          <td>(</td>
+          <td class="paramtype">Collection&lt; Long &gt;</td>          <td class="paramname"><span class="paramname"><em>ids</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Borra de Redis la copia de estas versiones (grafo y reglas). </p>
+<p>Se llama cuando las versiones ya se borraron de la base de datos. Si Redis no responde no pasa nada: las claves vencen solas por su TTL. </p>
 
 </div>
 </div>

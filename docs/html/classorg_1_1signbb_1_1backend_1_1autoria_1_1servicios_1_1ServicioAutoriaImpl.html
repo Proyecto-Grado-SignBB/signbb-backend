@@ -153,6 +153,8 @@ Métodos públicos</h2></td></tr>
 <tr class="memdesc:af4d95fca5828977091adf9f311102f70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Avisos del lienzo.  <br /></td></tr>
 <tr class="memitem:aaecd85995e59fcdf0b3ba95a7b505b15" id="r_aaecd85995e59fcdf0b3ba95a7b505b15"><td class="memItemLeft">SubgrafoDTO&#160;</td><td class="memItemRight"><a class="el" href="#aaecd85995e59fcdf0b3ba95a7b505b15">publicar</a> (Long id)</td></tr>
 <tr class="memdesc:aaecd85995e59fcdf0b3ba95a7b505b15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publica el borrador.  <br /></td></tr>
+<tr class="memitem:a27d591f98a123ed0b697a105631d3dfe" id="r_a27d591f98a123ed0b697a105631d3dfe"><td class="memItemLeft">SubgrafoDTO&#160;</td><td class="memItemRight"><a class="el" href="#a27d591f98a123ed0b697a105631d3dfe">despublicar</a> (Long id)</td></tr>
+<tr class="memdesc:a27d591f98a123ed0b697a105631d3dfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Despublica un subgrafo: las cuidadoras que empiecen un recorrido nuevo ya no lo ven y el borrador vuelve a <code class="JavaDocCode">BORRADOR</code> con el lienzo intacto.  <br /></td></tr>
 <tr class="memitem:ae1b07bd5b151b12d3ca5956f11147c72" id="r_ae1b07bd5b151b12d3ca5956f11147c72"><td class="memItemLeft">SubgrafoDTO&#160;</td><td class="memItemRight"><a class="el" href="#ae1b07bd5b151b12d3ca5956f11147c72">descartarCambios</a> (Long id)</td></tr>
 <tr class="memdesc:ae1b07bd5b151b12d3ca5956f11147c72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Descarta los cambios sin publicar: el borrador vuelve a como estaba en su última publicación.  <br /></td></tr>
 </table>
@@ -298,6 +300,35 @@ Métodos públicos</h2></td></tr>
 </dl>
 
 <p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#aa117090fe043fece573ef0c0f1824cf5">org.signbb.backend.autoria.servicios.ServicioAutoria</a>.</p>
+
+</div>
+</div>
+<a id="a27d591f98a123ed0b697a105631d3dfe" name="a27d591f98a123ed0b697a105631d3dfe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27d591f98a123ed0b697a105631d3dfe">&#9670;&#160;</a></span>despublicar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SubgrafoDTO org.signbb.backend.autoria.servicios.ServicioAutoriaImpl.despublicar </td>
+          <td>(</td>
+          <td class="paramtype">Long</td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Despublica un subgrafo: las cuidadoras que empiecen un recorrido nuevo ya no lo ven y el borrador vuelve a <code class="JavaDocCode">BORRADOR</code> con el lienzo intacto. </p>
+<p>Los recorridos que ya estaban en curso terminan con la versión con la que empezaron.</p>
+<dl class="exception"><dt>Excepciones</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EdicionInvalidaException.html" title="Una edición del lienzo que no se puede aplicar (por ejemplo, una segunda primera pregunta o un enlace...">EdicionInvalidaException</a></td><td>si el subgrafo no está publicado (422) </td></tr>
+    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ContenidoInvalidoException.html" title="El borrador no se puede publicar: tiene avisos bloqueantes o el contenido compuesto (raíz + subgrafos...">ContenidoInvalidoException</a></td><td>si el contenido restante no es válido, por ejemplo si era el único publicado (422) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#af85eaacef57e1b31db6de724a865700f">org.signbb.backend.autoria.servicios.ServicioAutoria</a>.</p>
 
 </div>
 </div>

@@ -133,15 +133,48 @@ Métodos públicos</h2></td></tr>
 <tr class="memdesc:ae8df76ad227116afd813726965d23789"><td class="mdescLeft">&#160;</td><td class="mdescRight">Guarda una imagen con ese nombre.  <br /></td></tr>
 <tr class="memitem:aa20cddbedf00a97aa45b90cab20b6a42" id="r_aa20cddbedf00a97aa45b90cab20b6a42"><td class="memItemLeft">Optional&lt; <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html#a817aa15e6b1aed40bff6b8984cce28c7">Imagen</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#aa20cddbedf00a97aa45b90cab20b6a42">leer</a> (String nombre)</td></tr>
 <tr class="memdesc:aa20cddbedf00a97aa45b90cab20b6a42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lee una imagen; vacío si no existe.  <br /></td></tr>
+<tr class="memitem:a54d1127adb991488d51d69611e7fd447" id="r_a54d1127adb991488d51d69611e7fd447"><td class="memItemLeft">List&lt; <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html#a87cc878de7953d039f8d5426408577bb">Guardada</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a54d1127adb991488d51d69611e7fd447">listar</a> ()</td></tr>
+<tr class="memdesc:a54d1127adb991488d51d69611e7fd447"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lista todo lo que hay guardado (nombre y fecha de subida), sin leer los archivos.  <br /></td></tr>
+<tr class="memitem:acc498d4c4ae29964268a3d9c9969b337" id="r_acc498d4c4ae29964268a3d9c9969b337"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#acc498d4c4ae29964268a3d9c9969b337">eliminar</a> (String nombre)</td></tr>
+<tr class="memdesc:acc498d4c4ae29964268a3d9c9969b337"><td class="mdescLeft">&#160;</td><td class="mdescRight">Borra una imagen; si no existe no hace nada.  <br /></td></tr>
 <tr class="inherit_header pub_methods_interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes"><td colspan="2">Métodos públicos heredados de <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html">org.signbb.backend.media.AlmacenImagenes</a></td></tr>
 <tr class="memitem:a817aa15e6b1aed40bff6b8984cce28c7 pub_methods_interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes" id="r_a817aa15e6b1aed40bff6b8984cce28c7"><td class="memItemLeft">
 record&#160;</td><td class="memItemRight"><b>Imagen</b> (byte[] datos, String tipo)</td></tr>
 <tr class="memdesc:a817aa15e6b1aed40bff6b8984cce28c7 pub_methods_interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imagen leída del almacén. <br /></td></tr>
+<tr class="memitem:a87cc878de7953d039f8d5426408577bb pub_methods_interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes" id="r_a87cc878de7953d039f8d5426408577bb"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html#a87cc878de7953d039f8d5426408577bb">Guardada</a> (String nombre, Instant modificadaEn)</td></tr>
+<tr class="memdesc:a87cc878de7953d039f8d5426408577bb pub_methods_interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes"><td class="mdescLeft">&#160;</td><td class="mdescRight">Archivo que hay en el almacén.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Almacén de imágenes en Silo (API compatible con S3). </p>
 <p>El cliente y el bucket se preparan la primera vez que se usan, no al arrancar: así el backend (y las pruebas, y el CI) arrancan aunque Silo no esté levantado, y solo falla subir o ver imágenes. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
+<a id="acc498d4c4ae29964268a3d9c9969b337" name="acc498d4c4ae29964268a3d9c9969b337"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc498d4c4ae29964268a3d9c9969b337">&#9670;&#160;</a></span>eliminar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void org.signbb.backend.media.AlmacenImagenesS3.eliminar </td>
+          <td>(</td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>nombre</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Borra una imagen; si no existe no hace nada. </p>
+<dl class="exception"><dt>Excepciones</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1media_1_1AlmacenNoDisponibleException.html" title="El almacén de imágenes (Silo) no responde.">AlmacenNoDisponibleException</a></td><td>si el almacén no responde </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html#aadb923acf25f3d789d3fc69231ca4b9f">org.signbb.backend.media.AlmacenImagenes</a>.</p>
+
+</div>
+</div>
 <a id="ae8df76ad227116afd813726965d23789" name="ae8df76ad227116afd813726965d23789"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae8df76ad227116afd813726965d23789">&#9670;&#160;</a></span>guardar()</h2>
 
@@ -202,6 +235,33 @@ record&#160;</td><td class="memItemRight"><b>Imagen</b> (byte[] datos, String ti
 </dl>
 
 <p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html#a2b0a8a3bdb91e61f624d6154869e7f52">org.signbb.backend.media.AlmacenImagenes</a>.</p>
+
+</div>
+</div>
+<a id="a54d1127adb991488d51d69611e7fd447" name="a54d1127adb991488d51d69611e7fd447"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54d1127adb991488d51d69611e7fd447">&#9670;&#160;</a></span>listar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">List&lt; <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html#a87cc878de7953d039f8d5426408577bb">Guardada</a> &gt; org.signbb.backend.media.AlmacenImagenesS3.listar </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Lista todo lo que hay guardado (nombre y fecha de subida), sin leer los archivos. </p>
+<dl class="exception"><dt>Excepciones</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1media_1_1AlmacenNoDisponibleException.html" title="El almacén de imágenes (Silo) no responde.">AlmacenNoDisponibleException</a></td><td>si el almacén no responde </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html#a5a9c407ccfd93dc3ed9b7b4eb5ac62e6">org.signbb.backend.media.AlmacenImagenes</a>.</p>
 
 </div>
 </div>

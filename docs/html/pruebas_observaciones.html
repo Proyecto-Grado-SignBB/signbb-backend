@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('pruebas_observ
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_backend_2src_2test_2java_2org_2signbb_2backend_2observaciones_2README"></a></p>
 <p>Pruebas del paquete <span class="tt"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1observaciones.html" title="Módulo de consultas guiadas para las observaciones del cuidador (en construcción).">org.signbb.backend.observaciones</a></span>, el que <b>valida, audita y reenvía</b> la respuesta del cuidador hacia el motor de navegación. Son <b>JUnit 5 + Mockito</b>, sin Spring, base de datos ni Redis.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md26"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md27"></a>
 Mapa de la suite</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -124,9 +124,9 @@ Mapa de la suite</h1>
 <td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">SeleccionCuidadorTest</span>  </td><td class="markdownTableBodyRight">6  </td><td class="markdownTableBodyNone">validación del constructor de <span class="tt">SeleccionCuidador</span> según el tipo de interacción  </td></tr>
 </table>
 <p>En total son <b>10 pruebas</b>.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md27"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md28"></a>
 Qué se prueba y por qué importa</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md28"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md29"></a>
 Captura de la respuesta (<span class="tt">ServicioCapturaImplTest</span>)</h2>
 <p>Con <span class="tt">ServicioNavegacion</span> y <span class="tt">RepositorioObservaciones</span> <b>simulados con Mockito</b>:</p>
 <ul>
@@ -135,7 +135,7 @@ Captura de la respuesta (<span class="tt">ServicioCapturaImplTest</span>)</h2>
 <li>una opción que <b>no pertenece</b> a la pregunta actual se rechaza <b>antes</b> de tocar el motor y <b>sin</b> guardar observación;</li>
 <li>si el recorrido ya está <span class="tt">FINALIZADO</span>, no se responde ni se audita.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md29"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
 Validación de la selección (<span class="tt">SeleccionCuidadorTest</span>)</h2>
 <p><span class="tt">SeleccionCuidador</span> es el value object que normaliza lo que marcó el cuidador según el <span class="tt">TipoInteraccion</span>:</p>
 <ul>
@@ -143,7 +143,7 @@ Validación de la selección (<span class="tt">SeleccionCuidadorTest</span>)</h2
 <li><span class="tt">SELECCION_MULTIPLE</span> acepta varias;</li>
 <li>se rechazan la lista vacía y el <span class="tt">recorridoId</span> vacío.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
 Cómo ejecutarlas</h1>
 <pre class="fragment">./mvnw test -Dtest='org.signbb.backend.observaciones.**'
 </pre><p>No requieren PostgreSQL ni Redis.</p>

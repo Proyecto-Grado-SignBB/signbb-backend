@@ -83,6 +83,17 @@ var annotated_dup =
             [ "OpenApiConfig", "classorg_1_1signbb_1_1backend_1_1config_1_1OpenApiConfig.html", "classorg_1_1signbb_1_1backend_1_1config_1_1OpenApiConfig" ],
             [ "RecursoNoEncontradoException", "classorg_1_1signbb_1_1backend_1_1config_1_1RecursoNoEncontradoException.html", null ]
           ] ],
+          [ "mantenimiento", "namespaceorg_1_1signbb_1_1backend_1_1mantenimiento.html", [
+            [ "ConfiguracionMantenimiento", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1ConfiguracionMantenimiento.html", null ],
+            [ "LimpiadorImagenes", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorImagenes.html", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorImagenes" ],
+            [ "LimpiadorImagenesTest", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorImagenesTest.html", null ],
+            [ "LimpiadorVersiones", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorVersiones.html", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorVersiones" ],
+            [ "LimpiadorVersionesTest", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorVersionesTest.html", null ],
+            [ "LimpiezaProgramada", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiezaProgramada.html", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiezaProgramada" ],
+            [ "LimpiezaProgramadaTest", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiezaProgramadaTest.html", null ],
+            [ "PoliticaRetencionVersiones", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1PoliticaRetencionVersiones.html", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1PoliticaRetencionVersiones" ],
+            [ "PoliticaRetencionVersionesTest", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1PoliticaRetencionVersionesTest.html", null ]
+          ] ],
           [ "media", "namespaceorg_1_1signbb_1_1backend_1_1media.html", [
             [ "AlmacenImagenes", "interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html", "interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes" ],
             [ "AlmacenImagenesS3", "classorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenesS3.html", "classorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenesS3" ],

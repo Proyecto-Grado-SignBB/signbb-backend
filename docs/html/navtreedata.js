@@ -34,84 +34,86 @@ var NAVTREE =
         [ "Avisos (<span class=\"tt\">ValidadorLienzoTest</span>)", "pruebas_autoria.html#autotoc_md4", null ],
         [ "Compilar (<span class=\"tt\">CompiladorSubgrafoTest</span>)", "pruebas_autoria.html#autotoc_md5", null ],
         [ "Publicar (<span class=\"tt\">PublicadorSubgrafoTest</span>)", "pruebas_autoria.html#autotoc_md6", null ],
-        [ "Servicio (<span class=\"tt\">ServicioAutoriaImplTest</span>)", "pruebas_autoria.html#autotoc_md7", null ],
-        [ "Reglas: compilar, validar y publicar (<span class=\"tt\">CompiladorReglasTest</span>, <span class=\"tt\">ValidadorReglasTest</span>, <span class=\"tt\">PublicadorReglaTest</span>)", "pruebas_autoria.html#autotoc_md8", null ],
-        [ "Reglas: CRUD y publicación (<span class=\"tt\">ServicioAutoriaReglasImplTest</span>, <span class=\"tt\">ServicioAutoriaReglasAbstractoTest</span>)", "pruebas_autoria.html#autotoc_md9", null ],
-        [ "API (<span class=\"tt\">ControladorAutoriaTest</span>)", "pruebas_autoria.html#autotoc_md10", null ],
-        [ "Punta a punta (<span class=\"tt\">AutoriaIntegracionTest</span>)", "pruebas_autoria.html#autotoc_md11", null ],
-        [ "Versiones del contenido (republicar sin romper recorridos en curso)", "pruebas_autoria.html#autotoc_md12", null ],
-        [ "Imágenes de las preguntas", "pruebas_autoria.html#autotoc_md13", null ]
+        [ "Despublicar (<span class=\"tt\">PublicadorSubgrafoTest</span>)", "pruebas_autoria.html#autotoc_md7", null ],
+        [ "Servicio (<span class=\"tt\">ServicioAutoriaImplTest</span>)", "pruebas_autoria.html#autotoc_md8", null ],
+        [ "Reglas: compilar, validar y publicar (<span class=\"tt\">CompiladorReglasTest</span>, <span class=\"tt\">ValidadorReglasTest</span>, <span class=\"tt\">PublicadorReglaTest</span>)", "pruebas_autoria.html#autotoc_md9", null ],
+        [ "Reglas: CRUD y publicación (<span class=\"tt\">ServicioAutoriaReglasImplTest</span>, <span class=\"tt\">ServicioAutoriaReglasAbstractoTest</span>)", "pruebas_autoria.html#autotoc_md10", null ],
+        [ "API (<span class=\"tt\">ControladorAutoriaTest</span>)", "pruebas_autoria.html#autotoc_md11", null ],
+        [ "Punta a punta (<span class=\"tt\">AutoriaIntegracionTest</span>)", "pruebas_autoria.html#autotoc_md12", null ],
+        [ "Versiones del contenido (republicar sin romper recorridos en curso)", "pruebas_autoria.html#autotoc_md13", null ],
+        [ "Imágenes de las preguntas", "pruebas_autoria.html#autotoc_md14", null ]
       ] ],
-      [ "Cómo ejecutarlas", "pruebas_autoria.html#autotoc_md14", null ]
+      [ "Cómo ejecutarlas", "pruebas_autoria.html#autotoc_md15", null ]
     ] ],
     [ "Pruebas del módulo de navegación", "pruebas_navegacion.html", [
-      [ "Mapa de la suite", "pruebas_navegacion.html#autotoc_md15", null ],
-      [ "Fixtures", "pruebas_navegacion.html#autotoc_md16", null ],
-      [ "Qué se prueba y por qué importa", "pruebas_navegacion.html#autotoc_md17", [
-        [ "Alertas y validación (<span class=\"tt\">MotorNavegacionTest</span>)", "pruebas_navegacion.html#autotoc_md18", null ],
-        [ "Retroceder (<span class=\"tt\">MotorNavegacionRetrocederTest</span>)", "pruebas_navegacion.html#autotoc_md19", null ],
-        [ "Límite de preguntas (<span class=\"tt\">MotorNavegacionLimiteTest</span>)", "pruebas_navegacion.html#autotoc_md20", null ],
-        [ "Cola de la selección múltiple (<span class=\"tt\">MotorNavegacionColaTest</span>, <span class=\"tt\">OrdenColaTest</span>)", "pruebas_navegacion.html#autotoc_md21", null ],
-        [ "Servicio (<span class=\"tt\">ServicioNavegacionImplTest</span>)", "pruebas_navegacion.html#autotoc_md22", null ]
+      [ "Mapa de la suite", "pruebas_navegacion.html#autotoc_md16", null ],
+      [ "Fixtures", "pruebas_navegacion.html#autotoc_md17", null ],
+      [ "Qué se prueba y por qué importa", "pruebas_navegacion.html#autotoc_md18", [
+        [ "Alertas y validación (<span class=\"tt\">MotorNavegacionTest</span>)", "pruebas_navegacion.html#autotoc_md19", null ],
+        [ "Retroceder (<span class=\"tt\">MotorNavegacionRetrocederTest</span>)", "pruebas_navegacion.html#autotoc_md20", null ],
+        [ "Límite de preguntas (<span class=\"tt\">MotorNavegacionLimiteTest</span>)", "pruebas_navegacion.html#autotoc_md21", null ],
+        [ "Cola de la selección múltiple (<span class=\"tt\">MotorNavegacionColaTest</span>, <span class=\"tt\">OrdenColaTest</span>)", "pruebas_navegacion.html#autotoc_md22", null ],
+        [ "Servicio (<span class=\"tt\">ServicioNavegacionImplTest</span>)", "pruebas_navegacion.html#autotoc_md23", null ]
       ] ],
-      [ "Qué se quitó en la reorganización", "pruebas_navegacion.html#autotoc_md23", null ],
-      [ "Cómo ejecutarlas", "pruebas_navegacion.html#autotoc_md24", null ],
-      [ "Resultados en GitHub Actions", "pruebas_navegacion.html#autotoc_md25", null ]
+      [ "Qué se quitó en la reorganización", "pruebas_navegacion.html#autotoc_md24", null ],
+      [ "Cómo ejecutarlas", "pruebas_navegacion.html#autotoc_md25", null ],
+      [ "Resultados en GitHub Actions", "pruebas_navegacion.html#autotoc_md26", null ]
     ] ],
     [ "Pruebas del módulo de observaciones", "pruebas_observaciones.html", [
-      [ "Mapa de la suite", "pruebas_observaciones.html#autotoc_md26", null ],
-      [ "Qué se prueba y por qué importa", "pruebas_observaciones.html#autotoc_md27", [
-        [ "Captura de la respuesta (<span class=\"tt\">ServicioCapturaImplTest</span>)", "pruebas_observaciones.html#autotoc_md28", null ],
-        [ "Validación de la selección (<span class=\"tt\">SeleccionCuidadorTest</span>)", "pruebas_observaciones.html#autotoc_md29", null ]
+      [ "Mapa de la suite", "pruebas_observaciones.html#autotoc_md27", null ],
+      [ "Qué se prueba y por qué importa", "pruebas_observaciones.html#autotoc_md28", [
+        [ "Captura de la respuesta (<span class=\"tt\">ServicioCapturaImplTest</span>)", "pruebas_observaciones.html#autotoc_md29", null ],
+        [ "Validación de la selección (<span class=\"tt\">SeleccionCuidadorTest</span>)", "pruebas_observaciones.html#autotoc_md30", null ]
       ] ],
-      [ "Cómo ejecutarlas", "pruebas_observaciones.html#autotoc_md30", null ]
+      [ "Cómo ejecutarlas", "pruebas_observaciones.html#autotoc_md31", null ]
     ] ],
     [ "Pruebas del módulo de reglas", "pruebas_reglas.html", [
-      [ "Mapa de la suite", "pruebas_reglas.html#autotoc_md31", null ],
+      [ "Mapa de la suite", "pruebas_reglas.html#autotoc_md32", null ],
       [ "Modelo de reglas (TAD)", "pruebas_reglas.html#pruebas_model", [
-        [ "TAD <span class=\"tt\">ReglaClinica</span> (<span class=\"tt\">ReglaClinicaTest</span>)", "pruebas_reglas.html#autotoc_md32", null ],
-        [ "TAD <span class=\"tt\">BaseReglas</span> (<span class=\"tt\">BaseReglasTest</span>)", "pruebas_reglas.html#autotoc_md33", null ],
-        [ "Evaluación abstracta (<span class=\"tt\">EvaluacionReglasAbstractaTest</span>)", "pruebas_reglas.html#autotoc_md34", null ]
+        [ "TAD <span class=\"tt\">ReglaClinica</span> (<span class=\"tt\">ReglaClinicaTest</span>)", "pruebas_reglas.html#autotoc_md33", null ],
+        [ "TAD <span class=\"tt\">BaseReglas</span> (<span class=\"tt\">BaseReglasTest</span>)", "pruebas_reglas.html#autotoc_md34", null ],
+        [ "Evaluación abstracta (<span class=\"tt\">EvaluacionReglasAbstractaTest</span>)", "pruebas_reglas.html#autotoc_md35", null ]
       ] ],
-      [ "Servicio de inferencia y mapeo JSON", "pruebas_reglas.html#autotoc_md35", [
-        [ "Servicio de inferencia (<span class=\"tt\">ServicioReglasImplTest</span>)", "pruebas_reglas.html#autotoc_md36", null ],
-        [ "Mapeo JSON (<span class=\"tt\">BaseReglasMapperTest</span>)", "pruebas_reglas.html#autotoc_md37", null ]
+      [ "Servicio de inferencia y mapeo JSON", "pruebas_reglas.html#autotoc_md36", [
+        [ "Servicio de inferencia (<span class=\"tt\">ServicioReglasImplTest</span>)", "pruebas_reglas.html#autotoc_md37", null ],
+        [ "Mapeo JSON (<span class=\"tt\">BaseReglasMapperTest</span>)", "pruebas_reglas.html#autotoc_md38", null ]
       ] ],
-      [ "Cómo ejecutarlas", "pruebas_reglas.html#autotoc_md38", null ]
+      [ "Cómo ejecutarlas", "pruebas_reglas.html#autotoc_md39", null ]
     ] ],
     [ "Pruebas del sistema", "pruebas.html", [
-      [ "Cómo ejecutarlas", "pruebas.html#autotoc_md39", null ],
-      [ "Tipos de prueba", "pruebas.html#autotoc_md40", null ],
-      [ "Suite por módulo", "pruebas.html#autotoc_md41", null ],
-      [ "Pruebas de integración de la raíz", "pruebas.html#autotoc_md42", null ],
-      [ "Resultados en CI", "pruebas.html#autotoc_md43", null ]
+      [ "Cómo ejecutarlas", "pruebas.html#autotoc_md40", null ],
+      [ "Tipos de prueba", "pruebas.html#autotoc_md41", null ],
+      [ "Suite por módulo", "pruebas.html#autotoc_md42", null ],
+      [ "Pruebas de integración de la raíz", "pruebas.html#autotoc_md43", null ],
+      [ "Resultados en CI", "pruebas.html#autotoc_md44", null ]
     ] ],
     [ "Pruebas del cache", "pruebas_cache.html", [
-      [ "Ubicación", "pruebas_cache.html#autotoc_md44", null ],
-      [ "ResolvedorContenidoClinicoTest — resolución cache-aside del contenido", "pruebas_cache.html#autotoc_md45", null ],
-      [ "RepositorioSesionRedisTest — sesiones en Redis", "pruebas_cache.html#autotoc_md46", null ],
-      [ "CacheRedisIntegracionTest — integración", "pruebas_cache.html#autotoc_md47", null ],
-      [ "ColaSeleccionMultipleRedisIntegracionTest — cola de la selección múltiple", "pruebas_cache.html#autotoc_md48", null ],
-      [ "Cómo ejecutarlas", "pruebas_cache.html#autotoc_md49", null ],
-      [ "Notas", "pruebas_cache.html#autotoc_md50", null ]
+      [ "Ubicación", "pruebas_cache.html#autotoc_md45", null ],
+      [ "ResolvedorContenidoClinicoTest — resolución cache-aside del contenido", "pruebas_cache.html#autotoc_md46", null ],
+      [ "RepositorioSesionRedisTest — sesiones en Redis", "pruebas_cache.html#autotoc_md47", null ],
+      [ "CacheRedisIntegracionTest — integración", "pruebas_cache.html#autotoc_md48", null ],
+      [ "ColaSeleccionMultipleRedisIntegracionTest — cola de la selección múltiple", "pruebas_cache.html#autotoc_md49", null ],
+      [ "Cómo ejecutarlas", "pruebas_cache.html#autotoc_md50", null ],
+      [ "Notas", "pruebas_cache.html#autotoc_md51", null ],
+      [ "Limpieza programada (<span class=\"tt\">mantenimiento</span>)", "pruebas_cache.html#autotoc_md52", null ]
     ] ],
     [ "Manual de contenedores", "md_contenedores_2MANUAL__CONTENEDORES.html", [
-      [ "Levantar", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md59", null ],
-      [ "Dar de baja", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md60", null ],
-      [ "Eliminar los datos persistentes", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md61", null ],
-      [ "Acceso rápido", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md62", null ],
-      [ "Parámetros de conexión (perfil <span class=\"tt\">docker</span> del backend)", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md63", null ]
+      [ "Levantar", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md61", null ],
+      [ "Dar de baja", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md62", null ],
+      [ "Eliminar los datos persistentes", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md63", null ],
+      [ "Acceso rápido", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md64", null ],
+      [ "Parámetros de conexión (perfil <span class=\"tt\">docker</span> del backend)", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md65", null ]
     ] ],
     [ "Grafo sistema", "md_grafo__sistema_2reporte__grafo.html", [
-      [ "Indice", "md_grafo__sistema_2reporte__grafo.html#autotoc_md65", null ],
-      [ "Grafo Raíz", "md_grafo__sistema_2reporte__grafo.html#autotoc_md66", null ],
-      [ "Grafo Gastrointestinal", "md_grafo__sistema_2reporte__grafo.html#autotoc_md67", null ],
-      [ "Grafo Respiración", "md_grafo__sistema_2reporte__grafo.html#autotoc_md68", null ],
-      [ "Grafo Activo y color", "md_grafo__sistema_2reporte__grafo.html#autotoc_md69", null ],
-      [ "Herramientas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md70", [
-        [ "Construir grafos visualmente", "md_grafo__sistema_2reporte__grafo.html#autotoc_md71", null ],
-        [ "Representacion visual de base de reglas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md72", null ],
-        [ "Representacion visual de grafo", "md_grafo__sistema_2reporte__grafo.html#autotoc_md73", null ]
+      [ "Indice", "md_grafo__sistema_2reporte__grafo.html#autotoc_md67", null ],
+      [ "Grafo Raíz", "md_grafo__sistema_2reporte__grafo.html#autotoc_md68", null ],
+      [ "Grafo Gastrointestinal", "md_grafo__sistema_2reporte__grafo.html#autotoc_md69", null ],
+      [ "Grafo Respiración", "md_grafo__sistema_2reporte__grafo.html#autotoc_md70", null ],
+      [ "Grafo Activo y color", "md_grafo__sistema_2reporte__grafo.html#autotoc_md71", null ],
+      [ "Herramientas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md72", [
+        [ "Construir grafos visualmente", "md_grafo__sistema_2reporte__grafo.html#autotoc_md73", null ],
+        [ "Representacion visual de base de reglas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md74", null ],
+        [ "Representacion visual de grafo", "md_grafo__sistema_2reporte__grafo.html#autotoc_md75", null ]
       ] ]
     ] ],
     [ "Paquetes", "namespaces.html", [
@@ -137,10 +139,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#ae1b07bd5b151b12d3ca5956f11147c72",
-"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a1d2f57bfa6a76787ba621bb8a3e3b3cd",
-"classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImplTest.html",
-"interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html#a129f8a32cea64590bfe65f6db56c16a6"
+"classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#aaecd85995e59fcdf0b3ba95a7b505b15",
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoParser.html#a74eac55b599e9ef2a911d2f2518d14ee",
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html#a635f0a7976d993792945536d0fcec2c5",
+"interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#acf50df8a6470610818994b1582ad5aff",
+"pruebas_reglas.html#pruebas_model"
 ];
 
 const SYNCONMSG = 'pulsar para deshabilitar sincronización';

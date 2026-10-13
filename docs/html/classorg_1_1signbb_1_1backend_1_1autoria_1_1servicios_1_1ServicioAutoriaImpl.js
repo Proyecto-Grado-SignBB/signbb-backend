@@ -7,6 +7,7 @@ var classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl
     [ "categorias", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#ad828b113762acbebeb802fe3ee674f76", null ],
     [ "crear", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#a7c1f6b427ed191d1e04d1aa72de37153", null ],
     [ "descartarCambios", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#ae1b07bd5b151b12d3ca5956f11147c72", null ],
+    [ "despublicar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#a27d591f98a123ed0b697a105631d3dfe", null ],
     [ "editarNodo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#ac71c57fef2cae12ca4c9ae7c32d826b7", null ],
     [ "eliminar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#a9e84974740b06a47daab4b5e60599c6b", null ],
     [ "eliminarNodo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#a7aad22f96f57f045bbd9ce0628428a75", null ],

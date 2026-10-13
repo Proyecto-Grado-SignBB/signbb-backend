@@ -12,6 +12,6 @@ var searchData=
   ['nombre_9',['nombre',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzo.html#afdd868ee1cce540cbd8efea3db359194',1,'org::signbb::backend::autoria::servicios::ValidadorLienzo']]],
   ['normal_10',['NORMAL',['../enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1NivelAlerta.html#ad20739cdb6a47e7f201d4a70aba3f5ae',1,'org::signbb::backend::reglas::modelo::NivelAlerta']]],
   ['normalizado_11',['normalizado',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorLienzo.html#aa069d92f3506d2f9720a3b72bf1380f3',1,'org::signbb::backend::autoria::servicios::EditorLienzo']]],
-  ['notas_12',['Notas',['../pruebas_cache.html#autotoc_md50',1,'']]],
+  ['notas_12',['Notas',['../pruebas_cache.html#autotoc_md51',1,'']]],
   ['nuevasesion_13',['nuevaSesion',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html#a1f0db75bb5a3575a99b347657fb7b02b',1,'org::signbb::backend::navegacion::modelo::Contexto']]]
 ];

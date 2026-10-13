@@ -22,5 +22,6 @@ var searchData=
   ['respuesta_19',['Respuesta',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html',1,'org::signbb::backend::navegacion::modelo']]],
   ['respuestarequest_20',['RespuestaRequest',['../classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1RespuestaRequest.html',1,'org::signbb::backend::observaciones::controladores']]],
   ['respuestatest_21',['RespuestaTest',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RespuestaTest.html',1,'org::signbb::backend::navegacion::modelo']]],
-  ['resultadopasorecomendacionestest_22',['ResultadoPasoRecomendacionesTest',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ResultadoPasoRecomendacionesTest.html',1,'org::signbb::backend::navegacion::modelo']]]
+  ['resultadopasorecomendacionestest_22',['ResultadoPasoRecomendacionesTest',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ResultadoPasoRecomendacionesTest.html',1,'org::signbb::backend::navegacion::modelo']]],
+  ['resumen_23',['Resumen',['../interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioVersionContenido_1_1Resumen.html',1,'org::signbb::backend::navegacion::datos::repositorios::RepositorioVersionContenido']]]
 ];

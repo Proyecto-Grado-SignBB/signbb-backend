@@ -136,6 +136,8 @@ synchronized <a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1mode
 <tr class="memdesc:a795d4cb8317af18d3cdf4d8782aadd92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base de reglas armada sobre el grafo de esa versión; <code class="JavaDocCode">null</code> es la vigente. <br /></td></tr>
 <tr class="memitem:a0ecbc0c6c7d015c1b44caf5ae06b1dba" id="r_a0ecbc0c6c7d015c1b44caf5ae06b1dba"><td class="memItemLeft">synchronized void&#160;</td><td class="memItemRight"><a class="el" href="#a0ecbc0c6c7d015c1b44caf5ae06b1dba">recargar</a> ()</td></tr>
 <tr class="memdesc:a0ecbc0c6c7d015c1b44caf5ae06b1dba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Descarta lo que hay en memoria para que el próximo uso lo vuelva a resolver (y vea la versión vigente nueva).  <br /></td></tr>
+<tr class="memitem:acdea6f5eb057aec164dddc4dabf552f0" id="r_acdea6f5eb057aec164dddc4dabf552f0"><td class="memItemLeft">synchronized void&#160;</td><td class="memItemRight"><a class="el" href="#acdea6f5eb057aec164dddc4dabf552f0">olvidar</a> (Collection&lt; Long &gt; ids)</td></tr>
+<tr class="memdesc:acdea6f5eb057aec164dddc4dabf552f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saca de memoria las versiones indicadas (las que se acaban de borrar de la base de datos).  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Conserva en memoria el grafo clínico y la base de reglas usados por el módulo de navegación, por versión del contenido. </p>
@@ -159,6 +161,26 @@ synchronized <a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1mode
 
 <p>Grafo de una versión. </p>
 <p>Con <code class="JavaDocCode">null</code> (recorridos guardados antes de que existieran las versiones) es el de la versión vigente. </p>
+
+</div>
+</div>
+<a id="acdea6f5eb057aec164dddc4dabf552f0" name="acdea6f5eb057aec164dddc4dabf552f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acdea6f5eb057aec164dddc4dabf552f0">&#9670;&#160;</a></span>olvidar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">synchronized void org.signbb.backend.navegacion.modelo.ContextoClinico.olvidar </td>
+          <td>(</td>
+          <td class="paramtype">Collection&lt; Long &gt;</td>          <td class="paramname"><span class="paramname"><em>ids</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Saca de memoria las versiones indicadas (las que se acaban de borrar de la base de datos). </p>
+<p>No toca el resto ni la versión vigente. </p>
 
 </div>
 </div>
