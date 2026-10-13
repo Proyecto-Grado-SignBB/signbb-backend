@@ -1,12 +1,15 @@
 package org.signbb.backend.autoria.servicios;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -250,6 +253,88 @@ class ServicioAutoriaImplTest {
 
         assertThrows(EdicionInvalidaException.class, () -> servicio.eliminar(1L));
         verify(borradores, never()).delete(any());
+    }
+
+    @Test
+    void despublicarRetiraElSubgrafoYDevuelveElBorradorASuEstadoInicial() {
+        BorradorSubgrafoEntity b = guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
+        servicio.publicar(1L);
+
+        SubgrafoDTO dto = servicio.despublicar(1L);
+
+        verify(publicador).retirar(b);
+        assertEquals(EstadoBorrador.BORRADOR, dto.estado());
+        assertNull(b.getPublicadoEn());
+        assertNull(b.getCopiaPublicada());
+        assertFalse(dto.puedeDescartar());
+    }
+
+    @Test
+    void despublicarNoTocaElLienzoNiLosDatosDelBorrador() {
+        BorradorSubgrafoEntity b = guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
+        servicio.publicar(1L);
+        servicio.actualizar(1L, new SubgrafoRequest("Otro nombre", "puente_respiracion", "Otra opción", null, null));
+
+        SubgrafoDTO dto = servicio.despublicar(1L);
+
+        assertEquals(LienzoFiebre.completo(), b.getDocumento());
+        assertEquals("Otro nombre", dto.nombre());
+        assertEquals("Otra opción", dto.etiquetaOpcion());
+    }
+
+    @Test
+    void despublicarUnPublicadoConCambiosSinPublicarTambienFunciona() {
+        BorradorSubgrafoEntity b = guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
+        servicio.publicar(1L);
+        servicio.enlazar(1L, LienzoFiebre.MENOS_38, null);
+        assertEquals(EstadoBorrador.CAMBIOS_SIN_PUBLICAR, b.getEstado());
+
+        SubgrafoDTO dto = servicio.despublicar(1L);
+
+        assertEquals(EstadoBorrador.BORRADOR, dto.estado());
+    }
+
+    @Test
+    void despublicarUnBorradorQueNuncaSePublicoSeRechazaYNoRetiraNada() {
+        guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
+
+        assertThrows(EdicionInvalidaException.class, () -> servicio.despublicar(1L));
+        verify(publicador, never()).retirar(any());
+        verify(borradores, never()).save(any());
+    }
+
+    @Test
+    void siElContenidoQueQuedaNoEsValidoElBorradorSigueSiendoPublicado() {
+        BorradorSubgrafoEntity b = guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
+        servicio.publicar(1L);
+        doThrow(new ContenidoInvalidoException("Este es el único subgrafo publicado", List.of()))
+                .when(publicador).retirar(b);
+
+        assertThrows(ContenidoInvalidoException.class, () -> servicio.despublicar(1L));
+        assertEquals(EstadoBorrador.PUBLICADO, b.getEstado());
+        assertNotNull(b.getPublicadoEn());
+        assertNotNull(b.getCopiaPublicada());
+    }
+
+    @Test
+    void despublicarUnBorradorQueNoExisteDa404() {
+        when(borradores.findById(9L)).thenReturn(Optional.empty());
+
+        assertThrows(RecursoNoEncontradoException.class, () -> servicio.despublicar(9L));
+    }
+
+    @Test
+    void unBorradorDespublicadoSePuedeVolverAPublicarYYaSePuedeBorrar() {
+        BorradorSubgrafoEntity b = guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
+        servicio.publicar(1L);
+        servicio.despublicar(1L);
+
+        SubgrafoDTO dto = servicio.publicar(1L);
+        assertEquals(EstadoBorrador.PUBLICADO, dto.estado());
+
+        servicio.despublicar(1L);
+        servicio.eliminar(1L);
+        verify(borradores).delete(b);
     }
 
     @Test

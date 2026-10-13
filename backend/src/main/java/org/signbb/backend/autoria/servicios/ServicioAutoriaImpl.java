@@ -169,6 +169,22 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
 
     @Override
     @Transactional
+    public SubgrafoDTO despublicar(Long id) {
+        BorradorSubgrafoEntity b = buscar(id);
+        if (b.getPublicadoEn() == null) {
+            throw new EdicionInvalidaException("Este subgrafo no está publicado, así que no hay nada que "
+                    + "despublicar.");
+        }
+        publicador.retirar(b);
+        b.setEstado(EstadoBorrador.BORRADOR);
+        b.setPublicadoEn(null);
+        b.setCopiaPublicada(null);
+        b.setActualizadoEn(Instant.now());
+        return SubgrafoDTO.desde(borradores.save(b));
+    }
+
+    @Override
+    @Transactional
     public SubgrafoDTO descartarCambios(Long id) {
         BorradorSubgrafoEntity b = buscar(id);
         if (b.getPublicadoEn() == null) {

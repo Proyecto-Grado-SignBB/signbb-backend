@@ -58,6 +58,18 @@ public interface ServicioAutoria {
     SubgrafoDTO publicar(Long id);
 
     /**
+     * Despublica un subgrafo: las cuidadoras que empiecen un recorrido nuevo ya
+     * no lo ven y el borrador vuelve a {@code BORRADOR} con el lienzo intacto.
+     * Los recorridos que ya estaban en curso terminan con la versión con la que
+     * empezaron.
+     *
+     * @throws EdicionInvalidaException   si el subgrafo no está publicado (422)
+     * @throws ContenidoInvalidoException si el contenido restante no es válido, por
+     *                                    ejemplo si era el único publicado (422)
+     */
+    SubgrafoDTO despublicar(Long id);
+
+    /**
      * Descarta los cambios sin publicar: el borrador vuelve a como estaba en su
      * última publicación. Si no tiene cambios sin publicar, lo devuelve igual.
      *

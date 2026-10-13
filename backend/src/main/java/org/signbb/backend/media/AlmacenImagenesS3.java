@@ -1,6 +1,8 @@
 package org.signbb.backend.media;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -15,9 +17,11 @@ import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.CreateBucketRequest;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.HeadBucketRequest;
+import software.amazon.awssdk.services.s3.model.ListObjectsV2Request;
 import software.amazon.awssdk.services.s3.model.NoSuchBucketException;
 import software.amazon.awssdk.services.s3.model.NoSuchKeyException;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
@@ -76,6 +80,29 @@ public class AlmacenImagenesS3 implements AlmacenImagenes {
             return Optional.empty();
         } catch (RuntimeException ex) {
             throw new AlmacenNoDisponibleException("No se pudo leer la imagen de Silo", ex);
+        }
+    }
+
+    @Override
+    public List<Guardada> listar() {
+        try {
+            S3Client s3 = listo();
+            List<Guardada> guardadas = new ArrayList<>();
+            s3.listObjectsV2Paginator(ListObjectsV2Request.builder().bucket(bucket).build()).contents()
+                    .forEach(o -> guardadas.add(new Guardada(o.key(), o.lastModified())));
+            return guardadas;
+        } catch (RuntimeException ex) {
+            throw new AlmacenNoDisponibleException("No se pudo listar las imágenes de Silo", ex);
+        }
+    }
+
+    @Override
+    public void eliminar(String nombre) {
+        try {
+            S3Client s3 = listo();
+            s3.deleteObject(DeleteObjectRequest.builder().bucket(bucket).key(nombre).build());
+        } catch (RuntimeException ex) {
+            throw new AlmacenNoDisponibleException("No se pudo borrar la imagen de Silo", ex);
         }
     }
 

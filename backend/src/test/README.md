@@ -13,6 +13,9 @@ reglas) están en \ref pruebas_autoria.
 - Unitarias (paquete `org.signbb.backend.cache`, sin Redis real):
   `ResolvedorContenidoClinicoTest` y `RepositorioSesionRedisTest`.
 - Integración (perfil `docker`): `org.signbb.backend.CacheRedisIntegracionTest`.
+- Limpieza programada de versiones e imágenes (paquete
+  `org.signbb.backend.mantenimiento`, todas unitarias): ver la sección
+  «Limpieza programada» al final.
 
 ## ResolvedorContenidoClinicoTest — resolución cache-aside del contenido
 
@@ -99,3 +102,35 @@ Requieren PostgreSQL y Redis arriba (`contenedores/compose.yaml`):
   (ver `contenedores/MANUAL_CONTENEDORES.md`).
 - El CI (GitHub Actions) corre `verify` con servicios PostgreSQL y Redis
   efímeros (`build.yml`), de modo que la suite completa se ejecuta ahí.
+
+## Limpieza programada (`mantenimiento`)
+
+Una vez al día (3:30, `signbb.limpieza.cron`) el backend borra por sí solo las
+versiones viejas del contenido y las imágenes sin uso. No hay endpoint. Todas
+las pruebas son unitarias, con Mockito y sin Spring, base de datos, Redis ni
+Silo.
+
+- **`PoliticaRetencionVersionesTest`**: con 20 versiones o menos no se borra
+  nada; con más se borran las más antiguas; nunca la vigente ni las 20 más
+  recientes; una versión reemplazada hace menos de 25 h se conserva (justo en
+  el límite se conserva y un segundo después se borra); no importa el orden en
+  que lleguen.
+- **`LimpiadorVersionesTest`**: borra de la base y después de Redis
+  (`ResolvedorVersiones.olvidar`) y de la memoria (`ContextoClinico.olvidar`);
+  si no hay nada que borrar no toca nada.
+- **`LimpiadorImagenesTest`**: borra solo la imagen que no usa ningún lienzo,
+  ninguna copia publicada, ningún grafo ni ninguna versión conservada; nunca
+  las subidas hace menos de 24 h ni archivos que no tengan nombre de imagen
+  del servidor; si no hay grafos en la base, si Silo no responde al listar o si
+  falla la lectura de un documento no borra nada; si falla borrar una sigue con
+  las demás.
+- **`LimpiezaProgramadaTest`**: primero las versiones y después las imágenes;
+  si una parte falla la otra se ejecuta igual y el error no se propaga.
+- **`ResolvedorVersionesTest`** (`olvidar`) y **`ContextoClinicoTest`**
+  (`olvidar`): borran solo las claves y las versiones indicadas, y un fallo de
+  Redis no rompe nada.
+- **`ServicioImagenesTest`** (`nombresEn`): encuentra los nombres de imagen
+  dentro de cualquier texto JSON.
+
+`AlmacenImagenesS3.listar` y `eliminar` hablan con Silo y se prueban a mano
+(ver `docs/autoria-subgrafos.md`).

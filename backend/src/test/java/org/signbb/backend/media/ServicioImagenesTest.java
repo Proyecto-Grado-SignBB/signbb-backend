@@ -5,7 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.Instant;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -35,6 +37,16 @@ class ServicioImagenesTest {
             @Override
             public Optional<Imagen> leer(String nombre) {
                 return Optional.ofNullable(guardadas.get(nombre));
+            }
+
+            @Override
+            public List<Guardada> listar() {
+                return guardadas.keySet().stream().map(n -> new Guardada(n, Instant.EPOCH)).toList();
+            }
+
+            @Override
+            public void eliminar(String nombre) {
+                guardadas.remove(nombre);
             }
         };
         servicio = new ServicioImagenes(almacen, 1024);
@@ -79,5 +91,16 @@ class ServicioImagenesTest {
         assertThrows(RecursoNoEncontradoException.class, () -> servicio.obtener("../etc/passwd"));
         assertThrows(RecursoNoEncontradoException.class,
                 () -> servicio.obtener("11111111-1111-1111-1111-111111111111.png"));
+    }
+
+    @Test
+    void nombresEnEncuentraLasImagenesDentroDeUnTextoSinImportarDondeEsten() {
+        String a = "11111111-2222-3333-4444-555555555555.png";
+        String b = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee.webp";
+        String json = "{\"imagenes\":[\"" + a + "\"],\"src\":[\"/api/imagenes/" + b + "\"],\"otro\":\"foto.png\"}";
+
+        assertEquals(java.util.Set.of(a, b), FormatoImagen.nombresEn(json));
+        assertTrue(FormatoImagen.nombresEn("sin imágenes").isEmpty());
+        assertTrue(FormatoImagen.nombresEn(null).isEmpty());
     }
 }

@@ -1,6 +1,9 @@
 package org.signbb.backend.cache;
 
 import java.time.Duration;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Stream;
 
 import org.signbb.backend.navegacion.datos.entidades.VersionContenidoEntity;
 import org.signbb.backend.navegacion.datos.repositorios.RepositorioVersionContenido;
@@ -127,6 +130,24 @@ public class ResolvedorVersiones {
             escribir(clave, mapper.writeValueAsString(reglas));
         }
         return reglas;
+    }
+
+    /**
+     * Borra de Redis la copia de estas versiones (grafo y reglas). Se llama
+     * cuando las versiones ya se borraron de la base de datos. Si Redis no
+     * responde no pasa nada: las claves vencen solas por su TTL.
+     */
+    public void olvidar(Collection<Long> ids) {
+        List<String> claves = ids.stream().flatMap(id -> Stream.of(clave(id), claveReglas(id))).toList();
+        if (claves.isEmpty()) {
+            return;
+        }
+        try {
+            redis.delete(claves);
+        } catch (DataAccessException e) {
+            log.warn("Redis no disponible para borrar la copia de {} versiones ({}): vencerán por su TTL.",
+                    ids.size(), e.getClass().getSimpleName());
+        }
     }
 
     private String leer(String clave) {

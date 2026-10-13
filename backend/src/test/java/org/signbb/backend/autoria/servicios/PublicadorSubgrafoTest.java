@@ -1,9 +1,12 @@
 package org.signbb.backend.autoria.servicios;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.clearInvocations;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -68,6 +71,10 @@ class PublicadorSubgrafoTest {
             }
             return e;
         });
+        doAnswer(i -> {
+            filas.remove(i.<GrafoClinicoEntity>getArgument(0));
+            return null;
+        }).when(grafos).delete(any(GrafoClinicoEntity.class));
         RepositorioBaseReglas bases = mock(RepositorioBaseReglas.class);
         List<BaseReglasEntity> reglas = ContenidoEjemplo.bases().stream().map(b -> {
             BaseReglasEntity e = new BaseReglasEntity();
@@ -249,5 +256,134 @@ class PublicadorSubgrafoTest {
         assertThrows(ContenidoInvalidoException.class, () -> publicador.publicar(borrador, FECHA));
 
         verify(versiones, never()).registrar(any(), any(), any());
+    }
+
+    // ---- Despublicar -------------------------------------------------------
+
+    private BorradorSubgrafoEntity fiebrePublicada() {
+        BorradorSubgrafoEntity borrador = LienzoFiebre.borrador(LienzoFiebre.completo());
+        publicador.publicar(borrador, FECHA);
+        return borrador;
+    }
+
+    private GrafoClinico contenidoNavegable() {
+        List<GrafoClinicoJson> subgrafos = filas.stream().map(GrafoClinicoEntity::getEstructura)
+                .filter(d -> !CompositorGrafoClinico.ID_RAIZ.equals(d.graph().id())).toList();
+        return GrafoClinicoMapper.desde(CompositorGrafoClinico.componer(
+                documento(CompositorGrafoClinico.ID_RAIZ), subgrafos, ContenidoEjemplo.bases()).grafo());
+    }
+
+    @Test
+    void retirarQuitaLaFilaLaReferenciaYLaOpcionDeLaPreguntaPuente() {
+        BorradorSubgrafoEntity borrador = fiebrePublicada();
+
+        publicador.retirar(borrador);
+
+        assertEquals(4, filas.size(), "raíz + 3 subgrafos del sistema");
+        assertTrue(filas.stream().noneMatch(f -> "grafo_fiebre".equals(f.getEstructura().graph().id())));
+        GrafoClinicoJson.Grafo raiz = documento(CompositorGrafoClinico.ID_RAIZ).graph();
+        assertFalse(raiz.nodes().containsKey(REFERENCIA));
+        assertTrue(aristasHaciaLaReferencia().isEmpty());
+    }
+
+    @Test
+    void despuesDeRetirarLaPreguntaPuenteVuelveATenerSoloSusOpcionesDeAntes() {
+        BorradorSubgrafoEntity borrador = fiebrePublicada();
+
+        publicador.retirar(borrador);
+
+        GrafoClinico tad = contenidoNavegable();
+        Nodo puente = tad.obtenerNodoPorId("puente_neuro").orElseThrow();
+        assertEquals(List.of("iniciar"), tad.obtenerOpciones(puente).stream()
+                .map(Respuesta::getCondicion).toList());
+        assertTrue(tad.obtenerNodoPorId("grafo_fiebre/" + LienzoFiebre.INICIO).isEmpty());
+    }
+
+    @Test
+    void retirarNoTocaLosDemasSubgrafos() {
+        BorradorSubgrafoEntity borrador = fiebrePublicada();
+        List<GrafoClinicoJson> antes = filas.stream().map(GrafoClinicoEntity::getEstructura)
+                .filter(d -> !"grafo_fiebre".equals(d.graph().id())
+                        && !CompositorGrafoClinico.ID_RAIZ.equals(d.graph().id()))
+                .toList();
+
+        publicador.retirar(borrador);
+
+        List<GrafoClinicoJson> despues = filas.stream().map(GrafoClinicoEntity::getEstructura)
+                .filter(d -> !CompositorGrafoClinico.ID_RAIZ.equals(d.graph().id())).toList();
+        assertEquals(antes, despues);
+    }
+
+    @Test
+    void retirarGuardaUnaVersionNuevaSinElSubgrafo() {
+        BorradorSubgrafoEntity borrador = fiebrePublicada();
+
+        publicador.retirar(borrador);
+
+        ArgumentCaptor<GrafoClinicoJson> grafo = ArgumentCaptor.forClass(GrafoClinicoJson.class);
+        ArgumentCaptor<String> origen = ArgumentCaptor.forClass(String.class);
+        verify(versiones, times(2)).registrar(grafo.capture(), any(), origen.capture());
+        assertTrue(origen.getValue().startsWith("Despublicación"));
+        assertTrue(origen.getValue().contains("grafo_fiebre"));
+        assertFalse(grafo.getValue().graph().nodes().containsKey("grafo_fiebre/" + LienzoFiebre.INICIO));
+        assertTrue(grafo.getValue().graph().nodes().containsKey("grafo_respiracion/q_resp_urgencia"));
+    }
+
+    @Test
+    void despuesDeRetirarInvalidaElCacheYRecargaElContexto() {
+        BorradorSubgrafoEntity borrador = fiebrePublicada();
+        clearInvocations(grafos, resolvedor, contexto);
+
+        publicador.retirar(borrador);
+
+        InOrder orden = inOrder(grafos, resolvedor, contexto);
+        orden.verify(grafos).save(any(GrafoClinicoEntity.class));
+        orden.verify(grafos).delete(any(GrafoClinicoEntity.class));
+        orden.verify(resolvedor).invalidar();
+        orden.verify(contexto).recargar();
+    }
+
+    @Test
+    void siEsElUnicoSubgrafoPublicadoNoSeRetiraNiSeGuardaNada() {
+        BorradorSubgrafoEntity borrador = fiebrePublicada();
+        filas.removeIf(f -> !CompositorGrafoClinico.ID_RAIZ.equals(f.getEstructura().graph().id())
+                && !"grafo_fiebre".equals(f.getEstructura().graph().id()));
+        clearInvocations(grafos, resolvedor, contexto, versiones);
+
+        ContenidoInvalidoException e = assertThrows(ContenidoInvalidoException.class,
+                () -> publicador.retirar(borrador));
+
+        assertTrue(e.getMessage().contains("único subgrafo publicado"));
+        verify(grafos, never()).save(any());
+        verify(grafos, never()).delete(any());
+        verify(versiones, never()).registrar(any(), any(), any());
+        verify(resolvedor, never()).invalidar();
+        verify(contexto, never()).recargar();
+    }
+
+    @Test
+    void unSubgrafoRetiradoSePuedeVolverAPublicar() {
+        BorradorSubgrafoEntity borrador = fiebrePublicada();
+        publicador.retirar(borrador);
+
+        publicador.publicar(borrador, FECHA);
+
+        assertEquals(5, filas.size());
+        assertEquals(List.of(new GrafoClinicoJson.Arista("puente_neuro", ETIQUETA, REFERENCIA, true)),
+                aristasHaciaLaReferencia());
+    }
+
+    @Test
+    void sinReferenciaQuitaElNodoYSoloLasAristasQueLoTocan() {
+        fiebrePublicada();
+        GrafoClinicoJson raiz = documento(CompositorGrafoClinico.ID_RAIZ);
+        int aristasAntes = raiz.graph().edges().size();
+
+        GrafoClinicoJson sin = PublicadorSubgrafo.sinReferencia(raiz, "grafo_fiebre");
+
+        assertEquals(raiz.graph().nodes().size() - 1, sin.graph().nodes().size());
+        assertEquals(aristasAntes - 1, sin.graph().edges().size());
+        assertEquals(raiz.graph().id(), sin.graph().id());
+        assertEquals(raiz.graph().preguntaInicial(), sin.graph().preguntaInicial());
     }
 }

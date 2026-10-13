@@ -173,6 +173,48 @@ class ControladorAutoriaTest {
     }
 
     @Test
+    void despublicarResponde200ConElBorrador() throws Exception {
+        when(servicio.despublicar(1L)).thenReturn(vacio());
+
+        MockHttpServletResponse r = ejecutar(post("/api/autoria/subgrafos/1/despublicar"));
+
+        assertEquals(200, r.getStatus());
+        assertTrue(cuerpo(r).contains("\"estado\":\"BORRADOR\""));
+        verify(servicio).despublicar(1L);
+    }
+
+    @Test
+    void despublicarUnSubgrafoQueNoEstaPublicadoResponde422ConElMensaje() throws Exception {
+        when(servicio.despublicar(1L)).thenThrow(new EdicionInvalidaException(
+                "Este subgrafo no está publicado, así que no hay nada que despublicar."));
+
+        MockHttpServletResponse r = ejecutar(post("/api/autoria/subgrafos/1/despublicar"));
+
+        assertEquals(422, r.getStatus());
+        assertTrue(cuerpo(r).contains("no hay nada que despublicar"));
+    }
+
+    @Test
+    void despublicarElUnicoSubgrafoPublicadoResponde422ConElMensaje() throws Exception {
+        when(servicio.despublicar(1L)).thenThrow(new ContenidoInvalidoException(
+                "Este es el único subgrafo publicado: si se despublica, la app de las cuidadoras se quedaría "
+                        + "sin nada que mostrar. Publica otro antes.", List.of()));
+
+        MockHttpServletResponse r = ejecutar(post("/api/autoria/subgrafos/1/despublicar"));
+
+        assertEquals(422, r.getStatus());
+        assertTrue(cuerpo(r).contains("único subgrafo publicado"));
+        assertTrue(cuerpo(r).contains("\"avisos\":[]"));
+    }
+
+    @Test
+    void despublicarUnSubgrafoQueNoExisteResponde404() throws Exception {
+        when(servicio.despublicar(9L)).thenThrow(new RecursoNoEncontradoException("subgrafo 9"));
+
+        assertEquals(404, ejecutar(post("/api/autoria/subgrafos/9/despublicar")).getStatus());
+    }
+
+    @Test
     void unSubgrafoQueNoExisteResponde404() throws Exception {
         when(servicio.obtener(9L)).thenThrow(new RecursoNoEncontradoException("no hay un subgrafo con id 9"));
 

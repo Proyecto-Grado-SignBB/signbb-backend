@@ -133,6 +133,84 @@ public class PublicadorSubgrafo {
     }
 
     /**
+     * Retira un subgrafo publicado: quita su referencia y sus opciones del grafo
+     * raíz y borra su fila, de modo que las cuidadoras que empiecen un recorrido
+     * nuevo ya no lo ven. Los recorridos en curso terminan con la versión con la
+     * que empezaron. Si el contenido que queda no es válido (por ejemplo, era el
+     * único subgrafo publicado), no se guarda nada.
+     *
+     * @param borrador borrador del subgrafo que se retira
+     * @throws ContenidoInvalidoException si el contenido restante no se puede componer
+     */
+    @Transactional
+    public void retirar(BorradorSubgrafoEntity borrador) {
+        GrafoClinicoEntity filaRaiz = null;
+        GrafoClinicoEntity filaSubgrafo = null;
+        List<GrafoClinicoJson> restantes = new ArrayList<>();
+        for (GrafoClinicoEntity fila : grafos.findAll()) {
+            String id = idDe(fila.getEstructura());
+            if (id == null) {
+                continue;
+            }
+            if (CompositorGrafoClinico.ID_RAIZ.equals(id)) {
+                filaRaiz = fila;
+            } else if (id.equals(borrador.getGrafoId())) {
+                filaSubgrafo = fila;
+            } else {
+                restantes.add(fila.getEstructura());
+            }
+        }
+        if (filaRaiz == null) {
+            throw new IllegalStateException("no hay grafo raíz ('" + CompositorGrafoClinico.ID_RAIZ
+                    + "') en la base de datos");
+        }
+        if (restantes.isEmpty()) {
+            throw new ContenidoInvalidoException("Este es el único subgrafo publicado: si se despublica, la "
+                    + "app de las cuidadoras se quedaría sin nada que mostrar. Publica otro antes.", List.of());
+        }
+        GrafoClinicoJson raiz = sinReferencia(filaRaiz.getEstructura(), borrador.getGrafoId());
+        CompositorGrafoClinico.Contenido compuesto = PublicacionContenido.validarComposicion(
+                "El subgrafo no se pudo despublicar", raiz, restantes, reglas());
+
+        filaRaiz.setEstructura(raiz);
+        grafos.save(filaRaiz);
+        if (filaSubgrafo != null) {
+            grafos.delete(filaSubgrafo);
+        }
+        Long version = versiones.registrar(compuesto.grafo(), compuesto.reglas(),
+                "Despublicación de '" + borrador.getGrafoId() + "'");
+        log.info("Subgrafo '{}' despublicado (versión {} del contenido).", borrador.getGrafoId(), version);
+
+        PublicacionContenido.despuesDelCommit(() -> {
+            resolvedor.invalidar();
+            contexto.recargar();
+        });
+    }
+
+    /** Copia del grafo raíz sin el nodo de referencia al subgrafo ni las aristas que lo tocan. */
+    static GrafoClinicoJson sinReferencia(GrafoClinicoJson raiz, String grafoId) {
+        GrafoClinicoJson.Grafo grafo = raiz.graph();
+        Map<String, GrafoClinicoJson.NodoJson> nodos = new LinkedHashMap<>();
+        List<String> quitados = new ArrayList<>();
+        for (Map.Entry<String, GrafoClinicoJson.NodoJson> e : grafo.nodes().entrySet()) {
+            GrafoClinicoJson.MetadataNodo m = e.getValue().metadata();
+            if (m != null && "referencia".equals(m.tipo()) && grafoId.equals(m.grafoId())) {
+                quitados.add(e.getKey());
+            } else {
+                nodos.put(e.getKey(), e.getValue());
+            }
+        }
+        List<GrafoClinicoJson.Arista> aristas = new ArrayList<>();
+        for (GrafoClinicoJson.Arista a : grafo.edges() == null ? List.<GrafoClinicoJson.Arista>of() : grafo.edges()) {
+            if (!quitados.contains(a.source()) && !quitados.contains(a.target())) {
+                aristas.add(a);
+            }
+        }
+        return new GrafoClinicoJson(new GrafoClinicoJson.Grafo(grafo.id(), grafo.label(), grafo.directed(),
+                grafo.category(), grafo.preguntaInicial(), grafo.nodoInicial(), grafo.metadata(), nodos, aristas));
+    }
+
+    /**
      * Copia del grafo raíz con la referencia al subgrafo y la arista desde su
      * pregunta puente. Las aristas que ya llegaban a la referencia se
      * reemplazan, por si cambió la pregunta puente o el texto de la opción.

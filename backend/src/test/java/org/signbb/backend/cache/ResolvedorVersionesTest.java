@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doThrow;
@@ -13,6 +14,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -159,6 +161,28 @@ class ResolvedorVersionesTest {
         when(repositorio.findById(2L)).thenReturn(Optional.of(fila(grafo)));
 
         assertEquals(grafo.graph().nodes().size(), resolvedor.documentoGrafo(2L).graph().nodes().size());
+    }
+
+    @Test
+    void olvidarBorraLasClavesDelGrafoYDeLasReglasDeCadaVersion() {
+        resolvedor.olvidar(List.of(3L, 4L));
+
+        verify(redis).delete(List.of(ResolvedorVersiones.clave(3L), ResolvedorVersiones.claveReglas(3L),
+                ResolvedorVersiones.clave(4L), ResolvedorVersiones.claveReglas(4L)));
+    }
+
+    @Test
+    void olvidarSinVersionesNoLlamaARedis() {
+        resolvedor.olvidar(List.of());
+
+        verify(redis, never()).delete(anyCollection());
+    }
+
+    @Test
+    void siRedisNoRespondeAlOlvidarNoFalla() {
+        when(redis.delete(anyCollection())).thenThrow(new QueryTimeoutException("sin redis"));
+
+        resolvedor.olvidar(List.of(3L));
     }
 
     @Test

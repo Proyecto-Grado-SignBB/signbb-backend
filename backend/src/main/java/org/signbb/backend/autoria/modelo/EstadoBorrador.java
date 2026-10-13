@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public enum EstadoBorrador {
 
     /** Nunca se publicó. */
-    @Schema(description = "Nunca se publicó.")
+    @Schema(description = "No está publicado: nunca se publicó o se despublicó.")
     BORRADOR,
 
     /** Lo publicado coincide con el borrador. */

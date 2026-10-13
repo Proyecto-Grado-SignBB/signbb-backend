@@ -1,6 +1,9 @@
 package org.signbb.backend.media;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -16,8 +19,26 @@ public record FormatoImagen(String extension, String tipo) {
     /** Máximo de imágenes por pregunta. */
     public static final int MAXIMO_POR_PREGUNTA = 3;
 
-    private static final Pattern NOMBRE = Pattern
-            .compile("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\\.(png|jpg|webp|gif)");
+    private static final String NOMBRE_REGEX =
+            "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\\.(?:png|jpg|webp|gif)";
+
+    private static final Pattern NOMBRE = Pattern.compile(NOMBRE_REGEX);
+
+    /**
+     * Nombres de imagen (como los genera el servidor) que aparecen dentro de un
+     * texto, por ejemplo un documento serializado como JSON. Sirve para saber
+     * qué imágenes usa un documento sin conocer su estructura.
+     */
+    public static Set<String> nombresEn(String texto) {
+        Set<String> nombres = new HashSet<>();
+        if (texto != null) {
+            Matcher m = NOMBRE.matcher(texto);
+            while (m.find()) {
+                nombres.add(m.group());
+            }
+        }
+        return nombres;
+    }
 
     /** True si es un nombre como los que genera el servidor (uuid y extensión permitida). */
     public static boolean nombreValido(String nombre) {

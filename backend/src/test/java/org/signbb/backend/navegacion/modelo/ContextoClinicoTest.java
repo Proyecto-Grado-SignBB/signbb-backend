@@ -8,6 +8,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.signbb.backend.cache.ResolvedorVersiones;
@@ -78,6 +80,19 @@ class ContextoClinicoTest {
         contexto.baseDe(2L);
 
         verify(versiones, times(1)).documentoGrafo(2L);
+    }
+
+    @Test
+    void olvidarSacaDeMemoriaSoloLasVersionesIndicadas() {
+        contexto.grafoDe(1L);
+        contexto.grafoDe(2L);
+
+        contexto.olvidar(List.of(2L));
+        contexto.grafoDe(1L);
+        contexto.grafoDe(2L);
+
+        verify(versiones, times(1)).documentoGrafo(1L);
+        verify(versiones, times(2)).documentoGrafo(2L);
     }
 
     @Test

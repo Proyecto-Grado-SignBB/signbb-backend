@@ -43,6 +43,9 @@ Esta entrega cubre subgrafos **sin reglas clínicas**. El desenlace lo decide la
    - Las categorías **son las preguntas puente del grafo raíz** (`grafo_raiz.json`). Ahora son piel, temperatura, respiración, gastrointestinal y neurológico.
    - Una categoría sin subgrafos no se le muestra a la cuidadora, porque el compositor la poda, y aparece sola cuando alguien publica en ella.
 7. **Nombre para la familia obligatorio** (`c23c5e7`): `etiquetaOpcion` es el único texto que ve la cuidadora. Si viene vacío, el back responde 422 con un mensaje claro. Ya no se usa el nombre técnico como respaldo.
+8. **Limpieza de versiones e imágenes** (`mantenimiento/`): `LimpiezaProgramada` corre todos los días a las 3:30 (primero versiones, luego imágenes) y no tiene endpoint.
+   - `PoliticaRetencionVersiones` decide: se quedan las 20 más recientes y las reemplazadas hace menos de 25 h (el TTL de las sesiones es 24 h, así que nadie sigue en una versión más vieja). `LimpiadorVersiones` las borra de la base, de Redis (`ResolvedorVersiones.olvidar`) y de la memoria (`ContextoClinico.olvidar`).
+   - `LimpiadorImagenes` lista Silo (`AlmacenImagenes.listar`) y borra (`eliminar`) lo que no aparece en ningún borrador, copia publicada, grafo ni versión conservada. Respeta 24 h de gracia porque la imagen se sube antes de guardar la pregunta.
 
 ### Front (`signbb-frontend`, rama `autoria-lienzo`, proyecto `ui-autoria`)
 1. **Cliente de la API nueva** (`c383d0d`): `core/http/autoria.ts` y `models/lienzo.model.ts`. Reemplazan `autoria.model.ts` y la API vieja `/grafos`.
@@ -71,6 +74,7 @@ Esta entrega cubre subgrafos **sin reglas clínicas**. El desenlace lo decide la
 | PUT | `/subgrafos/{id}/respuestas/{respuestaId}/destino` | Enlazar a una pregunta existente (`{"nodoId": null}` lo quita) |
 | GET | `/subgrafos/{id}/avisos` | Avisos actuales |
 | POST | `/subgrafos/{id}/publicar` | Publicar (422 con avisos si hay bloqueantes) |
+| POST | `/subgrafos/{id}/despublicar` | Despublicar: el borrador vuelve a `BORRADOR` con su lienzo intacto (422 si no está publicado o si es el único subgrafo publicado) |
 
 ## 5. Cómo probarlo en local
 
@@ -190,6 +194,15 @@ Debe listar piel, temperatura, respiración, gastrointestinal y neurológico. **
 3. Publica.
 4. En `http://localhost:4200` (cuidadora), entra a Piel y verifica que aparece «Piel u ojos amarillos» y que se recorre hasta la conclusión.
 
+### Probar la limpieza a mano
+
+La tarea corre sola a las 3:30. Para probarla sin esperar, cambia temporalmente en `backend/src/main/resources/application.properties` la línea `signbb.limpieza.cron=0 * * * * *` (corre cada minuto) y reinicia el back.
+
+1. **Imágenes:** sube una imagen en una pregunta y no guardes la pregunta. En el log debe salir `Limpieza de imágenes: ... se borraron 0`: la imagen tiene menos de 24 h. Para ver el borrado de verdad, sube a Silo (consola en `localhost:9001`) un archivo con nombre de la forma `00000000-0000-0000-0000-000000000001.png` y deja pasar más de 24 h, o cambia la gracia (`LimpiadorImagenes.GRACIA`) a 1 minuto solo para la prueba. Debe desaparecer solo si ningún lienzo la usa.
+2. **Imagen en uso:** una imagen puesta en una pregunta guardada nunca debe borrarse, ni siquiera con la gracia en cero.
+3. **Versiones:** publica y despublica más de 20 veces (o inserta filas en `version_contenido`) y mira el log: `Limpieza de versiones: se borraron N de M`. La versión vigente y las 20 más recientes deben seguir en la tabla.
+4. Deja el cron y la gracia como estaban antes de commitear.
+
 ### Errores a verificar
 
 - Crear sin nombre para la familia no debe dejar.
@@ -207,10 +220,12 @@ Debe listar piel, temperatura, respiración, gastrointestinal y neurológico. **
 - [ ] **Prueba de punta a punta con la app de la cuidadora (`ui-consulta`)** sobre las ramas integradas.
 
 ### Importantes
-- [ ] **Despublicar o retirar** un subgrafo publicado. Hoy no se puede borrar una vez publicado, y tampoco hay forma de ocultarlo.
+- [x] **Despublicar** un subgrafo publicado (`POST /subgrafos/{id}/despublicar`). Quita su opción y su nodo `ref_<grafoId>` del grafo raíz y borra su fila, guarda una versión nueva del contenido y el borrador vuelve a `BORRADOR` con el lienzo intacto (se puede corregir y republicar, o borrar). Los recorridos en curso no se cortan: cada cuidadora termina con la versión con la que empezó. No se deja despublicar el único subgrafo publicado.
+- [ ] **Retiro urgente** (opcional, más adelante): cortar también los recorridos en curso por un subgrafo retirado por un error clínico grave. Hoy quien ya iba por él sigue viéndolo hasta que termine.
 - [ ] **Cambiar la categoría** después de crear. Hoy se muestra pero no se edita; habría que mover la opción entre preguntas puente al republicar.
 - [ ] **Vista previa como cuidadora** antes de publicar: recorrer el subgrafo con el mismo motor sin publicarlo.
 - [ ] **Revisión o aprobación clínica** antes de publicar, por ejemplo que otro médico apruebe. Hoy cualquiera publica directo.
+- [x] **Limpieza de versiones del contenido e imágenes sin uso.** Una tarea diaria (3:30; `signbb.limpieza.cron`, se apaga con `signbb.limpieza.activa=false`) sin endpoint. Versiones: conserva las 20 más recientes (la vigente siempre) y las reemplazadas hace menos de 25 h; borra el resto de la base, de Redis y de la memoria. Imágenes: borra de Silo las que no están en ningún lienzo, copia publicada, grafo ni versión conservada, y nunca las subidas hace menos de 24 h ni archivos con otro nombre. Ante la duda no borra. Código en `mantenimiento/`.
 - [ ] **Historial de versiones y auditoría:** quién cambió qué y cuándo, y volver a una versión publicada anterior.
 - [ ] **Administrar categorías desde la interfaz.** Hoy se agregan editando `grafo_raiz.json`, que existe en dos copias que deben quedar idénticas, y requiere volver a sembrar la base.
 

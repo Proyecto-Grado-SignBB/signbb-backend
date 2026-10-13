@@ -228,6 +228,26 @@ public class ControladorAutoria {
         return servicio.publicar(id);
     }
 
+    /** {@code POST /api/autoria/subgrafos/{id}/despublicar}: retira el subgrafo de la app de las cuidadoras. */
+    @Operation(summary = "Despublica el subgrafo",
+            description = "Las cuidadoras que empiecen un recorrido nuevo ya no lo ven. Las que ya estaban "
+                    + "en medio de un recorrido lo terminan. El borrador vuelve a BORRADOR con el lienzo intacto.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Subgrafo despublicado"),
+            @ApiResponse(responseCode = "404", description = "El borrador no existe",
+                    content = @Content),
+            @ApiResponse(responseCode = "409", description = "Otra persona lo cambió al mismo tiempo",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAutoriaDTO.class))),
+            @ApiResponse(responseCode = "422", description = "No está publicado, o era el único subgrafo publicado",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAutoriaDTO.class)))
+    })
+    @PostMapping("/subgrafos/{id}/despublicar")
+    public SubgrafoDTO despublicar(@PathVariable Long id) {
+        return servicio.despublicar(id);
+    }
+
     /**
      * {@code POST /api/autoria/subgrafos/{id}/descartar}: descarta los cambios
      * sin publicar y devuelve el borrador a su última publicación.

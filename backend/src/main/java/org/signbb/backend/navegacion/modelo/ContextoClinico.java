@@ -1,5 +1,6 @@
 package org.signbb.backend.navegacion.modelo;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -92,6 +93,14 @@ public class ContextoClinico {
     public synchronized void recargar() {
         idActual = null;
         cargadas.clear();
+    }
+
+    /**
+     * Saca de memoria las versiones indicadas (las que se acaban de borrar de
+     * la base de datos). No toca el resto ni la versión vigente.
+     */
+    public synchronized void olvidar(Collection<Long> ids) {
+        cargadas.keySet().removeAll(ids);
     }
 
     private Contenido contenido(Long id) {

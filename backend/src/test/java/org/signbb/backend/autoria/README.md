@@ -18,9 +18,9 @@ PostgreSQL y Redis, como el CI.
 | `servicios` | `EditorLienzoTest` | 18 | el "+", enlazar a una pregunta existente, editar y eliminar nodos; lo que el editor rechaza |
 | `servicios` | `ValidadorLienzoTest` | 10 | un caso por cada aviso; nodos sueltos y choque de gravedades |
 | `servicios` | `CompiladorSubgrafoTest` | 7 | lienzo → `GrafoClinicoJson`: pesos, tipos, aristas y metadata |
-| `servicios` | `PublicadorSubgrafoTest` | 9 | upsert del subgrafo y de la opción en la raíz; categoría nueva visible; invalidar el contenido; rechazos |
-| `servicios` | `ServicioAutoriaImplTest` | 16 | categorías, ids de grafo, datos del subgrafo (nombre para la familia obligatorio), estados, descartar cambios y errores |
-| `controladores` | `ControladorAutoriaTest` | 9 | códigos HTTP y cuerpos de error de la API `/api/autoria` |
+| `servicios` | `PublicadorSubgrafoTest` | 20 | upsert del subgrafo y de la opción en la raíz; categoría nueva visible; invalidar el contenido; rechazos; despublicar |
+| `servicios` | `ServicioAutoriaImplTest` | 23 | categorías, ids de grafo, datos del subgrafo (nombre para la familia obligatorio), estados, descartar cambios, despublicar y errores |
+| `controladores` | `ControladorAutoriaTest` | 16 | códigos HTTP y cuerpos de error de la API `/api/autoria` |
 | `servicios` | `CompiladorReglasTest` | 3 | borrador de reglas → `BaseReglasJson` (FND, niveles) |
 | `servicios` | `ValidadorReglasTest` | 6 | un aviso por cada problema del borrador de reglas |
 | `servicios` | `PublicadorReglaTest` | 6 | publica/reemplaza la base de reglas de un grafo, recompone el contenido y registra una versión |
@@ -96,6 +96,16 @@ neurológica (`puente_neuro`).
   pregunta puente (por ejemplo "Iniciar"), si la pregunta puente no está o si
   el contenido compuesto no pasa la validación.
 
+### Despublicar (`PublicadorSubgrafoTest`)
+- `retirar` quita la fila del subgrafo, su nodo `ref_<grafoId>` y las aristas
+  que lo tocan; la pregunta puente vuelve a tener solo sus opciones de antes
+  y los demás subgrafos no cambian.
+- Guarda una versión nueva del contenido (origen "Despublicación de ...") sin
+  el subgrafo, e invalida Redis y recarga el contexto después de guardar.
+- **No guarda nada** si es el único subgrafo publicado (la app de las
+  cuidadoras se quedaría sin contenido).
+- Un subgrafo despublicado se puede volver a publicar sin duplicar la opción.
+
 ### Servicio (`ServicioAutoriaImplTest`)
 - Las categorías salen de las preguntas puente del grafo raíz: piel,
   temperatura, respiración, gastrointestinal y neurológico. Piel y
@@ -108,6 +118,10 @@ neurológica (`puente_neuro`).
 - El nombre para la familia (`etiquetaOpcion`) es obligatorio: sin él, crear
   o editar responde 422.
 - Un borrador publicado no se puede borrar; un id inexistente da 404.
+- Despublicar devuelve el borrador a **BORRADOR** (sin `publicadoEn` ni copia
+  publicada, con el lienzo y los datos intactos); se rechaza si nunca se
+  publicó, y si el contenido restante no es válido el borrador sigue
+  **PUBLICADO**. Ya despublicado se puede republicar o borrar.
 
 ### Reglas: compilar, validar y publicar (`CompiladorReglasTest`, `ValidadorReglasTest`, `PublicadorReglaTest`)
 - La base de reglas del borrador se compila a `BaseReglasJson` conservando la
@@ -134,6 +148,8 @@ neurológica (`puente_neuro`).
 - Una edición inválida responde **422 con `{mensaje, avisos: []}`** y publicar
   con avisos responde 422 con la lista.
 - Un id inexistente da 404 y una edición concurrente (`@Version`) da 409.
+- Despublicar responde 200 con el borrador en `BORRADOR`; 422 con el mensaje si
+  no estaba publicado o era el único subgrafo publicado; 404 si no existe.
 - Quitar el destino de una respuesta acepta `{"nodoId": null}`.
 
 ### Punta a punta (`AutoriaIntegracionTest`)

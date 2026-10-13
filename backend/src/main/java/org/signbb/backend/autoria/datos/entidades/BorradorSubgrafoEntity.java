@@ -70,7 +70,7 @@ public class BorradorSubgrafoEntity {
 
     private Instant actualizadoEn;
 
-    /** Última publicación, o {@code null} si nunca se publicó. */
+    /** Última publicación, o {@code null} si nunca se publicó o se despublicó. */
     private Instant publicadoEn;
 
     /**
