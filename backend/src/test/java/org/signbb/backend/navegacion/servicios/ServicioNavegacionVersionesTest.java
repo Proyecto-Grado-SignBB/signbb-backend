@@ -13,7 +13,6 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.signbb.backend.cache.ResolvedorContenidoClinico;
 import org.signbb.backend.cache.ResolvedorVersiones;
 import org.signbb.backend.config.RecursoNoEncontradoException;
 import org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico;
@@ -42,13 +41,13 @@ class ServicioNavegacionVersionesTest {
     @BeforeEach
     void preparar() {
         CompositorGrafoClinico.Contenido compuesto = ContenidoEjemplo.compuesto();
-        ResolvedorContenidoClinico resolvedor = mock(ResolvedorContenidoClinico.class);
-        when(resolvedor.documentoReglas()).thenReturn(compuesto.reglas());
         ResolvedorVersiones versiones = mock(ResolvedorVersiones.class);
         when(versiones.idActual()).thenAnswer(i -> vigente.get());
         when(versiones.documentoGrafo(1L)).thenReturn(compuesto.grafo());
         when(versiones.documentoGrafo(2L)).thenReturn(VersionesDePrueba.conOpcionExtra(compuesto.grafo()));
-        contexto = new ContextoClinico(resolvedor, versiones);
+        when(versiones.documentoReglas(1L)).thenReturn(compuesto.reglas());
+        when(versiones.documentoReglas(2L)).thenReturn(compuesto.reglas());
+        contexto = new ContextoClinico(versiones);
 
         RepositorioSesion repositorio = new RepositorioSesion() {
             @Override

@@ -68,6 +68,12 @@ public class ResolvedorVersiones {
         if (id == null) {
             id = registrar(contenido.documentoGrafo(), contenido.documentoReglas(), "Contenido inicial");
             log.info("Primera versión del contenido clínico creada (id {}).", id);
+        } else if (documentoReglas(id) == null) {
+            // Versión creada antes de versionar las reglas: se guarda una nueva
+            // con el contenido vigente para que los recorridos nuevos tengan
+            // reglas; las versiones antiguas quedan sin reglas.
+            id = registrar(contenido.documentoGrafo(), contenido.documentoReglas(), "Reglas versionadas");
+            log.info("Versión con reglas creada (id {}) a partir de una anterior sin reglas.", id);
         }
         return id;
     }

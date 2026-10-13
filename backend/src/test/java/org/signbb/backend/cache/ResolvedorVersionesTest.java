@@ -59,9 +59,29 @@ class ResolvedorVersionesTest {
     @Test
     void laVersionVigenteEsLaMasReciente() {
         when(repositorio.idMasReciente()).thenReturn(7L);
+        when(repositorio.findById(7L)).thenReturn(Optional.of(fila(grafo)));
 
         assertEquals(7L, resolvedor.idActual());
         verify(repositorio, never()).save(any());
+    }
+
+    @Test
+    void idActualConUnaVersionSinReglasCreaUnaConReglas() {
+        when(repositorio.idMasReciente()).thenReturn(7L);
+        when(repositorio.findById(7L))
+                .thenReturn(Optional.of(new VersionContenidoEntity(grafo, null, "previa")));
+        when(contenido.documentoGrafo()).thenReturn(grafo);
+        when(contenido.documentoReglas()).thenReturn(reglas);
+        VersionContenidoEntity nueva = mock(VersionContenidoEntity.class);
+        when(nueva.getId()).thenReturn(8L);
+        when(repositorio.save(any(VersionContenidoEntity.class))).thenReturn(nueva);
+
+        assertEquals(8L, resolvedor.idActual());
+
+        ArgumentCaptor<VersionContenidoEntity> captor = ArgumentCaptor.forClass(VersionContenidoEntity.class);
+        verify(repositorio).save(captor.capture());
+        assertEquals("Reglas versionadas", captor.getValue().getOrigen());
+        assertEquals(reglas.rules().size(), captor.getValue().getReglas().rules().size());
     }
 
     @Test

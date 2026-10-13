@@ -26,11 +26,12 @@ import org.springframework.stereotype.Component;
  *
  * <p>
  * Cada versión guarda el grafo y la base de reglas compuestos: un recorrido en
- * curso usa los de su versión. En versiones anteriores a versionar las reglas,
- * se usan las vigentes. Las versiones se cargan perezosamente (Redis como
- * copia caliente, base de datos como fuente de verdad) y la pereza garantiza
- * que la siembra inicial ({@code DatabaseInit}) haya corrido antes de la
- * primera resolución.
+ * curso usa los de su versión. Una versión anterior a que las reglas se
+ * versionaran no tiene reglas: queda con la base vacía (no se cae a las
+ * vigentes, que podrían referenciar nodos que no existen en su grafo). Las
+ * versiones se cargan perezosamente (Redis como copia caliente, base de datos
+ * como fuente de verdad) y la pereza garantiza que la siembra inicial
+ * ({@code DatabaseInit}) haya corrido antes de la primera resolución.
  */
 @Component
 public class ContextoClinico {
@@ -41,15 +42,13 @@ public class ContextoClinico {
     private record Contenido(GrafoClinico grafo, BaseReglas base) {
     }
 
-    private final ResolvedorContenidoClinico resolvedor;
     private final ResolvedorVersiones versiones;
 
     private Long idActual;
     private final Map<Long, Contenido> cargadas = new HashMap<>();
 
-    /** Inyecta los resolvedores del contenido vigente y de las versiones. */
-    public ContextoClinico(ResolvedorContenidoClinico resolvedor, ResolvedorVersiones versiones) {
-        this.resolvedor = resolvedor;
+    /** Inyecta el resolvedor de versiones del contenido clínico. */
+    public ContextoClinico(ResolvedorVersiones versiones) {
         this.versiones = versiones;
     }
 
@@ -104,12 +103,13 @@ public class ContextoClinico {
         return c;
     }
 
-    /** Reconstruye y valida el grafo de la versión y las reglas de esa versión (o las vigentes). */
+    /** Reconstruye y valida el grafo de la versión y sus reglas (vacías si la versión no las tiene). */
     private Contenido cargar(Long id) {
         GrafoClinico g = GrafoClinicoMapper.desde(versiones.documentoGrafo(id));
         BaseReglasJson reglasDeVersion = versiones.documentoReglas(id);
-        BaseReglas b = BaseReglasMapper.desde(
-                reglasDeVersion != null ? reglasDeVersion : resolvedor.documentoReglas(), g);
+        BaseReglas b = reglasDeVersion == null
+                ? new BaseReglas()
+                : BaseReglasMapper.desde(reglasDeVersion, g);
 
         if (!g.rutaValida()) {
             log.warn("El grafo clínico (versión {}) no cumple rutaValida(): puede haber nodos huérfanos "

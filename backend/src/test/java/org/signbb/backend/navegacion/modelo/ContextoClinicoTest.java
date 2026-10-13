@@ -10,7 +10,6 @@ import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.signbb.backend.cache.ResolvedorContenidoClinico;
 import org.signbb.backend.cache.ResolvedorVersiones;
 import org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico;
 import org.signbb.backend.navegacion.datos.serializacion.ContenidoEjemplo;
@@ -30,13 +29,13 @@ class ContextoClinicoTest {
         version1 = compuesto.grafo();
         version2 = VersionesDePrueba.conOpcionExtra(version1);
 
-        ResolvedorContenidoClinico resolvedor = mock(ResolvedorContenidoClinico.class);
-        when(resolvedor.documentoReglas()).thenReturn(compuesto.reglas());
         versiones = mock(ResolvedorVersiones.class);
         when(versiones.idActual()).thenReturn(1L);
         when(versiones.documentoGrafo(1L)).thenReturn(version1);
         when(versiones.documentoGrafo(2L)).thenReturn(version2);
-        contexto = new ContextoClinico(resolvedor, versiones);
+        when(versiones.documentoReglas(1L)).thenReturn(compuesto.reglas());
+        when(versiones.documentoReglas(2L)).thenReturn(compuesto.reglas());
+        contexto = new ContextoClinico(versiones);
     }
 
     private static int opcionesIniciales(GrafoClinico grafo) {
@@ -62,6 +61,14 @@ class ContextoClinicoTest {
     void sinVersionUsaLaVigente() {
         assertSame(contexto.getGrafo(), contexto.grafoDe(null));
         assertSame(contexto.getBase(), contexto.baseDe(null));
+    }
+
+    @Test
+    void unaVersionSinReglasQuedaConLaBaseVacia() {
+        when(versiones.documentoGrafo(3L)).thenReturn(version1);
+        when(versiones.documentoReglas(3L)).thenReturn(null);
+
+        assertEquals(0, contexto.baseDe(3L).size(), "una versión sin reglas no cae a las vigentes");
     }
 
     @Test
