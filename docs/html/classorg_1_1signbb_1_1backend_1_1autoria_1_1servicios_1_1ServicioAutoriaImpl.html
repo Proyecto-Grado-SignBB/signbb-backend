@@ -319,7 +319,7 @@ Métodos públicos</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Despublica un subgrafo: las cuidadoras que empiecen un recorrido nuevo ya no lo ven y el borrador vuelve a <code class="JavaDocCode">BORRADOR</code> con el lienzo intacto. </p>
-<p>Los recorridos que ya estaban en curso terminan con la versión con la que empezaron.</p>
+<p>También retira su base de reglas y devuelve el borrador de reglas a <code class="JavaDocCode">BORRADOR</code>, conservando el documento. Los recorridos que ya estaban en curso terminan con la versión con la que empezaron.</p>
 <dl class="exception"><dt>Excepciones</dt><dd>
   <table class="exception">
     <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EdicionInvalidaException.html" title="Una edición del lienzo que no se puede aplicar (por ejemplo, una segunda primera pregunta o un enlace...">EdicionInvalidaException</a></td><td>si el subgrafo no está publicado (422) </td></tr>

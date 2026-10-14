@@ -123,7 +123,7 @@ Métodos públicos</h2></td></tr>
 <tr class="memitem:a4d4fcc9001295d4c9854b1e16c74e328" id="r_a4d4fcc9001295d4c9854b1e16c74e328"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a4d4fcc9001295d4c9854b1e16c74e328">publicar</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1entidades_1_1BorradorSubgrafoEntity.html">BorradorSubgrafoEntity</a> borrador, Instant fecha)</td></tr>
 <tr class="memdesc:a4d4fcc9001295d4c9854b1e16c74e328"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publica el borrador.  <br /></td></tr>
 <tr class="memitem:a1fa3560fde498c16739dfc66573b6fcb" id="r_a1fa3560fde498c16739dfc66573b6fcb"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a1fa3560fde498c16739dfc66573b6fcb">retirar</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1entidades_1_1BorradorSubgrafoEntity.html">BorradorSubgrafoEntity</a> borrador)</td></tr>
-<tr class="memdesc:a1fa3560fde498c16739dfc66573b6fcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retira un subgrafo publicado: quita su referencia y sus opciones del grafo raíz y borra su fila, de modo que las cuidadoras que empiecen un recorrido nuevo ya no lo ven.  <br /></td></tr>
+<tr class="memdesc:a1fa3560fde498c16739dfc66573b6fcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retira un subgrafo publicado: quita su referencia y sus opciones del grafo raíz, borra su fila y borra su base de reglas, de modo que las cuidadoras que empiecen un recorrido nuevo ya no lo ven.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Atributos públicos estáticos</h2></td></tr>
@@ -240,8 +240,8 @@ Cuando la transacción confirma, invalida el cache de Redis y hace que <code><a 
       </table>
 </div><div class="memdoc">
 
-<p>Retira un subgrafo publicado: quita su referencia y sus opciones del grafo raíz y borra su fila, de modo que las cuidadoras que empiecen un recorrido nuevo ya no lo ven. </p>
-<p>Los recorridos en curso terminan con la versión con la que empezaron. Si el contenido que queda no es válido (por ejemplo, era el único subgrafo publicado), no se guarda nada.</p>
+<p>Retira un subgrafo publicado: quita su referencia y sus opciones del grafo raíz, borra su fila y borra su base de reglas, de modo que las cuidadoras que empiecen un recorrido nuevo ya no lo ven. </p>
+<p>Los recorridos en curso terminan con la versión con la que empezaron (grafo y reglas quedan congelados en su versión). Si el contenido que queda no es válido (por ejemplo, era el único subgrafo publicado), no se guarda nada.</p>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">borrador</td><td>borrador del subgrafo que se retira </td></tr>

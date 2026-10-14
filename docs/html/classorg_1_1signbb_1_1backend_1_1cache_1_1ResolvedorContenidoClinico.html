@@ -123,9 +123,8 @@ Métodos públicos</h2></td></tr>
 <tr class="memitem:acd018344179ca11a0149c7c145ce52c7" id="r_acd018344179ca11a0149c7c145ce52c7"><td class="memItemLeft"><a id="acd018344179ca11a0149c7c145ce52c7" name="acd018344179ca11a0149c7c145ce52c7"></a>
 GrafoClinicoJson&#160;</td><td class="memItemRight"><b>documentoGrafo</b> ()</td></tr>
 <tr class="memdesc:acd018344179ca11a0149c7c145ce52c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Grafo clínico compuesto (raíz + subgrafos, sin referencias): cache Redis → base de datos. <br /></td></tr>
-<tr class="memitem:ab29e65ac075b074375ec9b068542c8b3" id="r_ab29e65ac075b074375ec9b068542c8b3"><td class="memItemLeft"><a id="ab29e65ac075b074375ec9b068542c8b3" name="ab29e65ac075b074375ec9b068542c8b3"></a>
-BaseReglasJson&#160;</td><td class="memItemRight"><b>documentoReglas</b> ()</td></tr>
-<tr class="memdesc:ab29e65ac075b074375ec9b068542c8b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base de reglas compuesta (todas las bases, ids prefijados): cache Redis → base de datos. <br /></td></tr>
+<tr class="memitem:ab29e65ac075b074375ec9b068542c8b3" id="r_ab29e65ac075b074375ec9b068542c8b3"><td class="memItemLeft">BaseReglasJson&#160;</td><td class="memItemRight"><a class="el" href="#ab29e65ac075b074375ec9b068542c8b3">documentoReglas</a> ()</td></tr>
+<tr class="memdesc:ab29e65ac075b074375ec9b068542c8b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base de reglas compuesta (todas las bases, ids prefijados): cache Redis → base de datos.  <br /></td></tr>
 <tr class="memitem:aa5c8527bcef0cf207884d06a71f355db" id="r_aa5c8527bcef0cf207884d06a71f355db"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa5c8527bcef0cf207884d06a71f355db">invalidar</a> ()</td></tr>
 <tr class="memdesc:aa5c8527bcef0cf207884d06a71f355db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalida la copia en caliente (borra las claves).  <br /></td></tr>
 </table><table class="memberdecls">
@@ -142,6 +141,26 @@ static final String&#160;</td><td class="memItemRight"><b>CLAVE_REGLAS</b> = &qu
 <p>El classpath NO participa del runtime: los JSON de ejemplo son solo la semilla de <code class="JavaDocCode">DatabaseInit</code>. Si Redis no responde se degrada a la base de datos (Redis nunca es dependencia dura del arranque ni de la consulta); si la base no tiene contenido, falla con un error explícito.</p>
 <p>La base de datos guarda cada grafo por separado (el raíz del sistema y un subgrafo por médico) y cada base de reglas con su <code class="JavaDocCode">grafoId</code>. Este resolvedor los compone con <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1CompositorGrafoClinico.html">CompositorGrafoClinico</a></code> y cachea el resultado plano, que es lo único que ven <code class="JavaDocCode">ContextoClinico</code> y el motor. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
+<a id="ab29e65ac075b074375ec9b068542c8b3" name="ab29e65ac075b074375ec9b068542c8b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab29e65ac075b074375ec9b068542c8b3">&#9670;&#160;</a></span>documentoReglas()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">BaseReglasJson org.signbb.backend.cache.ResolvedorContenidoClinico.documentoReglas </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Base de reglas compuesta (todas las bases, ids prefijados): cache Redis → base de datos. </p>
+<p>Si no hay ninguna base (el sistema admite cero), devuelve una base vacía. </p>
+
+</div>
+</div>
 <a id="aa5c8527bcef0cf207884d06a71f355db" name="aa5c8527bcef0cf207884d06a71f355db"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa5c8527bcef0cf207884d06a71f355db">&#9670;&#160;</a></span>invalidar()</h2>
 
