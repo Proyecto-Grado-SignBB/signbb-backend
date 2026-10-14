@@ -83,17 +83,13 @@ public class ResolvedorContenidoClinico {
 
     /**
      * Base de reglas compuesta (todas las bases, ids prefijados): cache Redis
-     * → base de datos.
+     * → base de datos. Si no hay ninguna base (el sistema admite cero), devuelve
+     * una base vacía.
      */
     public BaseReglasJson documentoReglas() {
         String cacheado = leerCache(CLAVE_REGLAS);
         if (cacheado != null) {
             return mapper.readValue(cacheado, BaseReglasJson.class);
-        }
-        if (bases.count() == 0) {
-            throw new IllegalStateException(
-                    "no hay base de reglas en la base de datos; la siembra inicial "
-                            + "(DatabaseInit) debió poblarla");
         }
         return componerYCachear().reglas();
     }

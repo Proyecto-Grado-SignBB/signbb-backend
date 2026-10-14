@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
 import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico;
 import org.signbb.backend.navegacion.datos.serializacion.ContenidoEjemplo;
+import org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico;
 import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoJson;
 import org.signbb.backend.reglas.datos.entidades.BaseReglasEntity;
 import org.signbb.backend.reglas.datos.repositorios.RepositorioBaseReglas;
@@ -143,13 +144,14 @@ class ResolvedorContenidoClinicoTest {
     }
 
     @Test
-    void baseSinContenidoFallaConErrorExplicito() {
-        when(bases.count()).thenReturn(0L);
+    void sinBasesDeReglasDevuelveUnaBaseVacia() {
+        when(grafos.findAll()).thenReturn(List.of(filaRaiz, filaSubgrafo));
+        when(bases.findAll()).thenReturn(List.of());
 
-        IllegalStateException error = assertThrows(IllegalStateException.class,
-                () -> resolvedor.documentoReglas());
-        assertEquals("no hay base de reglas en la base de datos; la siembra inicial "
-                + "(DatabaseInit) debió poblarla", error.getMessage());
+        BaseReglasJson reglas = resolvedor.documentoReglas();
+
+        assertTrue(reglas.rules().isEmpty(), "el sistema admite cero bases de reglas");
+        assertEquals(CompositorGrafoClinico.ID_RAIZ, reglas.grafoId());
     }
 
     @Test

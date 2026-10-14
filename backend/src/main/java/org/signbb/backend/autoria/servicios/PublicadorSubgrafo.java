@@ -16,6 +16,7 @@ import org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico;
 import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoJson;
 import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoMapper;
 import org.signbb.backend.navegacion.modelo.ContextoClinico;
+import org.signbb.backend.reglas.datos.entidades.BaseReglasEntity;
 import org.signbb.backend.reglas.datos.repositorios.RepositorioBaseReglas;
 import org.signbb.backend.reglas.datos.serializacion.BaseReglasJson;
 import org.slf4j.Logger;
@@ -134,10 +135,11 @@ public class PublicadorSubgrafo {
 
     /**
      * Retira un subgrafo publicado: quita su referencia y sus opciones del grafo
-     * raíz y borra su fila, de modo que las cuidadoras que empiecen un recorrido
-     * nuevo ya no lo ven. Los recorridos en curso terminan con la versión con la
-     * que empezaron. Si el contenido que queda no es válido (por ejemplo, era el
-     * único subgrafo publicado), no se guarda nada.
+     * raíz, borra su fila y borra su base de reglas, de modo que las cuidadoras
+     * que empiecen un recorrido nuevo ya no lo ven. Los recorridos en curso
+     * terminan con la versión con la que empezaron (grafo y reglas quedan
+     * congelados en su versión). Si el contenido que queda no es válido (por
+     * ejemplo, era el único subgrafo publicado), no se guarda nada.
      *
      * @param borrador borrador del subgrafo que se retira
      * @throws ContenidoInvalidoException si el contenido restante no se puede componer
@@ -168,14 +170,30 @@ public class PublicadorSubgrafo {
             throw new ContenidoInvalidoException("Este es el único subgrafo publicado: si se despublica, la "
                     + "app de las cuidadoras se quedaría sin nada que mostrar. Publica otro antes.", List.of());
         }
+        List<BaseReglasJson> reglasRestantes = new ArrayList<>();
+        List<BaseReglasEntity> basesBorrar = new ArrayList<>();
+        for (BaseReglasEntity fila : bases.findAll()) {
+            BaseReglasJson documento = fila.getEstructura();
+            if (documento == null || documento.grafoId() == null || documento.grafoId().isBlank()) {
+                continue;
+            }
+            if (documento.grafoId().equals(borrador.getGrafoId())) {
+                basesBorrar.add(fila);
+            } else {
+                reglasRestantes.add(documento);
+            }
+        }
         GrafoClinicoJson raiz = sinReferencia(filaRaiz.getEstructura(), borrador.getGrafoId());
         CompositorGrafoClinico.Contenido compuesto = PublicacionContenido.validarComposicion(
-                "El subgrafo no se pudo despublicar", raiz, restantes, reglas());
+                "El subgrafo no se pudo despublicar", raiz, restantes, reglasRestantes);
 
         filaRaiz.setEstructura(raiz);
         grafos.save(filaRaiz);
         if (filaSubgrafo != null) {
             grafos.delete(filaSubgrafo);
+        }
+        for (BaseReglasEntity filaBase : basesBorrar) {
+            bases.delete(filaBase);
         }
         Long version = versiones.registrar(compuesto.grafo(), compuesto.reglas(),
                 "Despublicación de '" + borrador.getGrafoId() + "'");

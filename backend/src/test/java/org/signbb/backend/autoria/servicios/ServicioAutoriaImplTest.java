@@ -29,11 +29,14 @@ import org.signbb.backend.autoria.controladores.NodoRequest;
 import org.signbb.backend.autoria.controladores.OpcionRequest;
 import org.signbb.backend.autoria.controladores.SubgrafoDTO;
 import org.signbb.backend.autoria.controladores.SubgrafoRequest;
+import org.signbb.backend.autoria.datos.entidades.BorradorBaseReglaEntity;
 import org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorBaseRegla;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo;
+import org.signbb.backend.autoria.modelo.CopiaBaseReglaPublicada;
 import org.signbb.backend.autoria.modelo.CopiaPublicada;
 import org.signbb.backend.autoria.modelo.Desenlace;
+import org.signbb.backend.autoria.modelo.DocumentoBaseRegla;
 import org.signbb.backend.autoria.modelo.DocumentoLienzo;
 import org.signbb.backend.autoria.modelo.EstadoBorrador;
 import org.signbb.backend.autoria.modelo.Gravedad;
@@ -51,6 +54,7 @@ import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoJson;
 class ServicioAutoriaImplTest {
 
     private RepositorioBorradorSubgrafo borradores;
+    private RepositorioBorradorBaseRegla basesReglas;
     private PublicadorSubgrafo publicador;
     private ServicioAutoriaImpl servicio;
 
@@ -65,8 +69,9 @@ class ServicioAutoriaImplTest {
         borradores = mock(RepositorioBorradorSubgrafo.class);
         when(borradores.save(any(BorradorSubgrafoEntity.class))).thenAnswer(i -> i.getArgument(0));
         when(borradores.existsByGrafoId(anyString())).thenReturn(false);
-        RepositorioBorradorBaseRegla basesReglas = mock(RepositorioBorradorBaseRegla.class);
+        basesReglas = mock(RepositorioBorradorBaseRegla.class);
         when(basesReglas.findByGrafoId(anyString())).thenReturn(Optional.empty());
+        when(basesReglas.save(any(BorradorBaseReglaEntity.class))).thenAnswer(i -> i.getArgument(0));
         publicador = mock(PublicadorSubgrafo.class);
         servicio = new ServicioAutoriaImpl(borradores, basesReglas, grafos, publicador);
     }
@@ -267,6 +272,27 @@ class ServicioAutoriaImplTest {
         assertNull(b.getPublicadoEn());
         assertNull(b.getCopiaPublicada());
         assertFalse(dto.puedeDescartar());
+    }
+
+    @Test
+    void despublicarDevuelveElBorradorDeReglasABorradorConSuDocumentoIntacto() {
+        BorradorSubgrafoEntity b = guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
+        servicio.publicar(1L);
+        DocumentoBaseRegla documento = BaseReglasFiebre.conUrgencia();
+        BorradorBaseReglaEntity base = BaseReglasFiebre.borrador(documento);
+        base.setEstado(EstadoBorrador.PUBLICADO);
+        base.setPublicadoEn(Instant.parse("2026-10-01T00:00:00Z"));
+        base.setCopiaPublicada(new CopiaBaseReglaPublicada(base.getDocumento(), base.getNombre(),
+                base.getDescripcion(), base.getAutor(), base.getInstitucion()));
+        when(basesReglas.findByGrafoId("grafo_fiebre")).thenReturn(Optional.of(base));
+
+        servicio.despublicar(1L);
+
+        assertEquals(EstadoBorrador.BORRADOR, base.getEstado());
+        assertNull(base.getPublicadoEn());
+        assertNull(base.getCopiaPublicada());
+        assertEquals(documento, base.getDocumento(), "el borrador de reglas conserva su documento");
+        verify(basesReglas).save(base);
     }
 
     @Test

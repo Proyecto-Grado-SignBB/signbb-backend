@@ -51,7 +51,9 @@ class PublicadorSubgrafoTest {
     private static final String ETIQUETA = "Fiebre o temperatura alta";
 
     private final List<GrafoClinicoEntity> filas = new ArrayList<>();
+    private final List<BaseReglasEntity> baseFilas = new ArrayList<>();
     private RepositorioGrafoClinico grafos;
+    private RepositorioBaseReglas bases;
     private ResolvedorContenidoClinico resolvedor;
     private ResolvedorVersiones versiones;
     private ContextoClinico contexto;
@@ -75,13 +77,17 @@ class PublicadorSubgrafoTest {
             filas.remove(i.<GrafoClinicoEntity>getArgument(0));
             return null;
         }).when(grafos).delete(any(GrafoClinicoEntity.class));
-        RepositorioBaseReglas bases = mock(RepositorioBaseReglas.class);
-        List<BaseReglasEntity> reglas = ContenidoEjemplo.bases().stream().map(b -> {
+        ContenidoEjemplo.bases().forEach(b -> {
             BaseReglasEntity e = new BaseReglasEntity();
             e.setEstructura(b);
-            return e;
-        }).toList();
-        when(bases.findAll()).thenReturn(reglas);
+            baseFilas.add(e);
+        });
+        bases = mock(RepositorioBaseReglas.class);
+        when(bases.findAll()).thenAnswer(i -> new ArrayList<>(baseFilas));
+        doAnswer(i -> {
+            baseFilas.remove(i.<BaseReglasEntity>getArgument(0));
+            return null;
+        }).when(bases).delete(any(BaseReglasEntity.class));
 
         resolvedor = mock(ResolvedorContenidoClinico.class);
         versiones = mock(ResolvedorVersiones.class);
@@ -266,6 +272,14 @@ class PublicadorSubgrafoTest {
         return borrador;
     }
 
+    /** Base de reglas publicada de {@code grafo_fiebre}, compilada desde los datos de prueba. */
+    private BaseReglasEntity baseDeFiebre() {
+        BaseReglasEntity e = new BaseReglasEntity();
+        e.setEstructura(CompiladorReglas.compilar(
+                BaseReglasFiebre.borrador(BaseReglasFiebre.conUrgencia()), FECHA));
+        return e;
+    }
+
     private GrafoClinico contenidoNavegable() {
         List<GrafoClinicoJson> subgrafos = filas.stream().map(GrafoClinicoEntity::getEstructura)
                 .filter(d -> !CompositorGrafoClinico.ID_RAIZ.equals(d.graph().id())).toList();
@@ -315,6 +329,30 @@ class PublicadorSubgrafoTest {
     }
 
     @Test
+    void retirarBorraTambienLaBaseDeReglasDelGrafo() {
+        BaseReglasEntity baseFiebre = baseDeFiebre();
+        baseFilas.add(baseFiebre);
+        BorradorSubgrafoEntity borrador = fiebrePublicada();
+
+        publicador.retirar(borrador);
+
+        assertFalse(baseFilas.contains(baseFiebre), "la base del subgrafo retirado se borra");
+        assertFalse(baseFilas.stream().anyMatch(e -> "grafo_fiebre".equals(e.getEstructura().grafoId())));
+    }
+
+    @Test
+    void retirarNoTocaLasBasesDeLosDemasGrafos() {
+        baseFilas.add(baseDeFiebre());
+        BorradorSubgrafoEntity borrador = fiebrePublicada();
+        List<BaseReglasEntity> antes = baseFilas.stream()
+                .filter(e -> !"grafo_fiebre".equals(e.getEstructura().grafoId())).toList();
+
+        publicador.retirar(borrador);
+
+        assertEquals(antes, baseFilas);
+    }
+
+    @Test
     void retirarGuardaUnaVersionNuevaSinElSubgrafo() {
         BorradorSubgrafoEntity borrador = fiebrePublicada();
 
@@ -356,6 +394,7 @@ class PublicadorSubgrafoTest {
         assertTrue(e.getMessage().contains("único subgrafo publicado"));
         verify(grafos, never()).save(any());
         verify(grafos, never()).delete(any());
+        verify(bases, never()).delete(any(BaseReglasEntity.class));
         verify(versiones, never()).registrar(any(), any(), any());
         verify(resolvedor, never()).invalidar();
         verify(contexto, never()).recargar();

@@ -228,10 +228,11 @@ public class ControladorAutoria {
         return servicio.publicar(id);
     }
 
-    /** {@code POST /api/autoria/subgrafos/{id}/despublicar}: retira el subgrafo de la app de las cuidadoras. */
+    /** {@code POST /api/autoria/subgrafos/{id}/despublicar}: retira el subgrafo y su base de reglas de la app. */
     @Operation(summary = "Despublica el subgrafo",
             description = "Las cuidadoras que empiecen un recorrido nuevo ya no lo ven. Las que ya estaban "
-                    + "en medio de un recorrido lo terminan. El borrador vuelve a BORRADOR con el lienzo intacto.")
+                    + "en medio de un recorrido lo terminan. Se retira también su base de reglas; el borrador "
+                    + "del lienzo y el de reglas vuelven a BORRADOR con su documento intacto.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Subgrafo despublicado"),
             @ApiResponse(responseCode = "404", description = "El borrador no existe",

@@ -74,7 +74,7 @@ Esta entrega cubre subgrafos **sin reglas clínicas**. El desenlace lo decide la
 | PUT | `/subgrafos/{id}/respuestas/{respuestaId}/destino` | Enlazar a una pregunta existente (`{"nodoId": null}` lo quita) |
 | GET | `/subgrafos/{id}/avisos` | Avisos actuales |
 | POST | `/subgrafos/{id}/publicar` | Publicar (422 con avisos si hay bloqueantes) |
-| POST | `/subgrafos/{id}/despublicar` | Despublicar: el borrador vuelve a `BORRADOR` con su lienzo intacto (422 si no está publicado o si es el único subgrafo publicado) |
+| POST | `/subgrafos/{id}/despublicar` | Despublicar: quita el subgrafo y su base de reglas; los borradores (lienzo y reglas) vuelven a `BORRADOR` con su documento intacto (422 si no está publicado o si es el único subgrafo publicado) |
 
 ## 5. Cómo probarlo en local
 
@@ -220,7 +220,7 @@ La tarea corre sola a las 3:30. Para probarla sin esperar, cambia temporalmente 
 - [ ] **Prueba de punta a punta con la app de la cuidadora (`ui-consulta`)** sobre las ramas integradas.
 
 ### Importantes
-- [x] **Despublicar** un subgrafo publicado (`POST /subgrafos/{id}/despublicar`). Quita su opción y su nodo `ref_<grafoId>` del grafo raíz y borra su fila, guarda una versión nueva del contenido y el borrador vuelve a `BORRADOR` con el lienzo intacto (se puede corregir y republicar, o borrar). Los recorridos en curso no se cortan: cada cuidadora termina con la versión con la que empezó. No se deja despublicar el único subgrafo publicado.
+- [x] **Despublicar** un subgrafo publicado (`POST /subgrafos/{id}/despublicar`). Quita su opción y su nodo `ref_<grafoId>` del grafo raíz, borra su fila y su base de reglas, guarda una versión nueva del contenido y los borradores (lienzo y reglas) vuelven a `BORRADOR` con su documento intacto (se pueden corregir y republicar, o borrar). Los recorridos en curso no se cortan: cada cuidadora termina con la versión con la que empezó. No se deja despublicar el único subgrafo publicado.
 - [ ] **Retiro urgente** (opcional, más adelante): cortar también los recorridos en curso por un subgrafo retirado por un error clínico grave. Hoy quien ya iba por él sigue viéndolo hasta que termine.
 - [ ] **Cambiar la categoría** después de crear. Hoy se muestra pero no se edita; habría que mover la opción entre preguntas puente al republicar.
 - [ ] **Vista previa como cuidadora** antes de publicar: recorrer el subgrafo con el mismo motor sin publicarlo.

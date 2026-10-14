@@ -60,8 +60,9 @@ public interface ServicioAutoria {
     /**
      * Despublica un subgrafo: las cuidadoras que empiecen un recorrido nuevo ya
      * no lo ven y el borrador vuelve a {@code BORRADOR} con el lienzo intacto.
-     * Los recorridos que ya estaban en curso terminan con la versión con la que
-     * empezaron.
+     * También retira su base de reglas y devuelve el borrador de reglas a
+     * {@code BORRADOR}, conservando el documento. Los recorridos que ya estaban
+     * en curso terminan con la versión con la que empezaron.
      *
      * @throws EdicionInvalidaException   si el subgrafo no está publicado (422)
      * @throws ContenidoInvalidoException si el contenido restante no es válido, por

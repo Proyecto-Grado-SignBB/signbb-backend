@@ -176,6 +176,13 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
                     + "despublicar.");
         }
         publicador.retirar(b);
+        basesReglas.findByGrafoId(b.getGrafoId()).ifPresent(base -> {
+            base.setEstado(EstadoBorrador.BORRADOR);
+            base.setPublicadoEn(null);
+            base.setCopiaPublicada(null);
+            base.setActualizadoEn(Instant.now());
+            basesReglas.save(base);
+        });
         b.setEstado(EstadoBorrador.BORRADOR);
         b.setPublicadoEn(null);
         b.setCopiaPublicada(null);
