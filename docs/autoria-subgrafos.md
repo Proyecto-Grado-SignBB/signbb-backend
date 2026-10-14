@@ -32,9 +32,11 @@ Esta entrega cubre subgrafos **sin reglas clínicas**. El desenlace lo decide la
 2. **Edición del lienzo y avisos** (`25ec6e2`):
    - `EditorLienzo` maneja el "+", el enlace a una pregunta existente (sin permitir círculos) y editar o eliminar nodos (podando la rama huérfana).
    - `ValidadorLienzo` genera avisos en lenguaje humano. Algunos bloquean la publicación y otros solo advierten, como un nodo suelto.
-3. **Compilar y publicar** (`3733bad`):
+ 3. **Compilar y publicar** (`3733bad`):
    - `CompiladorSubgrafo` convierte el lienzo en un `GrafoClinicoJson`. El peso es la mayor gravedad que llega al nodo, y el tipo de selección (única o múltiple) se respeta.
    - `PublicadorSubgrafo` guarda el subgrafo y agrega su opción y el nodo `ref_<grafoId>` en la pregunta puente del grafo raíz. Republicar no duplica nada.
+   - **Publicar el subgrafo publica también su base de reglas**: la acción es única y atómica (si algo falla, no se publica ni el grafo ni las reglas). Las reglas no se publican por su cuenta desde la interfaz; si cambian las reglas, se republica el subgrafo. Para el grafo raíz (que no tiene subgrafo) la base no se publica desde aquí.
+   - **Validación cruzada**: si el médico borra un nodo que una regla usa como condición o destino, `ValidadorLienzoReglas` lo detecta, muestra un aviso bloqueante que enlaza a las reglas y evita publicar.
    - Al publicar se invalida Redis y se recarga el `ContextoClinico`.
 4. **API `/api/autoria`** (`703ecc4`). Ver la tabla de la sección 4.
    - Los errores salen con el formato `{mensaje, avisos}`: 422 si la edición es inválida o hay avisos, 404 si no existe y 409 si hubo una edición concurrente.
@@ -73,7 +75,7 @@ Esta entrega cubre subgrafos **sin reglas clínicas**. El desenlace lo decide la
 | PUT / DELETE | `/subgrafos/{id}/nodos/{nodoId}` | Editar / eliminar nodo |
 | PUT | `/subgrafos/{id}/respuestas/{respuestaId}/destino` | Enlazar a una pregunta existente (`{"nodoId": null}` lo quita) |
 | GET | `/subgrafos/{id}/avisos` | Avisos actuales |
-| POST | `/subgrafos/{id}/publicar` | Publicar (422 con avisos si hay bloqueantes) |
+| POST | `/subgrafos/{id}/publicar` | Publicar el subgrafo **y su base de reglas** (422 con avisos del lienzo y de las reglas si hay bloqueantes) |
 | POST | `/subgrafos/{id}/despublicar` | Despublicar: quita el subgrafo y su base de reglas; los borradores (lienzo y reglas) vuelven a `BORRADOR` con su documento intacto (422 si no está publicado o si es el único subgrafo publicado) |
 
 ## 5. Cómo probarlo en local

@@ -162,7 +162,9 @@ public class ControladorAutoria {
 
     /** {@code DELETE /api/autoria/subgrafos/{id}/nodos/{nodoId}}: elimina un nodo y su rama. */
     @Operation(summary = "Elimina un nodo y su rama",
-            description = "Las respuestas que llegaban vuelven a quedar como \"+\".")
+            description = "Las respuestas que llegaban vuelven a quedar como \"+\". Si alguna regla del "
+                    + "subgrafo usa el nodo (o su rama) como condición o destino, se agrega un aviso "
+                    + "bloqueante que impide publicar hasta corregir la regla.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Borrador actualizado"),
             @ApiResponse(responseCode = "404", description = "El borrador o el nodo no existe",
@@ -209,9 +211,11 @@ public class ControladorAutoria {
         return servicio.avisos(id);
     }
 
-    /** {@code POST /api/autoria/subgrafos/{id}/publicar}: publica el borrador. */
+    /** {@code POST /api/autoria/subgrafos/{id}/publicar}: publica el borrador y su base de reglas. */
     @Operation(summary = "Publica el borrador",
-            description = "Si hay avisos bloqueantes responde 422 con ellos en el cuerpo.")
+            description = "Publica el subgrafo y, si tiene base de reglas, también la base. Es atómico: "
+                    + "si algo falla no se publica nada y responde 422 con los avisos del lienzo y de las "
+                    + "reglas.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Subgrafo publicado y navegable por la cuidadora"),
             @ApiResponse(responseCode = "404", description = "El borrador no existe",

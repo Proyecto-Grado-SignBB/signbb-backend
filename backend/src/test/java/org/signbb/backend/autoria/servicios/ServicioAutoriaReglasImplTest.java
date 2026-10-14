@@ -23,6 +23,7 @@ import org.signbb.backend.autoria.datos.entidades.BorradorBaseReglaEntity;
 import org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorBaseRegla;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo;
+import org.signbb.backend.autoria.modelo.Aviso;
 import org.signbb.backend.autoria.modelo.CopiaBaseReglaPublicada;
 import org.signbb.backend.autoria.modelo.DocumentoBaseRegla;
 import org.signbb.backend.autoria.modelo.EstadoBorrador;
@@ -30,6 +31,7 @@ import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
 import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico;
 import org.signbb.backend.navegacion.datos.serializacion.ContenidoEjemplo;
 import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoJson;
+import org.signbb.backend.reglas.modelo.Caso;
 import org.signbb.backend.reglas.modelo.Condicion;
 import org.signbb.backend.reglas.modelo.NivelAlerta;
 
@@ -176,5 +178,20 @@ class ServicioAutoriaReglasImplTest {
         guardado(b);
 
         assertThrows(EdicionInvalidaException.class, () -> servicio.eliminar(b.getId()));
+    }
+
+    @Test
+    void losAvisosIncluyenLasReferenciasAlLienzoQueYaNoExisten() {
+        DocumentoBaseRegla roto = EditorReglas.agregarRegla(DocumentoBaseRegla.vacio(),
+                new EditorReglas.DatosRegla("R rota", null,
+                        List.of(new Caso(List.of(new Condicion("pregunta_99", "X")))),
+                        NivelAlerta.URGENCIA, LienzoFiebre.URGENCIA));
+        BorradorBaseReglaEntity b = guardado(BaseReglasFiebre.borrador(roto));
+        when(subgrafos.findByGrafoId("grafo_fiebre"))
+                .thenReturn(Optional.of(LienzoFiebre.borrador(LienzoFiebre.completo())));
+
+        List<Aviso> avisos = servicio.avisos(b.getId());
+
+        assertTrue(avisos.stream().anyMatch(a -> a.codigo() == Aviso.Codigo.REGLA_CONDICION_INVALIDA));
     }
 }

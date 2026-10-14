@@ -191,8 +191,10 @@ public class ControladorReglas {
 
     /** {@code POST /api/autoria/bases/{id}/publicar}: publica la base de reglas. */
     @Operation(summary = "Publica el borrador de reglas",
-            description = "Deja la base como la activa del grafo. Si el lienzo del subgrafo cambió "
-                    + "sin publicar, responde 422 pidiendo republicar el subgrafo primero.")
+            description = "Deja la base como la activa del grafo. Las reglas de un subgrafo se publican "
+                    + "publicando el subgrafo (no desde aquí); este endpoint queda para la base del grafo "
+                    + "raíz. Si el lienzo del subgrafo cambió sin publicar, responde 422 pidiendo "
+                    + "republicar el subgrafo primero.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Base publicada y activa para la cuidadora"),
             @ApiResponse(responseCode = "404", description = "El borrador no existe", content = @Content),

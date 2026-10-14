@@ -27,6 +27,7 @@ import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
 import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico;
 import org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico;
 import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoJson;
+import org.signbb.backend.reglas.datos.repositorios.RepositorioBaseReglas;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,17 +45,21 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
 
     private final RepositorioBorradorSubgrafo borradores;
     private final RepositorioBorradorBaseRegla basesReglas;
+    private final RepositorioBaseReglas basesPublicadas;
     private final RepositorioGrafoClinico grafos;
     private final PublicadorSubgrafo publicador;
+    private final ServicioAutoriaReglas reglas;
 
-    /** Inyecta los repositorios y el publicador. */
+    /** Inyecta los repositorios, el publicador y el servicio de reglas. */
     public ServicioAutoriaImpl(RepositorioBorradorSubgrafo borradores,
-            RepositorioBorradorBaseRegla basesReglas, RepositorioGrafoClinico grafos,
-            PublicadorSubgrafo publicador) {
+            RepositorioBorradorBaseRegla basesReglas, RepositorioBaseReglas basesPublicadas,
+            RepositorioGrafoClinico grafos, PublicadorSubgrafo publicador, ServicioAutoriaReglas reglas) {
         this.borradores = borradores;
         this.basesReglas = basesReglas;
+        this.basesPublicadas = basesPublicadas;
         this.grafos = grafos;
         this.publicador = publicador;
+        this.reglas = reglas;
     }
 
     @Override
@@ -91,13 +96,13 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
         Instant ahora = Instant.now();
         b.setCreadoEn(ahora);
         b.setActualizadoEn(ahora);
-        return SubgrafoDTO.desde(borradores.save(b));
+        return dto(borradores.save(b));
     }
 
     @Override
     @Transactional(readOnly = true)
     public SubgrafoDTO obtener(Long id) {
-        return SubgrafoDTO.desde(buscar(id));
+        return dto(buscar(id));
     }
 
     @Override
@@ -106,7 +111,7 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
         BorradorSubgrafoEntity b = buscar(id);
         aplicarDatos(b, datos);
         marcarEditado(b);
-        return SubgrafoDTO.desde(borradores.save(b));
+        return dto(borradores.save(b));
     }
 
     @Override
@@ -151,20 +156,28 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
     @Override
     @Transactional(readOnly = true)
     public List<Aviso> avisos(Long id) {
-        return ValidadorLienzo.validar(buscar(id).getDocumento());
+        return avisosDe(buscar(id));
     }
 
     @Override
     @Transactional
     public SubgrafoDTO publicar(Long id) {
         BorradorSubgrafoEntity b = buscar(id);
+        List<Aviso> bloqueantes = avisosDe(b).stream().filter(Aviso::bloqueante).toList();
+        if (!bloqueantes.isEmpty()) {
+            throw new ContenidoInvalidoException(
+                    "No se pudo publicar: revisa los avisos del lienzo y de las reglas.", bloqueantes);
+        }
         Instant ahora = Instant.now();
         publicador.publicar(b, ahora);
         b.setEstado(EstadoBorrador.PUBLICADO);
         b.setPublicadoEn(ahora);
         b.setCopiaPublicada(new CopiaPublicada(b.getDocumento(), b.getNombre(), b.getPuenteId(),
                 b.getCategoria(), b.getEtiquetaOpcion(), b.getAutor(), b.getInstitucion()));
-        return SubgrafoDTO.desde(borradores.save(b));
+        BorradorSubgrafoEntity guardado = borradores.save(b);
+        basesReglas.findByGrafoId(b.getGrafoId())
+                .ifPresent(base -> reglas.publicar(base.getId()));
+        return dto(guardado);
     }
 
     @Override
@@ -187,7 +200,7 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
         b.setPublicadoEn(null);
         b.setCopiaPublicada(null);
         b.setActualizadoEn(Instant.now());
-        return SubgrafoDTO.desde(borradores.save(b));
+        return dto(borradores.save(b));
     }
 
     @Override
@@ -199,7 +212,7 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
                     + "versión publicada a la que volver. Si ya no lo quieres, puedes eliminarlo.");
         }
         if (b.getEstado() == EstadoBorrador.PUBLICADO) {
-            return SubgrafoDTO.desde(b);
+            return dto(b);
         }
         CopiaPublicada copia = b.getCopiaPublicada();
         if (copia == null) {
@@ -215,7 +228,7 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
         b.setInstitucion(copia.institucion());
         b.setEstado(EstadoBorrador.PUBLICADO);
         b.setActualizadoEn(Instant.now());
-        return SubgrafoDTO.desde(borradores.save(b));
+        return dto(borradores.save(b));
     }
 
     /** Aplica una operación del editor al lienzo y guarda. */
@@ -223,7 +236,7 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
         BorradorSubgrafoEntity b = buscar(id);
         b.setDocumento(operacion.apply(b.getDocumento()));
         marcarEditado(b);
-        return SubgrafoDTO.desde(borradores.save(b));
+        return dto(borradores.save(b));
     }
 
     private BorradorSubgrafoEntity buscar(Long id) {
@@ -236,6 +249,33 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
         if (b.getEstado() == EstadoBorrador.PUBLICADO) {
             b.setEstado(EstadoBorrador.CAMBIOS_SIN_PUBLICAR);
         }
+    }
+
+    /**
+     * Avisos del lienzo más los de sus reglas: usa el borrador de reglas del
+     * grafo si existe; si no, la base de reglas ya publicada. Detecta reglas que
+     * apuntan a nodos o respuestas que el lienzo ya no tiene.
+     */
+    private List<Aviso> avisosDe(BorradorSubgrafoEntity b) {
+        List<Aviso> avisos = new ArrayList<>(ValidadorLienzo.validar(b.getDocumento()));
+        var borradorReglas = basesReglas.findByGrafoId(b.getGrafoId());
+        if (borradorReglas.isPresent()) {
+            avisos.addAll(ValidadorLienzoReglas.validar(b.getDocumento(),
+                    borradorReglas.get().getDocumento()));
+        } else {
+            basesPublicadas.findAll().stream()
+                    .map(fila -> fila.getEstructura())
+                    .filter(e -> e != null && b.getGrafoId().equals(e.grafoId()))
+                    .findFirst()
+                    .ifPresent(e -> avisos.addAll(
+                            ValidadorLienzoReglas.validarPublicada(b.getDocumento(), e)));
+        }
+        return avisos;
+    }
+
+    /** DTO del borrador con los avisos del lienzo y de las reglas. */
+    private SubgrafoDTO dto(BorradorSubgrafoEntity b) {
+        return SubgrafoDTO.desde(b, avisosDe(b));
     }
 
     /** Valida y copia los datos del subgrafo; la categoría se toma de la pregunta puente. */

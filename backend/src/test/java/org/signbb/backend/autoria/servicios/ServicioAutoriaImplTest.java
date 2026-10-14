@@ -34,6 +34,7 @@ import org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorBaseRegla;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo;
 import org.signbb.backend.autoria.modelo.CopiaBaseReglaPublicada;
+import org.signbb.backend.autoria.modelo.Aviso;
 import org.signbb.backend.autoria.modelo.CopiaPublicada;
 import org.signbb.backend.autoria.modelo.Desenlace;
 import org.signbb.backend.autoria.modelo.DocumentoBaseRegla;
@@ -43,6 +44,11 @@ import org.signbb.backend.autoria.modelo.Gravedad;
 import org.signbb.backend.autoria.modelo.TipoNodo;
 import org.signbb.backend.config.RecursoNoEncontradoException;
 import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
+import org.signbb.backend.reglas.datos.entidades.BaseReglasEntity;
+import org.signbb.backend.reglas.datos.repositorios.RepositorioBaseReglas;
+import org.signbb.backend.reglas.modelo.Caso;
+import org.signbb.backend.reglas.modelo.Condicion;
+import org.signbb.backend.reglas.modelo.NivelAlerta;
 import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico;
 import org.signbb.backend.navegacion.datos.serializacion.ContenidoEjemplo;
 import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoJson;
@@ -55,7 +61,9 @@ class ServicioAutoriaImplTest {
 
     private RepositorioBorradorSubgrafo borradores;
     private RepositorioBorradorBaseRegla basesReglas;
+    private RepositorioBaseReglas basesPublicadas;
     private PublicadorSubgrafo publicador;
+    private ServicioAutoriaReglas reglas;
     private ServicioAutoriaImpl servicio;
 
     @BeforeEach
@@ -72,8 +80,10 @@ class ServicioAutoriaImplTest {
         basesReglas = mock(RepositorioBorradorBaseRegla.class);
         when(basesReglas.findByGrafoId(anyString())).thenReturn(Optional.empty());
         when(basesReglas.save(any(BorradorBaseReglaEntity.class))).thenAnswer(i -> i.getArgument(0));
+        basesPublicadas = mock(RepositorioBaseReglas.class);
         publicador = mock(PublicadorSubgrafo.class);
-        servicio = new ServicioAutoriaImpl(borradores, basesReglas, grafos, publicador);
+        reglas = mock(ServicioAutoriaReglas.class);
+        servicio = new ServicioAutoriaImpl(borradores, basesReglas, basesPublicadas, grafos, publicador, reglas);
     }
 
     private static GrafoClinicoEntity fila(GrafoClinicoJson documento) {
@@ -199,6 +209,61 @@ class ServicioAutoriaImplTest {
         assertEquals("Fiebre", copia.nombre());
         assertEquals("puente_neuro", copia.puenteId());
         assertEquals("Fiebre o temperatura alta", copia.etiquetaOpcion());
+    }
+
+    @Test
+    void publicarPublicaTambienLaBaseDeReglasDelGrafo() {
+        guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
+        BorradorBaseReglaEntity base = BaseReglasFiebre.borrador(BaseReglasFiebre.conUrgencia());
+        base.setEstado(EstadoBorrador.CAMBIOS_SIN_PUBLICAR);
+        when(basesReglas.findByGrafoId("grafo_fiebre")).thenReturn(Optional.of(base));
+
+        SubgrafoDTO dto = servicio.publicar(1L);
+
+        assertEquals(EstadoBorrador.PUBLICADO, dto.estado());
+        verify(reglas).publicar(base.getId());
+    }
+
+    @Test
+    void publicarSinBorradorDeReglasNoTocaLasReglas() {
+        guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
+
+        servicio.publicar(1L);
+
+        verify(reglas, never()).publicar(any());
+    }
+
+    @Test
+    void publicarConUnaReglaQueApuntaAUnNodoBorradoSeBloquea() {
+        guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
+        when(basesReglas.findByGrafoId("grafo_fiebre"))
+                .thenReturn(Optional.of(BaseReglasFiebre.borrador(reglaRota())));
+
+        ContenidoInvalidoException e = assertThrows(ContenidoInvalidoException.class,
+                () -> servicio.publicar(1L));
+
+        assertTrue(e.getAvisos().stream()
+                .anyMatch(a -> a.codigo() == Aviso.Codigo.REGLA_CONDICION_INVALIDA));
+        verify(publicador, never()).publicar(any(), any());
+        verify(reglas, never()).publicar(any());
+    }
+
+    @Test
+    void obtenerIncluyeLosAvisosDeReglasQueApuntanANodosBorrados() {
+        guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
+        when(basesReglas.findByGrafoId("grafo_fiebre"))
+                .thenReturn(Optional.of(BaseReglasFiebre.borrador(reglaRota())));
+
+        List<Aviso> avisos = servicio.avisos(1L);
+
+        assertTrue(avisos.stream().anyMatch(a -> a.codigo() == Aviso.Codigo.REGLA_CONDICION_INVALIDA));
+    }
+
+    /** Regla que referencia un nodo que no está en el lienzo completo de fiebre. */
+    private static DocumentoBaseRegla reglaRota() {
+        return EditorReglas.agregarRegla(DocumentoBaseRegla.vacio(), new EditorReglas.DatosRegla(
+                "R rota", null, List.of(new Caso(List.of(new Condicion("pregunta_99", "X")))),
+                NivelAlerta.URGENCIA, LienzoFiebre.URGENCIA));
     }
 
     @Test

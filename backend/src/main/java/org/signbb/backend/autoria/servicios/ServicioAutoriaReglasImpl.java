@@ -1,6 +1,7 @@
 package org.signbb.backend.autoria.servicios;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
@@ -74,13 +75,13 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
         Instant ahora = Instant.now();
         b.setCreadoEn(ahora);
         b.setActualizadoEn(ahora);
-        return BaseReglaDTO.desde(borradores.save(b));
+        return dto(borradores.save(b));
     }
 
     @Override
     @Transactional(readOnly = true)
     public BaseReglaDTO obtener(Long id) {
-        return BaseReglaDTO.desde(buscar(id));
+        return dto(buscar(id));
     }
 
     @Override
@@ -89,7 +90,7 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
         BorradorBaseReglaEntity b = buscar(id);
         aplicarDatos(b, datos);
         marcarEditado(b);
-        return BaseReglaDTO.desde(borradores.save(b));
+        return dto(borradores.save(b));
     }
 
     @Override
@@ -124,7 +125,22 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
     @Override
     @Transactional(readOnly = true)
     public List<Aviso> avisos(Long id) {
-        return ValidadorReglas.validar(buscar(id).getDocumento());
+        return avisosDe(buscar(id));
+    }
+
+    /** Avisos de la base (estructura) más los de referencias al lienzo del subgrafo. */
+    private List<Aviso> avisosDe(BorradorBaseReglaEntity b) {
+        List<Aviso> avisos = new ArrayList<>(ValidadorReglas.validar(b.getDocumento()));
+        if (!CompositorGrafoClinico.ID_RAIZ.equals(b.getGrafoId())) {
+            subgrafos.findByGrafoId(b.getGrafoId()).ifPresent(s ->
+                    avisos.addAll(ValidadorLienzoReglas.validar(s.getDocumento(), b.getDocumento())));
+        }
+        return avisos;
+    }
+
+    /** DTO del borrador con los avisos de estructura y de referencias al lienzo. */
+    private BaseReglaDTO dto(BorradorBaseReglaEntity b) {
+        return BaseReglaDTO.desde(b, avisosDe(b));
     }
 
     @Override
@@ -138,7 +154,7 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
         b.setPublicadoEn(ahora);
         b.setCopiaPublicada(new CopiaBaseReglaPublicada(b.getDocumento(), b.getNombre(),
                 b.getDescripcion(), b.getAutor(), b.getInstitucion()));
-        return BaseReglaDTO.desde(borradores.save(b));
+        return dto(borradores.save(b));
     }
 
     @Override
@@ -150,7 +166,7 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
                     + "una versión publicada a la que volver. Si ya no la quieres, puedes eliminarla.");
         }
         if (b.getEstado() == EstadoBorrador.PUBLICADO) {
-            return BaseReglaDTO.desde(b);
+            return dto(b);
         }
         CopiaBaseReglaPublicada copia = b.getCopiaPublicada();
         if (copia == null) {
@@ -164,7 +180,7 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
         b.setInstitucion(copia.institucion());
         b.setEstado(EstadoBorrador.PUBLICADO);
         b.setActualizadoEn(Instant.now());
-        return BaseReglaDTO.desde(borradores.save(b));
+        return dto(borradores.save(b));
     }
 
     @Override
@@ -178,7 +194,7 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
         BorradorBaseReglaEntity b = buscar(id);
         b.setDocumento(operacion.apply(b.getDocumento()));
         marcarEditado(b);
-        return BaseReglaDTO.desde(borradores.save(b));
+        return dto(borradores.save(b));
     }
 
     private BorradorBaseReglaEntity buscar(Long id) {

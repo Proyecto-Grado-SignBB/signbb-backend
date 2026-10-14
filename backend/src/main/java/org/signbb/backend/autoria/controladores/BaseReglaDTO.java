@@ -33,11 +33,19 @@ public record BaseReglaDTO(
 
     /** DTO de un borrador, con sus avisos calculados en el momento. */
     public static BaseReglaDTO desde(BorradorBaseReglaEntity b) {
+        return desde(b, ValidadorReglas.validar(b.getDocumento()));
+    }
+
+    /**
+     * DTO de un borrador con los avisos ya calculados (estructura y referencias
+     * al lienzo del subgrafo); lo usa el servicio.
+     */
+    public static BaseReglaDTO desde(BorradorBaseReglaEntity b, List<Aviso> avisos) {
         List<ReglaDTO> reglas = b.getDocumento().reglas().entrySet().stream()
                 .map(e -> ReglaDTO.desde(e.getKey(), e.getValue()))
                 .toList();
         return new BaseReglaDTO(b.getId(), b.getGrafoId(), b.getNombre(), b.getDescripcion(), b.getAutor(),
-                b.getInstitucion(), b.getEstado(), reglas, ValidadorReglas.validar(b.getDocumento()),
+                b.getInstitucion(), b.getEstado(), reglas, List.copyOf(avisos),
                 b.getCreadoEn(), b.getActualizadoEn(), b.getPublicadoEn(), b.getCopiaPublicada() != null);
     }
 }

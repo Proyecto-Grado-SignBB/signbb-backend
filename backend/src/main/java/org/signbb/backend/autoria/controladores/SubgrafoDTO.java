@@ -55,10 +55,18 @@ public record SubgrafoDTO(
 
     /** DTO de un borrador, con sus avisos calculados en el momento. */
     public static SubgrafoDTO desde(BorradorSubgrafoEntity b) {
+        return desde(b, ValidadorLienzo.validar(b.getDocumento()));
+    }
+
+    /**
+     * DTO de un borrador con los avisos ya calculados (lienzo y reglas); lo usa
+     * el servicio, que conoce las reglas asociadas al grafo.
+     */
+    public static SubgrafoDTO desde(BorradorSubgrafoEntity b, List<Aviso> avisos) {
         return new SubgrafoDTO(b.getId(), b.getGrafoId(), b.getNombre(), b.getPuenteId(), b.getCategoria(),
                 b.getEtiquetaOpcion(), b.getAutor(), b.getInstitucion(), b.getEstado(),
                 b.getDocumento().inicio(), List.copyOf(b.getDocumento().nodos().values()),
-                ValidadorLienzo.validar(b.getDocumento()), b.getCreadoEn(), b.getActualizadoEn(),
+                List.copyOf(avisos), b.getCreadoEn(), b.getActualizadoEn(),
                 b.getPublicadoEn(), b.getCopiaPublicada() != null);
     }
 }

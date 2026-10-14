@@ -9,11 +9,16 @@ import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.signbb.backend.autoria.controladores.BaseReglaDTO;
+import org.signbb.backend.autoria.controladores.BaseReglaRequest;
 import org.signbb.backend.autoria.controladores.DespuesDeRequest;
 import org.signbb.backend.autoria.controladores.NodoRequest;
 import org.signbb.backend.autoria.controladores.OpcionRequest;
+import org.signbb.backend.autoria.controladores.ReglaRequest;
 import org.signbb.backend.autoria.controladores.SubgrafoDTO;
 import org.signbb.backend.autoria.controladores.SubgrafoRequest;
+import org.signbb.backend.autoria.datos.entidades.BorradorBaseReglaEntity;
+import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorBaseRegla;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo;
 import org.signbb.backend.autoria.modelo.Desenlace;
 import org.signbb.backend.autoria.modelo.EstadoBorrador;
@@ -21,6 +26,7 @@ import org.signbb.backend.autoria.modelo.Gravedad;
 import org.signbb.backend.autoria.modelo.NodoLienzo;
 import org.signbb.backend.autoria.modelo.TipoNodo;
 import org.signbb.backend.autoria.servicios.ServicioAutoria;
+import org.signbb.backend.autoria.servicios.ServicioAutoriaReglas;
 import org.signbb.backend.cache.ResolvedorContenidoClinico;
 import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
 import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico;
@@ -30,6 +36,10 @@ import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoJson;
 import org.signbb.backend.navegacion.modelo.ContextoClinico;
 import org.signbb.backend.navegacion.servicios.ServicioNavegacion;
 import org.signbb.backend.observaciones.controladores.RecorridoDTO;
+import org.signbb.backend.reglas.datos.entidades.BaseReglasEntity;
+import org.signbb.backend.reglas.datos.repositorios.RepositorioBaseReglas;
+import org.signbb.backend.reglas.modelo.Condicion;
+import org.signbb.backend.reglas.modelo.NivelAlerta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -67,6 +77,15 @@ class AutoriaIntegracionTest {
     @Autowired
     private ContextoClinico contexto;
 
+    @Autowired
+    private ServicioAutoriaReglas servicioReglas;
+
+    @Autowired
+    private RepositorioBorradorBaseRegla basesBorrador;
+
+    @Autowired
+    private RepositorioBaseReglas basesPublicadas;
+
     private GrafoClinicoJson raizOriginal;
     private Long ultimaVersionAntes;
     private Long borradorId;
@@ -80,6 +99,14 @@ class AutoriaIntegracionTest {
 
     @AfterEach
     void restaurar() {
+        if (grafoId != null) {
+            basesBorrador.findByGrafoId(grafoId).ifPresent(basesBorrador::delete);
+            for (BaseReglasEntity fila : basesPublicadas.findAll()) {
+                if (fila.getEstructura() != null && grafoId.equals(fila.getEstructura().grafoId())) {
+                    basesPublicadas.delete(fila);
+                }
+            }
+        }
         if (borradorId != null) {
             borradores.deleteById(borradorId);
         }
@@ -150,5 +177,52 @@ class AutoriaIntegracionTest {
         assertEquals("FINALIZADO", r.estado());
         assertEquals("URGENCIA", r.resultado().nivel());
         assertEquals("Lleve al bebé a urgencias ahora.", r.resultado().mensaje());
+    }
+
+    @Test
+    void publicarElSubgrafoPublicaTambienSuBaseDeReglas() {
+        String etiqueta = "Fiebre con reglas (prueba)";
+        SubgrafoDTO s = autoria.crear(new SubgrafoRequest("Fiebre con reglas", "puente_neuro", etiqueta,
+                "Dra. Prueba", "Hospital de prueba"));
+        borradorId = s.id();
+        grafoId = s.grafoId();
+
+        s = autoria.agregarNodo(borradorId, new NodoRequest(null, TipoNodo.PREGUNTA,
+                "¿Cuánto marca el termómetro?", false, null, List.of(
+                        new OpcionRequest(null, "Menos de 38 °C", Gravedad.LEVE),
+                        new OpcionRequest(null, "Más de 39 °C", Gravedad.GRAVE))));
+        String inicio = s.inicio();
+        NodoLienzo pregunta = s.nodos().get(0);
+        String menos = pregunta.respuestas().get(0).id();
+        String mas = pregunta.respuestas().get(1).id();
+        s = autoria.agregarNodo(borradorId, new NodoRequest(new DespuesDeRequest(inicio, mas),
+                TipoNodo.CONCLUSION, "Lleve al bebé a urgencias ahora.", null, Desenlace.URGENCIA, null));
+        String urgId = s.nodos().stream()
+                .filter(n -> "Lleve al bebé a urgencias ahora.".equals(n.texto()))
+                .findFirst().orElseThrow().id();
+        autoria.agregarNodo(borradorId, new NodoRequest(new DespuesDeRequest(inicio, menos),
+                TipoNodo.CONCLUSION, "Dele líquidos y vuelva a medir en una hora.", null,
+                Desenlace.RECOMENDACION, null));
+
+        // Base de reglas del subgrafo: «Menos de 38 °C» también debe llevar a urgencias.
+        BaseReglaDTO base = servicioReglas.crear(new BaseReglaRequest("Reglas de fiebre", null, grafoId,
+                "Dra. Prueba", "Hospital de prueba"));
+        servicioReglas.agregarRegla(base.id(), new ReglaRequest("R fiebre alta", null,
+                List.of(List.of(new Condicion(inicio, "Menos de 38 °C"))), NivelAlerta.URGENCIA, urgId));
+
+        // Publicar el subgrafo publica también la base (acción única).
+        s = autoria.publicar(borradorId);
+        assertEquals(EstadoBorrador.PUBLICADO, s.estado());
+        assertTrue(basesPublicadas.findAll().stream().anyMatch(f -> f.getEstructura() != null
+                        && grafoId.equals(f.getEstructura().grafoId())),
+                "la base de reglas queda publicada junto con el subgrafo");
+
+        RecorridoDTO r = navegacion.iniciar();
+        String id = r.recorridoId();
+        navegacion.responder(id, "neurologico");
+        navegacion.responder(id, etiqueta);
+        r = navegacion.responder(id, "Menos de 38 °C");
+        assertEquals("FINALIZADO", r.estado());
+        assertEquals("URGENCIA", r.resultado().nivel(), "la regla desvía a urgencias");
     }
 }
