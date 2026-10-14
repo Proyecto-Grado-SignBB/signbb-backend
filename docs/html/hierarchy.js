@@ -156,6 +156,7 @@ var hierarchy =
     [ "org.signbb.backend.observaciones.modelo.TipoInteraccion", "enumorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1TipoInteraccion.html", null ],
     [ "org.signbb.backend.autoria.modelo.TipoNodo", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1TipoNodo.html", null ],
     [ "org.signbb.backend.autoria.servicios.ValidadorLienzo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzo.html", null ],
+    [ "org.signbb.backend.autoria.servicios.ValidadorLienzoReglas", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzoReglas.html", null ],
     [ "org.signbb.backend.autoria.servicios.ValidadorLienzoTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzoTest.html", null ],
     [ "org.signbb.backend.autoria.servicios.ValidadorReglas", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorReglas.html", null ],
     [ "org.signbb.backend.autoria.servicios.ValidadorReglasTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorReglasTest.html", null ],

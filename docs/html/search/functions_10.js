@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['servicioautoriaimpl_0',['ServicioAutoriaImpl',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#a774199114cc5435708177d63461c1f96',1,'org::signbb::backend::autoria::servicios::ServicioAutoriaImpl']]],
+  ['servicioautoriaimpl_0',['ServicioAutoriaImpl',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#ae4414b7110a00d7c95e5d062e1f86432',1,'org::signbb::backend::autoria::servicios::ServicioAutoriaImpl']]],
   ['servicioautoriareglasimpl_1',['ServicioAutoriaReglasImpl',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImpl.html#aa05b7f0e25b6d0af8373abfe258e674a',1,'org::signbb::backend::autoria::servicios::ServicioAutoriaReglasImpl']]],
   ['servicioimagenes_2',['ServicioImagenes',['../classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenes.html#abdbf0ae080135e8f88a2209b9426745d',1,'org::signbb::backend::media::ServicioImagenes']]],
   ['servicionavegacionimpl_3',['ServicioNavegacionImpl',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImpl.html#af5ec517c37203c610d1940ff6fa25222',1,'org::signbb::backend::navegacion::servicios::ServicioNavegacionImpl']]],

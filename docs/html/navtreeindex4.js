@@ -1,5 +1,11 @@
 var NAVTREEINDEX4 =
 {
+"interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#aa117090fe043fece573ef0c0f1824cf5":[10,0,0,0,0,0,3,19,5],
+"interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#ac36cd7fe0acfde52ee6de8f8477b96fc":[9,0,0,0,0,1,3,19,2],
+"interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#ac36cd7fe0acfde52ee6de8f8477b96fc":[10,0,0,0,0,0,3,19,2],
+"interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#ac779d4076811e4ef0f371da4e9e429a4":[9,0,0,0,0,1,3,19,10],
+"interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#ac779d4076811e4ef0f371da4e9e429a4":[10,0,0,0,0,0,3,19,10],
+"interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#acf50df8a6470610818994b1582ad5aff":[9,0,0,0,0,1,3,19,13],
 "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#acf50df8a6470610818994b1582ad5aff":[10,0,0,0,0,0,3,19,13],
 "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#addb8dabe2e6174fe8184a6060febbf61":[9,0,0,0,0,1,3,19,11],
 "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#addb8dabe2e6174fe8184a6060febbf61":[10,0,0,0,0,0,3,19,11],
@@ -243,11 +249,5 @@ var NAVTREEINDEX4 =
 "pruebas_observaciones.html#autotoc_md31":[3,2],
 "pruebas_reglas.html":[4],
 "pruebas_reglas.html#autotoc_md32":[4,0],
-"pruebas_reglas.html#autotoc_md33":[4,1,0],
-"pruebas_reglas.html#autotoc_md34":[4,1,1],
-"pruebas_reglas.html#autotoc_md35":[4,1,2],
-"pruebas_reglas.html#autotoc_md36":[4,2],
-"pruebas_reglas.html#autotoc_md37":[4,2,0],
-"pruebas_reglas.html#autotoc_md38":[4,2,1],
-"pruebas_reglas.html#autotoc_md39":[4,3]
+"pruebas_reglas.html#autotoc_md33":[4,1,0]
 };
