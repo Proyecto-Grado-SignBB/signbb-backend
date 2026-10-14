@@ -240,8 +240,6 @@ var NAVTREEINDEX0 =
 "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#a27d591f98a123ed0b697a105631d3dfe":[10,0,0,0,0,0,3,20,7],
 "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#a323add019d5aa69f5910f78fc11a9017":[9,0,0,0,0,1,3,20,12],
 "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#a323add019d5aa69f5910f78fc11a9017":[10,0,0,0,0,0,3,20,12],
-"classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#a774199114cc5435708177d63461c1f96":[9,0,0,0,0,1,3,20,0],
-"classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#a774199114cc5435708177d63461c1f96":[10,0,0,0,0,0,3,20,0],
 "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#a7aad22f96f57f045bbd9ce0628428a75":[9,0,0,0,0,1,3,20,10],
 "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#a7aad22f96f57f045bbd9ce0628428a75":[10,0,0,0,0,0,3,20,10],
 "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#a7c1f6b427ed191d1e04d1aa72de37153":[9,0,0,0,0,1,3,20,5],
@@ -249,5 +247,7 @@ var NAVTREEINDEX0 =
 "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#a9e84974740b06a47daab4b5e60599c6b":[9,0,0,0,0,1,3,20,9],
 "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#a9e84974740b06a47daab4b5e60599c6b":[10,0,0,0,0,0,3,20,9],
 "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#aa85f404a94586270ebb0ceebf849e7f6":[9,0,0,0,0,1,3,20,1],
-"classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#aa85f404a94586270ebb0ceebf849e7f6":[10,0,0,0,0,0,3,20,1]
+"classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#aa85f404a94586270ebb0ceebf849e7f6":[10,0,0,0,0,0,3,20,1],
+"classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#aaecd85995e59fcdf0b3ba95a7b505b15":[9,0,0,0,0,1,3,20,14],
+"classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#aaecd85995e59fcdf0b3ba95a7b505b15":[10,0,0,0,0,0,3,20,14]
 };

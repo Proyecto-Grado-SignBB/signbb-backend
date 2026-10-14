@@ -62,6 +62,7 @@ var annotated_dup =
               [ "ServicioAutoriaReglasImpl", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImpl.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImpl" ],
               [ "ServicioAutoriaReglasImplTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImplTest.html", null ],
               [ "ValidadorLienzo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzo.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzo" ],
+              [ "ValidadorLienzoReglas", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzoReglas.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzoReglas" ],
               [ "ValidadorLienzoTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzoTest.html", null ],
               [ "ValidadorReglas", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorReglas.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorReglas" ],
               [ "ValidadorReglasTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorReglasTest.html", null ]
