@@ -11,5 +11,6 @@ var namespaceorg_1_1signbb_1_1backend_1_1seguridad =
     [ "InicializadorSeguridad", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1InicializadorSeguridad.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1InicializadorSeguridad" ],
     [ "InicializadorSeguridadTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1InicializadorSeguridadTest.html", null ],
     [ "ReglasAccesoIntegracionTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ReglasAccesoIntegracionTest.html", null ],
-    [ "ResolvedorUsuarioActual", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ResolvedorUsuarioActual.html", null ]
+    [ "ResolvedorUsuarioActual", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ResolvedorUsuarioActual.html", null ],
+    [ "UsuariosPrueba", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1UsuariosPrueba.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1UsuariosPrueba" ]
 ];

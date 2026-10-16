@@ -1,18 +1,18 @@
 var classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria =
 [
-    [ "ControladorAutoria", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#ab3565244f7a0d23cfd32ee19cdcfe5ac", null ],
-    [ "actualizar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#af466c10923702c0e29373dd336f5ca92", null ],
-    [ "agregarNodo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#aaffe8f6de260114e79313a95724b9a48", null ],
-    [ "avisos", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#a064bcdcf2ba2f262b1432396ed88d195", null ],
+    [ "ControladorAutoria", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#ac806b269caba7d06978f034eaffadc26", null ],
+    [ "actualizar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#aeffd9a18c8d6a2e66040af4407252735", null ],
+    [ "agregarNodo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#a447f7140e80c0a38619a0d196d39dc68", null ],
+    [ "avisos", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#a908fe8307278593c8bb6af90dc66c6b8", null ],
     [ "categorias", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#ab06b301acf12fcdc55a12e050e8b7571", null ],
-    [ "crear", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#adcae190f0bf26ecaecb4e5c2dc85a825", null ],
-    [ "descartar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#a14016c9a0f9367bc3b14ab82dad6af7f", null ],
+    [ "crear", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#ab36d00b55570f6551d05307d5ed1613f", null ],
+    [ "descartar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#a1ef295bcb225ea9452b2309d1e0d9e6b", null ],
     [ "despublicar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#ae1726f06eb8543d1a5d7a771269a5b91", null ],
-    [ "editarNodo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#af7d3bc2a9a29312677b5554ef88533aa", null ],
-    [ "eliminar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#afa09b1163ebd8d6ebec61c29198d5a5f", null ],
-    [ "eliminarNodo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#a8bc5747e02a615db3673d96678a66a53", null ],
-    [ "enlazar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#aaa6bfb221effb2ca1df886dfd3cba7b9", null ],
-    [ "listar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#a232620debba18ebe5af23d029f41e20c", null ],
-    [ "obtener", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#a1895f34ef12034d9e0b7a3cdec64190a", null ],
-    [ "publicar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#a820b8a3222d726d632b63a2975a9a72a", null ]
+    [ "editarNodo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#ae20494a0b7e5952353b29c94eeaee991", null ],
+    [ "eliminar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#a309d0aa34c678cc22e4b89c5ad985d43", null ],
+    [ "eliminarNodo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#a0a862e68cf3000f2520420b7eb72f54d", null ],
+    [ "enlazar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#a3207c582f081a392cf04af93cbdaef91", null ],
+    [ "listar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#ae9f60b1daf054029df66718664608662", null ],
+    [ "obtener", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#a8e8c56b0b8ece1da65889b8d064709e1", null ],
+    [ "publicar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#a6cbe0f9d7513429a4896419eec656d30", null ]
 ];

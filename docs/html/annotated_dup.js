@@ -46,7 +46,11 @@ var annotated_dup =
               [ "EditorLienzo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorLienzo.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorLienzo" ],
               [ "EditorLienzoTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorLienzoTest.html", null ],
               [ "EditorReglas", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorReglas.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorReglas" ],
+              [ "GuardiaAutoria", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1GuardiaAutoria.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1GuardiaAutoria" ],
+              [ "GuardiaAutoriaTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1GuardiaAutoriaTest.html", null ],
               [ "LienzoFiebre", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1LienzoFiebre.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1LienzoFiebre" ],
+              [ "PoliticaAccesoBorradores", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PoliticaAccesoBorradores.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PoliticaAccesoBorradores" ],
+              [ "PoliticaAccesoBorradoresTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PoliticaAccesoBorradoresTest.html", null ],
               [ "PublicacionContenido", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicacionContenido.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicacionContenido" ],
               [ "PublicadorRegla", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorRegla.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorRegla" ],
               [ "PublicadorReglaTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorReglaTest.html", null ],
@@ -244,7 +248,8 @@ var annotated_dup =
             [ "InicializadorSeguridad", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1InicializadorSeguridad.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1InicializadorSeguridad" ],
             [ "InicializadorSeguridadTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1InicializadorSeguridadTest.html", null ],
             [ "ReglasAccesoIntegracionTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ReglasAccesoIntegracionTest.html", null ],
-            [ "ResolvedorUsuarioActual", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ResolvedorUsuarioActual.html", null ]
+            [ "ResolvedorUsuarioActual", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ResolvedorUsuarioActual.html", null ],
+            [ "UsuariosPrueba", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1UsuariosPrueba.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1UsuariosPrueba" ]
           ] ],
           [ "AutoriaIntegracionTest", "classorg_1_1signbb_1_1backend_1_1AutoriaIntegracionTest.html", null ],
           [ "BackendApplication", "classorg_1_1signbb_1_1backend_1_1BackendApplication.html", null ],

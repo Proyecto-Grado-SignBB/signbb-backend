@@ -1,16 +1,16 @@
 var classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas =
 [
-    [ "ControladorReglas", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a96505f6c868701bcd8a3d9fe4dde5a9b", null ],
-    [ "actualizar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a2440cd4330fbb6b2d1fc0e4f017e0d91", null ],
-    [ "agregarRegla", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a94082966a7b1ffa2202afe975cdb4024", null ],
-    [ "avisos", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#af071600c6afbc0714fe8ccb6f9150aba", null ],
+    [ "ControladorReglas", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#ab6c27b26e1b5caab6689f42e928b571e", null ],
+    [ "actualizar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a27cc3226ebee4588a53177421b40b7c3", null ],
+    [ "agregarRegla", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a6c43b169b86c9bfde81cdd8be1429802", null ],
+    [ "avisos", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a063c2b98dcdc612f34899bd71403fdf2", null ],
     [ "catalogo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a4ed88b57f98c5a7a077c962bf39f14d2", null ],
-    [ "crear", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a425a0e1293e5792b2755b3cd51ef76f9", null ],
-    [ "descartar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a8d2d82152a0ef84ad754bde419c06480", null ],
-    [ "editarRegla", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a63232b3ed03085129aa14f4dc6e3e940", null ],
-    [ "eliminar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a32d6588141d411bccf374cd1214072fd", null ],
-    [ "eliminarRegla", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a24020028e85e2403a48ac8ae934278e9", null ],
-    [ "listar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#aff67886b327fe098d5c278f558879510", null ],
-    [ "obtener", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a8bea996a766369aa4969f9869b836bb1", null ],
-    [ "publicar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a4ee8b967b0a637279d6164a05ce3ed20", null ]
+    [ "crear", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a0ffc7dc1f3c3f3dfadc2455dffbf4071", null ],
+    [ "descartar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a31430183f7a08af100985f57e489cd73", null ],
+    [ "editarRegla", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#aa993a70696270a686878ea13cb8fd6ef", null ],
+    [ "eliminar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a7735363a68c37a3599266fc18f4048ce", null ],
+    [ "eliminarRegla", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a9b9433bf5ff934692242174127c069d6", null ],
+    [ "listar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a496da117084e4e6677b969fb2f4f6b02", null ],
+    [ "obtener", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a3ea6b736e68dde8e47013d113c6c2991", null ],
+    [ "publicar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a7d7f4897565436b4f10b601eee28dba9", null ]
 ];

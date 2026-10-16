@@ -11,12 +11,12 @@ var namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores =
     [ "OpcionRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1OpcionRequest.html", null ],
     [ "ReglaRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ReglaRequest.html", null ],
     [ "SubgrafoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1SubgrafoRequest.html", null ],
-    [ "BaseReglaDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a3453c8362bf3c4fa9704a169b3c35294", null ],
+    [ "BaseReglaDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a07da44516c2a38b6a6915c8639398b6d", null ],
     [ "CatalogoDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#ae0be934ddd85661b524b1f8501af947c", null ],
     [ "CategoriaDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a7420e3d4b075ae4109765b53ca6ec7a2", null ],
     [ "ErrorAutoriaDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a8d967bf6f3a34ce10dbeebd1aa35634d", null ],
     [ "ReglaDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#ae0a0bcf1970f11d102a4c5fbaeff86aa", null ],
-    [ "ResumenBaseReglaDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#ac31940c3c47dee5f6cfd558c27fb39cd", null ],
-    [ "ResumenSubgrafoDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a19d567cf8e54e9034f75ef3340f0ed7b", null ],
-    [ "SubgrafoDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a792a841e8ed9d66b50a99745557d71de", null ]
+    [ "ResumenBaseReglaDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#ac9698644781b452bf1f3446f9c4b78cb", null ],
+    [ "ResumenSubgrafoDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a4cccd72f2314bf201ea512459b0b4733", null ],
+    [ "SubgrafoDTO", "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a33f751e1826ede2e78b8b51ed2751f69", null ]
 ];

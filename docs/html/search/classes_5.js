@@ -6,5 +6,7 @@ var searchData=
   ['grafoclinicomappertest_3',['GrafoClinicoMapperTest',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoMapperTest.html',1,'org::signbb::backend::navegacion::datos::serializacion']]],
   ['grafoclinicoparser_4',['GrafoClinicoParser',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoParser.html',1,'org::signbb::backend::navegacion::datos::serializacion']]],
   ['grafoclinicotest_5',['GrafoClinicoTest',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinicoTest.html',1,'org::signbb::backend::navegacion::modelo']]],
-  ['gravedad_6',['Gravedad',['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Gravedad.html',1,'org::signbb::backend::autoria::modelo']]]
+  ['gravedad_6',['Gravedad',['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Gravedad.html',1,'org::signbb::backend::autoria::modelo']]],
+  ['guardiaautoria_7',['GuardiaAutoria',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1GuardiaAutoria.html',1,'org::signbb::backend::autoria::servicios']]],
+  ['guardiaautoriatest_8',['GuardiaAutoriaTest',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1GuardiaAutoriaTest.html',1,'org::signbb::backend::autoria::servicios']]]
 ];

@@ -67,6 +67,8 @@ var hierarchy =
     [ "org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoParser", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoParser.html", null ],
     [ "org.signbb.backend.navegacion.modelo.GrafoClinicoTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinicoTest.html", null ],
     [ "org.signbb.backend.autoria.modelo.Gravedad", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Gravedad.html", null ],
+    [ "org.signbb.backend.autoria.servicios.GuardiaAutoria", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1GuardiaAutoria.html", null ],
+    [ "org.signbb.backend.autoria.servicios.GuardiaAutoriaTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1GuardiaAutoriaTest.html", null ],
     [ "HandlerMethodArgumentResolver", null, [
       [ "org.signbb.backend.seguridad.ResolvedorUsuarioActual", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ResolvedorUsuarioActual.html", null ]
     ] ],
@@ -106,6 +108,8 @@ var hierarchy =
     [ "org.signbb.backend.config.OpenApiConfig", "classorg_1_1signbb_1_1backend_1_1config_1_1OpenApiConfig.html", null ],
     [ "org.signbb.backend.navegacion.motor.OrdenColaTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1motor_1_1OrdenColaTest.html", null ],
     [ "org.signbb.backend.PersistenciaEstructuraJsonTest", "classorg_1_1signbb_1_1backend_1_1PersistenciaEstructuraJsonTest.html", null ],
+    [ "org.signbb.backend.autoria.servicios.PoliticaAccesoBorradores", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PoliticaAccesoBorradores.html", null ],
+    [ "org.signbb.backend.autoria.servicios.PoliticaAccesoBorradoresTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PoliticaAccesoBorradoresTest.html", null ],
     [ "org.signbb.backend.mantenimiento.PoliticaRetencionVersiones", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1PoliticaRetencionVersiones.html", null ],
     [ "org.signbb.backend.mantenimiento.PoliticaRetencionVersionesTest", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1PoliticaRetencionVersionesTest.html", null ],
     [ "org.signbb.backend.autoria.servicios.PublicacionContenido", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicacionContenido.html", null ],
@@ -181,6 +185,7 @@ var hierarchy =
     [ "org.signbb.backend.observaciones.modelo.TipoInteraccion", "enumorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1TipoInteraccion.html", null ],
     [ "org.signbb.backend.autoria.modelo.TipoNodo", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1TipoNodo.html", null ],
     [ "org.signbb.backend.seguridad.datos.entidades.UsuarioEntity", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1entidades_1_1UsuarioEntity.html", null ],
+    [ "org.signbb.backend.seguridad.UsuariosPrueba", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1UsuariosPrueba.html", null ],
     [ "org.signbb.backend.autoria.servicios.ValidadorLienzo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzo.html", null ],
     [ "org.signbb.backend.autoria.servicios.ValidadorLienzoReglas", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzoReglas.html", null ],
     [ "org.signbb.backend.autoria.servicios.ValidadorLienzoTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzoTest.html", null ],

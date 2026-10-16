@@ -128,10 +128,10 @@ Diagrama de herencia de org.signbb.backend.autoria.servicios.ServicioAutoria</di
 Métodos públicos</h2></td></tr>
 <tr class="memitem:a53324a47657439038def928719277027" id="r_a53324a47657439038def928719277027"><td class="memItemLeft">List&lt; CategoriaDTO &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a53324a47657439038def928719277027">categorias</a> ()</td></tr>
 <tr class="memdesc:a53324a47657439038def928719277027"><td class="mdescLeft">&#160;</td><td class="mdescRight">Categorías del grafo raíz en las que se puede publicar.  <br /></td></tr>
-<tr class="memitem:addb8dabe2e6174fe8184a6060febbf61" id="r_addb8dabe2e6174fe8184a6060febbf61"><td class="memItemLeft">List&lt; ResumenSubgrafoDTO &gt;&#160;</td><td class="memItemRight"><a class="el" href="#addb8dabe2e6174fe8184a6060febbf61">listar</a> ()</td></tr>
-<tr class="memdesc:addb8dabe2e6174fe8184a6060febbf61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Borradores, del último editado al primero.  <br /></td></tr>
-<tr class="memitem:a044daef187e8a31703a401aabe4ba981" id="r_a044daef187e8a31703a401aabe4ba981"><td class="memItemLeft">SubgrafoDTO&#160;</td><td class="memItemRight"><a class="el" href="#a044daef187e8a31703a401aabe4ba981">crear</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1SubgrafoRequest.html">SubgrafoRequest</a> datos)</td></tr>
-<tr class="memdesc:a044daef187e8a31703a401aabe4ba981"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea un borrador con el lienzo vacío.  <br /></td></tr>
+<tr class="memitem:a19b757207d2e541f129c4743567b3a86" id="r_a19b757207d2e541f129c4743567b3a86"><td class="memItemLeft">List&lt; ResumenSubgrafoDTO &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a19b757207d2e541f129c4743567b3a86">listar</a> (UsuarioActual usuario)</td></tr>
+<tr class="memdesc:a19b757207d2e541f129c4743567b3a86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Borradores del último editado al primero: los del propio médico, o todos si es supervisor.  <br /></td></tr>
+<tr class="memitem:a81781f90b3536039cc7e344fa47c020f" id="r_a81781f90b3536039cc7e344fa47c020f"><td class="memItemLeft">SubgrafoDTO&#160;</td><td class="memItemRight"><a class="el" href="#a81781f90b3536039cc7e344fa47c020f">crear</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1SubgrafoRequest.html">SubgrafoRequest</a> datos, UsuarioActual usuario)</td></tr>
+<tr class="memdesc:a81781f90b3536039cc7e344fa47c020f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea un borrador con el lienzo vacío.  <br /></td></tr>
 <tr class="memitem:a4af2ffe2c509b2a1070f2b5838c2cc0b" id="r_a4af2ffe2c509b2a1070f2b5838c2cc0b"><td class="memItemLeft">SubgrafoDTO&#160;</td><td class="memItemRight"><a class="el" href="#a4af2ffe2c509b2a1070f2b5838c2cc0b">obtener</a> (Long id)</td></tr>
 <tr class="memdesc:a4af2ffe2c509b2a1070f2b5838c2cc0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Borrador completo.  <br /></td></tr>
 <tr class="memitem:a5e995fa586d184541cc333c14018364c" id="r_a5e995fa586d184541cc333c14018364c"><td class="memItemLeft">SubgrafoDTO&#160;</td><td class="memItemRight"><a class="el" href="#a5e995fa586d184541cc333c14018364c">actualizar</a> (Long id, <a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1SubgrafoRequest.html">SubgrafoRequest</a> datos)</td></tr>
@@ -157,7 +157,7 @@ Métodos públicos</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Fachada del módulo de autoría que usa la API REST. </p>
-<p>Las operaciones que editan devuelven el borrador completo. Un id inexistente lanza <code class="JavaDocCode">RecursoNoEncontradoException</code> (404); una edición no válida, <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EdicionInvalidaException.html">EdicionInvalidaException</a></code> (422). </p>
+<p>Las operaciones que editan devuelven el borrador completo. Un id inexistente lanza <code class="JavaDocCode">RecursoNoEncontradoException</code> (404); una edición no válida, <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EdicionInvalidaException.html">EdicionInvalidaException</a></code> (422). Quién puede leer o editar cada borrador lo revisa <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1GuardiaAutoria.html">GuardiaAutoria</a></code> en el controlador, antes de llamar aquí. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
 <a id="a5e995fa586d184541cc333c14018364c" name="a5e995fa586d184541cc333c14018364c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5e995fa586d184541cc333c14018364c">&#9670;&#160;</a></span>actualizar()</h2>
@@ -251,8 +251,8 @@ Métodos públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="a044daef187e8a31703a401aabe4ba981" name="a044daef187e8a31703a401aabe4ba981"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a044daef187e8a31703a401aabe4ba981">&#9670;&#160;</a></span>crear()</h2>
+<a id="a81781f90b3536039cc7e344fa47c020f" name="a81781f90b3536039cc7e344fa47c020f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81781f90b3536039cc7e344fa47c020f">&#9670;&#160;</a></span>crear()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -260,15 +260,20 @@ Métodos públicos</h2></td></tr>
         <tr>
           <td class="memname">SubgrafoDTO org.signbb.backend.autoria.servicios.ServicioAutoria.crear </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1SubgrafoRequest.html">SubgrafoRequest</a></td>          <td class="paramname"><span class="paramname"><em>datos</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1SubgrafoRequest.html">SubgrafoRequest</a></td>          <td class="paramname"><span class="paramname"><em>datos</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">UsuarioActual</td>          <td class="paramname"><span class="paramname"><em>usuario</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Crea un borrador con el lienzo vacío. </p>
+<p>El autor, su institución y su cuenta salen del usuario; los de la petición se ignoran. </p>
 
-<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#a7c1f6b427ed191d1e04d1aa72de37153">org.signbb.backend.autoria.servicios.ServicioAutoriaImpl</a>.</p>
+<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#abe033c5a8844f5f1e943cd7e75e8ac68">org.signbb.backend.autoria.servicios.ServicioAutoriaImpl</a>.</p>
 
 </div>
 </div>
@@ -435,8 +440,8 @@ Métodos públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="addb8dabe2e6174fe8184a6060febbf61" name="addb8dabe2e6174fe8184a6060febbf61"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#addb8dabe2e6174fe8184a6060febbf61">&#9670;&#160;</a></span>listar()</h2>
+<a id="a19b757207d2e541f129c4743567b3a86" name="a19b757207d2e541f129c4743567b3a86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19b757207d2e541f129c4743567b3a86">&#9670;&#160;</a></span>listar()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -444,15 +449,15 @@ Métodos públicos</h2></td></tr>
         <tr>
           <td class="memname">List&lt; ResumenSubgrafoDTO &gt; org.signbb.backend.autoria.servicios.ServicioAutoria.listar </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">UsuarioActual</td>          <td class="paramname"><span class="paramname"><em>usuario</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Borradores, del último editado al primero. </p>
+<p>Borradores del último editado al primero: los del propio médico, o todos si es supervisor. </p>
 
-<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#a323add019d5aa69f5910f78fc11a9017">org.signbb.backend.autoria.servicios.ServicioAutoriaImpl</a>.</p>
+<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#ae01635693b3112e17efd7faf9ebf7e0b">org.signbb.backend.autoria.servicios.ServicioAutoriaImpl</a>.</p>
 
 </div>
 </div>
