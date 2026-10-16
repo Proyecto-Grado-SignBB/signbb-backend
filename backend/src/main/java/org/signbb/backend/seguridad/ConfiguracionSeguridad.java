@@ -9,6 +9,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.signbb.backend.seguridad.modelo.Rol;
 import org.signbb.backend.seguridad.servicios.ServicioTokens;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -63,7 +64,7 @@ public class ConfiguracionSeguridad {
     /** Cadena de filtros con las reglas de acceso. */
     @Bean
     public SecurityFilterChain cadenaSeguridad(HttpSecurity http, ConvertidorJwtUsuario convertidor,
-            CorsConfigurationSource cors) throws Exception {
+            @Qualifier("corsConfigurationSource") CorsConfigurationSource cors) throws Exception {
         AuthenticationEntryPoint sinSesion = (peticion, respuesta, error) -> {
             respuesta.setHeader("WWW-Authenticate", "Bearer");
             escribir(respuesta, HttpServletResponse.SC_UNAUTHORIZED,
