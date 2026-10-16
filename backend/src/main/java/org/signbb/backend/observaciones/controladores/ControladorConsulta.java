@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.signbb.backend.observaciones.modelo.TipoInteraccion;
 import org.signbb.backend.observaciones.servicios.ServicioCaptura;
+import org.signbb.backend.observaciones.servicios.ServicioRecorridos;
 import org.signbb.backend.navegacion.servicios.ServicioNavegacion;
+import org.signbb.backend.seguridad.modelo.UsuarioActual;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +30,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * de llamar a {@link ServicioNavegacion} directamente, para que toda
  * respuesta (una opción o varias) quede validada y auditada. {@code iniciar}
  * y {@code consultar} no cambian — no reciben una observación del cuidador.
+ *
+ * <p>
+ * Cada recorrido es del padre que lo inició ({@link ServicioRecorridos}): antes
+ * de responder, retroceder o consultar se revisa que sea suyo y, si no, se
+ * responde 404 para no revelar que existe.
  */
 @RestController
 @RequestMapping("/api")
@@ -43,6 +50,10 @@ public class ControladorConsulta {
     @Autowired
     private ServicioCaptura servicioCaptura;
 
+    /** Dueño y estado durable de cada recorrido. */
+    @Autowired
+    private ServicioRecorridos servicioRecorridos;
+
     /**
      * {@code POST /api/recorridos}: inicia un recorrido y devuelve la primera
      * pregunta.
@@ -56,8 +67,17 @@ public class ControladorConsulta {
                     content = @Content)
     })
     @PostMapping("/recorridos")
-    public ResponseEntity<RecorridoDTO> iniciar() {
-        return ResponseEntity.ok(servicioNavegacion.iniciar());
+    public ResponseEntity<RecorridoDTO> iniciar(UsuarioActual usuario) {
+        return ResponseEntity.ok(servicioRecorridos.iniciar(usuario));
+    }
+
+    /** {@code GET /api/recorridos}: "Mis recorridos" del padre. */
+    @Operation(summary = "Lista los recorridos del padre",
+            description = "Del más nuevo al más viejo, con su estado y, si terminó, su resultado.")
+    @ApiResponse(responseCode = "200", description = "Recorridos del padre")
+    @GetMapping("/recorridos")
+    public ResponseEntity<List<ResumenRecorridoDTO>> misRecorridos(UsuarioActual usuario) {
+        return ResponseEntity.ok(servicioRecorridos.deUsuario(usuario));
     }
 
     /**
@@ -73,21 +93,23 @@ public class ControladorConsulta {
             @ApiResponse(responseCode = "200", description = "Respuesta registrada y recorrido actualizado"),
             @ApiResponse(responseCode = "400", description = "La opción enviada no es válida para la pregunta actual",
                     content = @Content),
-            @ApiResponse(responseCode = "404", description = "El recorrido no existe",
+            @ApiResponse(responseCode = "404", description = "El recorrido no existe o es de otro padre",
                     content = @Content),
             @ApiResponse(responseCode = "503", description = "Caché de sesiones (Redis) no disponible",
                     content = @Content)
     })
     @PostMapping("/recorridos/{recorridoId}/respuestas")
     public ResponseEntity<RecorridoDTO> responder(@PathVariable String recorridoId,
-            @RequestBody RespuestaRequest request) {
+            @RequestBody RespuestaRequest request, UsuarioActual usuario) {
+        servicioRecorridos.exigirDueno(recorridoId, usuario);
         List<String> seleccionadas = request.getOpciones() != null
                 ? request.getOpciones()
                 : List.of(request.getRespuesta());
 
         TipoInteraccion tipo = resolverTipo(request, seleccionadas);
 
-        return ResponseEntity.ok(servicioCaptura.registrarRespuesta(recorridoId, tipo, seleccionadas));
+        return ResponseEntity.ok(servicioRecorridos.actualizar(
+                servicioCaptura.registrarRespuesta(recorridoId, tipo, seleccionadas, usuario.id())));
     }
 
     /**
@@ -101,14 +123,15 @@ public class ControladorConsulta {
             @ApiResponse(responseCode = "200", description = "Recorrido actualizado en la pregunta anterior"),
             @ApiResponse(responseCode = "400", description = "El recorrido no tiene respuestas que deshacer",
                     content = @Content),
-            @ApiResponse(responseCode = "404", description = "El recorrido no existe",
+            @ApiResponse(responseCode = "404", description = "El recorrido no existe o es de otro padre",
                     content = @Content),
             @ApiResponse(responseCode = "503", description = "Caché de sesiones (Redis) no disponible",
                     content = @Content)
     })
     @PostMapping("/recorridos/{recorridoId}/retroceder")
-    public ResponseEntity<RecorridoDTO> retroceder(@PathVariable String recorridoId) {
-        return ResponseEntity.ok(servicioNavegacion.retroceder(recorridoId));
+    public ResponseEntity<RecorridoDTO> retroceder(@PathVariable String recorridoId, UsuarioActual usuario) {
+        servicioRecorridos.exigirDueno(recorridoId, usuario);
+        return ResponseEntity.ok(servicioRecorridos.actualizar(servicioNavegacion.retroceder(recorridoId)));
     }
 
     /** {@code GET /api/recorridos/{id}}: consulta el estado del recorrido. */
@@ -117,13 +140,14 @@ public class ControladorConsulta {
                     + "final si ya terminó.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Estado actual del recorrido"),
-            @ApiResponse(responseCode = "404", description = "El recorrido no existe",
+            @ApiResponse(responseCode = "404", description = "El recorrido no existe o es de otro padre",
                     content = @Content),
             @ApiResponse(responseCode = "503", description = "Caché de sesiones (Redis) no disponible",
                     content = @Content)
     })
     @GetMapping("/recorridos/{recorridoId}")
-    public ResponseEntity<RecorridoDTO> consultar(@PathVariable String recorridoId) {
+    public ResponseEntity<RecorridoDTO> consultar(@PathVariable String recorridoId, UsuarioActual usuario) {
+        servicioRecorridos.exigirDueno(recorridoId, usuario);
         return ResponseEntity.ok(servicioNavegacion.consultar(recorridoId));
     }
 

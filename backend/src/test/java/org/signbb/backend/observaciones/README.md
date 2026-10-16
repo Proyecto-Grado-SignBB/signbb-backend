@@ -8,10 +8,12 @@ y reenvía** la respuesta del cuidador hacia el motor de navegación. Son
 
 | Paquete | Clase | Tests | Qué cubre |
 |---|---|---:|---|
-| `servicios` | `ServicioCapturaImplTest` | 4 | valida la selección contra la pregunta actual, audita la observación y reenvía al servicio de navegación |
+| `servicios` | `ServicioCapturaImplTest` | 4 | valida la selección contra la pregunta actual, audita la observación (con el padre que respondió) y reenvía al servicio de navegación |
+| `servicios` | `ServicioRecorridosImplTest` | 8 | el recorrido queda a nombre del padre, otro padre recibe 404 y el estado y resultado se guardan al terminar o retroceder |
 | `modelo` | `SeleccionCuidadorTest` | 6 | validación del constructor de `SeleccionCuidador` según el tipo de interacción |
 
-En total son **10 pruebas**.
+En total son **18 pruebas**. La regla de dueño también se prueba con la cadena
+de seguridad real en `seguridad/ReglasAccesoIntegracionTest`.
 
 ## Qué se prueba y por qué importa
 
@@ -25,6 +27,16 @@ Con `ServicioNavegacion` y `RepositorioObservaciones` **simulados con Mockito**:
 - una opción que **no pertenece** a la pregunta actual se rechaza **antes** de
   tocar el motor y **sin** guardar observación;
 - si el recorrido ya está `FINALIZADO`, no se responde ni se audita.
+
+### Dueño del recorrido (`ServicioRecorridosImplTest`)
+Con `ServicioNavegacion` y `RepositorioRecorridos` simulados:
+
+- `iniciar` guarda la fila `recorrido` con el id del padre;
+- el dueño pasa; otro padre o un id inexistente reciben **404** con el mismo
+  mensaje, para no revelar que el recorrido existe;
+- al llegar a `FINALIZADO` se guardan el nivel y el mensaje; al retroceder
+  desde el final se borran y vuelve a `EN_CURSO`;
+- "Mis recorridos" lista solo los del padre.
 
 ### Validación de la selección (`SeleccionCuidadorTest`)
 `SeleccionCuidador` es el value object que normaliza lo que marcó el cuidador

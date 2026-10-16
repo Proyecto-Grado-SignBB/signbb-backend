@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.List;
 
 import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -35,6 +36,11 @@ public class ObservacionEntity {
     private long id;
 
     private String recorridoId;
+
+    /** Padre que respondió; {@code null} en las filas de antes de las cuentas. */
+    @Column(name = "usuario_id")
+    private Long usuarioId;
+
     private String idNodo;
 
     @Enumerated(EnumType.STRING)
@@ -46,10 +52,11 @@ public class ObservacionEntity {
 
     private Instant timestamp;
 
-    /** Construye la fila de auditoría a partir de la selección ya validada. */
-    public static ObservacionEntity desde(SeleccionCuidador r) {
+    /** Construye la fila de auditoría a partir de la selección ya validada y del padre que respondió. */
+    public static ObservacionEntity desde(SeleccionCuidador r, Long usuarioId) {
         ObservacionEntity e = new ObservacionEntity();
         e.recorridoId = r.getRecorridoId();
+        e.usuarioId = usuarioId;
         e.idNodo = r.getIdNodo();
         e.tipo = r.getTipo();
         e.opcionesSeleccionadas = r.getOpcionesSeleccionadas();

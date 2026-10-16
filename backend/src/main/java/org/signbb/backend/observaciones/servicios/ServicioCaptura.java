@@ -21,6 +21,8 @@ public interface ServicioCaptura {
      * Registra lo que el cuidador marcó para la pregunta actual y avanza el
      * recorrido. {@code opcionesSeleccionadas} trae un solo elemento para
      * SI_NO/SELECCION_UNICA, uno o más para SELECCION_MULTIPLE.
+     * {@code usuarioId} es el padre que responde y queda en la auditoría.
      */
-    RecorridoDTO registrarRespuesta(String recorridoId, TipoInteraccion tipo, List<String> opcionesSeleccionadas);
+    RecorridoDTO registrarRespuesta(String recorridoId, TipoInteraccion tipo, List<String> opcionesSeleccionadas,
+            Long usuarioId);
 }

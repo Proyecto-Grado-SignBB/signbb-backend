@@ -24,7 +24,7 @@ public class ServicioCapturaImpl implements ServicioCaptura {
 
     @Override
     public RecorridoDTO registrarRespuesta(String recorridoId, TipoInteraccion tipo,
-            List<String> opcionesSeleccionadas) {
+            List<String> opcionesSeleccionadas, Long usuarioId) {
         RecorridoDTO actual = servicioNavegacion.consultar(recorridoId);
         if (actual.pregunta() == null) {
             // el recorrido ya finalizó; no hay nada que registrar ni avanzar
@@ -49,7 +49,7 @@ public class ServicioCapturaImpl implements ServicioCaptura {
         // cuando la lista trae un único elemento.
         RecorridoDTO resultado = servicioNavegacion.responder(recorridoId, opcionesSeleccionadas);
 
-        repositorioObservaciones.save(ObservacionEntity.desde(seleccion));
+        repositorioObservaciones.save(ObservacionEntity.desde(seleccion, usuarioId));
         return resultado;
     }
 }

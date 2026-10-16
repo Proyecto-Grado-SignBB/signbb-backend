@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.signbb.backend.observaciones.datos.repositorios.RepositorioRecorridos;
 import org.signbb.backend.seguridad.datos.repositorios.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,10 +21,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.jayway.jsonpath.JsonPath;
+
 /**
  * Reglas de acceso con la cadena de filtros real (requiere PostgreSQL y
  * Redis, como el CI): qué responde cada ruta sin token, con un token alterado
- * y con cada rol. Las cuentas creadas se borran al terminar.
+ * y con cada rol, y que un recorrido solo lo ve el padre que lo inició. Las
+ * cuentas y recorridos creados se borran al terminar.
  */
 @SpringBootTest
 class ReglasAccesoIntegracionTest {
@@ -33,6 +37,9 @@ class ReglasAccesoIntegracionTest {
 
     @Autowired
     private RepositorioUsuario usuarios;
+
+    @Autowired
+    private RepositorioRecorridos recorridos;
 
     private ApiPrueba api;
     private MockMvc mvc;
@@ -113,6 +120,36 @@ class ReglasAccesoIntegracionTest {
         mvc.perform(conToken(post("/api/autoria/subgrafos/1/rechazar"), medico)).andExpect(status().isForbidden());
         mvc.perform(conToken(post("/api/autoria/subgrafos/1/despublicar"), medico))
                 .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void elRecorridoEsDeQuienLoInicio() throws Exception {
+        String p1 = api.registrarPadre("p1").token();
+        String p2 = api.registrarPadre("p2").token();
+
+        String cuerpo = mvc.perform(conToken(post("/api/recorridos"), p1))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        String id = JsonPath.read(cuerpo, "$.recorridoId");
+        try {
+            mvc.perform(conToken(get("/api/recorridos/" + id), p1)).andExpect(status().isOk());
+            mvc.perform(conToken(get("/api/recorridos"), p1))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.length()").value(1))
+                    .andExpect(jsonPath("$[0].recorridoId").value(id));
+
+            mvc.perform(conToken(get("/api/recorridos/" + id), p2)).andExpect(status().isNotFound());
+            mvc.perform(conToken(post("/api/recorridos/" + id + "/retroceder"), p2))
+                    .andExpect(status().isNotFound());
+            mvc.perform(conToken(post("/api/recorridos/" + id + "/respuestas"), p2)
+                    .contentType(MediaType.APPLICATION_JSON).content("{\"respuesta\":\"SI\"}"))
+                    .andExpect(status().isNotFound());
+            mvc.perform(conToken(get("/api/recorridos"), p2))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.length()").value(0));
+        } finally {
+            recorridos.deleteById(id);
+        }
     }
 
     @Test

@@ -14,6 +14,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.signbb.backend.observaciones.controladores.PreguntaDTO;
@@ -43,6 +44,7 @@ class ServicioCapturaImplTest {
     private ServicioCapturaImpl servicioCaptura;
 
     private static final String RECORRIDO_ID = "r1";
+    private static final Long PADRE = 7L;
 
     @BeforeEach
     void setUp() {
@@ -62,10 +64,10 @@ class ServicioCapturaImplTest {
         when(servicioNavegacion.responder(RECORRIDO_ID, List.of("SI"))).thenReturn(esperado);
 
         RecorridoDTO resultado = servicioCaptura.registrarRespuesta(RECORRIDO_ID, TipoInteraccion.SI_NO,
-                List.of("SI"));
+                List.of("SI"), PADRE);
 
         assertEquals(esperado, resultado);
-        verify(servicioNavegacion).responder(RECORRIDO_ID, List.of("SI"));
+        verify(servicioNavegacion).responder(RECORRIDO_ID, List.of("SI"), PADRE);
         verify(repositorioObservaciones).save(any(ObservacionEntity.class));
     }
 
@@ -77,7 +79,7 @@ class ServicioCapturaImplTest {
         when(servicioNavegacion.responder(eq(RECORRIDO_ID), eq(List.of("A", "B")))).thenReturn(esperado);
 
         RecorridoDTO resultado = servicioCaptura.registrarRespuesta(RECORRIDO_ID,
-                TipoInteraccion.SELECCION_MULTIPLE, List.of("A", "B"));
+                TipoInteraccion.SELECCION_MULTIPLE, List.of("A", "B"), PADRE);
 
         assertEquals(esperado, resultado);
         // Captura nunca decide cuál gana: siempre reenvía la lista completa tal cual.
@@ -90,7 +92,7 @@ class ServicioCapturaImplTest {
                 .thenReturn(recorridoConPregunta("n1", List.of("SI", "NO")));
 
         assertThrows(IllegalArgumentException.class, () -> servicioCaptura
-                .registrarRespuesta(RECORRIDO_ID, TipoInteraccion.SI_NO, List.of("TAL_VEZ")));
+                .registrarRespuesta(RECORRIDO_ID, TipoInteraccion.SI_NO, List.of("TAL_VEZ"), PADRE));
 
         verify(servicioNavegacion, never()).responder(anyString(), any(List.class));
         verify(repositorioObservaciones, never()).save(any());
@@ -102,7 +104,7 @@ class ServicioCapturaImplTest {
         when(servicioNavegacion.consultar(RECORRIDO_ID)).thenReturn(finalizado);
 
         RecorridoDTO resultado = servicioCaptura.registrarRespuesta(RECORRIDO_ID, TipoInteraccion.SI_NO,
-                List.of("SI"));
+                List.of("SI"), PADRE);
 
         assertEquals(finalizado, resultado);
         verify(servicioNavegacion, never()).responder(anyString(), any(List.class));
