@@ -14,7 +14,7 @@ var searchData=
   ['opcion_5fnueva_11',['OPCION_NUEVA',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1VersionesDePrueba.html#a348c1ed83563e72fcda6d836d7095ac0',1,'org::signbb::backend::navegacion::modelo::VersionesDePrueba']]],
   ['opcionpendiente_12',['OpcionPendiente',['../namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#a6d515ecc5fd241036d3a0c2e2bf0f8b8',1,'org::signbb::backend::navegacion::modelo']]],
   ['opcionrequest_13',['OpcionRequest',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1OpcionRequest.html',1,'org::signbb::backend::autoria::controladores']]],
-  ['openapi_14',['API REST (OpenAPI)',['../index.html#autotoc_md59',1,'']]],
+  ['openapi_14',['API REST (OpenAPI)',['../index.html#autotoc_md60',1,'']]],
   ['openapiconfig_15',['OpenApiConfig',['../classorg_1_1signbb_1_1backend_1_1config_1_1OpenApiConfig.html',1,'org::signbb::backend::config']]],
   ['ordencola_16',['ordenCola',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html#a7de9114384589d51c87a4a2c019d0182',1,'org::signbb::backend::navegacion::servicios::MotorNavegacion']]],
   ['ordencolatest_17',['OrdenColaTest',['../pruebas_navegacion.html#autotoc_md22',1,'Cola de la selección múltiple (&lt;span class=&quot;tt&quot;&gt;MotorNavegacionColaTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;OrdenColaTest&lt;/span&gt;)'],['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1motor_1_1OrdenColaTest.html',1,'org.signbb.backend.navegacion.motor.OrdenColaTest']]],

@@ -125,12 +125,12 @@ Diagrama de herencia de org.signbb.backend.observaciones.servicios.ServicioCaptu
 Métodos públicos</h2></td></tr>
 <tr class="memitem:ab0bd352452bd876345eff876b7037eb2" id="r_ab0bd352452bd876345eff876b7037eb2"><td class="memItemLeft"><a id="ab0bd352452bd876345eff876b7037eb2" name="ab0bd352452bd876345eff876b7037eb2"></a>
 &#160;</td><td class="memItemRight"><b>ServicioCapturaImpl</b> (<a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html">ServicioNavegacion</a> servicioNavegacion, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioObservaciones.html">RepositorioObservaciones</a> repositorioObservaciones)</td></tr>
-<tr class="memitem:ad047af2ad2ab550f5df9725b9f2219ee" id="r_ad047af2ad2ab550f5df9725b9f2219ee"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#ad047af2ad2ab550f5df9725b9f2219ee">registrarRespuesta</a> (String recorridoId, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1TipoInteraccion.html">TipoInteraccion</a> tipo, List&lt; String &gt; opcionesSeleccionadas)</td></tr>
-<tr class="memdesc:ad047af2ad2ab550f5df9725b9f2219ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registra lo que el cuidador marcó para la pregunta actual y avanza el recorrido.  <br /></td></tr>
+<tr class="memitem:aa30a73b5b9a3df8baf34e4300efc7d25" id="r_aa30a73b5b9a3df8baf34e4300efc7d25"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#aa30a73b5b9a3df8baf34e4300efc7d25">registrarRespuesta</a> (String recorridoId, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1TipoInteraccion.html">TipoInteraccion</a> tipo, List&lt; String &gt; opcionesSeleccionadas, Long usuarioId)</td></tr>
+<tr class="memdesc:aa30a73b5b9a3df8baf34e4300efc7d25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registra lo que el cuidador marcó para la pregunta actual y avanza el recorrido.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
-<a id="ad047af2ad2ab550f5df9725b9f2219ee" name="ad047af2ad2ab550f5df9725b9f2219ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad047af2ad2ab550f5df9725b9f2219ee">&#9670;&#160;</a></span>registrarRespuesta()</h2>
+<a id="aa30a73b5b9a3df8baf34e4300efc7d25" name="aa30a73b5b9a3df8baf34e4300efc7d25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa30a73b5b9a3df8baf34e4300efc7d25">&#9670;&#160;</a></span>registrarRespuesta()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -148,15 +148,20 @@ Métodos públicos</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">List&lt; String &gt;</td>          <td class="paramname"><span class="paramname"><em>opcionesSeleccionadas</em></span>&#160;)</td>
+          <td class="paramtype">List&lt; String &gt;</td>          <td class="paramname"><span class="paramname"><em>opcionesSeleccionadas</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Long</td>          <td class="paramname"><span class="paramname"><em>usuarioId</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Registra lo que el cuidador marcó para la pregunta actual y avanza el recorrido. </p>
-<p><code class="JavaDocCode">opcionesSeleccionadas</code> trae un solo elemento para SI_NO/SELECCION_UNICA, uno o más para SELECCION_MULTIPLE. </p>
+<p><code class="JavaDocCode">opcionesSeleccionadas</code> trae un solo elemento para SI_NO/SELECCION_UNICA, uno o más para SELECCION_MULTIPLE. <code class="JavaDocCode">usuarioId</code> es el padre que responde y queda en la auditoría. </p>
 
-<p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCaptura.html#a09c911b7897a1f706de65812c167bcb6">org.signbb.backend.observaciones.servicios.ServicioCaptura</a>.</p>
+<p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCaptura.html#af13400bb1d1c3a54c6814a017b5309d9">org.signbb.backend.observaciones.servicios.ServicioCaptura</a>.</p>
 
 </div>
 </div>

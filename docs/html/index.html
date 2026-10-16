@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('index.html',''
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_README"></a></p>
 <p>Backend del sistema SignBB: triaje clínico guiado por un grafo de navegación y un motor de reglas.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md54"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md55"></a>
 Requisitos</h1>
 <ul>
 <li>Java SDK 25</li>
@@ -122,12 +122,12 @@ Requisitos</h1>
 <li>Docker + Docker Compose (PostgreSQL y Redis de <span class="tt">contenedores/compose.yaml</span>)</li>
 <li>Doxygen (solo para regenerar la documentación)</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md55"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md56"></a>
 Construcción y pruebas</h1>
 <p>Desde el directorio <span class="tt">backend</span>: </p><pre class="fragment">./mvnw test              # compila y ejecuta la suite de tests
 ./mvnw spring-boot:run   # arranca la aplicación (demo de triaje por consola)
 ./mvnw verify            # build completo, igual que en CI (GitHub Actions)
-</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md56"></a>
+</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md57"></a>
 Perfil de base de datos</h1>
 <p>El backend usa un único perfil, <span class="tt">docker</span> (definido en <span class="tt">backend/src/main/resources/application.properties</span> con <span class="tt">spring.profiles.active=docker</span>): <b>PostgreSQL</b> en <span class="tt">localhost:5432</span> (base <span class="tt">signbb</span>) y <b>Redis</b> en <span class="tt">localhost:6379</span>, ambos desde <span class="tt">contenedores/compose.yaml</span>. Los datos persisten en los volúmenes del compose. Ver <span class="tt">contenedores/MANUAL_CONTENEDORES.md</span> para levantar y administrar los servicios.</p>
 <p>Antes de arrancar la aplicación o ejecutar las pruebas hay que levantar los servicios: </p><pre class="fragment">cd ../contenedores &amp;&amp; docker compose up -d
@@ -137,15 +137,15 @@ Perfil de base de datos</h1>
 </pre><blockquote class="doxtable">
 <p>Si la base ya estaba sembrada con una versión previa del grafo, hay que borrar los volúmenes (<span class="tt">docker compose down -v</span>) para que <span class="tt">DatabaseInit</span> vuelva a sembrar el contenido nuevo: el grafo raíz conserva el mismo <span class="tt">id</span>. </p>
 </blockquote>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md57"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md58"></a>
 Documentación</h1>
 <p>La documentación del código se genera con Doxygen desde la raíz del repositorio: </p><pre class="fragment">doxygen Doxyfile
 </pre><p>El HTML resultante queda en <span class="tt">docs/html</span> (abrir <span class="tt">docs/html/index.html</span>). La fuente es <span class="tt">backend/src/main/java</span> y <span class="tt">backend/src/test/java</span>, configurada en el <span class="tt">Doxyfile</span>.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md58"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md59"></a>
 Pruebas</h2>
 <p>La suite de pruebas está documentada en la sección <a class="el" href="pruebas.html" title="Pruebas del sistema">Pruebas del sistema</a> del Doxygen: tipos de prueba, cómo ejecutarlas y el detalle por módulo (navegación, reglas, modelo de reglas, autoría, observaciones y cache).</p>
 <p>El diagrama de arquitectura por módulos (<span class="tt">docs/diagramas/arquitectura_modulos.svg</span>) se regenera desde su fuente PlantUML: </p><pre class="fragment">java -jar plantuml.jar -tsvg docs/diagramas/arquitectura_modulos.puml
-</pre><h2 class="doxsection"><a class="anchor" id="autotoc_md59"></a>
+</pre><h2 class="doxsection"><a class="anchor" id="autotoc_md60"></a>
 API REST (OpenAPI)</h2>
 <p>La API se documenta con <b>springdoc-openapi</b> a partir de los controladores. Con la aplicación arriba:</p>
 <ul>

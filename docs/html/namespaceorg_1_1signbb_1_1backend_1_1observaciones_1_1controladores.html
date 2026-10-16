@@ -136,6 +136,8 @@ record&#160;</td><td class="memItemRight"><b>RecomendacionDTO</b> ( @Schema(desc
 <tr class="memdesc:a9da8fa006ec65b04cc12de8f45952e05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vista REST de un recorrido de triaje.  <br /></td></tr>
 <tr class="memitem:af5ce12c3bd3ada0c77918cbdce8c0e49" id="r_af5ce12c3bd3ada0c77918cbdce8c0e49"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#af5ce12c3bd3ada0c77918cbdce8c0e49">ResultadoDTO</a> ( @Schema(description=&quot;Nivel de alerta resultante; NORMAL si no disparó reglas&quot;) String nivel, @Schema(description=&quot;Id del nodo terminal&quot;) String destinoId, @Schema(description=&quot;Contenido del nodo terminal&quot;) String mensaje, @Schema(description=&quot;Ids de las <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1reglas.html">reglas</a> de nivel máximo que dispararon; vacío si NORMAL&quot;) List&lt; String &gt; razones, @Schema(description=&quot;Secuencia de nodos y condiciones hasta el destino&quot;) List&lt; <a class="el" href="#a9da139933c21f2a0601c2a022ece3608">PasoCausalDTO</a> &gt; caminoCausal, @Schema(description=&quot;Recomendaciones alcanzadas; vacía si hubo alerta&quot;) List&lt; <a class="el" href="#ab643e40096639e8da210ecbb6be97891">RecomendacionDTO</a> &gt; recomendaciones)</td></tr>
 <tr class="memdesc:af5ce12c3bd3ada0c77918cbdce8c0e49"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Desenlace.html" title="Desenlace de una conclusión.">Desenlace</a> de un recorrido FINALIZADO.  <br /></td></tr>
+<tr class="memitem:a3a4ac4e4b6d46a27904008aaf6dec760" id="r_a3a4ac4e4b6d46a27904008aaf6dec760"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a3a4ac4e4b6d46a27904008aaf6dec760">ResumenRecorridoDTO</a> ( @Schema(description=&quot;Id del recorrido&quot;) String recorridoId, @Schema(description=&quot;EN_CURSO o FINALIZADO&quot;) String estado, @Schema(description=&quot;Nivel de alerta del resultado, o nulo si sigue en curso&quot;) String nivel, @Schema(description=&quot;Mensaje de la conclusión, o nulo si sigue en curso&quot;) String mensaje, @Schema(description=&quot;Cuándo empezó&quot;) Instant iniciadoEn, @Schema(description=&quot;Cuándo terminó, o nulo&quot;) Instant finalizadoEn)</td></tr>
+<tr class="memdesc:a3a4ac4e4b6d46a27904008aaf6dec760"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fila de "Mis recorridos".  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Controladores REST de las consultas guiadas. </p>
@@ -262,6 +264,61 @@ record&#160;</td><td class="memItemRight"><b>RecomendacionDTO</b> ( @Schema(desc
 
 <p><a class="el" href="enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Desenlace.html" title="Desenlace de una conclusión.">Desenlace</a> de un recorrido FINALIZADO. </p>
 <p><code class="JavaDocCode">nivel</code> es el <code class="JavaDocCode">NivelAlerta</code> resultante (NORMAL si se llegó a un terminal del grafo sin disparar reglas); <code class="JavaDocCode">destinoId</code> y <code class="JavaDocCode">mensaje</code> son el id y el contenido del nodo terminal; <code class="JavaDocCode">razones</code> son los ids de las reglas de nivel máximo que dispararon (vacío si NORMAL); <code class="JavaDocCode">caminoCausal</code> es la secuencia de nodos y condiciones hasta el destino; y <code class="JavaDocCode">recomendaciones</code> son todas las recomendaciones alcanzadas, cada una con su propio camino. Solo viene con datos cuando el recorrido cierra sin alerta (ramas de selección múltiple que terminaron en recomendación, con o sin el cierre por el máximo de preguntas); con una alerta, o si no hay ninguna, es una lista vacía. </p>
+
+</div>
+</div>
+<a id="a3a4ac4e4b6d46a27904008aaf6dec760" name="a3a4ac4e4b6d46a27904008aaf6dec760"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a4ac4e4b6d46a27904008aaf6dec760">&#9670;&#160;</a></span>ResumenRecorridoDTO()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">record org.signbb.backend.observaciones.controladores.ResumenRecorridoDTO </td>
+          <td>(</td>
+          <td class="paramtype">@Schema(description=&quot;Id del recorrido&quot;) String</td>          <td class="paramname"><span class="paramname"><em>recorridoId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">@Schema(description=&quot;EN_CURSO o FINALIZADO&quot;) String</td>          <td class="paramname"><span class="paramname"><em>estado</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">@Schema(description=&quot;Nivel de alerta del resultado, o nulo si sigue en curso&quot;) String</td>          <td class="paramname"><span class="paramname"><em>nivel</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">@Schema(description=&quot;Mensaje de la conclusión, o nulo si sigue en curso&quot;) String</td>          <td class="paramname"><span class="paramname"><em>mensaje</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">@Schema(description=&quot;Cuándo empezó&quot;) Instant</td>          <td class="paramname"><span class="paramname"><em>iniciadoEn</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">@Schema(description=&quot;Cuándo terminó, o nulo&quot;) Instant</td>          <td class="paramname"><span class="paramname"><em>finalizadoEn</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fila de "Mis recorridos". </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">recorridoId</td><td>id del recorrido </td></tr>
+    <tr><td class="paramname">estado</td><td><code class="JavaDocCode">EN_CURSO</code> o <code class="JavaDocCode">FINALIZADO</code> </td></tr>
+    <tr><td class="paramname">nivel</td><td>nivel de alerta del resultado, o <code class="JavaDocCode">null</code> si sigue en curso </td></tr>
+    <tr><td class="paramname">mensaje</td><td>mensaje de la conclusión, o <code class="JavaDocCode">null</code> si sigue en curso </td></tr>
+    <tr><td class="paramname">iniciadoEn</td><td>cuándo empezó </td></tr>
+    <tr><td class="paramname">finalizadoEn</td><td>cuándo terminó, o <code class="JavaDocCode">null</code> </td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Resumen de un recorrido guardado.</p>
 
 </div>
 </div>

@@ -1,0 +1,4 @@
+var interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioRecorridos =
+[
+    [ "findByUsuarioIdOrderByIniciadoEnDesc", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioRecorridos.html#a9a604b473cf3e7101f5ff8c91b48dd38", null ]
+];

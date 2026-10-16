@@ -174,10 +174,12 @@ var annotated_dup =
             ] ],
             [ "datos", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos.html", [
               [ "entidades", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1entidades.html", [
-                [ "ObservacionEntity", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1entidades_1_1ObservacionEntity.html", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1entidades_1_1ObservacionEntity" ]
+                [ "ObservacionEntity", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1entidades_1_1ObservacionEntity.html", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1entidades_1_1ObservacionEntity" ],
+                [ "RecorridoEntity", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1entidades_1_1RecorridoEntity.html", null ]
               ] ],
               [ "repositorios", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios.html", [
-                [ "RepositorioObservaciones", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioObservaciones.html", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioObservaciones" ]
+                [ "RepositorioObservaciones", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioObservaciones.html", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioObservaciones" ],
+                [ "RepositorioRecorridos", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioRecorridos.html", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioRecorridos" ]
               ] ]
             ] ],
             [ "modelo", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo.html", [
@@ -188,7 +190,10 @@ var annotated_dup =
             [ "servicios", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios.html", [
               [ "ServicioCaptura", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCaptura.html", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCaptura" ],
               [ "ServicioCapturaImpl", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl.html", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl" ],
-              [ "ServicioCapturaImplTest", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImplTest.html", null ]
+              [ "ServicioCapturaImplTest", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImplTest.html", null ],
+              [ "ServicioRecorridos", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioRecorridos.html", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioRecorridos" ],
+              [ "ServicioRecorridosImpl", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioRecorridosImpl.html", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioRecorridosImpl" ],
+              [ "ServicioRecorridosImplTest", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioRecorridosImplTest.html", null ]
             ] ]
           ] ],
           [ "reglas", "namespaceorg_1_1signbb_1_1backend_1_1reglas.html", [

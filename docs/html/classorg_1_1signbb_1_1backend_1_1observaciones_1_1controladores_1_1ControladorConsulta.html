@@ -117,24 +117,28 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Métodos públicos</h2></td></tr>
-<tr class="memitem:a9286a48fea4c7faf8f9f483ceaea3431" id="r_a9286a48fea4c7faf8f9f483ceaea3431"><td class="memItemLeft"><a id="a9286a48fea4c7faf8f9f483ceaea3431" name="a9286a48fea4c7faf8f9f483ceaea3431"></a>
-ResponseEntity&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#a9da8fa006ec65b04cc12de8f45952e05">RecorridoDTO</a> &gt;&#160;</td><td class="memItemRight"><b>iniciar</b> ()</td></tr>
-<tr class="memdesc:a9286a48fea4c7faf8f9f483ceaea3431"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code class="JavaDocCode">POST /api/recorridos</code>: inicia un recorrido y devuelve la primera pregunta. <br /></td></tr>
-<tr class="memitem:aa69702f27458265bacf63f0a1999389c" id="r_aa69702f27458265bacf63f0a1999389c"><td class="memItemLeft">ResponseEntity&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#a9da8fa006ec65b04cc12de8f45952e05">RecorridoDTO</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#aa69702f27458265bacf63f0a1999389c">responder</a> (@PathVariable String recorridoId, @RequestBody <a class="el" href="classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1RespuestaRequest.html">RespuestaRequest</a> request)</td></tr>
-<tr class="memdesc:aa69702f27458265bacf63f0a1999389c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code class="JavaDocCode">POST /api/recorridos/{id}/respuestas</code>: responde la pregunta actual y avanza.  <br /></td></tr>
-<tr class="memitem:a8420a363668711fea9ea8cbceaadcb94" id="r_a8420a363668711fea9ea8cbceaadcb94"><td class="memItemLeft"><a id="a8420a363668711fea9ea8cbceaadcb94" name="a8420a363668711fea9ea8cbceaadcb94"></a>
-ResponseEntity&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#a9da8fa006ec65b04cc12de8f45952e05">RecorridoDTO</a> &gt;&#160;</td><td class="memItemRight"><b>retroceder</b> (@PathVariable String recorridoId)</td></tr>
-<tr class="memdesc:a8420a363668711fea9ea8cbceaadcb94"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code class="JavaDocCode">POST /api/recorridos/{id}/retroceder</code>: vuelve a la pregunta anterior para cambiar su respuesta (400 si aún no hay respuestas). <br /></td></tr>
-<tr class="memitem:acb09c7517316505ddb35d65f61513947" id="r_acb09c7517316505ddb35d65f61513947"><td class="memItemLeft"><a id="acb09c7517316505ddb35d65f61513947" name="acb09c7517316505ddb35d65f61513947"></a>
-ResponseEntity&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#a9da8fa006ec65b04cc12de8f45952e05">RecorridoDTO</a> &gt;&#160;</td><td class="memItemRight"><b>consultar</b> (@PathVariable String recorridoId)</td></tr>
-<tr class="memdesc:acb09c7517316505ddb35d65f61513947"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code class="JavaDocCode">GET /api/recorridos/{id}</code>: consulta el estado del recorrido. <br /></td></tr>
+<tr class="memitem:a75fb60c3ca3a3d5ae7987213af2b21d3" id="r_a75fb60c3ca3a3d5ae7987213af2b21d3"><td class="memItemLeft"><a id="a75fb60c3ca3a3d5ae7987213af2b21d3" name="a75fb60c3ca3a3d5ae7987213af2b21d3"></a>
+ResponseEntity&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#a9da8fa006ec65b04cc12de8f45952e05">RecorridoDTO</a> &gt;&#160;</td><td class="memItemRight"><b>iniciar</b> (UsuarioActual usuario)</td></tr>
+<tr class="memdesc:a75fb60c3ca3a3d5ae7987213af2b21d3"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code class="JavaDocCode">POST /api/recorridos</code>: inicia un recorrido y devuelve la primera pregunta. <br /></td></tr>
+<tr class="memitem:a33d1b6a84b63ad0952a650b0a440856b" id="r_a33d1b6a84b63ad0952a650b0a440856b"><td class="memItemLeft"><a id="a33d1b6a84b63ad0952a650b0a440856b" name="a33d1b6a84b63ad0952a650b0a440856b"></a>
+ResponseEntity&lt; List&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#a3a4ac4e4b6d46a27904008aaf6dec760">ResumenRecorridoDTO</a> &gt; &gt;&#160;</td><td class="memItemRight"><b>misRecorridos</b> (UsuarioActual usuario)</td></tr>
+<tr class="memdesc:a33d1b6a84b63ad0952a650b0a440856b"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code class="JavaDocCode">GET /api/recorridos</code>: "Mis recorridos" del padre. <br /></td></tr>
+<tr class="memitem:a163a73ec344017a786c89ed6a1bef195" id="r_a163a73ec344017a786c89ed6a1bef195"><td class="memItemLeft">ResponseEntity&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#a9da8fa006ec65b04cc12de8f45952e05">RecorridoDTO</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a163a73ec344017a786c89ed6a1bef195">responder</a> (@PathVariable String recorridoId, @RequestBody <a class="el" href="classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1RespuestaRequest.html">RespuestaRequest</a> request, UsuarioActual usuario)</td></tr>
+<tr class="memdesc:a163a73ec344017a786c89ed6a1bef195"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code class="JavaDocCode">POST /api/recorridos/{id}/respuestas</code>: responde la pregunta actual y avanza.  <br /></td></tr>
+<tr class="memitem:a4480b6112ac4fb2b26f62d1503bea742" id="r_a4480b6112ac4fb2b26f62d1503bea742"><td class="memItemLeft"><a id="a4480b6112ac4fb2b26f62d1503bea742" name="a4480b6112ac4fb2b26f62d1503bea742"></a>
+ResponseEntity&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#a9da8fa006ec65b04cc12de8f45952e05">RecorridoDTO</a> &gt;&#160;</td><td class="memItemRight"><b>retroceder</b> (@PathVariable String recorridoId, UsuarioActual usuario)</td></tr>
+<tr class="memdesc:a4480b6112ac4fb2b26f62d1503bea742"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code class="JavaDocCode">POST /api/recorridos/{id}/retroceder</code>: vuelve a la pregunta anterior para cambiar su respuesta (400 si aún no hay respuestas). <br /></td></tr>
+<tr class="memitem:a227c37f5e30ba1d770d9ea50958bfef2" id="r_a227c37f5e30ba1d770d9ea50958bfef2"><td class="memItemLeft"><a id="a227c37f5e30ba1d770d9ea50958bfef2" name="a227c37f5e30ba1d770d9ea50958bfef2"></a>
+ResponseEntity&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#a9da8fa006ec65b04cc12de8f45952e05">RecorridoDTO</a> &gt;&#160;</td><td class="memItemRight"><b>consultar</b> (@PathVariable String recorridoId, UsuarioActual usuario)</td></tr>
+<tr class="memdesc:a227c37f5e30ba1d770d9ea50958bfef2"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code class="JavaDocCode">GET /api/recorridos/{id}</code>: consulta el estado del recorrido. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Controlador REST de la consulta guiada del cuidador. </p>
-<p>MODIFICADO: <code class="JavaDocCode">responder</code> ahora pasa por <code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCaptura.html">ServicioCaptura</a></code> en vez de llamar a <code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html">ServicioNavegacion</a></code> directamente, para que toda respuesta (una opción o varias) quede validada y auditada. <code class="JavaDocCode">iniciar</code> y <code class="JavaDocCode">consultar</code> no cambian — no reciben una observación del cuidador. </p>
+<p>MODIFICADO: <code class="JavaDocCode">responder</code> ahora pasa por <code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCaptura.html">ServicioCaptura</a></code> en vez de llamar a <code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html">ServicioNavegacion</a></code> directamente, para que toda respuesta (una opción o varias) quede validada y auditada. <code class="JavaDocCode">iniciar</code> y <code class="JavaDocCode">consultar</code> no cambian — no reciben una observación del cuidador.</p>
+<p>Cada recorrido es del padre que lo inició (<code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioRecorridos.html">ServicioRecorridos</a></code>): antes de responder, retroceder o consultar se revisa que sea suyo y, si no, se responde 404 para no revelar que existe. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
-<a id="aa69702f27458265bacf63f0a1999389c" name="aa69702f27458265bacf63f0a1999389c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa69702f27458265bacf63f0a1999389c">&#9670;&#160;</a></span>responder()</h2>
+<a id="a163a73ec344017a786c89ed6a1bef195" name="a163a73ec344017a786c89ed6a1bef195"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a163a73ec344017a786c89ed6a1bef195">&#9670;&#160;</a></span>responder()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -147,7 +151,12 @@ ResponseEntity&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1obse
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">@RequestBody <a class="el" href="classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1RespuestaRequest.html">RespuestaRequest</a></td>          <td class="paramname"><span class="paramname"><em>request</em></span>&#160;)</td>
+          <td class="paramtype">@RequestBody <a class="el" href="classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1RespuestaRequest.html">RespuestaRequest</a></td>          <td class="paramname"><span class="paramname"><em>request</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">UsuarioActual</td>          <td class="paramname"><span class="paramname"><em>usuario</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">

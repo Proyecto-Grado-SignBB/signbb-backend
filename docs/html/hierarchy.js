@@ -81,6 +81,7 @@ var hierarchy =
       [ "org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafoClinico.html", null ],
       [ "org.signbb.backend.navegacion.datos.repositorios.RepositorioVersionContenido", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioVersionContenido.html", null ],
       [ "org.signbb.backend.observaciones.datos.repositorios.RepositorioObservaciones", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioObservaciones.html", null ],
+      [ "org.signbb.backend.observaciones.datos.repositorios.RepositorioRecorridos", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioRecorridos.html", null ],
       [ "org.signbb.backend.reglas.datos.repositorios.RepositorioBaseReglas", "interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1repositorios_1_1RepositorioBaseReglas.html", null ],
       [ "org.signbb.backend.seguridad.datos.repositorios.RepositorioUsuario", "interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios_1_1RepositorioUsuario.html", null ]
     ] ],
@@ -119,6 +120,7 @@ var hierarchy =
     [ "org.signbb.backend.autoria.servicios.PublicadorReglaTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorReglaTest.html", null ],
     [ "org.signbb.backend.autoria.servicios.PublicadorSubgrafo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorSubgrafo.html", null ],
     [ "org.signbb.backend.autoria.servicios.PublicadorSubgrafoTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorSubgrafoTest.html", null ],
+    [ "org.signbb.backend.observaciones.datos.entidades.RecorridoEntity", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1entidades_1_1RecorridoEntity.html", null ],
     [ "org.signbb.backend.reglas.modelo.ReglaClinica", "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html", null ],
     [ "org.signbb.backend.reglas.modelo.ReglaClinicaTest", "classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinicaTest.html", null ],
     [ "org.signbb.backend.autoria.controladores.ReglaRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ReglaRequest.html", null ],
@@ -176,6 +178,10 @@ var hierarchy =
     ] ],
     [ "org.signbb.backend.navegacion.servicios.ServicioNavegacionImplTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImplTest.html", null ],
     [ "org.signbb.backend.navegacion.servicios.ServicioNavegacionVersionesTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionVersionesTest.html", null ],
+    [ "org.signbb.backend.observaciones.servicios.ServicioRecorridos", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioRecorridos.html", [
+      [ "org.signbb.backend.observaciones.servicios.ServicioRecorridosImpl", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioRecorridosImpl.html", null ]
+    ] ],
+    [ "org.signbb.backend.observaciones.servicios.ServicioRecorridosImplTest", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioRecorridosImplTest.html", null ],
     [ "org.signbb.backend.reglas.servicios.ServicioReglas", "interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglas.html", [
       [ "org.signbb.backend.reglas.servicios.ServicioReglasImpl", "classorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglasImpl.html", null ]
     ] ],

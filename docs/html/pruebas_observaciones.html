@@ -119,11 +119,13 @@ Mapa de la suite</h1>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Paquete  </th><th class="markdownTableHeadNone">Clase  </th><th class="markdownTableHeadRight">Tests  </th><th class="markdownTableHeadNone">Qué cubre  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioCapturaImplTest</span>  </td><td class="markdownTableBodyRight">4  </td><td class="markdownTableBodyNone">valida la selección contra la pregunta actual, audita la observación y reenvía al servicio de navegación  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioCapturaImplTest</span>  </td><td class="markdownTableBodyRight">4  </td><td class="markdownTableBodyNone">valida la selección contra la pregunta actual, audita la observación (con el padre que respondió) y reenvía al servicio de navegación  </td></tr>
 <tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioRecorridosImplTest</span>  </td><td class="markdownTableBodyRight">8  </td><td class="markdownTableBodyNone">el recorrido queda a nombre del padre, otro padre recibe 404 y el estado y resultado se guardan al terminar o retroceder  </td></tr>
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">SeleccionCuidadorTest</span>  </td><td class="markdownTableBodyRight">6  </td><td class="markdownTableBodyNone">validación del constructor de <span class="tt">SeleccionCuidador</span> según el tipo de interacción  </td></tr>
 </table>
-<p>En total son <b>10 pruebas</b>.</p>
+<p>En total son <b>18 pruebas</b>. La regla de dueño también se prueba con la cadena de seguridad real en <span class="tt">seguridad/ReglasAccesoIntegracionTest</span>.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md28"></a>
 Qué se prueba y por qué importa</h1>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md29"></a>
@@ -136,6 +138,15 @@ Captura de la respuesta (<span class="tt">ServicioCapturaImplTest</span>)</h2>
 <li>si el recorrido ya está <span class="tt">FINALIZADO</span>, no se responde ni se audita.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
+Dueño del recorrido (<span class="tt">ServicioRecorridosImplTest</span>)</h2>
+<p>Con <span class="tt">ServicioNavegacion</span> y <span class="tt">RepositorioRecorridos</span> simulados:</p>
+<ul>
+<li><span class="tt">iniciar</span> guarda la fila <span class="tt">recorrido</span> con el id del padre;</li>
+<li>el dueño pasa; otro padre o un id inexistente reciben <b>404</b> con el mismo mensaje, para no revelar que el recorrido existe;</li>
+<li>al llegar a <span class="tt">FINALIZADO</span> se guardan el nivel y el mensaje; al retroceder desde el final se borran y vuelve a <span class="tt">EN_CURSO</span>;</li>
+<li>"Mis recorridos" lista solo los del padre.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
 Validación de la selección (<span class="tt">SeleccionCuidadorTest</span>)</h2>
 <p><span class="tt">SeleccionCuidador</span> es el value object que normaliza lo que marcó el cuidador según el <span class="tt">TipoInteraccion</span>:</p>
 <ul>
@@ -143,7 +154,7 @@ Validación de la selección (<span class="tt">SeleccionCuidadorTest</span>)</h2
 <li><span class="tt">SELECCION_MULTIPLE</span> acepta varias;</li>
 <li>se rechazan la lista vacía y el <span class="tt">recorridoId</span> vacío.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md32"></a>
 Cómo ejecutarlas</h1>
 <pre class="fragment">./mvnw test -Dtest='org.signbb.backend.observaciones.**'
 </pre><p>No requieren PostgreSQL ni Redis.</p>

@@ -1,7 +1,7 @@
 var searchData=
 [
   ['vaciarcola_0',['vaciarCola',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a3d6be5a30433d66f2e711ba0662eeecd',1,'org::signbb::backend::navegacion::modelo::EstadoPaciente']]],
-  ['validación_20de_20la_20selección_20seleccioncuidadortest_1',['Validación de la selección (&lt;span class=&quot;tt&quot;&gt;SeleccionCuidadorTest&lt;/span&gt;)',['../pruebas_observaciones.html#autotoc_md30',1,'']]],
+  ['validación_20de_20la_20selección_20seleccioncuidadortest_1',['Validación de la selección (&lt;span class=&quot;tt&quot;&gt;SeleccionCuidadorTest&lt;/span&gt;)',['../pruebas_observaciones.html#autotoc_md31',1,'']]],
   ['validación_20motornavegaciontest_2',['Alertas y validación (&lt;span class=&quot;tt&quot;&gt;MotorNavegacionTest&lt;/span&gt;)',['../pruebas_navegacion.html#autotoc_md19',1,'']]],
   ['validadorlienzo_3',['ValidadorLienzo',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzo.html',1,'org::signbb::backend::autoria::servicios']]],
   ['validadorlienzoreglas_4',['ValidadorLienzoReglas',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzoReglas.html',1,'org::signbb::backend::autoria::servicios']]],
@@ -20,7 +20,7 @@ var searchData=
   ['versioncontenidoentity_17',['VersionContenidoEntity',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1VersionContenidoEntity.html',1,'org.signbb.backend.navegacion.datos.entidades.VersionContenidoEntity'],['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1VersionContenidoEntity.html#afb2dc003e489f4534a641c600cb99780',1,'org.signbb.backend.navegacion.datos.entidades.VersionContenidoEntity.VersionContenidoEntity()']]],
   ['versiones_20del_20contenido_20republicar_20sin_20romper_20recorridos_20en_20curso_18',['Versiones del contenido (republicar sin romper recorridos en curso)',['../pruebas_autoria.html#autotoc_md13',1,'']]],
   ['versionesdeprueba_19',['VersionesDePrueba',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1VersionesDePrueba.html',1,'org::signbb::backend::navegacion::modelo']]],
-  ['visual_20de_20base_20de_20reglas_20',['Representacion visual de base de reglas',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md74',1,'']]],
-  ['visual_20de_20grafo_21',['Representacion visual de grafo',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md75',1,'']]],
-  ['visualmente_22',['Construir grafos visualmente',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md73',1,'']]]
+  ['visual_20de_20base_20de_20reglas_20',['Representacion visual de base de reglas',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md75',1,'']]],
+  ['visual_20de_20grafo_21',['Representacion visual de grafo',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md76',1,'']]],
+  ['visualmente_22',['Construir grafos visualmente',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md74',1,'']]]
 ];

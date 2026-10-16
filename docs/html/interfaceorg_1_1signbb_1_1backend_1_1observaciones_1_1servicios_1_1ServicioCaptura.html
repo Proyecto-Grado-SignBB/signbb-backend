@@ -126,15 +126,15 @@ Diagrama de herencia de org.signbb.backend.observaciones.servicios.ServicioCaptu
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Métodos públicos</h2></td></tr>
-<tr class="memitem:a09c911b7897a1f706de65812c167bcb6" id="r_a09c911b7897a1f706de65812c167bcb6"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#a09c911b7897a1f706de65812c167bcb6">registrarRespuesta</a> (String recorridoId, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1TipoInteraccion.html">TipoInteraccion</a> tipo, List&lt; String &gt; opcionesSeleccionadas)</td></tr>
-<tr class="memdesc:a09c911b7897a1f706de65812c167bcb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registra lo que el cuidador marcó para la pregunta actual y avanza el recorrido.  <br /></td></tr>
+<tr class="memitem:af13400bb1d1c3a54c6814a017b5309d9" id="r_af13400bb1d1c3a54c6814a017b5309d9"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#af13400bb1d1c3a54c6814a017b5309d9">registrarRespuesta</a> (String recorridoId, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1TipoInteraccion.html">TipoInteraccion</a> tipo, List&lt; String &gt; opcionesSeleccionadas, Long usuarioId)</td></tr>
+<tr class="memdesc:af13400bb1d1c3a54c6814a017b5309d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registra lo que el cuidador marcó para la pregunta actual y avanza el recorrido.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>API del módulo de captura: recibe la(s) opción(es) que el cuidador marcó para la pregunta actual, las valida y audita, y las entrega íntegras a <code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html">org.signbb.backend.navegacion.servicios.ServicioNavegacion</a></code>. </p>
 <p>No decide cuál opción domina en una selección múltiple — eso lo resuelve el Módulo de Navegación (ver <code class="JavaDocCode">ServicioNavegacion.responder(String, List)</code>). </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
-<a id="a09c911b7897a1f706de65812c167bcb6" name="a09c911b7897a1f706de65812c167bcb6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a09c911b7897a1f706de65812c167bcb6">&#9670;&#160;</a></span>registrarRespuesta()</h2>
+<a id="af13400bb1d1c3a54c6814a017b5309d9" name="af13400bb1d1c3a54c6814a017b5309d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af13400bb1d1c3a54c6814a017b5309d9">&#9670;&#160;</a></span>registrarRespuesta()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -152,15 +152,20 @@ Métodos públicos</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">List&lt; String &gt;</td>          <td class="paramname"><span class="paramname"><em>opcionesSeleccionadas</em></span>&#160;)</td>
+          <td class="paramtype">List&lt; String &gt;</td>          <td class="paramname"><span class="paramname"><em>opcionesSeleccionadas</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Long</td>          <td class="paramname"><span class="paramname"><em>usuarioId</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Registra lo que el cuidador marcó para la pregunta actual y avanza el recorrido. </p>
-<p><code class="JavaDocCode">opcionesSeleccionadas</code> trae un solo elemento para SI_NO/SELECCION_UNICA, uno o más para SELECCION_MULTIPLE. </p>
+<p><code class="JavaDocCode">opcionesSeleccionadas</code> trae un solo elemento para SI_NO/SELECCION_UNICA, uno o más para SELECCION_MULTIPLE. <code class="JavaDocCode">usuarioId</code> es el padre que responde y queda en la auditoría. </p>
 
-<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl.html#ad047af2ad2ab550f5df9725b9f2219ee">org.signbb.backend.observaciones.servicios.ServicioCapturaImpl</a>.</p>
+<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl.html#aa30a73b5b9a3df8baf34e4300efc7d25">org.signbb.backend.observaciones.servicios.ServicioCapturaImpl</a>.</p>
 
 </div>
 </div>
