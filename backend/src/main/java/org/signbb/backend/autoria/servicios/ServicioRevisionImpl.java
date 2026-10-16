@@ -6,6 +6,7 @@ import java.util.List;
 import org.signbb.backend.autoria.controladores.ResumenSubgrafoDTO;
 import org.signbb.backend.autoria.controladores.SubgrafoDTO;
 import org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity;
+import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorBaseRegla;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo;
 import org.signbb.backend.autoria.modelo.Aviso;
 import org.signbb.backend.autoria.modelo.EstadoBorrador;
@@ -19,17 +20,21 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Implementación de {@link ServicioRevision}. Aprobar reutiliza {@link
  * ServicioAutoria#publicar}, así que publica el subgrafo y su base de reglas
- * en una sola acción, con las mismas validaciones.
+ * en una sola acción, con las mismas validaciones. Por eso un subgrafo
+ * publicado también puede enviarse cuando lo único que cambió son sus reglas.
  */
 @Service
 public class ServicioRevisionImpl implements ServicioRevision {
 
     private final RepositorioBorradorSubgrafo borradores;
+    private final RepositorioBorradorBaseRegla bases;
     private final ServicioAutoria autoria;
 
-    /** Inyecta el repositorio de borradores y el servicio de autoría. */
-    public ServicioRevisionImpl(RepositorioBorradorSubgrafo borradores, ServicioAutoria autoria) {
+    /** Inyecta los repositorios de borradores y bases de reglas, y el servicio de autoría. */
+    public ServicioRevisionImpl(RepositorioBorradorSubgrafo borradores, RepositorioBorradorBaseRegla bases,
+            ServicioAutoria autoria) {
         this.borradores = borradores;
+        this.bases = bases;
         this.autoria = autoria;
     }
 
@@ -40,7 +45,7 @@ public class ServicioRevisionImpl implements ServicioRevision {
         if (b.getEstado() == EstadoBorrador.EN_REVISION) {
             throw new EdicionInvalidaException("Este subgrafo ya está en revisión.");
         }
-        if (b.getEstado() == EstadoBorrador.PUBLICADO) {
+        if (b.getEstado() == EstadoBorrador.PUBLICADO && !reglasSinPublicar(b)) {
             throw new EdicionInvalidaException("Este subgrafo está publicado y no tiene cambios que revisar.");
         }
         List<Aviso> bloqueantes = autoria.avisos(id).stream().filter(Aviso::bloqueante).toList();
@@ -125,5 +130,12 @@ public class ServicioRevisionImpl implements ServicioRevision {
     private BorradorSubgrafoEntity buscar(Long id) {
         return borradores.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException("no hay un subgrafo con id " + id));
+    }
+
+    /** True si la base de reglas del subgrafo tiene cambios que aún no salieron con él. */
+    private boolean reglasSinPublicar(BorradorSubgrafoEntity b) {
+        return bases.findByGrafoId(b.getGrafoId())
+                .map(base -> base.getEstado() != EstadoBorrador.PUBLICADO)
+                .orElse(false);
     }
 }

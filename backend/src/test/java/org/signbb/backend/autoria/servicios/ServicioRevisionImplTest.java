@@ -20,6 +20,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.signbb.backend.autoria.controladores.ResumenSubgrafoDTO;
 import org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity;
+import org.signbb.backend.autoria.datos.entidades.BorradorBaseReglaEntity;
+import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorBaseRegla;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo;
 import org.signbb.backend.autoria.modelo.Aviso;
 import org.signbb.backend.autoria.modelo.EstadoBorrador;
@@ -40,6 +42,7 @@ class ServicioRevisionImplTest {
             new UsuarioActual(MEDICO_A.id(), "Dra. A", "a@signbb.local", Rol.MEDICO_SUPERVISOR, null);
 
     private RepositorioBorradorSubgrafo borradores;
+    private RepositorioBorradorBaseRegla bases;
     private ServicioAutoria autoria;
     private ServicioRevisionImpl servicio;
     private BorradorSubgrafoEntity b;
@@ -47,12 +50,13 @@ class ServicioRevisionImplTest {
     @BeforeEach
     void preparar() {
         borradores = mock(RepositorioBorradorSubgrafo.class);
+        bases = mock(RepositorioBorradorBaseRegla.class);
         autoria = mock(ServicioAutoria.class);
         when(autoria.avisos(1L)).thenReturn(List.of());
         b = LienzoFiebre.borrador(LienzoFiebre.completo());
         b.setAutorId(MEDICO_A.id());
         when(borradores.findById(1L)).thenReturn(Optional.of(b));
-        servicio = new ServicioRevisionImpl(borradores, autoria);
+        servicio = new ServicioRevisionImpl(borradores, bases, autoria);
     }
 
     @Test
@@ -85,6 +89,20 @@ class ServicioRevisionImplTest {
         assertThrows(EdicionInvalidaException.class, () -> servicio.enviar(1L));
         b.setEstado(EstadoBorrador.PUBLICADO);
         assertThrows(EdicionInvalidaException.class, () -> servicio.enviar(1L));
+    }
+
+    @Test
+    void unSubgrafoPublicadoSeEnviaSiCambiaronSusReglas() {
+        b.setEstado(EstadoBorrador.PUBLICADO);
+        BorradorBaseReglaEntity base = new BorradorBaseReglaEntity();
+        base.setEstado(EstadoBorrador.PUBLICADO);
+        when(bases.findByGrafoId(b.getGrafoId())).thenReturn(Optional.of(base));
+        assertThrows(EdicionInvalidaException.class, () -> servicio.enviar(1L));
+
+        base.setEstado(EstadoBorrador.CAMBIOS_SIN_PUBLICAR);
+        servicio.enviar(1L);
+
+        assertEquals(EstadoBorrador.EN_REVISION, b.getEstado());
     }
 
     @Test
