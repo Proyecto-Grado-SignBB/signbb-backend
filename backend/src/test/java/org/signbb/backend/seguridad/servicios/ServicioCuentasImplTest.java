@@ -1,0 +1,195 @@
+package org.signbb.backend.seguridad.servicios;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.time.Instant;
+import java.util.List;
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.signbb.backend.seguridad.controladores.LoginRequest;
+import org.signbb.backend.seguridad.controladores.NuevoUsuarioRequest;
+import org.signbb.backend.seguridad.controladores.RegistroRequest;
+import org.signbb.backend.seguridad.controladores.SesionDTO;
+import org.signbb.backend.seguridad.controladores.UsuarioDTO;
+import org.signbb.backend.seguridad.datos.entidades.UsuarioEntity;
+import org.signbb.backend.seguridad.datos.repositorios.RepositorioUsuario;
+import org.signbb.backend.seguridad.modelo.Rol;
+import org.signbb.backend.seguridad.modelo.UsuarioActual;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+/**
+ * Tests de {@link ServicioCuentasImpl}: registro de padres, ingreso con el
+ * mismo mensaje para todo fallo y administración de cuentas clínicas.
+ */
+class ServicioCuentasImplTest {
+
+    private RepositorioUsuario usuarios;
+    private PasswordEncoder codificador;
+    private ServicioTokens tokens;
+    private ServicioCuentasImpl servicio;
+
+    @BeforeEach
+    void preparar() {
+        usuarios = mock(RepositorioUsuario.class);
+        codificador = new BCryptPasswordEncoder(4);
+        tokens = mock(ServicioTokens.class);
+        servicio = new ServicioCuentasImpl(usuarios, codificador, tokens);
+        when(usuarios.save(any(UsuarioEntity.class))).thenAnswer(i -> {
+            UsuarioEntity u = i.getArgument(0);
+            if (u.getId() == null) {
+                u.setId(7L);
+            }
+            return u;
+        });
+        when(tokens.emitir(any(UsuarioEntity.class)))
+                .thenReturn(new TokenEmitido("token", Instant.parse("2026-01-01T08:00:00Z")));
+    }
+
+    @Test
+    void registrarPadreNormalizaElCorreoYGuardaSoloElHash() {
+        SesionDTO sesion = servicio.registrarPadre(new RegistroRequest(" Ana ", "  Ana@Correo.COM ", "secreta123"));
+
+        ArgumentCaptor<UsuarioEntity> guardado = ArgumentCaptor.forClass(UsuarioEntity.class);
+        verify(usuarios).save(guardado.capture());
+        UsuarioEntity u = guardado.getValue();
+        assertEquals("ana@correo.com", u.getCorreo());
+        assertEquals("Ana", u.getNombre());
+        assertEquals(Rol.PADRE, u.getRol());
+        assertNotEquals("secreta123", u.getHashContrasena());
+        assertTrue(codificador.matches("secreta123", u.getHashContrasena()));
+        assertEquals("token", sesion.token());
+        assertEquals(Rol.PADRE, sesion.usuario().rol());
+    }
+
+    @Test
+    void registrarConCorreoRepetidoDa422() {
+        when(usuarios.existsByCorreo("ana@correo.com")).thenReturn(true);
+
+        assertThrows(CuentaInvalidaException.class,
+                () -> servicio.registrarPadre(new RegistroRequest("Ana", "ANA@correo.com", "secreta123")));
+        verify(usuarios, never()).save(any());
+    }
+
+    @Test
+    void registrarConContrasenaCortaOCorreoMaloDa422() {
+        assertThrows(CuentaInvalidaException.class,
+                () -> servicio.registrarPadre(new RegistroRequest("Ana", "ana@correo.com", "corta")));
+        assertThrows(CuentaInvalidaException.class,
+                () -> servicio.registrarPadre(new RegistroRequest("Ana", "sin-arroba", "secreta123")));
+        assertThrows(CuentaInvalidaException.class,
+                () -> servicio.registrarPadre(new RegistroRequest(" ", "ana@correo.com", "secreta123")));
+    }
+
+    @Test
+    void ingresarConDatosCorrectosDevuelveElToken() {
+        cuenta(3L, "ana@correo.com", "secreta123", Rol.PADRE, true);
+
+        SesionDTO sesion = servicio.ingresar(new LoginRequest(" ANA@correo.com", "secreta123"));
+
+        assertEquals("token", sesion.token());
+        assertEquals(3L, sesion.usuario().id());
+    }
+
+    @Test
+    void ingresarFallaConElMismoMensajeSinImportarPorQue() {
+        cuenta(3L, "ana@correo.com", "secreta123", Rol.PADRE, true);
+        cuenta(4L, "inactiva@correo.com", "secreta123", Rol.MEDICO, false);
+
+        String claveMala = assertThrows(CredencialesInvalidasException.class,
+                () -> servicio.ingresar(new LoginRequest("ana@correo.com", "otra-clave"))).getMessage();
+        String noExiste = assertThrows(CredencialesInvalidasException.class,
+                () -> servicio.ingresar(new LoginRequest("nadie@correo.com", "secreta123"))).getMessage();
+        String inactiva = assertThrows(CredencialesInvalidasException.class,
+                () -> servicio.ingresar(new LoginRequest("inactiva@correo.com", "secreta123"))).getMessage();
+        String vacio = assertThrows(CredencialesInvalidasException.class,
+                () -> servicio.ingresar(new LoginRequest(null, null))).getMessage();
+
+        assertEquals(ServicioCuentasImpl.MENSAJE_INGRESO, claveMala);
+        assertEquals(claveMala, noExiste);
+        assertEquals(claveMala, inactiva);
+        assertEquals(claveMala, vacio);
+    }
+
+    @Test
+    void usuarioActivoIgnoraLasCuentasInactivas() {
+        cuenta(3L, "ana@correo.com", "secreta123", Rol.PADRE, true);
+        cuenta(4L, "inactiva@correo.com", "secreta123", Rol.MEDICO, false);
+
+        assertEquals(Rol.PADRE, servicio.usuarioActivo(3L).orElseThrow().rol());
+        assertTrue(servicio.usuarioActivo(4L).isEmpty());
+        assertTrue(servicio.usuarioActivo(99L).isEmpty());
+    }
+
+    @Test
+    void elSupervisorCreaUnMedicoConSuInstitucion() {
+        UsuarioDTO creado = servicio.crearClinico(
+                new NuevoUsuarioRequest("Dra. A", "a@clinica.co", "secreta123", Rol.MEDICO, " Fundación "));
+
+        assertEquals(Rol.MEDICO, creado.rol());
+        assertEquals("Fundación", creado.institucion());
+        assertEquals("a@clinica.co", creado.correo());
+    }
+
+    @Test
+    void crearUnPadreOSinRolPorLaApiClinicaDa422() {
+        assertThrows(CuentaInvalidaException.class, () -> servicio.crearClinico(
+                new NuevoUsuarioRequest("P", "p@correo.com", "secreta123", Rol.PADRE, null)));
+        assertThrows(CuentaInvalidaException.class, () -> servicio.crearClinico(
+                new NuevoUsuarioRequest("P", "p@correo.com", "secreta123", null, null)));
+        verify(usuarios, never()).save(any());
+    }
+
+    @Test
+    void listarClinicosPideSoloMedicosYSupervisores() {
+        UsuarioEntity a = cuenta(5L, "a@clinica.co", "secreta123", Rol.MEDICO, true);
+        when(usuarios.findByRolInOrderByNombreAsc(List.of(Rol.MEDICO, Rol.MEDICO_SUPERVISOR)))
+                .thenReturn(List.of(a));
+
+        assertEquals(List.of(5L), servicio.listarClinicos().stream().map(UsuarioDTO::id).toList());
+    }
+
+    @Test
+    void elSupervisorNoPuedeDesactivarseASiMismo() {
+        UsuarioActual supervisor = new UsuarioActual(1L, "Sup", "s@x.co", Rol.MEDICO_SUPERVISOR, null);
+
+        assertThrows(CuentaInvalidaException.class, () -> servicio.cambiarActivo(1L, false, supervisor));
+    }
+
+    @Test
+    void desactivarAOtraCuentaLaDejaInactiva() {
+        UsuarioActual supervisor = new UsuarioActual(1L, "Sup", "s@x.co", Rol.MEDICO_SUPERVISOR, null);
+        UsuarioEntity b = cuenta(6L, "b@clinica.co", "secreta123", Rol.MEDICO, true);
+
+        UsuarioDTO dto = servicio.cambiarActivo(6L, false, supervisor);
+
+        assertFalse(dto.activo());
+        assertFalse(b.isActivo());
+    }
+
+    /** Registra en el repositorio simulado una cuenta con esos datos. */
+    private UsuarioEntity cuenta(Long id, String correo, String clave, Rol rol, boolean activo) {
+        UsuarioEntity u = new UsuarioEntity();
+        u.setId(id);
+        u.setCorreo(correo);
+        u.setNombre("Usuario " + id);
+        u.setHashContrasena(codificador.encode(clave));
+        u.setRol(rol);
+        u.setActivo(activo);
+        when(usuarios.findByCorreo(correo)).thenReturn(Optional.of(u));
+        when(usuarios.findById(id)).thenReturn(Optional.of(u));
+        return u;
+    }
+}
