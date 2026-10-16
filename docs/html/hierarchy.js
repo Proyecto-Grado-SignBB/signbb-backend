@@ -45,6 +45,8 @@ var hierarchy =
     [ "org.signbb.backend.media.ControladorImagenes", "classorg_1_1signbb_1_1backend_1_1media_1_1ControladorImagenes.html", null ],
     [ "org.signbb.backend.media.ControladorImagenesTest", "classorg_1_1signbb_1_1backend_1_1media_1_1ControladorImagenesTest.html", null ],
     [ "org.signbb.backend.autoria.controladores.ControladorReglas", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html", null ],
+    [ "org.signbb.backend.autoria.controladores.ControladorRevision", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorRevision.html", null ],
+    [ "org.signbb.backend.autoria.controladores.ControladorRevisionTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorRevisionTest.html", null ],
     [ "org.signbb.backend.seguridad.controladores.ControladorUsuarios", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores_1_1ControladorUsuarios.html", null ],
     [ "Converter", null, [
       [ "org.signbb.backend.seguridad.ConvertidorJwtUsuario", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConvertidorJwtUsuario.html", null ]
@@ -178,6 +180,10 @@ var hierarchy =
       [ "org.signbb.backend.reglas.servicios.ServicioReglasImpl", "classorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglasImpl.html", null ]
     ] ],
     [ "org.signbb.backend.reglas.servicios.ServicioReglasImplTest", "classorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglasImplTest.html", null ],
+    [ "org.signbb.backend.autoria.servicios.ServicioRevision", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioRevision.html", [
+      [ "org.signbb.backend.autoria.servicios.ServicioRevisionImpl", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioRevisionImpl.html", null ]
+    ] ],
+    [ "org.signbb.backend.autoria.servicios.ServicioRevisionImplTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioRevisionImplTest.html", null ],
     [ "org.signbb.backend.seguridad.servicios.ServicioTokens", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioTokens.html", null ],
     [ "org.signbb.backend.seguridad.servicios.ServicioTokensTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioTokensTest.html", null ],
     [ "org.signbb.backend.navegacion.modelo.SesionTriaje", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html", null ],

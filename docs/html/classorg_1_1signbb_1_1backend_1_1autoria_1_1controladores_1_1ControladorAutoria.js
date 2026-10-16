@@ -13,6 +13,5 @@ var classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAuto
     [ "eliminarNodo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#a0a862e68cf3000f2520420b7eb72f54d", null ],
     [ "enlazar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#a3207c582f081a392cf04af93cbdaef91", null ],
     [ "listar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#ae9f60b1daf054029df66718664608662", null ],
-    [ "obtener", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#a8e8c56b0b8ece1da65889b8d064709e1", null ],
-    [ "publicar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#a6cbe0f9d7513429a4896419eec656d30", null ]
+    [ "obtener", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html#a8e8c56b0b8ece1da65889b8d064709e1", null ]
 ];

@@ -11,6 +11,5 @@ var classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorRegl
     [ "eliminar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a7735363a68c37a3599266fc18f4048ce", null ],
     [ "eliminarRegla", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a9b9433bf5ff934692242174127c069d6", null ],
     [ "listar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a496da117084e4e6677b969fb2f4f6b02", null ],
-    [ "obtener", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a3ea6b736e68dde8e47013d113c6c2991", null ],
-    [ "publicar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a7d7f4897565436b4f10b601eee28dba9", null ]
+    [ "obtener", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html#a3ea6b736e68dde8e47013d113c6c2991", null ]
 ];

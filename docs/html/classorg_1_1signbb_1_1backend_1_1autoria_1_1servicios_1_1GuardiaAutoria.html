@@ -125,19 +125,28 @@ void&#160;</td><td class="memItemRight"><b>leerSubgrafo</b> (Long id, UsuarioAct
 <tr class="memdesc:a221081a03ad542fb3bfaae7378e7bbbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exige que el usuario pueda ver el subgrafo. <br /></td></tr>
 <tr class="memitem:aefe1ba4ea63141a5ed600a5f5c00946d" id="r_aefe1ba4ea63141a5ed600a5f5c00946d"><td class="memItemLeft"><a id="aefe1ba4ea63141a5ed600a5f5c00946d" name="aefe1ba4ea63141a5ed600a5f5c00946d"></a>
 void&#160;</td><td class="memItemRight"><b>editarSubgrafo</b> (Long id, UsuarioActual usuario)</td></tr>
-<tr class="memdesc:aefe1ba4ea63141a5ed600a5f5c00946d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exige que el usuario sea el autor del subgrafo. <br /></td></tr>
+<tr class="memdesc:aefe1ba4ea63141a5ed600a5f5c00946d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exige que el usuario sea el autor del subgrafo y que no esté en revisión. <br /></td></tr>
+<tr class="memitem:a539b66ace973d734478835e7d6fb1c3a" id="r_a539b66ace973d734478835e7d6fb1c3a"><td class="memItemLeft"><a id="a539b66ace973d734478835e7d6fb1c3a" name="a539b66ace973d734478835e7d6fb1c3a"></a>
+void&#160;</td><td class="memItemRight"><b>autorSubgrafo</b> (Long id, UsuarioActual usuario)</td></tr>
+<tr class="memdesc:a539b66ace973d734478835e7d6fb1c3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exige que el usuario sea el autor del subgrafo, en cualquier estado: para enviarlo a revisión o retirarlo. <br /></td></tr>
 <tr class="memitem:acd584ccf35b8b051b46fa533c4c808f8" id="r_acd584ccf35b8b051b46fa533c4c808f8"><td class="memItemLeft"><a id="acd584ccf35b8b051b46fa533c4c808f8" name="acd584ccf35b8b051b46fa533c4c808f8"></a>
 void&#160;</td><td class="memItemRight"><b>leerBase</b> (Long id, UsuarioActual usuario)</td></tr>
 <tr class="memdesc:acd584ccf35b8b051b46fa533c4c808f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exige que el usuario pueda ver la base de reglas. <br /></td></tr>
 <tr class="memitem:a77800415ce6330f0ff3c39b0fbaa9454" id="r_a77800415ce6330f0ff3c39b0fbaa9454"><td class="memItemLeft"><a id="a77800415ce6330f0ff3c39b0fbaa9454" name="a77800415ce6330f0ff3c39b0fbaa9454"></a>
 void&#160;</td><td class="memItemRight"><b>editarBase</b> (Long id, UsuarioActual usuario)</td></tr>
-<tr class="memdesc:a77800415ce6330f0ff3c39b0fbaa9454"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exige que el usuario sea el autor de la base de reglas. <br /></td></tr>
+<tr class="memdesc:a77800415ce6330f0ff3c39b0fbaa9454"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exige que el usuario sea el autor de la base de reglas y que su subgrafo no esté en revisión. <br /></td></tr>
 <tr class="memitem:a8d46519c7b3162df3f660c27f81984d0" id="r_a8d46519c7b3162df3f660c27f81984d0"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a8d46519c7b3162df3f660c27f81984d0">crearBase</a> (String grafoId, UsuarioActual usuario)</td></tr>
 <tr class="memdesc:a8d46519c7b3162df3f660c27f81984d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exige que el usuario pueda crear la base de reglas de ese grafo: el autor de su subgrafo; para el grafo raíz o un grafo del sistema (sin borrador), solo un supervisor.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Atributos públicos estáticos</h2></td></tr>
+<tr class="memitem:a7cf6a9854710b59b7b3baf54cb849977" id="r_a7cf6a9854710b59b7b3baf54cb849977"><td class="memItemLeft"><a id="a7cf6a9854710b59b7b3baf54cb849977" name="a7cf6a9854710b59b7b3baf54cb849977"></a>
+static final String&#160;</td><td class="memItemRight"><b>EN_REVISION</b> = &quot;Está en revisión; retíralo para editarlo.&quot;</td></tr>
+<tr class="memdesc:a7cf6a9854710b59b7b3baf54cb849977"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mensaje al intentar editar algo que está en revisión. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Aplica <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PoliticaAccesoBorradores.html">PoliticaAccesoBorradores</a></code> antes de cada operación de la autoría: los controladores la llaman con el id y el usuario y, si no corresponde, responde 404 (no existe) o 403 (<code><a class="el" href="classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1AccesoDenegadoException.html">AccesoDenegadoException</a></code>). </p>
-<p>Así los servicios siguen recibiendo solo ids. </p>
+<p>Así los servicios siguen recibiendo solo ids. Un subgrafo en revisión, y su base de reglas, no se editan: 422 hasta que el autor lo retire o un supervisor lo apruebe o rechace. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
 <a id="a8d46519c7b3162df3f660c27f81984d0" name="a8d46519c7b3162df3f660c27f81984d0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8d46519c7b3162df3f660c27f81984d0">&#9670;&#160;</a></span>crearBase()</h2>

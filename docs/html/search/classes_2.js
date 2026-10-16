@@ -25,8 +25,10 @@ var searchData=
   ['controladorimagenes_22',['ControladorImagenes',['../classorg_1_1signbb_1_1backend_1_1media_1_1ControladorImagenes.html',1,'org::signbb::backend::media']]],
   ['controladorimagenestest_23',['ControladorImagenesTest',['../classorg_1_1signbb_1_1backend_1_1media_1_1ControladorImagenesTest.html',1,'org::signbb::backend::media']]],
   ['controladorreglas_24',['ControladorReglas',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorReglas.html',1,'org::signbb::backend::autoria::controladores']]],
-  ['controladorusuarios_25',['ControladorUsuarios',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores_1_1ControladorUsuarios.html',1,'org::signbb::backend::seguridad::controladores']]],
-  ['convertidorjwtusuario_26',['ConvertidorJwtUsuario',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConvertidorJwtUsuario.html',1,'org::signbb::backend::seguridad']]],
-  ['credencialesinvalidasexception_27',['CredencialesInvalidasException',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CredencialesInvalidasException.html',1,'org::signbb::backend::seguridad::servicios']]],
-  ['cuentainvalidaexception_28',['CuentaInvalidaException',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CuentaInvalidaException.html',1,'org::signbb::backend::seguridad::servicios']]]
+  ['controladorrevision_25',['ControladorRevision',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorRevision.html',1,'org::signbb::backend::autoria::controladores']]],
+  ['controladorrevisiontest_26',['ControladorRevisionTest',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorRevisionTest.html',1,'org::signbb::backend::autoria::controladores']]],
+  ['controladorusuarios_27',['ControladorUsuarios',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores_1_1ControladorUsuarios.html',1,'org::signbb::backend::seguridad::controladores']]],
+  ['convertidorjwtusuario_28',['ConvertidorJwtUsuario',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConvertidorJwtUsuario.html',1,'org::signbb::backend::seguridad']]],
+  ['credencialesinvalidasexception_29',['CredencialesInvalidasException',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CredencialesInvalidasException.html',1,'org::signbb::backend::seguridad::servicios']]],
+  ['cuentainvalidaexception_30',['CuentaInvalidaException',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CuentaInvalidaException.html',1,'org::signbb::backend::seguridad::servicios']]]
 ];

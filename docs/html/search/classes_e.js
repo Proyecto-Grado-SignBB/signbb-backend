@@ -24,8 +24,11 @@ var searchData=
   ['servicioreglas_21',['ServicioReglas',['../interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglas.html',1,'org::signbb::backend::reglas::servicios']]],
   ['servicioreglasimpl_22',['ServicioReglasImpl',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglasImpl.html',1,'org::signbb::backend::reglas::servicios']]],
   ['servicioreglasimpltest_23',['ServicioReglasImplTest',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglasImplTest.html',1,'org::signbb::backend::reglas::servicios']]],
-  ['serviciotokens_24',['ServicioTokens',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioTokens.html',1,'org::signbb::backend::seguridad::servicios']]],
-  ['serviciotokenstest_25',['ServicioTokensTest',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioTokensTest.html',1,'org::signbb::backend::seguridad::servicios']]],
-  ['sesiontriaje_26',['SesionTriaje',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html',1,'org::signbb::backend::navegacion::modelo']]],
-  ['subgraforequest_27',['SubgrafoRequest',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1SubgrafoRequest.html',1,'org::signbb::backend::autoria::controladores']]]
+  ['serviciorevision_24',['ServicioRevision',['../interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioRevision.html',1,'org::signbb::backend::autoria::servicios']]],
+  ['serviciorevisionimpl_25',['ServicioRevisionImpl',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioRevisionImpl.html',1,'org::signbb::backend::autoria::servicios']]],
+  ['serviciorevisionimpltest_26',['ServicioRevisionImplTest',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioRevisionImplTest.html',1,'org::signbb::backend::autoria::servicios']]],
+  ['serviciotokens_27',['ServicioTokens',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioTokens.html',1,'org::signbb::backend::seguridad::servicios']]],
+  ['serviciotokenstest_28',['ServicioTokensTest',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioTokensTest.html',1,'org::signbb::backend::seguridad::servicios']]],
+  ['sesiontriaje_29',['SesionTriaje',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html',1,'org::signbb::backend::navegacion::modelo']]],
+  ['subgraforequest_30',['SubgrafoRequest',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1SubgrafoRequest.html',1,'org::signbb::backend::autoria::controladores']]]
 ];
