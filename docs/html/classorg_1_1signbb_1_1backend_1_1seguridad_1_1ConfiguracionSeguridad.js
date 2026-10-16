@@ -1,6 +1,6 @@
 var classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConfiguracionSeguridad =
 [
-    [ "cadenaSeguridad", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConfiguracionSeguridad.html#a57e227ddd05b91b02db7de853b845e05", null ],
+    [ "cadenaSeguridad", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConfiguracionSeguridad.html#a6772d82efc33726688a4f4dc9b97d6ff", null ],
     [ "clave", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConfiguracionSeguridad.html#a96189020a10c6464d3a9013160e8f06b", null ],
     [ "claveJwt", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConfiguracionSeguridad.html#a53bf8cd39763847c524a24ad295ae9a7", null ],
     [ "codificador", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConfiguracionSeguridad.html#af3761bd675bacf57d751ba7512a304d5", null ],
