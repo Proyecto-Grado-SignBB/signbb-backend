@@ -67,7 +67,7 @@ class ServicioCapturaImplTest {
                 List.of("SI"), PADRE);
 
         assertEquals(esperado, resultado);
-        verify(servicioNavegacion).responder(RECORRIDO_ID, List.of("SI"), PADRE);
+        verify(servicioNavegacion).responder(RECORRIDO_ID, List.of("SI"));
         verify(repositorioObservaciones).save(any(ObservacionEntity.class));
     }
 
