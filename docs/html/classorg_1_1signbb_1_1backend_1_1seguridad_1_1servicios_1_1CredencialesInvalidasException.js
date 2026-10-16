@@ -1,0 +1,4 @@
+var classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CredencialesInvalidasException =
+[
+    [ "CredencialesInvalidasException", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CredencialesInvalidasException.html#a1f080ea7d279d309d05cc7e3a7a6b8b4", null ]
+];

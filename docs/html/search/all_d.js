@@ -59,5 +59,11 @@ var searchData=
   ['org_3a_3asignbb_3a_3abackend_3a_3areglas_3a_3adatos_3a_3aserializacion_56',['serializacion',['../namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion.html',1,'org::signbb::backend::reglas::datos']]],
   ['org_3a_3asignbb_3a_3abackend_3a_3areglas_3a_3amodelo_57',['modelo',['../namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1modelo.html',1,'org::signbb::backend::reglas']]],
   ['org_3a_3asignbb_3a_3abackend_3a_3areglas_3a_3aservicios_58',['servicios',['../namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1servicios.html',1,'org::signbb::backend::reglas']]],
-  ['org_3a_3asignbb_3a_3abackend_3a_3aseguridad_59',['seguridad',['../namespaceorg_1_1signbb_1_1backend_1_1seguridad.html',1,'org::signbb::backend']]]
+  ['org_3a_3asignbb_3a_3abackend_3a_3aseguridad_59',['seguridad',['../namespaceorg_1_1signbb_1_1backend_1_1seguridad.html',1,'org::signbb::backend']]],
+  ['org_3a_3asignbb_3a_3abackend_3a_3aseguridad_3a_3acontroladores_60',['controladores',['../namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores.html',1,'org::signbb::backend::seguridad']]],
+  ['org_3a_3asignbb_3a_3abackend_3a_3aseguridad_3a_3adatos_61',['datos',['../namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos.html',1,'org::signbb::backend::seguridad']]],
+  ['org_3a_3asignbb_3a_3abackend_3a_3aseguridad_3a_3adatos_3a_3aentidades_62',['entidades',['../namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1entidades.html',1,'org::signbb::backend::seguridad::datos']]],
+  ['org_3a_3asignbb_3a_3abackend_3a_3aseguridad_3a_3adatos_3a_3arepositorios_63',['repositorios',['../namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios.html',1,'org::signbb::backend::seguridad::datos']]],
+  ['org_3a_3asignbb_3a_3abackend_3a_3aseguridad_3a_3amodelo_64',['modelo',['../namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo.html',1,'org::signbb::backend::seguridad']]],
+  ['org_3a_3asignbb_3a_3abackend_3a_3aseguridad_3a_3aservicios_65',['servicios',['../namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios.html',1,'org::signbb::backend::seguridad']]]
 ];

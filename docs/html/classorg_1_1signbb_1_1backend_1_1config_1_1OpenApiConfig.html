@@ -120,11 +120,23 @@ Métodos públicos</h2></td></tr>
 <tr class="memitem:ac1409594130983b0a524f51f6b4d5d4c" id="r_ac1409594130983b0a524f51f6b4d5d4c"><td class="memItemLeft"><a id="ac1409594130983b0a524f51f6b4d5d4c" name="ac1409594130983b0a524f51f6b4d5d4c"></a>
 OpenAPI&#160;</td><td class="memItemRight"><b>signbbOpenAPI</b> ()</td></tr>
 <tr class="memdesc:ac1409594130983b0a524f51f6b4d5d4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Información de la API mostrada por Swagger UI. <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Atributos públicos estáticos</h2></td></tr>
+<tr class="memitem:a09beae1fe883e74e8ac97963b06a4ce4" id="r_a09beae1fe883e74e8ac97963b06a4ce4"><td class="memItemLeft"><a id="a09beae1fe883e74e8ac97963b06a4ce4" name="a09beae1fe883e74e8ac97963b06a4ce4"></a>
+static final String&#160;</td><td class="memItemRight"><b>ESQUEMA</b> = &quot;bearerAuth&quot;</td></tr>
+<tr class="memdesc:a09beae1fe883e74e8ac97963b06a4ce4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nombre del esquema de seguridad en el contrato (botón «Authorize»). <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pac-static-methods" class="groupheader"><a id="pac-static-methods" name="pac-static-methods"></a>
+Funciones estáticas de paquete</h2></td></tr>
+<tr class="memitem:aa5b77c66c8eab8ecba8b4a32e70e2db5" id="r_aa5b77c66c8eab8ecba8b4a32e70e2db5"><td class="memItemLeft"><a id="aa5b77c66c8eab8ecba8b4a32e70e2db5" name="aa5b77c66c8eab8ecba8b4a32e70e2db5"></a>
+&#160;</td><td class="memItemRight"><b>[static initializer]</b></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Metadatos del contrato OpenAPI de SignBB. </p>
 <p>Los endpoints los descubre springdoc a partir de los controladores; aquí solo se fija la información general que aparece en la cabecera de Swagger UI.</p>
-<p>El contrato se publica en <code class="JavaDocCode">/v3/api-docs</code> (JSON) y <code class="JavaDocCode">/v3/api-docs.yaml</code> (YAML), y la interfaz en <code class="JavaDocCode">/swagger-ui.html</code>. La copia versionada vive en <code class="JavaDocCode">docs/api/openapi.yaml</code>. </p>
+<p>El contrato se publica en <code class="JavaDocCode">/v3/api-docs</code> (JSON) y <code class="JavaDocCode">/v3/api-docs.yaml</code> (YAML), y la interfaz en <code class="JavaDocCode">/swagger-ui.html</code>. La copia versionada vive en <code class="JavaDocCode">docs/api/openapi.yaml</code>.</p>
+<p>Todas las operaciones piden el esquema {@value <a class="el" href="#a09beae1fe883e74e8ac97963b06a4ce4" title="Nombre del esquema de seguridad en el contrato (botón «Authorize»).">ESQUEMA</a>} (JWT en <code class="JavaDocCode">Authorization: Bearer</code>), salvo las que lo anulan con <code class="JavaDocCode">@SecurityRequirements</code> (registro e ingreso). El parámetro <code><a class="el" href="">UsuarioActual</a></code> de los controladores no es parte del contrato: lo llena el servidor desde el token. </p>
 </div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/main/java/org/signbb/backend/config/<b>OpenApiConfig.java</b></li>
 </ul>

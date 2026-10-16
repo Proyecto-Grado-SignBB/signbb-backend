@@ -79,7 +79,6 @@ var annotated_dup =
             [ "ResolvedorVersionesTest", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorVersionesTest.html", null ]
           ] ],
           [ "config", "namespaceorg_1_1signbb_1_1backend_1_1config.html", [
-            [ "ConfiguracionCors", "classorg_1_1signbb_1_1backend_1_1config_1_1ConfiguracionCors.html", null ],
             [ "ManejadorExcepciones", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorExcepciones.html", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorExcepciones" ],
             [ "OpenApiConfig", "classorg_1_1signbb_1_1backend_1_1config_1_1OpenApiConfig.html", "classorg_1_1signbb_1_1backend_1_1config_1_1OpenApiConfig" ],
             [ "RecursoNoEncontradoException", "classorg_1_1signbb_1_1backend_1_1config_1_1RecursoNoEncontradoException.html", null ]
@@ -210,6 +209,42 @@ var annotated_dup =
               [ "ServicioReglasImpl", "classorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglasImpl.html", "classorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglasImpl" ],
               [ "ServicioReglasImplTest", "classorg_1_1signbb_1_1backend_1_1reglas_1_1servicios_1_1ServicioReglasImplTest.html", null ]
             ] ]
+          ] ],
+          [ "seguridad", "namespaceorg_1_1signbb_1_1backend_1_1seguridad.html", [
+            [ "controladores", "namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores.html", [
+              [ "ControladorAuth", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores_1_1ControladorAuth.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores_1_1ControladorAuth" ],
+              [ "ControladorUsuarios", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores_1_1ControladorUsuarios.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores_1_1ControladorUsuarios" ],
+              [ "ManejadorErroresSeguridad", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores_1_1ManejadorErroresSeguridad.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores_1_1ManejadorErroresSeguridad" ]
+            ] ],
+            [ "datos", "namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos.html", [
+              [ "entidades", "namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1entidades.html", [
+                [ "UsuarioEntity", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1entidades_1_1UsuarioEntity.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1entidades_1_1UsuarioEntity" ]
+              ] ],
+              [ "repositorios", "namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios.html", [
+                [ "RepositorioUsuario", "interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios_1_1RepositorioUsuario.html", "interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios_1_1RepositorioUsuario" ]
+              ] ]
+            ] ],
+            [ "modelo", "namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo.html", [
+              [ "Rol", "enumorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo_1_1Rol.html", "enumorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo_1_1Rol" ]
+            ] ],
+            [ "servicios", "namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios.html", [
+              [ "AccesoDenegadoException", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1AccesoDenegadoException.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1AccesoDenegadoException" ],
+              [ "CredencialesInvalidasException", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CredencialesInvalidasException.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CredencialesInvalidasException" ],
+              [ "CuentaInvalidaException", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CuentaInvalidaException.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CuentaInvalidaException" ],
+              [ "ServicioCuentas", "interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentas.html", "interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentas" ],
+              [ "ServicioCuentasImpl", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentasImpl.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentasImpl" ],
+              [ "ServicioCuentasImplTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentasImplTest.html", null ],
+              [ "ServicioTokens", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioTokens.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioTokens" ],
+              [ "ServicioTokensTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioTokensTest.html", null ]
+            ] ],
+            [ "ApiPrueba", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ApiPrueba.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ApiPrueba" ],
+            [ "ConfiguracionSeguridad", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConfiguracionSeguridad.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConfiguracionSeguridad" ],
+            [ "ConfiguracionWebSeguridad", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConfiguracionWebSeguridad.html", null ],
+            [ "ConvertidorJwtUsuario", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConvertidorJwtUsuario.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConvertidorJwtUsuario" ],
+            [ "InicializadorSeguridad", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1InicializadorSeguridad.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1InicializadorSeguridad" ],
+            [ "InicializadorSeguridadTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1InicializadorSeguridadTest.html", null ],
+            [ "ReglasAccesoIntegracionTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ReglasAccesoIntegracionTest.html", null ],
+            [ "ResolvedorUsuarioActual", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ResolvedorUsuarioActual.html", null ]
           ] ],
           [ "AutoriaIntegracionTest", "classorg_1_1signbb_1_1backend_1_1AutoriaIntegracionTest.html", null ],
           [ "BackendApplication", "classorg_1_1signbb_1_1backend_1_1BackendApplication.html", null ],
