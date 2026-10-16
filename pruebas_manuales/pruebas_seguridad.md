@@ -358,7 +358,7 @@ Las cuentas de médico se crean con S-04 (o con Swagger).
 | U-02 | Ingresa con una contraseña mala | El error dentro de la pantalla, sin alertas del navegador |
 | U-03 | Crea los médicos A y B con S-04. Ingresa como A | La barra lateral muestra el nombre y la institución reales de A y el tablero está vacío |
 | U-04 | Pulsa «Cerrar sesión» y luego el botón atrás del navegador | Vuelve al ingreso; atrás no deja volver al tablero |
-| U-05 | Como A, crea «Ictericia en la piel» (categoría Piel, «Piel u ojos amarillos»), arma una pregunta con dos conclusiones y una regla | La tarjeta dice que el autor es A; el perfil muestra los conteos de A |
+| U-05 | Como A, crea «Ictericia en la piel» (categoría Piel, «Piel u ojos amarillos»), arma una pregunta con dos conclusiones y una regla | El subgrafo queda en el tablero de A; el perfil muestra el nombre y la institución de A y sus conteos |
 | U-06 | Cierra sesión e ingresa como B | B no ve el subgrafo de A |
 | U-07 | Como A, deja un "+" sin camino y pulsa «Enviar a revisión»; complétalo y envíalo | Primero, el aviso bloqueante; después, la etiqueta «En revisión» y el lienzo en solo lectura, con «Retirar de revisión» |
 | U-08 | Con curl (S-12), el supervisor rechaza el subgrafo con un comentario | — |
