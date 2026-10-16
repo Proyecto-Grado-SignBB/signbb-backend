@@ -8,6 +8,7 @@ import org.signbb.backend.autoria.controladores.CatalogoDTO;
 import org.signbb.backend.autoria.controladores.ReglaRequest;
 import org.signbb.backend.autoria.controladores.ResumenBaseReglaDTO;
 import org.signbb.backend.autoria.modelo.Aviso;
+import org.signbb.backend.seguridad.modelo.UsuarioActual;
 
 /**
  * Fachada del módulo de autoría de reglas que usa la API REST. Las operaciones
@@ -17,11 +18,17 @@ import org.signbb.backend.autoria.modelo.Aviso;
  */
 public interface ServicioAutoriaReglas {
 
-    /** Borradores de bases de reglas, del último editado al primero. */
-    List<ResumenBaseReglaDTO> listar();
+    /**
+     * Borradores de bases de reglas del último editado al primero: los del
+     * propio médico, o todos si es supervisor.
+     */
+    List<ResumenBaseReglaDTO> listar(UsuarioActual usuario);
 
-    /** Crea un borrador vacío para un grafo. */
-    BaseReglaDTO crear(BaseReglaRequest datos);
+    /**
+     * Crea un borrador vacío para un grafo. El autor, su institución y su
+     * cuenta salen del usuario; los de la petición se ignoran.
+     */
+    BaseReglaDTO crear(BaseReglaRequest datos, UsuarioActual usuario);
 
     /** Borrador completo. */
     BaseReglaDTO obtener(Long id);

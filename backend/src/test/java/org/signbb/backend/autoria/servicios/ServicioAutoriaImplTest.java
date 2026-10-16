@@ -16,6 +16,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import static org.signbb.backend.seguridad.UsuariosPrueba.MEDICO_A;
+
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,7 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Sort;
 import org.signbb.backend.autoria.controladores.CategoriaDTO;
 import org.signbb.backend.autoria.controladores.DespuesDeRequest;
 import org.signbb.backend.autoria.controladores.NodoRequest;
@@ -43,6 +46,7 @@ import org.signbb.backend.autoria.modelo.EstadoBorrador;
 import org.signbb.backend.autoria.modelo.Gravedad;
 import org.signbb.backend.autoria.modelo.TipoNodo;
 import org.signbb.backend.config.RecursoNoEncontradoException;
+import org.signbb.backend.seguridad.UsuariosPrueba;
 import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
 import org.signbb.backend.reglas.datos.entidades.BaseReglasEntity;
 import org.signbb.backend.reglas.datos.repositorios.RepositorioBaseReglas;
@@ -112,7 +116,7 @@ class ServicioAutoriaImplTest {
     @Test
     void crearArmaUnBorradorVacioConUnGrafoIdSinTildes() {
         SubgrafoDTO dto = servicio.crear(new SubgrafoRequest("  Fiebre en niños pequeños ", "puente_neuro",
-                " Fiebre o calentura ", "Dra. Prueba", ""));
+                " Fiebre o calentura ", "Dra. Prueba", ""), MEDICO_A);
 
         assertEquals("grafo_fiebre_en_ninos_pequenos", dto.grafoId());
         assertEquals("Fiebre en niños pequeños", dto.nombre());
@@ -125,10 +129,44 @@ class ServicioAutoriaImplTest {
     }
 
     @Test
+    void elAutorSaleDeLaCuentaYNoDelRequest() {
+        SubgrafoDTO dto = servicio.crear(new SubgrafoRequest("Fiebre", "puente_neuro", "Fiebre",
+                "Otro autor", "Otra institución"), MEDICO_A);
+
+        assertEquals("Dra. A", dto.autor());
+        assertEquals("Fundación Canguro", dto.institucion());
+        assertEquals(10L, dto.autorId());
+    }
+
+    @Test
+    void editarLosDatosNoCambiaElAutor() {
+        BorradorSubgrafoEntity b = guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
+        b.setAutor("Dra. A");
+        b.setAutorId(10L);
+
+        SubgrafoDTO dto = servicio.actualizar(b.getId(), new SubgrafoRequest("Fiebre", "puente_neuro", "Fiebre",
+                "Otro autor", "Otra institución"));
+
+        assertEquals("Dra. A", dto.autor());
+        assertEquals(10L, dto.autorId());
+    }
+
+    @Test
+    void unMedicoListaSoloLoSuyoYElSupervisorTodo() {
+        servicio.listar(MEDICO_A);
+        verify(borradores).findByAutorId(eq(10L), any(Sort.class));
+        verify(borradores, never()).findAll(any(Sort.class));
+
+        servicio.listar(UsuariosPrueba.SUPERVISOR);
+        verify(borradores).findAll(any(Sort.class));
+    }
+
+    @Test
     void elGrafoIdNoChocaConLosGrafosNiLosBorradores() {
         when(borradores.existsByGrafoId("grafo_respiracion_2")).thenReturn(true);
 
-        SubgrafoDTO dto = servicio.crear(new SubgrafoRequest("Respiración", "puente_respiracion", "Le cuesta respirar", null, null));
+        SubgrafoDTO dto = servicio.crear(
+                new SubgrafoRequest("Respiración", "puente_respiracion", "Le cuesta respirar", null, null), MEDICO_A);
 
         assertEquals("grafo_respiracion_3", dto.grafoId());
     }
@@ -136,16 +174,17 @@ class ServicioAutoriaImplTest {
     @Test
     void crearSinNombreOConUnaCategoriaQueNoExisteSeRechaza() {
         assertThrows(EdicionInvalidaException.class,
-                () -> servicio.crear(new SubgrafoRequest(" ", "puente_neuro", "Fiebre", null, null)));
+                () -> servicio.crear(new SubgrafoRequest(" ", "puente_neuro", "Fiebre", null, null), MEDICO_A));
         assertThrows(EdicionInvalidaException.class,
-                () -> servicio.crear(new SubgrafoRequest("Fiebre", "puente_x", "Fiebre", null, null)));
+                () -> servicio.crear(new SubgrafoRequest("Fiebre", "puente_x", "Fiebre", null, null), MEDICO_A));
         verify(borradores, never()).save(any());
     }
 
     @Test
     void sinNombreParaLaFamiliaSeRechaza() {
         EdicionInvalidaException e = assertThrows(EdicionInvalidaException.class,
-                () -> servicio.crear(new SubgrafoRequest("Ictericia en la piel", "puente_piel", "  ", null, null)));
+                () -> servicio.crear(new SubgrafoRequest("Ictericia en la piel", "puente_piel", "  ", null, null),
+                        MEDICO_A));
 
         assertTrue(e.getMessage().contains("familias"));
         verify(borradores, never()).save(any());

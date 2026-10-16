@@ -40,6 +40,7 @@ import org.signbb.backend.reglas.datos.entidades.BaseReglasEntity;
 import org.signbb.backend.reglas.datos.repositorios.RepositorioBaseReglas;
 import org.signbb.backend.reglas.modelo.Condicion;
 import org.signbb.backend.reglas.modelo.NivelAlerta;
+import org.signbb.backend.seguridad.UsuariosPrueba;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -137,7 +138,7 @@ class AutoriaIntegracionTest {
     @Test
     void unSubgrafoPublicadoDesdeElLienzoSeRecorreComoCuidadora() {
         SubgrafoDTO s = autoria.crear(new SubgrafoRequest("Fiebre prueba de integracion", "puente_neuro", ETIQUETA,
-                "Dra. Prueba", "Hospital de prueba"));
+                "Dra. Prueba", "Hospital de prueba"), UsuariosPrueba.MEDICO_A);
         borradorId = s.id();
         grafoId = s.grafoId();
 
@@ -183,7 +184,7 @@ class AutoriaIntegracionTest {
     void publicarElSubgrafoPublicaTambienSuBaseDeReglas() {
         String etiqueta = "Fiebre con reglas (prueba)";
         SubgrafoDTO s = autoria.crear(new SubgrafoRequest("Fiebre con reglas", "puente_neuro", etiqueta,
-                "Dra. Prueba", "Hospital de prueba"));
+                "Dra. Prueba", "Hospital de prueba"), UsuariosPrueba.MEDICO_A);
         borradorId = s.id();
         grafoId = s.grafoId();
 
@@ -206,7 +207,7 @@ class AutoriaIntegracionTest {
 
         // Base de reglas del subgrafo: «Menos de 38 °C» también debe llevar a urgencias.
         BaseReglaDTO base = servicioReglas.crear(new BaseReglaRequest("Reglas de fiebre", null, grafoId,
-                "Dra. Prueba", "Hospital de prueba"));
+                "Dra. Prueba", "Hospital de prueba"), UsuariosPrueba.MEDICO_A);
         servicioReglas.agregarRegla(base.id(), new ReglaRequest("R fiebre alta", null,
                 List.of(List.of(new Condicion(inicio, "Menos de 38 °C"))), NivelAlerta.URGENCIA, urgId));
 

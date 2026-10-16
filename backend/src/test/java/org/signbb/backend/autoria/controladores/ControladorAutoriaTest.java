@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -23,9 +24,13 @@ import org.signbb.backend.autoria.modelo.Aviso;
 import org.signbb.backend.autoria.modelo.EstadoBorrador;
 import org.signbb.backend.autoria.servicios.ContenidoInvalidoException;
 import org.signbb.backend.autoria.servicios.EdicionInvalidaException;
+import org.signbb.backend.autoria.servicios.GuardiaAutoria;
 import org.signbb.backend.autoria.servicios.ServicioAutoria;
 import org.signbb.backend.config.ManejadorExcepciones;
 import org.signbb.backend.config.RecursoNoEncontradoException;
+import org.signbb.backend.seguridad.UsuariosPrueba;
+import org.signbb.backend.seguridad.controladores.ManejadorErroresSeguridad;
+import org.signbb.backend.seguridad.servicios.AccesoDenegadoException;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
@@ -35,18 +40,23 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 /**
  * Tests de {@link ControladorAutoria} con MockMvc en modo standalone y el
- * servicio simulado: rutas, códigos HTTP y el cuerpo de los errores.
+ * servicio simulado: rutas, códigos HTTP y el cuerpo de los errores. La
+ * petición llega siempre como {@link UsuariosPrueba#MEDICO_A}.
  */
 class ControladorAutoriaTest {
 
     private ServicioAutoria servicio;
+    private GuardiaAutoria guardia;
     private MockMvc mvc;
 
     @BeforeEach
     void preparar() {
         servicio = mock(ServicioAutoria.class);
-        mvc = MockMvcBuilders.standaloneSetup(new ControladorAutoria(servicio))
-                .setControllerAdvice(new ManejadorErroresAutoria(), new ManejadorExcepciones())
+        guardia = mock(GuardiaAutoria.class);
+        mvc = MockMvcBuilders.standaloneSetup(new ControladorAutoria(servicio, guardia))
+                .setCustomArgumentResolvers(UsuariosPrueba.resolvedor(UsuariosPrueba.MEDICO_A))
+                .setControllerAdvice(new ManejadorErroresAutoria(), new ManejadorErroresSeguridad(),
+                        new ManejadorExcepciones())
                 .build();
     }
 
@@ -60,18 +70,48 @@ class ControladorAutoriaTest {
 
     private static SubgrafoDTO vacio() {
         return new SubgrafoDTO(1L, "grafo_fiebre", "Fiebre", "puente_neuro", "neurologico", "Fiebre", null, null,
-                EstadoBorrador.BORRADOR, null, List.of(), List.of(), null, null, null, false);
+                EstadoBorrador.BORRADOR, null, List.of(), List.of(), null, null, null, false, 10L);
     }
 
     @Test
-    void crearResponde201ConElBorrador() throws Exception {
-        when(servicio.crear(any())).thenReturn(vacio());
+    void crearResponde201ConElBorradorYPasaElUsuario() throws Exception {
+        when(servicio.crear(any(), eq(UsuariosPrueba.MEDICO_A))).thenReturn(vacio());
 
         MockHttpServletResponse r = ejecutar(post("/api/autoria/subgrafos").contentType(MediaType.APPLICATION_JSON)
                 .content("{\"nombre\":\"Fiebre\",\"puenteId\":\"puente_neuro\"}"));
 
         assertEquals(201, r.getStatus());
         assertTrue(cuerpo(r).contains("\"grafoId\":\"grafo_fiebre\""));
+        assertTrue(cuerpo(r).contains("\"autorId\":10"));
+    }
+
+    @Test
+    void listarPasaElUsuarioAlServicio() throws Exception {
+        when(servicio.listar(UsuariosPrueba.MEDICO_A)).thenReturn(List.of());
+
+        assertEquals(200, ejecutar(get("/api/autoria/subgrafos")).getStatus());
+        verify(servicio).listar(UsuariosPrueba.MEDICO_A);
+    }
+
+    @Test
+    void editarLoDeOtroResponde403SinTocarElServicio() throws Exception {
+        doThrow(new AccesoDenegadoException("Solo el autor puede editar este subgrafo."))
+                .when(guardia).editarSubgrafo(1L, UsuariosPrueba.MEDICO_A);
+
+        MockHttpServletResponse r = ejecutar(post("/api/autoria/subgrafos/1/nodos")
+                .contentType(MediaType.APPLICATION_JSON).content("{\"tipo\":\"PREGUNTA\"}"));
+
+        assertEquals(403, r.getStatus());
+        assertTrue(cuerpo(r).contains("Solo el autor"));
+        verify(servicio, never()).agregarNodo(any(), any());
+    }
+
+    @Test
+    void verLoDeOtroResponde403() throws Exception {
+        doThrow(new AccesoDenegadoException("Este subgrafo es de otro médico."))
+                .when(guardia).leerSubgrafo(1L, UsuariosPrueba.MEDICO_A);
+
+        assertEquals(403, ejecutar(get("/api/autoria/subgrafos/1")).getStatus());
     }
 
     @Test

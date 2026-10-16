@@ -31,6 +31,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @param actualizadoEn  fecha de la última edición
  * @param publicadoEn    fecha de la última publicación, o {@code null}
  * @param puedeDescartar {@code true} si hay una copia de lo publicado a la que se puede volver
+ * @param autorId        cuenta del autor, o {@code null} en borradores de antes de las cuentas
  */
 @Schema(description = "Borrador completo: sus datos, el lienzo y los avisos. Lo devuelven "
         + "todas las operaciones que editan.")
@@ -51,7 +52,9 @@ public record SubgrafoDTO(
         @Schema(description = "Fecha de la última edición") Instant actualizadoEn,
         @Schema(description = "Fecha de la última publicación, o nula") Instant publicadoEn,
         @Schema(description = "true si hay una copia de lo publicado a la que se puede volver")
-        boolean puedeDescartar) {
+        boolean puedeDescartar,
+        @Schema(description = "Id de la cuenta del autor, o nulo en borradores de antes de las cuentas")
+        Long autorId) {
 
     /** DTO de un borrador, con sus avisos calculados en el momento. */
     public static SubgrafoDTO desde(BorradorSubgrafoEntity b) {
@@ -67,6 +70,6 @@ public record SubgrafoDTO(
                 b.getEtiquetaOpcion(), b.getAutor(), b.getInstitucion(), b.getEstado(),
                 b.getDocumento().inicio(), List.copyOf(b.getDocumento().nodos().values()),
                 List.copyOf(avisos), b.getCreadoEn(), b.getActualizadoEn(),
-                b.getPublicadoEn(), b.getCopiaPublicada() != null);
+                b.getPublicadoEn(), b.getCopiaPublicada() != null, b.getAutorId());
     }
 }

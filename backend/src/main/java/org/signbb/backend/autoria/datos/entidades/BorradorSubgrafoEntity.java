@@ -53,9 +53,19 @@ public class BorradorSubgrafoEntity {
     @Column(nullable = false)
     private String etiquetaOpcion;
 
+    /** Nombre del autor (para mostrar y para la metadata publicada); sale de su cuenta. */
     private String autor;
 
+    /** Institución del autor; sale de su cuenta. */
     private String institucion;
+
+    /**
+     * Cuenta del médico que creó el borrador: solo él lo edita. Es {@code null}
+     * en los borradores de antes del módulo de seguridad, que solo un
+     * supervisor puede ver.
+     */
+    @Column(name = "autor_id")
+    private Long autorId;
 
     /** Documento del lienzo. */
     @JdbcTypeCode(SqlTypes.JSON)

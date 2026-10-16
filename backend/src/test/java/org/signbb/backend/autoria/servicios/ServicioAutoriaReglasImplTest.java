@@ -5,9 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import static org.signbb.backend.seguridad.UsuariosPrueba.MEDICO_A;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -34,6 +38,8 @@ import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoJson;
 import org.signbb.backend.reglas.modelo.Caso;
 import org.signbb.backend.reglas.modelo.Condicion;
 import org.signbb.backend.reglas.modelo.NivelAlerta;
+import org.signbb.backend.seguridad.UsuariosPrueba;
+import org.springframework.data.domain.Sort;
 
 /** Tests de {@link ServicioAutoriaReglasImpl} con repositorios simulados. */
 class ServicioAutoriaReglasImplTest {
@@ -81,29 +87,41 @@ class ServicioAutoriaReglasImplTest {
     @Test
     void crearExigeNombre() {
         assertThrows(EdicionInvalidaException.class,
-                () -> servicio.crear(peticion("  ", "grafo_raiz")));
+                () -> servicio.crear(peticion("  ", "grafo_raiz"), MEDICO_A));
     }
 
     @Test
     void crearExigeUnGrafoValido() {
         assertThrows(EdicionInvalidaException.class,
-                () -> servicio.crear(peticion("Reglas", "grafo_inexistente")));
+                () -> servicio.crear(peticion("Reglas", "grafo_inexistente"), MEDICO_A));
     }
 
     @Test
     void crearCreaElBorradorVacio() {
         when(subgrafos.existsByGrafoId("grafo_fiebre")).thenReturn(true);
-        BaseReglaDTO dto = servicio.crear(peticion("Reglas de fiebre", "grafo_fiebre"));
+        BaseReglaDTO dto = servicio.crear(peticion("Reglas de fiebre", "grafo_fiebre"), MEDICO_A);
         assertEquals("grafo_fiebre", dto.grafoId());
         assertEquals(EstadoBorrador.BORRADOR, dto.estado());
         assertEquals(0, dto.reglas().size());
+        assertEquals("Dra. A", dto.autor(), "el autor sale de la cuenta, no del request");
+        assertEquals(10L, dto.autorId());
+    }
+
+    @Test
+    void unMedicoListaSoloSusBasesYElSupervisorTodas() {
+        servicio.listar(MEDICO_A);
+        verify(borradores).findByAutorId(eq(10L), any(Sort.class));
+        verify(borradores, never()).findAll(any(Sort.class));
+
+        servicio.listar(UsuariosPrueba.SUPERVISOR);
+        verify(borradores).findAll(any(Sort.class));
     }
 
     @Test
     void crearRechazaUnaBaseDuplicadaParaElMismoGrafo() {
         when(borradores.existsByGrafoId("grafo_fiebre")).thenReturn(true);
         assertThrows(EdicionInvalidaException.class,
-                () -> servicio.crear(peticion("Reglas", "grafo_fiebre")));
+                () -> servicio.crear(peticion("Reglas", "grafo_fiebre"), MEDICO_A));
     }
 
     @Test

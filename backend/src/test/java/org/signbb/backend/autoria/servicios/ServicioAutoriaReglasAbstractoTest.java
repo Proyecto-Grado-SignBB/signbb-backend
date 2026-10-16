@@ -8,6 +8,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import static org.signbb.backend.seguridad.UsuariosPrueba.MEDICO_A;
+
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
@@ -84,7 +86,7 @@ class ServicioAutoriaReglasAbstractoTest {
 
     @Test
     void crearBaseParaElGrafoRaiz() {
-        BaseReglaDTO dto = servicio.crear(peticion("Base raíz", "grafo_raiz"));
+        BaseReglaDTO dto = servicio.crear(peticion("Base raíz", "grafo_raiz"), MEDICO_A);
 
         assertEquals("grafo_raiz", dto.grafoId());
         assertEquals(EstadoBorrador.BORRADOR, dto.estado());
@@ -95,7 +97,7 @@ class ServicioAutoriaReglasAbstractoTest {
     void crearBaseParaUnSubgrafoExistente() {
         when(subgrafos.existsByGrafoId("grafo_x")).thenReturn(true);
 
-        BaseReglaDTO dto = servicio.crear(peticion("Base x", "grafo_x"));
+        BaseReglaDTO dto = servicio.crear(peticion("Base x", "grafo_x"), MEDICO_A);
 
         assertEquals("grafo_x", dto.grafoId());
     }
@@ -103,7 +105,7 @@ class ServicioAutoriaReglasAbstractoTest {
     @Test
     void crearRechazaUnGrafoDesconocido() {
         assertThrows(EdicionInvalidaException.class,
-                () -> servicio.crear(peticion("Base", "grafo_zzz")));
+                () -> servicio.crear(peticion("Base", "grafo_zzz"), MEDICO_A));
     }
 
     @Test
@@ -111,7 +113,7 @@ class ServicioAutoriaReglasAbstractoTest {
         when(borradores.existsByGrafoId("grafo_raiz")).thenReturn(true);
 
         assertThrows(EdicionInvalidaException.class,
-                () -> servicio.crear(peticion("Base", "grafo_raiz")));
+                () -> servicio.crear(peticion("Base", "grafo_raiz"), MEDICO_A));
     }
 
     @Test

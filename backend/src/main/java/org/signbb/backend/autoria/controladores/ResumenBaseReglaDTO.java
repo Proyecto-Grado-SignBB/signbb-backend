@@ -18,12 +18,13 @@ public record ResumenBaseReglaDTO(
         @Schema(description = "Estado: BORRADOR, PUBLICADO o CAMBIOS_SIN_PUBLICAR") EstadoBorrador estado,
         @Schema(description = "Número de reglas") int reglas,
         @Schema(description = "Fecha de la última edición") Instant actualizadoEn,
-        @Schema(description = "Fecha de la última publicación, o nula") Instant publicadoEn) {
+        @Schema(description = "Fecha de la última publicación, o nula") Instant publicadoEn,
+        @Schema(description = "Id de la cuenta del autor, o nulo") Long autorId) {
 
     /** Resumen de un borrador. */
     public static ResumenBaseReglaDTO desde(BorradorBaseReglaEntity b) {
         return new ResumenBaseReglaDTO(b.getId(), b.getGrafoId(), b.getNombre(), b.getDescripcion(),
                 b.getAutor(), b.getEstado(), b.getDocumento().reglas().size(), b.getActualizadoEn(),
-                b.getPublicadoEn());
+                b.getPublicadoEn(), b.getAutorId());
     }
 }

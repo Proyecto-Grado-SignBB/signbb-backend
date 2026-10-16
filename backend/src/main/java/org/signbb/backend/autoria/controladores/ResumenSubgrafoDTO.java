@@ -19,12 +19,13 @@ public record ResumenSubgrafoDTO(
         @Schema(description = "Estado: BORRADOR, PUBLICADO o CAMBIOS_SIN_PUBLICAR") EstadoBorrador estado,
         @Schema(description = "Número de nodos del lienzo") int nodos,
         @Schema(description = "Fecha de la última edición") Instant actualizadoEn,
-        @Schema(description = "Fecha de la última publicación, o nulo") Instant publicadoEn) {
+        @Schema(description = "Fecha de la última publicación, o nulo") Instant publicadoEn,
+        @Schema(description = "Id de la cuenta del autor, o nulo") Long autorId) {
 
     /** Resumen de un borrador. */
     public static ResumenSubgrafoDTO desde(BorradorSubgrafoEntity b) {
         return new ResumenSubgrafoDTO(b.getId(), b.getGrafoId(), b.getNombre(), b.getCategoria(),
                 b.getEtiquetaOpcion(), b.getAutor(), b.getEstado(), b.getDocumento().nodos().size(),
-                b.getActualizadoEn(), b.getPublicadoEn());
+                b.getActualizadoEn(), b.getPublicadoEn(), b.getAutorId());
     }
 }

@@ -8,23 +8,32 @@ import org.signbb.backend.autoria.controladores.ResumenSubgrafoDTO;
 import org.signbb.backend.autoria.controladores.SubgrafoDTO;
 import org.signbb.backend.autoria.controladores.SubgrafoRequest;
 import org.signbb.backend.autoria.modelo.Aviso;
+import org.signbb.backend.seguridad.modelo.UsuarioActual;
 
 /**
  * Fachada del módulo de autoría que usa la API REST. Las operaciones que
  * editan devuelven el borrador completo. Un id inexistente lanza
  * {@code RecursoNoEncontradoException} (404); una edición no válida,
- * {@link EdicionInvalidaException} (422).
+ * {@link EdicionInvalidaException} (422). Quién puede leer o editar cada
+ * borrador lo revisa {@link GuardiaAutoria} en el controlador, antes de
+ * llamar aquí.
  */
 public interface ServicioAutoria {
 
     /** Categorías del grafo raíz en las que se puede publicar. */
     List<CategoriaDTO> categorias();
 
-    /** Borradores, del último editado al primero. */
-    List<ResumenSubgrafoDTO> listar();
+    /**
+     * Borradores del último editado al primero: los del propio médico, o
+     * todos si es supervisor.
+     */
+    List<ResumenSubgrafoDTO> listar(UsuarioActual usuario);
 
-    /** Crea un borrador con el lienzo vacío. */
-    SubgrafoDTO crear(SubgrafoRequest datos);
+    /**
+     * Crea un borrador con el lienzo vacío. El autor, su institución y su
+     * cuenta salen del usuario; los de la petición se ignoran.
+     */
+    SubgrafoDTO crear(SubgrafoRequest datos, UsuarioActual usuario);
 
     /** Borrador completo. */
     SubgrafoDTO obtener(Long id);

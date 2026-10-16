@@ -51,9 +51,19 @@ public class BorradorBaseReglaEntity {
     /** Descripción de la base de reglas, para el tablero; no va al JSON publicado. */
     private String descripcion;
 
+    /** Nombre del autor (para mostrar y para la metadata publicada); sale de su cuenta. */
     private String autor;
 
+    /** Institución del autor; sale de su cuenta. */
     private String institucion;
+
+    /**
+     * Cuenta del médico que creó la base: solo él la edita. Es {@code null} en
+     * las bases de antes del módulo de seguridad, que solo un supervisor puede
+     * ver.
+     */
+    @Column(name = "autor_id")
+    private Long autorId;
 
     /** Documento con las reglas del borrador. */
     @JdbcTypeCode(SqlTypes.JSON)

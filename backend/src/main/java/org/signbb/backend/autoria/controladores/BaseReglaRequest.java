@@ -25,9 +25,13 @@ public class BaseReglaRequest {
     @Schema(description = "Grafo publicado al que pertenecen las reglas (grafo_raiz o un subgrafo)")
     private String grafoId;
 
-    @Schema(description = "Autor del contenido")
+    /** Obsoleto: se ignora; el autor sale de la cuenta que hace la petición. */
+    @Schema(description = "Obsoleto: se ignora. El autor sale de la cuenta que hace la petición",
+            deprecated = true)
     private String autor;
 
-    @Schema(description = "Institución del autor")
+    /** Obsoleto: se ignora; la institución sale de la cuenta que hace la petición. */
+    @Schema(description = "Obsoleto: se ignora. La institución sale de la cuenta que hace la petición",
+            deprecated = true)
     private String institucion;
 }

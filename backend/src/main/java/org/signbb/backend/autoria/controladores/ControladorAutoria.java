@@ -3,7 +3,9 @@ package org.signbb.backend.autoria.controladores;
 import java.util.List;
 
 import org.signbb.backend.autoria.modelo.Aviso;
+import org.signbb.backend.autoria.servicios.GuardiaAutoria;
 import org.signbb.backend.autoria.servicios.ServicioAutoria;
+import org.signbb.backend.seguridad.modelo.UsuarioActual;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,10 +40,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class ControladorAutoria {
 
     private final ServicioAutoria servicio;
+    private final GuardiaAutoria guardia;
 
-    /** Inyecta el servicio de autoría. */
-    public ControladorAutoria(ServicioAutoria servicio) {
+    /** Inyecta el servicio de autoría y la guardia que revisa quién puede qué. */
+    public ControladorAutoria(ServicioAutoria servicio, GuardiaAutoria guardia) {
         this.servicio = servicio;
+        this.guardia = guardia;
     }
 
     /** {@code GET /api/autoria/categorias}: preguntas puente del grafo raíz. */
@@ -58,8 +62,8 @@ public class ControladorAutoria {
             description = "Del último editado al primero.")
     @ApiResponse(responseCode = "200", description = "Resumen de cada borrador")
     @GetMapping("/subgrafos")
-    public List<ResumenSubgrafoDTO> listar() {
-        return servicio.listar();
+    public List<ResumenSubgrafoDTO> listar(UsuarioActual usuario) {
+        return servicio.listar(usuario);
     }
 
     /** {@code POST /api/autoria/subgrafos}: crea un borrador con el lienzo vacío (201). */
@@ -72,8 +76,8 @@ public class ControladorAutoria {
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @PostMapping("/subgrafos")
-    public ResponseEntity<SubgrafoDTO> crear(@RequestBody SubgrafoRequest datos) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(servicio.crear(datos));
+    public ResponseEntity<SubgrafoDTO> crear(@RequestBody SubgrafoRequest datos, UsuarioActual usuario) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(servicio.crear(datos, usuario));
     }
 
     /** {@code GET /api/autoria/subgrafos/{id}}: borrador completo. */
@@ -85,13 +89,14 @@ public class ControladorAutoria {
                     content = @Content)
     })
     @GetMapping("/subgrafos/{id}")
-    public SubgrafoDTO obtener(@PathVariable Long id) {
+    public SubgrafoDTO obtener(@PathVariable Long id, UsuarioActual usuario) {
+        guardia.leerSubgrafo(id, usuario);
         return servicio.obtener(id);
     }
 
     /** {@code PUT /api/autoria/subgrafos/{id}}: cambia los datos del subgrafo. */
     @Operation(summary = "Actualiza los datos del subgrafo",
-            description = "Cambia nombre, categoría, texto de la opción, autor o institución.")
+            description = "Cambia nombre, categoría o texto de la opción. Solo el autor.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Borrador actualizado"),
             @ApiResponse(responseCode = "404", description = "El borrador no existe",
@@ -104,7 +109,9 @@ public class ControladorAutoria {
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @PutMapping("/subgrafos/{id}")
-    public SubgrafoDTO actualizar(@PathVariable Long id, @RequestBody SubgrafoRequest datos) {
+    public SubgrafoDTO actualizar(@PathVariable Long id, @RequestBody SubgrafoRequest datos,
+            UsuarioActual usuario) {
+        guardia.editarSubgrafo(id, usuario);
         return servicio.actualizar(id, datos);
     }
 
@@ -120,7 +127,8 @@ public class ControladorAutoria {
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @DeleteMapping("/subgrafos/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+    public ResponseEntity<Void> eliminar(@PathVariable Long id, UsuarioActual usuario) {
+        guardia.editarSubgrafo(id, usuario);
         servicio.eliminar(id);
         return ResponseEntity.noContent().build();
     }
@@ -137,7 +145,8 @@ public class ControladorAutoria {
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @PostMapping("/subgrafos/{id}/nodos")
-    public SubgrafoDTO agregarNodo(@PathVariable Long id, @RequestBody NodoRequest nodo) {
+    public SubgrafoDTO agregarNodo(@PathVariable Long id, @RequestBody NodoRequest nodo, UsuarioActual usuario) {
+        guardia.editarSubgrafo(id, usuario);
         return servicio.agregarNodo(id, nodo);
     }
 
@@ -156,7 +165,8 @@ public class ControladorAutoria {
     })
     @PutMapping("/subgrafos/{id}/nodos/{nodoId}")
     public SubgrafoDTO editarNodo(@PathVariable Long id, @PathVariable String nodoId,
-            @RequestBody NodoRequest nodo) {
+            @RequestBody NodoRequest nodo, UsuarioActual usuario) {
+        guardia.editarSubgrafo(id, usuario);
         return servicio.editarNodo(id, nodoId, nodo);
     }
 
@@ -174,7 +184,8 @@ public class ControladorAutoria {
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @DeleteMapping("/subgrafos/{id}/nodos/{nodoId}")
-    public SubgrafoDTO eliminarNodo(@PathVariable Long id, @PathVariable String nodoId) {
+    public SubgrafoDTO eliminarNodo(@PathVariable Long id, @PathVariable String nodoId, UsuarioActual usuario) {
+        guardia.editarSubgrafo(id, usuario);
         return servicio.eliminarNodo(id, nodoId);
     }
 
@@ -194,7 +205,8 @@ public class ControladorAutoria {
     })
     @PutMapping("/subgrafos/{id}/respuestas/{respuestaId}/destino")
     public SubgrafoDTO enlazar(@PathVariable Long id, @PathVariable String respuestaId,
-            @RequestBody DestinoRequest destino) {
+            @RequestBody DestinoRequest destino, UsuarioActual usuario) {
+        guardia.editarSubgrafo(id, usuario);
         return servicio.enlazar(id, respuestaId, destino == null ? null : destino.getNodoId());
     }
 
@@ -207,7 +219,8 @@ public class ControladorAutoria {
                     content = @Content)
     })
     @GetMapping("/subgrafos/{id}/avisos")
-    public List<Aviso> avisos(@PathVariable Long id) {
+    public List<Aviso> avisos(@PathVariable Long id, UsuarioActual usuario) {
+        guardia.leerSubgrafo(id, usuario);
         return servicio.avisos(id);
     }
 
@@ -228,7 +241,8 @@ public class ControladorAutoria {
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @PostMapping("/subgrafos/{id}/publicar")
-    public SubgrafoDTO publicar(@PathVariable Long id) {
+    public SubgrafoDTO publicar(@PathVariable Long id, UsuarioActual usuario) {
+        guardia.editarSubgrafo(id, usuario);
         return servicio.publicar(id);
     }
 
@@ -258,7 +272,8 @@ public class ControladorAutoria {
      * sin publicar y devuelve el borrador a su última publicación.
      */
     @PostMapping("/subgrafos/{id}/descartar")
-    public SubgrafoDTO descartar(@PathVariable Long id) {
+    public SubgrafoDTO descartar(@PathVariable Long id, UsuarioActual usuario) {
+        guardia.editarSubgrafo(id, usuario);
         return servicio.descartarCambios(id);
     }
 }

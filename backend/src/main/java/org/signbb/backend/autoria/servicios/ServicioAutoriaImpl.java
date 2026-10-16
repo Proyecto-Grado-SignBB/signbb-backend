@@ -28,6 +28,7 @@ import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico;
 import org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico;
 import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoJson;
 import org.signbb.backend.reglas.datos.repositorios.RepositorioBaseReglas;
+import org.signbb.backend.seguridad.modelo.UsuarioActual;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -79,17 +80,23 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ResumenSubgrafoDTO> listar() {
-        return borradores.findAll(Sort.by(Sort.Direction.DESC, "actualizadoEn")).stream()
+    public List<ResumenSubgrafoDTO> listar(UsuarioActual usuario) {
+        Sort orden = Sort.by(Sort.Direction.DESC, "actualizadoEn");
+        List<BorradorSubgrafoEntity> lista = usuario.esSupervisor() ? borradores.findAll(orden)
+                : borradores.findByAutorId(usuario.id(), orden);
+        return lista.stream()
                 .map(ResumenSubgrafoDTO::desde)
                 .toList();
     }
 
     @Override
     @Transactional
-    public SubgrafoDTO crear(SubgrafoRequest datos) {
+    public SubgrafoDTO crear(SubgrafoRequest datos, UsuarioActual usuario) {
         BorradorSubgrafoEntity b = new BorradorSubgrafoEntity();
         aplicarDatos(b, datos);
+        b.setAutor(usuario.nombre());
+        b.setInstitucion(usuario.institucion());
+        b.setAutorId(usuario.id());
         b.setGrafoId(grafoIdLibre(b.getNombre()));
         b.setDocumento(DocumentoLienzo.vacio());
         b.setEstado(EstadoBorrador.BORRADOR);
@@ -278,7 +285,10 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
         return SubgrafoDTO.desde(b, avisosDe(b));
     }
 
-    /** Valida y copia los datos del subgrafo; la categoría se toma de la pregunta puente. */
+    /**
+     * Valida y copia los datos del subgrafo; la categoría se toma de la
+     * pregunta puente. El autor no se toca: sale de la cuenta al crear.
+     */
     private void aplicarDatos(BorradorSubgrafoEntity b, SubgrafoRequest datos) {
         String nombre = datos == null ? null : limpio(datos.getNombre());
         if (nombre == null) {
@@ -297,8 +307,6 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
         b.setPuenteId(categoria.puenteId());
         b.setCategoria(categoria.nombre());
         b.setEtiquetaOpcion(etiqueta);
-        b.setAutor(limpio(datos.getAutor()));
-        b.setInstitucion(limpio(datos.getInstitucion()));
     }
 
     /** Traduce la petición a los datos del editor. */

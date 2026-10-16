@@ -28,9 +28,13 @@ public class SubgrafoRequest {
     @Schema(description = "Nombre para la familia, obligatorio: lo que verá la cuidadora", requiredMode = Schema.RequiredMode.REQUIRED)
     private String etiquetaOpcion;
 
-    @Schema(description = "Autor del contenido")
+    /** Obsoleto: se ignora; el autor sale de la cuenta que hace la petición. */
+    @Schema(description = "Obsoleto: se ignora. El autor sale de la cuenta que hace la petición",
+            deprecated = true)
     private String autor;
 
-    @Schema(description = "Institución del autor")
+    /** Obsoleto: se ignora; la institución sale de la cuenta que hace la petición. */
+    @Schema(description = "Obsoleto: se ignora. La institución sale de la cuenta que hace la petición",
+            deprecated = true)
     private String institucion;
 }

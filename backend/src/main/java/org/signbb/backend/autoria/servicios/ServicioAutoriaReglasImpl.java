@@ -23,6 +23,7 @@ import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
 import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico;
 import org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico;
 import org.signbb.backend.reglas.modelo.Caso;
+import org.signbb.backend.seguridad.modelo.UsuarioActual;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,15 +55,18 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ResumenBaseReglaDTO> listar() {
-        return borradores.findAll(Sort.by(Sort.Direction.DESC, "actualizadoEn")).stream()
+    public List<ResumenBaseReglaDTO> listar(UsuarioActual usuario) {
+        Sort orden = Sort.by(Sort.Direction.DESC, "actualizadoEn");
+        List<BorradorBaseReglaEntity> lista = usuario.esSupervisor() ? borradores.findAll(orden)
+                : borradores.findByAutorId(usuario.id(), orden);
+        return lista.stream()
                 .map(ResumenBaseReglaDTO::desde)
                 .toList();
     }
 
     @Override
     @Transactional
-    public BaseReglaDTO crear(BaseReglaRequest datos) {
+    public BaseReglaDTO crear(BaseReglaRequest datos, UsuarioActual usuario) {
         BorradorBaseReglaEntity b = new BorradorBaseReglaEntity();
         String grafoId = validarGrafo(datos);
         if (borradores.existsByGrafoId(grafoId)) {
@@ -70,6 +74,9 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
         }
         b.setGrafoId(grafoId);
         aplicarDatos(b, datos);
+        b.setAutor(usuario.nombre());
+        b.setInstitucion(usuario.institucion());
+        b.setAutorId(usuario.id());
         b.setDocumento(DocumentoBaseRegla.vacio());
         b.setEstado(EstadoBorrador.BORRADOR);
         Instant ahora = Instant.now();
@@ -209,7 +216,10 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
         }
     }
 
-    /** Valida y copia los datos del borrador; el grafo se fija al crear. */
+    /**
+     * Valida y copia los datos del borrador; el grafo se fija al crear y el
+     * autor sale de la cuenta al crear.
+     */
     private void aplicarDatos(BorradorBaseReglaEntity b, BaseReglaRequest datos) {
         String nombre = datos == null ? null : limpio(datos.getNombre());
         if (nombre == null) {
@@ -217,8 +227,6 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
         }
         b.setNombre(nombre);
         b.setDescripcion(limpio(datos.getDescripcion()));
-        b.setAutor(limpio(datos.getAutor()));
-        b.setInstitucion(limpio(datos.getInstitucion()));
     }
 
     /**

@@ -13,8 +13,12 @@ import org.junit.jupiter.api.Test;
 import org.signbb.backend.seguridad.ConfiguracionSeguridad;
 import org.signbb.backend.seguridad.datos.entidades.UsuarioEntity;
 import org.signbb.backend.seguridad.modelo.Rol;
+import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
+import org.springframework.security.oauth2.jwt.JwsHeader;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.security.oauth2.jwt.JwtException;
 
 /**
@@ -45,9 +49,18 @@ class ServicioTokensTest {
 
     @Test
     void unTokenVencidoSeRechaza() {
-        ServicioTokens tokens = new ServicioTokens(ConfiguracionSeguridad.codificador(CLAVE), Duration.ofMinutes(-5));
-
-        String token = tokens.emitir(medico()).token();
+        // Vencido hace una hora, más que la tolerancia de reloj (60 s) del decodificador.
+        Instant hace2h = Instant.now().minus(Duration.ofHours(2));
+        JwtClaimsSet claims = JwtClaimsSet.builder()
+                .issuer(ServicioTokens.EMISOR)
+                .subject("42")
+                .issuedAt(hace2h)
+                .expiresAt(hace2h.plus(Duration.ofHours(1)))
+                .claim("rol", "MEDICO")
+                .build();
+        String token = ConfiguracionSeguridad.codificador(CLAVE)
+                .encode(JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS256).build(), claims))
+                .getTokenValue();
 
         assertThrows(JwtException.class, () -> decodificador.decode(token));
     }

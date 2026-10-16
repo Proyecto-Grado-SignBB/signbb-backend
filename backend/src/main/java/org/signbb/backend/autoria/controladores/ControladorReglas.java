@@ -3,7 +3,9 @@ package org.signbb.backend.autoria.controladores;
 import java.util.List;
 
 import org.signbb.backend.autoria.modelo.Aviso;
+import org.signbb.backend.autoria.servicios.GuardiaAutoria;
 import org.signbb.backend.autoria.servicios.ServicioAutoriaReglas;
+import org.signbb.backend.seguridad.modelo.UsuarioActual;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,10 +42,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class ControladorReglas {
 
     private final ServicioAutoriaReglas servicio;
+    private final GuardiaAutoria guardia;
 
-    /** Inyecta el servicio de autoría de reglas. */
-    public ControladorReglas(ServicioAutoriaReglas servicio) {
+    /** Inyecta el servicio de reglas y la guardia que revisa quién puede qué. */
+    public ControladorReglas(ServicioAutoriaReglas servicio, GuardiaAutoria guardia) {
         this.servicio = servicio;
+        this.guardia = guardia;
     }
 
     /** {@code GET /api/autoria/bases}: tablero de borradores de reglas. */
@@ -51,8 +55,8 @@ public class ControladorReglas {
             description = "Del último editado al primero.")
     @ApiResponse(responseCode = "200", description = "Resumen de cada borrador")
     @GetMapping
-    public List<ResumenBaseReglaDTO> listar() {
-        return servicio.listar();
+    public List<ResumenBaseReglaDTO> listar(UsuarioActual usuario) {
+        return servicio.listar(usuario);
     }
 
     /** {@code GET /api/autoria/bases/catalogo}: nodos y respuestas de un grafo. */
@@ -79,8 +83,9 @@ public class ControladorReglas {
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @PostMapping
-    public ResponseEntity<BaseReglaDTO> crear(@RequestBody BaseReglaRequest datos) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(servicio.crear(datos));
+    public ResponseEntity<BaseReglaDTO> crear(@RequestBody BaseReglaRequest datos, UsuarioActual usuario) {
+        guardia.crearBase(datos.getGrafoId(), usuario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(servicio.crear(datos, usuario));
     }
 
     /** {@code GET /api/autoria/bases/{id}}: borrador completo. */
@@ -91,7 +96,8 @@ public class ControladorReglas {
             @ApiResponse(responseCode = "404", description = "El borrador no existe", content = @Content)
     })
     @GetMapping("/{id}")
-    public BaseReglaDTO obtener(@PathVariable Long id) {
+    public BaseReglaDTO obtener(@PathVariable Long id, UsuarioActual usuario) {
+        guardia.leerBase(id, usuario);
         return servicio.obtener(id);
     }
 
@@ -109,7 +115,9 @@ public class ControladorReglas {
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @PutMapping("/{id}")
-    public BaseReglaDTO actualizar(@PathVariable Long id, @RequestBody BaseReglaRequest datos) {
+    public BaseReglaDTO actualizar(@PathVariable Long id, @RequestBody BaseReglaRequest datos,
+            UsuarioActual usuario) {
+        guardia.editarBase(id, usuario);
         return servicio.actualizar(id, datos);
     }
 
@@ -127,7 +135,8 @@ public class ControladorReglas {
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+    public ResponseEntity<Void> eliminar(@PathVariable Long id, UsuarioActual usuario) {
+        guardia.editarBase(id, usuario);
         servicio.eliminar(id);
         return ResponseEntity.noContent().build();
     }
@@ -142,7 +151,8 @@ public class ControladorReglas {
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @PostMapping("/{id}/reglas")
-    public BaseReglaDTO agregarRegla(@PathVariable Long id, @RequestBody ReglaRequest regla) {
+    public BaseReglaDTO agregarRegla(@PathVariable Long id, @RequestBody ReglaRequest regla, UsuarioActual usuario) {
+        guardia.editarBase(id, usuario);
         return servicio.agregarRegla(id, regla);
     }
 
@@ -160,7 +170,8 @@ public class ControladorReglas {
     })
     @PutMapping("/{id}/reglas/{reglaId}")
     public BaseReglaDTO editarRegla(@PathVariable Long id, @PathVariable String reglaId,
-            @RequestBody ReglaRequest regla) {
+            @RequestBody ReglaRequest regla, UsuarioActual usuario) {
+        guardia.editarBase(id, usuario);
         return servicio.editarRegla(id, reglaId, regla);
     }
 
@@ -174,7 +185,8 @@ public class ControladorReglas {
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @DeleteMapping("/{id}/reglas/{reglaId}")
-    public BaseReglaDTO eliminarRegla(@PathVariable Long id, @PathVariable String reglaId) {
+    public BaseReglaDTO eliminarRegla(@PathVariable Long id, @PathVariable String reglaId, UsuarioActual usuario) {
+        guardia.editarBase(id, usuario);
         return servicio.eliminarRegla(id, reglaId);
     }
 
@@ -185,7 +197,8 @@ public class ControladorReglas {
             @ApiResponse(responseCode = "404", description = "El borrador no existe", content = @Content)
     })
     @GetMapping("/{id}/avisos")
-    public List<Aviso> avisos(@PathVariable Long id) {
+    public List<Aviso> avisos(@PathVariable Long id, UsuarioActual usuario) {
+        guardia.leerBase(id, usuario);
         return servicio.avisos(id);
     }
 
@@ -206,7 +219,8 @@ public class ControladorReglas {
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @PostMapping("/{id}/publicar")
-    public BaseReglaDTO publicar(@PathVariable Long id) {
+    public BaseReglaDTO publicar(@PathVariable Long id, UsuarioActual usuario) {
+        guardia.editarBase(id, usuario);
         return servicio.publicar(id);
     }
 
@@ -224,7 +238,8 @@ public class ControladorReglas {
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @PostMapping("/{id}/descartar")
-    public BaseReglaDTO descartar(@PathVariable Long id) {
+    public BaseReglaDTO descartar(@PathVariable Long id, UsuarioActual usuario) {
+        guardia.editarBase(id, usuario);
         return servicio.descartarCambios(id);
     }
 }
