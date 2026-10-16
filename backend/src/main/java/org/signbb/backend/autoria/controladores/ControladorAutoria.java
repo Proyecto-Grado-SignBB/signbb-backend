@@ -29,12 +29,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * borrador completo ({@link SubgrafoDTO}). Errores: 404 si el subgrafo, el
  * nodo o la respuesta no existen; 422 con {@link ErrorAutoriaDTO} si la
  * edición no es válida o el borrador no se puede publicar; 409 si otra
- * persona lo cambió al mismo tiempo.
+ * persona lo cambió al mismo tiempo. Lee el autor o un supervisor y edita
+ * solo el autor ({@link GuardiaAutoria}); 403 si no. Ya no hay un
+ * {@code publicar}: se publica al aprobar la revisión ({@link
+ * ControladorRevision}).
  */
 @RestController
 @RequestMapping("/api/autoria")
-@Tag(name = "Autoría", description = "Lienzo del médico para armar, validar y publicar "
-        + "subgrafos clínicos. Las operaciones que editan devuelven el borrador completo. "
+@Tag(name = "Autoría", description = "Lienzo del médico para armar y validar "
+        + "subgrafos clínicos (se publican al aprobar su revisión). Solo el autor edita. Las operaciones que editan devuelven el borrador completo. "
         + "Errores: 404 si el recurso no existe; 422 con {mensaje, avisos} si la edición "
         + "no es válida o el borrador no se puede publicar; 409 si otra persona lo cambió.")
 public class ControladorAutoria {
@@ -224,31 +227,9 @@ public class ControladorAutoria {
         return servicio.avisos(id);
     }
 
-    /** {@code POST /api/autoria/subgrafos/{id}/publicar}: publica el borrador y su base de reglas. */
-    @Operation(summary = "Publica el borrador",
-            description = "Publica el subgrafo y, si tiene base de reglas, también la base. Es atómico: "
-                    + "si algo falla no se publica nada y responde 422 con los avisos del lienzo y de las "
-                    + "reglas.")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Subgrafo publicado y navegable por la cuidadora"),
-            @ApiResponse(responseCode = "404", description = "El borrador no existe",
-                    content = @Content),
-            @ApiResponse(responseCode = "409", description = "Otra persona lo cambió al mismo tiempo",
-                    content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorAutoriaDTO.class))),
-            @ApiResponse(responseCode = "422", description = "No se puede publicar: el cuerpo trae los avisos",
-                    content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorAutoriaDTO.class)))
-    })
-    @PostMapping("/subgrafos/{id}/publicar")
-    public SubgrafoDTO publicar(@PathVariable Long id, UsuarioActual usuario) {
-        guardia.editarSubgrafo(id, usuario);
-        return servicio.publicar(id);
-    }
-
     /** {@code POST /api/autoria/subgrafos/{id}/despublicar}: retira el subgrafo y su base de reglas de la app. */
     @Operation(summary = "Despublica el subgrafo",
-            description = "Las cuidadoras que empiecen un recorrido nuevo ya no lo ven. Las que ya estaban "
+            description = "Solo supervisor. Las cuidadoras que empiecen un recorrido nuevo ya no lo ven. Las que ya estaban "
                     + "en medio de un recorrido lo terminan. Se retira también su base de reglas; el borrador "
                     + "del lienzo y el de reglas vuelven a BORRADOR con su documento intacto.")
     @ApiResponses({

@@ -1,6 +1,7 @@
 package org.signbb.backend.autoria.servicios;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -18,6 +19,7 @@ import org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorBaseRegla;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo;
 import org.signbb.backend.autoria.modelo.DocumentoBaseRegla;
+import org.signbb.backend.autoria.modelo.EstadoBorrador;
 import org.signbb.backend.config.RecursoNoEncontradoException;
 import org.signbb.backend.seguridad.servicios.AccesoDenegadoException;
 
@@ -30,14 +32,16 @@ class GuardiaAutoriaTest {
     private RepositorioBorradorSubgrafo subgrafos;
     private RepositorioBorradorBaseRegla bases;
     private GuardiaAutoria guardia;
+    private BorradorSubgrafoEntity subgrafo;
 
     @BeforeEach
     void preparar() {
         subgrafos = mock(RepositorioBorradorSubgrafo.class);
         bases = mock(RepositorioBorradorBaseRegla.class);
-        when(subgrafos.findById(1L)).thenReturn(Optional.of(subgrafoDeA()));
+        subgrafo = subgrafoDeA();
+        when(subgrafos.findById(1L)).thenReturn(Optional.of(subgrafo));
         when(subgrafos.findByGrafoId(anyString())).thenReturn(Optional.empty());
-        when(subgrafos.findByGrafoId("grafo_fiebre")).thenReturn(Optional.of(subgrafoDeA()));
+        when(subgrafos.findByGrafoId("grafo_fiebre")).thenReturn(Optional.of(subgrafo));
         BorradorBaseReglaEntity base = BaseReglasFiebre.borrador(DocumentoBaseRegla.vacio());
         base.setAutorId(MEDICO_A.id());
         when(bases.findById(base.getId())).thenReturn(Optional.of(base));
@@ -93,5 +97,26 @@ class GuardiaAutoriaTest {
     void sinGrafoLaGuardiaDejaQueElServicioExpliqueElError() {
         assertDoesNotThrow(() -> guardia.crearBase(null, MEDICO_A));
         assertDoesNotThrow(() -> guardia.crearBase("  ", MEDICO_A));
+    }
+
+    @Test
+    void enRevisionNadieEditaElSubgrafoNiSusReglas() {
+        subgrafo.setEstado(EstadoBorrador.EN_REVISION);
+        Long base = BaseReglasFiebre.borrador(DocumentoBaseRegla.vacio()).getId();
+
+        EdicionInvalidaException e = assertThrows(EdicionInvalidaException.class,
+                () -> guardia.editarSubgrafo(1L, MEDICO_A));
+        assertEquals(GuardiaAutoria.EN_REVISION, e.getMessage());
+        assertThrows(EdicionInvalidaException.class, () -> guardia.editarBase(base, MEDICO_A));
+        assertThrows(EdicionInvalidaException.class, () -> guardia.crearBase("grafo_fiebre", MEDICO_A));
+    }
+
+    @Test
+    void enRevisionElAutorPuedeRetirarloYElSupervisorVerlo() {
+        subgrafo.setEstado(EstadoBorrador.EN_REVISION);
+
+        assertDoesNotThrow(() -> guardia.autorSubgrafo(1L, MEDICO_A));
+        assertDoesNotThrow(() -> guardia.leerSubgrafo(1L, SUPERVISOR));
+        assertThrows(AccesoDenegadoException.class, () -> guardia.autorSubgrafo(1L, MEDICO_B));
     }
 }

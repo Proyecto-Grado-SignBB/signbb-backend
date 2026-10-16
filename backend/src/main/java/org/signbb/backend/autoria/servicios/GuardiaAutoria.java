@@ -4,6 +4,7 @@ import org.signbb.backend.autoria.datos.entidades.BorradorBaseReglaEntity;
 import org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorBaseRegla;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo;
+import org.signbb.backend.autoria.modelo.EstadoBorrador;
 import org.signbb.backend.config.RecursoNoEncontradoException;
 import org.signbb.backend.seguridad.modelo.UsuarioActual;
 import org.signbb.backend.seguridad.servicios.AccesoDenegadoException;
@@ -15,10 +16,15 @@ import org.springframework.transaction.annotation.Transactional;
  * autoría: los controladores la llaman con el id y el usuario y, si no
  * corresponde, responde 404 (no existe) o 403 ({@link
  * AccesoDenegadoException}). Así los servicios siguen recibiendo solo ids.
+ * Un subgrafo en revisión, y su base de reglas, no se editan: 422 hasta que
+ * el autor lo retire o un supervisor lo apruebe o rechace.
  */
 @Component
 @Transactional(readOnly = true)
 public class GuardiaAutoria {
+
+    /** Mensaje al intentar editar algo que está en revisión. */
+    public static final String EN_REVISION = "Está en revisión; retíralo para editarlo.";
 
     private final RepositorioBorradorSubgrafo subgrafos;
     private final RepositorioBorradorBaseRegla bases;
@@ -36,8 +42,18 @@ public class GuardiaAutoria {
         }
     }
 
-    /** Exige que el usuario sea el autor del subgrafo. */
+    /** Exige que el usuario sea el autor del subgrafo y que no esté en revisión. */
     public void editarSubgrafo(Long id, UsuarioActual usuario) {
+        BorradorSubgrafoEntity b = subgrafo(id);
+        exigirAutor(b, usuario);
+        exigirFueraDeRevision(b);
+    }
+
+    /**
+     * Exige que el usuario sea el autor del subgrafo, en cualquier estado: para
+     * enviarlo a revisión o retirarlo.
+     */
+    public void autorSubgrafo(Long id, UsuarioActual usuario) {
         exigirAutor(subgrafo(id), usuario);
     }
 
@@ -48,11 +64,17 @@ public class GuardiaAutoria {
         }
     }
 
-    /** Exige que el usuario sea el autor de la base de reglas. */
+    /**
+     * Exige que el usuario sea el autor de la base de reglas y que su subgrafo
+     * no esté en revisión.
+     */
     public void editarBase(Long id, UsuarioActual usuario) {
         BorradorBaseReglaEntity b = base(id);
         if (!PoliticaAccesoBorradores.puedeEditar(b.getAutorId(), usuario)) {
             throw new AccesoDenegadoException("Solo el autor puede editar esta base de reglas.");
+        }
+        if (b.getGrafoId() != null) {
+            subgrafos.findByGrafoId(b.getGrafoId()).ifPresent(GuardiaAutoria::exigirFueraDeRevision);
         }
     }
 
@@ -67,6 +89,7 @@ public class GuardiaAutoria {
             if (!PoliticaAccesoBorradores.puedeEditar(subgrafo.getAutorId(), usuario)) {
                 throw new AccesoDenegadoException("Solo el autor del subgrafo puede crear sus reglas.");
             }
+            exigirFueraDeRevision(subgrafo);
         } else if (grafoId != null && !grafoId.isBlank() && !usuario.esSupervisor()) {
             throw new AccesoDenegadoException("Las reglas del grafo raíz o de un grafo del sistema solo las "
                     + "crea un supervisor.");
@@ -76,6 +99,12 @@ public class GuardiaAutoria {
     private void exigirAutor(BorradorSubgrafoEntity b, UsuarioActual usuario) {
         if (!PoliticaAccesoBorradores.puedeEditar(b.getAutorId(), usuario)) {
             throw new AccesoDenegadoException("Solo el autor puede editar este subgrafo.");
+        }
+    }
+
+    private static void exigirFueraDeRevision(BorradorSubgrafoEntity b) {
+        if (b.getEstado() == EstadoBorrador.EN_REVISION) {
+            throw new EdicionInvalidaException(EN_REVISION);
         }
     }
 

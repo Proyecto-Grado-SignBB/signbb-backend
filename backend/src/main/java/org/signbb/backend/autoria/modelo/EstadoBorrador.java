@@ -16,5 +16,13 @@ public enum EstadoBorrador {
 
     /** Se publicó y después se editó: la cuidadora sigue viendo la versión anterior. */
     @Schema(description = "Se publicó y después se editó: la cuidadora sigue viendo la versión anterior.")
-    CAMBIOS_SIN_PUBLICAR
+    CAMBIOS_SIN_PUBLICAR,
+
+    /**
+     * El autor lo envió a revisión: nadie lo edita hasta que un supervisor lo
+     * apruebe (y se publique) o lo rechace, o el autor lo retire.
+     */
+    @Schema(description = "Enviado a revisión: no se edita hasta que un supervisor lo apruebe o lo "
+            + "rechace, o el autor lo retire.")
+    EN_REVISION
 }

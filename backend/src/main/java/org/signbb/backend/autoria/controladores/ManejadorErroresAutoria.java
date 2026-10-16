@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * sigue a cargo de {@code ManejadorExcepciones}.
  */
 @RestControllerAdvice(assignableTypes = { ControladorAutoria.class, ControladorReglas.class,
-        ControladorImagenes.class })
+        ControladorRevision.class, ControladorImagenes.class })
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class ManejadorErroresAutoria {
 

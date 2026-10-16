@@ -91,6 +91,23 @@ public class BorradorSubgrafoEntity {
     @Column(name = "copia_publicada")
     private CopiaPublicada copiaPublicada;
 
+    /** Cuándo se envió a revisión por última vez, o {@code null}. */
+    private Instant enviadoRevisionEn;
+
+    /** Supervisor que aprobó o rechazó la última revisión, o {@code null}. */
+    @Column(name = "revisor_id")
+    private Long revisorId;
+
+    /** Cuándo se aprobó o rechazó la última revisión, o {@code null}. */
+    private Instant revisadoEn;
+
+    /**
+     * Comentario del supervisor al rechazar, para que el autor sepa qué
+     * corregir. Se borra al volver a enviarlo o al aprobarlo.
+     */
+    @Column(length = 2000)
+    private String comentarioRevision;
+
     /** Bloqueo optimista: dos ediciones simultáneas no se pisan. */
     @Version
     @Column(name = "jpa_version")

@@ -110,6 +110,7 @@ class ReglasAccesoIntegracionTest {
         mvc.perform(conToken(get("/api/usuarios"), medico)).andExpect(status().isForbidden());
         mvc.perform(conToken(get("/api/autoria/revisiones"), medico)).andExpect(status().isForbidden());
         mvc.perform(conToken(post("/api/autoria/subgrafos/1/aprobar"), medico)).andExpect(status().isForbidden());
+        mvc.perform(conToken(post("/api/autoria/subgrafos/1/rechazar"), medico)).andExpect(status().isForbidden());
         mvc.perform(conToken(post("/api/autoria/subgrafos/1/despublicar"), medico))
                 .andExpect(status().isForbidden());
     }

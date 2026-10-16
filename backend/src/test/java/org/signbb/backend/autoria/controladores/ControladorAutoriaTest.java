@@ -20,7 +20,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.signbb.backend.autoria.modelo.Aviso;
 import org.signbb.backend.autoria.modelo.EstadoBorrador;
 import org.signbb.backend.autoria.servicios.ContenidoInvalidoException;
 import org.signbb.backend.autoria.servicios.EdicionInvalidaException;
@@ -70,7 +69,7 @@ class ControladorAutoriaTest {
 
     private static SubgrafoDTO vacio() {
         return new SubgrafoDTO(1L, "grafo_fiebre", "Fiebre", "puente_neuro", "neurologico", "Fiebre", null, null,
-                EstadoBorrador.BORRADOR, null, List.of(), List.of(), null, null, null, false, 10L);
+                EstadoBorrador.BORRADOR, null, List.of(), List.of(), null, null, null, false, 10L, null, null);
     }
 
     @Test
@@ -152,15 +151,10 @@ class ControladorAutoriaTest {
     }
 
     @Test
-    void publicarConAvisosResponde422ConLaLista() throws Exception {
-        Aviso aviso = new Aviso(Aviso.Codigo.RESPUESTA_SIN_CAMINO, true, "falta un camino", "pregunta_1", "r_2");
-        when(servicio.publicar(1L)).thenThrow(new ContenidoInvalidoException("Hay avisos", List.of(aviso)));
+    void yaNoSePublicaDirectoSinoAlAprobarLaRevision() throws Exception {
+        int estado = ejecutar(post("/api/autoria/subgrafos/1/publicar")).getStatus();
 
-        MockHttpServletResponse r = ejecutar(post("/api/autoria/subgrafos/1/publicar"));
-
-        assertEquals(422, r.getStatus());
-        assertTrue(cuerpo(r).contains("\"codigo\":\"RESPUESTA_SIN_CAMINO\""));
-        assertTrue(cuerpo(r).contains("\"respuestaId\":\"r_2\""));
+        assertTrue(estado == 404 || estado == 405, "publicar ya no existe: respondió " + estado);
     }
 
     @Test

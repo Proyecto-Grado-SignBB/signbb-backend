@@ -31,12 +31,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * operaciones que editan devuelven el borrador completo ({@link BaseReglaDTO}).
  * Errores: 404 si el recurso no existe; 422 con {@link ErrorAutoriaDTO} si la
  * edición no es válida o la base no se puede publicar; 409 si otra persona la
- * cambió al mismo tiempo.
+ * cambió al mismo tiempo. Solo el autor edita; mientras su subgrafo está en
+ * revisión responde 422. La base se publica junto con su subgrafo al aprobar
+ * la revisión, así que no tiene un {@code publicar} propio.
  */
 @RestController
 @RequestMapping("/api/autoria/bases")
-@Tag(name = "Reglas", description = "Panel de reglas del médico: arma y publica las bases "
-        + "de reglas asociadas a un grafo. Las operaciones que editan devuelven el borrador "
+@Tag(name = "Reglas", description = "Panel de reglas del médico: arma las bases "
+        + "de reglas asociadas a un grafo (se publican con su subgrafo al aprobar la revisión). Las operaciones que editan devuelven el borrador "
         + "completo. Errores: 404 si el recurso no existe; 422 con {mensaje, avisos} si la "
         + "edición no es válida o la base no se puede publicar; 409 si otra persona la cambió.")
 public class ControladorReglas {
@@ -200,28 +202,6 @@ public class ControladorReglas {
     public List<Aviso> avisos(@PathVariable Long id, UsuarioActual usuario) {
         guardia.leerBase(id, usuario);
         return servicio.avisos(id);
-    }
-
-    /** {@code POST /api/autoria/bases/{id}/publicar}: publica la base de reglas. */
-    @Operation(summary = "Publica el borrador de reglas",
-            description = "Deja la base como la activa del grafo. Las reglas de un subgrafo se publican "
-                    + "publicando el subgrafo (no desde aquí); este endpoint queda para la base del grafo "
-                    + "raíz. Si el lienzo del subgrafo cambió sin publicar, responde 422 pidiendo "
-                    + "republicar el subgrafo primero.")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Base publicada y activa para la cuidadora"),
-            @ApiResponse(responseCode = "404", description = "El borrador no existe", content = @Content),
-            @ApiResponse(responseCode = "409", description = "Otra persona lo cambió al mismo tiempo",
-                    content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorAutoriaDTO.class))),
-            @ApiResponse(responseCode = "422", description = "No se puede publicar: el cuerpo trae el motivo o los avisos",
-                    content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorAutoriaDTO.class)))
-    })
-    @PostMapping("/{id}/publicar")
-    public BaseReglaDTO publicar(@PathVariable Long id, UsuarioActual usuario) {
-        guardia.editarBase(id, usuario);
-        return servicio.publicar(id);
     }
 
     /** {@code POST /api/autoria/bases/{id}/descartar}: descarta los cambios sin publicar. */

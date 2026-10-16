@@ -32,6 +32,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @param publicadoEn    fecha de la última publicación, o {@code null}
  * @param puedeDescartar {@code true} si hay una copia de lo publicado a la que se puede volver
  * @param autorId        cuenta del autor, o {@code null} en borradores de antes de las cuentas
+ * @param comentarioRevision comentario del supervisor si rechazó la última revisión, o {@code null}
+ * @param revisadoEn     cuándo se aprobó o rechazó la última revisión, o {@code null}
  */
 @Schema(description = "Borrador completo: sus datos, el lienzo y los avisos. Lo devuelven "
         + "todas las operaciones que editan.")
@@ -44,7 +46,8 @@ public record SubgrafoDTO(
         @Schema(description = "Texto de la opción en la pregunta puente") String etiquetaOpcion,
         @Schema(description = "Autor del contenido") String autor,
         @Schema(description = "Institución del autor") String institucion,
-        @Schema(description = "Estado: BORRADOR, PUBLICADO o CAMBIOS_SIN_PUBLICAR") EstadoBorrador estado,
+        @Schema(description = "Estado: BORRADOR, PUBLICADO, CAMBIOS_SIN_PUBLICAR o EN_REVISION")
+        EstadoBorrador estado,
         @Schema(description = "Id de la primera pregunta, o nulo") String inicio,
         @Schema(description = "Nodos del lienzo en el orden en que se crearon") List<NodoLienzo> nodos,
         @Schema(description = "Avisos actuales del lienzo") List<Aviso> avisos,
@@ -54,7 +57,10 @@ public record SubgrafoDTO(
         @Schema(description = "true si hay una copia de lo publicado a la que se puede volver")
         boolean puedeDescartar,
         @Schema(description = "Id de la cuenta del autor, o nulo en borradores de antes de las cuentas")
-        Long autorId) {
+        Long autorId,
+        @Schema(description = "Comentario del supervisor si rechazó la última revisión, o nulo")
+        String comentarioRevision,
+        @Schema(description = "Cuándo se aprobó o rechazó la última revisión, o nulo") Instant revisadoEn) {
 
     /** DTO de un borrador, con sus avisos calculados en el momento. */
     public static SubgrafoDTO desde(BorradorSubgrafoEntity b) {
@@ -70,6 +76,7 @@ public record SubgrafoDTO(
                 b.getEtiquetaOpcion(), b.getAutor(), b.getInstitucion(), b.getEstado(),
                 b.getDocumento().inicio(), List.copyOf(b.getDocumento().nodos().values()),
                 List.copyOf(avisos), b.getCreadoEn(), b.getActualizadoEn(),
-                b.getPublicadoEn(), b.getCopiaPublicada() != null, b.getAutorId());
+                b.getPublicadoEn(), b.getCopiaPublicada() != null, b.getAutorId(),
+                b.getComentarioRevision(), b.getRevisadoEn());
     }
 }
