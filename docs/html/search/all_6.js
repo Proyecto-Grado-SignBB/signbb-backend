@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['gastrointestinal_0',['Grafo Gastrointestinal',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md70',1,'']]],
+  ['gastrointestinal_0',['Grafo Gastrointestinal',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md81',1,'']]],
   ['getavisos_1',['getAvisos',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ContenidoInvalidoException.html#af755d437f0bcd57950f263f8f69a660a',1,'org::signbb::backend::autoria::servicios::ContenidoInvalidoException']]],
   ['getbase_2',['getBase',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html#a81a1376e12179a5b9ed00d50086d8b02',1,'org::signbb::backend::navegacion::modelo::ContextoClinico']]],
   ['getcasos_3',['getCasos',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a568b484c581e2b1363fa1ad6d654a03f',1,'org::signbb::backend::reglas::modelo::ReglaClinica']]],
@@ -28,13 +28,13 @@ var searchData=
   ['gettipointeraccion_25',['getTipoInteraccion',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#adef2f5061922890cd5d4ecad80f1894f',1,'org::signbb::backend::navegacion::modelo::Nodo']]],
   ['getultimopaso_26',['getUltimoPaso',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html#a09e39ab3aea8c0d8df5abc9745b3cdbd',1,'org::signbb::backend::navegacion::modelo::SesionTriaje']]],
   ['getversionid_27',['getVersionId',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html#a77b5334f11535c0a272c9dff2c8cfa00',1,'org::signbb::backend::navegacion::modelo::SesionTriaje']]],
-  ['github_20actions_28',['Resultados en GitHub Actions',['../pruebas_navegacion.html#autotoc_md26',1,'']]],
+  ['github_20actions_28',['Resultados en GitHub Actions',['../pruebas_navegacion.html#autotoc_md28',1,'']]],
   ['gracia_29',['GRACIA',['../classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorImagenes.html#a65d4167b48255cc76d51a40b0f1a932f',1,'org.signbb.backend.mantenimiento.LimpiadorImagenes.GRACIA'],['../classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1PoliticaRetencionVersiones.html#ae9ae2bb653f689e90feb3a1266fcec64',1,'org.signbb.backend.mantenimiento.PoliticaRetencionVersiones.GRACIA']]],
-  ['grafo_30',['Representacion visual de grafo',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md76',1,'']]],
-  ['grafo_20activo_20y_20color_31',['Grafo Activo y color',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md72',1,'']]],
-  ['grafo_20gastrointestinal_32',['Grafo Gastrointestinal',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md70',1,'']]],
-  ['grafo_20raíz_33',['Grafo Raíz',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md69',1,'']]],
-  ['grafo_20respiración_34',['Grafo Respiración',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md71',1,'']]],
+  ['grafo_30',['Representacion visual de grafo',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md87',1,'']]],
+  ['grafo_20activo_20y_20color_31',['Grafo Activo y color',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md83',1,'']]],
+  ['grafo_20gastrointestinal_32',['Grafo Gastrointestinal',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md81',1,'']]],
+  ['grafo_20raíz_33',['Grafo Raíz',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md80',1,'']]],
+  ['grafo_20respiración_34',['Grafo Respiración',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md82',1,'']]],
   ['grafo_20sistema_35',['Grafo sistema',['../md_grafo__sistema_2reporte__grafo.html',1,'']]],
   ['grafoclinico_36',['GrafoClinico',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html',1,'org.signbb.backend.navegacion.modelo.GrafoClinico'],['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#a7f0e86a6e41914b98aa16ef85689a715',1,'org.signbb.backend.navegacion.modelo.GrafoClinico.GrafoClinico()'],['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#a198df3cbf6d64405bc4032443da9acb1',1,'org.signbb.backend.navegacion.modelo.GrafoClinico.GrafoClinico(int umbralAlto, int umbralBajo)']]],
   ['grafoclinicoentity_37',['GrafoClinicoEntity',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1GrafoClinicoEntity.html',1,'org::signbb::backend::navegacion::datos::entidades']]],
@@ -44,10 +44,10 @@ var searchData=
   ['grafoclinicoparser_41',['GrafoClinicoParser',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoParser.html',1,'org::signbb::backend::navegacion::datos::serializacion']]],
   ['grafoclinicotest_42',['GrafoClinicoTest',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinicoTest.html',1,'org::signbb::backend::navegacion::modelo']]],
   ['grafode_43',['grafoDe',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html#a21614470c12cf34f5a30f0e47be2a86f',1,'org::signbb::backend::navegacion::modelo::ContextoClinico']]],
-  ['grafos_20visualmente_44',['Construir grafos visualmente',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md74',1,'']]],
+  ['grafos_20visualmente_44',['Construir grafos visualmente',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md85',1,'']]],
   ['gravedad_45',['Gravedad',['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Gravedad.html',1,'org.signbb.backend.autoria.modelo.Gravedad'],['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Gravedad.html#a92d5df61d1ba15011abf3d2d4a08145a',1,'org.signbb.backend.autoria.modelo.Gravedad.Gravedad()']]],
   ['guardada_46',['Guardada',['../interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html#a87cc878de7953d039f8d5426408577bb',1,'org::signbb::backend::media::AlmacenImagenes']]],
   ['guardar_47',['guardar',['../classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html#a729ae735b80ba5657d98d85b90d3ac27',1,'org.signbb.backend.cache.RepositorioSesionRedis.guardar()'],['../interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html#af5271ffa6cb874b958bdff77d5559932',1,'org.signbb.backend.media.AlmacenImagenes.guardar()'],['../classorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenesS3.html#ae8df76ad227116afd813726965d23789',1,'org.signbb.backend.media.AlmacenImagenesS3.guardar()'],['../interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html#a4dfd943b7a34ac405e62906b3b3b11d2',1,'org.signbb.backend.navegacion.modelo.RepositorioSesion.guardar()']]],
   ['guardiaautoria_48',['GuardiaAutoria',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1GuardiaAutoria.html',1,'org.signbb.backend.autoria.servicios.GuardiaAutoria'],['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1GuardiaAutoria.html#aad52650e3fc261259bbe1959255076e4',1,'org.signbb.backend.autoria.servicios.GuardiaAutoria.GuardiaAutoria()']]],
-  ['guardiaautoriatest_49',['GuardiaAutoriaTest',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1GuardiaAutoriaTest.html',1,'org::signbb::backend::autoria::servicios']]]
+  ['guardiaautoriatest_49',['GuardiaAutoriaTest',['../pruebas_autoria.html#autotoc_md11',1,'Autor y acceso (&lt;span class=&quot;tt&quot;&gt;PoliticaAccesoBorradoresTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;GuardiaAutoriaTest&lt;/span&gt;)'],['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1GuardiaAutoriaTest.html',1,'org.signbb.backend.autoria.servicios.GuardiaAutoriaTest']]]
 ];

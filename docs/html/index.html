@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('index.html',''
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_README"></a></p>
 <p>Backend del sistema SignBB: triaje clínico guiado por un grafo de navegación y un motor de reglas.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md55"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md65"></a>
 Requisitos</h1>
 <ul>
 <li>Java SDK 25</li>
@@ -122,12 +122,12 @@ Requisitos</h1>
 <li>Docker + Docker Compose (PostgreSQL y Redis de <span class="tt">contenedores/compose.yaml</span>)</li>
 <li>Doxygen (solo para regenerar la documentación)</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md56"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md66"></a>
 Construcción y pruebas</h1>
 <p>Desde el directorio <span class="tt">backend</span>: </p><pre class="fragment">./mvnw test              # compila y ejecuta la suite de tests
 ./mvnw spring-boot:run   # arranca la aplicación (demo de triaje por consola)
 ./mvnw verify            # build completo, igual que en CI (GitHub Actions)
-</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md57"></a>
+</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md67"></a>
 Perfil de base de datos</h1>
 <p>El backend usa un único perfil, <span class="tt">docker</span> (definido en <span class="tt">backend/src/main/resources/application.properties</span> con <span class="tt">spring.profiles.active=docker</span>): <b>PostgreSQL</b> en <span class="tt">localhost:5432</span> (base <span class="tt">signbb</span>) y <b>Redis</b> en <span class="tt">localhost:6379</span>, ambos desde <span class="tt">contenedores/compose.yaml</span>. Los datos persisten en los volúmenes del compose. Ver <span class="tt">contenedores/MANUAL_CONTENEDORES.md</span> para levantar y administrar los servicios.</p>
 <p>Antes de arrancar la aplicación o ejecutar las pruebas hay que levantar los servicios: </p><pre class="fragment">cd ../contenedores &amp;&amp; docker compose up -d
@@ -137,15 +137,49 @@ Perfil de base de datos</h1>
 </pre><blockquote class="doxtable">
 <p>Si la base ya estaba sembrada con una versión previa del grafo, hay que borrar los volúmenes (<span class="tt">docker compose down -v</span>) para que <span class="tt">DatabaseInit</span> vuelva a sembrar el contenido nuevo: el grafo raíz conserva el mismo <span class="tt">id</span>. </p>
 </blockquote>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md58"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md68"></a>
+Cuentas y seguridad</h1>
+<p>La API pide un token JWT (<span class="tt">Authorization: Bearer &lt;token&gt;</span>) salvo en el login, el registro, <span class="tt">/media</span> y Swagger. Hay tres roles:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Rol  </th><th class="markdownTableHeadNone">Cómo se crea  </th><th class="markdownTableHeadNone">Qué puede hacer  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">PADRE</span>  </td><td class="markdownTableBodyNone">Se registra solo (<span class="tt">POST /api/auth/registro</span>)  </td><td class="markdownTableBodyNone">Hacer recorridos y ver los suyos (<span class="tt">/api/recorridos</span>)  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">MEDICO</span>  </td><td class="markdownTableBodyNone">Lo crea un supervisor (<span class="tt">POST /api/usuarios</span>)  </td><td class="markdownTableBodyNone">Armar sus subgrafos y reglas y enviarlos a revisión  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">MEDICO_SUPERVISOR</span>  </td><td class="markdownTableBodyNone">Lo crea otro supervisor; el primero se siembra al arrancar  </td><td class="markdownTableBodyNone">Lo mismo que un médico, y además aprobar o rechazar lo de <b>otros</b>, despublicar y administrar cuentas  </td></tr>
+</table>
+<p>Para ingresar: <span class="tt">POST /api/auth/login</span> con <span class="tt">{"correo", "contrasena"}</span> devuelve <span class="tt">{token, expiraEn, usuario}</span>. El token dura 8 horas.</p>
+<p><b>Supervisor inicial.</b> Si no existe ningún supervisor, el back crea uno al arrancar. En desarrollo es <span class="tt">supervisor@signbb.local</span> / <span class="tt">Supervisor123</span>; <b>cámbialo</b> fuera de tu máquina con las variables de abajo.</p>
+<p><b>Variables de entorno:</b></p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Variable  </th><th class="markdownTableHeadNone">Para qué  </th><th class="markdownTableHeadNone">Valor de desarrollo  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_JWT_SECRETO</span>  </td><td class="markdownTableBodyNone">Clave HS256 de los tokens (32 bytes o más)  </td><td class="markdownTableBodyNone">un valor fijo de desarrollo  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_SUPERVISOR_NOMBRE</span>  </td><td class="markdownTableBodyNone">Nombre del supervisor inicial  </td><td class="markdownTableBodyNone"><span class="tt">Supervisor SignBB</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_SUPERVISOR_CORREO</span>  </td><td class="markdownTableBodyNone">Correo del supervisor inicial  </td><td class="markdownTableBodyNone"><span class="tt">supervisor@signbb.local</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_SUPERVISOR_CONTRASENA</span>  </td><td class="markdownTableBodyNone">Contraseña del supervisor inicial  </td><td class="markdownTableBodyNone"><span class="tt">Supervisor123</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_CORS_ORIGENES</span>  </td><td class="markdownTableBodyNone">Orígenes del front, separados por coma  </td><td class="markdownTableBodyNone"><span class="tt"><a href="http://localhost:4200,http://localhost:4300">http://localhost:4200,http://localhost:4300</a></span>  </td></tr>
+</table>
+<blockquote class="doxtable">
+<p><b>Si ya tenías la base de antes de las cuentas</b>, borra los volúmenes (<span class="tt">docker compose down -v</span>). Hibernate guarda el estado del borrador con un <em>check constraint</em> que no conoce el estado nuevo <span class="tt">EN_REVISION</span>, y los borradores viejos no tienen autor. </p>
+</blockquote>
+<p>La prueba manual del módulo (con <span class="tt">curl</span> y por las pantallas) está en <span class="tt">pruebas_manuales/pruebas_seguridad.md</span>.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md69"></a>
 Documentación</h1>
 <p>La documentación del código se genera con Doxygen desde la raíz del repositorio: </p><pre class="fragment">doxygen Doxyfile
 </pre><p>El HTML resultante queda en <span class="tt">docs/html</span> (abrir <span class="tt">docs/html/index.html</span>). La fuente es <span class="tt">backend/src/main/java</span> y <span class="tt">backend/src/test/java</span>, configurada en el <span class="tt">Doxyfile</span>.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md59"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md70"></a>
 Pruebas</h2>
 <p>La suite de pruebas está documentada en la sección <a class="el" href="pruebas.html" title="Pruebas del sistema">Pruebas del sistema</a> del Doxygen: tipos de prueba, cómo ejecutarlas y el detalle por módulo (navegación, reglas, modelo de reglas, autoría, observaciones y cache).</p>
 <p>El diagrama de arquitectura por módulos (<span class="tt">docs/diagramas/arquitectura_modulos.svg</span>) se regenera desde su fuente PlantUML: </p><pre class="fragment">java -jar plantuml.jar -tsvg docs/diagramas/arquitectura_modulos.puml
-</pre><h2 class="doxsection"><a class="anchor" id="autotoc_md60"></a>
+</pre><h2 class="doxsection"><a class="anchor" id="autotoc_md71"></a>
 API REST (OpenAPI)</h2>
 <p>La API se documenta con <b>springdoc-openapi</b> a partir de los controladores. Con la aplicación arriba:</p>
 <ul>

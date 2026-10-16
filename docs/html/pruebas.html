@@ -112,8 +112,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('pruebas.html',
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_backend_2src_2test_2PRUEBAS"></a></p>
-<p>Esta sección reúne la documentación de la <b>suite de pruebas del backend</b> (Spring Boot 4.1.1, Java 25). Cubre los TADs clínicos, el motor de navegación, el motor de reglas, la autoría (lienzo y reglas) y la captura de observaciones.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md41"></a>
+<p>Esta sección reúne la documentación de la <b>suite de pruebas del backend</b> (Spring Boot 4.1.1, Java 25). Cubre los TADs clínicos, el motor de navegación, el motor de reglas, la autoría (lienzo, reglas y revisión), la captura de observaciones y la seguridad (cuentas, roles y JWT).</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md51"></a>
 Cómo ejecutarlas</h1>
 <p>Desde el directorio <span class="tt">backend</span>: </p><pre class="fragment">./mvnw test              # compila y ejecuta la suite completa
 ./mvnw verify            # build completo, igual que en CI (GitHub Actions)
@@ -121,13 +121,13 @@ Cómo ejecutarlas</h1>
 ./mvnw -Dtest=Clase#metodo test
 </pre><p>Las pruebas unitarias son <b>JUnit 5 puro</b> y, cuando hace falta simular colaboradores, <b>Mockito</b> (5.x, con el <em>inline mock maker</em>, de modo que también se pueden simular clases <span class="tt">final</span>). No necesitan Spring, PostgreSQL ni Redis.</p>
 <p>Las pruebas de integración usan <span class="tt">@SpringBootTest</span> y <b>requieren PostgreSQL y Redis</b> arriba (<span class="tt">contenedores/compose.yaml</span>); el CI los levanta como servicios efímeros (<span class="tt">signbb-backend/.github/workflows/build.yml</span>).</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md42"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md52"></a>
 Tipos de prueba</h1>
 <ul>
 <li><b>Unitarias (JUnit 5 ± Mockito):</b> no arrancan el contexto de Spring. Son la mayoría y corren en local sin contenedores.</li>
 <li>**Integración (<span class="tt">@SpringBootTest</span>):** arrancan la aplicación completa y verifican persistencia (<span class="tt">jsonb</span>), cache (Redis) y el recorrido de punta a punta. Se ejecutan en <span class="tt">./mvnw verify</span>.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md43"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md53"></a>
 Suite por módulo</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -137,24 +137,27 @@ Suite por módulo</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Reglas: TAD, evaluación, servicio y mapeo JSON  </td><td class="markdownTableBodyRight">28  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_reglas.html" title="Pruebas del módulo de reglas">Ver página</a>  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Autoría: lienzo, subgrafos y reglas  </td><td class="markdownTableBodyRight">63 + 11  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_autoria.html" title="Pruebas del módulo de autoría">Ver página</a>  </td></tr>
+<td class="markdownTableBodyNone">Autoría: lienzo, subgrafos, reglas, autor y revisión  </td><td class="markdownTableBodyRight">194  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_autoria.html" title="Pruebas del módulo de autoría">Ver página</a>  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Observaciones: captura y validación de respuestas  </td><td class="markdownTableBodyRight">10  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_observaciones.html" title="Pruebas del módulo de observaciones">Ver página</a>  </td></tr>
+<td class="markdownTableBodyNone">Observaciones: captura, validación y dueño del recorrido  </td><td class="markdownTableBodyRight">18  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_observaciones.html" title="Pruebas del módulo de observaciones">Ver página</a>  </td></tr>
 <tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Seguridad: cuentas, login con JWT y reglas de acceso  </td><td class="markdownTableBodyRight">27  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito / <span class="tt">@SpringBootTest</span>  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_seguridad.html" title="Pruebas del módulo de seguridad">Ver página</a>  </td></tr>
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Cache: contenido clínico y sesiones en Redis  </td><td class="markdownTableBodyRight">—  </td><td class="markdownTableBodyNone">Mockito / <span class="tt">@SpringBootTest</span>  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_cache.html" title="Pruebas del cache">Ver página</a>  </td></tr>
 </table>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md44"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md54"></a>
 Pruebas de integración de la raíz</h1>
 <p>En <span class="tt">backend/src/test/java/org/signbb/backend/</span> viven las pruebas que arrancan el contexto completo:</p>
 <ul>
 <li><span class="tt">BackendApplicationTests</span> — <em>smoke test</em>: el contexto de la aplicación carga.</li>
 <li><span class="tt">PersistenciaEstructuraJsonTest</span> — ida y vuelta de los documentos JSON por la columna <span class="tt">estructura</span> (<span class="tt">jsonb</span>) y verificación de la siembra de <span class="tt">DatabaseInit</span>.</li>
-<li><span class="tt">AutoriaIntegracionTest</span> — de punta a punta: armar un subgrafo con el servicio, publicarlo y recorrerlo como la cuidadora (ver <a class="el" href="pruebas_autoria.html" title="Pruebas del módulo de autoría">Pruebas del módulo de autoría</a>).</li>
+<li><span class="tt">AutoriaIntegracionTest</span> — de punta a punta: armar un subgrafo con el servicio, aprobarlo (publicarlo) y recorrerlo como la cuidadora (ver <a class="el" href="pruebas_autoria.html" title="Pruebas del módulo de autoría">Pruebas del módulo de autoría</a>).</li>
+<li><span class="tt">seguridad/ReglasAccesoIntegracionTest</span> — la cadena de filtros real: 401 sin token, 403 por rol y 404 al recorrido de otro padre (ver <a class="el" href="pruebas_seguridad.html" title="Pruebas del módulo de seguridad">Pruebas del módulo de seguridad</a>).</li>
 <li><span class="tt">CacheRedisIntegracionTest</span> — cache-aside con Redis real; se salta sola si el servicio <span class="tt">cache</span> no responde (ver <a class="el" href="pruebas_cache.html" title="Pruebas del cache">Pruebas del cache</a>).</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md45"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md55"></a>
 Resultados en CI</h1>
-<p>El workflow <span class="tt">build</span> corre <span class="tt">./mvnw -B verify</span> con PostgreSQL y Redis como servicios. Las corridas y los conteos por clase se detallan en las páginas de cada módulo.</p>
+<p>El workflow <span class="tt">build</span> corre <span class="tt">./mvnw -B verify</span> con PostgreSQL y Redis como servicios. Las corridas y los conteos por clase se detallan en las páginas de cada módulo. En la rama <span class="tt">seguridad</span> (16-oct-2026) corren <b>528 pruebas</b>, sin fallos.</p>
 <blockquote class="doxtable">
 <p>Nota: para leer reportes frescos, ejecutar <span class="tt">./mvnw clean</span> antes: <span class="tt">target/surefire-reports</span> puede conservar reportes de clases que ya no existen. </p>
 </blockquote>

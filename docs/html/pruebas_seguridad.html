@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SignBB: Pruebas del módulo de seguridad</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SignBB
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('pruebas_seguridad.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Pruebas del módulo de seguridad </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="md_backend_2src_2test_2java_2org_2signbb_2backend_2seguridad_2README"></a></p>
+<blockquote class="doxtable">
+<p>Índice general de la suite: <a class="el" href="pruebas.html" title="Pruebas del sistema">Pruebas del sistema</a>. </p>
+</blockquote>
+<p>Pruebas del paquete <span class="tt"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1seguridad.html" title="Módulo de seguridad: cuentas, roles y sesión con JWT.">org.signbb.backend.seguridad</a></span>: cuentas, roles, login con JWT y la cadena de filtros que decide qué puede hacer cada rol. Los roles son <span class="tt">PADRE</span> (se registra solo y hace recorridos), <span class="tt">MEDICO</span> (arma grafos y reglas) y <span class="tt">MEDICO_SUPERVISOR</span> (además revisa lo de otros médicos y administra cuentas).</p>
+<p>Las unitarias son JUnit 5 y Mockito, sin Spring, base de datos ni Redis. La de integración (<span class="tt">ReglasAccesoIntegracionTest</span>) levanta la aplicación completa con PostgreSQL y Redis, como el CI.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md43"></a>
+Mapa de la suite</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Paquete  </th><th class="markdownTableHeadNone">Clase  </th><th class="markdownTableHeadRight">Tests  </th><th class="markdownTableHeadNone">Qué cubre  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioCuentasImplTest</span>  </td><td class="markdownTableBodyRight">11  </td><td class="markdownTableBodyNone">registro de padres, login, alta de médicos por el supervisor y activar o desactivar cuentas  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioTokensTest</span>  </td><td class="markdownTableBodyRight">4  </td><td class="markdownTableBodyNone">el JWT lleva <span class="tt">sub</span>, <span class="tt">rol</span> y <span class="tt">nombre</span>; uno vencido o firmado con otra clave se rechaza; un secreto corto no arranca  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">(raíz)  </td><td class="markdownTableBodyNone"><span class="tt">InicializadorSeguridadTest</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">el supervisor inicial se siembra una sola vez  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">(raíz)  </td><td class="markdownTableBodyNone"><span class="tt">ReglasAccesoIntegracionTest</span>  </td><td class="markdownTableBodyRight">10  </td><td class="markdownTableBodyNone">la cadena de filtros real: rutas públicas, 401 sin token, 403 por rol y dueño del recorrido  </td></tr>
+</table>
+<p>En total son <b>27 pruebas</b>. Las reglas de autor y de revisión de la autoría (<span class="tt">GuardiaAutoriaTest</span>, <span class="tt">PoliticaAccesoBorradoresTest</span>, <span class="tt">ServicioRevisionImplTest</span> y <span class="tt">ControladorRevisionTest</span>) están en <a class="el" href="pruebas_autoria.html" title="Pruebas del módulo de autoría">Pruebas del módulo de autoría</a>; la del dueño del recorrido, en <a class="el" href="pruebas_observaciones.html" title="Pruebas del módulo de observaciones">Pruebas del módulo de observaciones</a>.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md44"></a>
+Ayudas de prueba</h1>
+<ul>
+<li><span class="tt">UsuariosPrueba</span>: usuarios fijos (<span class="tt">MEDICO_A</span>, <span class="tt">MEDICO_B</span>, <span class="tt">SUPERVISOR</span>) y un resolvedor de <span class="tt">UsuarioActual</span> para los <span class="tt">standaloneSetup</span> de MockMvc, sin Spring Security.</li>
+<li><span class="tt">ApiPrueba</span>: MockMvc con la cadena de seguridad real; ingresa, registra padres, crea cuentas clínicas con el supervisor sembrado y borra al final las cuentas que creó.</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md45"></a>
+Qué se prueba y por qué importa</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md46"></a>
+Cuentas (<span class="tt">ServicioCuentasImplTest</span>)</h2>
+<ul>
+<li><b>Registro de padres.</b> El correo se guarda en minúsculas y sin espacios y solo se guarda el hash BCrypt. Un correo repetido, un correo mal escrito o una contraseña de menos de 8 caracteres dan <b>422</b>.</li>
+<li><b>Login.</b> Con los datos correctos devuelve el token. Si la contraseña está mal, el correo no existe o la cuenta está inactiva, responde <b>401 con el mismo mensaje</b>, para no revelar cuál de las tres falló.</li>
+<li><b>Cuentas clínicas.</b> El supervisor crea médicos con su institución. Crear un <span class="tt">PADRE</span> (o sin rol) por esa vía da 422: los padres solo se registran solos. Un supervisor no puede desactivarse a sí mismo.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md47"></a>
+Tokens (<span class="tt">ServicioTokensTest</span>)</h2>
+<p>El token se firma con HS256 y el resource server lo valida: se rechaza si venció o si se firmó con otra clave. Un secreto de menos de 32 bytes impide arrancar, para que nadie despliegue con una clave débil por descuido.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md48"></a>
+Supervisor inicial (<span class="tt">InicializadorSeguridadTest</span>)</h2>
+<p>Si no hay ningún <span class="tt">MEDICO_SUPERVISOR</span>, se crea uno con la contraseña cifrada. Si ya hay alguno, no hace nada, así que reiniciar el back no duplica cuentas.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md49"></a>
+Reglas de acceso (<span class="tt">ReglasAccesoIntegracionTest</span>)</h2>
+<p>Con la aplicación completa:</p>
+<ul>
+<li>sin token, la autoría, los recorridos, los usuarios y <span class="tt">/auth/yo</span> dan <b>401</b> con el mismo JSON <span class="tt">{mensaje, avisos}</span> que ya entiende el front;</li>
+<li>Swagger, <span class="tt">/media</span>, el login y el registro no piden token, y el <em>preflight</em> <span class="tt">OPTIONS</span> del front responde 200;</li>
+<li>un <span class="tt">PADRE</span> recibe <b>403</b> en la autoría y en los usuarios;</li>
+<li>un <span class="tt">MEDICO</span> recibe 403 en los recorridos, los usuarios, las revisiones, aprobar, rechazar y despublicar;</li>
+<li>un recorrido solo lo ve quien lo inició: otro padre recibe <b>404</b> al consultarlo, responderlo o retrocederlo, y no lo ve en "Mis recorridos";</li>
+<li>no se puede crear un <span class="tt">PADRE</span> por la API clínica;</li>
+<li>un token alterado da 401, y el token de una cuenta desactivada deja de servir.</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md50"></a>
+Cómo ejecutarlas</h1>
+<pre class="fragment">./mvnw test -Dtest='org.signbb.backend.seguridad.**'
+</pre><p><span class="tt">ReglasAccesoIntegracionTest</span> requiere PostgreSQL y Redis arriba (<span class="tt">contenedores/compose.yaml</span>); las demás no.</p>
+<p>La prueba manual, con <span class="tt">curl</span> y por las pantallas, está en <span class="tt">pruebas_manuales/pruebas_seguridad.md</span>. </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
+  </ul>
+</div>
+</body>
+</html>
