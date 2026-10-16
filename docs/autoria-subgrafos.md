@@ -1,6 +1,6 @@
 # SignBB · Autoría de subgrafos clínicos: qué se hizo y qué falta
 
-> Resumen para el equipo · actualizado el 10-oct-2026
+> Resumen para el equipo · actualizado el 16-oct-2026
 
 ## 1. Qué es esta parte
 
@@ -12,18 +12,19 @@ Cuidadora:  ¿Qué le pasa al bebé?  ──piel──▶  ¿Qué cambio observa
                                                        └─ preguntas del subgrafo … → Recomendación / Consulta / Urgencia
 ```
 
-Esta entrega cubre subgrafos **sin reglas clínicas**. El desenlace lo decide la conclusión a la que se llega (ver pendientes).
+Cada subgrafo puede tener además su **base de reglas clínicas** (reglas de alarma en FND: OR de casos, cada caso un AND de condiciones). Las reglas se editan en su propia pantalla y **se publican junto con el subgrafo**.
 
 ## 2. Ramas y cómo están
 
 | Repo | Rama | Sale de | Último commit | Estado |
 |---|---|---|---|---|
-| `signbb-backend` | `autoria` | `navegacion` (11 commits por delante) | `c23c5e7` | Pusheada, CI verde (297 pruebas) |
-| `signbb-frontend` | `autoria-lienzo` | `autoria` (la rama de Daniela, 5 commits por delante) | `fa3b46e` | Pusheada, 26 pruebas verdes y build limpio |
+| `signbb-backend` | `autoria` | `navegacion` | `bb93375` (14-oct) | CI verde. Ya incluye `autoria-reglas` |
+| `signbb-frontend` | `autoria` | — | `252fad0` (14-oct) | Ya incluye `autoria-lienzo` y `autoria-reglas` |
+| `signbb-backend` | `seguridad` | `autoria` (16-oct) | — | Rama nueva para el módulo de seguridad |
 
-- **No se ha hecho merge ni PR** de ninguna de las dos ramas.
-- La rama `feature/modulo-autoria` del back y la `autoria` del front **no se tocaron**.
-- El formato con Y/O anidado vive aparte en `feature/motor-and-or` y quedó diferido.
+- **La rama de trabajo es `autoria` en los dos repos.** `autoria-lienzo` y `autoria-reglas` ya están integradas ahí y no deben usarse para trabajo nuevo.
+- **No se ha hecho merge** de `autoria` hacia `navegacion`, `develop` ni `main`.
+- Las reglas usan el formato FND plano (`casos: Condicion[][]`). El Y/O anidado de `feature/motor-and-or` quedó descartado por ahora.
 
 ## 3. Pasos que seguimos
 
@@ -32,7 +33,7 @@ Esta entrega cubre subgrafos **sin reglas clínicas**. El desenlace lo decide la
 2. **Edición del lienzo y avisos** (`25ec6e2`):
    - `EditorLienzo` maneja el "+", el enlace a una pregunta existente (sin permitir círculos) y editar o eliminar nodos (podando la rama huérfana).
    - `ValidadorLienzo` genera avisos en lenguaje humano. Algunos bloquean la publicación y otros solo advierten, como un nodo suelto.
- 3. **Compilar y publicar** (`3733bad`):
+3. **Compilar y publicar** (`3733bad`):
    - `CompiladorSubgrafo` convierte el lienzo en un `GrafoClinicoJson`. El peso es la mayor gravedad que llega al nodo, y el tipo de selección (única o múltiple) se respeta.
    - `PublicadorSubgrafo` guarda el subgrafo y agrega su opción y el nodo `ref_<grafoId>` en la pregunta puente del grafo raíz. Republicar no duplica nada.
    - **Publicar el subgrafo publica también su base de reglas**: la acción es única y atómica (si algo falla, no se publica ni el grafo ni las reglas). Las reglas no se publican por su cuenta desde la interfaz; si cambian las reglas, se republica el subgrafo. Para el grafo raíz (que no tiene subgrafo) la base no se publica desde aquí.
@@ -48,8 +49,15 @@ Esta entrega cubre subgrafos **sin reglas clínicas**. El desenlace lo decide la
 8. **Limpieza de versiones e imágenes** (`mantenimiento/`): `LimpiezaProgramada` corre todos los días a las 3:30 (primero versiones, luego imágenes) y no tiene endpoint.
    - `PoliticaRetencionVersiones` decide: se quedan las 20 más recientes y las reemplazadas hace menos de 25 h (el TTL de las sesiones es 24 h, así que nadie sigue en una versión más vieja). `LimpiadorVersiones` las borra de la base, de Redis (`ResolvedorVersiones.olvidar`) y de la memoria (`ContextoClinico.olvidar`).
    - `LimpiadorImagenes` lista Silo (`AlmacenImagenes.listar`) y borra (`eliminar`) lo que no aparece en ningún borrador, copia publicada, grafo ni versión conservada. Respeta 24 h de gracia porque la imagen se sube antes de guardar la pregunta.
+9. **Reglas clínicas** (Simón, `3a14cda`, `e29af28`, `f951fda`, `0027a31`, `bbdc0da`, `4948827`, `8783f82`):
+   - API `/api/autoria/bases` para crear, editar, borrar y descartar bases de reglas y sus reglas. Incluye avisos y un catálogo de nodos que muestra el desenlace de cada conclusión.
+   - Las reglas se guardan en versiones junto al grafo (`VersionContenidoEntity`). Una versión sin reglas queda con la base vacía.
+   - Publicar el subgrafo publica sus reglas en una sola acción, y despublicarlo las retira.
+   - `ValidadorLienzoReglas` bloquea la publicación si una regla usa un nodo que ya no existe.
+10. **Documentación de la API** (Simón, `7bbe192`): springdoc y `docs/api/openapi.yaml`.
+11. **Pruebas** (Simón, `45eb370`, `2423a0d`): pruebas unitarias del motor de reglas y de la autoría de reglas, el plan de pruebas (`Plan_pruebas_navegacion_SignBB.xlsx`) y `pruebas_manuales/pruebas_versiones.md`.
 
-### Front (`signbb-frontend`, rama `autoria-lienzo`, proyecto `ui-autoria`)
+### Front (`signbb-frontend`, rama `autoria`, proyecto `ui-autoria`)
 1. **Cliente de la API nueva** (`c383d0d`): `core/http/autoria.ts` y `models/lienzo.model.ts`. Reemplazan `autoria.model.ts` y la API vieja `/grafos`.
 2. **Tablero y lienzo con "+"** (`18a6e54`):
    - `features/subgrafos/tablero` lista los subgrafos y crea uno nuevo con su nombre, categoría y nombre para la familia.
@@ -63,6 +71,12 @@ Esta entrega cubre subgrafos **sin reglas clínicas**. El desenlace lo decide la
 5. **Nombre para la familia obligatorio** (`fa3b46e`):
    - El campo explica al médico que escriba sin términos médicos, por ejemplo «Piel u ojos amarillos» en lugar de «Ictericia».
    - En el lienzo, **«Editar datos»** (`core/ui/modal-datos`) permite corregir el nombre técnico y el de la familia.
+6. **Mejoras de Daniela** (`ec3ddd2`, `df38734`, `aea0470`, `7f21248`, `2484d81`): imágenes en las preguntas, mejoras de las pantallas de subgrafo y de resultado, y el botón para despublicar.
+7. **Editor de reglas de alarma** (Simón, `da16b35`, `327bae8`, `80b9cd2`, `9e99401`, `2e2010c`, `b1d311d`, `252fad0`):
+   - `features/reglas`: un tablero de bases de reglas, el editor y un visor que dibuja la regla como grafo, con escala, centrado y expandir.
+   - Se pueden descartar los cambios de una base de reglas.
+   - El modal de publicar muestra las reglas que salen junto con el subgrafo, y el lienzo tiene el enlace «Ir a Reglas».
+8. **Documentación del front con Compodoc** (Simón, `e04c0f6`): `npm run docs` genera la documentación de las tres apps en `docs/`.
 
 ## 4. API (`/api/autoria`)
 
@@ -76,7 +90,23 @@ Esta entrega cubre subgrafos **sin reglas clínicas**. El desenlace lo decide la
 | PUT | `/subgrafos/{id}/respuestas/{respuestaId}/destino` | Enlazar a una pregunta existente (`{"nodoId": null}` lo quita) |
 | GET | `/subgrafos/{id}/avisos` | Avisos actuales |
 | POST | `/subgrafos/{id}/publicar` | Publicar el subgrafo **y su base de reglas** (422 con avisos del lienzo y de las reglas si hay bloqueantes) |
+| POST | `/subgrafos/{id}/descartar` | Descartar los cambios sin publicar y volver a la última publicación |
 | POST | `/subgrafos/{id}/despublicar` | Despublicar: quita el subgrafo y su base de reglas; los borradores (lienzo y reglas) vuelven a `BORRADOR` con su documento intacto (422 si no está publicado o si es el único subgrafo publicado) |
+
+Reglas (`/api/autoria/bases`):
+
+| Método | Ruta | Para qué |
+|---|---|---|
+| GET / POST | `/bases` | Listar / crear bases de reglas |
+| GET | `/bases/catalogo` | Nodos disponibles para las condiciones, con el desenlace de cada conclusión |
+| GET / PUT / DELETE | `/bases/{id}` | Ver / editar / borrar una base |
+| POST | `/bases/{id}/reglas` | Agregar una regla |
+| PUT / DELETE | `/bases/{id}/reglas/{reglaId}` | Editar / eliminar una regla |
+| GET | `/bases/{id}/avisos` | Avisos de la base |
+| POST | `/bases/{id}/publicar` | Publicar la base (la interfaz la publica con el subgrafo) |
+| POST | `/bases/{id}/descartar` | Descartar los cambios sin publicar |
+
+La especificación completa está en `docs/api/openapi.yaml`.
 
 ## 5. Cómo probarlo en local
 
@@ -112,8 +142,8 @@ cd ../backend
 **Front.** Abre otra terminal:
 ```bash
 cd signbb-frontend
-git fetch origin && git checkout autoria-lienzo && git pull
-npm install
+git fetch origin && git checkout autoria && git pull
+npm install                 # hace falta otra vez: se agregó @compodoc/compodoc
 npx ng build ui-compartida  # librería compartida; hay que compilarla antes que las apps
 npx ng serve ui-autoria     # http://localhost:4300
 ```
@@ -153,7 +183,7 @@ cd ..\backend
 **Front.** Abre otra ventana de PowerShell:
 ```powershell
 cd signbb-frontend
-git fetch origin; git checkout autoria-lienzo; git pull
+git fetch origin; git checkout autoria; git pull
 npm install
 npx ng build ui-compartida
 npx ng serve ui-autoria     # http://localhost:4300
@@ -214,11 +244,14 @@ La tarea corre sola a las 3:30. Para probarla sin esperar, cambia temporalmente 
 ## 6. Pendientes para tener completa la parte de subgrafos clínicos
 
 ### Imprescindibles
-- [ ] **Reglas clínicas en los subgrafos.** Hoy el desenlace sale solo de la conclusión. Falta poder definir la base de reglas (casos en FND: OR de casos, AND interno) desde la autoría y que se publique junto al subgrafo. La pantalla de reglas vieja del front se quitó porque usaba la API anterior. Hay que decidir si se usa el formato plano actual o el Y/O anidado de `feature/motor-and-or`.
-- [ ] **Autenticación de médicos.** El autor y la institución están fijos en el front («Dra. Catalina Rodríguez», «Fundación Canguro»). Hace falta un login real, que el autor salga de la sesión y que «Mis subgrafos» y el perfil filtren por autor.
+- [x] **Reglas clínicas en los subgrafos.** Hecho por Simón: editor de reglas en FND plano, versionadas junto al grafo y publicadas con el subgrafo.
+- [ ] **Módulo de seguridad: autenticación de médicos** (en curso, rama `seguridad` del back). El autor y la institución están fijos en el front («Dra. Catalina Rodríguez», «Fundación Canguro»). Hace falta:
+  - un login real, con el autor tomado de la sesión;
+  - proteger `/api/autoria/**`, que hoy es abierto y tiene CORS `*`;
+  - que «Mis subgrafos» y el perfil filtren por autor.
 - [ ] **Integrar las ramas.**
   - En el back, revisar y hacer merge de `autoria` → `navegacion` → `develop`.
-  - En el front, decidir con Daniela cómo entra `autoria-lienzo` en `autoria`, porque reemplaza las pantallas de `features/grafos`.
+  - En el front, hacer merge de `autoria` hacia `develop`.
 - [ ] **Prueba de punta a punta con la app de la cuidadora (`ui-consulta`)** sobre las ramas integradas.
 
 ### Importantes
@@ -233,7 +266,7 @@ La tarea corre sola a las 3:30. Para probarla sin esperar, cambia temporalmente 
 
 ### Detalles menores
 - [ ] Si falla la carga de la pregunta puente en el lienzo, no se avisa: el modal de publicar simplemente no la nombra.
-- [ ] Pruebas e2e del front (tablero → lienzo → publicar). Hoy solo hay unitarias con Karma.
+- [ ] Pruebas e2e del front (tablero → lienzo → reglas → publicar). Hoy solo hay unitarias con Karma. Simón dejó anotado evaluar Selenium.
 - [ ] Revisar el lienzo con subgrafos grandes (scroll y zoom) y en pantallas pequeñas.
 - [ ] Accesibilidad del lienzo: navegar con teclado entre nodos.
 
