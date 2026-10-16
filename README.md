@@ -41,6 +41,42 @@ servicios:
 > borrar los volúmenes (`docker compose down -v`) para que `DatabaseInit`
 > vuelva a sembrar el contenido nuevo: el grafo raíz conserva el mismo `id`.
 
+## Cuentas y seguridad
+
+La API pide un token JWT (`Authorization: Bearer <token>`) salvo en el login, el
+registro, `/media` y Swagger. Hay tres roles:
+
+| Rol | Cómo se crea | Qué puede hacer |
+|---|---|---|
+| `PADRE` | Se registra solo (`POST /api/auth/registro`) | Hacer recorridos y ver los suyos (`/api/recorridos`) |
+| `MEDICO` | Lo crea un supervisor (`POST /api/usuarios`) | Armar sus subgrafos y reglas y enviarlos a revisión |
+| `MEDICO_SUPERVISOR` | Lo crea otro supervisor; el primero se siembra al arrancar | Lo mismo que un médico, y además aprobar o rechazar lo de **otros**, despublicar y administrar cuentas |
+
+Para ingresar: `POST /api/auth/login` con `{"correo", "contrasena"}` devuelve
+`{token, expiraEn, usuario}`. El token dura 8 horas.
+
+**Supervisor inicial.** Si no existe ningún supervisor, el back crea uno al
+arrancar. En desarrollo es `supervisor@signbb.local` / `Supervisor123`;
+**cámbialo** fuera de tu máquina con las variables de abajo.
+
+**Variables de entorno:**
+
+| Variable | Para qué | Valor de desarrollo |
+|---|---|---|
+| `SIGNBB_JWT_SECRETO` | Clave HS256 de los tokens (32 bytes o más) | un valor fijo de desarrollo |
+| `SIGNBB_SUPERVISOR_NOMBRE` | Nombre del supervisor inicial | `Supervisor SignBB` |
+| `SIGNBB_SUPERVISOR_CORREO` | Correo del supervisor inicial | `supervisor@signbb.local` |
+| `SIGNBB_SUPERVISOR_CONTRASENA` | Contraseña del supervisor inicial | `Supervisor123` |
+| `SIGNBB_CORS_ORIGENES` | Orígenes del front, separados por coma | `http://localhost:4200,http://localhost:4300` |
+
+> **Si ya tenías la base de antes de las cuentas**, borra los volúmenes
+> (`docker compose down -v`). Hibernate guarda el estado del borrador con un
+> *check constraint* que no conoce el estado nuevo `EN_REVISION`, y los
+> borradores viejos no tienen autor.
+
+La prueba manual del módulo (con `curl` y por las pantallas) está en
+`pruebas_manuales/pruebas_seguridad.md`.
+
 ## Documentación
 
 La documentación del código se genera con Doxygen desde la raíz del

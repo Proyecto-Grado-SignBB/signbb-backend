@@ -15,20 +15,26 @@ PostgreSQL y Redis, como el CI.
 
 | Paquete | Clase | Tests | Qué cubre |
 |---|---|---:|---|
-| `servicios` | `EditorLienzoTest` | 18 | el "+", enlazar a una pregunta existente, editar y eliminar nodos; lo que el editor rechaza |
+| `servicios` | `EditorLienzoTest` | 25 | el "+", enlazar a una pregunta existente, editar y eliminar nodos; lo que el editor rechaza |
 | `servicios` | `ValidadorLienzoTest` | 10 | un caso por cada aviso; nodos sueltos y choque de gravedades |
-| `servicios` | `CompiladorSubgrafoTest` | 7 | lienzo → `GrafoClinicoJson`: pesos, tipos, aristas y metadata |
-| `servicios` | `PublicadorSubgrafoTest` | 20 | upsert del subgrafo y de la opción en la raíz; categoría nueva visible; invalidar el contenido; rechazos; despublicar |
-| `servicios` | `ServicioAutoriaImplTest` | 23 | categorías, ids de grafo, datos del subgrafo (nombre para la familia obligatorio), estados, descartar cambios, despublicar y errores |
-| `controladores` | `ControladorAutoriaTest` | 16 | códigos HTTP y cuerpos de error de la API `/api/autoria` |
+| `servicios` | `CompiladorSubgrafoTest` | 8 | lienzo → `GrafoClinicoJson`: pesos, tipos, aristas y metadata |
+| `servicios` | `PublicadorSubgrafoTest` | 22 | upsert del subgrafo y de la opción en la raíz; categoría nueva visible; invalidar el contenido; rechazos; despublicar |
+| `servicios` | `ServicioAutoriaImplTest` | 31 | categorías, ids de grafo, datos del subgrafo (nombre para la familia obligatorio), autor tomado de la cuenta, "Mis subgrafos", estados, descartar cambios, despublicar y errores |
+| `servicios` | `PoliticaAccesoBorradoresTest` | 4 | quién lee y quién edita un borrador: autor, otro médico, supervisor y borrador sin autor |
+| `servicios` | `GuardiaAutoriaTest` | 9 | la política aplicada a subgrafos y bases (403/404), quién crea una base y el bloqueo mientras está en revisión |
+| `servicios` | `ServicioRevisionImplTest` | 13 | enviar, retirar, aprobar (publica) y rechazar con comentario; nadie aprueba lo suyo |
+| `controladores` | `ControladorAutoriaTest` | 19 | códigos HTTP y cuerpos de error de la API `/api/autoria`; 403 a quien no es el autor |
+| `controladores` | `ControladorRevisionTest` | 8 | códigos HTTP de enviar, retirar, revisiones, aprobar y rechazar |
+| `modelo` | `NodoLienzoTest` | 2 | el JSON del nodo: las imágenes se guardan y se leen, y un nodo guardado sin imágenes se lee con la lista vacía |
 | `servicios` | `CompiladorReglasTest` | 3 | borrador de reglas → `BaseReglasJson` (FND, niveles) |
 | `servicios` | `ValidadorReglasTest` | 6 | un aviso por cada problema del borrador de reglas |
+| `servicios` | `ResolutorCatalogoNodosTest` | 2 | el catálogo de nodos (de un lienzo y del grafo raíz) pone el desenlace en los terminales |
 | `servicios` | `PublicadorReglaTest` | 6 | publica/reemplaza la base de reglas de un grafo, recompone el contenido y registra una versión |
-| `servicios` | `ServicioAutoriaReglasImplTest` | 11 | CRUD de la base de reglas, publicación y descartar cambios |
+| `servicios` | `ServicioAutoriaReglasImplTest` | 13 | CRUD de la base de reglas, autor tomado de la cuenta, "Mis bases", publicación y descartar cambios |
 | `servicios` | `ServicioAutoriaReglasAbstractoTest` | 11 | CRUD y publicación con datos abstractos y colaboradores simulados (Mockito) |
-| (raíz) | `AutoriaIntegracionTest` | 1 | de punta a punta: armar, publicar y recorrer como cuidadora |
+| (raíz) | `AutoriaIntegracionTest` | 2 | de punta a punta: armar, aprobar (publicar) y recorrer como cuidadora |
 
-En total son **107 pruebas**.
+En total son **194 pruebas**.
 
 ## Fixture
 
@@ -143,10 +149,46 @@ neurológica (`puente_neuro`).
 - La suite **abstracta** repite el CRUD con datos `op1/op2/op3` y todos los
   colaboradores simulados con Mockito, sin depender del dominio.
 
+### Autor y acceso (`PoliticaAccesoBorradoresTest`, `GuardiaAutoriaTest`)
+Cada subgrafo y cada base de reglas guarda el `autorId` de quien lo creó; el
+nombre y la institución salen de la cuenta y se ignora lo que mande el
+request. La política es:
+
+- **Leer:** el autor o un supervisor. Otro médico recibe 403 y un id
+  inexistente, 404.
+- **Editar** (datos, nodos, reglas, descartar, eliminar): solo el autor. Un
+  supervisor tampoco edita lo de otro.
+- **Borradores sin autor** (datos de antes de las cuentas): solo los lee un
+  supervisor.
+- **Crear una base de reglas:** solo el autor del subgrafo de ese `grafoId`;
+  la del grafo raíz (o de un grafo del sistema), solo un supervisor.
+- **En revisión** nadie edita el subgrafo ni su base (422); el autor sí puede
+  retirarlo y el supervisor verlo.
+- "Mis subgrafos" y "Mis bases" (`listar`) traen solo lo del médico; el
+  supervisor ve todo.
+
+### Revisión del supervisor (`ServicioRevisionImplTest`, `ControladorRevisionTest`)
+Ya no se publica directo: el autor **envía a revisión** y un supervisor que no
+sea el autor **aprueba** (eso publica el subgrafo y sus reglas) o **rechaza**
+con un comentario.
+
+- Enviar con avisos bloqueantes da 422 con la lista y no cambia nada; enviar
+  dos veces, o algo publicado sin cambios, también da 422. Un subgrafo
+  publicado sí se envía si cambiaron sus reglas.
+- Enviar borra el comentario del rechazo anterior.
+- Retirar (o rechazar) lo devuelve a `BORRADOR` si nunca se publicó, o a
+  `CAMBIOS_SIN_PUBLICAR` si ya tenía publicación.
+- Aprobar algo que no está en revisión da 422 y aprobar lo propio da **403**,
+  aunque quien lo intente sea supervisor. Al aprobar se guardan el revisor y
+  la fecha.
+- Rechazar sin comentario da 422.
+- Las revisiones pendientes excluyen las del propio supervisor.
+- Los endpoints `publicar` ya no existen (404 o 405).
+
 ### API (`ControladorAutoriaTest`)
 - Crear responde 201 y borrar 204.
-- Una edición inválida responde **422 con `{mensaje, avisos: []}`** y publicar
-  con avisos responde 422 con la lista.
+- Una edición inválida responde **422 con `{mensaje, avisos: []}`**.
+- Quien no es el autor recibe **403** al editar y al abrir lo de otro.
 - Un id inexistente da 404 y una edición concurrente (`@Version`) da 409.
 - Despublicar responde 200 con el borrador en `BORRADOR`; 422 con el mensaje si
   no estaba publicado o era el único subgrafo publicado; 404 si no existe.
@@ -154,7 +196,7 @@ neurológica (`puente_neuro`).
 
 ### Punta a punta (`AutoriaIntegracionTest`)
 Arma con el servicio un subgrafo de fiebre (una pregunta y dos
-conclusiones), lo publica y lo recorre con `ServicioNavegacion`:
+conclusiones), lo aprueba (es decir, lo publica) y lo recorre con `ServicioNavegacion`:
 `pregunta_inicial → neurologico → puente_neuro → opción nueva → pregunta
 del subgrafo → "Más de 39 °C" → URGENCIA`. En `puente_neuro` siguen las
 opciones del sistema y aparece la nueva. No es `@Transactional`, porque la

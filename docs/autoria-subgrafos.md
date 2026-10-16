@@ -20,7 +20,8 @@ Cada subgrafo puede tener además su **base de reglas clínicas** (reglas de ala
 |---|---|---|---|---|
 | `signbb-backend` | `autoria` | `navegacion` | `bb93375` (14-oct) | CI verde. Ya incluye `autoria-reglas` |
 | `signbb-frontend` | `autoria` | — | `252fad0` (14-oct) | Ya incluye `autoria-lienzo` y `autoria-reglas` |
-| `signbb-backend` | `seguridad` | `autoria` (16-oct) | — | Rama nueva para el módulo de seguridad |
+| `signbb-backend` | `seguridad` | `autoria` (16-oct) | (16-oct) | CI verde. Cuentas, roles, autor, revisión del supervisor y recorrido del padre |
+| `signbb-frontend` | `seguridad-front` | `autoria` (16-oct) | — | Ingreso y autor tomado de la sesión. Sin pantallas de supervisor |
 
 - **La rama de trabajo es `autoria` en los dos repos.** `autoria-lienzo` y `autoria-reglas` ya están integradas ahí y no deben usarse para trabajo nuevo.
 - **No se ha hecho merge** de `autoria` hacia `navegacion`, `develop` ni `main`.
@@ -80,18 +81,27 @@ Cada subgrafo puede tener además su **base de reglas clínicas** (reglas de ala
 
 ## 4. API (`/api/autoria`)
 
+En la rama `seguridad` todo `/api/autoria` pide token de `MEDICO` o
+`MEDICO_SUPERVISOR` (ver el README raíz). El autor y la institución salen de la
+cuenta: si el request los trae, se ignoran. Cada médico ve y edita solo lo suyo;
+un supervisor ve todo, pero solo edita lo propio.
+
 | Método | Ruta | Para qué |
 |---|---|---|
 | GET | `/categorias` | Preguntas puente del grafo raíz |
-| GET / POST | `/subgrafos` | Listar / crear (nombre, puenteId, etiquetaOpcion, autor, institucion) |
+| GET / POST | `/subgrafos` | Listar los propios (el supervisor, todos) / crear (nombre, puenteId, etiquetaOpcion) |
 | GET / PUT / DELETE | `/subgrafos/{id}` | Ver / editar datos / borrar (solo si nunca se publicó) |
 | POST | `/subgrafos/{id}/nodos` | Crear nodo (el "+") |
 | PUT / DELETE | `/subgrafos/{id}/nodos/{nodoId}` | Editar / eliminar nodo |
 | PUT | `/subgrafos/{id}/respuestas/{respuestaId}/destino` | Enlazar a una pregunta existente (`{"nodoId": null}` lo quita) |
 | GET | `/subgrafos/{id}/avisos` | Avisos actuales |
-| POST | `/subgrafos/{id}/publicar` | Publicar el subgrafo **y su base de reglas** (422 con avisos del lienzo y de las reglas si hay bloqueantes) |
+| POST | `/subgrafos/{id}/enviar-revision` | El autor lo envía a revisión (422 con avisos del lienzo y de las reglas si hay bloqueantes). Mientras está en revisión no se edita el subgrafo ni su base |
+| POST | `/subgrafos/{id}/retirar-revision` | El autor lo retira de revisión para volver a editarlo |
+| GET | `/revisiones` | **Supervisor:** subgrafos en revisión de otros autores |
+| POST | `/subgrafos/{id}/aprobar` | **Supervisor que no sea el autor:** publica el subgrafo **y su base de reglas** |
+| POST | `/subgrafos/{id}/rechazar` | **Supervisor que no sea el autor:** lo devuelve con `{"comentario"}` (obligatorio) |
 | POST | `/subgrafos/{id}/descartar` | Descartar los cambios sin publicar y volver a la última publicación |
-| POST | `/subgrafos/{id}/despublicar` | Despublicar: quita el subgrafo y su base de reglas; los borradores (lienzo y reglas) vuelven a `BORRADOR` con su documento intacto (422 si no está publicado o si es el único subgrafo publicado) |
+| POST | `/subgrafos/{id}/despublicar` | **Supervisor.** Despublicar: quita el subgrafo y su base de reglas; los borradores (lienzo y reglas) vuelven a `BORRADOR` con su documento intacto (422 si no está publicado o si es el único subgrafo publicado) |
 
 Reglas (`/api/autoria/bases`):
 
@@ -103,8 +113,11 @@ Reglas (`/api/autoria/bases`):
 | POST | `/bases/{id}/reglas` | Agregar una regla |
 | PUT / DELETE | `/bases/{id}/reglas/{reglaId}` | Editar / eliminar una regla |
 | GET | `/bases/{id}/avisos` | Avisos de la base |
-| POST | `/bases/{id}/publicar` | Publicar la base (la interfaz la publica con el subgrafo) |
 | POST | `/bases/{id}/descartar` | Descartar los cambios sin publicar |
+
+Ya no existen `POST /subgrafos/{id}/publicar` ni `POST /bases/{id}/publicar`:
+se publica solo al aprobar. Si cambian solo las reglas de un subgrafo publicado,
+se envía el subgrafo a revisión igual.
 
 La especificación completa está en `docs/api/openapi.yaml`.
 
@@ -245,10 +258,11 @@ La tarea corre sola a las 3:30. Para probarla sin esperar, cambia temporalmente 
 
 ### Imprescindibles
 - [x] **Reglas clínicas en los subgrafos.** Hecho por Simón: editor de reglas en FND plano, versionadas junto al grafo y publicadas con el subgrafo.
-- [ ] **Módulo de seguridad: autenticación de médicos** (en curso, rama `seguridad` del back). El autor y la institución están fijos en el front («Dra. Catalina Rodríguez», «Fundación Canguro»). Hace falta:
-  - un login real, con el autor tomado de la sesión;
-  - proteger `/api/autoria/**`, que hoy es abierto y tiene CORS `*`;
-  - que «Mis subgrafos» y el perfil filtren por autor.
+- [x] **Módulo de seguridad** (back en la rama `seguridad`, front en `seguridad-front`; sin merge todavía):
+  - login con JWT y roles `PADRE`, `MEDICO` y `MEDICO_SUPERVISOR`; toda la API pide token y CORS solo acepta los orígenes del front;
+  - el autor y la institución salen de la cuenta, y «Mis subgrafos» filtra por autor;
+  - el recorrido queda ligado al padre que lo inició;
+  - las pantallas de supervisor no están en el front: el supervisor trabaja por API (`pruebas_manuales/pruebas_seguridad.md`).
 - [ ] **Integrar las ramas.**
   - En el back, revisar y hacer merge de `autoria` → `navegacion` → `develop`.
   - En el front, hacer merge de `autoria` hacia `develop`.
@@ -259,7 +273,7 @@ La tarea corre sola a las 3:30. Para probarla sin esperar, cambia temporalmente 
 - [ ] **Retiro urgente** (opcional, más adelante): cortar también los recorridos en curso por un subgrafo retirado por un error clínico grave. Hoy quien ya iba por él sigue viéndolo hasta que termine.
 - [ ] **Cambiar la categoría** después de crear. Hoy se muestra pero no se edita; habría que mover la opción entre preguntas puente al republicar.
 - [ ] **Vista previa como cuidadora** antes de publicar: recorrer el subgrafo con el mismo motor sin publicarlo.
-- [ ] **Revisión o aprobación clínica** antes de publicar, por ejemplo que otro médico apruebe. Hoy cualquiera publica directo.
+- [x] **Revisión clínica** antes de publicar (rama `seguridad`): el médico envía a revisión y un supervisor que no sea el autor aprueba (y eso publica) o rechaza con un comentario.
 - [x] **Limpieza de versiones del contenido e imágenes sin uso.** Una tarea diaria (3:30; `signbb.limpieza.cron`, se apaga con `signbb.limpieza.activa=false`) sin endpoint. Versiones: conserva las 20 más recientes (la vigente siempre) y las reemplazadas hace menos de 25 h; borra el resto de la base, de Redis y de la memoria. Imágenes: borra de Silo las que no están en ningún lienzo, copia publicada, grafo ni versión conservada, y nunca las subidas hace menos de 24 h ni archivos con otro nombre. Ante la duda no borra. Código en `mantenimiento/`.
 - [ ] **Historial de versiones y auditoría:** quién cambió qué y cuándo, y volver a una versión publicada anterior.
 - [ ] **Administrar categorías desde la interfaz.** Hoy se agregan editando `grafo_raiz.json`, que existe en dos copias que deben quedar idénticas, y requiere volver a sembrar la base.

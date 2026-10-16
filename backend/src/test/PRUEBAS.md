@@ -2,7 +2,8 @@
 
 Esta sección reúne la documentación de la **suite de pruebas del backend**
 (Spring Boot 4.1.1, Java 25). Cubre los TADs clínicos, el motor de navegación,
-el motor de reglas, la autoría (lienzo y reglas) y la captura de observaciones.
+el motor de reglas, la autoría (lienzo, reglas y revisión), la captura de
+observaciones y la seguridad (cuentas, roles y JWT).
 
 ## Cómo ejecutarlas
 
@@ -35,8 +36,9 @@ efímeros (`signbb-backend/.github/workflows/build.yml`).
 |---|---:|---|---|
 | Navegación: TADs, parsers, motor y servicio | 171 | JUnit 5 | \ref pruebas_navegacion "Ver página" |
 | Reglas: TAD, evaluación, servicio y mapeo JSON | 28 | JUnit 5 + Mockito | \ref pruebas_reglas "Ver página" |
-| Autoría: lienzo, subgrafos y reglas | 63 + 11 | JUnit 5 + Mockito | \ref pruebas_autoria "Ver página" |
-| Observaciones: captura y validación de respuestas | 10 | JUnit 5 + Mockito | \ref pruebas_observaciones "Ver página" |
+| Autoría: lienzo, subgrafos, reglas, autor y revisión | 194 | JUnit 5 + Mockito | \ref pruebas_autoria "Ver página" |
+| Observaciones: captura, validación y dueño del recorrido | 18 | JUnit 5 + Mockito | \ref pruebas_observaciones "Ver página" |
+| Seguridad: cuentas, login con JWT y reglas de acceso | 27 | JUnit 5 + Mockito / `@SpringBootTest` | \ref pruebas_seguridad "Ver página" |
 | Cache: contenido clínico y sesiones en Redis | — | Mockito / `@SpringBootTest` | \ref pruebas_cache "Ver página" |
 
 ## Pruebas de integración de la raíz
@@ -48,7 +50,9 @@ contexto completo:
 - `PersistenciaEstructuraJsonTest` — ida y vuelta de los documentos JSON por la
   columna `estructura` (`jsonb`) y verificación de la siembra de `DatabaseInit`.
 - `AutoriaIntegracionTest` — de punta a punta: armar un subgrafo con el servicio,
-  publicarlo y recorrerlo como la cuidadora (ver \ref pruebas_autoria).
+  aprobarlo (publicarlo) y recorrerlo como la cuidadora (ver \ref pruebas_autoria).
+- `seguridad/ReglasAccesoIntegracionTest` — la cadena de filtros real: 401 sin
+  token, 403 por rol y 404 al recorrido de otro padre (ver \ref pruebas_seguridad).
 - `CacheRedisIntegracionTest` — cache-aside con Redis real; se salta sola si el
   servicio `cache` no responde (ver \ref pruebas_cache).
 
@@ -56,7 +60,8 @@ contexto completo:
 
 El workflow `build` corre `./mvnw -B verify` con PostgreSQL y Redis como
 servicios. Las corridas y los conteos por clase se detallan en las páginas de
-cada módulo.
+cada módulo. En la rama `seguridad` (16-oct-2026) corren **528 pruebas**, sin
+fallos.
 
 > Nota: para leer reportes frescos, ejecutar `./mvnw clean` antes: `target/surefire-reports`
 > puede conservar reportes de clases que ya no existen.

@@ -1,0 +1,82 @@
+# Pruebas del módulo de seguridad {#pruebas_seguridad}
+
+> Índice general de la suite: \ref pruebas.
+
+Pruebas del paquete `org.signbb.backend.seguridad`: cuentas, roles, login con
+JWT y la cadena de filtros que decide qué puede hacer cada rol. Los roles son
+`PADRE` (se registra solo y hace recorridos), `MEDICO` (arma grafos y reglas) y
+`MEDICO_SUPERVISOR` (además revisa lo de otros médicos y administra cuentas).
+
+Las unitarias son JUnit 5 y Mockito, sin Spring, base de datos ni Redis. La de
+integración (`ReglasAccesoIntegracionTest`) levanta la aplicación completa con
+PostgreSQL y Redis, como el CI.
+
+## Mapa de la suite
+
+| Paquete | Clase | Tests | Qué cubre |
+|---|---|---:|---|
+| `servicios` | `ServicioCuentasImplTest` | 11 | registro de padres, login, alta de médicos por el supervisor y activar o desactivar cuentas |
+| `servicios` | `ServicioTokensTest` | 4 | el JWT lleva `sub`, `rol` y `nombre`; uno vencido o firmado con otra clave se rechaza; un secreto corto no arranca |
+| (raíz) | `InicializadorSeguridadTest` | 2 | el supervisor inicial se siembra una sola vez |
+| (raíz) | `ReglasAccesoIntegracionTest` | 10 | la cadena de filtros real: rutas públicas, 401 sin token, 403 por rol y dueño del recorrido |
+
+En total son **27 pruebas**. Las reglas de autor y de revisión de la autoría
+(`GuardiaAutoriaTest`, `PoliticaAccesoBorradoresTest`, `ServicioRevisionImplTest`
+y `ControladorRevisionTest`) están en \ref pruebas_autoria; la del dueño del
+recorrido, en \ref pruebas_observaciones.
+
+## Ayudas de prueba
+
+- `UsuariosPrueba`: usuarios fijos (`MEDICO_A`, `MEDICO_B`, `SUPERVISOR`) y un
+  resolvedor de `UsuarioActual` para los `standaloneSetup` de MockMvc, sin
+  Spring Security.
+- `ApiPrueba`: MockMvc con la cadena de seguridad real; ingresa, registra
+  padres, crea cuentas clínicas con el supervisor sembrado y borra al final las
+  cuentas que creó.
+
+## Qué se prueba y por qué importa
+
+### Cuentas (`ServicioCuentasImplTest`)
+- **Registro de padres.** El correo se guarda en minúsculas y sin espacios y
+  solo se guarda el hash BCrypt. Un correo repetido, un correo mal escrito o
+  una contraseña de menos de 8 caracteres dan **422**.
+- **Login.** Con los datos correctos devuelve el token. Si la contraseña está
+  mal, el correo no existe o la cuenta está inactiva, responde **401 con el
+  mismo mensaje**, para no revelar cuál de las tres falló.
+- **Cuentas clínicas.** El supervisor crea médicos con su institución. Crear un
+  `PADRE` (o sin rol) por esa vía da 422: los padres solo se registran solos.
+  Un supervisor no puede desactivarse a sí mismo.
+
+### Tokens (`ServicioTokensTest`)
+El token se firma con HS256 y el resource server lo valida: se rechaza si
+venció o si se firmó con otra clave. Un secreto de menos de 32 bytes impide
+arrancar, para que nadie despliegue con una clave débil por descuido.
+
+### Supervisor inicial (`InicializadorSeguridadTest`)
+Si no hay ningún `MEDICO_SUPERVISOR`, se crea uno con la contraseña cifrada.
+Si ya hay alguno, no hace nada, así que reiniciar el back no duplica cuentas.
+
+### Reglas de acceso (`ReglasAccesoIntegracionTest`)
+Con la aplicación completa:
+
+- sin token, la autoría, los recorridos, los usuarios y `/auth/yo` dan **401**
+  con el mismo JSON `{mensaje, avisos}` que ya entiende el front;
+- Swagger, `/media`, el login y el registro no piden token, y el *preflight*
+  `OPTIONS` del front responde 200;
+- un `PADRE` recibe **403** en la autoría y en los usuarios;
+- un `MEDICO` recibe 403 en los recorridos, los usuarios, las revisiones,
+  aprobar, rechazar y despublicar;
+- un recorrido solo lo ve quien lo inició: otro padre recibe **404** al
+  consultarlo, responderlo o retrocederlo, y no lo ve en "Mis recorridos";
+- no se puede crear un `PADRE` por la API clínica;
+- un token alterado da 401, y el token de una cuenta desactivada deja de servir.
+
+## Cómo ejecutarlas
+
+    ./mvnw test -Dtest='org.signbb.backend.seguridad.**'
+
+`ReglasAccesoIntegracionTest` requiere PostgreSQL y Redis arriba
+(`contenedores/compose.yaml`); las demás no.
+
+La prueba manual, con `curl` y por las pantallas, está en
+`pruebas_manuales/pruebas_seguridad.md`.

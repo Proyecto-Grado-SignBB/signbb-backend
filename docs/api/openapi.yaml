@@ -2,19 +2,31 @@ openapi: 3.1.0
 info:
   title: SignBB API
   description: "API REST del sistema de apoyo al triaje clínico SignBB: consulta guiada\
-    \ del cuidador (recorridos) y autoría de subgrafos clínicos. Los endpoints de\
-    \ edición de reglas se documentarán en este mismo contrato cuando estén disponibles."
+    \ del padre o acudiente (recorridos), autoría de subgrafos clínicos y reglas,\
+    \ revisión del supervisor y cuentas. Ingresa en POST /api/auth/login y usa el\
+    \ token en «Authorize»."
   version: 0.0.1
 servers:
 - url: http://localhost:8080
   description: Servidor local (perfil docker)
+security:
+- bearerAuth: []
 tags:
+- name: Sesión
+  description: "Registro de padres, ingreso con correo y contraseña y usuario actual.\
+    \ El token devuelto va en Authorization: Bearer."
+- name: Usuarios
+  description: "Cuentas clínicas (solo MEDICO_SUPERVISOR): crear médicos y supervisores,\
+    \ listarlos y activarlos o desactivarlos."
+- name: Revisión
+  description: "El médico envía su subgrafo a revisión; un supervisor que no sea el\
+    \ autor lo aprueba (y se publica) o lo rechaza con un comentario."
 - name: Consulta
   description: "Recorrido guiado del cuidador: inicia el triaje, responde cada pregunta\
     \ y consulta el estado. Toda respuesta queda auditada."
 - name: Reglas
-  description: "Panel de reglas del médico: arma y publica las bases de reglas asociadas\
-    \ a un grafo. Las operaciones que editan devuelven el borrador completo. Errores:\
+  description: "Panel de reglas del médico: arma las bases de reglas asociadas\
+    \ a un grafo; se publican al aprobar el subgrafo. Las operaciones que editan devuelven el borrador completo. Errores:\
     \ 404 si el recurso no existe; 422 con {mensaje, avisos} si la edición no es vá\
     lida o la base no se puede publicar; 409 si otra persona la cambió."
 - name: Autoría
@@ -23,6 +35,328 @@ tags:
     \ recurso no existe; 422 con {mensaje, avisos} si la edición no es válida o el\
     \ borrador no se puede publicar; 409 si otra persona lo cambió."
 paths:
+  /api/auth/registro:
+    post:
+      tags:
+      - Sesión
+      summary: Registra un padre o acudiente
+      description: "Crea la cuenta con rol PADRE y devuelve la sesión abierta. Las\
+        \ cuentas clínicas las crea un supervisor en /api/usuarios."
+      operationId: registro
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegistroRequest"
+        required: true
+      responses:
+        "201":
+          description: Cuenta creada y sesión abierta
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SesionDTO"
+        "422":
+          description: "Falta un dato, el correo ya existe o la contraseña tiene menos de 8 caracteres"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+      security: []
+  /api/auth/login:
+    post:
+      tags:
+      - Sesión
+      summary: Ingresa con correo y contraseña
+      description: "Devuelve el token, cuándo vence y la cuenta."
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+        required: true
+      responses:
+        "200":
+          description: Sesión abierta
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SesionDTO"
+        "401":
+          description: "Correo o contraseña incorrectos, o cuenta inactiva (mismo mensaje en todos los casos)"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+      security: []
+  /api/auth/yo:
+    get:
+      tags:
+      - Sesión
+      summary: Usuario actual
+      description: La cuenta dueña del token.
+      operationId: yo
+      responses:
+        "200":
+          description: La cuenta
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UsuarioDTO"
+        "401":
+          description: "Sin token, token inválido o cuenta inactiva"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+  /api/usuarios:
+    get:
+      tags:
+      - Usuarios
+      summary: Lista las cuentas clínicas
+      description: "Médicos y supervisores, por nombre."
+      operationId: listar_usuarios
+      responses:
+        "200":
+          description: Las cuentas
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UsuarioDTO"
+        "403":
+          description: Quien llama no es supervisor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+    post:
+      tags:
+      - Usuarios
+      summary: Crea una cuenta clínica
+      description: El rol debe ser MEDICO o MEDICO_SUPERVISOR.
+      operationId: crear_usuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NuevoUsuarioRequest"
+        required: true
+      responses:
+        "201":
+          description: Cuenta creada
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UsuarioDTO"
+        "403":
+          description: Quien llama no es supervisor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+        "422":
+          description: "Rol PADRE, correo repetido, contraseña corta o falta un dato"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+  /api/usuarios/{id}/activo:
+    put:
+      tags:
+      - Usuarios
+      summary: Activa o desactiva una cuenta
+      description: "Una cuenta inactiva no puede ingresar y sus tokens dejan de servir.\
+        \ Un supervisor no puede desactivarse a sí mismo."
+      operationId: cambiar_activo
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ActivoRequest"
+        required: true
+      responses:
+        "200":
+          description: Cuenta actualizada
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UsuarioDTO"
+        "403":
+          description: Quien llama no es supervisor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+        "404":
+          description: La cuenta no existe
+        "422":
+          description: Falta activo o es la propia cuenta
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+  /api/autoria/subgrafos/{id}/enviar-revision:
+    post:
+      tags:
+      - Revisión
+      summary: Envía el subgrafo a revisión
+      description: "Solo el autor. Valida los avisos del lienzo y de las reglas como al publicar."
+      operationId: enviar_revision
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Subgrafo en revisión (EN_REVISION)
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SubgrafoDTO"
+        "403":
+          description: No es el autor
+        "404":
+          description: El subgrafo no existe
+        "422":
+          description: "Hay avisos bloqueantes, ya está en revisión o no tiene cambios: el cuerpo trae los avisos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+  /api/autoria/subgrafos/{id}/retirar-revision:
+    post:
+      tags:
+      - Revisión
+      summary: Retira el subgrafo de revisión
+      description: "Solo el autor. Vuelve a BORRADOR, o a CAMBIOS_SIN_PUBLICAR si ya estaba publicado."
+      operationId: retirar_revision
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Subgrafo fuera de revisión
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SubgrafoDTO"
+        "403":
+          description: No es el autor
+        "404":
+          description: El subgrafo no existe
+        "422":
+          description: No está en revisión
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+  /api/autoria/subgrafos/{id}/aprobar:
+    post:
+      tags:
+      - Revisión
+      summary: Aprueba y publica el subgrafo
+      description: "Solo un supervisor que no sea el autor. Publica el subgrafo y su base de reglas en una sola acción."
+      operationId: aprobar
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Subgrafo publicado
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SubgrafoDTO"
+        "403":
+          description: Es el autor o no es supervisor
+        "404":
+          description: El subgrafo no existe
+        "422":
+          description: No está en revisión o no se puede publicar
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+  /api/autoria/subgrafos/{id}/rechazar:
+    post:
+      tags:
+      - Revisión
+      summary: Rechaza el subgrafo
+      description: "Solo un supervisor que no sea el autor. El comentario es obligatorio."
+      operationId: rechazar
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RechazoRequest"
+        required: false
+      responses:
+        "200":
+          description: Subgrafo devuelto al autor con el comentario
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SubgrafoDTO"
+        "403":
+          description: Es el autor o no es supervisor
+        "404":
+          description: El subgrafo no existe
+        "422":
+          description: Falta el comentario o no está en revisión
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+  /api/autoria/revisiones:
+    get:
+      tags:
+      - Revisión
+      summary: Lista las revisiones pendientes
+      description: Solo supervisor. No incluye los suyos.
+      operationId: pendientes
+      responses:
+        "200":
+          description: Subgrafos en revisión
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ResumenSubgrafoDTO"
+        "403":
+          description: Quien llama no es supervisor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
   /api/autoria/subgrafos/{id}:
     get:
       tags:
@@ -400,6 +734,21 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorAutoriaDTO"
   /api/recorridos:
+    get:
+      tags:
+      - Consulta
+      summary: Mis recorridos
+      description: "Los recorridos del padre o acudiente, del más nuevo al más viejo."
+      operationId: misRecorridos
+      responses:
+        "200":
+          description: Los recorridos del usuario actual
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ResumenRecorridoDTO"
     post:
       tags:
       - Consulta
@@ -440,7 +789,7 @@ paths:
         "400":
           description: El recorrido no tiene respuestas que deshacer
         "404":
-          description: El recorrido no existe
+          description: El recorrido no existe o es de otro padre
         "503":
           description: Caché de sesiones (Redis) no disponible
   /api/recorridos/{recorridoId}/respuestas:
@@ -474,7 +823,7 @@ paths:
         "400":
           description: La opción enviada no es válida para la pregunta actual
         "404":
-          description: El recorrido no existe
+          description: El recorrido no existe o es de otro padre
         "503":
           description: Caché de sesiones (Redis) no disponible
   /api/autoria/subgrafos:
@@ -518,13 +867,16 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorAutoriaDTO"
-  /api/autoria/subgrafos/{id}/publicar:
+  /api/autoria/subgrafos/{id}/despublicar:
     post:
       tags:
       - Autoría
-      summary: Publica el borrador
-      description: Si hay avisos bloqueantes responde 422 con ellos en el cuerpo.
-      operationId: publicar
+      summary: Despublica el subgrafo
+      description: "Solo supervisor. Las cuidadoras que empiecen un recorrido nuevo\
+        \ ya no lo ven. Las que ya estaban en medio de un recorrido lo terminan. Se\
+        \ retira también su base de reglas; el borrador del lienzo y el de reglas vuelven\
+        \ a BORRADOR con su documento intacto."
+      operationId: despublicar
       parameters:
       - name: id
         in: path
@@ -534,11 +886,17 @@ paths:
           format: int64
       responses:
         "200":
-          description: Subgrafo publicado y navegable por la cuidadora
+          description: Subgrafo despublicado
           content:
             '*/*':
               schema:
                 $ref: "#/components/schemas/SubgrafoDTO"
+        "403":
+          description: Quien llama no es supervisor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
         "404":
           description: El borrador no existe
         "409":
@@ -548,7 +906,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorAutoriaDTO"
         "422":
-          description: "No se puede publicar: el cuerpo trae los avisos"
+          description: "No está publicado, o era el único subgrafo publicado"
           content:
             application/json:
               schema:
@@ -664,42 +1022,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorAutoriaDTO"
-  /api/autoria/bases/{id}/publicar:
-    post:
-      tags:
-      - Reglas
-      summary: Publica el borrador de reglas
-      description: "Deja la base como la activa del grafo. Si el lienzo del subgrafo\
-        \ cambió sin publicar, responde 422 pidiendo republicar el subgrafo primero."
-      operationId: publicar_1
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-      responses:
-        "200":
-          description: Base publicada y activa para la cuidadora
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/BaseReglaDTO"
-        "404":
-          description: El borrador no existe
-        "409":
-          description: Otra persona lo cambió al mismo tiempo
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorAutoriaDTO"
-        "422":
-          description: "No se puede publicar: el cuerpo trae el motivo o los avisos"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorAutoriaDTO"
   /api/recorridos/{recorridoId}:
     get:
       tags:
@@ -722,7 +1044,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/RecorridoDTO"
         "404":
-          description: El recorrido no existe
+          description: El recorrido no existe o es de otro padre
         "503":
           description: Caché de sesiones (Redis) no disponible
   /api/autoria/subgrafos/{id}/avisos:
@@ -817,6 +1139,119 @@ paths:
           description: No se indicó el grafo
 components:
   schemas:
+    LoginRequest:
+      type: object
+      description: Ingreso con correo y contraseña
+      properties:
+        correo:
+          type: string
+        contrasena:
+          type: string
+    RegistroRequest:
+      type: object
+      description: Registro de un padre o acudiente
+      properties:
+        nombre:
+          type: string
+        correo:
+          type: string
+        contrasena:
+          type: string
+          description: Mínimo 8 caracteres
+    UsuarioDTO:
+      type: object
+      description: Cuenta de un usuario.
+      properties:
+        id:
+          type: integer
+          format: int64
+        nombre:
+          type: string
+          description: Nombre para mostrar
+        correo:
+          type: string
+          description: Correo con el que ingresa
+        rol:
+          type: string
+          enum:
+          - PADRE
+          - MEDICO
+          - MEDICO_SUPERVISOR
+        institucion:
+          type: string
+          description: "Institución del médico, o nula"
+        activo:
+          type: boolean
+          description: Si puede ingresar
+    SesionDTO:
+      type: object
+      description: Sesión abierta.
+      properties:
+        token:
+          type: string
+          description: "JWT para Authorization: Bearer"
+        expiraEn:
+          type: string
+          format: date-time
+          description: Cuándo vence el token
+        usuario:
+          $ref: "#/components/schemas/UsuarioDTO"
+    NuevoUsuarioRequest:
+      type: object
+      description: Cuenta clínica nueva (solo MEDICO o MEDICO_SUPERVISOR)
+      properties:
+        nombre:
+          type: string
+        correo:
+          type: string
+        contrasena:
+          type: string
+          description: Mínimo 8 caracteres
+        rol:
+          type: string
+          enum:
+          - PADRE
+          - MEDICO
+          - MEDICO_SUPERVISOR
+        institucion:
+          type: string
+    ActivoRequest:
+      type: object
+      description: Activa o desactiva una cuenta
+      properties:
+        activo:
+          type: boolean
+    RechazoRequest:
+      type: object
+      description: Rechazo de una revisión.
+      properties:
+        comentario:
+          type: string
+          description: Qué debe corregir el autor (obligatorio)
+    ResumenRecorridoDTO:
+      type: object
+      description: "Fila de \"Mis recorridos\"."
+      properties:
+        recorridoId:
+          type: string
+          description: Id del recorrido
+        estado:
+          type: string
+          description: EN_CURSO o FINALIZADO
+        nivel:
+          type: string
+          description: "Nivel de alerta del resultado, o nulo si sigue en curso"
+        mensaje:
+          type: string
+          description: "Mensaje de la conclusión, o nulo si sigue en curso"
+        iniciadoEn:
+          type: string
+          format: date-time
+          description: Cuándo empezó
+        finalizadoEn:
+          type: string
+          format: date-time
+          description: "Cuándo terminó, o nulo"
     SubgrafoRequest:
       type: object
       properties:
@@ -831,10 +1266,12 @@ components:
           description: "Nombre para la familia, obligatorio: lo que verá la cuidadora"
         autor:
           type: string
-          description: Autor del contenido
+          description: "Obsoleto: se ignora; el autor sale de la cuenta que llama"
+          deprecated: true
         institucion:
           type: string
-          description: Institución del autor
+          description: "Obsoleto: se ignora; la institución sale de la cuenta que llama"
+          deprecated: true
       required:
       - etiquetaOpcion
     Aviso:
@@ -957,11 +1394,12 @@ components:
           description: Institución del autor
         estado:
           type: string
-          description: "Estado: BORRADOR, PUBLICADO o CAMBIOS_SIN_PUBLICAR"
+          description: "Estado: BORRADOR, PUBLICADO, CAMBIOS_SIN_PUBLICAR o EN_REVISION"
           enum:
           - BORRADOR
           - PUBLICADO
           - CAMBIOS_SIN_PUBLICAR
+          - EN_REVISION
         inicio:
           type: string
           description: "Id de la primera pregunta, o nulo"
@@ -987,6 +1425,17 @@ components:
           type: string
           format: date-time
           description: "Fecha de la última publicación, o nula"
+        autorId:
+          type: integer
+          format: int64
+          description: "Id de la cuenta del autor, o nulo"
+        comentarioRevision:
+          type: string
+          description: "Comentario del supervisor si rechazó la última revisión, o nulo"
+        revisadoEn:
+          type: string
+          format: date-time
+          description: "Cuándo se aprobó o rechazó la última revisión, o nulo"
     DestinoRequest:
       type: object
       description: Pregunta existente destino de una respuesta; nodoId nulo quita
@@ -1069,10 +1518,12 @@ components:
             un subgrafo)
         autor:
           type: string
-          description: Autor del contenido
+          description: "Obsoleto: se ignora; el autor sale de la cuenta que llama"
+          deprecated: true
         institucion:
           type: string
-          description: Institución del autor
+          description: "Obsoleto: se ignora; la institución sale de la cuenta que llama"
+          deprecated: true
     BaseReglaDTO:
       type: object
       description: Borrador completo de una base de reglas.
@@ -1098,11 +1549,12 @@ components:
           description: Institución del autor
         estado:
           type: string
-          description: "Estado: BORRADOR, PUBLICADO o CAMBIOS_SIN_PUBLICAR"
+          description: "Estado: BORRADOR, PUBLICADO, CAMBIOS_SIN_PUBLICAR o EN_REVISION"
           enum:
           - BORRADOR
           - PUBLICADO
           - CAMBIOS_SIN_PUBLICAR
+          - EN_REVISION
         reglas:
           type: array
           description: "Reglas del borrador, en orden"
@@ -1125,6 +1577,10 @@ components:
           type: string
           format: date-time
           description: "Fecha de la última publicación, o nula"
+        autorId:
+          type: integer
+          format: int64
+          description: "Id de la cuenta del autor, o nulo"
     Condicion:
       type: object
       properties:
@@ -1331,11 +1787,12 @@ components:
           description: Autor del contenido
         estado:
           type: string
-          description: "Estado: BORRADOR, PUBLICADO o CAMBIOS_SIN_PUBLICAR"
+          description: "Estado: BORRADOR, PUBLICADO, CAMBIOS_SIN_PUBLICAR o EN_REVISION"
           enum:
           - BORRADOR
           - PUBLICADO
           - CAMBIOS_SIN_PUBLICAR
+          - EN_REVISION
         nodos:
           type: integer
           format: int32
@@ -1348,6 +1805,17 @@ components:
           type: string
           format: date-time
           description: "Fecha de la última publicación, o nulo"
+        autorId:
+          type: integer
+          format: int64
+          description: "Id de la cuenta del autor, o nulo"
+        comentarioRevision:
+          type: string
+          description: "Comentario del supervisor si rechazó la última revisión, o nulo"
+        enviadoRevisionEn:
+          type: string
+          format: date-time
+          description: "Cuándo se envió a revisión por última vez, o nulo"
     CategoriaDTO:
       type: object
       description: "Categoría en la que se puede publicar un subgrafo: una pregunta\
@@ -1384,11 +1852,12 @@ components:
           description: Autor del contenido
         estado:
           type: string
-          description: "Estado: BORRADOR, PUBLICADO o CAMBIOS_SIN_PUBLICAR"
+          description: "Estado: BORRADOR, PUBLICADO, CAMBIOS_SIN_PUBLICAR o EN_REVISION"
           enum:
           - BORRADOR
           - PUBLICADO
           - CAMBIOS_SIN_PUBLICAR
+          - EN_REVISION
         reglas:
           type: integer
           format: int32
@@ -1401,6 +1870,10 @@ components:
           type: string
           format: date-time
           description: "Fecha de la última publicación, o nula"
+        autorId:
+          type: integer
+          format: int64
+          description: "Id de la cuenta del autor, o nulo"
     CatalogoDTO:
       type: object
       description: Catálogo de nodos y respuestas de un grafo.
@@ -1435,3 +1908,8 @@ components:
           type: string
           description: Desenlace del terminal (RECOMENDACION, CONSULTA_MEDICA o URGENCIA);
             nulo en las preguntas
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

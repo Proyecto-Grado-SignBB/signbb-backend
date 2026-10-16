@@ -19,6 +19,12 @@ El contenido de prueba es **abstracto** (sin información clínica):
 - PostgreSQL y Redis de `signbb-backend/contenedores/compose.yaml`:
   `docker compose up -d --wait`.
 - `curl`, `jq` y `docker` instalados.
+- En la rama `seguridad`, la API pide token: la preparación ingresa con el
+  supervisor sembrado, crea un médico QA (autor del contenido) y un padre QA.
+  Ya no se publica directo: `publicar` envía a revisión y el supervisor aprueba.
+  En `seguridad-front` el médico no tiene botón «Despublicar»: donde la hoja
+  diga despublicar por interfaz, usa
+  `sup -X POST "$BASE/autoria/subgrafos/$ID/despublicar"`.
 
 ## Preparación general
 
@@ -30,8 +36,21 @@ primeras disponibles.
 set -euo pipefail
 BASE=http://localhost:8080/api
 DB=contenedores-db-1
-api(){ curl -s -H 'Content-Type: application/json' "$@"; }
 psql(){ docker exec -i "$DB" psql -U admin -d signbb "$@"; }
+# Cuentas (rama seguridad): el contenido QA es del médico QA y lo publica el
+# supervisor al aprobarlo. Las cuentas se crean la primera vez; si ya existen,
+# la API responde 422 y se sigue.
+SUP_CORREO=supervisor@signbb.local; SUP_CLAVE=Supervisor123; QA_CLAVE=clave-qa-2026
+token(){ curl -s -H 'Content-Type: application/json' -X POST "$BASE/auth/login" -d "{\"correo\":\"$1\",\"contrasena\":\"$2\"}" | jq -r .token; }
+TOK_SUP=$(token "$SUP_CORREO" "$SUP_CLAVE")
+curl -s -o /dev/null -H 'Content-Type: application/json' -H "Authorization: Bearer $TOK_SUP" -X POST "$BASE/usuarios" -d "{\"nombre\":\"Médico QA\",\"correo\":\"qa.medico@signbb.local\",\"contrasena\":\"$QA_CLAVE\",\"rol\":\"MEDICO\",\"institucion\":\"QA\"}"
+curl -s -o /dev/null -H 'Content-Type: application/json' -X POST "$BASE/auth/registro" -d "{\"nombre\":\"Padre QA\",\"correo\":\"qa.padre@signbb.local\",\"contrasena\":\"$QA_CLAVE\"}"
+TOK_MED=$(token qa.medico@signbb.local "$QA_CLAVE"); TOK_PAD=$(token qa.padre@signbb.local "$QA_CLAVE")
+api(){ curl -s -H 'Content-Type: application/json' -H "Authorization: Bearer $TOK_MED" "$@"; }    # médico QA
+sup(){ curl -s -H 'Content-Type: application/json' -H "Authorization: Bearer $TOK_SUP" "$@"; }    # supervisor
+padre(){ curl -s -H 'Content-Type: application/json' -H "Authorization: Bearer $TOK_PAD" "$@"; } # padre QA
+# publicar <id>: el médico lo envía a revisión y el supervisor lo aprueba (publica subgrafo y reglas).
+publicar(){ api -X POST "$BASE/autoria/subgrafos/$1/enviar-revision" >/dev/null; sup -X POST "$BASE/autoria/subgrafos/$1/aprobar"; }
 
 # Borra QA A/QA B/QA L y sus bases publicadas o en borrador (repetible).
 limpiar_qa(){
@@ -39,9 +58,10 @@ limpiar_qa(){
     local id estado
     id=$(api "$BASE/autoria/subgrafos" | jq -r ".[]|select(.grafoId==\"$gid\")|.id")
     [ -z "$id" ] && continue
+    api -X POST "$BASE/autoria/subgrafos/$id/retirar-revision" >/dev/null  # por si quedó en revisión
     estado=$(api "$BASE/autoria/subgrafos/$id" | jq -r .estado)
     if [ "$estado" != BORRADOR ]; then
-      api -X POST "$BASE/autoria/subgrafos/$id/despublicar" >/dev/null
+      sup -X POST "$BASE/autoria/subgrafos/$id/despublicar" >/dev/null
     fi
     api -X DELETE "$BASE/autoria/subgrafos/$id" >/dev/null
   done
@@ -116,20 +136,19 @@ echo "Categorías: QA A=$PUE_A  QA B=$PUE_B  QA L=$PUE_L"
 # QA A + base QA R.
 A=$(api -X POST "$BASE/autoria/subgrafos" -d "{\"nombre\":\"QA A\",\"puenteId\":\"$PUE_A\",\"etiquetaOpcion\":\"QA A\",\"autor\":\"QA\",\"institucion\":\"QA\"}"|jq -r .id)
 read P1 RA1 RA2 RA3 < <(poblar "$A")
-api -X POST "$BASE/autoria/subgrafos/$A/publicar" | jq -e '[.avisos[]|select(.bloqueante)]|length==0'
 GRAF_A=$(api "$BASE/autoria/subgrafos/$A"|jq -r .grafoId)
 C_CON=$(api "$BASE/autoria/subgrafos/$A"|jq -r '.nodos[]|select(.texto=="Resultado consulta")|.id')
 R=$(api -X POST "$BASE/autoria/bases" -d "{\"nombre\":\"QA R\",\"descripcion\":\"Reglas QA\",\"grafoId\":\"$GRAF_A\",\"autor\":\"QA\",\"institucion\":\"QA\"}"|jq -r .id)
 api -X POST "$BASE/autoria/bases/$R/reglas" -d "{\"nombre\":\"R1\",\"descripcion\":\"A2 lleva a consulta\",\"casos\":[[{\"idNodo\":\"$P1\",\"respuesta\":\"A2\"}]],\"nivel\":\"CONSULTAR_MEDICO\",\"nodoDestino\":\"$C_CON\"}" | jq -e '[.avisos[]|select(.bloqueante)]|length==0'
-api -X POST "$BASE/autoria/bases/$R/publicar" >/dev/null
+publicar "$A" | jq -e '.estado=="PUBLICADO"' >/dev/null   # publica QA A con su base QA R
 
 # QA B (corto) y QA L (cadena larga), sin base de reglas.
 Bs=$(api -X POST "$BASE/autoria/subgrafos" -d "{\"nombre\":\"QA B\",\"puenteId\":\"$PUE_B\",\"etiquetaOpcion\":\"QA B\",\"autor\":\"QA\",\"institucion\":\"QA\"}"|jq -r .id)
 poblar "$Bs" >/dev/null
-api -X POST "$BASE/autoria/subgrafos/$Bs/publicar" >/dev/null
+publicar "$Bs" >/dev/null
 L=$(api -X POST "$BASE/autoria/subgrafos" -d "{\"nombre\":\"QA L\",\"puenteId\":\"$PUE_L\",\"etiquetaOpcion\":\"QA L\",\"autor\":\"QA\",\"institucion\":\"QA\"}"|jq -r .id)
 poblar_larga "$L" 12
-api -X POST "$BASE/autoria/subgrafos/$L/publicar" | jq -e '[.avisos[]|select(.bloqueante)]|length==0' >/dev/null
+publicar "$L" | jq -e '.estado=="PUBLICADO"' >/dev/null
 
 echo "Preparación lista: QA A id=$A grafo=$GRAF_A base=$R | QA B id=$Bs | QA L id=$L (12 pasos)"
 ```
@@ -180,7 +199,7 @@ sin la interfaz (alternativa), cambia la etiqueta y republica:
 A=$(api "$BASE/autoria/subgrafos" | jq -r '.[]|select(.grafoId=="grafo_qa_a")|.id')
 PUE=$(api "$BASE/autoria/subgrafos/$A" | jq -r .puenteId)
 api -X PUT "$BASE/autoria/subgrafos/$A" -d "{\"nombre\":\"QA A\",\"puenteId\":\"$PUE\",\"etiquetaOpcion\":\"QA A v2\",\"autor\":\"QA\",\"institucion\":\"QA\"}" >/dev/null
-api -X POST "$BASE/autoria/subgrafos/$A/publicar" >/dev/null
+publicar "$A" >/dev/null
 psql -At -c "select id,origen from version_contenido order by id desc limit 2;"
 ```
 
@@ -200,7 +219,7 @@ C_URG=$(echo "$SUB"|jq -r '.nodos[]|select(.texto=="Resultado urgente")|.id')
 R=$(api "$BASE/autoria/bases" | jq -r '.[]|select(.grafoId=="grafo_qa_a")|.id')
 RID=$(api "$BASE/autoria/bases/$R"|jq -r '.reglas[0].id')
 api -X PUT "$BASE/autoria/bases/$R/reglas/$RID" -d "{\"nombre\":\"R1\",\"descripcion\":\"A2 ahora urgencia\",\"casos\":[[{\"idNodo\":\"$P1\",\"respuesta\":\"A2\"}]],\"nivel\":\"URGENCIA\",\"nodoDestino\":\"$C_URG\"}" >/dev/null
-api -X POST "$BASE/autoria/bases/$R/publicar" >/dev/null
+publicar "$A" >/dev/null   # las reglas salen con su subgrafo
 psql -At -c "select id,origen from version_contenido order by id desc limit 2;"
 ```
 
@@ -213,7 +232,7 @@ Pasos por interfaz: ver la hoja, P-05. Antes de despublicar, crea una sesión y
 déjala en la raíz (en la app o con):
 
 ```bash
-REC=$(curl -s -X POST "$BASE/recorridos" -H 'Content-Type: application/json' -d '{}' | jq -r .recorridoId)
+REC=$(padre -X POST "$BASE/recorridos" -d '{}' | jq -r .recorridoId)   # a nombre del padre QA
 echo "Sesión en curso: $REC"
 ```
 
@@ -227,7 +246,7 @@ psql -c "select id, origen from version_contenido order by id desc limit 3;"    
 ```
 
 La sesión en curso (`$REC`) debe seguir navegando con su versión (grafo y reglas
-congelados): abre `http://localhost:4200/pregunta/$REC` y termínala.
+congelados): ingresa en `http://localhost:4200` como `qa.padre@signbb.local` (clave `clave-qa-2026`), abre `/pregunta/$REC` y termínala.
 
 ## P-06 — Despublicar borra la base de reglas y devuelve los borradores a BORRADOR
 
@@ -300,12 +319,24 @@ Borra los subgrafos y bases de prueba (autocontenido, repetible):
 
 ```bash
 BASE=http://localhost:8080/api
-api(){ curl -s -H 'Content-Type: application/json' "$@"; }
+# Cuentas (rama seguridad): el contenido QA es del médico QA y lo publica el
+# supervisor al aprobarlo. Las cuentas se crean la primera vez; si ya existen,
+# la API responde 422 y se sigue.
+SUP_CORREO=supervisor@signbb.local; SUP_CLAVE=Supervisor123; QA_CLAVE=clave-qa-2026
+token(){ curl -s -H 'Content-Type: application/json' -X POST "$BASE/auth/login" -d "{\"correo\":\"$1\",\"contrasena\":\"$2\"}" | jq -r .token; }
+TOK_SUP=$(token "$SUP_CORREO" "$SUP_CLAVE")
+curl -s -o /dev/null -H 'Content-Type: application/json' -H "Authorization: Bearer $TOK_SUP" -X POST "$BASE/usuarios" -d "{\"nombre\":\"Médico QA\",\"correo\":\"qa.medico@signbb.local\",\"contrasena\":\"$QA_CLAVE\",\"rol\":\"MEDICO\",\"institucion\":\"QA\"}"
+curl -s -o /dev/null -H 'Content-Type: application/json' -X POST "$BASE/auth/registro" -d "{\"nombre\":\"Padre QA\",\"correo\":\"qa.padre@signbb.local\",\"contrasena\":\"$QA_CLAVE\"}"
+TOK_MED=$(token qa.medico@signbb.local "$QA_CLAVE"); TOK_PAD=$(token qa.padre@signbb.local "$QA_CLAVE")
+api(){ curl -s -H 'Content-Type: application/json' -H "Authorization: Bearer $TOK_MED" "$@"; }    # médico QA
+sup(){ curl -s -H 'Content-Type: application/json' -H "Authorization: Bearer $TOK_SUP" "$@"; }    # supervisor
+padre(){ curl -s -H 'Content-Type: application/json' -H "Authorization: Bearer $TOK_PAD" "$@"; } # padre QA
 for gid in grafo_qa_a grafo_qa_b grafo_qa_l; do
   id=$(api "$BASE/autoria/subgrafos" | jq -r ".[]|select(.grafoId==\"$gid\")|.id")
   [ -z "$id" ] && continue
+  api -X POST "$BASE/autoria/subgrafos/$id/retirar-revision" >/dev/null
   estado=$(api "$BASE/autoria/subgrafos/$id" | jq -r .estado)
-  [ "$estado" != BORRADOR ] && api -X POST "$BASE/autoria/subgrafos/$id/despublicar" >/dev/null
+  [ "$estado" != BORRADOR ] && sup -X POST "$BASE/autoria/subgrafos/$id/despublicar" >/dev/null
   api -X DELETE "$BASE/autoria/subgrafos/$id" >/dev/null
 done
 for bid in $(api "$BASE/autoria/bases" | jq -r '.[]|select(.grafoId|startswith("grafo_qa"))|.id'); do
