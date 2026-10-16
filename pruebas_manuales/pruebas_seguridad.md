@@ -5,10 +5,10 @@ Plan de prueba manual del módulo de seguridad (rama `seguridad` del back y
 
 - **Parte A, por API (S-01 a S-17):** cada caso trae sus comandos `curl`, el
   código HTTP esperado y, cuando aplica, la verificación en la base.
-- **Parte B, por las pantallas (U-01 a U-17):** cada caso trae los pasos y lo
-  que se debe ver. Lo del supervisor (aprobar, rechazar, crear médicos,
-  desactivar cuentas) no tiene pantallas: se hace con los comandos de la parte A
-  o con Swagger.
+- **Parte B, por las pantallas (U-01 a U-19):** cada caso trae los pasos y lo
+  que se debe ver. El supervisor ve en las pantallas lo de los otros médicos,
+  pero solo para leerlo. Aprobar, rechazar, crear médicos y desactivar cuentas
+  no tienen pantallas: se hacen con los comandos de la parte A o con Swagger.
 
 Las pruebas automáticas del mismo módulo están en
 `backend/src/test/java/org/signbb/backend/seguridad/README.md`.
@@ -364,10 +364,12 @@ Las cuentas de médico se crean con S-04 (o con Swagger).
 | U-08 | Con curl (S-12), el supervisor rechaza el subgrafo con un comentario | — |
 | U-09 | A recarga el subgrafo | Un aviso arriba con el comentario del supervisor; puede editar y volver a enviar. No hay botón «Despublicar» |
 | U-10 | A lo reenvía. Con curl (S-13), el supervisor lo aprueba. A recarga | «Publicado» |
-| U-11 | Abre `http://localhost:4200` y pulsa «Comenzar» | Lleva al ingreso; desde ahí «Crear cuenta» y registra a P1 |
+| U-11 | Abre `http://localhost:4200` sin sesión. Pulsa «Crear cuenta» y registra a P1 | Primero, la bienvenida que explica la herramienta, con «Crear cuenta» e «Ingresar». Al registrarse llega al inicio con «Hola, Papá Uno» |
 | U-12 | Como P1, recorre Piel → «Piel u ojos amarillos» hasta la conclusión | Aparece la opción nueva y se muestra el resultado |
 | U-13 | Como P1, abre «Mis recorridos» | El recorrido aparece como terminado y «Ver resultado» lo abre |
-| U-14 | Copia la URL del resultado, cierra sesión, registra a P2 y pega la URL | «Ese recorrido no está disponible» |
+| U-14 | Copia la URL del resultado, cierra sesión desde el perfil, registra a P2 y pega la URL | Vuelve al inicio con «Ese recorrido no está disponible» |
 | U-15 | En `:4200` ingresa con la cuenta de A; en `:4300`, con la de P1 | Las dos se rechazan, cada una con su mensaje (usar la otra app) |
 | U-16 | Con curl (S-16), el supervisor desactiva a B. B intenta ingresar en `:4300` | B no puede entrar |
 | U-17 | En `:4300`, borra la sesión en DevTools → Application → Local Storage y recarga | Vuelve a la pantalla de ingreso |
+| U-18 | Como P1, en el inicio pulsa el ícono de perfil (arriba a la izquierda) y luego «Cerrar sesión» | El perfil muestra el nombre, el correo y «Cuenta de familia». Al cerrar sesión vuelve a la bienvenida, y el inicio ya no tiene «Cerrar sesión» |
+| U-19 | Con un subgrafo de A en el tablero (U-05), ingresa en `:4300` como el supervisor y abre ese subgrafo y su base de reglas | En el tablero, «De otros médicos» con «Por Dra. Ana Médica» y sin «Eliminar». El lienzo dice «Creado por Dra. Ana Médica · Fundación Canguro», no tiene botones de edición ni "+", y avisa que solo su autor puede editarlo. En las reglas se puede elegir cada regla, pero no editarla |
