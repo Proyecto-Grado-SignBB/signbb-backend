@@ -50,8 +50,8 @@ public class RepositorioSesionRedis implements RepositorioSesion {
     /** Prefijo de las claves de sesión en Redis. */
     public static final String PREFIJO_SESION = "signbb:sesion:";
 
-    /** TTL de las sesiones: las consultas abandonadas expiran solas. */
-    private static final Duration TTL = Duration.ofHours(24);
+    /** TTL de las sesiones: las consultas abandonadas expiran solas (8 h). */
+    private static final Duration TTL = Duration.ofHours(8);
 
     private final StringRedisTemplate redis;
     private final ContextoClinico contexto;

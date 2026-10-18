@@ -56,6 +56,13 @@ public class UsuarioEntity {
 
     private Instant creadoEn;
 
+    /**
+     * Desde cuándo valen los tokens: uno emitido antes de este instante ya no
+     * sirve. Lo fija «cerrar sesión en todos los dispositivos»; {@code null}
+     * si nunca se usó.
+     */
+    private Instant sesionValidaDesde;
+
     /** El usuario de la petición en curso que corresponde a esta cuenta. */
     public UsuarioActual comoActual() {
         return new UsuarioActual(id, nombre, correo, rol, institucion);

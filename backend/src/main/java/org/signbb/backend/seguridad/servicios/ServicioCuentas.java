@@ -1,5 +1,6 @@
 package org.signbb.backend.seguridad.servicios;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +26,8 @@ public interface ServicioCuentas {
     SesionDTO registrarPadre(RegistroRequest request);
 
     /**
-     * Abre una sesión con correo y contraseña.
+     * Abre una sesión con correo y contraseña. Si es un padre y el dispositivo
+     * es seguro, el token dura más tiempo.
      *
      * @throws CredencialesInvalidasException con el mismo mensaje si el correo
      *                                        no existe, la contraseña no
@@ -36,6 +38,21 @@ public interface ServicioCuentas {
 
     /** La cuenta activa con ese id, como usuario de la petición en curso. */
     Optional<UsuarioActual> usuarioActivo(Long id);
+
+    /**
+     * La cuenta activa con ese id, solo si el token emitido en {@code emitidoEn}
+     * sigue valiendo: vacío si la cuenta no existe, está inactiva o cerró sus
+     * sesiones después de que se emitió el token.
+     */
+    Optional<UsuarioActual> usuarioActivo(Long id, Instant emitidoEn);
+
+    /**
+     * Cierra la sesión en todos los dispositivos: los tokens emitidos hasta
+     * ahora dejan de servir.
+     *
+     * @throws CredencialesInvalidasException si la cuenta ya no existe
+     */
+    void cerrarTodasLasSesiones(UsuarioActual usuario);
 
     /** La cuenta del usuario actual. */
     UsuarioDTO yo(UsuarioActual usuario);

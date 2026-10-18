@@ -33,6 +33,9 @@ public class ServicioCuentasImpl implements ServicioCuentas {
     /** Mismo mensaje para todo fallo de ingreso: no revela qué falló. */
     static final String MENSAJE_INGRESO = "Correo o contraseña incorrectos.";
 
+    /** Mensaje del 401 cuando la sesión ya no sirve. */
+    static final String MENSAJE_SESION_TERMINADA = "Tu sesión terminó. Vuelve a ingresar.";
+
     private final RepositorioUsuario usuarios;
     private final PasswordEncoder codificador;
     private final ServicioTokens tokens;
@@ -48,7 +51,7 @@ public class ServicioCuentasImpl implements ServicioCuentas {
     @Override
     public SesionDTO registrarPadre(RegistroRequest request) {
         UsuarioEntity u = nueva(request.nombre(), request.correo(), request.contrasena(), Rol.PADRE, null);
-        return sesion(usuarios.save(u));
+        return sesion(usuarios.save(u), request.esDispositivoSeguro());
     }
 
     @Override
@@ -60,7 +63,7 @@ public class ServicioCuentasImpl implements ServicioCuentas {
         if (u == null || !u.isActivo() || !codificador.matches(contrasena, u.getHashContrasena())) {
             throw new CredencialesInvalidasException(MENSAJE_INGRESO);
         }
-        return sesion(u);
+        return sesion(u, request.esDispositivoSeguro());
     }
 
     @Override
@@ -71,9 +74,26 @@ public class ServicioCuentasImpl implements ServicioCuentas {
 
     @Override
     @Transactional(readOnly = true)
+    public Optional<UsuarioActual> usuarioActivo(Long id, Instant emitidoEn) {
+        return usuarios.findById(id).filter(UsuarioEntity::isActivo)
+                .filter(u -> tokenVigente(u, emitidoEn)).map(UsuarioEntity::comoActual);
+    }
+
+    @Override
+    public void cerrarTodasLasSesiones(UsuarioActual usuario) {
+        UsuarioEntity u = usuarios.findById(usuario.id())
+                .orElseThrow(() -> new CredencialesInvalidasException(MENSAJE_SESION_TERMINADA));
+        // El «iat» del token va en segundos y se redondea hacia abajo, así que un
+        // token emitido en el mismo segundo del cierre también queda invalidado.
+        u.setSesionValidaDesde(Instant.now());
+        usuarios.save(u);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public UsuarioDTO yo(UsuarioActual usuario) {
         return usuarios.findById(usuario.id()).map(UsuarioDTO::desde)
-                .orElseThrow(() -> new CredencialesInvalidasException("Tu sesión terminó. Vuelve a ingresar."));
+                .orElseThrow(() -> new CredencialesInvalidasException(MENSAJE_SESION_TERMINADA));
     }
 
     @Override
@@ -131,9 +151,15 @@ public class ServicioCuentasImpl implements ServicioCuentas {
         return u;
     }
 
-    /** Abre la sesión de la cuenta. */
-    private SesionDTO sesion(UsuarioEntity u) {
-        TokenEmitido t = tokens.emitir(u);
+    /** Un token vale si se emitió desde el último «cerrar todas las sesiones». */
+    private static boolean tokenVigente(UsuarioEntity u, Instant emitidoEn) {
+        Instant desde = u.getSesionValidaDesde();
+        return desde == null || (emitidoEn != null && !emitidoEn.isBefore(desde));
+    }
+
+    /** Abre la sesión de la cuenta; el token dura según su rol y el dispositivo. */
+    private SesionDTO sesion(UsuarioEntity u, boolean dispositivoSeguro) {
+        TokenEmitido t = tokens.emitir(u, dispositivoSeguro);
         return new SesionDTO(t.token(), t.expiraEn(), UsuarioDTO.desde(u));
     }
 

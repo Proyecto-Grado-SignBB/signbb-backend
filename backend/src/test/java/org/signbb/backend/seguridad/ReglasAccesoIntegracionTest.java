@@ -1,6 +1,7 @@
 package org.signbb.backend.seguridad;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.signbb.backend.seguridad.ApiPrueba.conToken;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.options;
@@ -15,8 +16,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.signbb.backend.observaciones.datos.repositorios.RepositorioRecorridos;
 import org.signbb.backend.seguridad.datos.repositorios.RepositorioUsuario;
+import org.signbb.backend.seguridad.servicios.LimitadorIntentosLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
@@ -41,6 +44,9 @@ class ReglasAccesoIntegracionTest {
     @Autowired
     private RepositorioRecorridos recorridos;
 
+    @Autowired
+    private StringRedisTemplate redis;
+
     private ApiPrueba api;
     private MockMvc mvc;
 
@@ -53,6 +59,13 @@ class ReglasAccesoIntegracionTest {
     @AfterEach
     void limpiar() {
         api.limpiar();
+    }
+
+    /** Pide ingresar con ese correo y clave, sin exigir el resultado. */
+    private org.springframework.test.web.servlet.ResultActions intentarIngreso(String correo, String clave)
+            throws Exception {
+        return mvc.perform(post("/api/auth/login").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"correo\":\"" + correo + "\",\"contrasena\":\"" + clave + "\"}"));
     }
 
     @Test
@@ -72,7 +85,7 @@ class ReglasAccesoIntegracionTest {
         mvc.perform(get("/media/00000000-0000-0000-0000-000000000000.png"))
                 .andExpect(r -> assertNotEquals(401, r.getResponse().getStatus()));
         mvc.perform(post("/api/auth/login").contentType(MediaType.APPLICATION_JSON)
-                .content("{\"correo\":\"nadie@prueba.signbb\",\"contrasena\":\"x\"}"))
+                .content("{\"correo\":\"nadie-" + System.nanoTime() + "@prueba.signbb\",\"contrasena\":\"x\"}"))
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.mensaje").value("Correo o contraseña incorrectos."));
     }
@@ -95,6 +108,62 @@ class ReglasAccesoIntegracionTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.rol").value("MEDICO_SUPERVISOR"))
                 .andExpect(jsonPath("$.correo").value(ApiPrueba.SUPERVISOR));
+    }
+
+    @Test
+    void cerrarTodasInvalidaLosTokensAnterioresYPermiteIngresarDeNuevo() throws Exception {
+        ApiPrueba.Cuenta padre = api.registrarPadre("padre-cierre");
+        String otroDispositivo = api.ingresar(padre.correo(), ApiPrueba.CLAVE);
+
+        mvc.perform(conToken(post("/api/auth/cerrar-todas"), padre.token())).andExpect(status().isNoContent());
+
+        mvc.perform(conToken(get("/api/auth/yo"), padre.token())).andExpect(status().isUnauthorized());
+        mvc.perform(conToken(get("/api/auth/yo"), otroDispositivo)).andExpect(status().isUnauthorized());
+        // El «iat» va en segundos: un token emitido en el segundo del cierre no sirve.
+        Thread.sleep(1100);
+        String nuevo = api.ingresar(padre.correo(), ApiPrueba.CLAVE);
+        mvc.perform(conToken(get("/api/auth/yo"), nuevo)).andExpect(status().isOk());
+    }
+
+    @Test
+    void cincoFallosBloqueanElIngresoAunConLaClaveCorrecta() throws Exception {
+        ApiPrueba.Cuenta padre = api.registrarPadre("padre-bloqueo");
+        try {
+            for (int i = 0; i < 5; i++) {
+                intentarIngreso(padre.correo(), "clave-mala").andExpect(status().isUnauthorized());
+            }
+
+            intentarIngreso(padre.correo(), "clave-mala").andExpect(status().isTooManyRequests())
+                    .andExpect(header().exists("Retry-After"))
+                    .andExpect(r -> assertTrue(JsonPath.<String>read(r.getResponse().getContentAsString(), "$.mensaje")
+                            .startsWith("Demasiados intentos")));
+            intentarIngreso(padre.correo(), ApiPrueba.CLAVE).andExpect(status().isTooManyRequests());
+            // Otro correo no se ve afectado.
+            api.registrarPadre("padre-libre");
+        } finally {
+            redis.delete(LimitadorIntentosLogin.PREFIJO + padre.correo());
+        }
+    }
+
+    @Test
+    void unIngresoCorrectoReiniciaElContadorDeFallos() throws Exception {
+        ApiPrueba.Cuenta padre = api.registrarPadre("padre-reinicio");
+        try {
+            for (int i = 0; i < 4; i++) {
+                intentarIngreso(padre.correo(), "clave-mala").andExpect(status().isUnauthorized());
+            }
+            intentarIngreso(padre.correo(), ApiPrueba.CLAVE).andExpect(status().isOk());
+            for (int i = 0; i < 4; i++) {
+                intentarIngreso(padre.correo(), "clave-mala").andExpect(status().isUnauthorized());
+            }
+        } finally {
+            redis.delete(LimitadorIntentosLogin.PREFIJO + padre.correo());
+        }
+    }
+
+    @Test
+    void cerrarTodasPideToken() throws Exception {
+        mvc.perform(post("/api/auth/cerrar-todas")).andExpect(status().isUnauthorized());
     }
 
     @Test

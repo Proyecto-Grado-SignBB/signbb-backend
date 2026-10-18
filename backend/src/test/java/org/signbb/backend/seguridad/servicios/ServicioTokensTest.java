@@ -48,6 +48,42 @@ class ServicioTokensTest {
     }
 
     @Test
+    void laDuracionDependeDelRolYDelDispositivoSeguro() {
+        ServicioTokens tokens = new ServicioTokens(ConfiguracionSeguridad.codificador(CLAVE), Duration.ofHours(8),
+                Duration.ofHours(24), Duration.ofDays(30));
+        Instant ahora = Instant.now();
+
+        Duration padre = Duration.between(ahora, tokens.emitir(usuario(Rol.PADRE), false).expiraEn());
+        Duration padreSeguro = Duration.between(ahora, tokens.emitir(usuario(Rol.PADRE), true).expiraEn());
+        Duration medicoSeguro = Duration.between(ahora, tokens.emitir(usuario(Rol.MEDICO), true).expiraEn());
+        Duration supervisor = Duration.between(ahora, tokens.emitir(usuario(Rol.MEDICO_SUPERVISOR), false).expiraEn());
+
+        assertNear(Duration.ofHours(24), padre);
+        assertNear(Duration.ofDays(30), padreSeguro);
+        assertNear(Duration.ofHours(8), medicoSeguro);
+        assertNear(Duration.ofHours(8), supervisor);
+    }
+
+    @Test
+    void sinIndicarDispositivoSeguroUnPadreRecibe24Horas() {
+        ServicioTokens tokens = new ServicioTokens(ConfiguracionSeguridad.codificador(CLAVE), Duration.ofHours(8));
+
+        Duration padre = Duration.between(Instant.now(), tokens.emitir(usuario(Rol.PADRE)).expiraEn());
+
+        assertNear(Duration.ofHours(24), padre);
+    }
+
+    @Test
+    void elTokenDeUnPadreSeguroSeDecodificaConSuRol() {
+        ServicioTokens tokens = new ServicioTokens(ConfiguracionSeguridad.codificador(CLAVE), Duration.ofHours(8));
+
+        Jwt jwt = decodificador.decode(tokens.emitir(usuario(Rol.PADRE), true).token());
+
+        assertEquals("PADRE", jwt.getClaimAsString("rol"));
+        assertTrue(jwt.getExpiresAt().isAfter(Instant.now().plus(Duration.ofDays(29))));
+    }
+
+    @Test
     void unTokenVencidoSeRechaza() {
         // Vencido hace una hora, más que la tolerancia de reloj (60 s) del decodificador.
         Instant hace2h = Instant.now().minus(Duration.ofHours(2));
@@ -77,6 +113,18 @@ class ServicioTokensTest {
     @Test
     void unSecretoCortoNoArranca() {
         assertThrows(IllegalStateException.class, () -> ConfiguracionSeguridad.clave("corto"));
+    }
+
+    /** Comprueba que la duración real esté a pocos segundos de la esperada. */
+    private static void assertNear(Duration esperada, Duration real) {
+        assertTrue(real.minus(esperada).abs().compareTo(Duration.ofSeconds(30)) < 0,
+                "esperaba cerca de " + esperada + " y fue " + real);
+    }
+
+    private static UsuarioEntity usuario(Rol rol) {
+        UsuarioEntity u = medico();
+        u.setRol(rol);
+        return u;
     }
 
     private static UsuarioEntity medico() {

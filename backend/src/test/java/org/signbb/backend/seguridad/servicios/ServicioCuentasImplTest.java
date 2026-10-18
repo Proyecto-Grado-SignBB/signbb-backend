@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -54,7 +56,7 @@ class ServicioCuentasImplTest {
             }
             return u;
         });
-        when(tokens.emitir(any(UsuarioEntity.class)))
+        when(tokens.emitir(any(UsuarioEntity.class), anyBoolean()))
                 .thenReturn(new TokenEmitido("token", Instant.parse("2026-01-01T08:00:00Z")));
     }
 
@@ -124,6 +126,27 @@ class ServicioCuentasImplTest {
     }
 
     @Test
+    void ingresarPasaElDispositivoSeguroAlEmisorDeTokens() {
+        UsuarioEntity ana = cuenta(3L, "ana@correo.com", "secreta123", Rol.PADRE, true);
+
+        servicio.ingresar(new LoginRequest("ana@correo.com", "secreta123", true));
+        servicio.ingresar(new LoginRequest("ana@correo.com", "secreta123", false));
+        servicio.ingresar(new LoginRequest("ana@correo.com", "secreta123"));
+
+        verify(tokens).emitir(ana, true);
+        verify(tokens, org.mockito.Mockito.times(2)).emitir(ana, false);
+    }
+
+    @Test
+    void registrarPadrePasaElDispositivoSeguroAlEmisorDeTokens() {
+        servicio.registrarPadre(new RegistroRequest("Ana", "ana@correo.com", "secreta123", true));
+        servicio.registrarPadre(new RegistroRequest("Beto", "beto@correo.com", "secreta123"));
+
+        verify(tokens).emitir(any(UsuarioEntity.class), eq(true));
+        verify(tokens).emitir(any(UsuarioEntity.class), eq(false));
+    }
+
+    @Test
     void usuarioActivoIgnoraLasCuentasInactivas() {
         cuenta(3L, "ana@correo.com", "secreta123", Rol.PADRE, true);
         cuenta(4L, "inactiva@correo.com", "secreta123", Rol.MEDICO, false);
@@ -131,6 +154,44 @@ class ServicioCuentasImplTest {
         assertEquals(Rol.PADRE, servicio.usuarioActivo(3L).orElseThrow().rol());
         assertTrue(servicio.usuarioActivo(4L).isEmpty());
         assertTrue(servicio.usuarioActivo(99L).isEmpty());
+    }
+
+    @Test
+    void cerrarTodasLasSesionesInvalidaLosTokensEmitidosAntes() {
+        UsuarioEntity ana = cuenta(3L, "ana@correo.com", "secreta123", Rol.PADRE, true);
+        Instant antes = Instant.now().minusSeconds(60);
+
+        servicio.cerrarTodasLasSesiones(ana.comoActual());
+
+        assertTrue(ana.getSesionValidaDesde() != null);
+        assertTrue(servicio.usuarioActivo(3L, antes).isEmpty());
+        assertTrue(servicio.usuarioActivo(3L, null).isEmpty());
+        assertEquals(Rol.PADRE, servicio.usuarioActivo(3L, Instant.now().plusSeconds(5)).orElseThrow().rol());
+        verify(usuarios).save(ana);
+    }
+
+    @Test
+    void sinCerrarSesionesTodoTokenValido() {
+        cuenta(3L, "ana@correo.com", "secreta123", Rol.PADRE, true);
+
+        assertEquals(Rol.PADRE, servicio.usuarioActivo(3L, Instant.now().minusSeconds(3600)).orElseThrow().rol());
+        assertEquals(Rol.PADRE, servicio.usuarioActivo(3L, null).orElseThrow().rol());
+    }
+
+    @Test
+    void usuarioActivoConFechaTambienIgnoraLasCuentasInactivas() {
+        cuenta(4L, "inactiva@correo.com", "secreta123", Rol.MEDICO, false);
+
+        assertTrue(servicio.usuarioActivo(4L, Instant.now()).isEmpty());
+        assertTrue(servicio.usuarioActivo(99L, Instant.now()).isEmpty());
+    }
+
+    @Test
+    void cerrarTodasLasSesionesDeUnaCuentaQueYaNoExisteDa401() {
+        UsuarioActual fantasma = new UsuarioActual(99L, "Fantasma", "f@x.co", Rol.PADRE, null);
+
+        assertThrows(CredencialesInvalidasException.class, () -> servicio.cerrarTodasLasSesiones(fantasma));
+        verify(usuarios, never()).save(any(UsuarioEntity.class));
     }
 
     @Test

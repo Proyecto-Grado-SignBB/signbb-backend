@@ -15,8 +15,9 @@ import org.springframework.stereotype.Component;
 /**
  * Convierte un JWT ya validado en la autenticación de la petición. Busca la
  * cuenta por el {@code sub}: si no existe o está inactiva el token deja de
- * servir (401) aunque no haya vencido. El rol sale de la cuenta guardada, no
- * del token, así un cambio de rol aplica de inmediato. El principal queda
+ * servir (401) aunque no haya vencido; lo mismo si la cuenta cerró sus
+ * sesiones después de que se emitió el token. El rol sale de la cuenta
+ * guardada, no del token, así un cambio de rol aplica de inmediato. El principal queda
  * como {@link UsuarioActual}.
  */
 @Component
@@ -35,7 +36,7 @@ public class ConvertidorJwtUsuario implements Converter<Jwt, AbstractAuthenticat
     @Override
     public AbstractAuthenticationToken convert(Jwt jwt) {
         Long id = idDe(jwt);
-        UsuarioActual usuario = id == null ? null : cuentas.usuarioActivo(id).orElse(null);
+        UsuarioActual usuario = id == null ? null : cuentas.usuarioActivo(id, jwt.getIssuedAt()).orElse(null);
         if (usuario == null) {
             throw new InvalidBearerTokenException(SESION_TERMINADA);
         }

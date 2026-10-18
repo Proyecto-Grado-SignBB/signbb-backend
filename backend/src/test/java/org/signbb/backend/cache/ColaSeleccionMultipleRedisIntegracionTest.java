@@ -205,8 +205,8 @@ class ColaSeleccionMultipleRedisIntegracionTest {
 
         Long segundos = redis.getExpire(RepositorioSesionRedis.PREFIJO_SESION + id);
         assertNotNull(segundos);
-        assertTrue(segundos > 0 && segundos <= Duration.ofHours(24).toSeconds(),
-                "la sesión debe tener TTL de hasta 24 h, tiene " + segundos);
+        assertTrue(segundos > 0 && segundos <= Duration.ofHours(8).toSeconds(),
+                "la sesión debe tener TTL de hasta 8 h, tiene " + segundos);
 
         SesionTriaje recargada = recargar(id);
         assertEquals("qa", recargada.getUltimoPaso().preguntaActual().getId());
