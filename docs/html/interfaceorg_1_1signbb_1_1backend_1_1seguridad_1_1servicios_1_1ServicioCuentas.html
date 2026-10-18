@@ -132,6 +132,10 @@ Métodos públicos</h2></td></tr>
 <tr class="memdesc:a86b6446a9a1d73a01debd9f5361bf0fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abre una sesión con correo y contraseña.  <br /></td></tr>
 <tr class="memitem:a87382b7724f31f9f91d759498addb78b" id="r_a87382b7724f31f9f91d759498addb78b"><td class="memItemLeft">Optional&lt; UsuarioActual &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a87382b7724f31f9f91d759498addb78b">usuarioActivo</a> (Long id)</td></tr>
 <tr class="memdesc:a87382b7724f31f9f91d759498addb78b"><td class="mdescLeft">&#160;</td><td class="mdescRight">La cuenta activa con ese id, como usuario de la petición en curso.  <br /></td></tr>
+<tr class="memitem:ab396cfbe3f3d937df74fb6cc33a1fbf8" id="r_ab396cfbe3f3d937df74fb6cc33a1fbf8"><td class="memItemLeft">Optional&lt; UsuarioActual &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ab396cfbe3f3d937df74fb6cc33a1fbf8">usuarioActivo</a> (Long id, Instant emitidoEn)</td></tr>
+<tr class="memdesc:ab396cfbe3f3d937df74fb6cc33a1fbf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">La cuenta activa con ese id, solo si el token emitido en <code class="JavaDocCode">emitidoEn</code> sigue valiendo: vacío si la cuenta no existe, está inactiva o cerró sus sesiones después de que se emitió el token.  <br /></td></tr>
+<tr class="memitem:a395d8fcd0a4786b92b5a7f479e92b684" id="r_a395d8fcd0a4786b92b5a7f479e92b684"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a395d8fcd0a4786b92b5a7f479e92b684">cerrarTodasLasSesiones</a> (UsuarioActual usuario)</td></tr>
+<tr class="memdesc:a395d8fcd0a4786b92b5a7f479e92b684"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cierra la sesión en todos los dispositivos: los tokens emitidos hasta ahora dejan de servir.  <br /></td></tr>
 <tr class="memitem:a08a4c862bacd1edcff1c38332af65120" id="r_a08a4c862bacd1edcff1c38332af65120"><td class="memItemLeft">UsuarioDTO&#160;</td><td class="memItemRight"><a class="el" href="#a08a4c862bacd1edcff1c38332af65120">yo</a> (UsuarioActual usuario)</td></tr>
 <tr class="memdesc:a08a4c862bacd1edcff1c38332af65120"><td class="mdescLeft">&#160;</td><td class="mdescRight">La cuenta del usuario actual.  <br /></td></tr>
 <tr class="memitem:a400790654bb1050e19f44d9d09515435" id="r_a400790654bb1050e19f44d9d09515435"><td class="memItemLeft">UsuarioDTO&#160;</td><td class="memItemRight"><a class="el" href="#a400790654bb1050e19f44d9d09515435">crearClinico</a> (NuevoUsuarioRequest request)</td></tr>
@@ -180,6 +184,33 @@ Métodos públicos</h2></td></tr>
 
 </div>
 </div>
+<a id="a395d8fcd0a4786b92b5a7f479e92b684" name="a395d8fcd0a4786b92b5a7f479e92b684"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a395d8fcd0a4786b92b5a7f479e92b684">&#9670;&#160;</a></span>cerrarTodasLasSesiones()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void org.signbb.backend.seguridad.servicios.ServicioCuentas.cerrarTodasLasSesiones </td>
+          <td>(</td>
+          <td class="paramtype">UsuarioActual</td>          <td class="paramname"><span class="paramname"><em>usuario</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Cierra la sesión en todos los dispositivos: los tokens emitidos hasta ahora dejan de servir. </p>
+<dl class="exception"><dt>Excepciones</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CredencialesInvalidasException.html" title="No se pudo identificar al usuario: correo o contraseña incorrectos, cuenta inactiva o sesión que ya n...">CredencialesInvalidasException</a></td><td>si la cuenta ya no existe </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentasImpl.html#a5658ec87bcc525d3828778e8bda9b405">org.signbb.backend.seguridad.servicios.ServicioCuentasImpl</a>.</p>
+
+</div>
+</div>
 <a id="a400790654bb1050e19f44d9d09515435" name="a400790654bb1050e19f44d9d09515435"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a400790654bb1050e19f44d9d09515435">&#9670;&#160;</a></span>crearClinico()</h2>
 
@@ -223,6 +254,7 @@ Métodos públicos</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Abre una sesión con correo y contraseña. </p>
+<p>Si es un padre y el dispositivo es seguro, el token dura más tiempo.</p>
 <dl class="exception"><dt>Excepciones</dt><dd>
   <table class="exception">
     <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CredencialesInvalidasException.html" title="No se pudo identificar al usuario: correo o contraseña incorrectos, cuenta inactiva o sesión que ya n...">CredencialesInvalidasException</a></td><td>con el mismo mensaje si el correo no existe, la contraseña no coincide o la cuenta está inactiva </td></tr>
@@ -283,7 +315,7 @@ Métodos públicos</h2></td></tr>
 </div>
 </div>
 <a id="a87382b7724f31f9f91d759498addb78b" name="a87382b7724f31f9f91d759498addb78b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a87382b7724f31f9f91d759498addb78b">&#9670;&#160;</a></span>usuarioActivo()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a87382b7724f31f9f91d759498addb78b">&#9670;&#160;</a></span>usuarioActivo() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -300,6 +332,31 @@ Métodos públicos</h2></td></tr>
 <p>La cuenta activa con ese id, como usuario de la petición en curso. </p>
 
 <p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentasImpl.html#ad8e575143f0329c0f55eab8c126d6a75">org.signbb.backend.seguridad.servicios.ServicioCuentasImpl</a>.</p>
+
+</div>
+</div>
+<a id="ab396cfbe3f3d937df74fb6cc33a1fbf8" name="ab396cfbe3f3d937df74fb6cc33a1fbf8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab396cfbe3f3d937df74fb6cc33a1fbf8">&#9670;&#160;</a></span>usuarioActivo() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Optional&lt; UsuarioActual &gt; org.signbb.backend.seguridad.servicios.ServicioCuentas.usuarioActivo </td>
+          <td>(</td>
+          <td class="paramtype">Long</td>          <td class="paramname"><span class="paramname"><em>id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Instant</td>          <td class="paramname"><span class="paramname"><em>emitidoEn</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>La cuenta activa con ese id, solo si el token emitido en <code class="JavaDocCode">emitidoEn</code> sigue valiendo: vacío si la cuenta no existe, está inactiva o cerró sus sesiones después de que se emitió el token. </p>
+
+<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentasImpl.html#a928631fd1c4cf84203de1d3f78711e69">org.signbb.backend.seguridad.servicios.ServicioCuentasImpl</a>.</p>
 
 </div>
 </div>

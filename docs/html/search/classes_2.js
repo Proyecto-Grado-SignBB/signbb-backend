@@ -29,6 +29,7 @@ var searchData=
   ['controladorrevisiontest_26',['ControladorRevisionTest',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorRevisionTest.html',1,'org::signbb::backend::autoria::controladores']]],
   ['controladorusuarios_27',['ControladorUsuarios',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores_1_1ControladorUsuarios.html',1,'org::signbb::backend::seguridad::controladores']]],
   ['convertidorjwtusuario_28',['ConvertidorJwtUsuario',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConvertidorJwtUsuario.html',1,'org::signbb::backend::seguridad']]],
-  ['credencialesinvalidasexception_29',['CredencialesInvalidasException',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CredencialesInvalidasException.html',1,'org::signbb::backend::seguridad::servicios']]],
-  ['cuentainvalidaexception_30',['CuentaInvalidaException',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CuentaInvalidaException.html',1,'org::signbb::backend::seguridad::servicios']]]
+  ['convertidorjwtusuariotest_29',['ConvertidorJwtUsuarioTest',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConvertidorJwtUsuarioTest.html',1,'org::signbb::backend::seguridad']]],
+  ['credencialesinvalidasexception_30',['CredencialesInvalidasException',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CredencialesInvalidasException.html',1,'org::signbb::backend::seguridad::servicios']]],
+  ['cuentainvalidaexception_31',['CuentaInvalidaException',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CuentaInvalidaException.html',1,'org::signbb::backend::seguridad::servicios']]]
 ];

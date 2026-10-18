@@ -137,7 +137,7 @@ static final String&#160;</td><td class="memItemRight"><b>SESION_TERMINADA</b> =
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Convierte un JWT ya validado en la autenticación de la petición. </p>
-<p>Busca la cuenta por el <code class="JavaDocCode">sub</code>: si no existe o está inactiva el token deja de servir (401) aunque no haya vencido. El rol sale de la cuenta guardada, no del token, así un cambio de rol aplica de inmediato. El principal queda como <code><a class="el" href="">UsuarioActual</a></code>. </p>
+<p>Busca la cuenta por el <code class="JavaDocCode">sub</code>: si no existe o está inactiva el token deja de servir (401) aunque no haya vencido; lo mismo si la cuenta cerró sus sesiones después de que se emitió el token. El rol sale de la cuenta guardada, no del token, así un cambio de rol aplica de inmediato. El principal queda como <code><a class="el" href="">UsuarioActual</a></code>. </p>
 </div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/main/java/org/signbb/backend/seguridad/<b>ConvertidorJwtUsuario.java</b></li>
 </ul>

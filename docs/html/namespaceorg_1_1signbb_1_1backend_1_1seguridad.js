@@ -8,6 +8,7 @@ var namespaceorg_1_1signbb_1_1backend_1_1seguridad =
     [ "ConfiguracionSeguridad", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConfiguracionSeguridad.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConfiguracionSeguridad" ],
     [ "ConfiguracionWebSeguridad", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConfiguracionWebSeguridad.html", null ],
     [ "ConvertidorJwtUsuario", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConvertidorJwtUsuario.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConvertidorJwtUsuario" ],
+    [ "ConvertidorJwtUsuarioTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConvertidorJwtUsuarioTest.html", null ],
     [ "InicializadorSeguridad", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1InicializadorSeguridad.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1InicializadorSeguridad" ],
     [ "InicializadorSeguridadTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1InicializadorSeguridadTest.html", null ],
     [ "ReglasAccesoIntegracionTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ReglasAccesoIntegracionTest.html", null ],

@@ -51,6 +51,7 @@ var hierarchy =
     [ "Converter", null, [
       [ "org.signbb.backend.seguridad.ConvertidorJwtUsuario", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConvertidorJwtUsuario.html", null ]
     ] ],
+    [ "org.signbb.backend.seguridad.ConvertidorJwtUsuarioTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConvertidorJwtUsuarioTest.html", null ],
     [ "org.signbb.backend.autoria.modelo.Desenlace", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Desenlace.html", null ],
     [ "org.signbb.backend.autoria.controladores.DespuesDeRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1DespuesDeRequest.html", null ],
     [ "org.signbb.backend.autoria.controladores.DestinoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1DestinoRequest.html", null ],
@@ -87,6 +88,8 @@ var hierarchy =
     ] ],
     [ "org.signbb.backend.navegacion.datos.serializacion.JsonParserTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1JsonParserTest.html", null ],
     [ "org.signbb.backend.autoria.servicios.LienzoFiebre", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1LienzoFiebre.html", null ],
+    [ "org.signbb.backend.seguridad.servicios.LimitadorIntentosLogin", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1LimitadorIntentosLogin.html", null ],
+    [ "org.signbb.backend.seguridad.servicios.LimitadorIntentosLoginTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1LimitadorIntentosLoginTest.html", null ],
     [ "org.signbb.backend.mantenimiento.LimpiadorImagenes", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorImagenes.html", null ],
     [ "org.signbb.backend.mantenimiento.LimpiadorImagenesTest", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorImagenesTest.html", null ],
     [ "org.signbb.backend.mantenimiento.LimpiadorVersiones", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorVersiones.html", null ],
@@ -150,7 +153,8 @@ var hierarchy =
       [ "org.signbb.backend.media.ImagenInvalidaException", "classorg_1_1signbb_1_1backend_1_1media_1_1ImagenInvalidaException.html", null ],
       [ "org.signbb.backend.seguridad.servicios.AccesoDenegadoException", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1AccesoDenegadoException.html", null ],
       [ "org.signbb.backend.seguridad.servicios.CredencialesInvalidasException", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CredencialesInvalidasException.html", null ],
-      [ "org.signbb.backend.seguridad.servicios.CuentaInvalidaException", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CuentaInvalidaException.html", null ]
+      [ "org.signbb.backend.seguridad.servicios.CuentaInvalidaException", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CuentaInvalidaException.html", null ],
+      [ "org.signbb.backend.seguridad.servicios.IntentosExcedidosException", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1IntentosExcedidosException.html", null ]
     ] ],
     [ "org.signbb.backend.observaciones.modelo.SeleccionCuidador", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1SeleccionCuidador.html", null ],
     [ "org.signbb.backend.observaciones.modelo.SeleccionCuidadorTest", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1SeleccionCuidadorTest.html", null ],

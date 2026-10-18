@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 </div><!--header-->
 <div class="contents">
 
-<p>Traduce los errores de seguridad a HTTP para todos los controladores, con el mismo cuerpo <code class="JavaDocCode">{mensaje, avisos}</code> de la autoría: 401 si no se pudo identificar al usuario, 403 si no puede hacer la acción y 422 si los datos de la cuenta no sirven.  
+<p>Traduce los errores de seguridad a HTTP para todos los controladores, con el mismo cuerpo <code class="JavaDocCode">{mensaje, avisos}</code> de la autoría: 401 si no se pudo identificar al usuario, 403 si no puede hacer la acción y 422 si los datos de la cuenta no sirven, y 429 si el ingreso está bloqueado por intentos fallidos.  
  <a href="#details">Más...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -126,9 +126,12 @@ ResponseEntity&lt; ErrorAutoriaDTO &gt;&#160;</td><td class="memItemRight"><b>ac
 <tr class="memitem:a44609af10d440d1e812f1ed35597186c" id="r_a44609af10d440d1e812f1ed35597186c"><td class="memItemLeft"><a id="a44609af10d440d1e812f1ed35597186c" name="a44609af10d440d1e812f1ed35597186c"></a>
 ResponseEntity&lt; ErrorAutoriaDTO &gt;&#160;</td><td class="memItemRight"><b>cuentaInvalida</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CuentaInvalidaException.html">CuentaInvalidaException</a> e)</td></tr>
 <tr class="memdesc:a44609af10d440d1e812f1ed35597186c"><td class="mdescLeft">&#160;</td><td class="mdescRight">422: correo repetido, contraseña corta, rol no permitido. <br /></td></tr>
+<tr class="memitem:aaea66450706d24d886638c98134f808b" id="r_aaea66450706d24d886638c98134f808b"><td class="memItemLeft"><a id="aaea66450706d24d886638c98134f808b" name="aaea66450706d24d886638c98134f808b"></a>
+ResponseEntity&lt; ErrorAutoriaDTO &gt;&#160;</td><td class="memItemRight"><b>demasiadosIntentos</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1IntentosExcedidosException.html">IntentosExcedidosException</a> e)</td></tr>
+<tr class="memdesc:aaea66450706d24d886638c98134f808b"><td class="mdescLeft">&#160;</td><td class="mdescRight">429: demasiados intentos fallidos de ingreso; <code class="JavaDocCode">Retry-After</code> trae los segundos de espera. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
-<div class="textblock"><p>Traduce los errores de seguridad a HTTP para todos los controladores, con el mismo cuerpo <code class="JavaDocCode">{mensaje, avisos}</code> de la autoría: 401 si no se pudo identificar al usuario, 403 si no puede hacer la acción y 422 si los datos de la cuenta no sirven. </p>
+<div class="textblock"><p>Traduce los errores de seguridad a HTTP para todos los controladores, con el mismo cuerpo <code class="JavaDocCode">{mensaje, avisos}</code> de la autoría: 401 si no se pudo identificar al usuario, 403 si no puede hacer la acción y 422 si los datos de la cuenta no sirven, y 429 si el ingreso está bloqueado por intentos fallidos. </p>
 </div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/main/java/org/signbb/backend/seguridad/controladores/<b>ManejadorErroresSeguridad.java</b></li>
 </ul>

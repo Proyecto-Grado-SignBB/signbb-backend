@@ -7,6 +7,7 @@ var searchData=
   ['validarpublicada_4',['validarPublicada',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzoReglas.html#a9eaf766b06516b30df382527aab8a4ce',1,'org::signbb::backend::autoria::servicios::ValidadorLienzoReglas']]],
   ['valor_5',['valor',['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Desenlace.html#ac303f890d1d89a68dd242a05fbf69851',1,'org::signbb::backend::autoria::modelo::Desenlace']]],
   ['ver_6',['ver',['../classorg_1_1signbb_1_1backend_1_1media_1_1ControladorImagenes.html#ade793cd5d2398e14e3f03f79a2a0b67e',1,'org::signbb::backend::media::ControladorImagenes']]],
-  ['versionconfecha_7',['VersionConFecha',['../classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1PoliticaRetencionVersiones.html#aa49b6674f308887c3306752f8949771a',1,'org::signbb::backend::mantenimiento::PoliticaRetencionVersiones']]],
-  ['versioncontenidoentity_8',['VersionContenidoEntity',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1VersionContenidoEntity.html#afb2dc003e489f4534a641c600cb99780',1,'org::signbb::backend::navegacion::datos::entidades::VersionContenidoEntity']]]
+  ['verificar_7',['verificar',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1LimitadorIntentosLogin.html#a7a4c4260bd85e47c023e725a6c2efab8',1,'org::signbb::backend::seguridad::servicios::LimitadorIntentosLogin']]],
+  ['versionconfecha_8',['VersionConFecha',['../classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1PoliticaRetencionVersiones.html#aa49b6674f308887c3306752f8949771a',1,'org::signbb::backend::mantenimiento::PoliticaRetencionVersiones']]],
+  ['versioncontenidoentity_9',['VersionContenidoEntity',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1VersionContenidoEntity.html#afb2dc003e489f4534a641c600cb99780',1,'org::signbb::backend::navegacion::datos::entidades::VersionContenidoEntity']]]
 ];

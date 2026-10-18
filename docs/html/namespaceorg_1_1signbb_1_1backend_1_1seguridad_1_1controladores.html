@@ -123,18 +123,18 @@ Clases</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">API de cuentas clínicas, solo para supervisores (la regla está en <code class="JavaDocCode"><br/>
 ConfiguracionSeguridad</code>): crear médicos y supervisores, listarlos y activarlos o desactivarlos.  <a href="classorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores_1_1ControladorUsuarios.html#details">Más...</a><br /></td></tr>
 <tr class="memitem:ManejadorErroresSeguridad" id="r_ManejadorErroresSeguridad"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores_1_1ManejadorErroresSeguridad.html">ManejadorErroresSeguridad</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Traduce los errores de seguridad a HTTP para todos los controladores, con el mismo cuerpo <code class="JavaDocCode">{mensaje, avisos}</code> de la autoría: 401 si no se pudo identificar al usuario, 403 si no puede hacer la acción y 422 si los datos de la cuenta no sirven.  <a href="classorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores_1_1ManejadorErroresSeguridad.html#details">Más...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Traduce los errores de seguridad a HTTP para todos los controladores, con el mismo cuerpo <code class="JavaDocCode">{mensaje, avisos}</code> de la autoría: 401 si no se pudo identificar al usuario, 403 si no puede hacer la acción y 422 si los datos de la cuenta no sirven, y 429 si el ingreso está bloqueado por intentos fallidos.  <a href="classorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores_1_1ManejadorErroresSeguridad.html#details">Más...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Funciones</h2></td></tr>
 <tr class="memitem:a821ca878dd42823d851d87f7ddd25348" id="r_a821ca878dd42823d851d87f7ddd25348"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a821ca878dd42823d851d87f7ddd25348">ActivoRequest</a> (Boolean activo)</td></tr>
 <tr class="memdesc:a821ca878dd42823d851d87f7ddd25348"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activa o desactiva una cuenta.  <br /></td></tr>
-<tr class="memitem:a858b023edc1b414c6d8fce13f28f8a14" id="r_a858b023edc1b414c6d8fce13f28f8a14"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a858b023edc1b414c6d8fce13f28f8a14">LoginRequest</a> (String correo, String contrasena)</td></tr>
-<tr class="memdesc:a858b023edc1b414c6d8fce13f28f8a14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ingreso con correo y contraseña.  <br /></td></tr>
+<tr class="memitem:afbb564b86505ce534b7881a88cee66cc" id="r_afbb564b86505ce534b7881a88cee66cc"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#afbb564b86505ce534b7881a88cee66cc">LoginRequest</a> (String correo, String contrasena, @Schema(description=&quot;Dispositivo seguro: el padre mantiene la sesión abierta más tiempo &quot;+&quot;(los médicos lo ignoran). Si falta, se toma como false.&quot;, example=&quot;false&quot;) Boolean dispositivoSeguro)</td></tr>
+<tr class="memdesc:afbb564b86505ce534b7881a88cee66cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ingreso con correo y contraseña.  <br /></td></tr>
 <tr class="memitem:a3f5af4634790933be0c7a46d93e55c4f" id="r_a3f5af4634790933be0c7a46d93e55c4f"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a3f5af4634790933be0c7a46d93e55c4f">NuevoUsuarioRequest</a> (String nombre, String correo, String contrasena, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo_1_1Rol.html">Rol</a> rol, String institucion)</td></tr>
 <tr class="memdesc:a3f5af4634790933be0c7a46d93e55c4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cuenta clínica nueva, creada por un supervisor.  <br /></td></tr>
-<tr class="memitem:a29315aa5ef6cc057fa632527d398c770" id="r_a29315aa5ef6cc057fa632527d398c770"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a29315aa5ef6cc057fa632527d398c770">RegistroRequest</a> (String nombre, String correo, String contrasena)</td></tr>
-<tr class="memdesc:a29315aa5ef6cc057fa632527d398c770"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registro de un padre o acudiente en la app de consulta.  <br /></td></tr>
+<tr class="memitem:abc8146b5b7ba1b3daf7be77dd044b32f" id="r_abc8146b5b7ba1b3daf7be77dd044b32f"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#abc8146b5b7ba1b3daf7be77dd044b32f">RegistroRequest</a> (String nombre, String correo, String contrasena, @Schema(description=&quot;Dispositivo seguro: la sesión se mantiene abierta más tiempo. &quot;+&quot;Si falta, se toma como false.&quot;, example=&quot;false&quot;) Boolean dispositivoSeguro)</td></tr>
+<tr class="memdesc:abc8146b5b7ba1b3daf7be77dd044b32f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registro de un padre o acudiente en la app de consulta.  <br /></td></tr>
 <tr class="memitem:ac758d9357bebd2fbe00e782030500610" id="r_ac758d9357bebd2fbe00e782030500610"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#ac758d9357bebd2fbe00e782030500610">SesionDTO</a> (String token, Instant expiraEn, <a class="el" href="#a612c9165a517458c242c6db4b9e4db5d">UsuarioDTO</a> usuario)</td></tr>
 <tr class="memdesc:ac758d9357bebd2fbe00e782030500610"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sesión abierta: el token para <code class="JavaDocCode">Authorization: Bearer</code> y el usuario.  <br /></td></tr>
 <tr class="memitem:a612c9165a517458c242c6db4b9e4db5d" id="r_a612c9165a517458c242c6db4b9e4db5d"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a612c9165a517458c242c6db4b9e4db5d">UsuarioDTO</a> (Long id, String nombre, String correo, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo_1_1Rol.html">Rol</a> rol, String institucion, boolean activo)</td></tr>
@@ -170,8 +170,8 @@ avisos}</code> que la autoría. </p>
 
 </div>
 </div>
-<a id="a858b023edc1b414c6d8fce13f28f8a14" name="a858b023edc1b414c6d8fce13f28f8a14"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a858b023edc1b414c6d8fce13f28f8a14">&#9670;&#160;</a></span>LoginRequest()</h2>
+<a id="afbb564b86505ce534b7881a88cee66cc" name="afbb564b86505ce534b7881a88cee66cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbb564b86505ce534b7881a88cee66cc">&#9670;&#160;</a></span>LoginRequest()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -184,7 +184,12 @@ avisos}</code> que la autoría. </p>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>contrasena</em></span>&#160;)</td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>contrasena</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">@Schema(description=&quot;Dispositivo seguro: el padre mantiene la sesión abierta más tiempo &quot;+&quot;(los médicos lo ignoran). Si falta, se toma como false.&quot;, example=&quot;false&quot;) Boolean</td>          <td class="paramname"><span class="paramname"><em>dispositivoSeguro</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -194,9 +199,12 @@ avisos}</code> que la autoría. </p>
   <table class="params">
     <tr><td class="paramname">correo</td><td>correo de la cuenta </td></tr>
     <tr><td class="paramname">contrasena</td><td>contraseña de la cuenta </td></tr>
+    <tr><td class="paramname">dispositivoSeguro</td><td>si es <code class="JavaDocCode">true</code>, un padre mantiene la sesión abierta más tiempo; los médicos lo ignoran. Si falta, vale <code class="JavaDocCode">false</code> </td></tr>
   </table>
   </dd>
 </dl>
+<p>Ingreso sin indicar si el dispositivo es seguro (se toma como no seguro).</p>
+<p>True solo si el dispositivo se indicó como seguro.</p>
 
 </div>
 </div>
@@ -248,8 +256,8 @@ avisos}</code> que la autoría. </p>
 
 </div>
 </div>
-<a id="a29315aa5ef6cc057fa632527d398c770" name="a29315aa5ef6cc057fa632527d398c770"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29315aa5ef6cc057fa632527d398c770">&#9670;&#160;</a></span>RegistroRequest()</h2>
+<a id="abc8146b5b7ba1b3daf7be77dd044b32f" name="abc8146b5b7ba1b3daf7be77dd044b32f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc8146b5b7ba1b3daf7be77dd044b32f">&#9670;&#160;</a></span>RegistroRequest()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -267,7 +275,12 @@ avisos}</code> que la autoría. </p>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>contrasena</em></span>&#160;)</td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>contrasena</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">@Schema(description=&quot;Dispositivo seguro: la sesión se mantiene abierta más tiempo. &quot;+&quot;Si falta, se toma como false.&quot;, example=&quot;false&quot;) Boolean</td>          <td class="paramname"><span class="paramname"><em>dispositivoSeguro</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -278,9 +291,12 @@ avisos}</code> que la autoría. </p>
     <tr><td class="paramname">nombre</td><td>cómo quiere que lo llamen </td></tr>
     <tr><td class="paramname">correo</td><td>correo con el que va a ingresar </td></tr>
     <tr><td class="paramname">contrasena</td><td>al menos 8 caracteres </td></tr>
+    <tr><td class="paramname">dispositivoSeguro</td><td>si es <code class="JavaDocCode">true</code>, la sesión dura más tiempo. Si falta, vale <code class="JavaDocCode">false</code> </td></tr>
   </table>
   </dd>
 </dl>
+<p>Registro sin indicar si el dispositivo es seguro (se toma como no seguro).</p>
+<p>True solo si el dispositivo se indicó como seguro.</p>
 
 </div>
 </div>

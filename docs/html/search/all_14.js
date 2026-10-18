@@ -16,11 +16,12 @@ var searchData=
   ['validarpublicada_13',['validarPublicada',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzoReglas.html#a9eaf766b06516b30df382527aab8a4ce',1,'org::signbb::backend::autoria::servicios::ValidadorLienzoReglas']]],
   ['valor_14',['valor',['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Desenlace.html#ac303f890d1d89a68dd242a05fbf69851',1,'org::signbb::backend::autoria::modelo::Desenlace']]],
   ['ver_15',['ver',['../classorg_1_1signbb_1_1backend_1_1media_1_1ControladorImagenes.html#ade793cd5d2398e14e3f03f79a2a0b67e',1,'org::signbb::backend::media::ControladorImagenes']]],
-  ['versionconfecha_16',['VersionConFecha',['../classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1PoliticaRetencionVersiones.html#aa49b6674f308887c3306752f8949771a',1,'org::signbb::backend::mantenimiento::PoliticaRetencionVersiones']]],
-  ['versioncontenidoentity_17',['VersionContenidoEntity',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1VersionContenidoEntity.html',1,'org.signbb.backend.navegacion.datos.entidades.VersionContenidoEntity'],['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1VersionContenidoEntity.html#afb2dc003e489f4534a641c600cb99780',1,'org.signbb.backend.navegacion.datos.entidades.VersionContenidoEntity.VersionContenidoEntity()']]],
-  ['versiones_20del_20contenido_20republicar_20sin_20romper_20recorridos_20en_20curso_18',['Versiones del contenido (republicar sin romper recorridos en curso)',['../pruebas_autoria.html#autotoc_md15',1,'']]],
-  ['versionesdeprueba_19',['VersionesDePrueba',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1VersionesDePrueba.html',1,'org::signbb::backend::navegacion::modelo']]],
-  ['visual_20de_20base_20de_20reglas_20',['Representacion visual de base de reglas',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md86',1,'']]],
-  ['visual_20de_20grafo_21',['Representacion visual de grafo',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md87',1,'']]],
-  ['visualmente_22',['Construir grafos visualmente',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md85',1,'']]]
+  ['verificar_16',['verificar',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1LimitadorIntentosLogin.html#a7a4c4260bd85e47c023e725a6c2efab8',1,'org::signbb::backend::seguridad::servicios::LimitadorIntentosLogin']]],
+  ['versionconfecha_17',['VersionConFecha',['../classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1PoliticaRetencionVersiones.html#aa49b6674f308887c3306752f8949771a',1,'org::signbb::backend::mantenimiento::PoliticaRetencionVersiones']]],
+  ['versioncontenidoentity_18',['VersionContenidoEntity',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1VersionContenidoEntity.html',1,'org.signbb.backend.navegacion.datos.entidades.VersionContenidoEntity'],['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1VersionContenidoEntity.html#afb2dc003e489f4534a641c600cb99780',1,'org.signbb.backend.navegacion.datos.entidades.VersionContenidoEntity.VersionContenidoEntity()']]],
+  ['versiones_20del_20contenido_20republicar_20sin_20romper_20recorridos_20en_20curso_19',['Versiones del contenido (republicar sin romper recorridos en curso)',['../pruebas_autoria.html#autotoc_md15',1,'']]],
+  ['versionesdeprueba_20',['VersionesDePrueba',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1VersionesDePrueba.html',1,'org::signbb::backend::navegacion::modelo']]],
+  ['visual_20de_20base_20de_20reglas_21',['Representacion visual de base de reglas',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md86',1,'']]],
+  ['visual_20de_20grafo_22',['Representacion visual de grafo',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md87',1,'']]],
+  ['visualmente_23',['Construir grafos visualmente',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md85',1,'']]]
 ];
