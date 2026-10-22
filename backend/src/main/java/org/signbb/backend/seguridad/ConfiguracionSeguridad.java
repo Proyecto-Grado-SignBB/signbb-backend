@@ -44,7 +44,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * ({@code /media}) y la documentación (Swagger y {@code /v3/api-docs}).</li>
  * <li>{@code /api/recorridos/**}: PADRE.</li>
  * <li>{@code /api/usuarios/**}, {@code /api/autoria/revisiones} y aprobar,
- * rechazar o despublicar un subgrafo: MEDICO_SUPERVISOR.</li>
+ * rechazar, publicar directamente o despublicar un subgrafo: MEDICO_SUPERVISOR.</li>
  * <li>El resto de {@code /api/autoria/**}: MEDICO o MEDICO_SUPERVISOR.</li>
  * <li>Cualquier otra ruta: con sesión.</li>
  * </ul>
@@ -89,7 +89,8 @@ public class ConfiguracionSeguridad {
                                 "/api/autoria/revisiones", "/api/autoria/revisiones/**").hasRole(SUPERVISOR)
                         .requestMatchers(HttpMethod.POST, "/api/autoria/subgrafos/*/aprobar",
                                 "/api/autoria/subgrafos/*/rechazar",
-                                "/api/autoria/subgrafos/*/despublicar").hasRole(SUPERVISOR)
+                                "/api/autoria/subgrafos/*/despublicar",
+                                "/api/autoria/subgrafos/*/publicar").hasRole(SUPERVISOR)
                         .requestMatchers("/api/autoria/**").hasAnyRole(Rol.MEDICO.name(), SUPERVISOR)
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(o -> o

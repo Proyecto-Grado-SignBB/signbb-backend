@@ -237,6 +237,23 @@ class ServicioAutoriaImplTest {
     }
 
     @Test
+    void publicarLimpiaLaMetadataDeRevision() {
+        BorradorSubgrafoEntity b = guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
+        b.setEstado(EstadoBorrador.EN_REVISION);
+        b.setEnviadoRevisionEn(Instant.now());
+        b.setRevisorId(30L);
+        b.setRevisadoEn(Instant.now());
+        b.setComentarioRevision("Corrige la conclusión");
+
+        servicio.publicar(1L);
+
+        assertNull(b.getEnviadoRevisionEn());
+        assertNull(b.getRevisorId());
+        assertNull(b.getRevisadoEn());
+        assertNull(b.getComentarioRevision());
+    }
+
+    @Test
     void publicarGuardaUnaCopiaDeLoPublicado() {
         BorradorSubgrafoEntity b = guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
 

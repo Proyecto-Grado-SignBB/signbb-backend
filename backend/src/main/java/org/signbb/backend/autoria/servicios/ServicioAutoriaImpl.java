@@ -181,6 +181,10 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
         b.setPublicadoEn(ahora);
         b.setCopiaPublicada(new CopiaPublicada(b.getDocumento(), b.getNombre(), b.getPuenteId(),
                 b.getCategoria(), b.getEtiquetaOpcion(), b.getAutor(), b.getInstitucion()));
+        b.setEnviadoRevisionEn(null);
+        b.setRevisorId(null);
+        b.setRevisadoEn(null);
+        b.setComentarioRevision(null);
         BorradorSubgrafoEntity guardado = borradores.save(b);
         basesReglas.findByGrafoId(b.getGrafoId())
                 .ifPresent(base -> reglas.publicar(base.getId()));

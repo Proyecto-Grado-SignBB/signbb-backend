@@ -30,14 +30,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * nodo o la respuesta no existen; 422 con {@link ErrorAutoriaDTO} si la
  * edición no es válida o el borrador no se puede publicar; 409 si otra
  * persona lo cambió al mismo tiempo. Lee el autor o un supervisor y edita
- * solo el autor ({@link GuardiaAutoria}); 403 si no. Ya no hay un
- * {@code publicar}: se publica al aprobar la revisión ({@link
- * ControladorRevision}).
+ * solo el autor ({@link GuardiaAutoria}); 403 si no. El supervisor autor
+ * publica directamente con {@code POST /subgrafos/{id}/publicar}; el resto de
+ * los médicos publica al aprobar su revisión ({@link ControladorRevision}).
  */
 @RestController
 @RequestMapping("/api/autoria")
 @Tag(name = "Autoría", description = "Lienzo del médico para armar y validar "
-        + "subgrafos clínicos (se publican al aprobar su revisión). Solo el autor edita. Las operaciones que editan devuelven el borrador completo. "
+        + "subgrafos clínicos. El supervisor autor los publica directamente; los demás médicos, "
+        + "al aprobar su revisión. Solo el autor edita. Las operaciones que editan devuelven el borrador completo. "
         + "Errores: 404 si el recurso no existe; 422 con {mensaje, avisos} si la edición "
         + "no es válida o el borrador no se puede publicar; 409 si otra persona lo cambió.")
 public class ControladorAutoria {
@@ -225,6 +226,31 @@ public class ControladorAutoria {
     public List<Aviso> avisos(@PathVariable Long id, UsuarioActual usuario) {
         guardia.leerSubgrafo(id, usuario);
         return servicio.avisos(id);
+    }
+
+    /**
+     * {@code POST /api/autoria/subgrafos/{id}/publicar}: el supervisor autor
+     * publica el subgrafo sin pasar por revisión.
+     */
+    @Operation(summary = "Publica directamente el subgrafo",
+            description = "Solo el supervisor autor. Publica el subgrafo y su base de reglas en una sola "
+                    + "acción, sin enviarlo a revisión. Se permite desde BORRADOR o CAMBIOS_SIN_PUBLICAR, "
+                    + "y también si ya está publicado pero sus reglas tienen cambios sin publicar.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Subgrafo publicado"),
+            @ApiResponse(responseCode = "403", description = "No es supervisor o no es el autor",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "El subgrafo no existe",
+                    content = @Content),
+            @ApiResponse(responseCode = "422", description = "No está en un estado publicable o el contenido "
+                    + "tiene avisos bloqueantes",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAutoriaDTO.class)))
+    })
+    @PostMapping("/subgrafos/{id}/publicar")
+    public SubgrafoDTO publicar(@PathVariable Long id, UsuarioActual usuario) {
+        guardia.publicarSubgrafo(id, usuario);
+        return servicio.publicar(id);
     }
 
     /** {@code POST /api/autoria/subgrafos/{id}/despublicar}: retira el subgrafo y su base de reglas de la app. */

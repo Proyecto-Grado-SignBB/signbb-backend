@@ -20,17 +20,20 @@ tags:
     \ listarlos y activarlos o desactivarlos."
 - name: Revisión
   description: "El médico envía su subgrafo a revisión; un supervisor que no sea el\
-    \ autor lo aprueba (y se publica) o lo rechaza con un comentario."
+    \ autor lo aprueba (y se publica) o lo rechaza con un comentario. El supervisor\
+    \ autor publica directamente sus propios subgrafos sin pasar por revisión."
 - name: Consulta
   description: "Recorrido guiado del cuidador: inicia el triaje, responde cada pregunta\
     \ y consulta el estado. Toda respuesta queda auditada."
 - name: Reglas
   description: "Panel de reglas del médico: arma las bases de reglas asociadas\
-    \ a un grafo; se publican al aprobar el subgrafo. Las operaciones que editan devuelven el borrador completo. Errores:\
+    \ a un grafo; se publican junto con el subgrafo (al aprobarlo o al publicarlo\
+    \ directamente el supervisor). Las operaciones que editan devuelven el borrador completo. Errores:\
     \ 404 si el recurso no existe; 422 con {mensaje, avisos} si la edición no es vá\
     lida o la base no se puede publicar; 409 si otra persona la cambió."
 - name: Autoría
-  description: "Lienzo del médico para armar, validar y publicar subgrafos clínicos.\
+  description: "Lienzo del médico para armar y validar subgrafos clínicos. El supervisor\
+    \ autor los publica directamente; los demás médicos, al aprobar su revisión.\
     \ Las operaciones que editan devuelven el borrador completo. Errores: 404 si el\
     \ recurso no existe; 422 con {mensaje, avisos} si la edición no es válida o el\
     \ borrador no se puede publicar; 409 si otra persona lo cambió."
@@ -294,6 +297,37 @@ paths:
           description: El subgrafo no existe
         "422":
           description: No está en revisión o no se puede publicar
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
+  /api/autoria/subgrafos/{id}/publicar:
+    post:
+      tags:
+      - Autoría
+      summary: Publica directamente el subgrafo
+      description: "Solo el supervisor autor. Publica el subgrafo y su base de reglas en una sola acción, sin enviarlo a revisión. Se permite desde BORRADOR o CAMBIOS_SIN_PUBLICAR, y también si ya está publicado pero sus reglas tienen cambios sin publicar."
+      operationId: publicar
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Subgrafo publicado
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SubgrafoDTO"
+        "403":
+          description: No es supervisor o no es el autor
+        "404":
+          description: El subgrafo no existe
+        "422":
+          description: No está en un estado publicable o el contenido tiene avisos bloqueantes
           content:
             application/json:
               schema:

@@ -50,6 +50,25 @@ public class GuardiaAutoria {
     }
 
     /**
+     * Exige que el usuario sea un supervisor y el autor del subgrafo, y que no
+     * esté en revisión. Si ya está publicado, solo lo deja republicar cuando su
+     * base de reglas tiene cambios sin publicar.
+     */
+    public void publicarSubgrafo(Long id, UsuarioActual usuario) {
+        BorradorSubgrafoEntity b = subgrafo(id);
+        if (!usuario.esSupervisor()) {
+            throw new AccesoDenegadoException("Solo un supervisor puede publicar directamente.");
+        }
+        if (!PoliticaAccesoBorradores.esAutor(b.getAutorId(), usuario)) {
+            throw new AccesoDenegadoException("Solo puedes publicar directamente tus propios subgrafos.");
+        }
+        exigirFueraDeRevision(b);
+        if (b.getEstado() == EstadoBorrador.PUBLICADO && !reglasConCambios(b)) {
+            throw new EdicionInvalidaException("Este subgrafo ya está publicado y no tiene cambios.");
+        }
+    }
+
+    /**
      * Exige que el usuario sea el autor del subgrafo, en cualquier estado: para
      * enviarlo a revisión o retirarlo.
      */
@@ -106,6 +125,12 @@ public class GuardiaAutoria {
         if (b.getEstado() == EstadoBorrador.EN_REVISION) {
             throw new EdicionInvalidaException(EN_REVISION);
         }
+    }
+
+    private boolean reglasConCambios(BorradorSubgrafoEntity b) {
+        return bases.findByGrafoId(b.getGrafoId())
+                .map(base -> base.getEstado() != EstadoBorrador.PUBLICADO)
+                .orElse(false);
     }
 
     private BorradorSubgrafoEntity subgrafo(Long id) {

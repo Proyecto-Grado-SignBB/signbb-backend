@@ -189,6 +189,8 @@ class ReglasAccesoIntegracionTest {
         mvc.perform(conToken(post("/api/autoria/subgrafos/1/rechazar"), medico)).andExpect(status().isForbidden());
         mvc.perform(conToken(post("/api/autoria/subgrafos/1/despublicar"), medico))
                 .andExpect(status().isForbidden());
+        mvc.perform(conToken(post("/api/autoria/subgrafos/1/publicar"), medico))
+                .andExpect(status().isForbidden());
     }
 
     @Test

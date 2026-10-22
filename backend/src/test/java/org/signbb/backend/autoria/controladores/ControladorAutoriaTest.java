@@ -47,6 +47,7 @@ class ControladorAutoriaTest {
     private ServicioAutoria servicio;
     private GuardiaAutoria guardia;
     private MockMvc mvc;
+    private MockMvc mvcSupervisor;
 
     @BeforeEach
     void preparar() {
@@ -54,6 +55,11 @@ class ControladorAutoriaTest {
         guardia = mock(GuardiaAutoria.class);
         mvc = MockMvcBuilders.standaloneSetup(new ControladorAutoria(servicio, guardia))
                 .setCustomArgumentResolvers(UsuariosPrueba.resolvedor(UsuariosPrueba.MEDICO_A))
+                .setControllerAdvice(new ManejadorErroresAutoria(), new ManejadorErroresSeguridad(),
+                        new ManejadorExcepciones())
+                .build();
+        mvcSupervisor = MockMvcBuilders.standaloneSetup(new ControladorAutoria(servicio, guardia))
+                .setCustomArgumentResolvers(UsuariosPrueba.resolvedor(UsuariosPrueba.SUPERVISOR))
                 .setControllerAdvice(new ManejadorErroresAutoria(), new ManejadorErroresSeguridad(),
                         new ManejadorExcepciones())
                 .build();
@@ -151,10 +157,27 @@ class ControladorAutoriaTest {
     }
 
     @Test
-    void yaNoSePublicaDirectoSinoAlAprobarLaRevision() throws Exception {
-        int estado = ejecutar(post("/api/autoria/subgrafos/1/publicar")).getStatus();
+    void elSupervisorPublicaDirectamente() throws Exception {
+        when(servicio.publicar(1L)).thenReturn(vacio());
 
-        assertTrue(estado == 404 || estado == 405, "publicar ya no existe: respondió " + estado);
+        MockHttpServletResponse r = mvcSupervisor.perform(post("/api/autoria/subgrafos/1/publicar"))
+                .andReturn().getResponse();
+
+        assertEquals(200, r.getStatus());
+        verify(guardia).publicarSubgrafo(1L, UsuariosPrueba.SUPERVISOR);
+        verify(servicio).publicar(1L);
+    }
+
+    @Test
+    void publicarDirectoLoQueNoEsSuyoResponde403() throws Exception {
+        doThrow(new AccesoDenegadoException("Solo puedes publicar directamente tus propios subgrafos."))
+                .when(guardia).publicarSubgrafo(1L, UsuariosPrueba.SUPERVISOR);
+
+        MockHttpServletResponse r = mvcSupervisor.perform(post("/api/autoria/subgrafos/1/publicar"))
+                .andReturn().getResponse();
+
+        assertEquals(403, r.getStatus());
+        verify(servicio, never()).publicar(any());
     }
 
     @Test

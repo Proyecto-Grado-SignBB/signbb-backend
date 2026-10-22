@@ -37,7 +37,7 @@ Cada subgrafo puede tener además su **base de reglas clínicas** (reglas de ala
 3. **Compilar y publicar** (`3733bad`):
    - `CompiladorSubgrafo` convierte el lienzo en un `GrafoClinicoJson`. El peso es la mayor gravedad que llega al nodo, y el tipo de selección (única o múltiple) se respeta.
    - `PublicadorSubgrafo` guarda el subgrafo y agrega su opción y el nodo `ref_<grafoId>` en la pregunta puente del grafo raíz. Republicar no duplica nada.
-   - **Publicar el subgrafo publica también su base de reglas**: la acción es única y atómica (si algo falla, no se publica ni el grafo ni las reglas). Las reglas no se publican por su cuenta desde la interfaz; si cambian las reglas, se republica el subgrafo. Para el grafo raíz (que no tiene subgrafo) la base no se publica desde aquí.
+   - **Publicar el subgrafo publica también su base de reglas**: la acción es única y atómica (si algo falla, no se publica ni el grafo ni las reglas). Las reglas no se publican por su cuenta desde la interfaz; si cambian las reglas, se republica el subgrafo. El supervisor que es autor puede publicarlo directamente; los demás médicos, al aprobar su revisión. Para el grafo raíz (que no tiene subgrafo) la base no se publica desde aquí.
    - **Validación cruzada**: si el médico borra un nodo que una regla usa como condición o destino, `ValidadorLienzoReglas` lo detecta, muestra un aviso bloqueante que enlaza a las reglas y evita publicar.
    - Al publicar se invalida Redis y se recarga el `ContextoClinico`.
 4. **API `/api/autoria`** (`703ecc4`). Ver la tabla de la sección 4.
@@ -84,7 +84,7 @@ Cada subgrafo puede tener además su **base de reglas clínicas** (reglas de ala
 En la rama `seguridad` todo `/api/autoria` pide token de `MEDICO` o
 `MEDICO_SUPERVISOR` (ver el README raíz). El autor y la institución salen de la
 cuenta: si el request los trae, se ignoran. Cada médico ve y edita solo lo suyo;
-un supervisor ve todo, pero solo edita lo propio.
+un supervisor ve todo, pero solo edita y publica directamente lo propio.
 
 | Método | Ruta | Para qué |
 |---|---|---|
@@ -99,6 +99,7 @@ un supervisor ve todo, pero solo edita lo propio.
 | POST | `/subgrafos/{id}/retirar-revision` | El autor lo retira de revisión para volver a editarlo |
 | GET | `/revisiones` | **Supervisor:** subgrafos en revisión de otros autores |
 | POST | `/subgrafos/{id}/aprobar` | **Supervisor que no sea el autor:** publica el subgrafo **y su base de reglas** |
+| POST | `/subgrafos/{id}/publicar` | **Supervisor autor:** publica directamente el subgrafo **y su base de reglas**, sin pasar por revisión. Se permite desde `BORRADOR` o `CAMBIOS_SIN_PUBLICAR`, y si solo cambiaron las reglas de uno ya publicado |
 | POST | `/subgrafos/{id}/rechazar` | **Supervisor que no sea el autor:** lo devuelve con `{"comentario"}` (obligatorio) |
 | POST | `/subgrafos/{id}/descartar` | Descartar los cambios sin publicar y volver a la última publicación |
 | POST | `/subgrafos/{id}/despublicar` | **Supervisor.** Despublicar: quita el subgrafo y su base de reglas; los borradores (lienzo y reglas) vuelven a `BORRADOR` con su documento intacto (422 si no está publicado o si es el único subgrafo publicado) |
@@ -115,9 +116,12 @@ Reglas (`/api/autoria/bases`):
 | GET | `/bases/{id}/avisos` | Avisos de la base |
 | POST | `/bases/{id}/descartar` | Descartar los cambios sin publicar |
 
-Ya no existen `POST /subgrafos/{id}/publicar` ni `POST /bases/{id}/publicar`:
-se publica solo al aprobar. Si cambian solo las reglas de un subgrafo publicado,
-se envía el subgrafo a revisión igual.
+`POST /subgrafos/{id}/publicar` es exclusivo del supervisor autor: publica
+directamente el subgrafo y su base de reglas, sin revisión. La base de reglas no
+tiene un `POST /bases/{id}/publicar` propio: se publica con el subgrafo. El
+resto de los médicos publica al aprobar su revisión; si cambian solo las reglas
+de un subgrafo publicado, el supervisor puede republicarlo directamente y los
+demás lo envían a revisión.
 
 La especificación completa está en `docs/api/openapi.yaml`.
 
@@ -262,7 +266,7 @@ La tarea corre sola a las 3:30. Para probarla sin esperar, cambia temporalmente 
   - login con JWT y roles `PADRE`, `MEDICO` y `MEDICO_SUPERVISOR`; toda la API pide token y CORS solo acepta los orígenes del front;
   - el autor y la institución salen de la cuenta, y «Mis subgrafos» filtra por autor;
   - el recorrido queda ligado al padre que lo inició;
-  - las pantallas de supervisor no están en el front: el supervisor trabaja por API (`pruebas_manuales/pruebas_seguridad.md`).
+  - la app incluye las pantallas de revisión y de cuentas del supervisor.
 - [ ] **Integrar las ramas.**
   - En el back, revisar y hacer merge de `autoria` → `navegacion` → `develop`.
   - En el front, hacer merge de `autoria` hacia `develop`.
@@ -273,7 +277,7 @@ La tarea corre sola a las 3:30. Para probarla sin esperar, cambia temporalmente 
 - [ ] **Retiro urgente** (opcional, más adelante): cortar también los recorridos en curso por un subgrafo retirado por un error clínico grave. Hoy quien ya iba por él sigue viéndolo hasta que termine.
 - [ ] **Cambiar la categoría** después de crear. Hoy se muestra pero no se edita; habría que mover la opción entre preguntas puente al republicar.
 - [ ] **Vista previa como cuidadora** antes de publicar: recorrer el subgrafo con el mismo motor sin publicarlo.
-- [x] **Revisión clínica** antes de publicar (rama `seguridad`): el médico envía a revisión y un supervisor que no sea el autor aprueba (y eso publica) o rechaza con un comentario.
+- [x] **Revisión clínica** antes de publicar (rama `seguridad`): el médico envía a revisión y un supervisor que no sea el autor aprueba (y eso publica) o rechaza con un comentario. El supervisor que es autor publica directamente sus propios grafos con `POST /subgrafos/{id}/publicar`.
 - [x] **Limpieza de versiones del contenido e imágenes sin uso.** Una tarea diaria (3:30; `signbb.limpieza.cron`, se apaga con `signbb.limpieza.activa=false`) sin endpoint. Versiones: conserva las 20 más recientes (la vigente siempre) y las reemplazadas hace menos de 25 h; borra el resto de la base, de Redis y de la memoria. Imágenes: borra de Silo las que no están en ningún lienzo, copia publicada, grafo ni versión conservada, y nunca las subidas hace menos de 24 h ni archivos con otro nombre. Ante la duda no borra. Código en `mantenimiento/`.
 - [ ] **Historial de versiones y auditoría:** quién cambió qué y cuándo, y volver a una versión publicada anterior.
 - [ ] **Administrar categorías desde la interfaz.** Hoy se agregan editando `grafo_raiz.json`, que existe en dos copias que deben quedar idénticas, y requiere volver a sembrar la base.

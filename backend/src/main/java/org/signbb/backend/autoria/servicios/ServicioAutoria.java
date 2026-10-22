@@ -60,8 +60,9 @@ public interface ServicioAutoria {
     List<Aviso> avisos(Long id);
 
     /**
-     * Publica el borrador. No tiene endpoint propio: lo llama {@link
-     * ServicioRevision#aprobar} al aprobar la revisión.
+     * Publica el borrador. Lo usan la aprobación de una revisión y la
+     * publicación directa del supervisor autor; publica el subgrafo y su base
+     * de reglas en una sola acción.
      *
      * @throws ContenidoInvalidoException si no se puede publicar (422 con los avisos)
      */

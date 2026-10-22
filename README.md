@@ -50,7 +50,7 @@ registro, `/media` y Swagger. Hay tres roles:
 |---|---|---|
 | `PADRE` | Se registra solo (`POST /api/auth/registro`) | Hacer recorridos y ver los suyos (`/api/recorridos`) |
 | `MEDICO` | Lo crea un supervisor (`POST /api/usuarios`) | Armar sus subgrafos y reglas y enviarlos a revisión |
-| `MEDICO_SUPERVISOR` | Lo crea otro supervisor; el primero se siembra al arrancar | Lo mismo que un médico, y además aprobar o rechazar lo de **otros**, despublicar y administrar cuentas |
+| `MEDICO_SUPERVISOR` | Lo crea otro supervisor; el primero se siembra al arrancar | Lo mismo que un médico, y además publicar directamente sus propios grafos, aprobar o rechazar lo de **otros**, despublicar y administrar cuentas |
 
 Para ingresar: `POST /api/auth/login` con `{"correo", "contrasena"}` devuelve
 `{token, expiraEn, usuario}`. El token dura 8 horas.
