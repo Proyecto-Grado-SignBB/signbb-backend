@@ -148,7 +148,7 @@ Cuentas y seguridad</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">MEDICO</span>  </td><td class="markdownTableBodyNone">Lo crea un supervisor (<span class="tt">POST /api/usuarios</span>)  </td><td class="markdownTableBodyNone">Armar sus subgrafos y reglas y enviarlos a revisión  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">MEDICO_SUPERVISOR</span>  </td><td class="markdownTableBodyNone">Lo crea otro supervisor; el primero se siembra al arrancar  </td><td class="markdownTableBodyNone">Lo mismo que un médico, y además aprobar o rechazar lo de <b>otros</b>, despublicar y administrar cuentas  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">MEDICO_SUPERVISOR</span>  </td><td class="markdownTableBodyNone">Lo crea otro supervisor; el primero se siembra al arrancar  </td><td class="markdownTableBodyNone">Lo mismo que un médico, y además publicar directamente sus propios grafos, aprobar o rechazar lo de <b>otros</b>, despublicar y administrar cuentas  </td></tr>
 </table>
 <p>Para ingresar: <span class="tt">POST /api/auth/login</span> con <span class="tt">{"correo", "contrasena"}</span> devuelve <span class="tt">{token, expiraEn, usuario}</span>. El token dura 8 horas.</p>
 <p><b>Supervisor inicial.</b> Si no existe ningún supervisor, el back crea uno al arrancar. En desarrollo es <span class="tt">supervisor@signbb.local</span> / <span class="tt">Supervisor123</span>; <b>cámbialo</b> fuera de tu máquina con las variables de abajo.</p>

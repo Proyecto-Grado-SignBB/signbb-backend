@@ -153,12 +153,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorSubgrafo.html",
-"classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenes.html#a9a8284a9e7a947d08774e3e2a3795ef1",
-"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#aa3758f7b81004c118d2092459cb1e8ac",
-"classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConfiguracionSeguridad.html#af3761bd675bacf57d751ba7512a304d5",
-"interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorBaseRegla.html",
-"namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos.html"
+"classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorRegla.html#ac31c7c9624e12baf3cf8a22ec9924481",
+"classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenes.html",
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#a872eb074d51806c826829b2f869a8fdb",
+"classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConfiguracionSeguridad.html#a96189020a10c6464d3a9013160e8f06b",
+"index.html#autotoc_md68",
+"namespaceorg_1_1signbb_1_1backend_1_1media.html"
 ];
 
 const SYNCONMSG = 'pulsar para deshabilitar sincronización';

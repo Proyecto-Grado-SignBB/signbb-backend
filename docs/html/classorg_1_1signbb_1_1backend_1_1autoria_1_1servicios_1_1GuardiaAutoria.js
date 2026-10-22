@@ -7,5 +7,6 @@ var classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1GuardiaAutoria =
     [ "editarSubgrafo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1GuardiaAutoria.html#aefe1ba4ea63141a5ed600a5f5c00946d", null ],
     [ "leerBase", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1GuardiaAutoria.html#acd584ccf35b8b051b46fa533c4c808f8", null ],
     [ "leerSubgrafo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1GuardiaAutoria.html#a221081a03ad542fb3bfaae7378e7bbbb", null ],
+    [ "publicarSubgrafo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1GuardiaAutoria.html#a4e82bac80574296932e85d7f284f30a3", null ],
     [ "EN_REVISION", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1GuardiaAutoria.html#a7cf6a9854710b59b7b3baf54cb849977", null ]
 ];

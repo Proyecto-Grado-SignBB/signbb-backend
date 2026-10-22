@@ -126,6 +126,8 @@ void&#160;</td><td class="memItemRight"><b>leerSubgrafo</b> (Long id, UsuarioAct
 <tr class="memitem:aefe1ba4ea63141a5ed600a5f5c00946d" id="r_aefe1ba4ea63141a5ed600a5f5c00946d"><td class="memItemLeft"><a id="aefe1ba4ea63141a5ed600a5f5c00946d" name="aefe1ba4ea63141a5ed600a5f5c00946d"></a>
 void&#160;</td><td class="memItemRight"><b>editarSubgrafo</b> (Long id, UsuarioActual usuario)</td></tr>
 <tr class="memdesc:aefe1ba4ea63141a5ed600a5f5c00946d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exige que el usuario sea el autor del subgrafo y que no esté en revisión. <br /></td></tr>
+<tr class="memitem:a4e82bac80574296932e85d7f284f30a3" id="r_a4e82bac80574296932e85d7f284f30a3"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a4e82bac80574296932e85d7f284f30a3">publicarSubgrafo</a> (Long id, UsuarioActual usuario)</td></tr>
+<tr class="memdesc:a4e82bac80574296932e85d7f284f30a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exige que el usuario sea un supervisor y el autor del subgrafo, y que no esté en revisión.  <br /></td></tr>
 <tr class="memitem:a539b66ace973d734478835e7d6fb1c3a" id="r_a539b66ace973d734478835e7d6fb1c3a"><td class="memItemLeft"><a id="a539b66ace973d734478835e7d6fb1c3a" name="a539b66ace973d734478835e7d6fb1c3a"></a>
 void&#160;</td><td class="memItemRight"><b>autorSubgrafo</b> (Long id, UsuarioActual usuario)</td></tr>
 <tr class="memdesc:a539b66ace973d734478835e7d6fb1c3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exige que el usuario sea el autor del subgrafo, en cualquier estado: para enviarlo a revisión o retirarlo. <br /></td></tr>
@@ -169,6 +171,30 @@ static final String&#160;</td><td class="memItemRight"><b>EN_REVISION</b> = &quo
 
 <p>Exige que el usuario pueda crear la base de reglas de ese grafo: el autor de su subgrafo; para el grafo raíz o un grafo del sistema (sin borrador), solo un supervisor. </p>
 <p>Si el grafo no existe lo dice después el servicio. </p>
+
+</div>
+</div>
+<a id="a4e82bac80574296932e85d7f284f30a3" name="a4e82bac80574296932e85d7f284f30a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e82bac80574296932e85d7f284f30a3">&#9670;&#160;</a></span>publicarSubgrafo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void org.signbb.backend.autoria.servicios.GuardiaAutoria.publicarSubgrafo </td>
+          <td>(</td>
+          <td class="paramtype">Long</td>          <td class="paramname"><span class="paramname"><em>id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">UsuarioActual</td>          <td class="paramname"><span class="paramname"><em>usuario</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Exige que el usuario sea un supervisor y el autor del subgrafo, y que no esté en revisión. </p>
+<p>Si ya está publicado, solo lo deja republicar cuando su base de reglas tiene cambios sin publicar. </p>
 
 </div>
 </div>

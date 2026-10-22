@@ -1,5 +1,9 @@
 var NAVTREEINDEX5 =
 {
+"index.html#autotoc_md68":[0,3],
+"index.html#autotoc_md69":[0,4],
+"index.html#autotoc_md70":[0,4,0],
+"index.html#autotoc_md71":[0,4,1],
 "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorBaseRegla.html":[10,0,0,0,0,1,1,1,0],
 "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorBaseRegla.html":[11,0,0,0,0,0,1,1,0],
 "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorBaseRegla.html#ac89ecc65f082a595dccd5a4e7730f014":[10,0,0,0,0,1,1,1,0,2],
@@ -245,9 +249,5 @@ var NAVTREEINDEX5 =
 "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1modelo.html#ad877808e981157f30a3a0c5956f6183c":[10,0,0,0,0,1,2,6],
 "namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios.html":[10,0,0,0,0,1,3],
 "namespaceorg_1_1signbb_1_1backend_1_1config.html":[10,0,0,0,0,2],
-"namespaceorg_1_1signbb_1_1backend_1_1mantenimiento.html":[10,0,0,0,0,3],
-"namespaceorg_1_1signbb_1_1backend_1_1media.html":[10,0,0,0,0,4],
-"namespaceorg_1_1signbb_1_1backend_1_1media.html#a91762c10bc5c270116b61b3161921619":[10,0,0,0,0,4,9],
-"namespaceorg_1_1signbb_1_1backend_1_1media.html#ae3e8c63af3474301ed955064478ad959":[10,0,0,0,0,4,8],
-"namespaceorg_1_1signbb_1_1backend_1_1navegacion.html":[10,0,0,0,0,5]
+"namespaceorg_1_1signbb_1_1backend_1_1mantenimiento.html":[10,0,0,0,0,3]
 };
