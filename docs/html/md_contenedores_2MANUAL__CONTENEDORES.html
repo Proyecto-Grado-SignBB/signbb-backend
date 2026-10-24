@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('md_contenedore
   <div class="headertitle"><div class="title">Manual de contenedores </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md72"></a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md73"></a></p>
 <p>Servicios definidos en <span class="tt">compose.yaml</span>:</p>
 <ul>
 <li><b>db</b>: PostgreSQL 16 (Alpine) en el puerto <span class="tt">5432</span>, con healthcheck.</li>
@@ -120,22 +120,22 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('md_contenedore
 <li><b>cache</b>: Redis 8 (Alpine) en el puerto <span class="tt">6379</span>, con healthcheck. Caché de los motores de navegación y reglas: guarda el contenido clínico activo (copia caliente de lo que vive en PostgreSQL) y las sesiones temporales de los recorridos en curso.</li>
 </ul>
 <p>Los datos persisten en los volúmenes <span class="tt">postgres_data</span>, <span class="tt">silo_data</span> y <span class="tt">redis_data</span> (Docker los lista con el prefijo del proyecto, p. ej. <span class="tt">contenedores_postgres_data</span>). En Redis la persistencia es AOF (<span class="tt">--appendonly yes</span>): las sesiones sobreviven reinicios del propio contenedor, no solo del backend.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md73"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md74"></a>
 Levantar</h1>
 <p>Desde este directorio (<span class="tt">contenedores</span>): </p><pre class="fragment">docker compose up -d           # levanta db, adminer, silo y cache
 docker compose up -d --wait    # igual, esperando a que queden healthy
 docker compose ps              # verificar el estado de los servicios
-</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md74"></a>
+</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md75"></a>
 Dar de baja</h1>
 <p>Detiene y elimina los contenedores, <b>conservando</b> los datos de los volúmenes: </p><pre class="fragment">docker compose down
-</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md75"></a>
+</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md76"></a>
 Eliminar los datos persistentes</h1>
 <p>Da de baja los servicios y además borra los volúmenes con los datos (base de datos, objetos de silo y caché/sesiones de Redis): </p><pre class="fragment">docker compose down -v
 </pre><blockquote class="doxtable">
 <p>Advertencia: el borrado es irreversible. Tras vaciar la base, el siguiente arranque del backend vuelve a crear las tablas y siembra de nuevo el grafo clínico y las reglas (<span class="tt">DatabaseInit</span>), pues la siembra solo se omite cuando las tablas ya tienen filas. Las sesiones de recorridos en curso guardadas en Redis y los objetos de silo no se recuperan de ninguna otra fuente.</p>
 <p>Actualizar el contenido clínico: <span class="tt">DatabaseInit</span> decide sembrar según el <span class="tt">id</span> del grafo raíz (<span class="tt">grafo_raiz</span>). Si se cambian los archivos de <span class="tt">backend/src/main/resources/static/grafo_sistema/</span> pero la base ya estaba sembrada, hay que borrar los volúmenes (<span class="tt">docker compose down -v</span>) y volver a levantar; de lo contrario se seguiría sirviendo el contenido anterior. </p>
 </blockquote>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md76"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md77"></a>
 Acceso rápido</h1>
 <ul>
 <li><b>Adminer</b>: <span class="tt"><a href="http://localhost:8180">http://localhost:8180</a></span> — servidor <span class="tt">db</span>, base <span class="tt">signbb</span>, usuario <span class="tt">admin</span>, contraseña <span class="tt">example</span>.</li>
@@ -144,7 +144,10 @@ Acceso rápido</h1>
 <li><b>psql</b>: <span class="tt">docker exec -it contenedores-db-1 psql -U admin -d signbb</span></li>
 <li><b>Logs</b>: <span class="tt">docker compose logs -f db</span> (o <span class="tt">silo</span> / <span class="tt">cache</span>, según interese)</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md77"></a>
+<blockquote class="doxtable">
+<p><b>Puertos solo locales.</b> PostgreSQL, Adminer, Silo y Redis se publican en <span class="tt">127.0.0.1</span> (por ejemplo <span class="tt">127.0.0.1:5432</span>). Funcionan desde tu propio computador, pero no se ven desde otro equipo de la red. Si cambias el <span class="tt">compose.yaml</span>, aplica el cambio con <span class="tt">docker compose up -d</span>: los contenedores se recrean y los datos se conservan porque viven en volúmenes. </p>
+</blockquote>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md78"></a>
 Parámetros de conexión (perfil <span class="tt">docker</span> del backend)</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">

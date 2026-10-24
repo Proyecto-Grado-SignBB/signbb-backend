@@ -129,9 +129,11 @@ Mapa de la suite</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">(raíz)  </td><td class="markdownTableBodyNone"><span class="tt">InicializadorSeguridadTest</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">el supervisor inicial se siembra una sola vez  </td></tr>
 <tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">(raíz)  </td><td class="markdownTableBodyNone"><span class="tt">VerificadorSecretosProduccionTest</span>  </td><td class="markdownTableBodyRight">8  </td><td class="markdownTableBodyNone">en producción no se aceptan los valores de ejemplo ni la documentación de la API activa; un entorno mal escrito impide arrancar  </td></tr>
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">(raíz)  </td><td class="markdownTableBodyNone"><span class="tt">ReglasAccesoIntegracionTest</span>  </td><td class="markdownTableBodyRight">10  </td><td class="markdownTableBodyNone">la cadena de filtros real: rutas públicas, 401 sin token, 403 por rol y dueño del recorrido  </td></tr>
 </table>
-<p>En total son <b>27 pruebas</b>. Las reglas de autor y de revisión de la autoría (<span class="tt">GuardiaAutoriaTest</span>, <span class="tt">PoliticaAccesoBorradoresTest</span>, <span class="tt">ServicioRevisionImplTest</span> y <span class="tt">ControladorRevisionTest</span>) están en <a class="el" href="pruebas_autoria.html" title="Pruebas del módulo de autoría">Pruebas del módulo de autoría</a>; la del dueño del recorrido, en <a class="el" href="pruebas_observaciones.html" title="Pruebas del módulo de observaciones">Pruebas del módulo de observaciones</a>.</p>
+<p>En total son <b>35 pruebas</b>. Las reglas de autor y de revisión de la autoría (<span class="tt">GuardiaAutoriaTest</span>, <span class="tt">PoliticaAccesoBorradoresTest</span>, <span class="tt">ServicioRevisionImplTest</span> y <span class="tt">ControladorRevisionTest</span>) están en <a class="el" href="pruebas_autoria.html" title="Pruebas del módulo de autoría">Pruebas del módulo de autoría</a>; la del dueño del recorrido, en <a class="el" href="pruebas_observaciones.html" title="Pruebas del módulo de observaciones">Pruebas del módulo de observaciones</a>.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md44"></a>
 Ayudas de prueba</h1>
 <ul>
@@ -154,6 +156,9 @@ Tokens (<span class="tt">ServicioTokensTest</span>)</h2>
 Supervisor inicial (<span class="tt">InicializadorSeguridadTest</span>)</h2>
 <p>Si no hay ningún <span class="tt">MEDICO_SUPERVISOR</span>, se crea uno con la contraseña cifrada. Si ya hay alguno, no hace nada, así que reiniciar el back no duplica cuentas.</p>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md49"></a>
+Secretos de producción (<span class="tt">VerificadorSecretosProduccionTest</span>)</h2>
+<p>Con <span class="tt">SIGNBB_ENTORNO=produccion</span>, la app no arranca si el secreto JWT, la contraseña del supervisor inicial o las claves de Silo valen lo mismo que en desarrollo, o si Swagger y <span class="tt">/v3/api-docs</span> siguen activos (<span class="tt">SIGNBB_DOCS_ACTIVAS</span> distinto de <span class="tt">false</span>), y el mensaje nombra las variables sin mostrar los valores. En desarrollo se aceptan. Un entorno mal escrito también impide arrancar, y una prueba comprueba que los valores de ejemplo del código sigan iguales a los de <span class="tt">application.properties</span> y <span class="tt">application-docker.properties</span>, y otra que la variable de la documentación esté conectada a springdoc.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md50"></a>
 Reglas de acceso (<span class="tt">ReglasAccesoIntegracionTest</span>)</h2>
 <p>Con la aplicación completa:</p>
 <ul>
@@ -165,7 +170,7 @@ Reglas de acceso (<span class="tt">ReglasAccesoIntegracionTest</span>)</h2>
 <li>no se puede crear un <span class="tt">PADRE</span> por la API clínica;</li>
 <li>un token alterado da 401, y el token de una cuenta desactivada deja de servir.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md50"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md51"></a>
 Cómo ejecutarlas</h1>
 <pre class="fragment">./mvnw test -Dtest='org.signbb.backend.seguridad.**'
 </pre><p><span class="tt">ReglasAccesoIntegracionTest</span> requiere PostgreSQL y Redis arriba (<span class="tt">contenedores/compose.yaml</span>); las demás no.</p>

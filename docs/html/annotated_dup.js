@@ -263,7 +263,9 @@ var annotated_dup =
             [ "InicializadorSeguridadTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1InicializadorSeguridadTest.html", null ],
             [ "ReglasAccesoIntegracionTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ReglasAccesoIntegracionTest.html", null ],
             [ "ResolvedorUsuarioActual", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ResolvedorUsuarioActual.html", null ],
-            [ "UsuariosPrueba", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1UsuariosPrueba.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1UsuariosPrueba" ]
+            [ "UsuariosPrueba", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1UsuariosPrueba.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1UsuariosPrueba" ],
+            [ "VerificadorSecretosProduccion", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1VerificadorSecretosProduccion.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1VerificadorSecretosProduccion" ],
+            [ "VerificadorSecretosProduccionTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1VerificadorSecretosProduccionTest.html", null ]
           ] ],
           [ "AutoriaIntegracionTest", "classorg_1_1signbb_1_1backend_1_1AutoriaIntegracionTest.html", null ],
           [ "BackendApplication", "classorg_1_1signbb_1_1backend_1_1BackendApplication.html", null ],

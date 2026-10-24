@@ -116,14 +116,14 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('pruebas_cache.
 <p>Índice general de la suite: <a class="el" href="pruebas.html" title="Pruebas del sistema">Pruebas del sistema</a>. </p>
 </blockquote>
 <p>Este README documenta las <b>pruebas del cache Redis</b> (contenido clínico y sesiones de los recorridos). Las pruebas del módulo de navegación (TADs, parsers, motor y servicio) están documentadas en <a class="el" href="pruebas_navegacion.html" title="Pruebas del módulo de navegación">Pruebas del módulo de navegación</a>. Las del módulo de autoría (lienzo, subgrafos y reglas) están en <a class="el" href="pruebas_autoria.html" title="Pruebas del módulo de autoría">Pruebas del módulo de autoría</a>.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md56"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md57"></a>
 Ubicación</h1>
 <ul>
 <li>Unitarias (paquete <span class="tt">org.signbb.backend.cache</span>, sin Redis real): <span class="tt">ResolvedorContenidoClinicoTest</span> y <span class="tt">RepositorioSesionRedisTest</span>.</li>
 <li>Integración (perfil <span class="tt">docker</span>): <span class="tt"><a class="el" href="classorg_1_1signbb_1_1backend_1_1CacheRedisIntegracionTest.html" title="Tests de integración del cache Redis (requiere el servicio cache de contenedores/compose....">org.signbb.backend.CacheRedisIntegracionTest</a></span>.</li>
 <li>Limpieza programada de versiones e imágenes (paquete <span class="tt"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1mantenimiento.html" title="Mantenimiento programado: limpieza de versiones viejas del contenido e imágenes sin uso.">org.signbb.backend.mantenimiento</a></span>, todas unitarias): ver la sección «Limpieza programada» al final.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md57"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md58"></a>
 ResolvedorContenidoClinicoTest — resolución cache-aside del contenido</h1>
 <p>Con el template de Redis y los repositorios simulados (Mockito):</p>
 <ul>
@@ -134,7 +134,7 @@ ResolvedorContenidoClinicoTest — resolución cache-aside del contenido</h1>
 <li><b>Base sin contenido</b>: <span class="tt">IllegalStateException</span> explícito — el classpath NO es un mecanismo de fallback en runtime, solo la semilla de <span class="tt">DatabaseInit</span>.</li>
 <li><b><span class="tt">invalidar()</span></b>: borra las claves de contenido (el hook del futuro módulo de Autoría).</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md58"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md59"></a>
 RepositorioSesionRedisTest — sesiones en Redis</h1>
 <p>Con un template simulado respaldado por un mapa en memoria y el contenido real (grafo y reglas de <span class="tt">static/grafo_sistema/</span>):</p>
 <ul>
@@ -143,7 +143,7 @@ RepositorioSesionRedisTest — sesiones en Redis</h1>
 <li><b>Sesión inexistente</b>: 404 (<span class="tt">RecursoNoEncontradoException</span>).</li>
 <li><b>Redis caído al buscar o guardar</b>: <span class="tt">CacheNoDisponibleException</span> (el <span class="tt">ControllerAdvice</span> la responde como 503; nunca degrada a memoria para evitar sesiones que aparecen y desaparecen).</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md59"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md60"></a>
 CacheRedisIntegracionTest — integración</h1>
 <p>Requiere <span class="tt">contenedores/compose.yaml</span> levantado (db + cache). Las tres primeras se <b>saltan solas</b> (suposición <span class="tt">modoCacheActivo</span>: bean de sesiones Redis + Redis respondiendo) cuando el despliegue no está en modo cache — entonces aparecen como <em>skipped</em>, no como falla:</p>
 <ul>
@@ -152,7 +152,7 @@ CacheRedisIntegracionTest — integración</h1>
 <li><b>La sesión sobrevive un reinicio simulado</b>: una instancia nueva del repositorio (como tras un arranque limpio) recupera la sesión completa.</li>
 <li><b>El contexto sirve contenido completo</b> (sin requisito de Redis): si el cache no responde, resuelve directo desde la base, lo que verifica el camino de degradación de punta a punta.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md60"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md61"></a>
 ColaSeleccionMultipleRedisIntegracionTest — cola de la selección múltiple</h1>
 <p>Usa un Redis real (servicio <span class="tt">cache</span> del compose, <span class="tt">localhost:6379</span>; se cambia con <span class="tt">-Dsignbb.test.redis.host</span> y <span class="tt">-Dsignbb.test.redis.port</span>) y un grafo pequeño de dos ramas armado en código (<span class="tt">q1</span> de selección múltiple con <span class="tt">qa</span>, peso 3, y <span class="tt">qb</span>, peso 2), de modo que la cola queda con una recomendación pendiente. No necesita Spring ni la base: se <b>salta sola</b> si Redis no responde. Cada paso se guarda y se relee con una instancia nueva del repositorio (reinicio simulado):</p>
 <ul>
@@ -161,17 +161,17 @@ ColaSeleccionMultipleRedisIntegracionTest — cola de la selección múltiple</h
 <li><b>Retroceder tras recargar</b> restaura la cola y descarta la recomendación del paso deshecho.</li>
 <li><b>Una alerta en una rama</b> cierra con la alerta sola y vacía la cola guardada, también tras retroceder y cambiar de rama.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md61"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md62"></a>
 Cómo ejecutarlas</h1>
 <p>Requieren PostgreSQL y Redis arriba (<span class="tt">contenedores/compose.yaml</span>): </p><pre class="fragment">./mvnw test                                          # suite completa (contenedores arriba)
 ./mvnw test -Dtest=ResolvedorContenidoClinicoTest,RepositorioSesionRedisTest,CacheRedisIntegracionTest,ColaSeleccionMultipleRedisIntegracionTest
-</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md62"></a>
+</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md63"></a>
 Notas</h1>
 <ul>
 <li>Claves en Redis: <span class="tt">signbb:contenido:v2:grafo|reglas</span> (TTL 24 h) y <span class="tt">signbb:sesion:&lt;id&gt;</span> (TTL 24 h); inspección manual con <span class="tt">docker exec -it contenedores-cache-1 redis-cli</span> (ver <span class="tt">contenedores/MANUAL_CONTENEDORES.md</span>).</li>
 <li>El CI (GitHub Actions) corre <span class="tt">verify</span> con servicios PostgreSQL y Redis efímeros (<span class="tt">build.yml</span>), de modo que la suite completa se ejecuta ahí.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md63"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md64"></a>
 Limpieza programada (<span class="tt">mantenimiento</span>)</h1>
 <p>Una vez al día (3:30, <span class="tt">signbb.limpieza.cron</span>) el backend borra por sí solo las versiones viejas del contenido y las imágenes sin uso. No hay endpoint. Todas las pruebas son unitarias, con Mockito y sin Spring, base de datos, Redis ni Silo.</p>
 <ul>
