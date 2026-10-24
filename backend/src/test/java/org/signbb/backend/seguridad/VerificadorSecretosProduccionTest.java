@@ -19,7 +19,23 @@ class VerificadorSecretosProduccionTest {
 
     private static VerificadorSecretosProduccion verificador(String entorno, String jwt, String supervisor,
             String acceso, String secreto, boolean docsActivas) {
-        return new VerificadorSecretosProduccion(entorno, jwt, supervisor, acceso, secreto, docsActivas);
+        return new VerificadorSecretosProduccion(entorno, jwt, supervisor, acceso, secreto, docsActivas, false);
+    }
+
+    @Test
+    void enProduccionRechazaElRegistroDeSqlEncendido() {
+        IllegalStateException ex = assertThrows(IllegalStateException.class,
+                () -> new VerificadorSecretosProduccion("produccion", JWT_PROPIO, CLAVE_PROPIA, CLAVE_PROPIA,
+                        CLAVE_PROPIA, false, true));
+
+        assertTrue(ex.getMessage().contains("SIGNBB_SHOW_SQL"));
+        assertFalse(ex.getMessage().contains("SIGNBB_DOCS_ACTIVAS"));
+    }
+
+    @Test
+    void enDesarrolloAceptaElRegistroDeSqlEncendido() {
+        assertDoesNotThrow(() -> new VerificadorSecretosProduccion("desarrollo", JWT_PROPIO, CLAVE_PROPIA,
+                CLAVE_PROPIA, CLAVE_PROPIA, true, true));
     }
 
     @Test
@@ -104,6 +120,11 @@ class VerificadorSecretosProduccionTest {
         assertTrue(principal.contains("signbb.docs.activas=${SIGNBB_DOCS_ACTIVAS:true}"));
         assertTrue(principal.contains("springdoc.api-docs.enabled=${signbb.docs.activas}"));
         assertTrue(principal.contains("springdoc.swagger-ui.enabled=${signbb.docs.activas}"));
+    }
+
+    @Test
+    void elRegistroDeSqlEstaApagadoPorDefecto() throws IOException {
+        assertTrue(leer("/application.properties").contains("spring.jpa.show-sql=${SIGNBB_SHOW_SQL:false}"));
     }
 
     private static String leer(String recurso) throws IOException {

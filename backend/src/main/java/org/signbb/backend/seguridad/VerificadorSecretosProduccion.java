@@ -19,12 +19,15 @@ import org.springframework.stereotype.Component;
  * siguen valiendo lo mismo que en desarrollo, o si Swagger y {@code /v3/api-docs}
  * siguen activos ({@code SIGNBB_DOCS_ACTIVAS} distinto de {@code false}), la
  * aplicación no arranca y el mensaje dice qué variables corregir (nunca muestra
- * los valores). Un entorno
+ * los valores). Tampoco arranca si {@code SIGNBB_SHOW_SQL} deja encendido el
+ * registro de SQL. Un entorno
  * con cualquier otro texto también impide arrancar, para que un error de
  * escritura no deje la revisión apagada sin avisar.</p>
  *
  * <p>La revisión ocurre al construir este componente, antes de que se siembre
  * el supervisor inicial o se atienda alguna petición.</p>
+ *
+ * <p>MODIFICADO (1.6): también revisa {@code spring.jpa.show-sql}.</p>
  */
 @Component
 public class VerificadorSecretosProduccion {
@@ -54,7 +57,7 @@ public class VerificadorSecretosProduccion {
      *
      * @throws IllegalStateException si el entorno no es válido o, en producción,
      *         algún secreto conserva su valor de desarrollo o la documentación
-     *         de la API sigue activa
+     *         de la API o el registro de SQL siguen activos
      */
     public VerificadorSecretosProduccion(
             @Value("${signbb.entorno:" + ENTORNO_DESARROLLO + "}") String entorno,
@@ -62,7 +65,8 @@ public class VerificadorSecretosProduccion {
             @Value("${signbb.seguridad.supervisor-inicial.contrasena}") String contrasenaSupervisor,
             @Value("${signbb.media.access-key:" + MEDIA_ACCESO_DESARROLLO + "}") String mediaAcceso,
             @Value("${signbb.media.secret-key:" + MEDIA_SECRETO_DESARROLLO + "}") String mediaSecreto,
-            @Value("${signbb.docs.activas:true}") boolean docsActivas) {
+            @Value("${signbb.docs.activas:true}") boolean docsActivas,
+            @Value("${spring.jpa.show-sql:false}") boolean showSql) {
         String normalizado = entorno == null ? "" : entorno.trim().toLowerCase(Locale.ROOT);
         if (normalizado.equals(ENTORNO_DESARROLLO)) {
             log.info("Entorno de desarrollo: no se revisan los secretos de ejemplo.");
@@ -87,6 +91,9 @@ public class VerificadorSecretosProduccion {
         }
         if (docsActivas) {
             pendientes.add("SIGNBB_DOCS_ACTIVAS (debe ser false)");
+        }
+        if (showSql) {
+            pendientes.add("SIGNBB_SHOW_SQL (debe ser false)");
         }
         if (!pendientes.isEmpty()) {
             throw new IllegalStateException("En producción no se pueden usar los valores de ejemplo ni dejar "

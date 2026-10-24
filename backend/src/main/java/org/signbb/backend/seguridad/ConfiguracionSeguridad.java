@@ -55,6 +55,11 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * <p>
  * MODIFICADO (2.4): el teléfono del pediatra solo lo guarda un padre.
+ *
+ * <p>
+ * MODIFICADO (1.5): {@code GET /actuator/health} queda abierto para el
+ * chequeo de salud del contenedor; responde solo {@code UP} o {@code DOWN},
+ * sin detalles. Lo demás de {@code /actuator} no se expone.
  */
 @Configuration
 public class ConfiguracionSeguridad {
@@ -85,6 +90,7 @@ public class ConfiguracionSeguridad {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/registro").permitAll()
                         .requestMatchers(HttpMethod.GET, "/media/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/actuator/health", "/actuator/health/**").permitAll()
                         .requestMatchers("/v3/api-docs", "/v3/api-docs/**", "/v3/api-docs.yaml",
                                 "/swagger-ui/**", "/swagger-ui.html", "/error").permitAll()
                         .requestMatchers("/api/recorridos", "/api/recorridos/**").hasRole(Rol.PADRE.name())

@@ -17,6 +17,7 @@ import org.signbb.backend.reglas.modelo.BaseReglas;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,8 +35,15 @@ import org.springframework.stereotype.Component;
  * repite al resolver el contenido. La siembra es idempotente: si el grafo raíz
  * ya está, no hace nada. Las filas del formato previo no se tocan; el
  * resolvedor las ignora.
+ *
+ * <p>
+ * MODIFICADO (1.6): solo existe si {@code signbb.siembra.activa} vale
+ * {@code true} ({@code SIGNBB_SIEMBRA_ACTIVA}, encendida por defecto para
+ * desarrollo y CI). En producción se enciende en el primer despliegue y luego
+ * se apaga.
  */
 @Component
+@ConditionalOnProperty(name = "signbb.siembra.activa", havingValue = "true")
 public class DatabaseInit implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(DatabaseInit.class);

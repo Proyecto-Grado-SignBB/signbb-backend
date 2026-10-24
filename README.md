@@ -6,7 +6,7 @@ y un motor de reglas.
 ## Requisitos
 
 - Java SDK 25
-- Spring Boot 4.1.1 (Web MVC, Data JPA, Redis, Lombok)
+- Spring Boot 4.1.1 (Web MVC, Data JPA, Redis, Flyway, Actuator, Lombok)
 - Maven (se usa el wrapper `backend/mvnw`, no requiere instalación local)
 - Docker + Docker Compose (PostgreSQL y Redis de `contenedores/compose.yaml`)
 - Doxygen (solo para regenerar la documentación)
@@ -16,8 +16,11 @@ y un motor de reglas.
 Desde el directorio `backend`:
 
     ./mvnw test              # compila y ejecuta la suite de tests
-    ./mvnw spring-boot:run   # arranca la aplicación (demo de triaje por consola)
+    ./mvnw spring-boot:run   # arranca la aplicación
     ./mvnw verify            # build completo, igual que en CI (GitHub Actions)
+
+La demo del motor por consola (`DemoTriajeRunner`) está apagada; se enciende
+con `SIGNBB_DEMO_ACTIVA=true`.
 
 ## Perfil de base de datos
 
@@ -29,13 +32,28 @@ El backend usa un único perfil, `docker` (definido en
 Ver `contenedores/MANUAL_CONTENEDORES.md` para levantar y administrar los
 servicios.
 
-Antes de arrancar la aplicación o ejecutar las pruebas hay que levantar los
-servicios:
+Hay dos formas de trabajar:
 
-    cd ../contenedores && docker compose up -d
+- **Todo en contenedores** (backend incluido, construido con
+  `backend/Dockerfile`): `cd contenedores && docker compose up -d --build`. La
+  API queda en `http://localhost:8080` y `curl localhost:8080/actuator/health`
+  responde `{"status":"UP"}`.
+- **Backend en el host** (para desarrollar): se levanta solo la
+  infraestructura y se arranca con Maven.
 
-    ./mvnw spring-boot:run   # arranca la aplicación (demo de triaje por consola)
-    ./mvnw test              # suite completa contra PostgreSQL y Redis
+      cd ../contenedores && docker compose up -d db adminer silo cache
+
+      ./mvnw spring-boot:run   # arranca la aplicación
+      ./mvnw test              # suite completa contra PostgreSQL y Redis
+
+**Esquema con Flyway.** Las tablas las crean las migraciones de
+`backend/src/main/resources/db/migration` (`V1__esquema_inicial.sql`,
+`V2__telefono_pediatra.sql`, ...); Hibernate solo valida
+(`ddl-auto=validate`). Un cambio de esquema es un archivo `V<n>__descripcion.sql`
+nuevo; nunca se edita una migración ya publicada. Una base creada antes de
+Flyway se marca como versión 1 y recibe solo las siguientes. Si al arrancar
+Hibernate dice que una tabla o columna no coincide (bases locales muy viejas),
+borra los volúmenes con `docker compose down -v`.
 
 > Si la base ya estaba sembrada con una versión previa del grafo, hay que
 > borrar los volúmenes (`docker compose down -v`) para que `DatabaseInit`
@@ -44,7 +62,8 @@ servicios:
 ## Cuentas y seguridad
 
 La API pide un token JWT (`Authorization: Bearer <token>`) salvo en el login, el
-registro, `/media` y Swagger. Hay tres roles:
+registro, `/media`, Swagger y `GET /actuator/health` (solo dice `UP` o `DOWN`;
+el resto de Actuator no se expone). Hay tres roles:
 
 | Rol | Cómo se crea | Qué puede hacer |
 |---|---|---|
@@ -72,11 +91,25 @@ arrancar. En desarrollo es `supervisor@signbb.local` / `Supervisor123`;
 | `SIGNBB_MEDIA_ACCESS_KEY` | Usuario de Silo (imágenes) | `silo-admin` |
 | `SIGNBB_MEDIA_SECRET_KEY` | Clave de Silo (imágenes) | `ejemplo123` |
 | `SIGNBB_DOCS_ACTIVAS` | `false` apaga Swagger UI y `/v3/api-docs` (responden 404). **Obligatorio en producción** | `true` |
+| `SIGNBB_SHOW_SQL` | `true` imprime el SQL en consola. En producción la app no arranca si está en `true` | `false` |
+| `SIGNBB_SIEMBRA_ACTIVA` | Siembra el contenido clínico de ejemplo si falta el grafo raíz (`DatabaseInit`). En producción, `true` solo en el primer despliegue | `true` |
+| `SIGNBB_DEMO_ACTIVA` | Imprime la demo del motor al arrancar (`DemoTriajeRunner`) | `false` |
+| `SIGNBB_DB_URL` | URL JDBC de PostgreSQL | `jdbc:postgresql://localhost:5432/signbb` |
+| `SIGNBB_DB_USUARIO` | Usuario de PostgreSQL | `admin` |
+| `SIGNBB_DB_CONTRASENA` | Contraseña de PostgreSQL | `example` |
+| `SIGNBB_REDIS_HOST` | Host de Redis | `localhost` |
+| `SIGNBB_REDIS_PUERTO` | Puerto de Redis | `6379` |
+| `SIGNBB_MEDIA_ENDPOINT` | URL de la API S3 de Silo | `http://localhost:9000` |
+| `SIGNBB_MEDIA_BUCKET` | Bucket de las imágenes | `signbb-imagenes` |
+
+En el contenedor, `contenedores/compose.yaml` ya apunta las de conexión a los
+servicios `db`, `cache` y `silo`; el resto se toma del entorno o de un archivo
+`contenedores/.env` (no versionado).
 
 **Despliegue en producción.** Define `SIGNBB_ENTORNO=produccion`. Con eso, al
 arrancar se revisa que `SIGNBB_JWT_SECRETO`, `SIGNBB_SUPERVISOR_CONTRASENA`,
-`SIGNBB_MEDIA_ACCESS_KEY` y `SIGNBB_MEDIA_SECRET_KEY` tengan valores propios, y que
-`SIGNBB_DOCS_ACTIVAS=false`. Si algo falla, la app no arranca y el mensaje dice
+`SIGNBB_MEDIA_ACCESS_KEY` y `SIGNBB_MEDIA_SECRET_KEY` tengan valores propios, que
+`SIGNBB_DOCS_ACTIVAS=false` y que `SIGNBB_SHOW_SQL` no esté en `true`. Si algo falla, la app no arranca y el mensaje dice
 cuál variable corregir (nunca muestra el valor). Si `SIGNBB_ENTORNO` tiene
 cualquier otro texto, tampoco arranca. Sin esta variable la app se comporta como
 en desarrollo.

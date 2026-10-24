@@ -17,6 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 /**
@@ -39,8 +40,14 @@ import org.springframework.stereotype.Component;
  *
  * <p>
  * Se ejecuta automáticamente al arrancar la app Spring Boot.
+ *
+ * <p>
+ * MODIFICADO (1.6): apagada por defecto; solo corre si
+ * {@code signbb.demo.activa} vale {@code true} ({@code SIGNBB_DEMO_ACTIVA}),
+ * para no llenar el log de producción.
  */
 @Component
+@ConditionalOnProperty(name = "signbb.demo.activa", havingValue = "true")
 public class DemoTriajeRunner implements CommandLineRunner {
 
     /** Subgrafo cuyas preguntas usan los escenarios de la sección 6. */

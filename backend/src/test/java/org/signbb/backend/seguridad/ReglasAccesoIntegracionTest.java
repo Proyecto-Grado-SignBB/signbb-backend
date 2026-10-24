@@ -81,6 +81,23 @@ class ReglasAccesoIntegracionTest {
     }
 
     @Test
+    void elChequeoDeSaludRespondeSinTokenYNoMuestraDetalles() throws Exception {
+        mvc.perform(get("/actuator/health"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("UP"))
+                .andExpect(jsonPath("$.components").doesNotExist());
+    }
+
+    @Test
+    void elRestoDeActuatorNoQuedaExpuesto() throws Exception {
+        mvc.perform(get("/actuator/env")).andExpect(r -> assertNotEquals(200, r.getResponse().getStatus()));
+        mvc.perform(get("/actuator/beans")).andExpect(r -> assertNotEquals(200, r.getResponse().getStatus()));
+        String token = api.ingresar(ApiPrueba.SUPERVISOR, ApiPrueba.CLAVE_SUPERVISOR);
+        mvc.perform(conToken(get("/actuator/env"), token))
+                .andExpect(r -> assertNotEquals(200, r.getResponse().getStatus()));
+    }
+
+    @Test
     void lasRutasPublicasNoPidenToken() throws Exception {
         mvc.perform(get("/v3/api-docs")).andExpect(status().isOk());
         mvc.perform(get("/media/00000000-0000-0000-0000-000000000000.png"))

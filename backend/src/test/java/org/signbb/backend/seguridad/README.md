@@ -18,10 +18,10 @@ PostgreSQL y Redis, como el CI.
 | `servicios` | `ServicioCuentasImplTest` | 22 | registro de padres, login, alta de médicos por el supervisor y activar o desactivar cuentas; una contraseña de más de 72 bytes da 422; el padre guarda, cambia o borra el teléfono de su pediatra y uno mal escrito da 422 |
 | `servicios` | `ServicioTokensTest` | 7 | el JWT lleva `sub`, `rol` y `nombre`; uno vencido o firmado con otra clave se rechaza; un secreto corto no arranca |
 | (raíz) | `InicializadorSeguridadTest` | 2 | el supervisor inicial se siembra una sola vez |
-| (raíz) | `VerificadorSecretosProduccionTest` | 8 | en producción no se aceptan los valores de ejemplo ni la documentación de la API activa; un entorno mal escrito impide arrancar |
-| (raíz) | `ReglasAccesoIntegracionTest` | 17 | la cadena de filtros real: rutas públicas, 401 sin token, 403 por rol y dueño del recorrido; solo un padre guarda el teléfono del pediatra; un recorrido reiniciado o sin sesión da 410 |
+| (raíz) | `VerificadorSecretosProduccionTest` | 11 | en producción no se aceptan los valores de ejemplo, la documentación de la API activa ni el registro de SQL encendido; un entorno mal escrito impide arrancar |
+| (raíz) | `ReglasAccesoIntegracionTest` | 19 | la cadena de filtros real: rutas públicas, `/actuator/health` abierto y el resto de Actuator sin exponer, 401 sin token, 403 por rol y dueño del recorrido; solo un padre guarda el teléfono del pediatra; un recorrido reiniciado o sin sesión da 410 |
 
-En total son **56 pruebas** en estas clases. Las reglas de autor y de revisión de la autoría
+En total son **61 pruebas** en estas clases. Las reglas de autor y de revisión de la autoría
 (`GuardiaAutoriaTest`, `PoliticaAccesoBorradoresTest`, `ServicioRevisionImplTest`
 y `ControladorRevisionTest`) están en \ref pruebas_autoria; la del dueño del
 recorrido, en \ref pruebas_observaciones.
@@ -61,11 +61,13 @@ Si ya hay alguno, no hace nada, así que reiniciar el back no duplica cuentas.
 Con `SIGNBB_ENTORNO=produccion`, la app no arranca si el secreto JWT, la
 contraseña del supervisor inicial o las claves de Silo valen lo mismo que en
 desarrollo, o si Swagger y `/v3/api-docs` siguen activos
-(`SIGNBB_DOCS_ACTIVAS` distinto de `false`), y el mensaje nombra las variables
+(`SIGNBB_DOCS_ACTIVAS` distinto de `false`), o si el registro de SQL está
+encendido (`SIGNBB_SHOW_SQL=true`), y el mensaje nombra las variables
 sin mostrar los valores. En desarrollo se aceptan. Un entorno mal escrito también impide arrancar, y una
 prueba comprueba que los valores de ejemplo del código sigan iguales a los de
 `application.properties` y `application-docker.properties`, y otra que la
-variable de la documentación esté conectada a springdoc.
+variable de la documentación esté conectada a springdoc y otra que el registro
+de SQL esté apagado por defecto.
 
 ### Reglas de acceso (`ReglasAccesoIntegracionTest`)
 Con la aplicación completa:
@@ -74,6 +76,9 @@ Con la aplicación completa:
   con el mismo JSON `{mensaje, avisos}` que ya entiende el front;
 - Swagger, `/media`, el login y el registro no piden token, y el *preflight*
   `OPTIONS` del front responde 200;
+- `GET /actuator/health` responde 200 con `{"status":"UP"}` sin token y sin
+  detalles; `/actuator/env` y `/actuator/beans` no responden 200 ni con el
+  token del supervisor;
 - un `PADRE` recibe **403** en la autoría y en los usuarios;
 - un `MEDICO` recibe 403 en los recorridos, los usuarios, las revisiones,
   aprobar, rechazar y despublicar;

@@ -53,3 +53,15 @@ jobs:
 
       - name: Build and test
         run: ./mvnw -B verify
+
+  # La imagen del backend (backend/Dockerfile) se construye en cada push para
+  # que un cambio en el Dockerfile o en la compilación no se descubra al
+  # desplegar. Solo se construye; no se publica en ningún registro.
+  imagen:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build backend image
+        run: docker build -t signbb-backend backend

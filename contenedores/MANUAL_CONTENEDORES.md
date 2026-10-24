@@ -10,6 +10,10 @@ Servicios definidos en `compose.yaml`:
   los motores de navegación y reglas: guarda el contenido clínico activo
   (copia caliente de lo que vive en PostgreSQL) y las sesiones temporales de
   los recorridos en curso.
+- **backend**: la API de SignBB (Spring Boot), construida con
+  `backend/Dockerfile`, en el puerto `8080`. Espera a que `db`, `cache` y
+  `silo` estén sanos, se reinicia sola si cae (`restart: always`) y su
+  healthcheck consulta `/actuator/health`.
 
 Los datos persisten en los volúmenes `postgres_data`, `silo_data` y
 `redis_data` (Docker los lista con el prefijo del proyecto, p. ej.
@@ -21,9 +25,46 @@ contenedor, no solo del backend.
 
 Desde este directorio (`contenedores`):
 
-    docker compose up -d           # levanta db, adminer, silo y cache
+    docker compose up -d --build   # levanta todo, backend incluido (lo recompila)
     docker compose up -d --wait    # igual, esperando a que queden healthy
     docker compose ps              # verificar el estado de los servicios
+    curl localhost:8080/actuator/health   # {"status":"UP"} cuando el backend está listo
+
+Para desarrollar con el backend en el host (`./mvnw spring-boot:run` desde
+`backend`), se levanta solo la infraestructura:
+
+    docker compose up -d db adminer silo cache
+
+Si el backend del contenedor está corriendo, ocupa el puerto `8080`; detenlo
+antes con `docker compose stop backend`.
+
+### Variables de entorno
+
+Todas tienen un valor de desarrollo, así que `docker compose up` funciona sin
+configurar nada. Para cambiarlas, exportarlas antes de levantar o escribirlas en
+un archivo `.env` en este directorio (no se versiona). Las que comparten
+nombre se usan en dos servicios a la vez, para que no queden distintas.
+
+| Variable | Servicios | Valor de desarrollo |
+| -------- | --------- | ------------------- |
+| `SIGNBB_DB_CONTRASENA` | db, backend | `example` |
+| `SIGNBB_MEDIA_ACCESS_KEY` | silo, backend | `silo-admin` |
+| `SIGNBB_MEDIA_SECRET_KEY` | silo, backend | `ejemplo123` |
+| `SIGNBB_ENTORNO` | backend | `desarrollo` |
+| `SIGNBB_JWT_SECRETO` | backend | valor fijo de desarrollo |
+| `SIGNBB_SUPERVISOR_CONTRASENA` | backend | `Supervisor123` |
+| `SIGNBB_DOCS_ACTIVAS` | backend | `true` |
+| `SIGNBB_SIEMBRA_ACTIVA` | backend | `true` |
+| `SIGNBB_CORS_ORIGENES` | backend | `http://localhost:4200,http://localhost:4300` |
+
+> PostgreSQL y Silo leen su contraseña solo la primera vez, con el volumen
+> vacío. Si se cambia después, hay que cambiarla también dentro del servicio o
+> empezar de cero con `docker compose down -v`.
+
+**Producción.** `SIGNBB_ENTORNO=produccion` obliga a dar valores propios a los
+secretos y `SIGNBB_DOCS_ACTIVAS=false`; si no, el backend no arranca y el log
+dice qué variable falta. `SIGNBB_SIEMBRA_ACTIVA=true` solo en el primer
+despliegue (siembra el contenido clínico) y `false` después.
 
 ## Dar de baja
 
@@ -40,9 +81,10 @@ datos, objetos de silo y caché/sesiones de Redis):
     docker compose down -v
 
 > Advertencia: el borrado es irreversible. Tras vaciar la base, el siguiente
-> arranque del backend vuelve a crear las tablas y siembra de nuevo el grafo
-> clínico y las reglas (`DatabaseInit`), pues la siembra solo se omite cuando
-> las tablas ya tienen filas. Las sesiones de recorridos en curso guardadas en
+> arranque del backend vuelve a crear las tablas con las migraciones de Flyway
+> y siembra de nuevo el grafo clínico y las reglas (`DatabaseInit`, si
+> `SIGNBB_SIEMBRA_ACTIVA` es `true`), pues la siembra solo se omite cuando ya
+> existe el grafo raíz. Las sesiones de recorridos en curso guardadas en
 > Redis y los objetos de silo no se recuperan de ninguna otra fuente.
 >
 > Actualizar el contenido clínico: `DatabaseInit` decide sembrar según el `id`
@@ -50,6 +92,10 @@ datos, objetos de silo y caché/sesiones de Redis):
 > `backend/src/main/resources/static/grafo_sistema/` pero la base ya estaba
 > sembrada, hay que borrar los volúmenes (`docker compose down -v`) y volver a
 > levantar; de lo contrario se seguiría sirviendo el contenido anterior.
+>
+> Base local vieja: si el backend no arranca porque Hibernate dice que una
+> tabla o columna no coincide con el esquema, la base se creó antes de Flyway
+> con otra forma. `docker compose down -v` y volver a levantar la deja migrada.
 
 ## Acceso rápido
 
@@ -59,15 +105,15 @@ datos, objetos de silo y caché/sesiones de Redis):
   contraseña `ejemplo123`.
 - **redis-cli**: `docker exec -it contenedores-cache-1 redis-cli`
 - **psql**: `docker exec -it contenedores-db-1 psql -U admin -d signbb`
-- **Logs**: `docker compose logs -f db` (o `silo` / `cache`, según interese)
+- **Logs**: `docker compose logs -f db` (o `silo` / `cache` / `backend`, según interese)
 
-> **Puertos solo locales.** PostgreSQL, Adminer, Silo y Redis se publican en
+> **Puertos solo locales.** PostgreSQL, Adminer, Silo, Redis y el backend se publican en
 > `127.0.0.1` (por ejemplo `127.0.0.1:5432`). Funcionan desde tu propio
 > computador, pero no se ven desde otro equipo de la red. Si cambias el
 > `compose.yaml`, aplica el cambio con `docker compose up -d`: los contenedores
 > se recrean y los datos se conservan porque viven en volúmenes.
 
-## Parámetros de conexión (perfil `docker` del backend)
+## Parámetros de conexión (perfil `docker` del backend en el host)
 
 | Parámetro   | Valor              |
 | ----------- | ------------------ |

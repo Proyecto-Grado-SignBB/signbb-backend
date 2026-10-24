@@ -34,11 +34,11 @@ efímeros (`signbb-backend/.github/workflows/build.yml`).
 
 | Módulo | Pruebas | Tipo | Documentación |
 |---|---:|---|---|
-| Navegación: TADs, parsers, motor y servicio | 171 | JUnit 5 | \ref pruebas_navegacion "Ver página" |
+| Navegación: TADs, parsers, motor y servicio | 172 | JUnit 5 | \ref pruebas_navegacion "Ver página" |
 | Reglas: TAD, evaluación, servicio y mapeo JSON | 28 | JUnit 5 + Mockito | \ref pruebas_reglas "Ver página" |
 | Autoría: lienzo, subgrafos, reglas, autor y revisión | 194 | JUnit 5 + Mockito | \ref pruebas_autoria "Ver página" |
-| Observaciones: captura "todo o nada", validación, dueño del recorrido y respuesta del cuidador | 38 | JUnit 5 + Mockito | \ref pruebas_observaciones "Ver página" |
-| Seguridad: cuentas, login con JWT, reglas de acceso y secretos de producción | 36 | JUnit 5 + Mockito / `@SpringBootTest` | \ref pruebas_seguridad "Ver página" |
+| Observaciones: captura "todo o nada", validación, dueño del recorrido y respuesta del cuidador | 53 | JUnit 5 + Mockito | \ref pruebas_observaciones "Ver página" |
+| Seguridad: cuentas, login con JWT, reglas de acceso y secretos de producción | 61 | JUnit 5 + Mockito / `@SpringBootTest` | \ref pruebas_seguridad "Ver página" |
 | Cache: contenido clínico y sesiones en Redis | — | Mockito / `@SpringBootTest` | \ref pruebas_cache "Ver página" |
 | Errores generales: 400, 405, 409, 422 y 500 con cuerpo `{mensaje, avisos}` (`config/ManejadorErroresGeneralesTest`) | 8 | JUnit 5 + MockMvc | — |
 | Validación de entradas: límites de largo y de caracteres de los DTO (`config/ValidacionEntradasTest`) | 8 | JUnit 5 + validador de Jakarta | — |
@@ -48,7 +48,12 @@ efímeros (`signbb-backend/.github/workflows/build.yml`).
 En `backend/src/test/java/org/signbb/backend/` viven las pruebas que arrancan el
 contexto completo:
 
-- `BackendApplicationTests` — *smoke test*: el contexto de la aplicación carga.
+- `BackendApplicationTests` — *smoke test*: el contexto de la aplicación carga. Con
+  `ddl-auto=validate`, además comprueba que las migraciones de Flyway dejan el
+  esquema que esperan las entidades.
+- `ArranqueCondicionalTest` — la siembra (`DatabaseInit`) y la demo de consola
+  (`DemoTriajeRunner`) solo existen si `signbb.siembra.activa` /
+  `signbb.demo.activa` valen `true` (sin base de datos).
 - `PersistenciaEstructuraJsonTest` — ida y vuelta de los documentos JSON por la
   columna `estructura` (`jsonb`) y verificación de la siembra de `DatabaseInit`.
 - `AutoriaIntegracionTest` — de punta a punta: armar un subgrafo con el servicio,
@@ -62,8 +67,8 @@ contexto completo:
 
 El workflow `build` corre `./mvnw -B verify` con PostgreSQL y Redis como
 servicios. Las corridas y los conteos por clase se detallan en las páginas de
-cada módulo. En la rama `seguridad` (16-oct-2026) corren **528 pruebas**, sin
-fallos.
+cada módulo. En la rama `mejoras-rondas-3-4` (23-oct-2026) corren **645 pruebas**,
+sin fallos.
 
 > Nota: para leer reportes frescos, ejecutar `./mvnw clean` antes: `target/surefire-reports`
 > puede conservar reportes de clases que ya no existen.

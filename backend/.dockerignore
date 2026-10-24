@@ -1,0 +1,7 @@
+# Lo que no entra al contexto de "docker build": compilados locales y
+# archivos del IDE. El jar se compila dentro de la imagen.
+target/
+.idea/
+.vscode/
+*.iml
+.DS_Store

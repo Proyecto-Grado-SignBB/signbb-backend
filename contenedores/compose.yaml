@@ -1,8 +1,11 @@
 # =============================================================================
-# Docker Compose para SignBB - Servicios de Base de Datos
+# Docker Compose para SignBB
 # =============================================================================
-# Este archivo define los servicios de PostgreSQL y Adminer.
-# Se ejecuta con: docker compose up -d
+# Este archivo define PostgreSQL, Adminer, Silo, Redis y el backend.
+# Todo junto:                 docker compose up -d --build
+# Solo infraestructura (backend en el host con ./mvnw spring-boot:run):
+#                             docker compose up -d db adminer silo cache
+# Ver MANUAL_CONTENEDORES.md para las variables de entorno.
 # =============================================================================
 
 services:
@@ -35,9 +38,9 @@ services:
       # Se usa "admin" para seguir la convención del proyecto.
       POSTGRES_USER: admin
 
-      # Contraseña del superusuario.
+      # Contraseña del superusuario. La misma variable la recibe el backend.
       # En producción, usar un secreto gestionado (Docker Secrets, Vault, etc.).
-      POSTGRES_PASSWORD: example
+      POSTGRES_PASSWORD: ${SIGNBB_DB_CONTRASENA:-example}
 
       # Base de datos que se crea automáticamente al inicializar.
       # Si no se especifica, PostgreSQL crea una base de datos con el nombre del usuario.
@@ -139,8 +142,9 @@ services:
     environment:
       # Credenciales raíz del almacenamiento (solo desarrollo).
       # MINIO_ROOT_PASSWORD debe tener 8+ caracteres (la imagen lo exige).
-      MINIO_ROOT_USER: silo-admin
-      MINIO_ROOT_PASSWORD: ejemplo123
+      # Las mismas variables las recibe el backend.
+      MINIO_ROOT_USER: ${SIGNBB_MEDIA_ACCESS_KEY:-silo-admin}
+      MINIO_ROOT_PASSWORD: ${SIGNBB_MEDIA_SECRET_KEY:-ejemplo123}
 
     # Volumen nombrado para persistir los objetos.
     # Debe montarse en /data: es la ruta que sirve el comando "server" y el
@@ -195,6 +199,60 @@ services:
       timeout: 5s
       retries: 5
       start_period: 5s
+
+  # ===========================================================================
+  # SERVICIO: backend (API de SignBB, Spring Boot)
+  # ===========================================================================
+  # Se construye con backend/Dockerfile. Arranca cuando la base, Redis y Silo
+  # están sanos; Flyway migra el esquema y, si SIGNBB_SIEMBRA_ACTIVA es true,
+  # se siembra el contenido clínico de ejemplo.
+  # ===========================================================================
+  backend:
+    build: ../backend
+
+    # Política de reinicio (AD-07): si el proceso cae, Docker lo levanta otra vez.
+    restart: always
+
+    depends_on:
+      db:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+      silo:
+        condition: service_healthy
+
+    # Dentro de la red de Docker cada servicio se alcanza por su nombre.
+    # Los secretos tienen valor de desarrollo por defecto; en producción se
+    # definen en el entorno o en un archivo .env junto a este compose (no
+    # versionado) y SIGNBB_ENTORNO=produccion impide arrancar con los de ejemplo.
+    environment:
+      SIGNBB_DB_URL: jdbc:postgresql://db:5432/signbb
+      SIGNBB_DB_USUARIO: admin
+      SIGNBB_DB_CONTRASENA: ${SIGNBB_DB_CONTRASENA:-example}
+      SIGNBB_REDIS_HOST: cache
+      SIGNBB_REDIS_PUERTO: 6379
+      SIGNBB_MEDIA_ENDPOINT: http://silo:9000
+      SIGNBB_MEDIA_ACCESS_KEY: ${SIGNBB_MEDIA_ACCESS_KEY:-silo-admin}
+      SIGNBB_MEDIA_SECRET_KEY: ${SIGNBB_MEDIA_SECRET_KEY:-ejemplo123}
+      SIGNBB_ENTORNO: ${SIGNBB_ENTORNO:-desarrollo}
+      SIGNBB_JWT_SECRETO: ${SIGNBB_JWT_SECRETO:-signbb-desarrollo-secreto-cambiar-en-produccion-2026}
+      SIGNBB_SUPERVISOR_CONTRASENA: ${SIGNBB_SUPERVISOR_CONTRASENA:-Supervisor123}
+      SIGNBB_DOCS_ACTIVAS: ${SIGNBB_DOCS_ACTIVAS:-true}
+      SIGNBB_SIEMBRA_ACTIVA: ${SIGNBB_SIEMBRA_ACTIVA:-true}
+      SIGNBB_CORS_ORIGENES: ${SIGNBB_CORS_ORIGENES:-http://localhost:4200,http://localhost:4300}
+
+    # Solo en 127.0.0.1: delante va el proxy o el front, no la red directa.
+    ports:
+      - "127.0.0.1:8080:8080"
+
+    # /actuator/health responde {"status":"UP"} cuando la base y Redis
+    # contestan. Spring tarda en arrancar, por eso el start_period largo.
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/actuator/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 90s
 
 # =============================================================================
 # VOLÚMENES
