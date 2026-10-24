@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
+import org.signbb.backend.config.PatronesTexto;
 import org.signbb.backend.config.RecursoNoEncontradoException;
 import org.signbb.backend.seguridad.controladores.LoginRequest;
 import org.signbb.backend.seguridad.controladores.NuevoUsuarioRequest;
@@ -22,6 +23,9 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Implementación de {@link ServicioCuentas} sobre {@link RepositorioUsuario},
  * con contraseñas en BCrypt y tokens de {@link ServicioTokens}.
+ *
+ * <p>
+ * MODIFICADO (2.4): guarda y borra el teléfono del pediatra del padre.
  */
 @Service
 @Transactional
@@ -38,6 +42,9 @@ public class ServicioCuentasImpl implements ServicioCuentas {
 
     /** Mensaje del 401 cuando la sesión ya no sirve. */
     static final String MENSAJE_SESION_TERMINADA = "Tu sesión terminó. Vuelve a ingresar.";
+
+    /** Mensaje del 422 cuando el teléfono del pediatra no tiene un formato válido. */
+    static final String MENSAJE_TELEFONO = "Escribe un teléfono de 7 a 20 caracteres: solo números, + y espacios.";
 
     private final RepositorioUsuario usuarios;
     private final PasswordEncoder codificador;
@@ -97,6 +104,18 @@ public class ServicioCuentasImpl implements ServicioCuentas {
     public UsuarioDTO yo(UsuarioActual usuario) {
         return usuarios.findById(usuario.id()).map(UsuarioDTO::desde)
                 .orElseThrow(() -> new CredencialesInvalidasException(MENSAJE_SESION_TERMINADA));
+    }
+
+    @Override
+    public UsuarioDTO guardarTelefonoPediatra(UsuarioActual padre, String telefono) {
+        String limpio = vacioANull(telefono);
+        if (limpio != null && !limpio.matches(PatronesTexto.TELEFONO)) {
+            throw new CuentaInvalidaException(MENSAJE_TELEFONO);
+        }
+        UsuarioEntity u = usuarios.findById(padre.id())
+                .orElseThrow(() -> new CredencialesInvalidasException(MENSAJE_SESION_TERMINADA));
+        u.setTelefonoPediatra(limpio);
+        return UsuarioDTO.desde(usuarios.save(u));
     }
 
     @Override

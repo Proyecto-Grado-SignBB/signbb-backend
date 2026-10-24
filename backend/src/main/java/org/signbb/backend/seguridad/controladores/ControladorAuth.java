@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -26,6 +27,10 @@ import jakarta.validation.Valid;
 /**
  * API de sesión: registro de padres, ingreso y usuario actual. El token que
  * devuelven registro e ingreso va en {@code Authorization: Bearer <token>}.
+ *
+ * <p>
+ * MODIFICADO (2.4): se agrega {@code PUT /api/auth/yo/pediatra}, solo para
+ * padres.
  */
 @RestController
 @RequestMapping("/api/auth")
@@ -115,5 +120,27 @@ public class ControladorAuth {
     @GetMapping("/yo")
     public UsuarioDTO yo(UsuarioActual usuario) {
         return cuentas.yo(usuario);
+    }
+
+    /** {@code PUT /api/auth/yo/pediatra}: guarda o borra el teléfono del pediatra del padre. */
+    @Operation(summary = "Guarda el teléfono del pediatra",
+            description = "Solo para padres. Con el teléfono vacío se borra el número guardado. "
+                    + "Devuelve la cuenta actualizada.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Cuenta con el teléfono actualizado"),
+            @ApiResponse(responseCode = "401", description = "Sin token, token inválido o cuenta inactiva",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAutoriaDTO.class))),
+            @ApiResponse(responseCode = "403", description = "La cuenta no es de un padre",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAutoriaDTO.class))),
+            @ApiResponse(responseCode = "422", description = "El teléfono no tiene un formato válido",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAutoriaDTO.class)))
+    })
+    @PutMapping("/yo/pediatra")
+    public UsuarioDTO guardarTelefonoPediatra(@Valid @RequestBody TelefonoPediatraRequest request,
+            UsuarioActual usuario) {
+        return cuentas.guardarTelefonoPediatra(usuario, request.telefono());
     }
 }

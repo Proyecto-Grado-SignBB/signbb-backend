@@ -42,7 +42,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * <ul>
  * <li>Públicas: preflight {@code OPTIONS}, registro e ingreso, imágenes
  * ({@code /media}) y la documentación (Swagger y {@code /v3/api-docs}).</li>
- * <li>{@code /api/recorridos/**}: PADRE.</li>
+ * <li>{@code /api/recorridos/**} y {@code PUT /api/auth/yo/pediatra}: PADRE.</li>
  * <li>{@code /api/usuarios/**}, {@code /api/autoria/revisiones} y aprobar,
  * rechazar, publicar directamente o despublicar un subgrafo: MEDICO_SUPERVISOR.</li>
  * <li>El resto de {@code /api/autoria/**}: MEDICO o MEDICO_SUPERVISOR.</li>
@@ -52,6 +52,9 @@ import jakarta.servlet.http.HttpServletResponse;
  * <p>
  * El 401 y el 403 salen en JSON con el formato {@code {mensaje, avisos}} que
  * ya entiende el front.
+ *
+ * <p>
+ * MODIFICADO (2.4): el teléfono del pediatra solo lo guarda un padre.
  */
 @Configuration
 public class ConfiguracionSeguridad {
@@ -85,6 +88,7 @@ public class ConfiguracionSeguridad {
                         .requestMatchers("/v3/api-docs", "/v3/api-docs/**", "/v3/api-docs.yaml",
                                 "/swagger-ui/**", "/swagger-ui.html", "/error").permitAll()
                         .requestMatchers("/api/recorridos", "/api/recorridos/**").hasRole(Rol.PADRE.name())
+                        .requestMatchers(HttpMethod.PUT, "/api/auth/yo/pediatra").hasRole(Rol.PADRE.name())
                         .requestMatchers("/api/usuarios", "/api/usuarios/**",
                                 "/api/autoria/revisiones", "/api/autoria/revisiones/**").hasRole(SUPERVISOR)
                         .requestMatchers(HttpMethod.POST, "/api/autoria/subgrafos/*/aprobar",

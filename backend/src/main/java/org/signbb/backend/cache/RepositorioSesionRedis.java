@@ -42,6 +42,10 @@ import tools.jackson.databind.ObjectMapper;
  * Si Redis no está disponible, falla con
  * {@link CacheNoDisponibleException} (503): degradar a memoria crearía
  * inconsistencias entre sesiones que aparecen y desaparecen.
+ *
+ * <p>
+ * MODIFICADO (CU10/CU11): implementa {@link #existe(String)} y
+ * {@link #eliminar(String)} con el mismo manejo de Redis caído (503).
  */
 @Component
 @Profile("docker")
@@ -84,6 +88,26 @@ public class RepositorioSesionRedis implements RepositorioSesion {
     public void guardar(SesionTriaje sesion) {
         escribir(PREFIJO_SESION + sesion.getId(),
                 mapper.writeValueAsString(SesionJson.desde(sesion)));
+    }
+
+    @Override
+    public boolean existe(String id) {
+        try {
+            return Boolean.TRUE.equals(redis.hasKey(PREFIJO_SESION + id));
+        } catch (DataAccessException e) {
+            throw new CacheNoDisponibleException(
+                    "el almacenamiento de sesiones no está disponible", e);
+        }
+    }
+
+    @Override
+    public void eliminar(String id) {
+        try {
+            redis.delete(PREFIJO_SESION + id);
+        } catch (DataAccessException e) {
+            throw new CacheNoDisponibleException(
+                    "el almacenamiento de sesiones no está disponible", e);
+        }
     }
 
     /** Reconstruye la sesión desde su forma serializable, resolviendo referencias por id. */

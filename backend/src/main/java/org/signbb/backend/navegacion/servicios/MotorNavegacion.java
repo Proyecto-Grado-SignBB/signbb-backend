@@ -134,6 +134,14 @@ public class MotorNavegacion {
     /**
      * Desenlace de sistema para un recorrido que alcanzó el máximo de
      * preguntas sin llegar a un terminal. No pertenece al grafo clínico.
+     *
+     * <p>
+     * Cierra con nivel {@code NORMAL} y no con una alerta: si en diez
+     * preguntas no apareció ninguna señal de alarma, no hay razón clínica
+     * para mandar a urgencias o a consulta; el mensaje pide seguir observando
+     * y consultar si aparece algún signo. Es una decisión del equipo (23 de
+     * octubre de 2026, ítem 2.5 del plan) que se revisará con el asesor
+     * clínico.
      */
     public static final Nodo LIMITE_PREGUNTAS = new Nodo("sistema/limite_preguntas", "recomendacion",
             "Respondió el máximo de preguntas sin encontrar señales de alarma. Siga observando a su "

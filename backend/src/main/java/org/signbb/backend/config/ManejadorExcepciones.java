@@ -6,6 +6,8 @@ import org.signbb.backend.autoria.controladores.ErrorAutoriaDTO;
 import org.signbb.backend.cache.CacheNoDisponibleException;
 import org.signbb.backend.navegacion.modelo.RecorridoOcupadoException;
 import org.signbb.backend.observaciones.servicios.PreguntaDesactualizadaException;
+import org.signbb.backend.observaciones.servicios.RecorridoFinalizadoException;
+import org.signbb.backend.observaciones.servicios.RecorridoVencidoException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,10 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 /**
  * Errores específicos del backend. Va antes que {@link ManejadorErroresGenerales},
  * que es la red de seguridad de lo que nadie más atiende.
+ *
+ * <p>
+ * MODIFICADO (CU10/CU11): una consulta vencida o reiniciada responde 410 y
+ * reiniciar una consulta terminada responde 409, los dos con mensaje.
  */
 @ControllerAdvice
 @Order(Ordered.LOWEST_PRECEDENCE - 10)
@@ -61,6 +67,18 @@ public class ManejadorExcepciones {
     /** La respuesta era para una pregunta que ya no es la actual: 409 y el cliente vuelve a consultar. */
     @ExceptionHandler(PreguntaDesactualizadaException.class)
     public ResponseEntity<ErrorAutoriaDTO> manejarPreguntaDesactualizada(PreguntaDesactualizadaException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorAutoriaDTO(ex.getMessage(), List.of()));
+    }
+
+    /** La consulta venció o se reinició: 410 para que el cliente lleve al inicio con el aviso. */
+    @ExceptionHandler(RecorridoVencidoException.class)
+    public ResponseEntity<ErrorAutoriaDTO> manejarRecorridoVencido(RecorridoVencidoException ex) {
+        return ResponseEntity.status(HttpStatus.GONE).body(new ErrorAutoriaDTO(ex.getMessage(), List.of()));
+    }
+
+    /** Se pidió reiniciar una consulta que ya terminó: 409, su resultado no cambia. */
+    @ExceptionHandler(RecorridoFinalizadoException.class)
+    public ResponseEntity<ErrorAutoriaDTO> manejarRecorridoFinalizado(RecorridoFinalizadoException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorAutoriaDTO(ex.getMessage(), List.of()));
     }
 

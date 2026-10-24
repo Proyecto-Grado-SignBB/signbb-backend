@@ -49,6 +49,9 @@ real (grafo y reglas de `static/grafo_sistema/`):
 - **Redis caído al buscar o guardar**: `CacheNoDisponibleException`
   (el `ControllerAdvice` la responde como 503; nunca degrada a memoria para
   evitar sesiones que aparecen y desaparecen).
+- **`existe` y `eliminar`** (CU10/CU11): `existe` dice si la clave sigue en
+  Redis (una sesión vencida a las 8 h ya no está) y `eliminar` borra la del
+  recorrido reiniciado; con Redis caído también dan `CacheNoDisponibleException`.
 
 ## CandadoRecorridoRedisTest — candado por recorrido
 

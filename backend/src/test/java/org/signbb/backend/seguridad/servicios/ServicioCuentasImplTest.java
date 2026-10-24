@@ -3,6 +3,7 @@ package org.signbb.backend.seguridad.servicios;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -246,6 +247,46 @@ class ServicioCuentasImplTest {
 
         assertFalse(dto.activo());
         assertFalse(b.isActivo());
+    }
+
+    @Test
+    void elPadreGuardaElTelefonoDeSuPediatraSinEspaciosSobrantes() {
+        UsuarioEntity padre = cuenta(8L, "p@familia.co", "secreta123", Rol.PADRE, true);
+
+        UsuarioDTO dto = servicio.guardarTelefonoPediatra(padre.comoActual(), "  +57 300 123 4567 ");
+
+        assertEquals("+57 300 123 4567", dto.telefonoPediatra());
+        assertEquals("+57 300 123 4567", padre.getTelefonoPediatra());
+    }
+
+    @Test
+    void unTelefonoVacioBorraElNumeroGuardado() {
+        UsuarioEntity padre = cuenta(8L, "p@familia.co", "secreta123", Rol.PADRE, true);
+        padre.setTelefonoPediatra("3001234567");
+
+        assertNull(servicio.guardarTelefonoPediatra(padre.comoActual(), "  ").telefonoPediatra());
+        assertNull(padre.getTelefonoPediatra());
+    }
+
+    @Test
+    void unTelefonoConLetrasOMuyCortoDa422YNoSeGuarda() {
+        UsuarioEntity padre = cuenta(8L, "p@familia.co", "secreta123", Rol.PADRE, true);
+
+        for (String malo : List.of("300-ABC-4567", "12345", "1".repeat(21))) {
+            assertThrows(CuentaInvalidaException.class,
+                    () -> servicio.guardarTelefonoPediatra(padre.comoActual(), malo));
+        }
+        verify(usuarios, never()).save(any());
+    }
+
+    @Test
+    void elTelefonoDelPediatraVieneEnLaSesion() {
+        UsuarioEntity padre = cuenta(8L, "p@familia.co", "secreta123", Rol.PADRE, true);
+        padre.setTelefonoPediatra("3001234567");
+
+        SesionDTO sesion = servicio.ingresar(new LoginRequest("p@familia.co", "secreta123"));
+
+        assertEquals("3001234567", sesion.usuario().telefonoPediatra());
     }
 
     /** Registra en el repositorio simulado una cuenta con esos datos. */

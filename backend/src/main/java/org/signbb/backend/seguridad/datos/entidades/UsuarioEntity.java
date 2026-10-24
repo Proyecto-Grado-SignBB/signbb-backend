@@ -20,6 +20,10 @@ import lombok.Setter;
 /**
  * Cuenta de un usuario: padre, médico o médico supervisor. El correo se
  * guarda en minúsculas y la contraseña solo como hash BCrypt.
+ *
+ * <p>
+ * MODIFICADO (2.4): se agrega {@code telefonoPediatra}, que el padre usa para
+ * llamar a su pediatra desde el resultado de la consulta.
  */
 @Entity
 @Table(name = "usuario")
@@ -62,6 +66,10 @@ public class UsuarioEntity {
      * si nunca se usó.
      */
     private Instant sesionValidaDesde;
+
+    /** Teléfono del pediatra que guardó un padre, o {@code null} si no lo guardó. */
+    @Column(length = 20)
+    private String telefonoPediatra;
 
     /** El usuario de la petición en curso que corresponde a esta cuenta. */
     public UsuarioActual comoActual() {

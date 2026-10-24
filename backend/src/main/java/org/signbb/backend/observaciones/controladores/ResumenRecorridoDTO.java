@@ -9,8 +9,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * Fila de "Mis recorridos".
  *
+ * <p>
+ * MODIFICADO (CU10/CU11): el estado puede ser también {@code VENCIDO} o
+ * {@code ABANDONADO}.
+ *
  * @param recorridoId  id del recorrido
- * @param estado       {@code EN_CURSO} o {@code FINALIZADO}
+ * @param estado       {@code EN_CURSO}, {@code FINALIZADO}, {@code VENCIDO} o {@code ABANDONADO}
  * @param nivel        nivel de alerta del resultado, o {@code null} si sigue en curso
  * @param mensaje      mensaje de la conclusión, o {@code null} si sigue en curso
  * @param iniciadoEn   cuándo empezó
@@ -19,7 +23,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(description = "Fila de \"Mis recorridos\".")
 public record ResumenRecorridoDTO(
         @Schema(description = "Id del recorrido") String recorridoId,
-        @Schema(description = "EN_CURSO o FINALIZADO") String estado,
+        @Schema(description = "EN_CURSO, FINALIZADO, VENCIDO (la sesión venció) o ABANDONADO "
+                + "(se reinició)") String estado,
         @Schema(description = "Nivel de alerta del resultado, o nulo si sigue en curso") String nivel,
         @Schema(description = "Mensaje de la conclusión, o nulo si sigue en curso") String mensaje,
         @Schema(description = "Cuándo empezó") Instant iniciadoEn,

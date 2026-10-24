@@ -5,13 +5,18 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +25,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.signbb.backend.config.RecursoNoEncontradoException;
+import org.signbb.backend.navegacion.modelo.CandadoRecorrido;
+import org.signbb.backend.navegacion.modelo.RecorridoOcupadoException;
+import org.signbb.backend.navegacion.modelo.RepositorioSesion;
 import org.signbb.backend.navegacion.servicios.ServicioNavegacion;
 import org.signbb.backend.observaciones.controladores.PreguntaDTO;
 import org.signbb.backend.observaciones.controladores.RecorridoDTO;
@@ -29,11 +37,17 @@ import org.signbb.backend.observaciones.datos.entidades.RecorridoEntity;
 import org.signbb.backend.observaciones.datos.repositorios.RepositorioRecorridos;
 import org.signbb.backend.seguridad.modelo.Rol;
 import org.signbb.backend.seguridad.modelo.UsuarioActual;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.SimpleTransactionStatus;
 
 /**
  * Pruebas de {@link ServicioRecorridosImpl} con la navegación y el
  * repositorio mockeados: el recorrido queda a nombre del padre, otro padre
  * recibe 404 y el estado se lleva al terminar o al retroceder.
+ *
+ * <p>
+ * MODIFICADO (CU10/CU11): también cubre la consulta vencida (410 y estado
+ * {@code VENCIDO}) y el reinicio con candado.
  */
 @ExtendWith(MockitoExtension.class)
 class ServicioRecorridosImplTest {
@@ -48,11 +62,30 @@ class ServicioRecorridosImplTest {
     @Mock
     private RepositorioRecorridos recorridos;
 
+    @Mock
+    private RepositorioSesion sesiones;
+
+    @Mock
+    private PlatformTransactionManager gestor;
+
     private ServicioRecorridosImpl servicio;
+
+    /** Candado que siempre deja pasar. */
+    private static class CandadoLibre implements CandadoRecorrido {
+        @Override
+        public <T> T conCandado(String recorridoId, Supplier<T> accion) {
+            return accion.get();
+        }
+    }
 
     @BeforeEach
     void preparar() {
-        servicio = new ServicioRecorridosImpl(navegacion, recorridos);
+        lenient().when(gestor.getTransaction(any())).thenReturn(new SimpleTransactionStatus());
+        servicio = crear(new CandadoLibre());
+    }
+
+    private ServicioRecorridosImpl crear(CandadoRecorrido candado) {
+        return new ServicioRecorridosImpl(navegacion, recorridos, sesiones, candado, gestor);
     }
 
     private static RecorridoDTO enCurso() {
@@ -152,11 +185,154 @@ class ServicioRecorridosImplTest {
     @Test
     void listaLosRecorridosDelPadre() {
         when(recorridos.findByUsuarioIdOrderByIniciadoEnDesc(P1.id())).thenReturn(List.of(guardado(P1.id())));
+        when(sesiones.existe(ID)).thenReturn(true);
 
         List<ResumenRecorridoDTO> lista = servicio.deUsuario(P1);
 
         assertEquals(1, lista.size());
         assertEquals(ID, lista.get(0).recorridoId());
         assertEquals("EN_CURSO", lista.get(0).estado());
+    }
+
+    @Test
+    void enLaListaUnRecorridoEnCursoSinSesionQuedaVencido() {
+        RecorridoEntity fila = guardado(P1.id());
+        when(recorridos.findByUsuarioIdOrderByIniciadoEnDesc(P1.id())).thenReturn(List.of(fila));
+        when(sesiones.existe(ID)).thenReturn(false);
+
+        assertEquals("VENCIDO", servicio.deUsuario(P1).get(0).estado());
+        assertEquals("VENCIDO", fila.getEstado());
+        verify(recorridos).save(fila);
+    }
+
+    @Test
+    void siRedisNoRespondeLaListaSaleConElUltimoEstadoGuardado() {
+        when(recorridos.findByUsuarioIdOrderByIniciadoEnDesc(P1.id())).thenReturn(List.of(guardado(P1.id())));
+        when(sesiones.existe(ID)).thenThrow(new IllegalStateException("redis caído"));
+
+        assertEquals("EN_CURSO", servicio.deUsuario(P1).get(0).estado());
+    }
+
+    @Test
+    void unRecorridoEnCursoConSesionSigueVigente() {
+        when(recorridos.findById(ID)).thenReturn(Optional.of(guardado(P1.id())));
+        when(sesiones.existe(ID)).thenReturn(true);
+
+        servicio.exigirVigente(ID);
+
+        verify(recorridos, never()).save(any());
+    }
+
+    @Test
+    void unRecorridoEnCursoSinSesionDa410YQuedaVencido() {
+        RecorridoEntity fila = guardado(P1.id());
+        when(recorridos.findById(ID)).thenReturn(Optional.of(fila));
+        when(sesiones.existe(ID)).thenReturn(false);
+
+        RecorridoVencidoException e = assertThrows(RecorridoVencidoException.class,
+                () -> servicio.exigirVigente(ID));
+
+        assertEquals(RecorridoVencidoException.MENSAJE, e.getMessage());
+        assertEquals("VENCIDO", fila.getEstado());
+        verify(recorridos).save(fila);
+    }
+
+    @Test
+    void unRecorridoVencidoOReiniciadoDa410ConSuMensaje() {
+        RecorridoEntity fila = guardado(P1.id());
+        when(recorridos.findById(ID)).thenReturn(Optional.of(fila));
+
+        fila.setEstado("VENCIDO");
+        assertEquals(RecorridoVencidoException.MENSAJE,
+                assertThrows(RecorridoVencidoException.class, () -> servicio.exigirVigente(ID)).getMessage());
+        fila.setEstado("ABANDONADO");
+        assertEquals(RecorridoVencidoException.MENSAJE_REINICIADO,
+                assertThrows(RecorridoVencidoException.class, () -> servicio.exigirVigente(ID)).getMessage());
+    }
+
+    @Test
+    void unRecorridoFinalizadoSigueVigenteAunqueSuSesionHayaVencido() {
+        RecorridoEntity fila = guardado(P1.id());
+        fila.setEstado("FINALIZADO");
+        when(recorridos.findById(ID)).thenReturn(Optional.of(fila));
+
+        servicio.exigirVigente(ID);
+
+        assertEquals("FINALIZADO", fila.getEstado());
+        verify(sesiones, never()).existe(any());
+    }
+
+    @Test
+    void reiniciarDejaElViejoAbandonadoBorraSuSesionYEmpiezaUnoNuevo() {
+        RecorridoEntity viejo = guardado(P1.id());
+        when(recorridos.findById(ID)).thenReturn(Optional.of(viejo));
+        RecorridoDTO otro = new RecorridoDTO("r-2", "EN_CURSO", enCurso().pregunta(), null);
+        when(navegacion.iniciar()).thenReturn(otro);
+
+        RecorridoDTO nuevo = servicio.reiniciar(ID, P1);
+
+        assertEquals("r-2", nuevo.recorridoId());
+        assertEquals("ABANDONADO", viejo.getEstado());
+        verify(sesiones).eliminar(ID);
+        ArgumentCaptor<RecorridoEntity> filas = ArgumentCaptor.forClass(RecorridoEntity.class);
+        verify(recorridos, times(2)).save(filas.capture());
+        assertEquals("r-2", filas.getAllValues().get(1).getId());
+        assertEquals(P1.id(), filas.getAllValues().get(1).getUsuarioId());
+    }
+
+    @Test
+    void reiniciarUnRecorridoTerminadoDa409YNoEmpiezaOtro() {
+        RecorridoEntity fila = guardado(P1.id());
+        fila.setEstado("FINALIZADO");
+        when(recorridos.findById(ID)).thenReturn(Optional.of(fila));
+
+        assertThrows(RecorridoFinalizadoException.class, () -> servicio.reiniciar(ID, P1));
+
+        verify(navegacion, never()).iniciar();
+        verify(sesiones, never()).eliminar(any());
+        assertEquals("FINALIZADO", fila.getEstado());
+    }
+
+    @Test
+    void reiniciarUnRecorridoYaReiniciadoDa410() {
+        RecorridoEntity fila = guardado(P1.id());
+        fila.setEstado("ABANDONADO");
+        when(recorridos.findById(ID)).thenReturn(Optional.of(fila));
+
+        assertThrows(RecorridoVencidoException.class, () -> servicio.reiniciar(ID, P1));
+        verify(navegacion, never()).iniciar();
+    }
+
+    @Test
+    void reiniciarUnRecorridoVencidoEmpiezaUnoNuevoSinCambiarElViejo() {
+        RecorridoEntity fila = guardado(P1.id());
+        fila.setEstado("VENCIDO");
+        when(recorridos.findById(ID)).thenReturn(Optional.of(fila));
+        when(navegacion.iniciar()).thenReturn(new RecorridoDTO("r-2", "EN_CURSO", enCurso().pregunta(), null));
+
+        assertEquals("r-2", servicio.reiniciar(ID, P1).recorridoId());
+        assertEquals("VENCIDO", fila.getEstado());
+    }
+
+    @Test
+    void siNoSePuedeBorrarLaSesionViejaElReinicioIgualDevuelveElNuevo() {
+        when(recorridos.findById(ID)).thenReturn(Optional.of(guardado(P1.id())));
+        when(navegacion.iniciar()).thenReturn(new RecorridoDTO("r-2", "EN_CURSO", enCurso().pregunta(), null));
+        doThrow(new IllegalStateException("redis caído")).when(sesiones).eliminar(ID);
+
+        assertEquals("r-2", servicio.reiniciar(ID, P1).recorridoId());
+    }
+
+    @Test
+    void siElRecorridoEstaOcupadoReiniciarNoTocaNada() {
+        servicio = crear(new CandadoRecorrido() {
+            @Override
+            public <T> T conCandado(String recorridoId, Supplier<T> accion) {
+                throw new RecorridoOcupadoException();
+            }
+        });
+
+        assertThrows(RecorridoOcupadoException.class, () -> servicio.reiniciar(ID, P1));
+        verifyNoInteractions(recorridos, sesiones, navegacion);
     }
 }

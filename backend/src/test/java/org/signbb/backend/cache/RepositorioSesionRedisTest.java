@@ -9,6 +9,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.Duration;
@@ -265,5 +266,25 @@ class RepositorioSesionRedisTest {
         assertThrows(CacheNoDisponibleException.class, () -> repositorio.buscar("x"));
         assertThrows(CacheNoDisponibleException.class,
                 () -> repositorio.crear(estado, ResultadoPaso.pregunta(pregunta)));
+    }
+
+    @Test
+    void existeYEliminarUsanLaClaveDeLaSesion() {
+        when(redis.hasKey(RepositorioSesionRedis.PREFIJO_SESION + "s-1")).thenReturn(true);
+
+        assertTrue(repositorio.existe("s-1"));
+        assertFalse(repositorio.existe("otra"));
+        repositorio.eliminar("s-1");
+
+        verify(redis).delete(RepositorioSesionRedis.PREFIJO_SESION + "s-1");
+    }
+
+    @Test
+    void redisCaidoDaCacheNoDisponibleEnExisteYEliminar() {
+        when(redis.hasKey(anyString())).thenThrow(new DataAccessResourceFailureException("cache caído"));
+        when(redis.delete(anyString())).thenThrow(new DataAccessResourceFailureException("cache caído"));
+
+        assertThrows(CacheNoDisponibleException.class, () -> repositorio.existe("x"));
+        assertThrows(CacheNoDisponibleException.class, () -> repositorio.eliminar("x"));
     }
 }

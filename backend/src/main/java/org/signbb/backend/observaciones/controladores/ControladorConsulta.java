@@ -3,6 +3,7 @@ package org.signbb.backend.observaciones.controladores;
 import java.util.List;
 
 import org.signbb.backend.observaciones.modelo.TipoInteraccion;
+import org.signbb.backend.autoria.controladores.ErrorAutoriaDTO;
 import org.signbb.backend.observaciones.servicios.ServicioCaptura;
 import org.signbb.backend.observaciones.servicios.ServicioRecorridos;
 import org.signbb.backend.navegacion.servicios.ServicioNavegacion;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -38,6 +40,11 @@ import jakarta.validation.Valid;
  * Cada recorrido es del padre que lo inició ({@link ServicioRecorridos}): antes
  * de responder, retroceder o consultar se revisa que sea suyo y, si no, se
  * responde 404 para no revelar que existe.
+ *
+ * <p>
+ * MODIFICADO (CU10/CU11): consultar, responder y retroceder revisan además que
+ * la consulta siga vigente; si venció tras 8 horas sin actividad o ya se
+ * reinició, responden 410. Se agrega {@code reiniciar}.
  */
 @RestController
 @RequestMapping("/api")
@@ -101,6 +108,9 @@ public class ControladorConsulta {
             @ApiResponse(responseCode = "409", description = "Otra respuesta del mismo recorrido se está guardando, "
                             + "o la pregunta enviada (idPregunta) ya no es la actual",
                     content = @Content),
+            @ApiResponse(responseCode = "410", description = "La consulta venció tras 8 horas sin actividad "
+                    + "o se reinició",
+                    content = @Content(schema = @Schema(implementation = ErrorAutoriaDTO.class))),
             @ApiResponse(responseCode = "503", description = "Caché de sesiones (Redis) no disponible",
                     content = @Content)
     })
@@ -108,6 +118,7 @@ public class ControladorConsulta {
     public ResponseEntity<RecorridoDTO> responder(@PathVariable String recorridoId,
             @Valid @RequestBody RespuestaRequest request, UsuarioActual usuario) {
         servicioRecorridos.exigirDueno(recorridoId, usuario);
+        servicioRecorridos.exigirVigente(recorridoId);
         List<String> seleccionadas = request.getOpciones() != null
                 ? request.getOpciones()
                 : request.getRespuesta() != null ? List.of(request.getRespuesta()) : List.of();
@@ -136,13 +147,43 @@ public class ControladorConsulta {
                     content = @Content),
             @ApiResponse(responseCode = "409", description = "Otra operación del mismo recorrido se está guardando",
                     content = @Content),
+            @ApiResponse(responseCode = "410", description = "La consulta venció tras 8 horas sin actividad "
+                    + "o se reinició",
+                    content = @Content(schema = @Schema(implementation = ErrorAutoriaDTO.class))),
             @ApiResponse(responseCode = "503", description = "Caché de sesiones (Redis) no disponible",
                     content = @Content)
     })
     @PostMapping("/recorridos/{recorridoId}/retroceder")
     public ResponseEntity<RecorridoDTO> retroceder(@PathVariable String recorridoId, UsuarioActual usuario) {
         servicioRecorridos.exigirDueno(recorridoId, usuario);
+        servicioRecorridos.exigirVigente(recorridoId);
         return ResponseEntity.ok(servicioCaptura.retroceder(recorridoId));
+    }
+
+    /**
+     * {@code POST /api/recorridos/{id}/reiniciar}: deja la consulta como
+     * reiniciada y empieza una nueva desde la primera pregunta (CU11).
+     */
+    @Operation(summary = "Reinicia la consulta",
+            description = "Marca el recorrido como reiniciado (ABANDONADO), borra su sesión y "
+                    + "devuelve un recorrido nuevo con su primera pregunta. Un recorrido terminado "
+                    + "no se reinicia: su resultado queda en Mis recorridos.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Recorrido nuevo con su primera pregunta"),
+            @ApiResponse(responseCode = "404", description = "El recorrido no existe o es de otro padre",
+                    content = @Content),
+            @ApiResponse(responseCode = "409", description = "El recorrido ya terminó, u otra operación del "
+                    + "mismo recorrido se está guardando",
+                    content = @Content(schema = @Schema(implementation = ErrorAutoriaDTO.class))),
+            @ApiResponse(responseCode = "410", description = "El recorrido ya se había reiniciado",
+                    content = @Content(schema = @Schema(implementation = ErrorAutoriaDTO.class))),
+            @ApiResponse(responseCode = "503", description = "Caché de sesiones (Redis) no disponible",
+                    content = @Content)
+    })
+    @PostMapping("/recorridos/{recorridoId}/reiniciar")
+    public ResponseEntity<RecorridoDTO> reiniciar(@PathVariable String recorridoId, UsuarioActual usuario) {
+        servicioRecorridos.exigirDueno(recorridoId, usuario);
+        return ResponseEntity.ok(servicioRecorridos.reiniciar(recorridoId, usuario));
     }
 
     /** {@code GET /api/recorridos/{id}}: consulta el estado del recorrido. */
@@ -153,12 +194,16 @@ public class ControladorConsulta {
             @ApiResponse(responseCode = "200", description = "Estado actual del recorrido"),
             @ApiResponse(responseCode = "404", description = "El recorrido no existe o es de otro padre",
                     content = @Content),
+            @ApiResponse(responseCode = "410", description = "La consulta venció tras 8 horas sin actividad "
+                    + "o se reinició",
+                    content = @Content(schema = @Schema(implementation = ErrorAutoriaDTO.class))),
             @ApiResponse(responseCode = "503", description = "Caché de sesiones (Redis) no disponible",
                     content = @Content)
     })
     @GetMapping("/recorridos/{recorridoId}")
     public ResponseEntity<RecorridoDTO> consultar(@PathVariable String recorridoId, UsuarioActual usuario) {
         servicioRecorridos.exigirDueno(recorridoId, usuario);
+        servicioRecorridos.exigirVigente(recorridoId);
         return ResponseEntity.ok(servicioNavegacion.consultar(recorridoId));
     }
 

@@ -10,8 +10,14 @@ import lombok.Data;
 
 /**
  * Registro durable de un recorrido y de su dueño. La sesión vive en Redis y
- * vence en 24 h; esta fila queda para "Mis recorridos" y para saber de quién
- * es cada recorrido: solo el padre que lo inició puede verlo o seguirlo.
+ * vence tras 8 h sin actividad; esta fila queda para "Mis recorridos" y para
+ * saber de quién es cada recorrido: solo el padre que lo inició puede verlo o
+ * seguirlo.
+ *
+ * <p>
+ * MODIFICADO (CU10/CU11): {@code estado} suma {@code VENCIDO} y
+ * {@code ABANDONADO} (ver {@code ServicioRecorridosImpl}); la columna ya era
+ * texto, así que el esquema no cambia.
  */
 @Entity
 @Table(name = "recorrido")
@@ -26,7 +32,11 @@ public class RecorridoEntity {
     @Column(name = "usuario_id", nullable = false)
     private Long usuarioId;
 
-    /** {@code EN_CURSO} o {@code FINALIZADO}, igual que en el {@code RecorridoDTO}. */
+    /**
+     * {@code EN_CURSO} o {@code FINALIZADO}, igual que en el {@code RecorridoDTO};
+     * {@code VENCIDO} si la sesión venció en curso y {@code ABANDONADO} si el
+     * padre lo reinició.
+     */
     @Column(nullable = false)
     private String estado;
 

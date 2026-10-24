@@ -25,9 +25,9 @@ datos y sin Redis), así que corren igual en local y en GitHub Actions.
 | `motor` | `MotorNavegacionLimiteTest` | 8 | máximo de preguntas (10 por defecto) |
 | `motor` | `MotorNavegacionColaTest` | 23 | cola de la selección múltiple: ramas, alertas, umbral, reglas y retroceder |
 | `motor` | `OrdenColaTest` | 7 | orden de la cola: gravedad, peso y antigüedad |
-| `servicios` | `ServicioNavegacionImplTest` | 9 | la fachada de la API: iniciar, responder, consultar, retroceder y errores |
+| `servicios` | `ServicioNavegacionImplTest` | 10 | la fachada de la API: iniciar, responder, consultar, retroceder y errores; el camino del resultado trae el texto de cada pregunta y las razones son nombres de reglas |
 
-En total son **171 pruebas**. Las pruebas de la sesión en Redis
+En total son **172 pruebas**. Las pruebas de la sesión en Redis
 (`cache/RepositorioSesionRedisTest` y `cache/ColaSeleccionMultipleRedisIntegracionTest`)
 están documentadas en [`backend/src/test/README.md`](../../../../../README.md).
 
@@ -93,6 +93,10 @@ disparó. Retroceder lo desapila.
 - **Las respuestas deshechas no cuentan.** Retroceder y volver a responder no
   acerca el corte.
 - Desde el cierre por límite se puede retroceder a la décima pregunta.
+- **Por qué NORMAL.** Si en diez preguntas no apareció ninguna señal de
+  alarma, no hay razón clínica para una alerta. Es una decisión del equipo
+  (23 de octubre de 2026, ítem 2.5 del plan) que se revisará con el asesor
+  clínico; estas pruebas la fijan para que un cambio sea a propósito.
 
 ### Cola de la selección múltiple (`MotorNavegacionColaTest`, `OrdenColaTest`)
 - Se sigue a fondo la opción más grave y las demás quedan pendientes.
@@ -165,8 +169,8 @@ servicios) sobre el commit `518f775`, el merge de `tests-navegacion` en
 | `motor.MotorNavegacionLimiteTest` | 8 | 0 | 0 |
 | `motor.MotorNavegacionColaTest` | 23 | 0 | 0 |
 | `motor.OrdenColaTest` | 7 | 0 | 0 |
-| `servicios.ServicioNavegacionImplTest` | 9 | 0 | 0 |
-| **Módulo de navegación** | **171** | **0** | **0** |
+| `servicios.ServicioNavegacionImplTest` | 10 | 0 | 0 |
+| **Módulo de navegación** | **172** | **0** | **0** |
 
 La suite completa del backend corrió **234 pruebas, 0 fallos, 0 errores y 0
 omitidas**: con Redis como servicio del CI, las de integración de

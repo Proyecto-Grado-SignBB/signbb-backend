@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.signbb.backend.navegacion.modelo.GrafoClinico;
 import org.signbb.backend.navegacion.modelo.Nodo;
+import org.signbb.backend.navegacion.modelo.PasoCausal;
 import org.signbb.backend.navegacion.modelo.Respuesta;
 import org.signbb.backend.navegacion.modelo.ResultadoPaso;
 import org.signbb.backend.reglas.modelo.ReglaClinica;
@@ -17,6 +18,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * Si {@code estado} es {@code EN_CURSO}, lleva la {@code pregunta} que debe
  * responderse y {@code resultado} es {@code null}. Si es {@code FINALIZADO},
  * lleva el {@code resultado} y {@code pregunta} es {@code null}.
+ *
+ * <p>
+ * MODIFICADO (2.6): cada paso del camino causal lleva también el texto de su
+ * nodo.
  */
 @Schema(description = "Vista de un recorrido de triaje. Si estado es EN_CURSO lleva "
                 + "pregunta y resultado es nulo; si es FINALIZADO lleva resultado y pregunta es nulo.")
@@ -53,20 +58,24 @@ public record RecorridoDTO(
                                 .map(ReglaClinica::getNombre)
                                 .toList();
                 List<PasoCausalDTO> camino = paso.caminoCausal().stream()
-                                .map(p -> new PasoCausalDTO(p.nodo().getId(), p.condicion()))
+                                .map(RecorridoDTO::paso)
                                 .toList();
                 List<RecomendacionDTO> recomendaciones = paso.recomendaciones().stream()
                                 .map(r -> new RecomendacionDTO(
                                                 r.nodo().getId(),
                                                 r.nodo().getContenido(),
                                                 r.camino().stream()
-                                                                .map(p -> new PasoCausalDTO(p.nodo().getId(),
-                                                                                p.condicion()))
+                                                                .map(RecorridoDTO::paso)
                                                                 .toList()))
                                 .toList();
                 ResultadoDTO resultado = new ResultadoDTO(
                                 paso.nivel().name(), destino.getId(), destino.getContenido(), razones, camino,
                                 recomendaciones);
                 return new RecorridoDTO(recorridoId, paso.estado().name(), null, resultado);
+        }
+
+        /** Un paso del camino con el texto de su nodo. */
+        private static PasoCausalDTO paso(PasoCausal p) {
+                return new PasoCausalDTO(p.nodo().getId(), p.condicion(), p.nodo().getContenido());
         }
 }

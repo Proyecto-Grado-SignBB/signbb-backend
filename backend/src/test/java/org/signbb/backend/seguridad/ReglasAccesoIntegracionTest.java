@@ -14,6 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.signbb.backend.cache.RepositorioSesionRedis;
 import org.signbb.backend.observaciones.datos.repositorios.RepositorioRecorridos;
 import org.signbb.backend.seguridad.datos.repositorios.RepositorioUsuario;
 import org.signbb.backend.seguridad.servicios.LimitadorIntentosLogin;
@@ -218,6 +219,69 @@ class ReglasAccesoIntegracionTest {
             mvc.perform(conToken(get("/api/recorridos"), p2))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.length()").value(0));
+        } finally {
+            recorridos.deleteById(id);
+        }
+    }
+
+    @Test
+    void soloUnPadreGuardaElTelefonoDeSuPediatra() throws Exception {
+        String padre = api.registrarPadre("pediatra").token();
+        String medico = api.crearClinico("sin-pediatra", "MEDICO").token();
+
+        mvc.perform(conToken(put("/api/auth/yo/pediatra"), padre).contentType(MediaType.APPLICATION_JSON)
+                .content("{\"telefono\":\"+57 300 123 4567\"}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.telefonoPediatra").value("+57 300 123 4567"));
+        mvc.perform(conToken(get("/api/auth/yo"), padre))
+                .andExpect(jsonPath("$.telefonoPediatra").value("+57 300 123 4567"));
+        mvc.perform(conToken(put("/api/auth/yo/pediatra"), padre).contentType(MediaType.APPLICATION_JSON)
+                .content("{\"telefono\":\"llamar\"}"))
+                .andExpect(status().is(422));
+        mvc.perform(conToken(put("/api/auth/yo/pediatra"), medico).contentType(MediaType.APPLICATION_JSON)
+                .content("{\"telefono\":\"3001234567\"}"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void unRecorridoReiniciadoYaNoSeSigueYElNuevoSi() throws Exception {
+        String padre = api.registrarPadre("reinicia").token();
+        String viejo = JsonPath.read(mvc.perform(conToken(post("/api/recorridos"), padre))
+                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString(), "$.recorridoId");
+        String nuevo = null;
+        try {
+            nuevo = JsonPath.read(mvc.perform(conToken(post("/api/recorridos/" + viejo + "/reiniciar"), padre))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.estado").value("EN_CURSO"))
+                    .andReturn().getResponse().getContentAsString(), "$.recorridoId");
+
+            assertNotEquals(viejo, nuevo);
+            mvc.perform(conToken(get("/api/recorridos/" + viejo), padre)).andExpect(status().isGone())
+                    .andExpect(jsonPath("$.mensaje").exists());
+            mvc.perform(conToken(get("/api/recorridos/" + nuevo), padre)).andExpect(status().isOk());
+            mvc.perform(conToken(get("/api/recorridos"), padre))
+                    .andExpect(jsonPath("$[?(@.recorridoId == '" + viejo + "')].estado").value("ABANDONADO"));
+        } finally {
+            recorridos.deleteById(viejo);
+            if (nuevo != null) {
+                recorridos.deleteById(nuevo);
+            }
+        }
+    }
+
+    @Test
+    void unRecorridoSinSesionDa410YQuedaVencido() throws Exception {
+        String padre = api.registrarPadre("vencido").token();
+        String id = JsonPath.read(mvc.perform(conToken(post("/api/recorridos"), padre))
+                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString(), "$.recorridoId");
+        try {
+            redis.delete(RepositorioSesionRedis.PREFIJO_SESION + id);
+
+            mvc.perform(conToken(get("/api/recorridos/" + id), padre)).andExpect(status().isGone())
+                    .andExpect(jsonPath("$.mensaje").value(
+                            "Esta consulta venció tras 8 horas sin actividad. Inicia una nueva."));
+            mvc.perform(conToken(get("/api/recorridos"), padre))
+                    .andExpect(jsonPath("$[0].estado").value("VENCIDO"));
         } finally {
             recorridos.deleteById(id);
         }

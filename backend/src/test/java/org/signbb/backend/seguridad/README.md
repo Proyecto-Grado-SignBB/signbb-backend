@@ -15,13 +15,13 @@ PostgreSQL y Redis, como el CI.
 
 | Paquete | Clase | Tests | Qué cubre |
 |---|---|---:|---|
-| `servicios` | `ServicioCuentasImplTest` | 12 | registro de padres, login, alta de médicos por el supervisor y activar o desactivar cuentas; una contraseña de más de 72 bytes da 422 |
-| `servicios` | `ServicioTokensTest` | 4 | el JWT lleva `sub`, `rol` y `nombre`; uno vencido o firmado con otra clave se rechaza; un secreto corto no arranca |
+| `servicios` | `ServicioCuentasImplTest` | 22 | registro de padres, login, alta de médicos por el supervisor y activar o desactivar cuentas; una contraseña de más de 72 bytes da 422; el padre guarda, cambia o borra el teléfono de su pediatra y uno mal escrito da 422 |
+| `servicios` | `ServicioTokensTest` | 7 | el JWT lleva `sub`, `rol` y `nombre`; uno vencido o firmado con otra clave se rechaza; un secreto corto no arranca |
 | (raíz) | `InicializadorSeguridadTest` | 2 | el supervisor inicial se siembra una sola vez |
 | (raíz) | `VerificadorSecretosProduccionTest` | 8 | en producción no se aceptan los valores de ejemplo ni la documentación de la API activa; un entorno mal escrito impide arrancar |
-| (raíz) | `ReglasAccesoIntegracionTest` | 10 | la cadena de filtros real: rutas públicas, 401 sin token, 403 por rol y dueño del recorrido |
+| (raíz) | `ReglasAccesoIntegracionTest` | 17 | la cadena de filtros real: rutas públicas, 401 sin token, 403 por rol y dueño del recorrido; solo un padre guarda el teléfono del pediatra; un recorrido reiniciado o sin sesión da 410 |
 
-En total son **36 pruebas**. Las reglas de autor y de revisión de la autoría
+En total son **56 pruebas** en estas clases. Las reglas de autor y de revisión de la autoría
 (`GuardiaAutoriaTest`, `PoliticaAccesoBorradoresTest`, `ServicioRevisionImplTest`
 y `ControladorRevisionTest`) están en \ref pruebas_autoria; la del dueño del
 recorrido, en \ref pruebas_observaciones.

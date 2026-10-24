@@ -24,6 +24,7 @@ import org.signbb.backend.navegacion.modelo.GrafoClinico;
 import org.signbb.backend.navegacion.modelo.RepositorioSesion;
 import org.signbb.backend.navegacion.modelo.ResultadoPaso;
 import org.signbb.backend.navegacion.modelo.SesionTriaje;
+import org.signbb.backend.observaciones.controladores.PasoCausalDTO;
 import org.signbb.backend.observaciones.controladores.RecorridoDTO;
 import org.signbb.backend.reglas.datos.serializacion.BaseReglasMapper;
 import org.signbb.backend.reglas.modelo.BaseReglas;
@@ -69,6 +70,16 @@ class ServicioNavegacionImplTest {
         @Override
         public void guardar(SesionTriaje sesion) {
             sesiones.put(sesion.getId(), sesion);
+        }
+
+        @Override
+        public boolean existe(String id) {
+            return sesiones.containsKey(id);
+        }
+
+        @Override
+        public void eliminar(String id) {
+            sesiones.remove(id);
         }
     }
 
@@ -121,6 +132,23 @@ class ServicioNavegacionImplTest {
         assertEquals("FINALIZADO", urgencia.estado());
         assertEquals("URGENCIA", urgencia.resultado().nivel());
         assertEquals("FINALIZADO", servicio.consultar(id).estado());
+    }
+
+    @Test
+    void elCaminoDelResultadoTraeElTextoDeCadaPreguntaYLasRazonesSonNombres() {
+        String id = hastaUrgencia();
+        String textoUrgencia = servicio.consultar(id).pregunta().texto();
+
+        RecorridoDTO cierre = servicio.responder(id, "Quejido al respirar");
+
+        List<PasoCausalDTO> camino = cierre.resultado().caminoCausal();
+        PasoCausalDTO ultimo = camino.get(camino.size() - 1);
+        PasoCausalDTO previo = camino.get(camino.size() - 2);
+        assertEquals("Quejido al respirar", ultimo.condicion());
+        assertEquals(cierre.resultado().mensaje(), ultimo.contenido());
+        assertEquals(URGENCIA, previo.nodoId());
+        assertEquals(textoUrgencia, previo.contenido());
+        assertEquals(List.of("Regla Respiración Urgencia"), cierre.resultado().razones());
     }
 
     @Test

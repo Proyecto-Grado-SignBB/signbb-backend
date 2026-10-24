@@ -14,6 +14,9 @@ import org.signbb.backend.seguridad.modelo.UsuarioActual;
 /**
  * Cuentas de usuario: registro de padres, ingreso y administración de las
  * cuentas clínicas por un supervisor.
+ *
+ * <p>
+ * MODIFICADO (2.4): se agrega {@link #guardarTelefonoPediatra}.
  */
 public interface ServicioCuentas {
 
@@ -56,6 +59,13 @@ public interface ServicioCuentas {
 
     /** La cuenta del usuario actual. */
     UsuarioDTO yo(UsuarioActual usuario);
+
+    /**
+     * Guarda el teléfono del pediatra del padre; vacío o {@code null} lo borra.
+     *
+     * @throws CuentaInvalidaException si el teléfono no tiene un formato válido
+     */
+    UsuarioDTO guardarTelefonoPediatra(UsuarioActual padre, String telefono);
 
     /**
      * Crea una cuenta de médico o de supervisor.
