@@ -11,5 +11,5 @@ var searchData=
   ['las_20preguntas_8',['Imágenes de las preguntas',['../pruebas_autoria.html#autotoc_md16',1,'']]],
   ['levantar_9',['Levantar',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md75',1,'']]],
   ['limpieza_20programada_20mantenimiento_10',['Limpieza programada (&lt;span class=&quot;tt&quot;&gt;mantenimiento&lt;/span&gt;)',['../pruebas_cache.html#autotoc_md65',1,'']]],
-  ['los_20datos_20persistentes_11',['Eliminar los datos persistentes',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md77',1,'']]]
+  ['los_20datos_20persistentes_11',['Eliminar los datos persistentes',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md78',1,'']]]
 ];

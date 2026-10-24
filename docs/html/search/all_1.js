@@ -1,12 +1,12 @@
 var searchData=
 [
   ['backend_0',['SignBB — Backend',['../index.html',1,'']]],
-  ['backend_1',['Parámetros de conexión (perfil &lt;span class=&quot;tt&quot;&gt;docker&lt;/span&gt; del backend)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md79',1,'']]],
+  ['backend_20en_20el_20host_1',['Parámetros de conexión (perfil &lt;span class=&quot;tt&quot;&gt;docker&lt;/span&gt; del backend en el host)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md80',1,'']]],
   ['backendapplication_2',['BackendApplication',['../classorg_1_1signbb_1_1backend_1_1BackendApplication.html',1,'org::signbb::backend']]],
   ['backendapplicationtests_3',['BackendApplicationTests',['../classorg_1_1signbb_1_1backend_1_1BackendApplicationTests.html',1,'org::signbb::backend']]],
-  ['baja_4',['Dar de baja',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md76',1,'']]],
+  ['baja_4',['Dar de baja',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md77',1,'']]],
   ['base_20de_20datos_5',['Perfil de base de datos',['../index.html#autotoc_md69',1,'']]],
-  ['base_20de_20reglas_6',['Representacion visual de base de reglas',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md88',1,'']]],
+  ['base_20de_20reglas_6',['Representacion visual de base de reglas',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md89',1,'']]],
   ['basede_7',['baseDe',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html#a795d4cb8317af18d3cdf4d8782aadd92',1,'org::signbb::backend::navegacion::modelo::ContextoClinico']]],
   ['baseregladto_8',['BaseReglaDTO',['../namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a07da44516c2a38b6a6915c8639398b6d',1,'org::signbb::backend::autoria::controladores']]],
   ['basereglarequest_9',['BaseReglaRequest',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1BaseReglaRequest.html',1,'org::signbb::backend::autoria::controladores']]],

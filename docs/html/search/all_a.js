@@ -30,5 +30,5 @@ var searchData=
   ['listarclinicos_27',['listarClinicos',['../interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentas.html#a0e6d16cf1cc77512448287b19272f0af',1,'org.signbb.backend.seguridad.servicios.ServicioCuentas.listarClinicos()'],['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentasImpl.html#a4bfc6b94759d7ef3279d0fe183433f67',1,'org.signbb.backend.seguridad.servicios.ServicioCuentasImpl.listarClinicos()']]],
   ['login_28',['login',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores_1_1ControladorAuth.html#ab110c602196c8b38dd2115c13478ef6f',1,'org::signbb::backend::seguridad::controladores::ControladorAuth']]],
   ['loginrequest_29',['LoginRequest',['../namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores.html#aa7b4adbadf12c178054aca3b30a35a55',1,'org::signbb::backend::seguridad::controladores']]],
-  ['los_20datos_20persistentes_30',['Eliminar los datos persistentes',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md77',1,'']]]
+  ['los_20datos_20persistentes_30',['Eliminar los datos persistentes',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md78',1,'']]]
 ];

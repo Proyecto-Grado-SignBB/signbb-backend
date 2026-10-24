@@ -114,22 +114,24 @@ var NAVTREE =
       [ "Limpieza programada (<span class=\"tt\">mantenimiento</span>)", "pruebas_cache.html#autotoc_md65", null ]
     ] ],
     [ "Manual de contenedores", "md_contenedores_2MANUAL__CONTENEDORES.html", [
-      [ "Levantar", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md75", null ],
-      [ "Dar de baja", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md76", null ],
-      [ "Eliminar los datos persistentes", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md77", null ],
-      [ "Acceso rápido", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md78", null ],
-      [ "Parámetros de conexión (perfil <span class=\"tt\">docker</span> del backend)", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md79", null ]
+      [ "Levantar", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md75", [
+        [ "Variables de entorno", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md76", null ]
+      ] ],
+      [ "Dar de baja", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md77", null ],
+      [ "Eliminar los datos persistentes", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md78", null ],
+      [ "Acceso rápido", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md79", null ],
+      [ "Parámetros de conexión (perfil <span class=\"tt\">docker</span> del backend en el host)", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md80", null ]
     ] ],
     [ "Grafo sistema", "md_grafo__sistema_2reporte__grafo.html", [
-      [ "Indice", "md_grafo__sistema_2reporte__grafo.html#autotoc_md81", null ],
-      [ "Grafo Raíz", "md_grafo__sistema_2reporte__grafo.html#autotoc_md82", null ],
-      [ "Grafo Gastrointestinal", "md_grafo__sistema_2reporte__grafo.html#autotoc_md83", null ],
-      [ "Grafo Respiración", "md_grafo__sistema_2reporte__grafo.html#autotoc_md84", null ],
-      [ "Grafo Activo y color", "md_grafo__sistema_2reporte__grafo.html#autotoc_md85", null ],
-      [ "Herramientas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md86", [
-        [ "Construir grafos visualmente", "md_grafo__sistema_2reporte__grafo.html#autotoc_md87", null ],
-        [ "Representacion visual de base de reglas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md88", null ],
-        [ "Representacion visual de grafo", "md_grafo__sistema_2reporte__grafo.html#autotoc_md89", null ]
+      [ "Indice", "md_grafo__sistema_2reporte__grafo.html#autotoc_md82", null ],
+      [ "Grafo Raíz", "md_grafo__sistema_2reporte__grafo.html#autotoc_md83", null ],
+      [ "Grafo Gastrointestinal", "md_grafo__sistema_2reporte__grafo.html#autotoc_md84", null ],
+      [ "Grafo Respiración", "md_grafo__sistema_2reporte__grafo.html#autotoc_md85", null ],
+      [ "Grafo Activo y color", "md_grafo__sistema_2reporte__grafo.html#autotoc_md86", null ],
+      [ "Herramientas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md87", [
+        [ "Construir grafos visualmente", "md_grafo__sistema_2reporte__grafo.html#autotoc_md88", null ],
+        [ "Representacion visual de base de reglas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md89", null ],
+        [ "Representacion visual de grafo", "md_grafo__sistema_2reporte__grafo.html#autotoc_md90", null ]
       ] ]
     ] ],
     [ "Paquetes", "namespaces.html", [
@@ -155,13 +157,13 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorRegla.html#ac31c7c9624e12baf3cf8a22ec9924481",
-"classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiezaProgramadaTest.html",
-"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#a7c41db8e666b8159f91e275e3cab32d0",
-"classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html#a0f732a5f2d06b14b51a5248d633b32fe",
-"classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioTokens.html",
-"interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html#adbf63657501976de781efc5b9efaac73",
-"pruebas_seguridad.html#autotoc_md46"
+"classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorRegla.html#ab3500c918380829d799dcc13779ac00b",
+"classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiezaProgramada.html#a63868fe4b95561180dcfaff5f6b14d2d",
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#a7bd22fcbe6bdadbdb5b8b6a672e857ee",
+"classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html",
+"classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentasImplTest.html",
+"interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html#a82ef31a7df53d5d7161870795111854f",
+"pruebas_seguridad.html#autotoc_md43"
 ];
 
 const SYNCONMSG = 'pulsar para deshabilitar sincronización';

@@ -168,7 +168,8 @@ El resto de <code class="JavaDocCode">/api/autoria/**</code>: MEDICO o MEDICO_SU
 Cualquier otra ruta: con sesión. </li>
 </ul>
 <p>El 401 y el 403 salen en JSON con el formato <code class="JavaDocCode">{mensaje, avisos}</code> que ya entiende el front.</p>
-<p>MODIFICADO (2.4): el teléfono del pediatra solo lo guarda un padre. </p>
+<p>MODIFICADO (2.4): el teléfono del pediatra solo lo guarda un padre.</p>
+<p>MODIFICADO (1.5): <code class="JavaDocCode">GET /actuator/health</code> queda abierto para el chequeo de salud del contenedor; responde solo <code class="JavaDocCode">UP</code> o <code class="JavaDocCode">DOWN</code>, sin detalles. Lo demás de <code class="JavaDocCode">/actuator</code> no se expone. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
 <a id="a96189020a10c6464d3a9013160e8f06b" name="a96189020a10c6464d3a9013160e8f06b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a96189020a10c6464d3a9013160e8f06b">&#9670;&#160;</a></span>clave()</h2>

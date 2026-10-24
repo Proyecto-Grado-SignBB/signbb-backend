@@ -8,6 +8,7 @@ var namespaceorg_1_1signbb_1_1backend =
     [ "observaciones", "namespaceorg_1_1signbb_1_1backend_1_1observaciones.html", "namespaceorg_1_1signbb_1_1backend_1_1observaciones" ],
     [ "reglas", "namespaceorg_1_1signbb_1_1backend_1_1reglas.html", "namespaceorg_1_1signbb_1_1backend_1_1reglas" ],
     [ "seguridad", "namespaceorg_1_1signbb_1_1backend_1_1seguridad.html", "namespaceorg_1_1signbb_1_1backend_1_1seguridad" ],
+    [ "ArranqueCondicionalTest", "classorg_1_1signbb_1_1backend_1_1ArranqueCondicionalTest.html", null ],
     [ "AutoriaIntegracionTest", "classorg_1_1signbb_1_1backend_1_1AutoriaIntegracionTest.html", null ],
     [ "BackendApplication", "classorg_1_1signbb_1_1backend_1_1BackendApplication.html", null ],
     [ "BackendApplicationTests", "classorg_1_1signbb_1_1backend_1_1BackendApplicationTests.html", null ],

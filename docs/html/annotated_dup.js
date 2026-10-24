@@ -279,6 +279,7 @@ var annotated_dup =
             [ "VerificadorSecretosProduccion", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1VerificadorSecretosProduccion.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1VerificadorSecretosProduccion" ],
             [ "VerificadorSecretosProduccionTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1VerificadorSecretosProduccionTest.html", null ]
           ] ],
+          [ "ArranqueCondicionalTest", "classorg_1_1signbb_1_1backend_1_1ArranqueCondicionalTest.html", null ],
           [ "AutoriaIntegracionTest", "classorg_1_1signbb_1_1backend_1_1AutoriaIntegracionTest.html", null ],
           [ "BackendApplication", "classorg_1_1signbb_1_1backend_1_1BackendApplication.html", null ],
           [ "BackendApplicationTests", "classorg_1_1signbb_1_1backend_1_1BackendApplicationTests.html", null ],

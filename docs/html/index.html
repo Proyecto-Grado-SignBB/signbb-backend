@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('index.html',''
 Requisitos</h1>
 <ul>
 <li>Java SDK 25</li>
-<li>Spring Boot 4.1.1 (Web MVC, Data JPA, Redis, Lombok)</li>
+<li>Spring Boot 4.1.1 (Web MVC, Data JPA, Redis, Flyway, Actuator, Lombok)</li>
 <li>Maven (se usa el wrapper <span class="tt">backend/mvnw</span>, no requiere instalación local)</li>
 <li>Docker + Docker Compose (PostgreSQL y Redis de <span class="tt">contenedores/compose.yaml</span>)</li>
 <li>Doxygen (solo para regenerar la documentación)</li>
@@ -125,21 +125,28 @@ Requisitos</h1>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md68"></a>
 Construcción y pruebas</h1>
 <p>Desde el directorio <span class="tt">backend</span>: </p><pre class="fragment">./mvnw test              # compila y ejecuta la suite de tests
-./mvnw spring-boot:run   # arranca la aplicación (demo de triaje por consola)
+./mvnw spring-boot:run   # arranca la aplicación
 ./mvnw verify            # build completo, igual que en CI (GitHub Actions)
-</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md69"></a>
+</pre><p>La demo del motor por consola (<span class="tt">DemoTriajeRunner</span>) está apagada; se enciende con <span class="tt">SIGNBB_DEMO_ACTIVA=true</span>.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md69"></a>
 Perfil de base de datos</h1>
 <p>El backend usa un único perfil, <span class="tt">docker</span> (definido en <span class="tt">backend/src/main/resources/application.properties</span> con <span class="tt">spring.profiles.active=docker</span>): <b>PostgreSQL</b> en <span class="tt">localhost:5432</span> (base <span class="tt">signbb</span>) y <b>Redis</b> en <span class="tt">localhost:6379</span>, ambos desde <span class="tt">contenedores/compose.yaml</span>. Los datos persisten en los volúmenes del compose. Ver <span class="tt">contenedores/MANUAL_CONTENEDORES.md</span> para levantar y administrar los servicios.</p>
-<p>Antes de arrancar la aplicación o ejecutar las pruebas hay que levantar los servicios: </p><pre class="fragment">cd ../contenedores &amp;&amp; docker compose up -d
+<p>Hay dos formas de trabajar:</p>
+<ul>
+<li><b>Todo en contenedores</b> (backend incluido, construido con <span class="tt">backend/Dockerfile</span>): <span class="tt">cd contenedores &amp;&amp; docker compose up -d --build</span>. La API queda en <span class="tt"><a href="http://localhost:8080">http://localhost:8080</a></span> y <span class="tt">curl localhost:8080/actuator/health</span> responde <span class="tt">{"status":"UP"}</span>.</li>
+<li><b>Backend en el host</b> (para desarrollar): se levanta solo la infraestructura y se arranca con Maven. <pre class="fragment">cd ../contenedores &amp;&amp; docker compose up -d db adminer silo cache
 
-./mvnw spring-boot:run   # arranca la aplicación (demo de triaje por consola)
+./mvnw spring-boot:run   # arranca la aplicación
 ./mvnw test              # suite completa contra PostgreSQL y Redis
-</pre><blockquote class="doxtable">
+</pre></li>
+</ul>
+<p><b>Esquema con Flyway.</b> Las tablas las crean las migraciones de <span class="tt">backend/src/main/resources/db/migration</span> (<span class="tt">V1__esquema_inicial.sql</span>, <span class="tt">V2__telefono_pediatra.sql</span>, ...); Hibernate solo valida (<span class="tt">ddl-auto=validate</span>). Un cambio de esquema es un archivo <span class="tt">V&lt;n&gt;__descripcion.sql</span> nuevo; nunca se edita una migración ya publicada. Una base creada antes de Flyway se marca como versión 1 y recibe solo las siguientes. Si al arrancar Hibernate dice que una tabla o columna no coincide (bases locales muy viejas), borra los volúmenes con <span class="tt">docker compose down -v</span>.</p>
+<blockquote class="doxtable">
 <p>Si la base ya estaba sembrada con una versión previa del grafo, hay que borrar los volúmenes (<span class="tt">docker compose down -v</span>) para que <span class="tt">DatabaseInit</span> vuelva a sembrar el contenido nuevo: el grafo raíz conserva el mismo <span class="tt">id</span>. </p>
 </blockquote>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md70"></a>
 Cuentas y seguridad</h1>
-<p>La API pide un token JWT (<span class="tt">Authorization: Bearer &lt;token&gt;</span>) salvo en el login, el registro, <span class="tt">/media</span> y Swagger. Hay tres roles:</p>
+<p>La API pide un token JWT (<span class="tt">Authorization: Bearer &lt;token&gt;</span>) salvo en el login, el registro, <span class="tt">/media</span>, Swagger y <span class="tt">GET /actuator/health</span> (solo dice <span class="tt">UP</span> o <span class="tt">DOWN</span>; el resto de Actuator no se expone). Hay tres roles:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Rol  </th><th class="markdownTableHeadNone">Cómo se crea  </th><th class="markdownTableHeadNone">Qué puede hacer  </th></tr>
@@ -174,8 +181,29 @@ Cuentas y seguridad</h1>
 <td class="markdownTableBodyNone"><span class="tt">SIGNBB_MEDIA_SECRET_KEY</span>  </td><td class="markdownTableBodyNone">Clave de Silo (imágenes)  </td><td class="markdownTableBodyNone"><span class="tt">ejemplo123</span>  </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">SIGNBB_DOCS_ACTIVAS</span>  </td><td class="markdownTableBodyNone"><span class="tt">false</span> apaga Swagger UI y <span class="tt">/v3/api-docs</span> (responden 404). <b>Obligatorio en producción</b>  </td><td class="markdownTableBodyNone"><span class="tt">true</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_SHOW_SQL</span>  </td><td class="markdownTableBodyNone"><span class="tt">true</span> imprime el SQL en consola. En producción la app no arranca si está en <span class="tt">true</span>  </td><td class="markdownTableBodyNone"><span class="tt">false</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_SIEMBRA_ACTIVA</span>  </td><td class="markdownTableBodyNone">Siembra el contenido clínico de ejemplo si falta el grafo raíz (<span class="tt">DatabaseInit</span>). En producción, <span class="tt">true</span> solo en el primer despliegue  </td><td class="markdownTableBodyNone"><span class="tt">true</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_DEMO_ACTIVA</span>  </td><td class="markdownTableBodyNone">Imprime la demo del motor al arrancar (<span class="tt">DemoTriajeRunner</span>)  </td><td class="markdownTableBodyNone"><span class="tt">false</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_DB_URL</span>  </td><td class="markdownTableBodyNone">URL JDBC de PostgreSQL  </td><td class="markdownTableBodyNone"><span class="tt">jdbc:postgresql://localhost:5432/signbb</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_DB_USUARIO</span>  </td><td class="markdownTableBodyNone">Usuario de PostgreSQL  </td><td class="markdownTableBodyNone"><span class="tt">admin</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_DB_CONTRASENA</span>  </td><td class="markdownTableBodyNone">Contraseña de PostgreSQL  </td><td class="markdownTableBodyNone"><span class="tt">example</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_REDIS_HOST</span>  </td><td class="markdownTableBodyNone">Host de Redis  </td><td class="markdownTableBodyNone"><span class="tt">localhost</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_REDIS_PUERTO</span>  </td><td class="markdownTableBodyNone">Puerto de Redis  </td><td class="markdownTableBodyNone"><span class="tt">6379</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_MEDIA_ENDPOINT</span>  </td><td class="markdownTableBodyNone">URL de la API S3 de Silo  </td><td class="markdownTableBodyNone"><span class="tt"><a href="http://localhost:9000">http://localhost:9000</a></span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_MEDIA_BUCKET</span>  </td><td class="markdownTableBodyNone">Bucket de las imágenes  </td><td class="markdownTableBodyNone"><span class="tt">signbb-imagenes</span>  </td></tr>
 </table>
-<p><b>Despliegue en producción.</b> Define <span class="tt">SIGNBB_ENTORNO=produccion</span>. Con eso, al arrancar se revisa que <span class="tt">SIGNBB_JWT_SECRETO</span>, <span class="tt">SIGNBB_SUPERVISOR_CONTRASENA</span>, <span class="tt">SIGNBB_MEDIA_ACCESS_KEY</span> y <span class="tt">SIGNBB_MEDIA_SECRET_KEY</span> tengan valores propios, y que <span class="tt">SIGNBB_DOCS_ACTIVAS=false</span>. Si algo falla, la app no arranca y el mensaje dice cuál variable corregir (nunca muestra el valor). Si <span class="tt">SIGNBB_ENTORNO</span> tiene cualquier otro texto, tampoco arranca. Sin esta variable la app se comporta como en desarrollo.</p>
+<p>En el contenedor, <span class="tt">contenedores/compose.yaml</span> ya apunta las de conexión a los servicios <span class="tt">db</span>, <span class="tt">cache</span> y <span class="tt">silo</span>; el resto se toma del entorno o de un archivo <span class="tt">contenedores/.env</span> (no versionado).</p>
+<p><b>Despliegue en producción.</b> Define <span class="tt">SIGNBB_ENTORNO=produccion</span>. Con eso, al arrancar se revisa que <span class="tt">SIGNBB_JWT_SECRETO</span>, <span class="tt">SIGNBB_SUPERVISOR_CONTRASENA</span>, <span class="tt">SIGNBB_MEDIA_ACCESS_KEY</span> y <span class="tt">SIGNBB_MEDIA_SECRET_KEY</span> tengan valores propios, que <span class="tt">SIGNBB_DOCS_ACTIVAS=false</span> y que <span class="tt">SIGNBB_SHOW_SQL</span> no esté en <span class="tt">true</span>. Si algo falla, la app no arranca y el mensaje dice cuál variable corregir (nunca muestra el valor). Si <span class="tt">SIGNBB_ENTORNO</span> tiene cualquier otro texto, tampoco arranca. Sin esta variable la app se comporta como en desarrollo.</p>
 <blockquote class="doxtable">
 <p><b>Si ya tenías la base de antes de las cuentas</b>, borra los volúmenes (<span class="tt">docker compose down -v</span>). Hibernate guarda el estado del borrador con un <em>check constraint</em> que no conoce el estado nuevo <span class="tt">EN_REVISION</span>, y los borradores viejos no tienen autor. </p>
 </blockquote>

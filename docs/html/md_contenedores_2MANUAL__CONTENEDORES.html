@@ -118,37 +118,71 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('md_contenedore
 <li><b>adminer</b>: cliente web de administración en el puerto <span class="tt">8180</span>.</li>
 <li><b>silo</b>: almacenamiento de objetos compatible con la API de Amazon S3, con la API en el puerto <span class="tt">9000</span> y la consola web en el <span class="tt">9001</span>.</li>
 <li><b>cache</b>: Redis 8 (Alpine) en el puerto <span class="tt">6379</span>, con healthcheck. Caché de los motores de navegación y reglas: guarda el contenido clínico activo (copia caliente de lo que vive en PostgreSQL) y las sesiones temporales de los recorridos en curso.</li>
+<li><b>backend</b>: la API de SignBB (Spring Boot), construida con <span class="tt">backend/Dockerfile</span>, en el puerto <span class="tt">8080</span>. Espera a que <span class="tt">db</span>, <span class="tt">cache</span> y <span class="tt">silo</span> estén sanos, se reinicia sola si cae (<span class="tt">restart: always</span>) y su healthcheck consulta <span class="tt">/actuator/health</span>.</li>
 </ul>
 <p>Los datos persisten en los volúmenes <span class="tt">postgres_data</span>, <span class="tt">silo_data</span> y <span class="tt">redis_data</span> (Docker los lista con el prefijo del proyecto, p. ej. <span class="tt">contenedores_postgres_data</span>). En Redis la persistencia es AOF (<span class="tt">--appendonly yes</span>): las sesiones sobreviven reinicios del propio contenedor, no solo del backend.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md75"></a>
 Levantar</h1>
-<p>Desde este directorio (<span class="tt">contenedores</span>): </p><pre class="fragment">docker compose up -d           # levanta db, adminer, silo y cache
+<p>Desde este directorio (<span class="tt">contenedores</span>): </p><pre class="fragment">docker compose up -d --build   # levanta todo, backend incluido (lo recompila)
 docker compose up -d --wait    # igual, esperando a que queden healthy
 docker compose ps              # verificar el estado de los servicios
-</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md76"></a>
+curl localhost:8080/actuator/health   # {"status":"UP"} cuando el backend está listo
+</pre><p>Para desarrollar con el backend en el host (<span class="tt">./mvnw spring-boot:run</span> desde <span class="tt">backend</span>), se levanta solo la infraestructura: </p><pre class="fragment">docker compose up -d db adminer silo cache
+</pre><p>Si el backend del contenedor está corriendo, ocupa el puerto <span class="tt">8080</span>; detenlo antes con <span class="tt">docker compose stop backend</span>.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md76"></a>
+Variables de entorno</h2>
+<p>Todas tienen un valor de desarrollo, así que <span class="tt">docker compose up</span> funciona sin configurar nada. Para cambiarlas, exportarlas antes de levantar o escribirlas en un archivo <span class="tt">.env</span> en este directorio (no se versiona). Las que comparten nombre se usan en dos servicios a la vez, para que no queden distintas.</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Variable  </th><th class="markdownTableHeadNone">Servicios  </th><th class="markdownTableHeadNone">Valor de desarrollo  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_DB_CONTRASENA</span>  </td><td class="markdownTableBodyNone">db, backend  </td><td class="markdownTableBodyNone"><span class="tt">example</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_MEDIA_ACCESS_KEY</span>  </td><td class="markdownTableBodyNone">silo, backend  </td><td class="markdownTableBodyNone"><span class="tt">silo-admin</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_MEDIA_SECRET_KEY</span>  </td><td class="markdownTableBodyNone">silo, backend  </td><td class="markdownTableBodyNone"><span class="tt">ejemplo123</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_ENTORNO</span>  </td><td class="markdownTableBodyNone">backend  </td><td class="markdownTableBodyNone"><span class="tt">desarrollo</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_JWT_SECRETO</span>  </td><td class="markdownTableBodyNone">backend  </td><td class="markdownTableBodyNone">valor fijo de desarrollo  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_SUPERVISOR_CONTRASENA</span>  </td><td class="markdownTableBodyNone">backend  </td><td class="markdownTableBodyNone"><span class="tt">Supervisor123</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_DOCS_ACTIVAS</span>  </td><td class="markdownTableBodyNone">backend  </td><td class="markdownTableBodyNone"><span class="tt">true</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_SIEMBRA_ACTIVA</span>  </td><td class="markdownTableBodyNone">backend  </td><td class="markdownTableBodyNone"><span class="tt">true</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_CORS_ORIGENES</span>  </td><td class="markdownTableBodyNone">backend  </td><td class="markdownTableBodyNone"><span class="tt"><a href="http://localhost:4200,http://localhost:4300">http://localhost:4200,http://localhost:4300</a></span>  </td></tr>
+</table>
+<blockquote class="doxtable">
+<p>PostgreSQL y Silo leen su contraseña solo la primera vez, con el volumen vacío. Si se cambia después, hay que cambiarla también dentro del servicio o empezar de cero con <span class="tt">docker compose down -v</span>. </p>
+</blockquote>
+<p><b>Producción.</b> <span class="tt">SIGNBB_ENTORNO=produccion</span> obliga a dar valores propios a los secretos y <span class="tt">SIGNBB_DOCS_ACTIVAS=false</span>; si no, el backend no arranca y el log dice qué variable falta. <span class="tt">SIGNBB_SIEMBRA_ACTIVA=true</span> solo en el primer despliegue (siembra el contenido clínico) y <span class="tt">false</span> después.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md77"></a>
 Dar de baja</h1>
 <p>Detiene y elimina los contenedores, <b>conservando</b> los datos de los volúmenes: </p><pre class="fragment">docker compose down
-</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md77"></a>
+</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md78"></a>
 Eliminar los datos persistentes</h1>
 <p>Da de baja los servicios y además borra los volúmenes con los datos (base de datos, objetos de silo y caché/sesiones de Redis): </p><pre class="fragment">docker compose down -v
 </pre><blockquote class="doxtable">
-<p>Advertencia: el borrado es irreversible. Tras vaciar la base, el siguiente arranque del backend vuelve a crear las tablas y siembra de nuevo el grafo clínico y las reglas (<span class="tt">DatabaseInit</span>), pues la siembra solo se omite cuando las tablas ya tienen filas. Las sesiones de recorridos en curso guardadas en Redis y los objetos de silo no se recuperan de ninguna otra fuente.</p>
-<p>Actualizar el contenido clínico: <span class="tt">DatabaseInit</span> decide sembrar según el <span class="tt">id</span> del grafo raíz (<span class="tt">grafo_raiz</span>). Si se cambian los archivos de <span class="tt">backend/src/main/resources/static/grafo_sistema/</span> pero la base ya estaba sembrada, hay que borrar los volúmenes (<span class="tt">docker compose down -v</span>) y volver a levantar; de lo contrario se seguiría sirviendo el contenido anterior. </p>
+<p>Advertencia: el borrado es irreversible. Tras vaciar la base, el siguiente arranque del backend vuelve a crear las tablas con las migraciones de Flyway y siembra de nuevo el grafo clínico y las reglas (<span class="tt">DatabaseInit</span>, si <span class="tt">SIGNBB_SIEMBRA_ACTIVA</span> es <span class="tt">true</span>), pues la siembra solo se omite cuando ya existe el grafo raíz. Las sesiones de recorridos en curso guardadas en Redis y los objetos de silo no se recuperan de ninguna otra fuente.</p>
+<p>Actualizar el contenido clínico: <span class="tt">DatabaseInit</span> decide sembrar según el <span class="tt">id</span> del grafo raíz (<span class="tt">grafo_raiz</span>). Si se cambian los archivos de <span class="tt">backend/src/main/resources/static/grafo_sistema/</span> pero la base ya estaba sembrada, hay que borrar los volúmenes (<span class="tt">docker compose down -v</span>) y volver a levantar; de lo contrario se seguiría sirviendo el contenido anterior.</p>
+<p>Base local vieja: si el backend no arranca porque Hibernate dice que una tabla o columna no coincide con el esquema, la base se creó antes de Flyway con otra forma. <span class="tt">docker compose down -v</span> y volver a levantar la deja migrada. </p>
 </blockquote>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md78"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md79"></a>
 Acceso rápido</h1>
 <ul>
 <li><b>Adminer</b>: <span class="tt"><a href="http://localhost:8180">http://localhost:8180</a></span> — servidor <span class="tt">db</span>, base <span class="tt">signbb</span>, usuario <span class="tt">admin</span>, contraseña <span class="tt">example</span>.</li>
 <li><b>Consola de silo</b>: <span class="tt"><a href="http://localhost:9001">http://localhost:9001</a></span> — usuario <span class="tt">silo-admin</span>, contraseña <span class="tt">ejemplo123</span>.</li>
 <li><b>redis-cli</b>: <span class="tt">docker exec -it contenedores-cache-1 redis-cli</span></li>
 <li><b>psql</b>: <span class="tt">docker exec -it contenedores-db-1 psql -U admin -d signbb</span></li>
-<li><b>Logs</b>: <span class="tt">docker compose logs -f db</span> (o <span class="tt">silo</span> / <span class="tt">cache</span>, según interese)</li>
+<li><b>Logs</b>: <span class="tt">docker compose logs -f db</span> (o <span class="tt">silo</span> / <span class="tt">cache</span> / <span class="tt">backend</span>, según interese)</li>
 </ul>
 <blockquote class="doxtable">
-<p><b>Puertos solo locales.</b> PostgreSQL, Adminer, Silo y Redis se publican en <span class="tt">127.0.0.1</span> (por ejemplo <span class="tt">127.0.0.1:5432</span>). Funcionan desde tu propio computador, pero no se ven desde otro equipo de la red. Si cambias el <span class="tt">compose.yaml</span>, aplica el cambio con <span class="tt">docker compose up -d</span>: los contenedores se recrean y los datos se conservan porque viven en volúmenes. </p>
+<p><b>Puertos solo locales.</b> PostgreSQL, Adminer, Silo, Redis y el backend se publican en <span class="tt">127.0.0.1</span> (por ejemplo <span class="tt">127.0.0.1:5432</span>). Funcionan desde tu propio computador, pero no se ven desde otro equipo de la red. Si cambias el <span class="tt">compose.yaml</span>, aplica el cambio con <span class="tt">docker compose up -d</span>: los contenedores se recrean y los datos se conservan porque viven en volúmenes. </p>
 </blockquote>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md79"></a>
-Parámetros de conexión (perfil <span class="tt">docker</span> del backend)</h1>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md80"></a>
+Parámetros de conexión (perfil <span class="tt">docker</span> del backend en el host)</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Parámetro  </th><th class="markdownTableHeadNone">Valor  </th></tr>

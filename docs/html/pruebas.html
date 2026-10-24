@@ -133,15 +133,15 @@ Suite por módulo</h1>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Módulo  </th><th class="markdownTableHeadRight">Pruebas  </th><th class="markdownTableHeadNone">Tipo  </th><th class="markdownTableHeadNone">Documentación  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Navegación: TADs, parsers, motor y servicio  </td><td class="markdownTableBodyRight">171  </td><td class="markdownTableBodyNone">JUnit 5  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_navegacion.html" title="Pruebas del módulo de navegación">Ver página</a>  </td></tr>
+<td class="markdownTableBodyNone">Navegación: TADs, parsers, motor y servicio  </td><td class="markdownTableBodyRight">172  </td><td class="markdownTableBodyNone">JUnit 5  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_navegacion.html" title="Pruebas del módulo de navegación">Ver página</a>  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Reglas: TAD, evaluación, servicio y mapeo JSON  </td><td class="markdownTableBodyRight">28  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_reglas.html" title="Pruebas del módulo de reglas">Ver página</a>  </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Autoría: lienzo, subgrafos, reglas, autor y revisión  </td><td class="markdownTableBodyRight">194  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_autoria.html" title="Pruebas del módulo de autoría">Ver página</a>  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Observaciones: captura "todo o nada", validación, dueño del recorrido y respuesta del cuidador  </td><td class="markdownTableBodyRight">38  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_observaciones.html" title="Pruebas del módulo de observaciones">Ver página</a>  </td></tr>
+<td class="markdownTableBodyNone">Observaciones: captura "todo o nada", validación, dueño del recorrido y respuesta del cuidador  </td><td class="markdownTableBodyRight">53  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_observaciones.html" title="Pruebas del módulo de observaciones">Ver página</a>  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Seguridad: cuentas, login con JWT, reglas de acceso y secretos de producción  </td><td class="markdownTableBodyRight">36  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito / <span class="tt">@SpringBootTest</span>  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_seguridad.html" title="Pruebas del módulo de seguridad">Ver página</a>  </td></tr>
+<td class="markdownTableBodyNone">Seguridad: cuentas, login con JWT, reglas de acceso y secretos de producción  </td><td class="markdownTableBodyRight">61  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito / <span class="tt">@SpringBootTest</span>  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_seguridad.html" title="Pruebas del módulo de seguridad">Ver página</a>  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Cache: contenido clínico y sesiones en Redis  </td><td class="markdownTableBodyRight">—  </td><td class="markdownTableBodyNone">Mockito / <span class="tt">@SpringBootTest</span>  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_cache.html" title="Pruebas del cache">Ver página</a>  </td></tr>
 <tr class="markdownTableRowOdd">
@@ -153,7 +153,8 @@ Suite por módulo</h1>
 Pruebas de integración de la raíz</h1>
 <p>En <span class="tt">backend/src/test/java/org/signbb/backend/</span> viven las pruebas que arrancan el contexto completo:</p>
 <ul>
-<li><span class="tt">BackendApplicationTests</span> — <em>smoke test</em>: el contexto de la aplicación carga.</li>
+<li><span class="tt">BackendApplicationTests</span> — <em>smoke test</em>: el contexto de la aplicación carga. Con <span class="tt">ddl-auto=validate</span>, además comprueba que las migraciones de Flyway dejan el esquema que esperan las entidades.</li>
+<li><span class="tt">ArranqueCondicionalTest</span> — la siembra (<span class="tt">DatabaseInit</span>) y la demo de consola (<span class="tt">DemoTriajeRunner</span>) solo existen si <span class="tt">signbb.siembra.activa</span> / <span class="tt">signbb.demo.activa</span> valen <span class="tt">true</span> (sin base de datos).</li>
 <li><span class="tt">PersistenciaEstructuraJsonTest</span> — ida y vuelta de los documentos JSON por la columna <span class="tt">estructura</span> (<span class="tt">jsonb</span>) y verificación de la siembra de <span class="tt">DatabaseInit</span>.</li>
 <li><span class="tt">AutoriaIntegracionTest</span> — de punta a punta: armar un subgrafo con el servicio, aprobarlo (publicarlo) y recorrerlo como la cuidadora (ver <a class="el" href="pruebas_autoria.html" title="Pruebas del módulo de autoría">Pruebas del módulo de autoría</a>).</li>
 <li><span class="tt">seguridad/ReglasAccesoIntegracionTest</span> — la cadena de filtros real: 401 sin token, 403 por rol y 404 al recorrido de otro padre (ver <a class="el" href="pruebas_seguridad.html" title="Pruebas del módulo de seguridad">Pruebas del módulo de seguridad</a>).</li>
@@ -161,7 +162,7 @@ Pruebas de integración de la raíz</h1>
 </ul>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md56"></a>
 Resultados en CI</h1>
-<p>El workflow <span class="tt">build</span> corre <span class="tt">./mvnw -B verify</span> con PostgreSQL y Redis como servicios. Las corridas y los conteos por clase se detallan en las páginas de cada módulo. En la rama <span class="tt">seguridad</span> (16-oct-2026) corren <b>528 pruebas</b>, sin fallos.</p>
+<p>El workflow <span class="tt">build</span> corre <span class="tt">./mvnw -B verify</span> con PostgreSQL y Redis como servicios. Las corridas y los conteos por clase se detallan en las páginas de cada módulo. En la rama <span class="tt">mejoras-rondas-3-4</span> (23-oct-2026) corren <b>645 pruebas</b>, sin fallos.</p>
 <blockquote class="doxtable">
 <p>Nota: para leer reportes frescos, ejecutar <span class="tt">./mvnw clean</span> antes: <span class="tt">target/surefire-reports</span> puede conservar reportes de clases que ya no existen. </p>
 </blockquote>

@@ -12,7 +12,7 @@ var searchData=
   ['imagensubidadto_9',['ImagenSubidaDTO',['../namespaceorg_1_1signbb_1_1backend_1_1media.html#a91762c10bc5c270116b61b3161921619',1,'org::signbb::backend::media']]],
   ['importa_10',['importa',['../pruebas_autoria.html#autotoc_md2',1,'Qué se prueba y por qué importa'],['../pruebas_navegacion.html#autotoc_md20',1,'Qué se prueba y por qué importa'],['../pruebas_observaciones.html#autotoc_md30',1,'Qué se prueba y por qué importa'],['../pruebas_seguridad.html#autotoc_md45',1,'Qué se prueba y por qué importa']]],
   ['incompleta_11',['incompleta',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1BaseReglasFiebre.html#ad721313d19240c587a241604213adfd6',1,'org::signbb::backend::autoria::servicios::BaseReglasFiebre']]],
-  ['indice_12',['Indice',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md81',1,'']]],
+  ['indice_12',['Indice',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md82',1,'']]],
   ['inesperado_13',['inesperado',['../classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorErroresGenerales.html#a0be5a4a77066f2a9ea43afa5123c1dd5',1,'org::signbb::backend::config::ManejadorErroresGenerales']]],
   ['inferencia_20servicioreglasimpltest_14',['Servicio de inferencia (&lt;span class=&quot;tt&quot;&gt;ServicioReglasImplTest&lt;/span&gt;)',['../pruebas_reglas.html#autotoc_md40',1,'']]],
   ['inferencia_20y_20mapeo_20json_15',['Servicio de inferencia y mapeo JSON',['../pruebas_reglas.html#autotoc_md39',1,'']]],

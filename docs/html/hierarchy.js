@@ -5,6 +5,7 @@ var hierarchy =
       [ "org.signbb.backend.media.AlmacenImagenesS3", "classorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenesS3.html", null ]
     ] ],
     [ "org.signbb.backend.seguridad.ApiPrueba", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ApiPrueba.html", null ],
+    [ "org.signbb.backend.ArranqueCondicionalTest", "classorg_1_1signbb_1_1backend_1_1ArranqueCondicionalTest.html", null ],
     [ "org.signbb.backend.AutoriaIntegracionTest", "classorg_1_1signbb_1_1backend_1_1AutoriaIntegracionTest.html", null ],
     [ "org.signbb.backend.BackendApplication", "classorg_1_1signbb_1_1backend_1_1BackendApplication.html", null ],
     [ "org.signbb.backend.BackendApplicationTests", "classorg_1_1signbb_1_1backend_1_1BackendApplicationTests.html", null ],

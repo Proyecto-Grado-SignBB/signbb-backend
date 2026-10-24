@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['parámetros_20de_20conexión_20perfil_20docker_20del_20backend_0',['Parámetros de conexión (perfil &lt;span class=&quot;tt&quot;&gt;docker&lt;/span&gt; del backend)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md79',1,'']]],
+  ['parámetros_20de_20conexión_20perfil_20docker_20del_20backend_20en_20el_20host_0',['Parámetros de conexión (perfil &lt;span class=&quot;tt&quot;&gt;docker&lt;/span&gt; del backend en el host)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md80',1,'']]],
   ['perfil_20de_20base_20de_20datos_1',['Perfil de base de datos',['../index.html#autotoc_md69',1,'']]],
-  ['perfil_20docker_20del_20backend_2',['Parámetros de conexión (perfil &lt;span class=&quot;tt&quot;&gt;docker&lt;/span&gt; del backend)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md79',1,'']]],
-  ['persistentes_3',['Eliminar los datos persistentes',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md77',1,'']]],
+  ['perfil_20docker_20del_20backend_20en_20el_20host_2',['Parámetros de conexión (perfil &lt;span class=&quot;tt&quot;&gt;docker&lt;/span&gt; del backend en el host)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md80',1,'']]],
+  ['persistentes_3',['Eliminar los datos persistentes',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md78',1,'']]],
   ['politicaaccesoborradorestest_20guardiaautoriatest_4',['Autor y acceso (&lt;span class=&quot;tt&quot;&gt;PoliticaAccesoBorradoresTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;GuardiaAutoriaTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md11',1,'']]],
   ['por_20módulo_5',['Suite por módulo',['../pruebas.html#autotoc_md54',1,'']]],
   ['por_20qué_20importa_6',['por qué importa',['../pruebas_autoria.html#autotoc_md2',1,'Qué se prueba y por qué importa'],['../pruebas_navegacion.html#autotoc_md20',1,'Qué se prueba y por qué importa'],['../pruebas_observaciones.html#autotoc_md30',1,'Qué se prueba y por qué importa'],['../pruebas_seguridad.html#autotoc_md45',1,'Qué se prueba y por qué importa']]],
