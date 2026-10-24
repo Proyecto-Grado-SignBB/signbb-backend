@@ -159,7 +159,7 @@ static final int&#160;</td><td class="memItemRight"><b>MINIMO_SECRETO</b> = 32</
 <li>
 Públicas: preflight <code class="JavaDocCode">OPTIONS</code>, registro e ingreso, imágenes (<code class="JavaDocCode">/media</code>) y la documentación (Swagger y <code class="JavaDocCode">/v3/api-docs</code>). </li>
 <li>
-<code class="JavaDocCode">/api/recorridos/**</code>: PADRE. </li>
+<code class="JavaDocCode">/api/recorridos/**</code> y <code class="JavaDocCode">PUT /api/auth/yo/pediatra</code>: PADRE. </li>
 <li>
 <code class="JavaDocCode">/api/usuarios/**</code>, <code class="JavaDocCode">/api/autoria/revisiones</code> y aprobar, rechazar, publicar directamente o despublicar un subgrafo: MEDICO_SUPERVISOR. </li>
 <li>
@@ -167,7 +167,8 @@ El resto de <code class="JavaDocCode">/api/autoria/**</code>: MEDICO o MEDICO_SU
 <li>
 Cualquier otra ruta: con sesión. </li>
 </ul>
-<p>El 401 y el 403 salen en JSON con el formato <code class="JavaDocCode">{mensaje, avisos}</code> que ya entiende el front. </p>
+<p>El 401 y el 403 salen en JSON con el formato <code class="JavaDocCode">{mensaje, avisos}</code> que ya entiende el front.</p>
+<p>MODIFICADO (2.4): el teléfono del pediatra solo lo guarda un padre. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
 <a id="a96189020a10c6464d3a9013160e8f06b" name="a96189020a10c6464d3a9013160e8f06b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a96189020a10c6464d3a9013160e8f06b">&#9670;&#160;</a></span>clave()</h2>

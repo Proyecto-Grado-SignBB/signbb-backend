@@ -3,6 +3,7 @@ var interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuent
     [ "cambiarActivo", "interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentas.html#a48c7ed2221936f22f7390b93a083dacf", null ],
     [ "cerrarTodasLasSesiones", "interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentas.html#a395d8fcd0a4786b92b5a7f479e92b684", null ],
     [ "crearClinico", "interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentas.html#a400790654bb1050e19f44d9d09515435", null ],
+    [ "guardarTelefonoPediatra", "interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentas.html#aaeff4a049b1d1b2759d8dde605b9364d", null ],
     [ "ingresar", "interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentas.html#a86b6446a9a1d73a01debd9f5361bf0fe", null ],
     [ "listarClinicos", "interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentas.html#a0e6d16cf1cc77512448287b19272f0af", null ],
     [ "registrarPadre", "interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentas.html#affd2acfb22023798d9d3bccdf788ae23", null ],

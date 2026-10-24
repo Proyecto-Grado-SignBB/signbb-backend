@@ -116,7 +116,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
  <a href="#details">Más...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Registro durable de un recorrido y de su dueño. </p>
-<p>La sesión vive en Redis y vence en 24 h; esta fila queda para "Mis recorridos" y para saber de quién es cada recorrido: solo el padre que lo inició puede verlo o seguirlo. </p>
+<p>La sesión vive en Redis y vence tras 8 h sin actividad; esta fila queda para "Mis recorridos" y para saber de quién es cada recorrido: solo el padre que lo inició puede verlo o seguirlo.</p>
+<p>MODIFICADO (CU10/CU11): <code class="JavaDocCode">estado</code> suma <code class="JavaDocCode">VENCIDO</code> y <code class="JavaDocCode">ABANDONADO</code> (ver <code class="JavaDocCode">ServicioRecorridosImpl</code>); la columna ya era texto, así que el esquema no cambia. </p>
 </div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/main/java/org/signbb/backend/observaciones/datos/entidades/<b>RecorridoEntity.java</b></li>
 </ul>

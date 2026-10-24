@@ -135,10 +135,15 @@ default <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1model
 <tr class="memdesc:a0269f24b995c4409bc97a23ec23a6514"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busca una sesión por id; falla con 404 si no existe.  <br /></td></tr>
 <tr class="memitem:a4dfd943b7a34ac405e62906b3b3b11d2" id="r_a4dfd943b7a34ac405e62906b3b3b11d2"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a4dfd943b7a34ac405e62906b3b3b11d2">guardar</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html">SesionTriaje</a> sesion)</td></tr>
 <tr class="memdesc:a4dfd943b7a34ac405e62906b3b3b11d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Persiste el estado actualizado de una sesión.  <br /></td></tr>
+<tr class="memitem:ac13d9b210df9d525f7519ed1ced768e2" id="r_ac13d9b210df9d525f7519ed1ced768e2"><td class="memItemLeft">boolean&#160;</td><td class="memItemRight"><a class="el" href="#ac13d9b210df9d525f7519ed1ced768e2">existe</a> (String id)</td></tr>
+<tr class="memdesc:ac13d9b210df9d525f7519ed1ced768e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indica si la sesión sigue guardada; <code class="JavaDocCode">false</code> si venció o nunca existió.  <br /></td></tr>
+<tr class="memitem:a37bc4fc30499b0a593a24200086a5b0c" id="r_a37bc4fc30499b0a593a24200086a5b0c"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a37bc4fc30499b0a593a24200086a5b0c">eliminar</a> (String id)</td></tr>
+<tr class="memdesc:a37bc4fc30499b0a593a24200086a5b0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Borra la sesión; si ya no existe, no hace nada.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Almacén de las sesiones de triaje en curso. </p>
-<p>MODIFICADO (cache): pasa a interfaz cuya implementación es <code class="JavaDocCode">RepositorioSesionRedis</code> (perfil <code class="JavaDocCode">docker</code>), según el documento de diseño: las sesiones temporales de los padres viven en la caché distribuida para que las consultas sobrevivan reinicios del backend. </p>
+<p>MODIFICADO (cache): pasa a interfaz cuya implementación es <code class="JavaDocCode">RepositorioSesionRedis</code> (perfil <code class="JavaDocCode">docker</code>), según el documento de diseño: las sesiones temporales de los padres viven en la caché distribuida para que las consultas sobrevivan reinicios del backend.</p>
+<p>MODIFICADO (CU10/CU11): se agregan <code><a class="el" href="#ac13d9b210df9d525f7519ed1ced768e2">existe(String)</a></code>, para saber si una sesión ya venció sin tratarlo como error, y <code><a class="el" href="#a37bc4fc30499b0a593a24200086a5b0c">eliminar(String)</a></code>, para borrar la sesión de un recorrido que se reinicia. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
 <a id="a0269f24b995c4409bc97a23ec23a6514" name="a0269f24b995c4409bc97a23ec23a6514"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0269f24b995c4409bc97a23ec23a6514">&#9670;&#160;</a></span>buscar()</h2>
@@ -188,6 +193,48 @@ default <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1model
 <p>Crea y almacena una sesión nueva con un id generado, atada a la versión del contenido clínico con la que empieza el recorrido. </p>
 
 <p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html#a34eb56ee12a019ebe8e3f48e6c7c0dae">org.signbb.backend.cache.RepositorioSesionRedis</a>.</p>
+
+</div>
+</div>
+<a id="a37bc4fc30499b0a593a24200086a5b0c" name="a37bc4fc30499b0a593a24200086a5b0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37bc4fc30499b0a593a24200086a5b0c">&#9670;&#160;</a></span>eliminar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void org.signbb.backend.navegacion.modelo.RepositorioSesion.eliminar </td>
+          <td>(</td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Borra la sesión; si ya no existe, no hace nada. </p>
+
+<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html#ababb1972327a8c2e3bd308c3a2ae3c8e">org.signbb.backend.cache.RepositorioSesionRedis</a>.</p>
+
+</div>
+</div>
+<a id="ac13d9b210df9d525f7519ed1ced768e2" name="ac13d9b210df9d525f7519ed1ced768e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac13d9b210df9d525f7519ed1ced768e2">&#9670;&#160;</a></span>existe()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">boolean org.signbb.backend.navegacion.modelo.RepositorioSesion.existe </td>
+          <td>(</td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Indica si la sesión sigue guardada; <code class="JavaDocCode">false</code> si venció o nunca existió. </p>
+
+<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html#a407c0f5516484d795162eb57dce34d21">org.signbb.backend.cache.RepositorioSesionRedis</a>.</p>
 
 </div>
 </div>

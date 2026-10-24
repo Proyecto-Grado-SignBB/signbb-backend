@@ -141,6 +141,8 @@ Métodos públicos</h2></td></tr>
 <tr class="memdesc:a5658ec87bcc525d3828778e8bda9b405"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cierra la sesión en todos los dispositivos: los tokens emitidos hasta ahora dejan de servir.  <br /></td></tr>
 <tr class="memitem:a0e6fef63cbe86ac0f6f68531cde23709" id="r_a0e6fef63cbe86ac0f6f68531cde23709"><td class="memItemLeft">UsuarioDTO&#160;</td><td class="memItemRight"><a class="el" href="#a0e6fef63cbe86ac0f6f68531cde23709">yo</a> (UsuarioActual usuario)</td></tr>
 <tr class="memdesc:a0e6fef63cbe86ac0f6f68531cde23709"><td class="mdescLeft">&#160;</td><td class="mdescRight">La cuenta del usuario actual.  <br /></td></tr>
+<tr class="memitem:a2de6e7a57e56155d271f38a6ad50b986" id="r_a2de6e7a57e56155d271f38a6ad50b986"><td class="memItemLeft">UsuarioDTO&#160;</td><td class="memItemRight"><a class="el" href="#a2de6e7a57e56155d271f38a6ad50b986">guardarTelefonoPediatra</a> (UsuarioActual padre, String telefono)</td></tr>
+<tr class="memdesc:a2de6e7a57e56155d271f38a6ad50b986"><td class="mdescLeft">&#160;</td><td class="mdescRight">Guarda el teléfono del pediatra del padre; vacío o <code class="JavaDocCode">null</code> lo borra.  <br /></td></tr>
 <tr class="memitem:ab1a83cc9e9e7f927123c3912bf3c44aa" id="r_ab1a83cc9e9e7f927123c3912bf3c44aa"><td class="memItemLeft">UsuarioDTO&#160;</td><td class="memItemRight"><a class="el" href="#ab1a83cc9e9e7f927123c3912bf3c44aa">crearClinico</a> (NuevoUsuarioRequest request)</td></tr>
 <tr class="memdesc:ab1a83cc9e9e7f927123c3912bf3c44aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea una cuenta de médico o de supervisor.  <br /></td></tr>
 <tr class="memitem:a4bfc6b94759d7ef3279d0fe183433f67" id="r_a4bfc6b94759d7ef3279d0fe183433f67"><td class="memItemLeft">List&lt; UsuarioDTO &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a4bfc6b94759d7ef3279d0fe183433f67">listarClinicos</a> ()</td></tr>
@@ -168,9 +170,13 @@ static final String&#160;</td><td class="memItemRight"><b>MENSAJE_INGRESO</b> = 
 <tr class="memitem:afe1df74f475d4a22207d9e2be17862fb" id="r_afe1df74f475d4a22207d9e2be17862fb"><td class="memItemLeft"><a id="afe1df74f475d4a22207d9e2be17862fb" name="afe1df74f475d4a22207d9e2be17862fb"></a>
 static final String&#160;</td><td class="memItemRight"><b>MENSAJE_SESION_TERMINADA</b> = &quot;Tu sesión terminó. Vuelve a ingresar.&quot;</td></tr>
 <tr class="memdesc:afe1df74f475d4a22207d9e2be17862fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mensaje del 401 cuando la sesión ya no sirve. <br /></td></tr>
+<tr class="memitem:a2f9c192102c60149806d51c370b69f69" id="r_a2f9c192102c60149806d51c370b69f69"><td class="memItemLeft"><a id="a2f9c192102c60149806d51c370b69f69" name="a2f9c192102c60149806d51c370b69f69"></a>
+static final String&#160;</td><td class="memItemRight"><b>MENSAJE_TELEFONO</b> = &quot;Escribe un teléfono de 7 a 20 caracteres: solo números, + y espacios.&quot;</td></tr>
+<tr class="memdesc:a2f9c192102c60149806d51c370b69f69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mensaje del 422 cuando el teléfono del pediatra no tiene un formato válido. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Implementación de <code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentas.html">ServicioCuentas</a></code> sobre <code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios_1_1RepositorioUsuario.html">RepositorioUsuario</a></code>, con contraseñas en BCrypt y tokens de <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioTokens.html">ServicioTokens</a></code>. </p>
+<p>MODIFICADO (2.4): guarda y borra el teléfono del pediatra del padre. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
 <a id="a507c232b27895003c4c9a948007eb8d5" name="a507c232b27895003c4c9a948007eb8d5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a507c232b27895003c4c9a948007eb8d5">&#9670;&#160;</a></span>cambiarActivo()</h2>
@@ -259,6 +265,37 @@ static final String&#160;</td><td class="memItemRight"><b>MENSAJE_SESION_TERMINA
 </dl>
 
 <p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentas.html#a400790654bb1050e19f44d9d09515435">org.signbb.backend.seguridad.servicios.ServicioCuentas</a>.</p>
+
+</div>
+</div>
+<a id="a2de6e7a57e56155d271f38a6ad50b986" name="a2de6e7a57e56155d271f38a6ad50b986"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2de6e7a57e56155d271f38a6ad50b986">&#9670;&#160;</a></span>guardarTelefonoPediatra()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">UsuarioDTO org.signbb.backend.seguridad.servicios.ServicioCuentasImpl.guardarTelefonoPediatra </td>
+          <td>(</td>
+          <td class="paramtype">UsuarioActual</td>          <td class="paramname"><span class="paramname"><em>padre</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>telefono</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Guarda el teléfono del pediatra del padre; vacío o <code class="JavaDocCode">null</code> lo borra. </p>
+<dl class="exception"><dt>Excepciones</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CuentaInvalidaException.html" title="Los datos de una cuenta nueva o de un cambio no se pueden aceptar (correo repetido,...">CuentaInvalidaException</a></td><td>si el teléfono no tiene un formato válido </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentas.html#aaeff4a049b1d1b2759d8dde605b9364d">org.signbb.backend.seguridad.servicios.ServicioCuentas</a>.</p>
 
 </div>
 </div>

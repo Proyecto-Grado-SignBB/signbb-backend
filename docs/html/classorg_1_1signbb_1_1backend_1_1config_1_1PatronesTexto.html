@@ -123,10 +123,14 @@ static final String&#160;</td><td class="memItemRight"><b>UNA_LINEA</b> = &quot;
 <tr class="memitem:a942d239ec087ae025d043df9819c2f55" id="r_a942d239ec087ae025d043df9819c2f55"><td class="memItemLeft"><a id="a942d239ec087ae025d043df9819c2f55" name="a942d239ec087ae025d043df9819c2f55"></a>
 static final String&#160;</td><td class="memItemRight"><b>TEXTO_LARGO</b> = &quot;[\\P{Cntrl}\\n\\r\\t]*&quot;</td></tr>
 <tr class="memdesc:a942d239ec087ae025d043df9819c2f55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Texto largo: permite saltos de línea y tabulaciones, pero ningún otro carácter de control. <br /></td></tr>
+<tr class="memitem:ae2954d9612630d61fb455f9a5eed0fc5" id="r_ae2954d9612630d61fb455f9a5eed0fc5"><td class="memItemLeft"><a id="ae2954d9612630d61fb455f9a5eed0fc5" name="ae2954d9612630d61fb455f9a5eed0fc5"></a>
+static final String&#160;</td><td class="memItemRight"><b>TELEFONO</b> = &quot;[+0-9 ]{7,20}&quot;</td></tr>
+<tr class="memdesc:ae2954d9612630d61fb455f9a5eed0fc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teléfono: dígitos, <code class="JavaDocCode">+</code> y espacios, de 7 a 20 caracteres (por ejemplo, <code class="JavaDocCode">+57 300 123 4567</code>). <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Expresiones regulares para las anotaciones <code class="JavaDocCode">@Pattern</code> de los DTO de entrada. </p>
-<p><code class="JavaDocCode">@Pattern</code> exige que coincida todo el texto, por eso no llevan anclas. </p>
+<p><code class="JavaDocCode">@Pattern</code> exige que coincida todo el texto, por eso no llevan anclas.</p>
+<p>MODIFICADO (2.4): se agrega <code><a class="el" href="#ae2954d9612630d61fb455f9a5eed0fc5">TELEFONO</a></code> para el número del pediatra. </p>
 </div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/main/java/org/signbb/backend/config/<b>PatronesTexto.java</b></li>
 </ul>

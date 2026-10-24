@@ -126,9 +126,9 @@ Diagrama de herencia de org.signbb.backend.observaciones.servicios.ServicioRecor
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Métodos públicos</h2></td></tr>
-<tr class="memitem:a868bc8e83f7f4bb54331a9a28f9bfe45" id="r_a868bc8e83f7f4bb54331a9a28f9bfe45"><td class="memItemLeft"><a id="a868bc8e83f7f4bb54331a9a28f9bfe45" name="a868bc8e83f7f4bb54331a9a28f9bfe45"></a>
-&#160;</td><td class="memItemRight"><b>ServicioRecorridosImpl</b> (<a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html">ServicioNavegacion</a> navegacion, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioRecorridos.html">RepositorioRecorridos</a> recorridos)</td></tr>
-<tr class="memdesc:a868bc8e83f7f4bb54331a9a28f9bfe45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta la navegación y el repositorio de recorridos. <br /></td></tr>
+<tr class="memitem:abaed17a225fecdb9366863d943103281" id="r_abaed17a225fecdb9366863d943103281"><td class="memItemLeft"><a id="abaed17a225fecdb9366863d943103281" name="abaed17a225fecdb9366863d943103281"></a>
+&#160;</td><td class="memItemRight"><b>ServicioRecorridosImpl</b> (<a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html">ServicioNavegacion</a> navegacion, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioRecorridos.html">RepositorioRecorridos</a> recorridos, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html">RepositorioSesion</a> sesiones, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1CandadoRecorrido.html">CandadoRecorrido</a> candado, PlatformTransactionManager gestorTransacciones)</td></tr>
+<tr class="memdesc:abaed17a225fecdb9366863d943103281"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta la navegación, los repositorios, el candado y el gestor de transacciones. <br /></td></tr>
 <tr class="memitem:a31e0de6f251da40d462a40442af94165" id="r_a31e0de6f251da40d462a40442af94165"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#a31e0de6f251da40d462a40442af94165">iniciar</a> (UsuarioActual padre)</td></tr>
 <tr class="memdesc:a31e0de6f251da40d462a40442af94165"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inicia un recorrido a nombre del padre y lo registra.  <br /></td></tr>
 <tr class="memitem:a81edb284940cd4c4257662e429ccc1f3" id="r_a81edb284940cd4c4257662e429ccc1f3"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a81edb284940cd4c4257662e429ccc1f3">exigirDueno</a> (String recorridoId, UsuarioActual padre)</td></tr>
@@ -137,15 +137,32 @@ Métodos públicos</h2></td></tr>
 <tr class="memdesc:ae12ad6bf28bad78ecc2a8e77db2d5f27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Guarda el estado y el resultado que devolvió la navegación.  <br /></td></tr>
 <tr class="memitem:ae2d3025e628fa0f8b4ac49d691011684" id="r_ae2d3025e628fa0f8b4ac49d691011684"><td class="memItemLeft">List&lt; ResumenRecorridoDTO &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ae2d3025e628fa0f8b4ac49d691011684">deUsuario</a> (UsuarioActual padre)</td></tr>
 <tr class="memdesc:ae2d3025e628fa0f8b4ac49d691011684"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recorridos del padre, del más nuevo al más viejo.  <br /></td></tr>
+<tr class="memitem:a606aa6c744123bb21e6f32c5e1eadd28" id="r_a606aa6c744123bb21e6f32c5e1eadd28"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a606aa6c744123bb21e6f32c5e1eadd28">exigirVigente</a> (String recorridoId)</td></tr>
+<tr class="memdesc:a606aa6c744123bb21e6f32c5e1eadd28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exige que el recorrido se pueda seguir.  <br /></td></tr>
+<tr class="memitem:a8cf93bc77d5e2e5b66486eb74b86f324" id="r_a8cf93bc77d5e2e5b66486eb74b86f324"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#a8cf93bc77d5e2e5b66486eb74b86f324">reiniciar</a> (String recorridoId, UsuarioActual padre)</td></tr>
+<tr class="memdesc:a8cf93bc77d5e2e5b66486eb74b86f324"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reinicia la consulta (CU11): el recorrido queda <code class="JavaDocCode">ABANDONADO</code>, se borra su sesión y empieza uno nuevo a nombre del mismo padre.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Atributos públicos estáticos</h2></td></tr>
 <tr class="memitem:ab7fc889c42ddf448d6111ed4d86d32bd" id="r_ab7fc889c42ddf448d6111ed4d86d32bd"><td class="memItemLeft"><a id="ab7fc889c42ddf448d6111ed4d86d32bd" name="ab7fc889c42ddf448d6111ed4d86d32bd"></a>
 static final String&#160;</td><td class="memItemRight"><b>NO_DISPONIBLE</b> = &quot;Ese recorrido no está disponible.&quot;</td></tr>
 <tr class="memdesc:ab7fc889c42ddf448d6111ed4d86d32bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mensaje del 404 cuando el recorrido no existe o es de otro padre. <br /></td></tr>
+<tr class="memitem:a2b46103880e156f79f76bf1f8f482b96" id="r_a2b46103880e156f79f76bf1f8f482b96"><td class="memItemLeft"><a id="a2b46103880e156f79f76bf1f8f482b96" name="a2b46103880e156f79f76bf1f8f482b96"></a>
+static final String&#160;</td><td class="memItemRight"><b>EN_CURSO</b> = &quot;EN_CURSO&quot;</td></tr>
+<tr class="memdesc:a2b46103880e156f79f76bf1f8f482b96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estado del recorrido que todavía tiene preguntas, como lo devuelve la navegación. <br /></td></tr>
+<tr class="memitem:a746f22156fafba73f71dc21ca81ba7e6" id="r_a746f22156fafba73f71dc21ca81ba7e6"><td class="memItemLeft"><a id="a746f22156fafba73f71dc21ca81ba7e6" name="a746f22156fafba73f71dc21ca81ba7e6"></a>
+static final String&#160;</td><td class="memItemRight"><b>FINALIZADO</b> = &quot;FINALIZADO&quot;</td></tr>
+<tr class="memdesc:a746f22156fafba73f71dc21ca81ba7e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estado del recorrido terminado, como lo devuelve la navegación. <br /></td></tr>
+<tr class="memitem:ae1d5b6ae224b14d4f7c8776597bebb4f" id="r_ae1d5b6ae224b14d4f7c8776597bebb4f"><td class="memItemLeft"><a id="ae1d5b6ae224b14d4f7c8776597bebb4f" name="ae1d5b6ae224b14d4f7c8776597bebb4f"></a>
+static final String&#160;</td><td class="memItemRight"><b>VENCIDO</b> = &quot;VENCIDO&quot;</td></tr>
+<tr class="memdesc:ae1d5b6ae224b14d4f7c8776597bebb4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estado del recorrido en curso cuya sesión venció tras 8 h sin actividad. <br /></td></tr>
+<tr class="memitem:a3742fa4b7e5cdcd60a10451343d31097" id="r_a3742fa4b7e5cdcd60a10451343d31097"><td class="memItemLeft"><a id="a3742fa4b7e5cdcd60a10451343d31097" name="a3742fa4b7e5cdcd60a10451343d31097"></a>
+static final String&#160;</td><td class="memItemRight"><b>ABANDONADO</b> = &quot;ABANDONADO&quot;</td></tr>
+<tr class="memdesc:a3742fa4b7e5cdcd60a10451343d31097"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estado del recorrido que el padre reinició; lo reemplaza uno nuevo. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Implementación de <code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioRecorridos.html">ServicioRecorridos</a></code> sobre la tabla <code class="JavaDocCode">recorrido</code>. </p>
+<p>MODIFICADO (CU10/CU11): usa el <code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html">RepositorioSesion</a></code> para saber si la sesión de un recorrido en curso venció (<code class="JavaDocCode">VENCIDO</code>); "Mis recorridos" se muestra igual si Redis no responde. Al reiniciar, toma el <code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1CandadoRecorrido.html">CandadoRecorrido</a></code> del recorrido, lo marca <code class="JavaDocCode">ABANDONADO</code> y empieza uno nuevo dentro de una transacción. La sesión vieja se borra después de confirmar; si Redis falla en ese paso, la sesión caduca sola y la fila ya no deja seguirla. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
 <a id="ae12ad6bf28bad78ecc2a8e77db2d5f27" name="ae12ad6bf28bad78ecc2a8e77db2d5f27"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae12ad6bf28bad78ecc2a8e77db2d5f27">&#9670;&#160;</a></span>actualizar()</h2>
@@ -184,6 +201,7 @@ static final String&#160;</td><td class="memItemRight"><b>NO_DISPONIBLE</b> = &q
 </div><div class="memdoc">
 
 <p>Recorridos del padre, del más nuevo al más viejo. </p>
+<p>Los que siguen <code class="JavaDocCode">EN_CURSO</code> pero ya no tienen sesión quedan <code class="JavaDocCode">VENCIDO</code>. </p>
 
 <p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioRecorridos.html#ab4330c6fc1880153f17a50d68d7e9df1">org.signbb.backend.observaciones.servicios.ServicioRecorridos</a>.</p>
 
@@ -220,6 +238,34 @@ static final String&#160;</td><td class="memItemRight"><b>NO_DISPONIBLE</b> = &q
 
 </div>
 </div>
+<a id="a606aa6c744123bb21e6f32c5e1eadd28" name="a606aa6c744123bb21e6f32c5e1eadd28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a606aa6c744123bb21e6f32c5e1eadd28">&#9670;&#160;</a></span>exigirVigente()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void org.signbb.backend.observaciones.servicios.ServicioRecorridosImpl.exigirVigente </td>
+          <td>(</td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>recorridoId</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Exige que el recorrido se pueda seguir. </p>
+<p>Si estaba en curso y su sesión venció, lo marca <code class="JavaDocCode">VENCIDO</code> antes de fallar.</p>
+<dl class="exception"><dt>Excepciones</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1RecorridoVencidoException.html" title="El recorrido ya no se puede seguir (CU10): su sesión venció tras 8 horas sin actividad,...">RecorridoVencidoException</a></td><td>si venció o se reinició (410) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioRecorridos.html#a1c3e1faf84cd27af5ca07f832d975061">org.signbb.backend.observaciones.servicios.ServicioRecorridos</a>.</p>
+
+</div>
+</div>
 <a id="a31e0de6f251da40d462a40442af94165" name="a31e0de6f251da40d462a40442af94165"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a31e0de6f251da40d462a40442af94165">&#9670;&#160;</a></span>iniciar()</h2>
 
@@ -238,6 +284,40 @@ static final String&#160;</td><td class="memItemRight"><b>NO_DISPONIBLE</b> = &q
 <p>Inicia un recorrido a nombre del padre y lo registra. </p>
 
 <p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioRecorridos.html#abc426264f75a11a2ffed6c2a16cfc184">org.signbb.backend.observaciones.servicios.ServicioRecorridos</a>.</p>
+
+</div>
+</div>
+<a id="a8cf93bc77d5e2e5b66486eb74b86f324" name="a8cf93bc77d5e2e5b66486eb74b86f324"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cf93bc77d5e2e5b66486eb74b86f324">&#9670;&#160;</a></span>reiniciar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RecorridoDTO org.signbb.backend.observaciones.servicios.ServicioRecorridosImpl.reiniciar </td>
+          <td>(</td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>recorridoId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">UsuarioActual</td>          <td class="paramname"><span class="paramname"><em>padre</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reinicia la consulta (CU11): el recorrido queda <code class="JavaDocCode">ABANDONADO</code>, se borra su sesión y empieza uno nuevo a nombre del mismo padre. </p>
+<dl class="section return"><dt>Devuelve</dt><dd>la primera pregunta del recorrido nuevo </dd></dl>
+<dl class="exception"><dt>Excepciones</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1RecorridoFinalizadoException.html" title="Se pidió reiniciar (CU11) un recorrido que ya terminó.">RecorridoFinalizadoException</a></td><td>si el recorrido ya terminó (409) </td></tr>
+    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1RecorridoVencidoException.html" title="El recorrido ya no se puede seguir (CU10): su sesión venció tras 8 horas sin actividad,...">RecorridoVencidoException</a></td><td>si ya se había reiniciado (410) </td></tr>
+    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RecorridoOcupadoException.html" title="Otra operación está cambiando ahora mismo el mismo recorrido.">org.signbb.backend.navegacion.modelo.RecorridoOcupadoException</a></td><td>si otra operación lo está cambiando (409) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioRecorridos.html#abef0c51107158b237d782379f3ebf6c7">org.signbb.backend.observaciones.servicios.ServicioRecorridos</a>.</p>
 
 </div>
 </div>

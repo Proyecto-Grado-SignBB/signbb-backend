@@ -150,9 +150,9 @@ Mapa de la suite</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">motor</span>  </td><td class="markdownTableBodyNone"><span class="tt">OrdenColaTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyNone">orden de la cola: gravedad, peso y antigüedad  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioNavegacionImplTest</span>  </td><td class="markdownTableBodyRight">9  </td><td class="markdownTableBodyNone">la fachada de la API: iniciar, responder, consultar, retroceder y errores  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioNavegacionImplTest</span>  </td><td class="markdownTableBodyRight">10  </td><td class="markdownTableBodyNone">la fachada de la API: iniciar, responder, consultar, retroceder y errores; el camino del resultado trae el texto de cada pregunta y las razones son nombres de reglas  </td></tr>
 </table>
-<p>En total son <b>171 pruebas</b>. Las pruebas de la sesión en Redis (<span class="tt">cache/RepositorioSesionRedisTest</span> y <span class="tt">cache/ColaSeleccionMultipleRedisIntegracionTest</span>) están documentadas en <a class="el" href="pruebas_cache.html#md_backend_2src_2test_2README" title="backend/src/test/README.md"><span class="tt">backend/src/test/README.md</span></a>.</p>
+<p>En total son <b>172 pruebas</b>. Las pruebas de la sesión en Redis (<span class="tt">cache/RepositorioSesionRedisTest</span> y <span class="tt">cache/ColaSeleccionMultipleRedisIntegracionTest</span>) están documentadas en <a class="el" href="pruebas_cache.html#md_backend_2src_2test_2README" title="backend/src/test/README.md"><span class="tt">backend/src/test/README.md</span></a>.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
 Fixtures</h1>
 <ul>
@@ -187,6 +187,7 @@ Límite de preguntas (<span class="tt">MotorNavegacionLimiteTest</span>)</h2>
 <li>El límite se puede configurar (<span class="tt">signbb.navegacion.max-preguntas</span>) y un valor menor que 1 se rechaza.</li>
 <li><b>Las respuestas deshechas no cuentan.</b> Retroceder y volver a responder no acerca el corte.</li>
 <li>Desde el cierre por límite se puede retroceder a la décima pregunta.</li>
+<li><b>Por qué NORMAL.</b> Si en diez preguntas no apareció ninguna señal de alarma, no hay razón clínica para una alerta. Es una decisión del equipo (23 de octubre de 2026, ítem 2.5 del plan) que se revisará con el asesor clínico; estas pruebas la fijan para que un cambio sea a propósito.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md24"></a>
 Cola de la selección múltiple (<span class="tt">MotorNavegacionColaTest</span>, <span class="tt">OrdenColaTest</span>)</h2>
@@ -264,9 +265,9 @@ Resultados en GitHub Actions</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">motor.OrdenColaTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">servicios.ServicioNavegacionImplTest</span>  </td><td class="markdownTableBodyRight">9  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios.ServicioNavegacionImplTest</span>  </td><td class="markdownTableBodyRight">10  </td><td class="markdownTableBodyRight">0  </td><td class="markdownTableBodyRight">0  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>Módulo de navegación</b>  </td><td class="markdownTableBodyRight"><b>171</b>  </td><td class="markdownTableBodyRight"><b>0</b>  </td><td class="markdownTableBodyRight"><b>0</b>  </td></tr>
+<td class="markdownTableBodyNone"><b>Módulo de navegación</b>  </td><td class="markdownTableBodyRight"><b>172</b>  </td><td class="markdownTableBodyRight"><b>0</b>  </td><td class="markdownTableBodyRight"><b>0</b>  </td></tr>
 </table>
 <p>La suite completa del backend corrió <b>234 pruebas, 0 fallos, 0 errores y 0 omitidas</b>: con Redis como servicio del CI, las de integración de <span class="tt">CacheRedisIntegracionTest</span> ya no se saltan. </p>
 </div></div><!-- contents -->

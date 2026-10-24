@@ -138,6 +138,8 @@ Métodos públicos</h2></td></tr>
 <tr class="memdesc:a395d8fcd0a4786b92b5a7f479e92b684"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cierra la sesión en todos los dispositivos: los tokens emitidos hasta ahora dejan de servir.  <br /></td></tr>
 <tr class="memitem:a08a4c862bacd1edcff1c38332af65120" id="r_a08a4c862bacd1edcff1c38332af65120"><td class="memItemLeft">UsuarioDTO&#160;</td><td class="memItemRight"><a class="el" href="#a08a4c862bacd1edcff1c38332af65120">yo</a> (UsuarioActual usuario)</td></tr>
 <tr class="memdesc:a08a4c862bacd1edcff1c38332af65120"><td class="mdescLeft">&#160;</td><td class="mdescRight">La cuenta del usuario actual.  <br /></td></tr>
+<tr class="memitem:aaeff4a049b1d1b2759d8dde605b9364d" id="r_aaeff4a049b1d1b2759d8dde605b9364d"><td class="memItemLeft">UsuarioDTO&#160;</td><td class="memItemRight"><a class="el" href="#aaeff4a049b1d1b2759d8dde605b9364d">guardarTelefonoPediatra</a> (UsuarioActual padre, String telefono)</td></tr>
+<tr class="memdesc:aaeff4a049b1d1b2759d8dde605b9364d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Guarda el teléfono del pediatra del padre; vacío o <code class="JavaDocCode">null</code> lo borra.  <br /></td></tr>
 <tr class="memitem:a400790654bb1050e19f44d9d09515435" id="r_a400790654bb1050e19f44d9d09515435"><td class="memItemLeft">UsuarioDTO&#160;</td><td class="memItemRight"><a class="el" href="#a400790654bb1050e19f44d9d09515435">crearClinico</a> (NuevoUsuarioRequest request)</td></tr>
 <tr class="memdesc:a400790654bb1050e19f44d9d09515435"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea una cuenta de médico o de supervisor.  <br /></td></tr>
 <tr class="memitem:a0e6d16cf1cc77512448287b19272f0af" id="r_a0e6d16cf1cc77512448287b19272f0af"><td class="memItemLeft">List&lt; UsuarioDTO &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a0e6d16cf1cc77512448287b19272f0af">listarClinicos</a> ()</td></tr>
@@ -147,6 +149,7 @@ Métodos públicos</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Cuentas de usuario: registro de padres, ingreso y administración de las cuentas clínicas por un supervisor. </p>
+<p>MODIFICADO (2.4): se agrega <code><a class="el" href="#aaeff4a049b1d1b2759d8dde605b9364d">guardarTelefonoPediatra</a></code>. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
 <a id="a48c7ed2221936f22f7390b93a083dacf" name="a48c7ed2221936f22f7390b93a083dacf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a48c7ed2221936f22f7390b93a083dacf">&#9670;&#160;</a></span>cambiarActivo()</h2>
@@ -235,6 +238,37 @@ Métodos públicos</h2></td></tr>
 </dl>
 
 <p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentasImpl.html#ab1a83cc9e9e7f927123c3912bf3c44aa">org.signbb.backend.seguridad.servicios.ServicioCuentasImpl</a>.</p>
+
+</div>
+</div>
+<a id="aaeff4a049b1d1b2759d8dde605b9364d" name="aaeff4a049b1d1b2759d8dde605b9364d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaeff4a049b1d1b2759d8dde605b9364d">&#9670;&#160;</a></span>guardarTelefonoPediatra()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">UsuarioDTO org.signbb.backend.seguridad.servicios.ServicioCuentas.guardarTelefonoPediatra </td>
+          <td>(</td>
+          <td class="paramtype">UsuarioActual</td>          <td class="paramname"><span class="paramname"><em>padre</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>telefono</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Guarda el teléfono del pediatra del padre; vacío o <code class="JavaDocCode">null</code> lo borra. </p>
+<dl class="exception"><dt>Excepciones</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CuentaInvalidaException.html" title="Los datos de una cuenta nueva o de un cambio no se pueden aceptar (correo repetido,...">CuentaInvalidaException</a></td><td>si el teléfono no tiene un formato válido </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentasImpl.html#a2de6e7a57e56155d271f38a6ad50b986">org.signbb.backend.seguridad.servicios.ServicioCuentasImpl</a>.</p>
 
 </div>
 </div>

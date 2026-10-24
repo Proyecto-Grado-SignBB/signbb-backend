@@ -162,6 +162,8 @@ var hierarchy =
       [ "org.signbb.backend.media.ImagenInvalidaException", "classorg_1_1signbb_1_1backend_1_1media_1_1ImagenInvalidaException.html", null ],
       [ "org.signbb.backend.navegacion.modelo.RecorridoOcupadoException", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RecorridoOcupadoException.html", null ],
       [ "org.signbb.backend.observaciones.servicios.PreguntaDesactualizadaException", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1PreguntaDesactualizadaException.html", null ],
+      [ "org.signbb.backend.observaciones.servicios.RecorridoFinalizadoException", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1RecorridoFinalizadoException.html", null ],
+      [ "org.signbb.backend.observaciones.servicios.RecorridoVencidoException", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1RecorridoVencidoException.html", null ],
       [ "org.signbb.backend.seguridad.servicios.AccesoDenegadoException", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1AccesoDenegadoException.html", null ],
       [ "org.signbb.backend.seguridad.servicios.CredencialesInvalidasException", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CredencialesInvalidasException.html", null ],
       [ "org.signbb.backend.seguridad.servicios.CuentaInvalidaException", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CuentaInvalidaException.html", null ],

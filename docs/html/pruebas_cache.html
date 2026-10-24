@@ -142,6 +142,7 @@ RepositorioSesionRedisTest — sesiones en Redis</h1>
 <li><b>Round-trip FINALIZADO</b>: guardar y buscar restaura nivel, destino, razones (por id de regla), camino causal y puntaje.</li>
 <li><b>Sesión inexistente</b>: 404 (<span class="tt">RecursoNoEncontradoException</span>).</li>
 <li><b>Redis caído al buscar o guardar</b>: <span class="tt">CacheNoDisponibleException</span> (el <span class="tt">ControllerAdvice</span> la responde como 503; nunca degrada a memoria para evitar sesiones que aparecen y desaparecen).</li>
+<li><b><span class="tt">existe</span> y <span class="tt">eliminar</span></b> (CU10/CU11): <span class="tt">existe</span> dice si la clave sigue en Redis (una sesión vencida a las 8 h ya no está) y <span class="tt">eliminar</span> borra la del recorrido reiniciado; con Redis caído también dan <span class="tt">CacheNoDisponibleException</span>.</li>
 </ul>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md60"></a>
 CandadoRecorridoRedisTest — candado por recorrido</h1>

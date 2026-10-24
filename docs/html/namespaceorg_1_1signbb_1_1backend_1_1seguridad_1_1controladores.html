@@ -135,10 +135,12 @@ Funciones</h2></td></tr>
 <tr class="memdesc:ac19e260efe62ce27b6f19177a00559fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cuenta clínica nueva, creada por un supervisor.  <br /></td></tr>
 <tr class="memitem:a6490aee7bbbf81677e8e57c72488150f" id="r_a6490aee7bbbf81677e8e57c72488150f"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a6490aee7bbbf81677e8e57c72488150f">RegistroRequest</a> ( @Size(max=100, message=&quot;El nombre no puede pasar de 100 caracteres.&quot;) @Pattern(regexp=<a class="el" href="classorg_1_1signbb_1_1backend_1_1config_1_1PatronesTexto.html#a506bbce37f6b4be59631c29fb38f7f30">PatronesTexto.UNA_LINEA</a>, message=&quot;El nombre no puede tener saltos de línea.&quot;) String nombre, @Size(max=254, message=&quot;El correo no puede pasar de 254 caracteres.&quot;) String correo, @Size(max=72, message=&quot;La contraseña no puede pasar de 72 caracteres.&quot;) String contrasena, @Schema(description=&quot;Dispositivo seguro: la sesión se mantiene abierta más tiempo. &quot;+&quot;Si falta, se toma como false.&quot;, example=&quot;false&quot;) Boolean dispositivoSeguro)</td></tr>
 <tr class="memdesc:a6490aee7bbbf81677e8e57c72488150f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registro de un padre o acudiente en la app de consulta.  <br /></td></tr>
-<tr class="memitem:ac758d9357bebd2fbe00e782030500610" id="r_ac758d9357bebd2fbe00e782030500610"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#ac758d9357bebd2fbe00e782030500610">SesionDTO</a> (String token, Instant expiraEn, <a class="el" href="#a612c9165a517458c242c6db4b9e4db5d">UsuarioDTO</a> usuario)</td></tr>
+<tr class="memitem:ac758d9357bebd2fbe00e782030500610" id="r_ac758d9357bebd2fbe00e782030500610"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#ac758d9357bebd2fbe00e782030500610">SesionDTO</a> (String token, Instant expiraEn, <a class="el" href="#aa87b89d6c33a89abc575bd2fcdfb8c33">UsuarioDTO</a> usuario)</td></tr>
 <tr class="memdesc:ac758d9357bebd2fbe00e782030500610"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sesión abierta: el token para <code class="JavaDocCode">Authorization: Bearer</code> y el usuario.  <br /></td></tr>
-<tr class="memitem:a612c9165a517458c242c6db4b9e4db5d" id="r_a612c9165a517458c242c6db4b9e4db5d"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a612c9165a517458c242c6db4b9e4db5d">UsuarioDTO</a> (Long id, String nombre, String correo, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo_1_1Rol.html">Rol</a> rol, String institucion, boolean activo)</td></tr>
-<tr class="memdesc:a612c9165a517458c242c6db4b9e4db5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Una cuenta, sin la contraseña.  <br /></td></tr>
+<tr class="memitem:a5e5e15781a374e0c701b1a7f1ce9d916" id="r_a5e5e15781a374e0c701b1a7f1ce9d916"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a5e5e15781a374e0c701b1a7f1ce9d916">TelefonoPediatraRequest</a> ( @Schema(description=&quot;Dígitos, + y espacios, de 7 a 20 caracteres&quot;, example=&quot;+57 300 123 4567&quot;) @Pattern(regexp=&quot;\\s*|&quot;+PatronesTexto.TELEFONO, message=&quot;Escribe un teléfono de 7 a 20 caracteres: solo números, + y espacios.&quot;) String telefono)</td></tr>
+<tr class="memdesc:a5e5e15781a374e0c701b1a7f1ce9d916"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teléfono del pediatra que guarda un padre.  <br /></td></tr>
+<tr class="memitem:aa87b89d6c33a89abc575bd2fcdfb8c33" id="r_aa87b89d6c33a89abc575bd2fcdfb8c33"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#aa87b89d6c33a89abc575bd2fcdfb8c33">UsuarioDTO</a> (Long id, String nombre, String correo, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo_1_1Rol.html">Rol</a> rol, String institucion, boolean activo, String telefonoPediatra)</td></tr>
+<tr class="memdesc:aa87b89d6c33a89abc575bd2fcdfb8c33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Una cuenta, sin la contraseña.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>API del módulo de seguridad: <code class="JavaDocCode">/api/auth</code> (registro de padres, ingreso y usuario actual) y <code class="JavaDocCode">/api/usuarios</code> (cuentas clínicas, solo supervisor). </p>
@@ -319,7 +321,7 @@ avisos}</code> que la autoría. </p>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="#a612c9165a517458c242c6db4b9e4db5d">UsuarioDTO</a></td>          <td class="paramname"><span class="paramname"><em>usuario</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#aa87b89d6c33a89abc575bd2fcdfb8c33">UsuarioDTO</a></td>          <td class="paramname"><span class="paramname"><em>usuario</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -336,8 +338,33 @@ avisos}</code> que la autoría. </p>
 
 </div>
 </div>
-<a id="a612c9165a517458c242c6db4b9e4db5d" name="a612c9165a517458c242c6db4b9e4db5d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a612c9165a517458c242c6db4b9e4db5d">&#9670;&#160;</a></span>UsuarioDTO()</h2>
+<a id="a5e5e15781a374e0c701b1a7f1ce9d916" name="a5e5e15781a374e0c701b1a7f1ce9d916"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e5e15781a374e0c701b1a7f1ce9d916">&#9670;&#160;</a></span>TelefonoPediatraRequest()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">record org.signbb.backend.seguridad.controladores.TelefonoPediatraRequest </td>
+          <td>(</td>
+          <td class="paramtype">@Schema(description=&quot;Dígitos, + y espacios, de 7 a 20 caracteres&quot;, example=&quot;+57 300 123 4567&quot;) @Pattern(regexp=&quot;\\s*|&quot;+PatronesTexto.TELEFONO, message=&quot;Escribe un teléfono de 7 a 20 caracteres: solo números, + y espacios.&quot;) String</td>          <td class="paramname"><span class="paramname"><em>telefono</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teléfono del pediatra que guarda un padre. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">telefono</td><td>dígitos, <code class="JavaDocCode">+</code> y espacios, de 7 a 20 caracteres; vacío o <code class="JavaDocCode">null</code> borra el número guardado </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa87b89d6c33a89abc575bd2fcdfb8c33" name="aa87b89d6c33a89abc575bd2fcdfb8c33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa87b89d6c33a89abc575bd2fcdfb8c33">&#9670;&#160;</a></span>UsuarioDTO()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -370,12 +397,18 @@ avisos}</code> que la autoría. </p>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">boolean</td>          <td class="paramname"><span class="paramname"><em>activo</em></span>&#160;)</td>
+          <td class="paramtype">boolean</td>          <td class="paramname"><span class="paramname"><em>activo</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>telefonoPediatra</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Una cuenta, sin la contraseña. </p>
+<p>MODIFICADO (2.4): se agrega <code class="JavaDocCode">telefonoPediatra</code>; viene en <code class="JavaDocCode">/api/auth/yo</code> y en la sesión que devuelven el ingreso y el registro.</p>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>id de la cuenta </td></tr>
@@ -384,6 +417,7 @@ avisos}</code> que la autoría. </p>
     <tr><td class="paramname">rol</td><td>rol de la cuenta </td></tr>
     <tr><td class="paramname">institucion</td><td>institución del médico, o <code class="JavaDocCode">null</code> </td></tr>
     <tr><td class="paramname">activo</td><td>si puede ingresar </td></tr>
+    <tr><td class="paramname">telefonoPediatra</td><td>teléfono del pediatra que guardó un padre, o <code class="JavaDocCode">null</code> </td></tr>
   </table>
   </dd>
 </dl>

@@ -129,13 +129,20 @@ ResponseEntity&lt; ErrorAutoriaDTO &gt;&#160;</td><td class="memItemRight"><b>ma
 <tr class="memitem:a0bfee71571dc86bc2ba9872a91f274e1" id="r_a0bfee71571dc86bc2ba9872a91f274e1"><td class="memItemLeft"><a id="a0bfee71571dc86bc2ba9872a91f274e1" name="a0bfee71571dc86bc2ba9872a91f274e1"></a>
 ResponseEntity&lt; ErrorAutoriaDTO &gt;&#160;</td><td class="memItemRight"><b>manejarPreguntaDesactualizada</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1PreguntaDesactualizadaException.html">PreguntaDesactualizadaException</a> ex)</td></tr>
 <tr class="memdesc:a0bfee71571dc86bc2ba9872a91f274e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">La respuesta era para una pregunta que ya no es la actual: 409 y el cliente vuelve a consultar. <br /></td></tr>
+<tr class="memitem:adf022203740888807dc32b46e3262c1b" id="r_adf022203740888807dc32b46e3262c1b"><td class="memItemLeft"><a id="adf022203740888807dc32b46e3262c1b" name="adf022203740888807dc32b46e3262c1b"></a>
+ResponseEntity&lt; ErrorAutoriaDTO &gt;&#160;</td><td class="memItemRight"><b>manejarRecorridoVencido</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1RecorridoVencidoException.html">RecorridoVencidoException</a> ex)</td></tr>
+<tr class="memdesc:adf022203740888807dc32b46e3262c1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">La consulta venció o se reinició: 410 para que el cliente lleve al inicio con el aviso. <br /></td></tr>
+<tr class="memitem:afe653adbfd985189fd24e0f266d44839" id="r_afe653adbfd985189fd24e0f266d44839"><td class="memItemLeft"><a id="afe653adbfd985189fd24e0f266d44839" name="afe653adbfd985189fd24e0f266d44839"></a>
+ResponseEntity&lt; ErrorAutoriaDTO &gt;&#160;</td><td class="memItemRight"><b>manejarRecorridoFinalizado</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1RecorridoFinalizadoException.html">RecorridoFinalizadoException</a> ex)</td></tr>
+<tr class="memdesc:afe653adbfd985189fd24e0f266d44839"><td class="mdescLeft">&#160;</td><td class="mdescRight">Se pidió reiniciar una consulta que ya terminó: 409, su resultado no cambia. <br /></td></tr>
 <tr class="memitem:a47da4350124a737dd82b564443c76571" id="r_a47da4350124a737dd82b564443c76571"><td class="memItemLeft"><a id="a47da4350124a737dd82b564443c76571" name="a47da4350124a737dd82b564443c76571"></a>
 ResponseEntity&lt; Void &gt;&#160;</td><td class="memItemRight"><b>manejarCacheNoDisponible</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1CacheNoDisponibleException.html">CacheNoDisponibleException</a> ex)</td></tr>
 <tr class="memdesc:a47da4350124a737dd82b564443c76571"><td class="mdescLeft">&#160;</td><td class="mdescRight">MODIFICADO (cache): Redis no disponible para sesiones — 503 para que el cliente sepa que es transitorio y reintente; degradar a memoria crearía inconsistencias entre sesiones. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Errores específicos del backend. </p>
-<p>Va antes que <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorErroresGenerales.html">ManejadorErroresGenerales</a></code>, que es la red de seguridad de lo que nadie más atiende. </p>
+<p>Va antes que <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorErroresGenerales.html">ManejadorErroresGenerales</a></code>, que es la red de seguridad de lo que nadie más atiende.</p>
+<p>MODIFICADO (CU10/CU11): una consulta vencida o reiniciada responde 410 y reiniciar una consulta terminada responde 409, los dos con mensaje. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
 <a id="a85cb802d12bf33ec69fa8b6b7e88df71" name="a85cb802d12bf33ec69fa8b6b7e88df71"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a85cb802d12bf33ec69fa8b6b7e88df71">&#9670;&#160;</a></span>manejarArchivoGrande()</h2>

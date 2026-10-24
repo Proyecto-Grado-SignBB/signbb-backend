@@ -121,13 +121,13 @@ Mapa de la suite</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioCapturaImplTest</span>  </td><td class="markdownTableBodyRight">15  </td><td class="markdownTableBodyNone">valida la selección contra la pregunta actual, audita la observación (con el padre que respondió), reenvía al servicio de navegación y guarda "todo o nada" con candado por recorrido (también al retroceder) y rechaza con 409 una respuesta para una pregunta que ya no es la actual  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioRecorridosImplTest</span>  </td><td class="markdownTableBodyRight">8  </td><td class="markdownTableBodyNone">el recorrido queda a nombre del padre, otro padre recibe 404 y el estado y resultado se guardan al terminar o retroceder  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioRecorridosImplTest</span>  </td><td class="markdownTableBodyRight">20  </td><td class="markdownTableBodyNone">el recorrido queda a nombre del padre, otro padre recibe 404 y el estado y resultado se guardan al terminar o retroceder; un recorrido sin sesión queda vencido (410) y reiniciar lo marca abandonado y empieza otro  </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">SeleccionCuidadorTest</span>  </td><td class="markdownTableBodyRight">6  </td><td class="markdownTableBodyNone">validación del constructor de <span class="tt">SeleccionCuidador</span> según el tipo de interacción  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">controladores</span>  </td><td class="markdownTableBodyNone"><span class="tt">ControladorConsultaTest</span>  </td><td class="markdownTableBodyRight">9  </td><td class="markdownTableBodyNone">una respuesta vacía da 400 (no 500), una respuesta válida llega al servicio, una de más de 200 caracteres da 422, un recorrido ocupado da 409 al responder y al retroceder, el id de la pregunta llega al servicio y una pregunta que ya no es la actual da 409  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">controladores</span>  </td><td class="markdownTableBodyNone"><span class="tt">ControladorConsultaTest</span>  </td><td class="markdownTableBodyRight">12  </td><td class="markdownTableBodyNone">una respuesta vacía da 400 (no 500), una respuesta válida llega al servicio, una de más de 200 caracteres da 422, un recorrido ocupado da 409 al responder y al retroceder, el id de la pregunta llega al servicio y una pregunta que ya no es la actual da 409; un recorrido vencido da 410, reiniciar devuelve el nuevo y reiniciar uno terminado da 409  </td></tr>
 </table>
-<p>En total son <b>38 pruebas</b>. La regla de dueño también se prueba con la cadena de seguridad real en <span class="tt">seguridad/ReglasAccesoIntegracionTest</span>.</p>
+<p>En total son <b>53 pruebas</b>. La regla de dueño también se prueba con la cadena de seguridad real en <span class="tt">seguridad/ReglasAccesoIntegracionTest</span>.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
 Qué se prueba y por qué importa</h1>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
@@ -150,7 +150,9 @@ Dueño del recorrido (<span class="tt">ServicioRecorridosImplTest</span>)</h2>
 <li><span class="tt">iniciar</span> guarda la fila <span class="tt">recorrido</span> con el id del padre;</li>
 <li>el dueño pasa; otro padre o un id inexistente reciben <b>404</b> con el mismo mensaje, para no revelar que el recorrido existe;</li>
 <li>al llegar a <span class="tt">FINALIZADO</span> se guardan el nivel y el mensaje; al retroceder desde el final se borran y vuelve a <span class="tt">EN_CURSO</span>;</li>
-<li>"Mis recorridos" lista solo los del padre.</li>
+<li>"Mis recorridos" lista solo los del padre; los que siguen en curso sin sesión en Redis (venció a las 8 h) pasan a <span class="tt">VENCIDO</span>, y si Redis no responde la lista sale igual;</li>
+<li><b>vigente</b> (CU10): un recorrido en curso sin sesión se marca <span class="tt">VENCIDO</span> y da 410; uno reiniciado (<span class="tt">ABANDONADO</span>) da 410 con su propio mensaje; uno terminado pasa;</li>
+<li><b>reiniciar</b> (CU11): con el candado del recorrido, lo marca <span class="tt">ABANDONADO</span>, inicia uno nuevo en la misma transacción y después borra la sesión vieja (si Redis falla en ese paso solo se registra); uno terminado da 409 y uno ya reiniciado da 410.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md33"></a>
 Validación de la selección (<span class="tt">SeleccionCuidadorTest</span>)</h2>

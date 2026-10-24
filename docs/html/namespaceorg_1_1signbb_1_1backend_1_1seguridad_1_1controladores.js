@@ -8,5 +8,6 @@ var namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores =
     [ "NuevoUsuarioRequest", "namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores.html#ac19e260efe62ce27b6f19177a00559fa", null ],
     [ "RegistroRequest", "namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores.html#a6490aee7bbbf81677e8e57c72488150f", null ],
     [ "SesionDTO", "namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores.html#ac758d9357bebd2fbe00e782030500610", null ],
-    [ "UsuarioDTO", "namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores.html#a612c9165a517458c242c6db4b9e4db5d", null ]
+    [ "TelefonoPediatraRequest", "namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores.html#a5e5e15781a374e0c701b1a7f1ce9d916", null ],
+    [ "UsuarioDTO", "namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores.html#aa87b89d6c33a89abc575bd2fcdfb8c33", null ]
 ];

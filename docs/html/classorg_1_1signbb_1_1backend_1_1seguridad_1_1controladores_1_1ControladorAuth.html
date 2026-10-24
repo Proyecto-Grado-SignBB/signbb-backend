@@ -130,12 +130,16 @@ ResponseEntity&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1segu
 void&#160;</td><td class="memItemRight"><b>cerrarTodas</b> (UsuarioActual usuario)</td></tr>
 <tr class="memdesc:a4cd53397815ac4088ab5bd00a7413051"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code class="JavaDocCode">POST /api/auth/cerrar-todas</code>: termina las sesiones de todos los dispositivos. <br /></td></tr>
 <tr class="memitem:adad54e74fa4f0214dda9008bc70096c6" id="r_adad54e74fa4f0214dda9008bc70096c6"><td class="memItemLeft"><a id="adad54e74fa4f0214dda9008bc70096c6" name="adad54e74fa4f0214dda9008bc70096c6"></a>
-<a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores.html#a612c9165a517458c242c6db4b9e4db5d">UsuarioDTO</a>&#160;</td><td class="memItemRight"><b>yo</b> (UsuarioActual usuario)</td></tr>
+<a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores.html#aa87b89d6c33a89abc575bd2fcdfb8c33">UsuarioDTO</a>&#160;</td><td class="memItemRight"><b>yo</b> (UsuarioActual usuario)</td></tr>
 <tr class="memdesc:adad54e74fa4f0214dda9008bc70096c6"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code class="JavaDocCode">GET /api/auth/yo</code>: la cuenta del usuario actual. <br /></td></tr>
+<tr class="memitem:a8d204a5df410fdbffd3400207b29e479" id="r_a8d204a5df410fdbffd3400207b29e479"><td class="memItemLeft"><a id="a8d204a5df410fdbffd3400207b29e479" name="a8d204a5df410fdbffd3400207b29e479"></a>
+<a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores.html#aa87b89d6c33a89abc575bd2fcdfb8c33">UsuarioDTO</a>&#160;</td><td class="memItemRight"><b>guardarTelefonoPediatra</b> (@Valid @RequestBody <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores.html#a5e5e15781a374e0c701b1a7f1ce9d916">TelefonoPediatraRequest</a> request, UsuarioActual usuario)</td></tr>
+<tr class="memdesc:a8d204a5df410fdbffd3400207b29e479"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code class="JavaDocCode">PUT /api/auth/yo/pediatra</code>: guarda o borra el teléfono del pediatra del padre. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>API de sesión: registro de padres, ingreso y usuario actual. </p>
-<p>El token que devuelven registro e ingreso va en <code class="JavaDocCode">Authorization: Bearer &lt;token&gt;</code>. </p>
+<p>El token que devuelven registro e ingreso va en <code class="JavaDocCode">Authorization: Bearer &lt;token&gt;</code>.</p>
+<p>MODIFICADO (2.4): se agrega <code class="JavaDocCode">PUT /api/auth/yo/pediatra</code>, solo para padres. </p>
 </div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/main/java/org/signbb/backend/seguridad/controladores/<b>ControladorAuth.java</b></li>
 </ul>
