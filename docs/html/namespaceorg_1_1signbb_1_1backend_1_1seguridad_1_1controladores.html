@@ -129,12 +129,12 @@ ConfiguracionSeguridad</code>): crear médicos y supervisores, listarlos y activ
 Funciones</h2></td></tr>
 <tr class="memitem:a821ca878dd42823d851d87f7ddd25348" id="r_a821ca878dd42823d851d87f7ddd25348"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a821ca878dd42823d851d87f7ddd25348">ActivoRequest</a> (Boolean activo)</td></tr>
 <tr class="memdesc:a821ca878dd42823d851d87f7ddd25348"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activa o desactiva una cuenta.  <br /></td></tr>
-<tr class="memitem:afbb564b86505ce534b7881a88cee66cc" id="r_afbb564b86505ce534b7881a88cee66cc"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#afbb564b86505ce534b7881a88cee66cc">LoginRequest</a> (String correo, String contrasena, @Schema(description=&quot;Dispositivo seguro: el padre mantiene la sesión abierta más tiempo &quot;+&quot;(los médicos lo ignoran). Si falta, se toma como false.&quot;, example=&quot;false&quot;) Boolean dispositivoSeguro)</td></tr>
-<tr class="memdesc:afbb564b86505ce534b7881a88cee66cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ingreso con correo y contraseña.  <br /></td></tr>
-<tr class="memitem:a3f5af4634790933be0c7a46d93e55c4f" id="r_a3f5af4634790933be0c7a46d93e55c4f"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a3f5af4634790933be0c7a46d93e55c4f">NuevoUsuarioRequest</a> (String nombre, String correo, String contrasena, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo_1_1Rol.html">Rol</a> rol, String institucion)</td></tr>
-<tr class="memdesc:a3f5af4634790933be0c7a46d93e55c4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cuenta clínica nueva, creada por un supervisor.  <br /></td></tr>
-<tr class="memitem:abc8146b5b7ba1b3daf7be77dd044b32f" id="r_abc8146b5b7ba1b3daf7be77dd044b32f"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#abc8146b5b7ba1b3daf7be77dd044b32f">RegistroRequest</a> (String nombre, String correo, String contrasena, @Schema(description=&quot;Dispositivo seguro: la sesión se mantiene abierta más tiempo. &quot;+&quot;Si falta, se toma como false.&quot;, example=&quot;false&quot;) Boolean dispositivoSeguro)</td></tr>
-<tr class="memdesc:abc8146b5b7ba1b3daf7be77dd044b32f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registro de un padre o acudiente en la app de consulta.  <br /></td></tr>
+<tr class="memitem:aa7b4adbadf12c178054aca3b30a35a55" id="r_aa7b4adbadf12c178054aca3b30a35a55"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#aa7b4adbadf12c178054aca3b30a35a55">LoginRequest</a> ( @Size(max=254, message=&quot;El correo no puede pasar de 254 caracteres.&quot;) String correo, @Size(max=72, message=&quot;La contraseña no puede pasar de 72 caracteres.&quot;) String contrasena, @Schema(description=&quot;Dispositivo seguro: el padre mantiene la sesión abierta más tiempo &quot;+&quot;(los médicos lo ignoran). Si falta, se toma como false.&quot;, example=&quot;false&quot;) Boolean dispositivoSeguro)</td></tr>
+<tr class="memdesc:aa7b4adbadf12c178054aca3b30a35a55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ingreso con correo y contraseña.  <br /></td></tr>
+<tr class="memitem:ac19e260efe62ce27b6f19177a00559fa" id="r_ac19e260efe62ce27b6f19177a00559fa"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#ac19e260efe62ce27b6f19177a00559fa">NuevoUsuarioRequest</a> ( @Size(max=100, message=&quot;El nombre no puede pasar de 100 caracteres.&quot;) @Pattern(regexp=<a class="el" href="classorg_1_1signbb_1_1backend_1_1config_1_1PatronesTexto.html#a506bbce37f6b4be59631c29fb38f7f30">PatronesTexto.UNA_LINEA</a>, message=&quot;El nombre no puede tener saltos de línea.&quot;) String nombre, @Size(max=254, message=&quot;El correo no puede pasar de 254 caracteres.&quot;) String correo, @Size(max=72, message=&quot;La contraseña no puede pasar de 72 caracteres.&quot;) String contrasena, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo_1_1Rol.html">Rol</a> rol, @Size(max=150, message=&quot;La institución no puede pasar de 150 caracteres.&quot;) @Pattern(regexp=<a class="el" href="classorg_1_1signbb_1_1backend_1_1config_1_1PatronesTexto.html#a506bbce37f6b4be59631c29fb38f7f30">PatronesTexto.UNA_LINEA</a>, message=&quot;La institución no puede tener saltos de línea.&quot;) String institucion)</td></tr>
+<tr class="memdesc:ac19e260efe62ce27b6f19177a00559fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cuenta clínica nueva, creada por un supervisor.  <br /></td></tr>
+<tr class="memitem:a6490aee7bbbf81677e8e57c72488150f" id="r_a6490aee7bbbf81677e8e57c72488150f"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a6490aee7bbbf81677e8e57c72488150f">RegistroRequest</a> ( @Size(max=100, message=&quot;El nombre no puede pasar de 100 caracteres.&quot;) @Pattern(regexp=<a class="el" href="classorg_1_1signbb_1_1backend_1_1config_1_1PatronesTexto.html#a506bbce37f6b4be59631c29fb38f7f30">PatronesTexto.UNA_LINEA</a>, message=&quot;El nombre no puede tener saltos de línea.&quot;) String nombre, @Size(max=254, message=&quot;El correo no puede pasar de 254 caracteres.&quot;) String correo, @Size(max=72, message=&quot;La contraseña no puede pasar de 72 caracteres.&quot;) String contrasena, @Schema(description=&quot;Dispositivo seguro: la sesión se mantiene abierta más tiempo. &quot;+&quot;Si falta, se toma como false.&quot;, example=&quot;false&quot;) Boolean dispositivoSeguro)</td></tr>
+<tr class="memdesc:a6490aee7bbbf81677e8e57c72488150f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registro de un padre o acudiente en la app de consulta.  <br /></td></tr>
 <tr class="memitem:ac758d9357bebd2fbe00e782030500610" id="r_ac758d9357bebd2fbe00e782030500610"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#ac758d9357bebd2fbe00e782030500610">SesionDTO</a> (String token, Instant expiraEn, <a class="el" href="#a612c9165a517458c242c6db4b9e4db5d">UsuarioDTO</a> usuario)</td></tr>
 <tr class="memdesc:ac758d9357bebd2fbe00e782030500610"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sesión abierta: el token para <code class="JavaDocCode">Authorization: Bearer</code> y el usuario.  <br /></td></tr>
 <tr class="memitem:a612c9165a517458c242c6db4b9e4db5d" id="r_a612c9165a517458c242c6db4b9e4db5d"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a612c9165a517458c242c6db4b9e4db5d">UsuarioDTO</a> (Long id, String nombre, String correo, <a class="el" href="enumorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo_1_1Rol.html">Rol</a> rol, String institucion, boolean activo)</td></tr>
@@ -170,8 +170,8 @@ avisos}</code> que la autoría. </p>
 
 </div>
 </div>
-<a id="afbb564b86505ce534b7881a88cee66cc" name="afbb564b86505ce534b7881a88cee66cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afbb564b86505ce534b7881a88cee66cc">&#9670;&#160;</a></span>LoginRequest()</h2>
+<a id="aa7b4adbadf12c178054aca3b30a35a55" name="aa7b4adbadf12c178054aca3b30a35a55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7b4adbadf12c178054aca3b30a35a55">&#9670;&#160;</a></span>LoginRequest()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -179,12 +179,12 @@ avisos}</code> que la autoría. </p>
         <tr>
           <td class="memname">record org.signbb.backend.seguridad.controladores.LoginRequest </td>
           <td>(</td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>correo</em></span>, </td>
+          <td class="paramtype">@Size(max=254, message=&quot;El correo no puede pasar de 254 caracteres.&quot;) String</td>          <td class="paramname"><span class="paramname"><em>correo</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>contrasena</em></span>, </td>
+          <td class="paramtype">@Size(max=72, message=&quot;La contraseña no puede pasar de 72 caracteres.&quot;) String</td>          <td class="paramname"><span class="paramname"><em>contrasena</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -208,8 +208,8 @@ avisos}</code> que la autoría. </p>
 
 </div>
 </div>
-<a id="a3f5af4634790933be0c7a46d93e55c4f" name="a3f5af4634790933be0c7a46d93e55c4f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3f5af4634790933be0c7a46d93e55c4f">&#9670;&#160;</a></span>NuevoUsuarioRequest()</h2>
+<a id="ac19e260efe62ce27b6f19177a00559fa" name="ac19e260efe62ce27b6f19177a00559fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac19e260efe62ce27b6f19177a00559fa">&#9670;&#160;</a></span>NuevoUsuarioRequest()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -217,17 +217,17 @@ avisos}</code> que la autoría. </p>
         <tr>
           <td class="memname">record org.signbb.backend.seguridad.controladores.NuevoUsuarioRequest </td>
           <td>(</td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>nombre</em></span>, </td>
+          <td class="paramtype">@Size(max=100, message=&quot;El nombre no puede pasar de 100 caracteres.&quot;) @Pattern(regexp=<a class="el" href="classorg_1_1signbb_1_1backend_1_1config_1_1PatronesTexto.html#a506bbce37f6b4be59631c29fb38f7f30">PatronesTexto.UNA_LINEA</a>, message=&quot;El nombre no puede tener saltos de línea.&quot;) String</td>          <td class="paramname"><span class="paramname"><em>nombre</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>correo</em></span>, </td>
+          <td class="paramtype">@Size(max=254, message=&quot;El correo no puede pasar de 254 caracteres.&quot;) String</td>          <td class="paramname"><span class="paramname"><em>correo</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>contrasena</em></span>, </td>
+          <td class="paramtype">@Size(max=72, message=&quot;La contraseña no puede pasar de 72 caracteres.&quot;) String</td>          <td class="paramname"><span class="paramname"><em>contrasena</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -237,7 +237,7 @@ avisos}</code> que la autoría. </p>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>institucion</em></span>&#160;)</td>
+          <td class="paramtype">@Size(max=150, message=&quot;La institución no puede pasar de 150 caracteres.&quot;) @Pattern(regexp=<a class="el" href="classorg_1_1signbb_1_1backend_1_1config_1_1PatronesTexto.html#a506bbce37f6b4be59631c29fb38f7f30">PatronesTexto.UNA_LINEA</a>, message=&quot;La institución no puede tener saltos de línea.&quot;) String</td>          <td class="paramname"><span class="paramname"><em>institucion</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -256,8 +256,8 @@ avisos}</code> que la autoría. </p>
 
 </div>
 </div>
-<a id="abc8146b5b7ba1b3daf7be77dd044b32f" name="abc8146b5b7ba1b3daf7be77dd044b32f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc8146b5b7ba1b3daf7be77dd044b32f">&#9670;&#160;</a></span>RegistroRequest()</h2>
+<a id="a6490aee7bbbf81677e8e57c72488150f" name="a6490aee7bbbf81677e8e57c72488150f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6490aee7bbbf81677e8e57c72488150f">&#9670;&#160;</a></span>RegistroRequest()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -265,17 +265,17 @@ avisos}</code> que la autoría. </p>
         <tr>
           <td class="memname">record org.signbb.backend.seguridad.controladores.RegistroRequest </td>
           <td>(</td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>nombre</em></span>, </td>
+          <td class="paramtype">@Size(max=100, message=&quot;El nombre no puede pasar de 100 caracteres.&quot;) @Pattern(regexp=<a class="el" href="classorg_1_1signbb_1_1backend_1_1config_1_1PatronesTexto.html#a506bbce37f6b4be59631c29fb38f7f30">PatronesTexto.UNA_LINEA</a>, message=&quot;El nombre no puede tener saltos de línea.&quot;) String</td>          <td class="paramname"><span class="paramname"><em>nombre</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>correo</em></span>, </td>
+          <td class="paramtype">@Size(max=254, message=&quot;El correo no puede pasar de 254 caracteres.&quot;) String</td>          <td class="paramname"><span class="paramname"><em>correo</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>contrasena</em></span>, </td>
+          <td class="paramtype">@Size(max=72, message=&quot;La contraseña no puede pasar de 72 caracteres.&quot;) String</td>          <td class="paramname"><span class="paramname"><em>contrasena</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>

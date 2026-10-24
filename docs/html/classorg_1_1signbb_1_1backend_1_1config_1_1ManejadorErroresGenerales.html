@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SignBB: Referencia de la clase org.signbb.backend.config.ManejadorErroresGenerales</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SignBB
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorErroresGenerales.html','','classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorErroresGenerales-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Referencia de la clase org.signbb.backend.config.ManejadorErroresGenerales</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Red de seguridad de los errores: atiende lo que ningún otro manejador atendió y siempre responde con el cuerpo <code class="JavaDocCode">{mensaje, avisos}</code> de <code><a class="el" href="">ErrorAutoriaDTO</a></code>, con un texto corto en español y nunca con el texto técnico de la excepción.  
+ <a href="#details">Más...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Métodos públicos</h2></td></tr>
+<tr class="memitem:a8dd9412d30900c034221a62e72bbbd5c" id="r_a8dd9412d30900c034221a62e72bbbd5c"><td class="memItemLeft"><a id="a8dd9412d30900c034221a62e72bbbd5c" name="a8dd9412d30900c034221a62e72bbbd5c"></a>
+ResponseEntity&lt; ErrorAutoriaDTO &gt;&#160;</td><td class="memItemRight"><b>datosInvalidos</b> (MethodArgumentNotValidException ex)</td></tr>
+<tr class="memdesc:a8dd9412d30900c034221a62e72bbbd5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Datos que no cumplen los límites de un campo: 422 con los mensajes de cada campo. <br /></td></tr>
+<tr class="memitem:afb26e8e0ad7fa80c07c7f90a04e684e5" id="r_afb26e8e0ad7fa80c07c7f90a04e684e5"><td class="memItemLeft"><a id="afb26e8e0ad7fa80c07c7f90a04e684e5" name="afb26e8e0ad7fa80c07c7f90a04e684e5"></a>
+ResponseEntity&lt; ErrorAutoriaDTO &gt;&#160;</td><td class="memItemRight"><b>peticionInvalida</b> (Exception ex)</td></tr>
+<tr class="memdesc:afb26e8e0ad7fa80c07c7f90a04e684e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Petición mal hecha: 400. <br /></td></tr>
+<tr class="memitem:a80603db72138d96169cbb388f41f7bdd" id="r_a80603db72138d96169cbb388f41f7bdd"><td class="memItemLeft"><a id="a80603db72138d96169cbb388f41f7bdd" name="a80603db72138d96169cbb388f41f7bdd"></a>
+ResponseEntity&lt; ErrorAutoriaDTO &gt;&#160;</td><td class="memItemRight"><b>conflictoDeDatos</b> (DataIntegrityViolationException ex)</td></tr>
+<tr class="memdesc:a80603db72138d96169cbb388f41f7bdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choque con la base de datos (dato repetido, relación rota): 409. <br /></td></tr>
+<tr class="memitem:a0be5a4a77066f2a9ea43afa5123c1dd5" id="r_a0be5a4a77066f2a9ea43afa5123c1dd5"><td class="memItemLeft">ResponseEntity&lt; ErrorAutoriaDTO &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a0be5a4a77066f2a9ea43afa5123c1dd5">inesperado</a> (Exception ex)</td></tr>
+<tr class="memdesc:a0be5a4a77066f2a9ea43afa5123c1dd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Todo lo demás.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pac-static-methods" class="groupheader"><a id="pac-static-methods" name="pac-static-methods"></a>
+Funciones estáticas de paquete</h2></td></tr>
+<tr class="memitem:a7b63a088c5b7adebac268f20b5722166" id="r_a7b63a088c5b7adebac268f20b5722166"><td class="memItemLeft"><a id="a7b63a088c5b7adebac268f20b5722166" name="a7b63a088c5b7adebac268f20b5722166"></a>
+static String&#160;</td><td class="memItemRight"><b>mensaje</b> (HttpStatusCode estado)</td></tr>
+<tr class="memdesc:a7b63a088c5b7adebac268f20b5722166"><td class="mdescLeft">&#160;</td><td class="mdescRight">Texto corto en español según el código HTTP. <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pac-static-attribs" class="groupheader"><a id="pac-static-attribs" name="pac-static-attribs"></a>
+Atributos estáticos de paquete</h2></td></tr>
+<tr class="memitem:aa97a3060f31a46bf909c6a05754ba4c7" id="r_aa97a3060f31a46bf909c6a05754ba4c7"><td class="memItemLeft">static final String&#160;</td><td class="memItemRight"><a class="el" href="#aa97a3060f31a46bf909c6a05754ba4c7">MENSAJE_INESPERADO</a></td></tr>
+<tr class="memdesc:aa97a3060f31a46bf909c6a05754ba4c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Texto para los errores 5xx: no revela nada interno.  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
+<div class="textblock"><p>Red de seguridad de los errores: atiende lo que ningún otro manejador atendió y siempre responde con el cuerpo <code class="JavaDocCode">{mensaje, avisos}</code> de <code><a class="el" href="">ErrorAutoriaDTO</a></code>, con un texto corto en español y nunca con el texto técnico de la excepción. </p>
+<ul>
+<li>
+Datos que no cumplen los límites de un campo (<code class="JavaDocCode">@Valid</code>): 422 con el mensaje de cada campo. </li>
+<li>
+Petición mal hecha (JSON mal formado, tipo incorrecto): 400. </li>
+<li>
+Choque con la base de datos (por ejemplo un correo repetido en dos peticiones a la vez): 409. </li>
+<li>
+Errores de Spring MVC que traen su propio código (falta un parámetro, método no permitido, formato no soportado, ruta que no existe): ese código. </li>
+<li>
+Cualquier otro error: 500 con un mensaje genérico; la excepción completa queda en el registro del servidor. </li>
+</ul>
+<p>Tiene la prioridad más baja a propósito: los manejadores específicos (<code class="JavaDocCode">ManejadorErroresAutoria</code>, <code class="JavaDocCode">ManejadorErroresSeguridad</code> y <code class="JavaDocCode">ManejadorExcepciones</code>) deben ganar siempre. Si algún día se usa seguridad por método (<code class="JavaDocCode">@PreAuthorize</code>), hay que dejar pasar <code class="JavaDocCode">AccessDeniedException</code> aquí para que siga siendo 403.</p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
+<a id="a0be5a4a77066f2a9ea43afa5123c1dd5" name="a0be5a4a77066f2a9ea43afa5123c1dd5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0be5a4a77066f2a9ea43afa5123c1dd5">&#9670;&#160;</a></span>inesperado()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ResponseEntity&lt; ErrorAutoriaDTO &gt; org.signbb.backend.config.ManejadorErroresGenerales.inesperado </td>
+          <td>(</td>
+          <td class="paramtype">Exception</td>          <td class="paramname"><span class="paramname"><em>ex</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Todo lo demás. </p>
+<p>Los errores de Spring MVC que ya traen su código (<code><a class="el" href="">ErrorResponse</a></code>) lo conservan, con sus cabeceras (por ejemplo <code class="JavaDocCode">Allow</code> en un 405); el resto es un 500 que se registra completo. </p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Documentación de datos miembro</h2>
+<a id="aa97a3060f31a46bf909c6a05754ba4c7" name="aa97a3060f31a46bf909c6a05754ba4c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa97a3060f31a46bf909c6a05754ba4c7">&#9670;&#160;</a></span>MENSAJE_INESPERADO</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">final String org.signbb.backend.config.ManejadorErroresGenerales.MENSAJE_INESPERADO</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel package">package</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Valor inicial:</b><div class="fragment"><div class="line">                               =</div>
+<div class="line"><span class="stringliteral">&quot;Ocurrió un error inesperado. Intenta de nuevo; si sigue pasando, avisa al equipo.&quot;</span></div>
+</div><!-- fragment -->
+<p>Texto para los errores 5xx: no revela nada interno. </p>
+
+</div>
+</div>
+<hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
+<li>backend/src/main/java/org/signbb/backend/config/<b>ManejadorErroresGenerales.java</b></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespaceorg.html">org</a></li><li class="navelem"><a href="namespaceorg_1_1signbb.html">signbb</a></li><li class="navelem"><a href="namespaceorg_1_1signbb_1_1backend.html">backend</a></li><li class="navelem"><a href="namespaceorg_1_1signbb_1_1backend_1_1config.html">config</a></li><li class="navelem"><a href="classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorErroresGenerales.html">ManejadorErroresGenerales</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
+  </ul>
+</div>
+</body>
+</html>

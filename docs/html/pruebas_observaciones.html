@@ -119,13 +119,15 @@ Mapa de la suite</h1>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Paquete  </th><th class="markdownTableHeadNone">Clase  </th><th class="markdownTableHeadRight">Tests  </th><th class="markdownTableHeadNone">Qué cubre  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioCapturaImplTest</span>  </td><td class="markdownTableBodyRight">4  </td><td class="markdownTableBodyNone">valida la selección contra la pregunta actual, audita la observación (con el padre que respondió) y reenvía al servicio de navegación  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioCapturaImplTest</span>  </td><td class="markdownTableBodyRight">15  </td><td class="markdownTableBodyNone">valida la selección contra la pregunta actual, audita la observación (con el padre que respondió), reenvía al servicio de navegación y guarda "todo o nada" con candado por recorrido (también al retroceder) y rechaza con 409 una respuesta para una pregunta que ya no es la actual  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioRecorridosImplTest</span>  </td><td class="markdownTableBodyRight">8  </td><td class="markdownTableBodyNone">el recorrido queda a nombre del padre, otro padre recibe 404 y el estado y resultado se guardan al terminar o retroceder  </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">SeleccionCuidadorTest</span>  </td><td class="markdownTableBodyRight">6  </td><td class="markdownTableBodyNone">validación del constructor de <span class="tt">SeleccionCuidador</span> según el tipo de interacción  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">controladores</span>  </td><td class="markdownTableBodyNone"><span class="tt">ControladorConsultaTest</span>  </td><td class="markdownTableBodyRight">9  </td><td class="markdownTableBodyNone">una respuesta vacía da 400 (no 500), una respuesta válida llega al servicio, una de más de 200 caracteres da 422, un recorrido ocupado da 409 al responder y al retroceder, el id de la pregunta llega al servicio y una pregunta que ya no es la actual da 409  </td></tr>
 </table>
-<p>En total son <b>18 pruebas</b>. La regla de dueño también se prueba con la cadena de seguridad real en <span class="tt">seguridad/ReglasAccesoIntegracionTest</span>.</p>
+<p>En total son <b>38 pruebas</b>. La regla de dueño también se prueba con la cadena de seguridad real en <span class="tt">seguridad/ReglasAccesoIntegracionTest</span>.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
 Qué se prueba y por qué importa</h1>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
@@ -135,7 +137,11 @@ Captura de la respuesta (<span class="tt">ServicioCapturaImplTest</span>)</h2>
 <li>una sola opción se valida, se <b>audita</b> (<span class="tt">ObservacionEntity</span> guardada) y se reenvía al motor, devolviendo su resultado;</li>
 <li>una <b>selección múltiple</b> se reenvía completa: la captura <b>nunca decide</b> cuál opción domina (eso es del motor);</li>
 <li>una opción que <b>no pertenece</b> a la pregunta actual se rechaza <b>antes</b> de tocar el motor y <b>sin</b> guardar observación;</li>
-<li>si el recorrido ya está <span class="tt">FINALIZADO</span>, no se responde ni se audita.</li>
+<li>si el recorrido ya está <span class="tt">FINALIZADO</span>, no se responde ni se audita;</li>
+<li><b>todo o nada</b>: la sesión en Redis, la observación y la fila del recorrido se guardan dentro de una sola transacción de Postgres. Si falla la observación, el guardado del recorrido o el cierre de la transacción, se revierte Postgres y la sesión de Redis vuelve a la copia tomada antes; si tampoco se puede devolver la sesión, sale el error original;</li>
+<li><b>pregunta esperada</b>: si la petición trae el id de la pregunta que contesta y ya no es la actual, se rechaza con <span class="tt">PreguntaDesactualizadaException</span> (409) sin registrar ni avanzar nada; sin id funciona como antes, y si el recorrido ya terminó se devuelve tal cual;</li>
+<li><b>candado ocupado</b>: si otra operación tiene el candado del recorrido, no se toca nada (ni navegación, ni sesión, ni transacción);</li>
+<li><b>retroceder</b> sigue las mismas reglas (transacción, devolver la sesión si falla).</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md32"></a>
 Dueño del recorrido (<span class="tt">ServicioRecorridosImplTest</span>)</h2>

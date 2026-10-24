@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['herramientas_0',['Herramientas',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md85',1,'']]]
+  ['herramientas_0',['Herramientas',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md86',1,'']]]
 ];

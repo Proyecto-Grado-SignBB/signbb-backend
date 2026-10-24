@@ -106,29 +106,30 @@ var NAVTREE =
       [ "Ubicación", "pruebas_cache.html#autotoc_md57", null ],
       [ "ResolvedorContenidoClinicoTest — resolución cache-aside del contenido", "pruebas_cache.html#autotoc_md58", null ],
       [ "RepositorioSesionRedisTest — sesiones en Redis", "pruebas_cache.html#autotoc_md59", null ],
-      [ "CacheRedisIntegracionTest — integración", "pruebas_cache.html#autotoc_md60", null ],
-      [ "ColaSeleccionMultipleRedisIntegracionTest — cola de la selección múltiple", "pruebas_cache.html#autotoc_md61", null ],
-      [ "Cómo ejecutarlas", "pruebas_cache.html#autotoc_md62", null ],
-      [ "Notas", "pruebas_cache.html#autotoc_md63", null ],
-      [ "Limpieza programada (<span class=\"tt\">mantenimiento</span>)", "pruebas_cache.html#autotoc_md64", null ]
+      [ "CandadoRecorridoRedisTest — candado por recorrido", "pruebas_cache.html#autotoc_md60", null ],
+      [ "CacheRedisIntegracionTest — integración", "pruebas_cache.html#autotoc_md61", null ],
+      [ "ColaSeleccionMultipleRedisIntegracionTest — cola de la selección múltiple", "pruebas_cache.html#autotoc_md62", null ],
+      [ "Cómo ejecutarlas", "pruebas_cache.html#autotoc_md63", null ],
+      [ "Notas", "pruebas_cache.html#autotoc_md64", null ],
+      [ "Limpieza programada (<span class=\"tt\">mantenimiento</span>)", "pruebas_cache.html#autotoc_md65", null ]
     ] ],
     [ "Manual de contenedores", "md_contenedores_2MANUAL__CONTENEDORES.html", [
-      [ "Levantar", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md74", null ],
-      [ "Dar de baja", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md75", null ],
-      [ "Eliminar los datos persistentes", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md76", null ],
-      [ "Acceso rápido", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md77", null ],
-      [ "Parámetros de conexión (perfil <span class=\"tt\">docker</span> del backend)", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md78", null ]
+      [ "Levantar", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md75", null ],
+      [ "Dar de baja", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md76", null ],
+      [ "Eliminar los datos persistentes", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md77", null ],
+      [ "Acceso rápido", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md78", null ],
+      [ "Parámetros de conexión (perfil <span class=\"tt\">docker</span> del backend)", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md79", null ]
     ] ],
     [ "Grafo sistema", "md_grafo__sistema_2reporte__grafo.html", [
-      [ "Indice", "md_grafo__sistema_2reporte__grafo.html#autotoc_md80", null ],
-      [ "Grafo Raíz", "md_grafo__sistema_2reporte__grafo.html#autotoc_md81", null ],
-      [ "Grafo Gastrointestinal", "md_grafo__sistema_2reporte__grafo.html#autotoc_md82", null ],
-      [ "Grafo Respiración", "md_grafo__sistema_2reporte__grafo.html#autotoc_md83", null ],
-      [ "Grafo Activo y color", "md_grafo__sistema_2reporte__grafo.html#autotoc_md84", null ],
-      [ "Herramientas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md85", [
-        [ "Construir grafos visualmente", "md_grafo__sistema_2reporte__grafo.html#autotoc_md86", null ],
-        [ "Representacion visual de base de reglas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md87", null ],
-        [ "Representacion visual de grafo", "md_grafo__sistema_2reporte__grafo.html#autotoc_md88", null ]
+      [ "Indice", "md_grafo__sistema_2reporte__grafo.html#autotoc_md81", null ],
+      [ "Grafo Raíz", "md_grafo__sistema_2reporte__grafo.html#autotoc_md82", null ],
+      [ "Grafo Gastrointestinal", "md_grafo__sistema_2reporte__grafo.html#autotoc_md83", null ],
+      [ "Grafo Respiración", "md_grafo__sistema_2reporte__grafo.html#autotoc_md84", null ],
+      [ "Grafo Activo y color", "md_grafo__sistema_2reporte__grafo.html#autotoc_md85", null ],
+      [ "Herramientas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md86", [
+        [ "Construir grafos visualmente", "md_grafo__sistema_2reporte__grafo.html#autotoc_md87", null ],
+        [ "Representacion visual de base de reglas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md88", null ],
+        [ "Representacion visual de grafo", "md_grafo__sistema_2reporte__grafo.html#autotoc_md89", null ]
       ] ]
     ] ],
     [ "Paquetes", "namespaces.html", [
@@ -155,11 +156,11 @@ var NAVTREEINDEX =
 [
 "annotated.html",
 "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorRegla.html#ac31c7c9624e12baf3cf8a22ec9924481",
-"classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenes.html",
-"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#a872eb074d51806c826829b2f869a8fdb",
-"classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConfiguracionSeguridad.html#a96189020a10c6464d3a9013160e8f06b",
-"functions_m.html",
-"namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1modelo.html#a868661946496d54d45711fe2593035f1"
+"classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1PoliticaRetencionVersiones.html#ab5cd6adace1af3e63880b84a1fe12ed3",
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#a8ffdfbe00b7336f555ff958aec91d961",
+"classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a7e530ddb3baf04ee4e9ed2f542ba5982",
+"enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1NivelAlerta.html#a4d9b53c979b047a951ded62ec9965a98",
+"interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios_1_1RepositorioUsuario.html#aa94ae2803d7b4d896c1ce104eebd3235"
 ];
 
 const SYNCONMSG = 'pulsar para deshabilitar sincronización';

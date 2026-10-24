@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['id_5fraiz_0',['ID_RAIZ',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1CompositorGrafoClinico.html#ac6a1f18680a049cabcdb86bdddf6b131',1,'org::signbb::backend::navegacion::datos::serializacion::CompositorGrafoClinico']]]
+  ['gracia_0',['GRACIA',['../classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorImagenes.html#a65d4167b48255cc76d51a40b0f1a932f',1,'org.signbb.backend.mantenimiento.LimpiadorImagenes.GRACIA'],['../classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1PoliticaRetencionVersiones.html#ae9ae2bb653f689e90feb3a1266fcec64',1,'org.signbb.backend.mantenimiento.PoliticaRetencionVersiones.GRACIA']]]
 ];

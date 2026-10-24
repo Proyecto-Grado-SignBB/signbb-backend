@@ -79,6 +79,8 @@ var annotated_dup =
           ] ],
           [ "cache", null, [
             [ "CacheNoDisponibleException", "classorg_1_1signbb_1_1backend_1_1cache_1_1CacheNoDisponibleException.html", null ],
+            [ "CandadoRecorridoRedis", "classorg_1_1signbb_1_1backend_1_1cache_1_1CandadoRecorridoRedis.html", "classorg_1_1signbb_1_1backend_1_1cache_1_1CandadoRecorridoRedis" ],
+            [ "CandadoRecorridoRedisTest", "classorg_1_1signbb_1_1backend_1_1cache_1_1CandadoRecorridoRedisTest.html", null ],
             [ "ColaSeleccionMultipleRedisIntegracionTest", "classorg_1_1signbb_1_1backend_1_1cache_1_1ColaSeleccionMultipleRedisIntegracionTest.html", null ],
             [ "RepositorioSesionRedis", "classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html", "classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis" ],
             [ "RepositorioSesionRedisTest", "classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedisTest.html", null ],
@@ -88,9 +90,13 @@ var annotated_dup =
             [ "ResolvedorVersionesTest", "classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorVersionesTest.html", null ]
           ] ],
           [ "config", "namespaceorg_1_1signbb_1_1backend_1_1config.html", [
+            [ "ManejadorErroresGenerales", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorErroresGenerales.html", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorErroresGenerales" ],
+            [ "ManejadorErroresGeneralesTest", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorErroresGeneralesTest.html", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorErroresGeneralesTest" ],
             [ "ManejadorExcepciones", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorExcepciones.html", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorExcepciones" ],
             [ "OpenApiConfig", "classorg_1_1signbb_1_1backend_1_1config_1_1OpenApiConfig.html", "classorg_1_1signbb_1_1backend_1_1config_1_1OpenApiConfig" ],
-            [ "RecursoNoEncontradoException", "classorg_1_1signbb_1_1backend_1_1config_1_1RecursoNoEncontradoException.html", null ]
+            [ "PatronesTexto", "classorg_1_1signbb_1_1backend_1_1config_1_1PatronesTexto.html", "classorg_1_1signbb_1_1backend_1_1config_1_1PatronesTexto" ],
+            [ "RecursoNoEncontradoException", "classorg_1_1signbb_1_1backend_1_1config_1_1RecursoNoEncontradoException.html", null ],
+            [ "ValidacionEntradasTest", "classorg_1_1signbb_1_1backend_1_1config_1_1ValidacionEntradasTest.html", null ]
           ] ],
           [ "mantenimiento", "namespaceorg_1_1signbb_1_1backend_1_1mantenimiento.html", [
             [ "ConfiguracionMantenimiento", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1ConfiguracionMantenimiento.html", null ],
@@ -134,6 +140,7 @@ var annotated_dup =
               ] ]
             ] ],
             [ "modelo", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html", [
+              [ "CandadoRecorrido", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1CandadoRecorrido.html", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1CandadoRecorrido" ],
               [ "Contexto", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto" ],
               [ "ContextoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico" ],
               [ "ContextoClinicoTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinicoTest.html", null ],
@@ -145,6 +152,7 @@ var annotated_dup =
               [ "GrafoClinicoTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinicoTest.html", null ],
               [ "Nodo", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo" ],
               [ "NodoTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1NodoTest.html", null ],
+              [ "RecorridoOcupadoException", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RecorridoOcupadoException.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RecorridoOcupadoException" ],
               [ "RepositorioSesion", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion" ],
               [ "Respuesta", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta" ],
               [ "RespuestaTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RespuestaTest.html", null ],
@@ -170,6 +178,7 @@ var annotated_dup =
           [ "observaciones", "namespaceorg_1_1signbb_1_1backend_1_1observaciones.html", [
             [ "controladores", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html", [
               [ "ControladorConsulta", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1ControladorConsulta.html", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1ControladorConsulta" ],
+              [ "ControladorConsultaTest", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1ControladorConsultaTest.html", null ],
               [ "RespuestaRequest", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1RespuestaRequest.html", null ]
             ] ],
             [ "datos", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos.html", [
@@ -188,6 +197,7 @@ var annotated_dup =
               [ "TipoInteraccion", "enumorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1TipoInteraccion.html", null ]
             ] ],
             [ "servicios", "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios.html", [
+              [ "PreguntaDesactualizadaException", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1PreguntaDesactualizadaException.html", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1PreguntaDesactualizadaException" ],
               [ "ServicioCaptura", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCaptura.html", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCaptura" ],
               [ "ServicioCapturaImpl", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl.html", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl" ],
               [ "ServicioCapturaImplTest", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImplTest.html", null ],

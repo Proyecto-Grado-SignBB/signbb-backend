@@ -1,5 +1,6 @@
 var namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo =
 [
+    [ "CandadoRecorrido", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1CandadoRecorrido.html", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1CandadoRecorrido" ],
     [ "Contexto", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto" ],
     [ "ContextoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico" ],
     [ "ContextoClinicoTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinicoTest.html", null ],
@@ -11,6 +12,7 @@ var namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo =
     [ "GrafoClinicoTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinicoTest.html", null ],
     [ "Nodo", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo" ],
     [ "NodoTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1NodoTest.html", null ],
+    [ "RecorridoOcupadoException", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RecorridoOcupadoException.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RecorridoOcupadoException" ],
     [ "RepositorioSesion", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion" ],
     [ "Respuesta", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Respuesta" ],
     [ "RespuestaTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RespuestaTest.html", null ],

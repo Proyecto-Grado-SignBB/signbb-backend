@@ -111,9 +111,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('md_grafo__sist
   <div class="headertitle"><div class="title">Grafo sistema </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md79"></a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md80"></a></p>
 <p>El grafo del sistema se construyó utilizando una base de reglas creada mediante la consulta de síntomas y la validación realizada por la Doctora Catalina Lince.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md80"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md81"></a>
 Indice</h1>
 <p>Leyenda de los tipos de nodo usados en todos los grafos (color y forma):</p>
 <div class="image">
@@ -128,7 +128,7 @@ Indice de nodos</div></div>
 <li><b>Nodo terminal consultar médico:</b> doble círculo amarillo.</li>
 <li><b>Nodo terminal normal:</b> doble círculo verde.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md81"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md82"></a>
 Grafo Raíz</h1>
 <p>Es el orquestador principal. Parte de una pregunta de selección múltiple que permite elegir una o varias categorías; cada categoría pasa por un nodo puente de selección única y termina en un nodo de referencia que abre el subgrafo correspondiente.</p>
 <p>Se definieron tres categorías para los grafos:</p>
@@ -142,38 +142,38 @@ Grafo Raíz</h1>
 <object type="image/svg+xml" data="raiz.svg" style="pointer-events: none;"></object>
 <div class="caption">
 Grafo Raíz</div></div>
-    <h1 class="doxsection"><a class="anchor" id="autotoc_md82"></a>
+    <h1 class="doxsection"><a class="anchor" id="autotoc_md83"></a>
 Grafo Gastrointestinal</h1>
 <p>Subgrafo de alimentación, abdomen y deposiciones. Se recorre con una cola de prioridad: cada rama (vómito, abdomen, popó) tiene un peso y puede terminar en urgencia (corta la ejecución), consulta médica (continúa con la siguiente rama en cola) o normal.</p>
 <div class="image">
 <object type="image/svg+xml" data="gastrointestinal.svg" style="pointer-events: none;"></object>
 <div class="caption">
 Grafo Gastrointestinal</div></div>
-    <h1 class="doxsection"><a class="anchor" id="autotoc_md83"></a>
+    <h1 class="doxsection"><a class="anchor" id="autotoc_md84"></a>
 Grafo Respiración</h1>
 <p>Subgrafo secuencial de respiración y nariz. Primero descarta los signos de alarma (urgencia); si no hay ninguno, evalúa los signos de alerta media (consulta médica) y, en último caso, las condiciones comunes (normal).</p>
 <div class="image">
 <object type="image/svg+xml" data="respiracion.svg" style="pointer-events: none;"></object>
 <div class="caption">
 Grafo Respiración</div></div>
-    <h1 class="doxsection"><a class="anchor" id="autotoc_md84"></a>
+    <h1 class="doxsection"><a class="anchor" id="autotoc_md85"></a>
 Grafo Activo y color</h1>
 <p>Subgrafo de tono/actividad, coloración de la piel y llanto. Se recorre con una cola de prioridad por peso: tono (peso 3), color (peso 2) y llanto (peso 1), cada rama con desenlaces de urgencia, consulta médica o normal.</p>
 <div class="image">
 <object type="image/svg+xml" data="actividad_color.svg" style="pointer-events: none;"></object>
 <div class="caption">
 Grafo Activo y color</div></div>
-    <h1 class="doxsection"><a class="anchor" id="autotoc_md85"></a>
+    <h1 class="doxsection"><a class="anchor" id="autotoc_md86"></a>
 Herramientas</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md86"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md87"></a>
 Construir grafos visualmente</h2>
 <p>Se usa el formato de texto DOT y se exporta a SVG para visualizar con facilidad.</p>
 <div class="fragment"><div class="line">dot -Tsvg raiz.dot -o raiz.svg</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md87"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md88"></a>
 Representacion visual de base de reglas</h2>
 <p>Toma un formato JSON de reglas (<span class="tt">base_reglas.json</span>) y lo representa como una tabla Markdown en <span class="tt">generado/base_reglas.md</span>.</p>
 <div class="fragment"><div class="line">python3 reglas_a_markdown.py base_reglas.json</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md88"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md89"></a>
 Representacion visual de grafo</h2>
 <p>Toma un formato JSON de grafo (<span class="tt">grafo_*.json</span>), lo pasa a formato DOT y finalmente lo renderiza como SVG en <span class="tt">generado/</span>.</p>
 <div class="fragment"><div class="line">python3 json_a_dot.py --render</div>

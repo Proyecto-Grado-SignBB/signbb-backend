@@ -9,5 +9,5 @@ var searchData=
   ['normalizado_6',['normalizado',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorLienzo.html#aa069d92f3506d2f9720a3b72bf1380f3',1,'org::signbb::backend::autoria::servicios::EditorLienzo']]],
   ['normalizarcorreo_7',['normalizarCorreo',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentasImpl.html#ae7e061fc16ff5139f59a04f64a3a140f',1,'org::signbb::backend::seguridad::servicios::ServicioCuentasImpl']]],
   ['nuevasesion_8',['nuevaSesion',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html#a1f0db75bb5a3575a99b347657fb7b02b',1,'org::signbb::backend::navegacion::modelo::Contexto']]],
-  ['nuevousuariorequest_9',['NuevoUsuarioRequest',['../namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores.html#a3f5af4634790933be0c7a46d93e55c4f',1,'org::signbb::backend::seguridad::controladores']]]
+  ['nuevousuariorequest_9',['NuevoUsuarioRequest',['../namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores.html#ac19e260efe62ce27b6f19177a00559fa',1,'org::signbb::backend::seguridad::controladores']]]
 ];

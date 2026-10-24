@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('index.html',''
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_README"></a></p>
 <p>Backend del sistema SignBB: triaje clínico guiado por un grafo de navegación y un motor de reglas.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md66"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md67"></a>
 Requisitos</h1>
 <ul>
 <li>Java SDK 25</li>
@@ -122,12 +122,12 @@ Requisitos</h1>
 <li>Docker + Docker Compose (PostgreSQL y Redis de <span class="tt">contenedores/compose.yaml</span>)</li>
 <li>Doxygen (solo para regenerar la documentación)</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md67"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md68"></a>
 Construcción y pruebas</h1>
 <p>Desde el directorio <span class="tt">backend</span>: </p><pre class="fragment">./mvnw test              # compila y ejecuta la suite de tests
 ./mvnw spring-boot:run   # arranca la aplicación (demo de triaje por consola)
 ./mvnw verify            # build completo, igual que en CI (GitHub Actions)
-</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md68"></a>
+</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md69"></a>
 Perfil de base de datos</h1>
 <p>El backend usa un único perfil, <span class="tt">docker</span> (definido en <span class="tt">backend/src/main/resources/application.properties</span> con <span class="tt">spring.profiles.active=docker</span>): <b>PostgreSQL</b> en <span class="tt">localhost:5432</span> (base <span class="tt">signbb</span>) y <b>Redis</b> en <span class="tt">localhost:6379</span>, ambos desde <span class="tt">contenedores/compose.yaml</span>. Los datos persisten en los volúmenes del compose. Ver <span class="tt">contenedores/MANUAL_CONTENEDORES.md</span> para levantar y administrar los servicios.</p>
 <p>Antes de arrancar la aplicación o ejecutar las pruebas hay que levantar los servicios: </p><pre class="fragment">cd ../contenedores &amp;&amp; docker compose up -d
@@ -137,7 +137,7 @@ Perfil de base de datos</h1>
 </pre><blockquote class="doxtable">
 <p>Si la base ya estaba sembrada con una versión previa del grafo, hay que borrar los volúmenes (<span class="tt">docker compose down -v</span>) para que <span class="tt">DatabaseInit</span> vuelva a sembrar el contenido nuevo: el grafo raíz conserva el mismo <span class="tt">id</span>. </p>
 </blockquote>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md69"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md70"></a>
 Cuentas y seguridad</h1>
 <p>La API pide un token JWT (<span class="tt">Authorization: Bearer &lt;token&gt;</span>) salvo en el login, el registro, <span class="tt">/media</span> y Swagger. Hay tres roles:</p>
 <table class="markdownTable">
@@ -180,15 +180,15 @@ Cuentas y seguridad</h1>
 <p><b>Si ya tenías la base de antes de las cuentas</b>, borra los volúmenes (<span class="tt">docker compose down -v</span>). Hibernate guarda el estado del borrador con un <em>check constraint</em> que no conoce el estado nuevo <span class="tt">EN_REVISION</span>, y los borradores viejos no tienen autor. </p>
 </blockquote>
 <p>La prueba manual del módulo (con <span class="tt">curl</span> y por las pantallas) está en <span class="tt">pruebas_manuales/pruebas_seguridad.md</span>.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md70"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md71"></a>
 Documentación</h1>
 <p>La documentación del código se genera con Doxygen desde la raíz del repositorio: </p><pre class="fragment">doxygen Doxyfile
 </pre><p>El HTML resultante queda en <span class="tt">docs/html</span> (abrir <span class="tt">docs/html/index.html</span>). La fuente es <span class="tt">backend/src/main/java</span> y <span class="tt">backend/src/test/java</span>, configurada en el <span class="tt">Doxyfile</span>.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md71"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md72"></a>
 Pruebas</h2>
 <p>La suite de pruebas está documentada en la sección <a class="el" href="pruebas.html" title="Pruebas del sistema">Pruebas del sistema</a> del Doxygen: tipos de prueba, cómo ejecutarlas y el detalle por módulo (navegación, reglas, modelo de reglas, autoría, observaciones y cache).</p>
 <p>El diagrama de arquitectura por módulos (<span class="tt">docs/diagramas/arquitectura_modulos.svg</span>) se regenera desde su fuente PlantUML: </p><pre class="fragment">java -jar plantuml.jar -tsvg docs/diagramas/arquitectura_modulos.puml
-</pre><h2 class="doxsection"><a class="anchor" id="autotoc_md72"></a>
+</pre><h2 class="doxsection"><a class="anchor" id="autotoc_md73"></a>
 API REST (OpenAPI)</h2>
 <p>La API se documenta con <b>springdoc-openapi</b> a partir de los controladores. Con la aplicación arriba:</p>
 <ul>
@@ -196,6 +196,31 @@ API REST (OpenAPI)</h2>
 <li>Contrato JSON: <span class="tt"><a href="http://localhost:8080/v3/api-docs">http://localhost:8080/v3/api-docs</a></span></li>
 <li>Contrato YAML: <span class="tt"><a href="http://localhost:8080/v3/api-docs.yaml">http://localhost:8080/v3/api-docs.yaml</a></span></li>
 </ul>
+<p><b>Límites de los campos.</b> Los datos que llegan a la API tienen límite de largo; si se pasan, responde <b>422</b> con un <span class="tt">mensaje</span> que dice cuál campo. Los nombres, el correo, las etiquetas y los textos de las opciones son de una sola línea (sin saltos de línea); las descripciones y el texto de una pregunta permiten saltos de línea.</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Campo  </th><th class="markdownTableHeadNone">Límite  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Correo  </td><td class="markdownTableBodyNone">254 caracteres  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Nombre de persona; nombre de subgrafo, de regla o de base de reglas; etiqueta para la familia  </td><td class="markdownTableBodyNone">100  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Institución  </td><td class="markdownTableBodyNone">150  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Contraseña  </td><td class="markdownTableBodyNone">8 a 72 caracteres (y hasta 72 bytes: la ñ y las tildes cuentan doble)  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Texto de una pregunta o conclusión  </td><td class="markdownTableBodyNone">1000  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Texto de una opción de respuesta; respuesta del cuidador  </td><td class="markdownTableBodyNone">200  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Respuestas por pregunta  </td><td class="markdownTableBodyNone">10  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Descripción de regla o de base de reglas  </td><td class="markdownTableBodyNone">500  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Casos por regla / condiciones por caso  </td><td class="markdownTableBodyNone">20 / 20  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Opciones marcadas por el cuidador  </td><td class="markdownTableBodyNone">20  </td></tr>
+</table>
 <p>En producción la documentación va apagada (<span class="tt">SIGNBB_DOCS_ACTIVAS=false</span>) y esas rutas responden 404; el contrato se consulta en la copia versionada.</p>
 <p>La copia versionada del contrato vive en <span class="tt">docs/api/openapi.yaml</span>. Para regenerarla tras cambiar los controladores o los DTOs: </p><pre class="fragment">./mvnw spring-boot:run   # en una terminal; esperar "Started BackendApplication"
 curl -o docs/api/openapi.yaml http://localhost:8080/v3/api-docs.yaml

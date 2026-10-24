@@ -111,6 +111,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
   <div class="headertitle"><div class="title">Referencia de la clase org.signbb.backend.config.ManejadorExcepciones</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Errores específicos del backend.  
+ <a href="#details">Más...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Métodos públicos</h2></td></tr>
@@ -120,11 +123,20 @@ ResponseEntity&lt; Void &gt;&#160;</td><td class="memItemRight"><b>manejarNoEnco
 <tr class="memdesc:a58bc95da503481f07e0a513f6a32c9e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">MODIFICADO: agregado para que las opciones inválidas del cuidador (validadas en <code class="JavaDocCode">ServicioCapturaImpl</code>) respondan 400 en vez de caer como 500 sin manejar.  <br /></td></tr>
 <tr class="memitem:a85cb802d12bf33ec69fa8b6b7e88df71" id="r_a85cb802d12bf33ec69fa8b6b7e88df71"><td class="memItemLeft">ResponseEntity&lt; ErrorAutoriaDTO &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a85cb802d12bf33ec69fa8b6b7e88df71">manejarArchivoGrande</a> (MaxUploadSizeExceededException ex)</td></tr>
 <tr class="memdesc:a85cb802d12bf33ec69fa8b6b7e88df71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Archivo subido por encima del límite del servidor (imágenes de las preguntas).  <br /></td></tr>
+<tr class="memitem:a443a75314fb068a70dea54ec438ff888" id="r_a443a75314fb068a70dea54ec438ff888"><td class="memItemLeft"><a id="a443a75314fb068a70dea54ec438ff888" name="a443a75314fb068a70dea54ec438ff888"></a>
+ResponseEntity&lt; ErrorAutoriaDTO &gt;&#160;</td><td class="memItemRight"><b>manejarRecorridoOcupado</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RecorridoOcupadoException.html">RecorridoOcupadoException</a> ex)</td></tr>
+<tr class="memdesc:a443a75314fb068a70dea54ec438ff888"><td class="mdescLeft">&#160;</td><td class="mdescRight">Otra operación está cambiando el mismo recorrido: 409 para que el cliente espere y reintente. <br /></td></tr>
+<tr class="memitem:a0bfee71571dc86bc2ba9872a91f274e1" id="r_a0bfee71571dc86bc2ba9872a91f274e1"><td class="memItemLeft"><a id="a0bfee71571dc86bc2ba9872a91f274e1" name="a0bfee71571dc86bc2ba9872a91f274e1"></a>
+ResponseEntity&lt; ErrorAutoriaDTO &gt;&#160;</td><td class="memItemRight"><b>manejarPreguntaDesactualizada</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1PreguntaDesactualizadaException.html">PreguntaDesactualizadaException</a> ex)</td></tr>
+<tr class="memdesc:a0bfee71571dc86bc2ba9872a91f274e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">La respuesta era para una pregunta que ya no es la actual: 409 y el cliente vuelve a consultar. <br /></td></tr>
 <tr class="memitem:a47da4350124a737dd82b564443c76571" id="r_a47da4350124a737dd82b564443c76571"><td class="memItemLeft"><a id="a47da4350124a737dd82b564443c76571" name="a47da4350124a737dd82b564443c76571"></a>
 ResponseEntity&lt; Void &gt;&#160;</td><td class="memItemRight"><b>manejarCacheNoDisponible</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1CacheNoDisponibleException.html">CacheNoDisponibleException</a> ex)</td></tr>
 <tr class="memdesc:a47da4350124a737dd82b564443c76571"><td class="mdescLeft">&#160;</td><td class="mdescRight">MODIFICADO (cache): Redis no disponible para sesiones — 503 para que el cliente sepa que es transitorio y reintente; degradar a memoria crearía inconsistencias entre sesiones. <br /></td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
+<div class="textblock"><p>Errores específicos del backend. </p>
+<p>Va antes que <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorErroresGenerales.html">ManejadorErroresGenerales</a></code>, que es la red de seguridad de lo que nadie más atiende. </p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
 <a id="a85cb802d12bf33ec69fa8b6b7e88df71" name="a85cb802d12bf33ec69fa8b6b7e88df71"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a85cb802d12bf33ec69fa8b6b7e88df71">&#9670;&#160;</a></span>manejarArchivoGrande()</h2>
 
