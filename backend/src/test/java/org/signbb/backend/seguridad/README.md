@@ -18,9 +18,10 @@ PostgreSQL y Redis, como el CI.
 | `servicios` | `ServicioCuentasImplTest` | 11 | registro de padres, login, alta de médicos por el supervisor y activar o desactivar cuentas |
 | `servicios` | `ServicioTokensTest` | 4 | el JWT lleva `sub`, `rol` y `nombre`; uno vencido o firmado con otra clave se rechaza; un secreto corto no arranca |
 | (raíz) | `InicializadorSeguridadTest` | 2 | el supervisor inicial se siembra una sola vez |
+| (raíz) | `VerificadorSecretosProduccionTest` | 8 | en producción no se aceptan los valores de ejemplo ni la documentación de la API activa; un entorno mal escrito impide arrancar |
 | (raíz) | `ReglasAccesoIntegracionTest` | 10 | la cadena de filtros real: rutas públicas, 401 sin token, 403 por rol y dueño del recorrido |
 
-En total son **27 pruebas**. Las reglas de autor y de revisión de la autoría
+En total son **35 pruebas**. Las reglas de autor y de revisión de la autoría
 (`GuardiaAutoriaTest`, `PoliticaAccesoBorradoresTest`, `ServicioRevisionImplTest`
 y `ControladorRevisionTest`) están en \ref pruebas_autoria; la del dueño del
 recorrido, en \ref pruebas_observaciones.
@@ -55,6 +56,16 @@ arrancar, para que nadie despliegue con una clave débil por descuido.
 ### Supervisor inicial (`InicializadorSeguridadTest`)
 Si no hay ningún `MEDICO_SUPERVISOR`, se crea uno con la contraseña cifrada.
 Si ya hay alguno, no hace nada, así que reiniciar el back no duplica cuentas.
+
+### Secretos de producción (`VerificadorSecretosProduccionTest`)
+Con `SIGNBB_ENTORNO=produccion`, la app no arranca si el secreto JWT, la
+contraseña del supervisor inicial o las claves de Silo valen lo mismo que en
+desarrollo, o si Swagger y `/v3/api-docs` siguen activos
+(`SIGNBB_DOCS_ACTIVAS` distinto de `false`), y el mensaje nombra las variables
+sin mostrar los valores. En desarrollo se aceptan. Un entorno mal escrito también impide arrancar, y una
+prueba comprueba que los valores de ejemplo del código sigan iguales a los de
+`application.properties` y `application-docker.properties`, y otra que la
+variable de la documentación esté conectada a springdoc.
 
 ### Reglas de acceso (`ReglasAccesoIntegracionTest`)
 Con la aplicación completa:

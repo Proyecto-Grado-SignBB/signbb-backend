@@ -61,6 +61,12 @@ datos, objetos de silo y caché/sesiones de Redis):
 - **psql**: `docker exec -it contenedores-db-1 psql -U admin -d signbb`
 - **Logs**: `docker compose logs -f db` (o `silo` / `cache`, según interese)
 
+> **Puertos solo locales.** PostgreSQL, Adminer, Silo y Redis se publican en
+> `127.0.0.1` (por ejemplo `127.0.0.1:5432`). Funcionan desde tu propio
+> computador, pero no se ven desde otro equipo de la red. Si cambias el
+> `compose.yaml`, aplica el cambio con `docker compose up -d`: los contenedores
+> se recrean y los datos se conservan porque viven en volúmenes.
+
 ## Parámetros de conexión (perfil `docker` del backend)
 
 | Parámetro   | Valor              |

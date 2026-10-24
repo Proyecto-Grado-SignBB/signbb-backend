@@ -52,7 +52,5 @@ según el `TipoInteraccion`:
 
 No requieren PostgreSQL ni Redis.
 
-> La **auditoría** de observaciones vive en este módulo (`ServicioCaptura`); no
-> existe todavía un paquete `org.signbb.backend.auditoria` implementado (solo
-> `package-info.java`). La autoría de reglas, con su CRUD y publicación, está en
-> \ref pruebas_autoria.
+> La **auditoría** de observaciones vive en este módulo (`ServicioCaptura`). La
+> autoría de reglas, con su CRUD y publicación, está en \ref pruebas_autoria.

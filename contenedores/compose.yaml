@@ -47,8 +47,9 @@ services:
     # Expone el puerto 5432 de PostgreSQL al puerto 5432 del host.
     # Necesario para conectarse desde herramientas externas (ej. DBeaver, psql).
     # En producción, se puede omitir si solo el backend accede a la BD.
+    # Se publica solo en 127.0.0.1: desde otro computador de la red no se llega.
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
 
     # Volumen para persistir los datos de PostgreSQL.
     # Sin esto, los datos se pierden al eliminar el contenedor.
@@ -94,8 +95,9 @@ services:
 
     # Mapeo de puertos: expone Adminer en http://localhost:8180
     # El puerto 8180 del host se mapea al 8080 del contenedor.
+    # Solo en 127.0.0.1; en producción no se debe desplegar Adminer.
     ports:
-      - "8180:8080"
+      - "127.0.0.1:8180:8080"
 
     # Variable de entorno que indica a Adminer el servidor por defecto.
     # Sin esto, Adminer intentaría conectarse a "localhost" (sí mismo).
@@ -129,9 +131,10 @@ services:
     # Sirve los objetos desde /data y expone la consola web en el puerto 9001.
     command: server /data --console-address ":9001"
 
+    # Solo en 127.0.0.1: la API S3 y la consola no se ven desde la red.
     ports:
-      - "9000:9000"
-      - "9001:9001"
+      - "127.0.0.1:9000:9000"
+      - "127.0.0.1:9001:9001"
 
     environment:
       # Credenciales raíz del almacenamiento (solo desarrollo).
@@ -177,8 +180,9 @@ services:
 
     # Mapeo de puertos: expone Redis en localhost:6379 para el backend (que
     # corre en el host durante el desarrollo) y para redis-cli / RedisInsight.
+    # Solo en 127.0.0.1: Redis no tiene contraseña y no debe verse desde la red.
     ports:
-      - "6379:6379"
+      - "127.0.0.1:6379:6379"
 
     # Volumen nombrado para el AOF de Redis.
     volumes:

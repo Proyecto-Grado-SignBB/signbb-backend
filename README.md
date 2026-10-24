@@ -63,11 +63,23 @@ arrancar. En desarrollo es `supervisor@signbb.local` / `Supervisor123`;
 
 | Variable | Para qué | Valor de desarrollo |
 |---|---|---|
+| `SIGNBB_ENTORNO` | `desarrollo` o `produccion`. En producción la app no arranca si quedan valores de ejemplo (ver abajo) | `desarrollo` |
 | `SIGNBB_JWT_SECRETO` | Clave HS256 de los tokens (32 bytes o más) | un valor fijo de desarrollo |
 | `SIGNBB_SUPERVISOR_NOMBRE` | Nombre del supervisor inicial | `Supervisor SignBB` |
 | `SIGNBB_SUPERVISOR_CORREO` | Correo del supervisor inicial | `supervisor@signbb.local` |
 | `SIGNBB_SUPERVISOR_CONTRASENA` | Contraseña del supervisor inicial | `Supervisor123` |
 | `SIGNBB_CORS_ORIGENES` | Orígenes del front, separados por coma | `http://localhost:4200,http://localhost:4300` |
+| `SIGNBB_MEDIA_ACCESS_KEY` | Usuario de Silo (imágenes) | `silo-admin` |
+| `SIGNBB_MEDIA_SECRET_KEY` | Clave de Silo (imágenes) | `ejemplo123` |
+| `SIGNBB_DOCS_ACTIVAS` | `false` apaga Swagger UI y `/v3/api-docs` (responden 404). **Obligatorio en producción** | `true` |
+
+**Despliegue en producción.** Define `SIGNBB_ENTORNO=produccion`. Con eso, al
+arrancar se revisa que `SIGNBB_JWT_SECRETO`, `SIGNBB_SUPERVISOR_CONTRASENA`,
+`SIGNBB_MEDIA_ACCESS_KEY` y `SIGNBB_MEDIA_SECRET_KEY` tengan valores propios, y que
+`SIGNBB_DOCS_ACTIVAS=false`. Si algo falla, la app no arranca y el mensaje dice
+cuál variable corregir (nunca muestra el valor). Si `SIGNBB_ENTORNO` tiene
+cualquier otro texto, tampoco arranca. Sin esta variable la app se comporta como
+en desarrollo.
 
 > **Si ya tenías la base de antes de las cuentas**, borra los volúmenes
 > (`docker compose down -v`). Hibernate guarda el estado del borrador con un
@@ -107,6 +119,9 @@ Con la aplicación arriba:
 - Swagger UI: `http://localhost:8080/swagger-ui.html`
 - Contrato JSON: `http://localhost:8080/v3/api-docs`
 - Contrato YAML: `http://localhost:8080/v3/api-docs.yaml`
+
+En producción la documentación va apagada (`SIGNBB_DOCS_ACTIVAS=false`) y
+esas rutas responden 404; el contrato se consulta en la copia versionada.
 
 La copia versionada del contrato vive en `docs/api/openapi.yaml`. Para
 regenerarla tras cambiar los controladores o los DTOs:
