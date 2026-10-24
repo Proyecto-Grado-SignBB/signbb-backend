@@ -144,7 +144,8 @@ class ServicioNavegacionImplTest {
         List<PasoCausalDTO> camino = cierre.resultado().caminoCausal();
         PasoCausalDTO ultimo = camino.get(camino.size() - 1);
         PasoCausalDTO previo = camino.get(camino.size() - 2);
-        assertEquals("Quejido al respirar", ultimo.condicion());
+        // lo cierra una regla, no una arista: el terminal llega sin condición
+        assertEquals("", ultimo.condicion());
         assertEquals(cierre.resultado().mensaje(), ultimo.contenido());
         assertEquals(URGENCIA, previo.nodoId());
         assertEquals(textoUrgencia, previo.contenido());
