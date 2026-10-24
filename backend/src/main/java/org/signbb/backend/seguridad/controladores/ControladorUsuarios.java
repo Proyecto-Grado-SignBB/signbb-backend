@@ -22,6 +22,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 /**
  * API de cuentas clínicas, solo para supervisores (la regla está en {@code
@@ -55,7 +56,7 @@ public class ControladorUsuarios {
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @PostMapping
-    public ResponseEntity<UsuarioDTO> crear(@RequestBody NuevoUsuarioRequest request) {
+    public ResponseEntity<UsuarioDTO> crear(@Valid @RequestBody NuevoUsuarioRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(cuentas.crearClinico(request));
     }
 

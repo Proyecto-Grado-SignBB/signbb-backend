@@ -30,6 +30,9 @@ public class ServicioCuentasImpl implements ServicioCuentas {
     /** Largo mínimo de una contraseña. */
     static final int MINIMO_CONTRASENA = 8;
 
+    /** BCrypt solo usa los primeros 72 bytes de la contraseña. */
+    static final int MAXIMO_BYTES_CONTRASENA = 72;
+
     /** Mismo mensaje para todo fallo de ingreso: no revela qué falló. */
     static final String MENSAJE_INGRESO = "Correo o contraseña incorrectos.";
 
@@ -136,6 +139,10 @@ public class ServicioCuentasImpl implements ServicioCuentas {
         if (contrasena == null || contrasena.length() < MINIMO_CONTRASENA) {
             throw new CuentaInvalidaException(
                     "La contraseña debe tener al menos " + MINIMO_CONTRASENA + " caracteres.");
+        }
+        if (contrasena.getBytes(java.nio.charset.StandardCharsets.UTF_8).length > MAXIMO_BYTES_CONTRASENA) {
+            throw new CuentaInvalidaException("La contraseña es demasiado larga: máximo "
+                    + MAXIMO_BYTES_CONTRASENA + " bytes (las tildes y la ñ cuentan doble).");
         }
         if (usuarios.existsByCorreo(normalizado)) {
             throw new CuentaInvalidaException("Ya existe una cuenta con ese correo.");

@@ -11,6 +11,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import org.signbb.backend.config.PatronesTexto;
 
 /**
  * Nodo que manda el panel del lienzo, para crearlo (el "+") o editarlo.
@@ -32,12 +36,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @AllArgsConstructor
 public class NodoRequest {
     @Schema(description = "Al crear, la respuesta cuyo \"+\" se tocó; nulo para la primera pregunta. Al editar se ignora.")
+    @Valid
     private DespuesDeRequest despuesDe;
 
     @Schema(description = "Tipo de nodo; obligatorio al crear, puede omitirse al editar")
     private TipoNodo tipo;
 
     @Schema(description = "Texto de la pregunta o conclusión")
+    @Size(max = 1000, message = "El texto no puede pasar de 1000 caracteres.")
+    @Pattern(regexp = PatronesTexto.TEXTO_LARGO, message = "El texto tiene caracteres que no se aceptan.")
     private String texto;
 
     @Schema(description = "Si la pregunta admite selección múltiple")
@@ -47,7 +54,8 @@ public class NodoRequest {
     private Desenlace desenlace;
 
     @Schema(description = "Respuestas; solo para preguntas. Al editar, las que traen id conservan su destino")
-    private List<OpcionRequest> respuestas;
+    @Size(max = 10, message = "Una pregunta no puede tener más de 10 respuestas.")
+    private List<@Valid OpcionRequest> respuestas;
     private List<String> imagenes;
 
     /** Nodo sin imágenes. */

@@ -21,6 +21,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 /**
  * Controlador REST de la consulta guiada del cuidador.
@@ -30,6 +31,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * de llamar a {@link ServicioNavegacion} directamente, para que toda
  * respuesta (una opción o varias) quede validada y auditada. {@code iniciar}
  * y {@code consultar} no cambian — no reciben una observación del cuidador.
+ * {@code responder} y {@code retroceder} van con candado por recorrido y
+ * guardan Redis y Postgres como "todo o nada" (ver {@link ServicioCaptura}).
  *
  * <p>
  * Cada recorrido es del padre que lo inició ({@link ServicioRecorridos}): antes
@@ -95,21 +98,27 @@ public class ControladorConsulta {
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "El recorrido no existe o es de otro padre",
                     content = @Content),
+            @ApiResponse(responseCode = "409", description = "Otra respuesta del mismo recorrido se está guardando, "
+                            + "o la pregunta enviada (idPregunta) ya no es la actual",
+                    content = @Content),
             @ApiResponse(responseCode = "503", description = "Caché de sesiones (Redis) no disponible",
                     content = @Content)
     })
     @PostMapping("/recorridos/{recorridoId}/respuestas")
     public ResponseEntity<RecorridoDTO> responder(@PathVariable String recorridoId,
-            @RequestBody RespuestaRequest request, UsuarioActual usuario) {
+            @Valid @RequestBody RespuestaRequest request, UsuarioActual usuario) {
         servicioRecorridos.exigirDueno(recorridoId, usuario);
         List<String> seleccionadas = request.getOpciones() != null
                 ? request.getOpciones()
-                : List.of(request.getRespuesta());
+                : request.getRespuesta() != null ? List.of(request.getRespuesta()) : List.of();
+        if (seleccionadas.isEmpty()) {
+            throw new IllegalArgumentException("Elige al menos una respuesta.");
+        }
 
         TipoInteraccion tipo = resolverTipo(request, seleccionadas);
 
-        return ResponseEntity.ok(servicioRecorridos.actualizar(
-                servicioCaptura.registrarRespuesta(recorridoId, tipo, seleccionadas, usuario.id())));
+        return ResponseEntity.ok(servicioCaptura.registrarRespuesta(
+                recorridoId, tipo, seleccionadas, usuario.id(), request.getIdPregunta()));
     }
 
     /**
@@ -125,13 +134,15 @@ public class ControladorConsulta {
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "El recorrido no existe o es de otro padre",
                     content = @Content),
+            @ApiResponse(responseCode = "409", description = "Otra operación del mismo recorrido se está guardando",
+                    content = @Content),
             @ApiResponse(responseCode = "503", description = "Caché de sesiones (Redis) no disponible",
                     content = @Content)
     })
     @PostMapping("/recorridos/{recorridoId}/retroceder")
     public ResponseEntity<RecorridoDTO> retroceder(@PathVariable String recorridoId, UsuarioActual usuario) {
         servicioRecorridos.exigirDueno(recorridoId, usuario);
-        return ResponseEntity.ok(servicioRecorridos.actualizar(servicioNavegacion.retroceder(recorridoId)));
+        return ResponseEntity.ok(servicioCaptura.retroceder(recorridoId));
     }
 
     /** {@code GET /api/recorridos/{id}}: consulta el estado del recorrido. */

@@ -11,7 +11,8 @@ reglas) están en \ref pruebas_autoria.
 ## Ubicación
 
 - Unitarias (paquete `org.signbb.backend.cache`, sin Redis real):
-  `ResolvedorContenidoClinicoTest` y `RepositorioSesionRedisTest`.
+  `ResolvedorContenidoClinicoTest`, `RepositorioSesionRedisTest` y
+  `CandadoRecorridoRedisTest`.
 - Integración (perfil `docker`): `org.signbb.backend.CacheRedisIntegracionTest`.
 - Limpieza programada de versiones e imágenes (paquete
   `org.signbb.backend.mantenimiento`, todas unitarias): ver la sección
@@ -48,6 +49,20 @@ real (grafo y reglas de `static/grafo_sistema/`):
 - **Redis caído al buscar o guardar**: `CacheNoDisponibleException`
   (el `ControllerAdvice` la responde como 503; nunca degrada a memoria para
   evitar sesiones que aparecen y desaparecen).
+
+## CandadoRecorridoRedisTest — candado por recorrido
+
+Con un template simulado. El candado (`signbb:candado:recorrido:<id>`) deja
+pasar una operación a la vez sobre el mismo recorrido (responder, retroceder):
+
+- **Toma, ejecuta y suelta**: se toma con tiempo límite de 10 s y se suelta
+  con su propia ficha (un candado ajeno nunca se borra).
+- **Ya tomado**: lanza `RecorridoOcupadoException` (409), no ejecuta la acción
+  ni suelta el candado de otro.
+- **La acción falla**: el candado se suelta igual.
+- **Redis caído al tomarlo**: `CacheNoDisponibleException` (503) y no se ejecuta
+  la acción.
+- **Redis falla al soltarlo**: no tapa el resultado; el candado caduca solo.
 
 ## CacheRedisIntegracionTest — integración
 

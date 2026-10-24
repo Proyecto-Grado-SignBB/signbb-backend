@@ -37,9 +37,11 @@ efímeros (`signbb-backend/.github/workflows/build.yml`).
 | Navegación: TADs, parsers, motor y servicio | 171 | JUnit 5 | \ref pruebas_navegacion "Ver página" |
 | Reglas: TAD, evaluación, servicio y mapeo JSON | 28 | JUnit 5 + Mockito | \ref pruebas_reglas "Ver página" |
 | Autoría: lienzo, subgrafos, reglas, autor y revisión | 194 | JUnit 5 + Mockito | \ref pruebas_autoria "Ver página" |
-| Observaciones: captura, validación y dueño del recorrido | 18 | JUnit 5 + Mockito | \ref pruebas_observaciones "Ver página" |
-| Seguridad: cuentas, login con JWT y reglas de acceso | 27 | JUnit 5 + Mockito / `@SpringBootTest` | \ref pruebas_seguridad "Ver página" |
+| Observaciones: captura "todo o nada", validación, dueño del recorrido y respuesta del cuidador | 38 | JUnit 5 + Mockito | \ref pruebas_observaciones "Ver página" |
+| Seguridad: cuentas, login con JWT, reglas de acceso y secretos de producción | 36 | JUnit 5 + Mockito / `@SpringBootTest` | \ref pruebas_seguridad "Ver página" |
 | Cache: contenido clínico y sesiones en Redis | — | Mockito / `@SpringBootTest` | \ref pruebas_cache "Ver página" |
+| Errores generales: 400, 405, 409, 422 y 500 con cuerpo `{mensaje, avisos}` (`config/ManejadorErroresGeneralesTest`) | 8 | JUnit 5 + MockMvc | — |
+| Validación de entradas: límites de largo y de caracteres de los DTO (`config/ValidacionEntradasTest`) | 8 | JUnit 5 + validador de Jakarta | — |
 
 ## Pruebas de integración de la raíz
 

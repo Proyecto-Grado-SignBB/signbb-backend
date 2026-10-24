@@ -120,6 +120,21 @@ Con la aplicación arriba:
 - Contrato JSON: `http://localhost:8080/v3/api-docs`
 - Contrato YAML: `http://localhost:8080/v3/api-docs.yaml`
 
+**Límites de los campos.** Los datos que llegan a la API tienen límite de largo; si se pasan, responde **422** con un `mensaje` que dice cuál campo. Los nombres, el correo, las etiquetas y los textos de las opciones son de una sola línea (sin saltos de línea); las descripciones y el texto de una pregunta permiten saltos de línea.
+
+| Campo | Límite |
+|---|---|
+| Correo | 254 caracteres |
+| Nombre de persona; nombre de subgrafo, de regla o de base de reglas; etiqueta para la familia | 100 |
+| Institución | 150 |
+| Contraseña | 8 a 72 caracteres (y hasta 72 bytes: la ñ y las tildes cuentan doble) |
+| Texto de una pregunta o conclusión | 1000 |
+| Texto de una opción de respuesta; respuesta del cuidador | 200 |
+| Respuestas por pregunta | 10 |
+| Descripción de regla o de base de reglas | 500 |
+| Casos por regla / condiciones por caso | 20 / 20 |
+| Opciones marcadas por el cuidador | 20 |
+
 En producción la documentación va apagada (`SIGNBB_DOCS_ACTIVAS=false`) y
 esas rutas responden 404; el contrato se consulta en la copia versionada.
 

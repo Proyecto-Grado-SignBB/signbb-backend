@@ -96,6 +96,14 @@ class ServicioCuentasImplTest {
     }
 
     @Test
+    void unaContrasenaDeMasDe72BytesDa422PorqueBCryptSoloUsaLosPrimeros72() {
+        // 37 eñes = 37 caracteres pero 74 bytes en UTF-8
+        assertThrows(CuentaInvalidaException.class,
+                () -> servicio.registrarPadre(new RegistroRequest("Ana", "ana@correo.com", "ñ".repeat(37))));
+        verify(usuarios, never()).save(any(UsuarioEntity.class));
+    }
+
+    @Test
     void ingresarConDatosCorrectosDevuelveElToken() {
         cuenta(3L, "ana@correo.com", "secreta123", Rol.PADRE, true);
 

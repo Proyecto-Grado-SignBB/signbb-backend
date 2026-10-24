@@ -7,6 +7,8 @@ import org.signbb.backend.seguridad.servicios.AccesoDenegadoException;
 import org.signbb.backend.seguridad.servicios.CredencialesInvalidasException;
 import org.signbb.backend.seguridad.servicios.CuentaInvalidaException;
 import org.signbb.backend.seguridad.servicios.IntentosExcedidosException;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * de la cuenta no sirven, y 429 si el ingreso está bloqueado por intentos fallidos.
  */
 @RestControllerAdvice
+@Order(Ordered.LOWEST_PRECEDENCE - 10)
 public class ManejadorErroresSeguridad {
 
     /** HTTP 422: los datos de la cuenta no se pueden aceptar. */

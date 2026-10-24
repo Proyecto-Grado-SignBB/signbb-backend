@@ -24,6 +24,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 /**
  * API REST del panel de reglas. Una base de reglas pertenece a un grafo
@@ -85,7 +86,7 @@ public class ControladorReglas {
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @PostMapping
-    public ResponseEntity<BaseReglaDTO> crear(@RequestBody BaseReglaRequest datos, UsuarioActual usuario) {
+    public ResponseEntity<BaseReglaDTO> crear(@Valid @RequestBody BaseReglaRequest datos, UsuarioActual usuario) {
         guardia.crearBase(datos.getGrafoId(), usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(servicio.crear(datos, usuario));
     }
@@ -117,7 +118,7 @@ public class ControladorReglas {
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @PutMapping("/{id}")
-    public BaseReglaDTO actualizar(@PathVariable Long id, @RequestBody BaseReglaRequest datos,
+    public BaseReglaDTO actualizar(@PathVariable Long id, @Valid @RequestBody BaseReglaRequest datos,
             UsuarioActual usuario) {
         guardia.editarBase(id, usuario);
         return servicio.actualizar(id, datos);
@@ -153,7 +154,7 @@ public class ControladorReglas {
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @PostMapping("/{id}/reglas")
-    public BaseReglaDTO agregarRegla(@PathVariable Long id, @RequestBody ReglaRequest regla, UsuarioActual usuario) {
+    public BaseReglaDTO agregarRegla(@PathVariable Long id, @Valid @RequestBody ReglaRequest regla, UsuarioActual usuario) {
         guardia.editarBase(id, usuario);
         return servicio.agregarRegla(id, regla);
     }
@@ -172,7 +173,7 @@ public class ControladorReglas {
     })
     @PutMapping("/{id}/reglas/{reglaId}")
     public BaseReglaDTO editarRegla(@PathVariable Long id, @PathVariable String reglaId,
-            @RequestBody ReglaRequest regla, UsuarioActual usuario) {
+            @Valid @RequestBody ReglaRequest regla, UsuarioActual usuario) {
         guardia.editarBase(id, usuario);
         return servicio.editarRegla(id, reglaId, regla);
     }

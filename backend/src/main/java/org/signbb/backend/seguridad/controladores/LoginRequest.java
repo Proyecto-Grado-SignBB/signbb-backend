@@ -1,6 +1,7 @@
 package org.signbb.backend.seguridad.controladores;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Size;
 
 /**
  * Ingreso con correo y contraseña.
@@ -12,7 +13,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
  *                        {@code false}
  */
 @Schema(description = "Ingreso con correo y contraseña")
-public record LoginRequest(String correo, String contrasena,
+public record LoginRequest(
+        @Size(max = 254, message = "El correo no puede pasar de 254 caracteres.") String correo,
+        @Size(max = 72, message = "La contraseña no puede pasar de 72 caracteres.") String contrasena,
         @Schema(description = "Dispositivo seguro: el padre mantiene la sesión abierta más tiempo "
                 + "(los médicos lo ignoran). Si falta, se toma como false.", example = "false")
         Boolean dispositivoSeguro) {

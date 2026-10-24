@@ -23,6 +23,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 /**
  * API REST del lienzo de autoría. Las operaciones que editan devuelven el
@@ -80,7 +81,7 @@ public class ControladorAutoria {
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @PostMapping("/subgrafos")
-    public ResponseEntity<SubgrafoDTO> crear(@RequestBody SubgrafoRequest datos, UsuarioActual usuario) {
+    public ResponseEntity<SubgrafoDTO> crear(@Valid @RequestBody SubgrafoRequest datos, UsuarioActual usuario) {
         return ResponseEntity.status(HttpStatus.CREATED).body(servicio.crear(datos, usuario));
     }
 
@@ -113,7 +114,7 @@ public class ControladorAutoria {
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @PutMapping("/subgrafos/{id}")
-    public SubgrafoDTO actualizar(@PathVariable Long id, @RequestBody SubgrafoRequest datos,
+    public SubgrafoDTO actualizar(@PathVariable Long id, @Valid @RequestBody SubgrafoRequest datos,
             UsuarioActual usuario) {
         guardia.editarSubgrafo(id, usuario);
         return servicio.actualizar(id, datos);
@@ -149,7 +150,7 @@ public class ControladorAutoria {
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @PostMapping("/subgrafos/{id}/nodos")
-    public SubgrafoDTO agregarNodo(@PathVariable Long id, @RequestBody NodoRequest nodo, UsuarioActual usuario) {
+    public SubgrafoDTO agregarNodo(@PathVariable Long id, @Valid @RequestBody NodoRequest nodo, UsuarioActual usuario) {
         guardia.editarSubgrafo(id, usuario);
         return servicio.agregarNodo(id, nodo);
     }
@@ -169,7 +170,7 @@ public class ControladorAutoria {
     })
     @PutMapping("/subgrafos/{id}/nodos/{nodoId}")
     public SubgrafoDTO editarNodo(@PathVariable Long id, @PathVariable String nodoId,
-            @RequestBody NodoRequest nodo, UsuarioActual usuario) {
+            @Valid @RequestBody NodoRequest nodo, UsuarioActual usuario) {
         guardia.editarSubgrafo(id, usuario);
         return servicio.editarNodo(id, nodoId, nodo);
     }
@@ -209,7 +210,7 @@ public class ControladorAutoria {
     })
     @PutMapping("/subgrafos/{id}/respuestas/{respuestaId}/destino")
     public SubgrafoDTO enlazar(@PathVariable Long id, @PathVariable String respuestaId,
-            @RequestBody DestinoRequest destino, UsuarioActual usuario) {
+            @Valid @RequestBody DestinoRequest destino, UsuarioActual usuario) {
         guardia.editarSubgrafo(id, usuario);
         return servicio.enlazar(id, respuestaId, destino == null ? null : destino.getNodoId());
     }

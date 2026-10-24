@@ -8,11 +8,12 @@ y reenvía** la respuesta del cuidador hacia el motor de navegación. Son
 
 | Paquete | Clase | Tests | Qué cubre |
 |---|---|---:|---|
-| `servicios` | `ServicioCapturaImplTest` | 4 | valida la selección contra la pregunta actual, audita la observación (con el padre que respondió) y reenvía al servicio de navegación |
+| `servicios` | `ServicioCapturaImplTest` | 15 | valida la selección contra la pregunta actual, audita la observación (con el padre que respondió), reenvía al servicio de navegación y guarda "todo o nada" con candado por recorrido (también al retroceder) y rechaza con 409 una respuesta para una pregunta que ya no es la actual |
 | `servicios` | `ServicioRecorridosImplTest` | 8 | el recorrido queda a nombre del padre, otro padre recibe 404 y el estado y resultado se guardan al terminar o retroceder |
 | `modelo` | `SeleccionCuidadorTest` | 6 | validación del constructor de `SeleccionCuidador` según el tipo de interacción |
+| `controladores` | `ControladorConsultaTest` | 9 | una respuesta vacía da 400 (no 500), una respuesta válida llega al servicio, una de más de 200 caracteres da 422, un recorrido ocupado da 409 al responder y al retroceder, el id de la pregunta llega al servicio y una pregunta que ya no es la actual da 409 |
 
-En total son **18 pruebas**. La regla de dueño también se prueba con la cadena
+En total son **38 pruebas**. La regla de dueño también se prueba con la cadena
 de seguridad real en `seguridad/ReglasAccesoIntegracionTest`.
 
 ## Qué se prueba y por qué importa
@@ -26,7 +27,19 @@ Con `ServicioNavegacion` y `RepositorioObservaciones` **simulados con Mockito**:
   cuál opción domina (eso es del motor);
 - una opción que **no pertenece** a la pregunta actual se rechaza **antes** de
   tocar el motor y **sin** guardar observación;
-- si el recorrido ya está `FINALIZADO`, no se responde ni se audita.
+- si el recorrido ya está `FINALIZADO`, no se responde ni se audita;
+- **todo o nada**: la sesión en Redis, la observación y la fila del recorrido
+  se guardan dentro de una sola transacción de Postgres. Si falla la
+  observación, el guardado del recorrido o el cierre de la transacción, se
+  revierte Postgres y la sesión de Redis vuelve a la copia tomada antes; si
+  tampoco se puede devolver la sesión, sale el error original;
+- **pregunta esperada**: si la petición trae el id de la pregunta que contesta
+  y ya no es la actual, se rechaza con `PreguntaDesactualizadaException` (409)
+  sin registrar ni avanzar nada; sin id funciona como antes, y si el recorrido
+  ya terminó se devuelve tal cual;
+- **candado ocupado**: si otra operación tiene el candado del recorrido, no se
+  toca nada (ni navegación, ni sesión, ni transacción);
+- **retroceder** sigue las mismas reglas (transacción, devolver la sesión si falla).
 
 ### Dueño del recorrido (`ServicioRecorridosImplTest`)
 Con `ServicioNavegacion` y `RepositorioRecorridos` simulados:

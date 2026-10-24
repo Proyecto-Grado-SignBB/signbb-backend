@@ -21,6 +21,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 /**
  * API de sesión: registro de padres, ingreso y usuario actual. El token que
@@ -54,7 +55,7 @@ public class ControladorAuth {
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @PostMapping("/registro")
-    public ResponseEntity<SesionDTO> registro(@RequestBody RegistroRequest request) {
+    public ResponseEntity<SesionDTO> registro(@Valid @RequestBody RegistroRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(cuentas.registrarPadre(request));
     }
 
@@ -75,7 +76,7 @@ public class ControladorAuth {
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @PostMapping("/login")
-    public SesionDTO login(@RequestBody LoginRequest request) {
+    public SesionDTO login(@Valid @RequestBody LoginRequest request) {
         limitador.verificar(request.correo());
         try {
             SesionDTO sesion = cuentas.ingresar(request);
