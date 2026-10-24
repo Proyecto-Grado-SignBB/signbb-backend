@@ -70,6 +70,16 @@ class ServicioNavegacionVersionesTest {
             public void guardar(SesionTriaje sesion) {
                 sesiones.put(sesion.getId(), sesion);
             }
+
+            @Override
+            public boolean existe(String id) {
+                return sesiones.containsKey(id);
+            }
+
+            @Override
+            public void eliminar(String id) {
+                sesiones.remove(id);
+            }
         };
         servicio = new ServicioNavegacionImpl(contexto, new MotorNavegacion(new ServicioReglasImpl()), repositorio);
     }
