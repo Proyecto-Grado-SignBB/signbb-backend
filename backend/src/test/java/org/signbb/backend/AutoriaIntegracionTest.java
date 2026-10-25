@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.Instant;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
@@ -41,7 +42,10 @@ import org.signbb.backend.reglas.datos.entidades.BaseReglasEntity;
 import org.signbb.backend.reglas.datos.repositorios.RepositorioBaseReglas;
 import org.signbb.backend.reglas.modelo.Condicion;
 import org.signbb.backend.reglas.modelo.NivelAlerta;
-import org.signbb.backend.seguridad.UsuariosPrueba;
+import org.signbb.backend.seguridad.datos.entidades.UsuarioEntity;
+import org.signbb.backend.seguridad.datos.repositorios.RepositorioUsuario;
+import org.signbb.backend.seguridad.modelo.Rol;
+import org.signbb.backend.seguridad.modelo.UsuarioActual;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -52,11 +56,17 @@ import org.springframework.boot.test.context.SpringBootTest;
  * conclusión. No es {@code @Transactional} porque publicar actúa después del
  * commit; al terminar se borran las filas creadas, se restaura el grafo raíz y
  * se invalida el contenido en cache y en memoria.
+ *
+ * <p>
+ * El autor es una cuenta real de médico (se crea la primera vez): la base
+ * exige que {@code autor_id} exista en {@code usuario}.
  */
 @SpringBootTest
 class AutoriaIntegracionTest {
 
     private static final String ETIQUETA = "Fiebre o temperatura alta (prueba)";
+
+    private static final String CORREO_AUTOR = "autor-integracion@signbb.local";
 
     @Autowired
     private ServicioAutoria autoria;
@@ -88,6 +98,11 @@ class AutoriaIntegracionTest {
     @Autowired
     private RepositorioBaseReglas basesPublicadas;
 
+    @Autowired
+    private RepositorioUsuario usuarios;
+
+    private UsuarioActual autor;
+
     private GrafoClinicoJson raizOriginal;
     private Long ultimaVersionAntes;
     private Long borradorId;
@@ -97,6 +112,19 @@ class AutoriaIntegracionTest {
     void guardarRaiz() {
         raizOriginal = filaRaiz().getEstructura();
         ultimaVersionAntes = versiones.idMasReciente();
+        UsuarioEntity cuenta = usuarios.findByCorreo(CORREO_AUTOR).orElseGet(() -> {
+            UsuarioEntity u = new UsuarioEntity();
+            u.setCorreo(CORREO_AUTOR);
+            u.setNombre("Dra. Prueba");
+            u.setHashContrasena("sin-ingreso");
+            u.setRol(Rol.MEDICO);
+            u.setInstitucion("Hospital de prueba");
+            u.setActivo(true);
+            u.setCreadoEn(Instant.now());
+            return usuarios.save(u);
+        });
+        autor = new UsuarioActual(cuenta.getId(), cuenta.getNombre(), cuenta.getCorreo(), cuenta.getRol(),
+                cuenta.getInstitucion());
     }
 
     @AfterEach
@@ -139,7 +167,7 @@ class AutoriaIntegracionTest {
     @Test
     void unSubgrafoPublicadoDesdeElLienzoSeRecorreComoCuidadora() {
         SubgrafoDTO s = autoria.crear(new SubgrafoRequest("Fiebre prueba de integracion", "puente_neuro", ETIQUETA,
-                "Dra. Prueba", "Hospital de prueba"), UsuariosPrueba.MEDICO_A);
+                "Dra. Prueba", "Hospital de prueba"), autor);
         borradorId = s.id();
         grafoId = s.grafoId();
 
@@ -187,7 +215,7 @@ class AutoriaIntegracionTest {
     void publicarElSubgrafoPublicaTambienSuBaseDeReglas() {
         String etiqueta = "Fiebre con reglas (prueba)";
         SubgrafoDTO s = autoria.crear(new SubgrafoRequest("Fiebre con reglas", "puente_neuro", etiqueta,
-                "Dra. Prueba", "Hospital de prueba"), UsuariosPrueba.MEDICO_A);
+                "Dra. Prueba", "Hospital de prueba"), autor);
         borradorId = s.id();
         grafoId = s.grafoId();
 
@@ -210,7 +238,7 @@ class AutoriaIntegracionTest {
 
         // Base de reglas del subgrafo: «Menos de 38 °C» también debe llevar a urgencias.
         BaseReglaDTO base = servicioReglas.crear(new BaseReglaRequest("Reglas de fiebre", null, grafoId,
-                "Dra. Prueba", "Hospital de prueba"), UsuariosPrueba.MEDICO_A);
+                "Dra. Prueba", "Hospital de prueba"), autor);
         servicioReglas.agregarRegla(base.id(), new ReglaRequest("R fiebre alta", null,
                 List.of(List.of(new Condicion(inicio, "Menos de 38 °C"))), NivelAlerta.URGENCIA, urgId));
 

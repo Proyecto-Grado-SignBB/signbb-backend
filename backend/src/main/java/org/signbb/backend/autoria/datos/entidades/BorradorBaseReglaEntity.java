@@ -15,6 +15,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lombok.Data;
 
@@ -29,6 +31,7 @@ import lombok.Data;
  * ids locales de sus nodos y el compositor los prefija al publicar.
  */
 @Entity
+@Table(name = "borrador_base_regla_entity", indexes = @Index(name = "ix_borrador_base_regla_autor", columnList = "autor_id"))
 @Data
 public class BorradorBaseReglaEntity {
 
