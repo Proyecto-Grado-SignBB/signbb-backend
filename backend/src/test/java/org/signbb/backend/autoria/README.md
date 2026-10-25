@@ -72,11 +72,11 @@ neurológica (`puente_neuro`).
 ### Avisos (`ValidadorLienzoTest`)
 - **Bloquean la publicación:** sin primera pregunta, texto vacío, menos de 2
   respuestas, respuesta repetida, respuesta sin camino, conclusión sin
-  desenlace y círculo.
+  desenlace, círculo y nodo suelto.
 - Los mensajes están en lenguaje humano, por ejemplo: «La respuesta "Más de
   39 °C" de "¿Cuánto marca el termómetro?" todavía no dice qué pasa
   después.».
-- **No bloquea:** un nodo suelto. Avisa que no se publicará.
+- Un nodo suelto no se revisa por dentro: basta con conectarlo o eliminarlo.
 - **No se avisa** el choque de gravedades: se resuelve al compilar con la
   mayor, como se acordó.
 
@@ -86,7 +86,8 @@ neurológica (`puente_neuro`).
 - "¿Puede marcar varias?" da `SELECCION_MULTIPLE`; si no, `SELECCION_UNICA`.
 - Las conclusiones quedan como `terminal` con su desenlace y el mensaje como
   `label`.
-- Los nodos sueltos no se publican.
+- Los nodos sueltos bloquean la publicación; si se compila un documento que
+  no pasó por la validación, se omiten.
 - La salida pasa por `GrafoClinicoMapper.desde`, la misma validación estricta
   que el contenido del sistema.
 

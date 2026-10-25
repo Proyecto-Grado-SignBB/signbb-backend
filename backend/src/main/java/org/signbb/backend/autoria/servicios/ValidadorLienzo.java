@@ -18,10 +18,10 @@ import org.signbb.backend.autoria.modelo.TipoNodo;
  * Revisa el lienzo y devuelve los avisos para el médico, en lenguaje humano.
  *
  * <p>
- * Solo se revisan los nodos a los que se llega desde la primera pregunta,
- * porque son los que se publican. Un nodo suelto da un único aviso, que no
- * bloquea: al publicar se omite. Que dos respuestas de distinta gravedad
- * lleguen a la misma pregunta no se avisa; al compilar se toma la mayor.
+ * Solo se revisan los nodos a los que se llega desde la primera pregunta.
+ * Un nodo suelto da un único aviso bloqueante: hay que conectarlo o eliminarlo
+ * antes de publicar. Que dos respuestas de distinta gravedad lleguen a la misma
+ * pregunta no se avisa; al compilar se toma la mayor.
  */
 public final class ValidadorLienzo {
 
@@ -42,8 +42,9 @@ public final class ValidadorLienzo {
 
         for (NodoLienzo nodo : documento.nodos().values()) {
             if (!alcanzables.contains(nodo.id())) {
-                avisos.add(new Aviso(Codigo.NODO_SUELTO, false, "\"" + nombre(nodo)
-                        + "\" no está conectada con ninguna respuesta: no se publicará.", nodo.id(), null));
+                avisos.add(new Aviso(Codigo.NODO_SUELTO, true, "\"" + nombre(nodo)
+                        + "\" no está conectada con ninguna respuesta: conéctala a una respuesta o elimínala "
+                        + "antes de publicar.", nodo.id(), null));
             } else if (nodo.tipo() == TipoNodo.CONCLUSION) {
                 revisarConclusion(nodo, avisos);
             } else {

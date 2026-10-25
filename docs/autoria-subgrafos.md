@@ -33,7 +33,7 @@ Cada subgrafo puede tener además su **base de reglas clínicas** (reglas de ala
 1. **Modelo y persistencia del borrador** (`c545730`): `BorradorSubgrafoEntity`, que guarda el lienzo como JSON (`DocumentoLienzo`, `NodoLienzo`, `RespuestaLienzo`). Lleva `@Version` para detectar ediciones simultáneas y los estados `BORRADOR`, `PUBLICADO` y `CAMBIOS_SIN_PUBLICAR`. Es independiente del grafo publicado.
 2. **Edición del lienzo y avisos** (`25ec6e2`):
    - `EditorLienzo` maneja el "+", el enlace a una pregunta existente (sin permitir círculos) y editar o eliminar nodos (podando la rama huérfana).
-   - `ValidadorLienzo` genera avisos en lenguaje humano. Algunos bloquean la publicación y otros solo advierten, como un nodo suelto.
+   - `ValidadorLienzo` genera avisos en lenguaje humano. Todos bloquean la publicación; un nodo suelto impide publicar hasta conectarlo a una respuesta o eliminarlo.
 3. **Compilar y publicar** (`3733bad`):
    - `CompiladorSubgrafo` convierte el lienzo en un `GrafoClinicoJson`. El peso es la mayor gravedad que llega al nodo, y el tipo de selección (única o múltiple) se respeta.
    - `PublicadorSubgrafo` guarda el subgrafo y agrega su opción y el nodo `ref_<grafoId>` en la pregunta puente del grafo raíz. Republicar no duplica nada.

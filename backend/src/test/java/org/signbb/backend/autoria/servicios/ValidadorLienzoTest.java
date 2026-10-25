@@ -116,7 +116,7 @@ class ValidadorLienzoTest {
     }
 
     @Test
-    void unNodoSueltoAvisaSinBloquearYNoSeRevisaPorDentro() {
+    void unNodoSueltoBloqueaYNoSeRevisaPorDentro() {
         // La conclusión de urgencia queda suelta: su respuesta vuelve a ser un "+".
         DocumentoLienzo d = EditorLienzo.enlazar(LienzoFiebre.completo(), MAS_39, null);
         // Aunque esté suelta y le falte el desenlace, solo da el aviso de suelto.
@@ -126,10 +126,12 @@ class ValidadorLienzoTest {
         List<Aviso> avisos = ValidadorLienzo.validar(d);
 
         Aviso suelto = avisos.stream().filter(a -> a.codigo() == Codigo.NODO_SUELTO).findFirst().orElseThrow();
-        assertFalse(suelto.bloqueante());
+        assertTrue(suelto.bloqueante());
+        assertTrue(suelto.mensaje().contains("conéctala a una respuesta o elimínala antes de publicar"));
         assertEquals(URGENCIA, suelto.nodoId());
         assertFalse(avisos.stream().anyMatch(a -> a.codigo() == Codigo.SIN_DESENLACE));
         assertTrue(avisos.stream().anyMatch(a -> a.codigo() == Codigo.RESPUESTA_SIN_CAMINO));
+        assertTrue(ValidadorLienzo.hayBloqueantes(avisos));
     }
 
     @Test

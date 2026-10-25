@@ -23,6 +23,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 import org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity;
+import org.signbb.backend.autoria.modelo.Aviso;
+import org.signbb.backend.autoria.modelo.DocumentoLienzo;
 import org.signbb.backend.cache.ResolvedorContenidoClinico;
 import org.signbb.backend.cache.ResolvedorVersiones;
 import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
@@ -193,6 +195,19 @@ class PublicadorSubgrafoTest {
         verify(grafos, never()).save(any());
         verify(resolvedor, never()).invalidar();
         verify(contexto, never()).recargar();
+    }
+
+    @Test
+    void unNodoSueltoBloqueaLaPublicacion() {
+        DocumentoLienzo conSuelto = EditorLienzo.enlazar(LienzoFiebre.completo(), LienzoFiebre.MAS_39, null);
+
+        ContenidoInvalidoException e = assertThrows(ContenidoInvalidoException.class,
+                () -> publicador.publicar(LienzoFiebre.borrador(conSuelto), FECHA));
+
+        assertTrue(e.getAvisos().stream()
+                .anyMatch(a -> a.codigo() == Aviso.Codigo.NODO_SUELTO && a.bloqueante()));
+        verify(grafos, never()).save(any());
+        verify(versiones, never()).registrar(any(), any(), any());
     }
 
     @Test

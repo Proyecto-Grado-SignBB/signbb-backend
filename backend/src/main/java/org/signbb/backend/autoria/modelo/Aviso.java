@@ -20,8 +20,8 @@ public record Aviso(
         @Schema(description = "Respuesta a la que se refiere, o nula") String respuestaId) {
 
     /**
-     * Clases de aviso del lienzo y de las reglas. Del lienzo, todas bloquean la
-     * publicación salvo {@code NODO_SUELTO}; de las reglas, todas bloquean.
+     * Clases de aviso del lienzo y de las reglas. Todos los avisos actuales
+     * bloquean la publicación.
      */
     @Schema(description = "Clases de aviso del lienzo y de las reglas.")
     public enum Codigo {
@@ -46,8 +46,8 @@ public record Aviso(
         /** Un camino que vuelve a una pregunta anterior. */
         @Schema(description = "Un camino que vuelve a una pregunta anterior.")
         CICLO,
-        /** Un nodo al que no llega ninguna respuesta; no se publica. */
-        @Schema(description = "Un nodo al que no llega ninguna respuesta; no se publica.")
+        /** Un nodo al que no llega ninguna respuesta; bloquea hasta conectarlo. */
+        @Schema(description = "Un nodo al que no llega ninguna respuesta; bloquea hasta conectarlo.")
         NODO_SUELTO,
         /** Una regla sin nombre. */
         @Schema(description = "Una regla sin nombre.")

@@ -23,7 +23,8 @@ import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoMapper;
  *
  * <ul>
  * <li>Solo se compilan los nodos a los que se llega desde la primera
- * pregunta; los sueltos se omiten.</li>
+ * pregunta. Un nodo suelto bloquea en {@link ValidadorLienzo}; si se compila
+ * un documento que no pasó por esa validación, se omite.</li>
  * <li>Una pregunta queda como {@code tipo: pregunta}, con
  * {@code SELECCION_MULTIPLE} si se pueden marcar varias respuestas y
  * {@code SELECCION_UNICA} si no.</li>
