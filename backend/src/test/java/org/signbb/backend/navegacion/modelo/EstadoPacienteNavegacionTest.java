@@ -144,22 +144,6 @@ class EstadoPacienteNavegacionTest {
     }
 
     @Test
-    void reiniciarLimpiaLaNavegacionYElContadorDeOrden() {
-        EstadoPaciente e = new EstadoPaciente("s");
-        e.encolarOpcion("q1", "A", "d1", List.of());
-        e.agregarARuta(new PasoRuta("q1", ""));
-        e.registrarRecomendacion("r1", List.of());
-
-        e.reiniciar();
-
-        assertTrue(e.cola().isEmpty());
-        assertTrue(e.ruta().isEmpty());
-        assertTrue(e.recomendaciones().isEmpty());
-        e.encolarOpcion("q1", "A", "d1", List.of());
-        assertEquals(0, e.cola().get(0).orden());
-    }
-
-    @Test
     void laOpcionPendienteValidaSusDatos() {
         assertThrows(IllegalArgumentException.class, () -> new OpcionPendiente("", "A", "d", 0, List.of()));
         assertThrows(IllegalArgumentException.class, () -> new OpcionPendiente("q", "", "d", 0, List.of()));

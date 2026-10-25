@@ -28,10 +28,10 @@ import org.signbb.backend.reglas.modelo.ReglaClinica;
  * {@code historial} es la pila de pasos del recorrido, que permite
  * retroceder sin reevaluar reglas. {@code navegacion} es la cola de opciones
  * pendientes de la selección múltiple, la ruta que se está siguiendo y las
- * recomendaciones ya alcanzadas. Una sesión guardada antes de que existieran
- * no trae estos campos ({@code null}): sin historial el motor retrocede
- * reproduciendo el recorrido, y sin navegación arranca con la cola vacía y
- * reconstruye la ruta cuando la necesita.
+ * recomendaciones ya alcanzadas. El formato actual siempre trae ambos campos.
+ * En una sesión guardada antes de que existieran pueden venir {@code null}:
+ * sin historial la pila queda vacía y no se puede retroceder, y sin navegación
+ * arranca con la cola vacía y reconstruye la ruta cuando la necesita.
  *
  * <p>
  * {@code versionId} es la versión del contenido clínico con la que empezó el

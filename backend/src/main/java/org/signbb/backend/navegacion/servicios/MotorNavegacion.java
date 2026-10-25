@@ -239,53 +239,23 @@ public class MotorNavegacion {
      * borra (o restaura) su respuesta y se desmarcan solo las reglas que ese
      * paso marcó, sin reevaluar las reglas.
      *
-     * @throws IllegalArgumentException si aún no hay ninguna respuesta.
+     * <p>
+     * Un recorrido actual siempre apila un paso por respuesta. Una pila vacía
+     * corresponde a un recorrido sin respuestas o a una sesión heredada sin
+     * historial; en ambos casos no se puede retroceder.
+     *
+     * @throws IllegalArgumentException si no hay pasos que deshacer.
      * @throws IllegalStateException    si la pregunta ya no existe en el
-     *                                  contenido clínico, o si sin pila no se
-     *                                  pudo reproducir el recorrido.
+     *                                  contenido clínico.
      */
     public ResultadoPaso retroceder(GrafoClinico grafo, BaseReglas base, EstadoPaciente estado) {
-        if (estado.pasos().isEmpty()) {
-            return retrocederReproduciendo(grafo, base, estado);
-        }
-        PasoRecorrido deshecho = estado.desapilarPaso().orElseThrow();
+        PasoRecorrido deshecho = estado.desapilarPaso()
+                .orElseThrow(() -> new IllegalArgumentException("no hay pregunta anterior a la cual volver"));
         Nodo pregunta = grafo.obtenerNodoPorId(deshecho.idPregunta())
                 .orElseThrow(() -> new IllegalStateException(
                         "la pregunta '" + deshecho.idPregunta()
                                 + "' ya no existe en el contenido clínico"));
         return ResultadoPaso.pregunta(pregunta);
-    }
-
-    /**
-     * Respaldo de {@link #retroceder} para un estado sin pila de pasos (una
-     * sesión guardada antes de que existiera, o respuestas registradas a mano):
-     * reinicia la memoria de trabajo y reproduce, en orden, las respuestas
-     * anteriores a la última pregunta. Al reproducir con {@link #paso} la pila
-     * queda reconstruida.
-     */
-    private ResultadoPaso retrocederReproduciendo(GrafoClinico grafo, BaseReglas base,
-            EstadoPaciente estado) {
-        String anterior = estado.ultimaPreguntaRespondida()
-                .orElseThrow(() -> new IllegalArgumentException("no hay pregunta anterior a la cual volver"));
-        Map<String, List<String>> conservadas = estado.respuestasEnOrden();
-        conservadas.remove(anterior);
-
-        estado.reiniciar();
-        ResultadoPaso reproducido = iniciar(estado, grafo);
-        for (Map.Entry<String, List<String>> e : conservadas.entrySet()) {
-            if (reproducido.finalizado() || !reproducido.preguntaActual().getId().equals(e.getKey())) {
-                throw new IllegalStateException(
-                        "no se pudo reproducir el recorrido hasta '" + anterior
-                                + "': el contenido clínico cambió");
-            }
-            reproducido = paso(grafo, base, estado, reproducido.preguntaActual(), e.getValue());
-        }
-        if (reproducido.finalizado() || !reproducido.preguntaActual().getId().equals(anterior)) {
-            throw new IllegalStateException(
-                    "no se pudo reproducir el recorrido hasta '" + anterior
-                            + "': el contenido clínico cambió");
-        }
-        return reproducido;
     }
 
     /**

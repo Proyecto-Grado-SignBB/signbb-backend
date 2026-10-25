@@ -62,16 +62,6 @@ class EstadoPacienteTest {
     }
 
     @Test
-    void reiniciar() {
-        EstadoPaciente e = new EstadoPaciente("s1");
-        e.registrarRespuesta("a", "1");
-        e.sumarPuntaje(10);
-        e.reiniciar();
-        assertEquals(0, e.size());
-        assertEquals(0, e.getPuntaje());
-    }
-
-    @Test
     void desapilarBorraLaRespuestaYDesmarcaSoloSusReglas() {
         EstadoPaciente e = new EstadoPaciente("s1");
         e.registrarRespuesta("p1", "SI");
@@ -87,7 +77,7 @@ class EstadoPacienteTest {
         assertTrue(e.getRespuestas("p2").isEmpty());
         assertFalse(e.reglaDisparada("R1"));
         assertTrue(e.reglaDisparada("R0"));
-        assertEquals(Optional.of("p1"), e.ultimaPreguntaRespondida());
+        assertEquals("p1", e.pasos().get(0).idPregunta());
     }
 
     @Test
@@ -106,12 +96,8 @@ class EstadoPacienteTest {
     }
 
     @Test
-    void desapilarSinPasosDaVacioYReiniciarVaciaLaPila() {
+    void desapilarSinPasosDaVacio() {
         EstadoPaciente e = new EstadoPaciente("s1");
         assertTrue(e.desapilarPaso().isEmpty());
-
-        e.apilarPaso(new PasoRecorrido("p1", List.of("SI"), List.of(), List.of()));
-        e.reiniciar();
-        assertTrue(e.pasos().isEmpty());
     }
 }

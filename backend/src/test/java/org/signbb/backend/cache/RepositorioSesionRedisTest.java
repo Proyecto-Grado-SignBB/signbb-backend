@@ -35,6 +35,7 @@ import org.signbb.backend.navegacion.modelo.Recomendacion;
 import org.signbb.backend.navegacion.modelo.RepositorioSesion;
 import org.signbb.backend.navegacion.modelo.ResultadoPaso;
 import org.signbb.backend.navegacion.modelo.SesionTriaje;
+import org.signbb.backend.navegacion.modelo.Sintoma;
 import org.signbb.backend.navegacion.servicios.MotorNavegacion;
 import org.signbb.backend.reglas.datos.serializacion.BaseReglasMapper;
 import org.signbb.backend.reglas.modelo.BaseReglas;
@@ -149,9 +150,7 @@ class RepositorioSesionRedisTest {
         EstadoPaciente recuperado = repositorio.buscar(sesion.getId()).getEstado();
 
         assertEquals(List.of("pregunta_inicial", "puente_respiracion", "grafo_respiracion/q_resp_urgencia"),
-                List.copyOf(recuperado.respuestasEnOrden().keySet()));
-        assertEquals("grafo_respiracion/q_resp_urgencia",
-                recuperado.ultimaPreguntaRespondida().orElseThrow());
+                recuperado.sintomas().stream().map(Sintoma::idNodo).toList());
     }
 
     @Test

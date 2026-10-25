@@ -35,9 +35,9 @@ import org.signbb.backend.reglas.servicios.ServicioReglasImpl;
  * (grafo raíz + subgrafos del sistema), recorriendo el de respiración. Cada
  * respuesta apila un {@link PasoRecorrido} con las reglas que marcó;
  * retroceder lo desapila, borra esa respuesta, desmarca solo esas reglas y
- * vuelve a la pregunta sin reevaluar nada. Sin pila (sesión guardada antes de
- * existir) el motor reproduce el recorrido. Los casos con la cola de la
- * selección múltiple están en {@link MotorNavegacionColaTest}.
+ * vuelve a la pregunta sin reevaluar nada. Sin pila no se puede retroceder.
+ * Los casos con la cola de la selección múltiple están en
+ * {@link MotorNavegacionColaTest}.
  */
 class MotorNavegacionRetrocederTest {
 
@@ -177,27 +177,12 @@ class MotorNavegacionRetrocederTest {
     }
 
     @Test
-    void sinPilaReproduceElRecorridoYReconstruyeLaPila() {
-        // Estado armado a mano, como una sesión guardada antes de existir la pila.
+    void sinPilaSeRechazaAunqueHayaRespuestas() {
+        // Una sesión heredada sin historial carga con respuestas pero sin pasos.
         EstadoPaciente e = new EstadoPaciente("s");
         e.registrarRespuesta("pregunta_inicial", "respiracion");
         e.registrarRespuesta("puente_respiracion", "iniciar");
 
-        ResultadoPaso atras = motor.retroceder(grafo, base, e);
-
-        assertEquals("puente_respiracion", atras.preguntaActual().getId());
-        assertTrue(e.getRespuestas("puente_respiracion").isEmpty());
-        assertEquals(1, e.pasos().size());
-        assertEquals("pregunta_inicial", e.pasos().get(0).idPregunta());
-    }
-
-    @Test
-    void sinPilaYConElContenidoCambiadoFallaConEstadoIlegal() {
-        // La respuesta guardada ya no está en el camino que da el contenido actual.
-        EstadoPaciente e = new EstadoPaciente("s");
-        e.registrarRespuesta("pregunta_inicial", "respiracion");
-        e.registrarRespuesta("pregunta_retirada", "SI");
-
-        assertThrows(IllegalStateException.class, () -> motor.retroceder(grafo, base, e));
+        assertThrows(IllegalArgumentException.class, () -> motor.retroceder(grafo, base, e));
     }
 }

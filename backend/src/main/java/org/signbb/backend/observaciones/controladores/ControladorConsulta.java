@@ -134,14 +134,14 @@ public class ControladorConsulta {
 
     /**
      * {@code POST /api/recorridos/{id}/retroceder}: vuelve a la pregunta
-     * anterior para cambiar su respuesta (400 si aún no hay respuestas).
+     * anterior para cambiar su respuesta (400 si no hay pasos en el historial).
      */
     @Operation(summary = "Retrocede a la pregunta anterior",
             description = "Vuelve atrás para cambiar la última respuesta. Falla con 400 si "
-                    + "el recorrido aún no tiene respuestas.")
+                    + "el recorrido no tiene pasos en el historial.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Recorrido actualizado en la pregunta anterior"),
-            @ApiResponse(responseCode = "400", description = "El recorrido no tiene respuestas que deshacer",
+            @ApiResponse(responseCode = "400", description = "El recorrido no tiene historial que deshacer",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "El recorrido no existe o es de otro padre",
                     content = @Content),

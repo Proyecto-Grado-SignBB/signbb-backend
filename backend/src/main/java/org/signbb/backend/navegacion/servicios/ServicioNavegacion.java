@@ -51,7 +51,7 @@ public interface ServicioNavegacion {
      * reglas que disparó dejan de estar disparadas. Ver
      * {@code MotorNavegacion.retroceder}.
      *
-     * @throws IllegalArgumentException si el recorrido aún no tiene respuestas.
+     * @throws IllegalArgumentException si el recorrido no tiene pasos en el historial.
      */
     RecorridoDTO retroceder(String recorridoId);
 }

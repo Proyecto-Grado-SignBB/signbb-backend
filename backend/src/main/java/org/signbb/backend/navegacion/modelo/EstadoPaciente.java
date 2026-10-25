@@ -125,35 +125,6 @@ public final class EstadoPaciente {
     }
 
     /**
-     * Copia de las respuestas por nodo en el orden en que se respondieron las
-     * preguntas. Es el historial del recorrido: el motor lo reproduce para
-     * volver a la pregunta anterior.
-     */
-    public Map<String, List<String>> respuestasEnOrden() {
-        Map<String, List<String>> copia = new LinkedHashMap<>();
-        for (Map.Entry<String, List<String>> e : respuestas.entrySet()) {
-            copia.put(e.getKey(), new ArrayList<>(e.getValue()));
-        }
-        return copia;
-    }
-
-    /**
-     * Id de la última pregunta respondida, o vacío si aún no hay respuestas.
-     * Si hay pila de pasos, es la pregunta de su cima; si no, la última
-     * insertada en las respuestas.
-     */
-    public Optional<String> ultimaPreguntaRespondida() {
-        if (!pasos.isEmpty()) {
-            return Optional.of(pasos.get(pasos.size() - 1).idPregunta());
-        }
-        String ultima = null;
-        for (String idNodo : respuestas.keySet()) {
-            ultima = idNodo;
-        }
-        return Optional.ofNullable(ultima);
-    }
-
-    /**
      * Apila un paso ya aplicado: solo lo anota, no toca respuestas ni reglas
      * (las registró quien lo apila). Lo usan el motor y la reconstrucción de
      * una sesión guardada.
@@ -337,18 +308,6 @@ public final class EstadoPaciente {
             }
         }
         return lista;
-    }
-
-    /** Vacía las respuestas, las reglas disparadas, la pila de pasos y reinicia el puntaje. */
-    public void reiniciar() {
-        respuestas.clear();
-        reglasDisparadas.clear();
-        pasos.clear();
-        cola.clear();
-        ruta.clear();
-        recomendaciones.clear();
-        siguienteOrden = 0;
-        puntaje = 0;
     }
 
     /** Número de nodos con al menos una respuesta registrada. */
