@@ -5,6 +5,7 @@ import java.time.Instant;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -18,9 +19,14 @@ import lombok.Data;
  * MODIFICADO (CU10/CU11): {@code estado} suma {@code VENCIDO} y
  * {@code ABANDONADO} (ver {@code ServicioRecorridosImpl}); la columna ya era
  * texto, así que el esquema no cambia.
+ *
+ * <p>
+ * MODIFICADO (V3): la base restringe {@code estado} y {@code nivel} con
+ * {@code check}, exige que {@code usuario_id} exista en {@code usuario} e
+ * indexa el historial de cada padre ({@code ix_recorrido_usuario}).
  */
 @Entity
-@Table(name = "recorrido")
+@Table(name = "recorrido", indexes = @Index(name = "ix_recorrido_usuario", columnList = "usuario_id, iniciado_en desc"))
 @Data
 public class RecorridoEntity {
 

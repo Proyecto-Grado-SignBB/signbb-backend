@@ -15,6 +15,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lombok.Data;
 
@@ -24,6 +26,10 @@ import lombok.Data;
  * al publicar; así la cuidadora nunca ve un subgrafo a medio armar.
  */
 @Entity
+@Table(name = "borrador_subgrafo_entity", indexes = {
+        @Index(name = "ix_borrador_subgrafo_estado", columnList = "estado"),
+        @Index(name = "ix_borrador_subgrafo_autor", columnList = "autor_id"),
+        @Index(name = "ix_borrador_subgrafo_revisor", columnList = "revisor_id") })
 @Data
 public class BorradorSubgrafoEntity {
     @Id

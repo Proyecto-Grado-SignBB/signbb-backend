@@ -51,6 +51,15 @@ jobs:
       - name: Make Maven Wrapper executable
         run: chmod +x mvnw
 
+      # Los DAO solo usan consultas derivadas y JPQL con parámetros enlazados
+      # (PreparedStatement); SQL nativo o armado a mano no pasa el build.
+      - name: Sin SQL nativo ni Statement
+        run: |
+          if grep -rnE 'nativeQuery|createNativeQuery|createStatement|JdbcTemplate' src/main/java; then
+            echo "Se encontró SQL nativo o Statement en src/main/java" >&2
+            exit 1
+          fi
+
       - name: Build and test
         run: ./mvnw -B verify
 

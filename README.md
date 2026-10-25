@@ -48,7 +48,7 @@ Hay dos formas de trabajar:
 
 **Esquema con Flyway.** Las tablas las crean las migraciones de
 `backend/src/main/resources/db/migration` (`V1__esquema_inicial.sql`,
-`V2__telefono_pediatra.sql`, ...); Hibernate solo valida
+`V2__telefono_pediatra.sql`, `V3__integridad_e_indices.sql`, ...); Hibernate solo valida
 (`ddl-auto=validate`). Un cambio de esquema es un archivo `V<n>__descripcion.sql`
 nuevo; nunca se edita una migración ya publicada. Una base creada antes de
 Flyway se marca como versión 1 y recibe solo las siguientes. Si al arrancar
