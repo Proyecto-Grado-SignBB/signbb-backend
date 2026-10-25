@@ -22,6 +22,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,6 +47,7 @@ import org.signbb.backend.autoria.modelo.EstadoBorrador;
 import org.signbb.backend.autoria.modelo.Gravedad;
 import org.signbb.backend.autoria.modelo.TipoNodo;
 import org.signbb.backend.config.RecursoNoEncontradoException;
+import org.signbb.backend.media.ServicioImagenes;
 import org.signbb.backend.seguridad.UsuariosPrueba;
 import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
 import org.signbb.backend.reglas.datos.entidades.BaseReglasEntity;
@@ -63,11 +65,16 @@ import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoJson;
  */
 class ServicioAutoriaImplTest {
 
+    private static final String IMAGEN_1 = "11111111-1111-1111-1111-111111111111.png";
+    private static final String IMAGEN_2 = "22222222-2222-2222-2222-222222222222.jpg";
+    private static final String IMAGEN_3 = "33333333-3333-3333-3333-333333333333.webp";
+
     private RepositorioBorradorSubgrafo borradores;
     private RepositorioBorradorBaseRegla basesReglas;
     private RepositorioBaseReglas basesPublicadas;
     private PublicadorSubgrafo publicador;
     private ServicioAutoriaReglas reglas;
+    private ServicioImagenes imagenes;
     private ServicioAutoriaImpl servicio;
 
     @BeforeEach
@@ -87,7 +94,9 @@ class ServicioAutoriaImplTest {
         basesPublicadas = mock(RepositorioBaseReglas.class);
         publicador = mock(PublicadorSubgrafo.class);
         reglas = mock(ServicioAutoriaReglas.class);
-        servicio = new ServicioAutoriaImpl(borradores, basesReglas, basesPublicadas, grafos, publicador, reglas);
+        imagenes = mock(ServicioImagenes.class);
+        servicio = new ServicioAutoriaImpl(borradores, basesReglas, basesPublicadas, grafos, publicador, reglas,
+                imagenes);
     }
 
     private static GrafoClinicoEntity fila(GrafoClinicoJson documento) {
@@ -489,5 +498,79 @@ class ServicioAutoriaImplTest {
         when(borradores.findById(9L)).thenReturn(Optional.empty());
 
         assertThrows(RecursoNoEncontradoException.class, () -> servicio.obtener(9L));
+    }
+
+    @Test
+    void editarUnNodoSinUnaImagenLaBorraDeSilo() {
+        conImagenes();
+
+        servicio.editarNodo(1L, "pregunta_1", nodoConImagenes(List.of(IMAGEN_1)));
+
+        verify(imagenes).eliminarSiHuerfanas(Set.of(IMAGEN_2));
+    }
+
+    @Test
+    void editarUnNodoConservandoLasImagenesNoBorraNada() {
+        conImagenes();
+
+        servicio.editarNodo(1L, "pregunta_1", nodoConImagenes(List.of(IMAGEN_1, IMAGEN_2)));
+
+        verify(imagenes, never()).eliminarSiHuerfanas(any());
+    }
+
+    @Test
+    void agregarUnaImagenNoBorraLasQueYaEstaban() {
+        conImagenes();
+
+        servicio.editarNodo(1L, "pregunta_1",
+                nodoConImagenes(List.of(IMAGEN_1, IMAGEN_2, IMAGEN_3)));
+
+        verify(imagenes, never()).eliminarSiHuerfanas(any());
+    }
+
+    @Test
+    void eliminarUnNodoBorraTodasSusImagenes() {
+        conImagenes();
+
+        servicio.eliminarNodo(1L, "pregunta_1");
+
+        verify(imagenes).eliminarSiHuerfanas(Set.of(IMAGEN_1, IMAGEN_2));
+    }
+
+    @Test
+    void eliminarElBorradorBorraLasImagenesQueSoloEstabanEnEl() {
+        BorradorSubgrafoEntity b = conImagenes();
+
+        servicio.eliminar(1L);
+
+        verify(borradores).delete(b);
+        verify(imagenes).eliminarSiHuerfanas(Set.of(IMAGEN_1, IMAGEN_2));
+    }
+
+    @Test
+    void descartarCambiosBorraLasImagenesQueSoloEstabanEnElBorrador() {
+        BorradorSubgrafoEntity b = conImagenes();
+        DocumentoLienzo publicado = b.getDocumento();
+        b.setEstado(EstadoBorrador.CAMBIOS_SIN_PUBLICAR);
+        b.setPublicadoEn(Instant.parse("2026-10-01T00:00:00Z"));
+        b.setCopiaPublicada(new CopiaPublicada(publicado, b.getNombre(), b.getPuenteId(), b.getCategoria(),
+                b.getEtiquetaOpcion(), b.getAutor(), b.getInstitucion()));
+        servicio.editarNodo(1L, "pregunta_1",
+                nodoConImagenes(List.of(IMAGEN_1, IMAGEN_2, IMAGEN_3)));
+
+        servicio.descartarCambios(1L);
+
+        verify(imagenes).eliminarSiHuerfanas(Set.of(IMAGEN_3));
+    }
+
+    private BorradorSubgrafoEntity conImagenes() {
+        DocumentoLienzo documento = EditorLienzo.agregarNodo(DocumentoLienzo.vacio(), null, null,
+                new EditorLienzo.DatosNodo(TipoNodo.PREGUNTA, "¿Tiene manchas?", false, null, List.of(),
+                        List.of(IMAGEN_1, IMAGEN_2)));
+        return guardado(LienzoFiebre.borrador(documento));
+    }
+
+    private static NodoRequest nodoConImagenes(List<String> imagenes) {
+        return new NodoRequest(null, TipoNodo.PREGUNTA, "¿Tiene manchas?", false, null, List.of(), imagenes);
     }
 }

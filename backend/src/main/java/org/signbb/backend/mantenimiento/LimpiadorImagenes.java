@@ -3,24 +3,16 @@ package org.signbb.backend.mantenimiento;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity;
-import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo;
 import org.signbb.backend.media.AlmacenImagenes;
 import org.signbb.backend.media.AlmacenNoDisponibleException;
 import org.signbb.backend.media.FormatoImagen;
-import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
-import org.signbb.backend.navegacion.datos.entidades.VersionContenidoEntity;
-import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico;
-import org.signbb.backend.navegacion.datos.repositorios.RepositorioVersionContenido;
+import org.signbb.backend.media.ReferenciasImagenes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import tools.jackson.databind.ObjectMapper;
 
 /**
  * Borra de Silo las imágenes que nadie usa.
@@ -46,18 +38,12 @@ public class LimpiadorImagenes {
     public static final Duration GRACIA = Duration.ofHours(24);
 
     private final AlmacenImagenes almacen;
-    private final RepositorioBorradorSubgrafo borradores;
-    private final RepositorioGrafoClinico grafos;
-    private final RepositorioVersionContenido versiones;
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final ReferenciasImagenes referencias;
 
-    /** Inyecta el almacén de imágenes y los repositorios donde pueden estar referenciadas. */
-    public LimpiadorImagenes(AlmacenImagenes almacen, RepositorioBorradorSubgrafo borradores,
-            RepositorioGrafoClinico grafos, RepositorioVersionContenido versiones) {
+    /** Inyecta el almacén y el cálculo de imágenes en uso. */
+    public LimpiadorImagenes(AlmacenImagenes almacen, ReferenciasImagenes referencias) {
         this.almacen = almacen;
-        this.borradores = borradores;
-        this.grafos = grafos;
-        this.versiones = versiones;
+        this.referencias = referencias;
     }
 
     /**
@@ -81,13 +67,13 @@ public class LimpiadorImagenes {
                     GRACIA.toHours(), guardadas.size());
             return List.of();
         }
-        if (grafos.count() == 0) {
+        if (!referencias.hayGrafosPublicados()) {
             log.warn("Limpieza de imágenes cancelada: no hay grafos en la base de datos, así que no se puede "
                     + "saber qué imágenes se usan.");
             return List.of();
         }
 
-        Set<String> enUso = nombresEnUso();
+        Set<String> enUso = referencias.enUso();
         List<String> borradas = new ArrayList<>();
         for (String nombre : candidatas) {
             if (enUso.contains(nombre)) {
@@ -103,24 +89,5 @@ public class LimpiadorImagenes {
         log.info("Limpieza de imágenes: se borraron {} de {} imágenes ({} en uso).", borradas.size(),
                 guardadas.size(), enUso.size());
         return borradas;
-    }
-
-    private Set<String> nombresEnUso() {
-        Set<String> enUso = new HashSet<>();
-        for (BorradorSubgrafoEntity b : borradores.findAll()) {
-            enUso.addAll(nombresEn(b.getDocumento()));
-            enUso.addAll(nombresEn(b.getCopiaPublicada()));
-        }
-        for (GrafoClinicoEntity g : grafos.findAll()) {
-            enUso.addAll(nombresEn(g.getEstructura()));
-        }
-        for (VersionContenidoEntity v : versiones.findAll()) {
-            enUso.addAll(nombresEn(v.getGrafo()));
-        }
-        return enUso;
-    }
-
-    private Set<String> nombresEn(Object documento) {
-        return documento == null ? Set.of() : FormatoImagen.nombresEn(mapper.writeValueAsString(documento));
     }
 }

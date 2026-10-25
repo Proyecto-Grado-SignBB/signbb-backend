@@ -22,7 +22,9 @@ import org.signbb.backend.autoria.modelo.Aviso;
 import org.signbb.backend.autoria.modelo.CopiaPublicada;
 import org.signbb.backend.autoria.modelo.DocumentoLienzo;
 import org.signbb.backend.autoria.modelo.EstadoBorrador;
+import org.signbb.backend.autoria.modelo.NodoLienzo;
 import org.signbb.backend.config.RecursoNoEncontradoException;
+import org.signbb.backend.media.ServicioImagenes;
 import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
 import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico;
 import org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico;
@@ -32,6 +34,7 @@ import org.signbb.backend.seguridad.modelo.UsuarioActual;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 /**
  * Implementación de {@link ServicioAutoria}: carga el borrador, aplica la
@@ -50,17 +53,20 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
     private final RepositorioGrafoClinico grafos;
     private final PublicadorSubgrafo publicador;
     private final ServicioAutoriaReglas reglas;
+    private final ServicioImagenes imagenes;
 
-    /** Inyecta los repositorios, el publicador y el servicio de reglas. */
+    /** Inyecta los repositorios, el publicador, el servicio de reglas y las imágenes. */
     public ServicioAutoriaImpl(RepositorioBorradorSubgrafo borradores,
             RepositorioBorradorBaseRegla basesReglas, RepositorioBaseReglas basesPublicadas,
-            RepositorioGrafoClinico grafos, PublicadorSubgrafo publicador, ServicioAutoriaReglas reglas) {
+            RepositorioGrafoClinico grafos, PublicadorSubgrafo publicador, ServicioAutoriaReglas reglas,
+            ServicioImagenes imagenes) {
         this.borradores = borradores;
         this.basesReglas = basesReglas;
         this.basesPublicadas = basesPublicadas;
         this.grafos = grafos;
         this.publicador = publicador;
         this.reglas = reglas;
+        this.imagenes = imagenes;
     }
 
     @Override
@@ -129,8 +135,10 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
             throw new EdicionInvalidaException(
                     "Este subgrafo ya está publicado y las cuidadoras lo usan: no se puede borrar.");
         }
+        Set<String> antes = imagenesDe(b.getDocumento());
         basesReglas.findByGrafoId(b.getGrafoId()).ifPresent(basesReglas::delete);
         borradores.delete(b);
+        programarBorrado(antes, Set.of());
     }
 
     @Override
@@ -151,13 +159,26 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
     @Override
     @Transactional
     public SubgrafoDTO editarNodo(Long id, String nodoId, NodoRequest nodo) {
-        return editar(id, d -> EditorLienzo.editarNodo(d, nodoId, datosDe(nodo)));
+        BorradorSubgrafoEntity b = buscar(id);
+        Set<String> antes = imagenesDe(b.getDocumento());
+        b.setDocumento(EditorLienzo.editarNodo(b.getDocumento(), nodoId, datosDe(nodo)));
+        Set<String> despues = imagenesDe(b.getDocumento());
+        marcarEditado(b);
+        SubgrafoDTO dto = dto(borradores.save(b));
+        programarBorrado(antes, despues);
+        return dto;
     }
 
     @Override
     @Transactional
     public SubgrafoDTO eliminarNodo(Long id, String nodoId) {
-        return editar(id, d -> EditorLienzo.eliminarNodo(d, nodoId));
+        BorradorSubgrafoEntity b = buscar(id);
+        Set<String> antes = imagenesDe(b.getDocumento());
+        b.setDocumento(EditorLienzo.eliminarNodo(b.getDocumento(), nodoId));
+        marcarEditado(b);
+        SubgrafoDTO dto = dto(borradores.save(b));
+        programarBorrado(antes, Set.of());
+        return dto;
     }
 
     @Override
@@ -188,6 +209,7 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
         BorradorSubgrafoEntity guardado = borradores.save(b);
         basesReglas.findByGrafoId(b.getGrafoId())
                 .ifPresent(base -> reglas.publicar(base.getId()));
+        PublicacionContenido.despuesDelCommit(imagenes::invalidarCachePublicadas);
         return dto(guardado);
     }
 
@@ -211,6 +233,7 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
         b.setPublicadoEn(null);
         b.setCopiaPublicada(null);
         b.setActualizadoEn(Instant.now());
+        PublicacionContenido.despuesDelCommit(imagenes::invalidarCachePublicadas);
         return dto(borradores.save(b));
     }
 
@@ -230,6 +253,7 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
             throw new EdicionInvalidaException("Este subgrafo se publicó antes de que se guardara una copia de "
                     + "lo publicado. Podrás descartar cambios a partir de su próxima publicación.");
         }
+        Set<String> antes = imagenesDe(b.getDocumento());
         b.setDocumento(copia.documento());
         b.setNombre(copia.nombre());
         b.setPuenteId(copia.puenteId());
@@ -239,7 +263,9 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
         b.setInstitucion(copia.institucion());
         b.setEstado(EstadoBorrador.PUBLICADO);
         b.setActualizadoEn(Instant.now());
-        return dto(borradores.save(b));
+        SubgrafoDTO dto = dto(borradores.save(b));
+        programarBorrado(antes, imagenesDe(b.getDocumento()));
+        return dto;
     }
 
     /** Aplica una operación del editor al lienzo y guarda. */
@@ -253,6 +279,31 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
     private BorradorSubgrafoEntity buscar(Long id) {
         return borradores.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException("no hay un subgrafo con id " + id));
+    }
+
+    /** Imágenes referenciadas por los nodos de un documento del lienzo. */
+    private static Set<String> imagenesDe(DocumentoLienzo documento) {
+        if (documento == null) {
+            return Set.of();
+        }
+        Set<String> imagenes = new HashSet<>();
+        for (NodoLienzo nodo : documento.nodos().values()) {
+            imagenes.addAll(nodo.imagenes());
+        }
+        return imagenes;
+    }
+
+    /**
+     * Programa borrar de Silo las imágenes que dejaron de estar en el nodo. La
+     * comprobación de referencias se hace después del commit para que vea el
+     * documento nuevo y no borre una imagen que otra pregunta o versión usa.
+     */
+    private void programarBorrado(Set<String> antes, Set<String> despues) {
+        Set<String> retiradas = new HashSet<>(antes);
+        retiradas.removeAll(despues);
+        if (!retiradas.isEmpty()) {
+            PublicacionContenido.despuesDelCommit(() -> imagenes.eliminarSiHuerfanas(retiradas));
+        }
     }
 
     private static void marcarEditado(BorradorSubgrafoEntity b) {

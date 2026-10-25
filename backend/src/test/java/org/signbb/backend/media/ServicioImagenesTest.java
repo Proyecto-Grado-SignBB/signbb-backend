@@ -1,27 +1,35 @@
 package org.signbb.backend.media;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.imageio.ImageIO;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.signbb.backend.config.RecursoNoEncontradoException;
 
-/** Tests de {@link ServicioImagenes}: formato, tamaño y nombre, con un almacén en memoria. */
-class ServicioImagenesTest {
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.exif.ExifIFD0Directory;
+import com.drew.metadata.exif.GpsDirectory;
 
-    private static final byte[] PNG = { (byte) 0x89, 'P', 'N', 'G', 0x0D, 0x0A, 0x1A, 0x0A, 0, 0, 0, 0 };
-    private static final byte[] JPEG = { (byte) 0xFF, (byte) 0xD8, (byte) 0xFF, (byte) 0xE0, 0, 0 };
-    private static final byte[] GIF = { 'G', 'I', 'F', '8', '9', 'a', 0, 0 };
-    private static final byte[] WEBP = { 'R', 'I', 'F', 'F', 1, 2, 3, 4, 'W', 'E', 'B', 'P' };
+/** Tests de {@link ServicioImagenes}: formato, tamaño, nombre, EXIF y orientación. */
+class ServicioImagenesTest {
 
     private final Map<String, AlmacenImagenes.Imagen> guardadas = new HashMap<>();
     private ServicioImagenes servicio;
@@ -49,19 +57,68 @@ class ServicioImagenesTest {
                 guardadas.remove(nombre);
             }
         };
-        servicio = new ServicioImagenes(almacen, 1024);
+        servicio = new ServicioImagenes(almacen, mock(ReferenciasImagenes.class), 1024);
     }
 
     @Test
-    void guardaLosCuatroFormatosConNombreUuidYSuExtension() {
-        assertTrue(servicio.subir(PNG).endsWith(".png"));
-        assertTrue(servicio.subir(JPEG).endsWith(".jpg"));
-        assertTrue(servicio.subir(GIF).endsWith(".gif"));
-        String webp = servicio.subir(WEBP);
-        assertTrue(webp.endsWith(".webp"));
-        assertTrue(FormatoImagen.nombreValido(webp));
-        assertEquals("image/webp", guardadas.get(webp).tipo());
-        assertEquals(4, guardadas.size());
+    void guardaLosCuatroFormatosSinMetadatos() throws IOException {
+        assertTrue(servicio.subir(recurso("foto.jpg")).endsWith(".jpg"));
+        assertTrue(servicio.subir(recurso("foto.png")).endsWith(".png"));
+        assertTrue(servicio.subir(recurso("foto.gif")).endsWith(".png"));
+        assertTrue(servicio.subir(recurso("foto.webp")).endsWith(".jpg"));
+        assertTrue(servicio.subir(recurso("foto-alpha.webp")).endsWith(".png"));
+        assertEquals(5, guardadas.size());
+    }
+
+    @Test
+    void quitaElExifYAplicaLaOrientacion() throws Exception {
+        String nombre = servicio.subir(recurso("exif-orientacion.jpg"));
+        AlmacenImagenes.Imagen guardada = guardadas.get(nombre);
+
+        Metadata metadata = ImageMetadataReader.readMetadata(
+                new java.io.ByteArrayInputStream(guardada.datos()));
+        assertTrue(metadata.getDirectoriesOfType(ExifIFD0Directory.class).isEmpty(),
+                "no debe quedar EXIF en el archivo guardado");
+        assertTrue(metadata.getDirectoriesOfType(GpsDirectory.class).isEmpty(),
+                "no debe quedar GPS en el archivo guardado");
+
+        var imagen = ImageIO.read(new java.io.ByteArrayInputStream(guardada.datos()));
+        assertEquals(1, imagen.getWidth(), "la orientación 6 gira la imagen 90°");
+        assertEquals(2, imagen.getHeight());
+    }
+
+    @Test
+    void aplicaLaOrientacionTranspuestaYTransversa() throws IOException {
+        // Orientación 5: transpuesta (rojo arriba, azul abajo).
+        assertOrientacion("exif-orientacion-5.jpg", Color.RED, Color.BLUE);
+        // Orientación 7: transversa (azul arriba, rojo abajo).
+        assertOrientacion("exif-orientacion-7.jpg", Color.BLUE, Color.RED);
+    }
+
+    private void assertOrientacion(String archivo, Color arriba, Color abajo) throws IOException {
+        String nombre = servicio.subir(recurso(archivo));
+        BufferedImage imagen = ImageIO.read(new ByteArrayInputStream(guardadas.get(nombre).datos()));
+
+        assertEquals(2, imagen.getWidth());
+        assertEquals(4, imagen.getHeight());
+        assertColor(arriba, new Color(imagen.getRGB(1, 0)), archivo + " arriba");
+        assertColor(abajo, new Color(imagen.getRGB(1, 3)), archivo + " abajo");
+    }
+
+    private static void assertColor(Color esperado, Color real, String donde) {
+        assertTrue(Math.abs(esperado.getRed() - real.getRed()) < 60
+                && Math.abs(esperado.getGreen() - real.getGreen()) < 60
+                && Math.abs(esperado.getBlue() - real.getBlue()) < 60,
+                donde + ": esperaba " + esperado + " y fue " + real);
+    }
+
+    @Test
+    void rechazaLasImagenesAnimadas() throws IOException {
+        byte[] gif = recurso("animado.gif");
+
+        ImagenInvalidaException e = assertThrows(ImagenInvalidaException.class, () -> servicio.subir(gif));
+        assertTrue(e.getMessage().contains("animadas"));
+        assertTrue(guardadas.isEmpty());
     }
 
     @Test
@@ -76,17 +133,17 @@ class ServicioImagenesTest {
     @Test
     void rechazaLoQuePesaMasDelTope() {
         byte[] grande = new byte[1025];
-        System.arraycopy(PNG, 0, grande, 0, PNG.length);
+        System.arraycopy(new byte[] { (byte) 0x89, 'P', 'N', 'G', 0x0D, 0x0A, 0x1A, 0x0A }, 0, grande, 0, 8);
 
         assertThrows(ImagenInvalidaException.class, () -> servicio.subir(grande));
         assertTrue(guardadas.isEmpty());
     }
 
     @Test
-    void obtenerDevuelveLoGuardadoYRechazaNombresRaros() {
-        String nombre = servicio.subir(PNG);
+    void obtenerDevuelveLoGuardadoYRechazaNombresRaros() throws IOException {
+        String nombre = servicio.subir(recurso("foto.png"));
 
-        assertArrayEquals(PNG, servicio.obtener(nombre).datos());
+        assertNotNull(servicio.obtener(nombre));
         assertEquals("image/png", servicio.obtener(nombre).tipo());
         assertThrows(RecursoNoEncontradoException.class, () -> servicio.obtener("../etc/passwd"));
         assertThrows(RecursoNoEncontradoException.class,
@@ -102,5 +159,14 @@ class ServicioImagenesTest {
         assertEquals(java.util.Set.of(a, b), FormatoImagen.nombresEn(json));
         assertTrue(FormatoImagen.nombresEn("sin imágenes").isEmpty());
         assertTrue(FormatoImagen.nombresEn(null).isEmpty());
+    }
+
+    private static byte[] recurso(String nombre) throws IOException {
+        try (InputStream entrada = ServicioImagenesTest.class.getResourceAsStream("/imagenes/" + nombre)) {
+            if (entrada == null) {
+                throw new IllegalStateException("falta el recurso " + nombre);
+            }
+            return entrada.readAllBytes();
+        }
     }
 }

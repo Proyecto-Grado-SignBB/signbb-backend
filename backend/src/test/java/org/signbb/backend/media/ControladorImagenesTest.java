@@ -78,6 +78,7 @@ class ControladorImagenesTest {
     @Test
     void verEntregaLosBytesConSuTipoYCache() throws Exception {
         byte[] datos = { 9, 8, 7 };
+        when(servicio.esPublicada(NOMBRE)).thenReturn(true);
         when(servicio.obtener(NOMBRE)).thenReturn(new AlmacenImagenes.Imagen(datos, "image/png"));
 
         MockHttpServletResponse r = mvc.perform(get("/media/" + NOMBRE)).andReturn().getResponse();
@@ -90,8 +91,30 @@ class ControladorImagenesTest {
 
     @Test
     void verUnaImagenQueNoExisteDa404() throws Exception {
+        when(servicio.esPublicada(NOMBRE)).thenReturn(true);
         when(servicio.obtener(NOMBRE)).thenThrow(new RecursoNoEncontradoException("no hay"));
 
         assertEquals(404, mvc.perform(get("/media/" + NOMBRE)).andReturn().getResponse().getStatus());
+    }
+
+    @Test
+    void unaImagenDeBorradorNoSeSirvePorLaRutaPublica() throws Exception {
+        when(servicio.esPublicada(NOMBRE)).thenReturn(false);
+
+        MockHttpServletResponse r = mvc.perform(get("/media/" + NOMBRE)).andReturn().getResponse();
+
+        assertEquals(404, r.getStatus());
+    }
+
+    @Test
+    void laVistaDeAutoríaEntregaLaImagenSinCachePublico() throws Exception {
+        byte[] datos = { 9, 8, 7 };
+        when(servicio.obtener(NOMBRE)).thenReturn(new AlmacenImagenes.Imagen(datos, "image/png"));
+
+        MockHttpServletResponse r = mvc.perform(get("/api/autoria/imagenes/" + NOMBRE)).andReturn().getResponse();
+
+        assertEquals(200, r.getStatus());
+        assertArrayEquals(datos, r.getContentAsByteArray());
+        assertTrue(r.getHeader("Cache-Control").contains("no-store"));
     }
 }
