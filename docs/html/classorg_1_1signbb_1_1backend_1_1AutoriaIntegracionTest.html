@@ -128,7 +128,8 @@ void&#160;</td><td class="memItemRight"><b>publicarElSubgrafoPublicaTambienSuBas
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Prueba de punta a punta de la autoría (requiere PostgreSQL y Redis, como el CI): se arma un subgrafo de fiebre con el servicio, como lo haría el lienzo, se publica y se recorre como cuidadora desde la pregunta inicial hasta su conclusión. </p>
-<p>No es <code class="JavaDocCode">@Transactional</code> porque publicar actúa después del commit; al terminar se borran las filas creadas, se restaura el grafo raíz y se invalida el contenido en cache y en memoria. </p>
+<p>No es <code class="JavaDocCode">@Transactional</code> porque publicar actúa después del commit; al terminar se borran las filas creadas, se restaura el grafo raíz y se invalida el contenido en cache y en memoria.</p>
+<p>El autor es una cuenta real de médico (se crea la primera vez): la base exige que <code class="JavaDocCode">autor_id</code> exista en <code class="JavaDocCode">usuario</code>. </p>
 </div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/test/java/org/signbb/backend/<b>AutoriaIntegracionTest.java</b></li>
 </ul>
