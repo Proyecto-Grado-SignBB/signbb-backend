@@ -240,6 +240,9 @@ services:
       SIGNBB_DOCS_ACTIVAS: ${SIGNBB_DOCS_ACTIVAS:-true}
       SIGNBB_SIEMBRA_ACTIVA: ${SIGNBB_SIEMBRA_ACTIVA:-true}
       SIGNBB_CORS_ORIGENES: ${SIGNBB_CORS_ORIGENES:-http://localhost:4200,http://localhost:4300}
+      # Detrás de Caddy: Spring debe ver el esquema https y el host originales
+      # para no tratar como CORS las peticiones del mismo origen.
+      SERVER_FORWARD_HEADERS_STRATEGY: ${SERVER_FORWARD_HEADERS_STRATEGY:-framework}
 
     # Solo en 127.0.0.1: delante va el proxy o el front, no la red directa.
     ports:

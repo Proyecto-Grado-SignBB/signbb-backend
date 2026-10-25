@@ -15,6 +15,11 @@ Servicios definidos en `compose.yaml`:
   `silo` estén sanos, se reinicia sola si cae (`restart: always`) y su
   healthcheck consulta `/actuator/health`.
 
+El frontend PWA (`ui-consulta`) se despliega aparte, en
+`signbb-frontend/deploy/`: una imagen con el build de producción y Caddy, que
+sirve la PWA por HTTPS y hace proxy de `/api` y `/media` al backend. No forma
+parte de este `compose.yaml` porque vive en el repositorio del frontend.
+
 Los datos persisten en los volúmenes `postgres_data`, `silo_data` y
 `redis_data` (Docker los lista con el prefijo del proyecto, p. ej.
 `contenedores_postgres_data`). En Redis la persistencia es AOF
@@ -38,6 +43,44 @@ Para desarrollar con el backend en el host (`./mvnw spring-boot:run` desde
 Si el backend del contenedor está corriendo, ocupa el puerto `8080`; detenlo
 antes con `docker compose stop backend`.
 
+### Frontend PWA (Caddy)
+
+La PWA de consulta se levanta desde `signbb-frontend/deploy/` con su propio
+compose (imagen de Caddy + build de `ui-consulta`):
+
+    cd signbb-frontend/deploy
+    cp .env.example .env      # SIGNBB_DOMINIO y SIGNBB_BACKEND
+    docker compose up -d --build
+
+El servicio `web` usa `network_mode: host` para escuchar en 80/443 y llegar al
+backend por `127.0.0.1:8080`, tanto si el backend corre en el host como si es
+el servicio `backend` de este compose (que publica `127.0.0.1:8080`). Caddy
+escucha solo en el 443 (la redirección desde el 80 está desactivada, así que
+nginx puede seguir en el 80). Si se quiere redirección `http://` → `https://`,
+liberar el 80 y quitar `auto_https disable_redirects` del `Caddyfile`.
+
+El certificado es de la CA interna de Caddy (`tls internal`), porque no hay
+certificados públicos para IPs privadas. La CA raíz se copia del volumen
+`signbb_caddy_data` y se instala una vez en cada dispositivo:
+
+    docker compose cp web:/data/caddy/pki/authorities/local/root.crt ./caddy-root.crt
+
+El detalle de instalación en Android/iOS, los comandos de operación, el
+backup de la CA, la actualización del frontend y el diagnóstico están en
+`signbb-frontend/deploy/README.md`.
+
+Para que Spring funcione detrás de Caddy, `application.properties` activa
+`server.forward-headers-strategy=framework` por defecto (se puede desactivar
+con `SERVER_FORWARD_HEADERS_STRATEGY=none`). En producción, añadir también el
+origen HTTPS a CORS:
+
+    export SIGNBB_CORS_ORIGENES=https://192.168.20.217,http://localhost:4200,http://localhost:4300
+    ./mvnw spring-boot:run
+
+El mismo `SIGNBB_CORS_ORIGENES` se puede definir en el `.env` de este compose.
+No se debe borrar `signbb_caddy_data` sin reinstalar la CA en los móviles: la
+CA cambia y los certificados anteriores dejan de ser válidos.
+
 ### Variables de entorno
 
 Todas tienen un valor de desarrollo, así que `docker compose up` funciona sin
@@ -56,6 +99,7 @@ nombre se usan en dos servicios a la vez, para que no queden distintas.
 | `SIGNBB_DOCS_ACTIVAS` | backend | `true` |
 | `SIGNBB_SIEMBRA_ACTIVA` | backend | `true` |
 | `SIGNBB_CORS_ORIGENES` | backend | `http://localhost:4200,http://localhost:4300` |
+| `SERVER_FORWARD_HEADERS_STRATEGY` | backend | `framework` (valor por defecto) |
 
 > PostgreSQL y Silo leen su contraseña solo la primera vez, con el volumen
 > vacío. Si se cambia después, hay que cambiarla también dentro del servicio o
