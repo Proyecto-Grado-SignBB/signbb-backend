@@ -136,10 +136,6 @@ List&lt; String &gt;&#160;</td><td class="memItemRight"><b>getRespuestas</b> (St
 <tr class="memitem:a85f6c5b1292e6f153f382e67959c0f34" id="r_a85f6c5b1292e6f153f382e67959c0f34"><td class="memItemLeft"><a id="a85f6c5b1292e6f153f382e67959c0f34" name="a85f6c5b1292e6f153f382e67959c0f34"></a>
 boolean&#160;</td><td class="memItemRight"><b>contieneRespuesta</b> (String idNodo, String respuesta)</td></tr>
 <tr class="memdesc:a85f6c5b1292e6f153f382e67959c0f34"><td class="mdescLeft">&#160;</td><td class="mdescRight">True si <code class="JavaDocCode">respuesta</code> está entre las registradas para <code class="JavaDocCode">idNodo</code>. <br /></td></tr>
-<tr class="memitem:a4e0e5be27a09dbf4124a4ee5806378a3" id="r_a4e0e5be27a09dbf4124a4ee5806378a3"><td class="memItemLeft">Map&lt; String, List&lt; String &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a4e0e5be27a09dbf4124a4ee5806378a3">respuestasEnOrden</a> ()</td></tr>
-<tr class="memdesc:a4e0e5be27a09dbf4124a4ee5806378a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copia de las respuestas por nodo en el orden en que se respondieron las preguntas.  <br /></td></tr>
-<tr class="memitem:adc6e906cf92f61ccf825ef13ac7d2410" id="r_adc6e906cf92f61ccf825ef13ac7d2410"><td class="memItemLeft">Optional&lt; String &gt;&#160;</td><td class="memItemRight"><a class="el" href="#adc6e906cf92f61ccf825ef13ac7d2410">ultimaPreguntaRespondida</a> ()</td></tr>
-<tr class="memdesc:adc6e906cf92f61ccf825ef13ac7d2410"><td class="mdescLeft">&#160;</td><td class="mdescRight">Id de la última pregunta respondida, o vacío si aún no hay respuestas.  <br /></td></tr>
 <tr class="memitem:a0e2c1cc1b30fbd08661f2bacdce15280" id="r_a0e2c1cc1b30fbd08661f2bacdce15280"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a0e2c1cc1b30fbd08661f2bacdce15280">apilarPaso</a> (<a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#a7da30e7dd7e57c08db6f24b16e46290c">PasoRecorrido</a> paso)</td></tr>
 <tr class="memdesc:a0e2c1cc1b30fbd08661f2bacdce15280"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apila un paso ya aplicado: solo lo anota, no toca respuestas ni reglas (las registró quien lo apila).  <br /></td></tr>
 <tr class="memitem:abe0217d4542dabcb0cdfddc041f6afdc" id="r_abe0217d4542dabcb0cdfddc041f6afdc"><td class="memItemLeft">Optional&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#a7da30e7dd7e57c08db6f24b16e46290c">PasoRecorrido</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#abe0217d4542dabcb0cdfddc041f6afdc">desapilarPaso</a> ()</td></tr>
@@ -198,9 +194,6 @@ int&#160;</td><td class="memItemRight"><b>getPuntaje</b> ()</td></tr>
 <tr class="memdesc:a1d2f57bfa6a76787ba621bb8a3e3b3cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Puntaje acumulado de la sesión. <br /></td></tr>
 <tr class="memitem:a64696f31f73d34102f5d965db0ede57d" id="r_a64696f31f73d34102f5d965db0ede57d"><td class="memItemLeft">List&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#a6d07b4c9c8333aa7b1c485f9f2ec8af8">Sintoma</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a64696f31f73d34102f5d965db0ede57d">sintomas</a> ()</td></tr>
 <tr class="memdesc:a64696f31f73d34102f5d965db0ede57d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copia de los síntomas registrados (no expone la estructura interna).  <br /></td></tr>
-<tr class="memitem:a2987dbc31ec74d124ec2ab4eb06a3d99" id="r_a2987dbc31ec74d124ec2ab4eb06a3d99"><td class="memItemLeft"><a id="a2987dbc31ec74d124ec2ab4eb06a3d99" name="a2987dbc31ec74d124ec2ab4eb06a3d99"></a>
-void&#160;</td><td class="memItemRight"><b>reiniciar</b> ()</td></tr>
-<tr class="memdesc:a2987dbc31ec74d124ec2ab4eb06a3d99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vacía las respuestas, las reglas disparadas, la pila de pasos y reinicia el puntaje. <br /></td></tr>
 <tr class="memitem:a9059c481166e855a25805260afec2b3c" id="r_a9059c481166e855a25805260afec2b3c"><td class="memItemLeft"><a id="a9059c481166e855a25805260afec2b3c" name="a9059c481166e855a25805260afec2b3c"></a>
 int&#160;</td><td class="memItemRight"><b>size</b> ()</td></tr>
 <tr class="memdesc:a9059c481166e855a25805260afec2b3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Número de nodos con al menos una respuesta registrada. <br /></td></tr>
@@ -360,26 +353,6 @@ String&#160;</td><td class="memItemRight"><b>toString</b> ()</td></tr>
 
 </div>
 </div>
-<a id="a4e0e5be27a09dbf4124a4ee5806378a3" name="a4e0e5be27a09dbf4124a4ee5806378a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e0e5be27a09dbf4124a4ee5806378a3">&#9670;&#160;</a></span>respuestasEnOrden()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Map&lt; String, List&lt; String &gt; &gt; org.signbb.backend.navegacion.modelo.EstadoPaciente.respuestasEnOrden </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Copia de las respuestas por nodo en el orden en que se respondieron las preguntas. </p>
-<p>Es el historial del recorrido: el motor lo reproduce para volver a la pregunta anterior. </p>
-
-</div>
-</div>
 <a id="a64696f31f73d34102f5d965db0ede57d" name="a64696f31f73d34102f5d965db0ede57d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a64696f31f73d34102f5d965db0ede57d">&#9670;&#160;</a></span>sintomas()</h2>
 
@@ -397,26 +370,6 @@ String&#160;</td><td class="memItemRight"><b>toString</b> ()</td></tr>
 
 <p>Copia de los síntomas registrados (no expone la estructura interna). </p>
 <p>Un nodo de selección múltiple aporta un síntoma por cada respuesta marcada. </p>
-
-</div>
-</div>
-<a id="adc6e906cf92f61ccf825ef13ac7d2410" name="adc6e906cf92f61ccf825ef13ac7d2410"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adc6e906cf92f61ccf825ef13ac7d2410">&#9670;&#160;</a></span>ultimaPreguntaRespondida()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Optional&lt; String &gt; org.signbb.backend.navegacion.modelo.EstadoPaciente.ultimaPreguntaRespondida </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Id de la última pregunta respondida, o vacío si aún no hay respuestas. </p>
-<p>Si hay pila de pasos, es la pregunta de su cima; si no, la última insertada en las respuestas. </p>
 
 </div>
 </div>

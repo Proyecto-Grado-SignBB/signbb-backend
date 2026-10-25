@@ -7,10 +7,12 @@ var searchData=
   ['findbygrafoid_4',['findByGrafoId',['../interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorBaseRegla.html#ac89ecc65f082a595dccd5a4e7730f014',1,'org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorBaseRegla.findByGrafoId()'],['../interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorSubgrafo.html#a71cf3f1ce41e37f883134e9fd754e5d7',1,'org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo.findByGrafoId()']]],
   ['findbyrecorridoidorderbytimestampasc_5',['findByRecorridoIdOrderByTimestampAsc',['../interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioObservaciones.html#a0171765ec8dae0207ab421704ccf5749',1,'org::signbb::backend::observaciones::datos::repositorios::RepositorioObservaciones']]],
   ['findbyrolinorderbynombreasc_6',['findByRolInOrderByNombreAsc',['../interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios_1_1RepositorioUsuario.html#a1ba696b3552bac51127c80ef100588fb',1,'org::signbb::backend::seguridad::datos::repositorios::RepositorioUsuario']]],
-  ['findbyusuarioidorderbyiniciadoendesc_7',['findByUsuarioIdOrderByIniciadoEnDesc',['../interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioRecorridos.html#a9a604b473cf3e7101f5ff8c91b48dd38',1,'org::signbb::backend::observaciones::datos::repositorios::RepositorioRecorridos']]],
-  ['fixture_8',['Fixture',['../pruebas_autoria.html#autotoc_md1',1,'']]],
-  ['fixtures_9',['Fixtures',['../pruebas_navegacion.html#autotoc_md19',1,'']]],
-  ['formatoimagen_10',['FormatoImagen',['../namespaceorg_1_1signbb_1_1backend_1_1media.html#ae3e8c63af3474301ed955064478ad959',1,'org::signbb::backend::media']]],
-  ['fotografiarnavegacion_11',['fotografiarNavegacion',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a54a3953e76e293a433912b4a650b84a8',1,'org::signbb::backend::navegacion::modelo::EstadoPaciente']]],
-  ['fotonavegacion_12',['FotoNavegacion',['../namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#ad0a916e226b0a74974b6aa0f13ad7ef4',1,'org::signbb::backend::navegacion::modelo']]]
+  ['findbytipoandclave_7',['findByTipoAndClave',['../interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios_1_1RepositorioLimiteIntentos.html#af015e8942e9b2f379c592d53ed451695',1,'org::signbb::backend::seguridad::datos::repositorios::RepositorioLimiteIntentos']]],
+  ['findbyusuarioidorderbyiniciadoendesc_8',['findByUsuarioIdOrderByIniciadoEnDesc',['../interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioRecorridos.html#a9a604b473cf3e7101f5ff8c91b48dd38',1,'org::signbb::backend::observaciones::datos::repositorios::RepositorioRecorridos']]],
+  ['fixture_9',['Fixture',['../pruebas_autoria.html#autotoc_md1',1,'']]],
+  ['fixtures_10',['Fixtures',['../pruebas_navegacion.html#autotoc_md19',1,'']]],
+  ['formatoimagen_11',['FormatoImagen',['../namespaceorg_1_1signbb_1_1backend_1_1media.html#ae3e8c63af3474301ed955064478ad959',1,'org::signbb::backend::media']]],
+  ['fotografiarnavegacion_12',['fotografiarNavegacion',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a54a3953e76e293a433912b4a650b84a8',1,'org::signbb::backend::navegacion::modelo::EstadoPaciente']]],
+  ['fotonavegacion_13',['FotoNavegacion',['../namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#ad0a916e226b0a74974b6aa0f13ad7ef4',1,'org::signbb::backend::navegacion::modelo']]],
+  ['frontend_20pwa_20caddy_14',['Frontend PWA (Caddy)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md76',1,'']]]
 ];

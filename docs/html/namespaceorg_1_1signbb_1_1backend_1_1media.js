@@ -6,6 +6,8 @@ var namespaceorg_1_1signbb_1_1backend_1_1media =
     [ "ControladorImagenes", "classorg_1_1signbb_1_1backend_1_1media_1_1ControladorImagenes.html", "classorg_1_1signbb_1_1backend_1_1media_1_1ControladorImagenes" ],
     [ "ControladorImagenesTest", "classorg_1_1signbb_1_1backend_1_1media_1_1ControladorImagenesTest.html", null ],
     [ "ImagenInvalidaException", "classorg_1_1signbb_1_1backend_1_1media_1_1ImagenInvalidaException.html", "classorg_1_1signbb_1_1backend_1_1media_1_1ImagenInvalidaException" ],
+    [ "ReferenciasImagenes", "classorg_1_1signbb_1_1backend_1_1media_1_1ReferenciasImagenes.html", "classorg_1_1signbb_1_1backend_1_1media_1_1ReferenciasImagenes" ],
+    [ "ReferenciasImagenesTest", "classorg_1_1signbb_1_1backend_1_1media_1_1ReferenciasImagenesTest.html", null ],
     [ "ServicioImagenes", "classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenes.html", "classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenes" ],
     [ "ServicioImagenesTest", "classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenesTest.html", null ],
     [ "FormatoImagen", "namespaceorg_1_1signbb_1_1backend_1_1media.html#ae3e8c63af3474301ed955064478ad959", null ],

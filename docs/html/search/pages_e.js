@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['parámetros_20de_20conexión_20perfil_20docker_20del_20backend_20en_20el_20host_0',['Parámetros de conexión (perfil &lt;span class=&quot;tt&quot;&gt;docker&lt;/span&gt; del backend en el host)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md80',1,'']]],
+  ['parámetros_20de_20conexión_20perfil_20docker_20del_20backend_20en_20el_20host_0',['Parámetros de conexión (perfil &lt;span class=&quot;tt&quot;&gt;docker&lt;/span&gt; del backend en el host)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md81',1,'']]],
   ['perfil_20de_20base_20de_20datos_1',['Perfil de base de datos',['../index.html#autotoc_md69',1,'']]],
-  ['perfil_20docker_20del_20backend_20en_20el_20host_2',['Parámetros de conexión (perfil &lt;span class=&quot;tt&quot;&gt;docker&lt;/span&gt; del backend en el host)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md80',1,'']]],
-  ['persistentes_3',['Eliminar los datos persistentes',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md78',1,'']]],
+  ['perfil_20docker_20del_20backend_20en_20el_20host_2',['Parámetros de conexión (perfil &lt;span class=&quot;tt&quot;&gt;docker&lt;/span&gt; del backend en el host)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md81',1,'']]],
+  ['persistentes_3',['Eliminar los datos persistentes',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md79',1,'']]],
   ['politicaaccesoborradorestest_20guardiaautoriatest_4',['Autor y acceso (&lt;span class=&quot;tt&quot;&gt;PoliticaAccesoBorradoresTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;GuardiaAutoriaTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md11',1,'']]],
   ['por_20módulo_5',['Suite por módulo',['../pruebas.html#autotoc_md54',1,'']]],
   ['por_20qué_20importa_6',['por qué importa',['../pruebas_autoria.html#autotoc_md2',1,'Qué se prueba y por qué importa'],['../pruebas_navegacion.html#autotoc_md20',1,'Qué se prueba y por qué importa'],['../pruebas_observaciones.html#autotoc_md30',1,'Qué se prueba y por qué importa'],['../pruebas_seguridad.html#autotoc_md45',1,'Qué se prueba y por qué importa']]],
@@ -30,5 +30,6 @@ var searchData=
   ['publicar_20compiladorreglastest_20validadorreglastest_20publicadorreglatest_27',['Reglas: compilar, validar y publicar (&lt;span class=&quot;tt&quot;&gt;CompiladorReglasTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;ValidadorReglasTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;PublicadorReglaTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md9',1,'']]],
   ['publicar_20publicadorsubgrafotest_28',['Publicar (&lt;span class=&quot;tt&quot;&gt;PublicadorSubgrafoTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md6',1,'']]],
   ['punta_20a_20punta_20autoriaintegraciontest_29',['Punta a punta (&lt;span class=&quot;tt&quot;&gt;AutoriaIntegracionTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md14',1,'']]],
-  ['punta_20autoriaintegraciontest_30',['Punta a punta (&lt;span class=&quot;tt&quot;&gt;AutoriaIntegracionTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md14',1,'']]]
+  ['punta_20autoriaintegraciontest_30',['Punta a punta (&lt;span class=&quot;tt&quot;&gt;AutoriaIntegracionTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md14',1,'']]],
+  ['pwa_20caddy_31',['Frontend PWA (Caddy)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md76',1,'']]]
 ];

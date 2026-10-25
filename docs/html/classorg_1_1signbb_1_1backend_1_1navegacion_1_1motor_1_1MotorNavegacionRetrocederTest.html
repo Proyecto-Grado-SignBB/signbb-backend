@@ -133,14 +133,12 @@ void&#160;</td><td class="memItemRight"><b>dosVecesSeguidasVuelveDosPreguntas</b
 void&#160;</td><td class="memItemRight"><b>sinRespuestasSeRechaza</b> ()</td></tr>
 <tr class="memitem:a65f9a9abcac551c2f287f2f1dfa900f8" id="r_a65f9a9abcac551c2f287f2f1dfa900f8"><td class="memItemLeft"><a id="a65f9a9abcac551c2f287f2f1dfa900f8" name="a65f9a9abcac551c2f287f2f1dfa900f8"></a>
 void&#160;</td><td class="memItemRight"><b>unaPreguntaQueYaNoExisteEnElContenidoFallaConEstadoIlegal</b> ()</td></tr>
-<tr class="memitem:a5298999e8191a58a129394b87dcfc238" id="r_a5298999e8191a58a129394b87dcfc238"><td class="memItemLeft"><a id="a5298999e8191a58a129394b87dcfc238" name="a5298999e8191a58a129394b87dcfc238"></a>
-void&#160;</td><td class="memItemRight"><b>sinPilaReproduceElRecorridoYReconstruyeLaPila</b> ()</td></tr>
-<tr class="memitem:a331b6bd9c8fa2169395775c1d8f813e4" id="r_a331b6bd9c8fa2169395775c1d8f813e4"><td class="memItemLeft"><a id="a331b6bd9c8fa2169395775c1d8f813e4" name="a331b6bd9c8fa2169395775c1d8f813e4"></a>
-void&#160;</td><td class="memItemRight"><b>sinPilaYConElContenidoCambiadoFallaConEstadoIlegal</b> ()</td></tr>
+<tr class="memitem:a3bda7a30f0636ba273dc3f9639e821d6" id="r_a3bda7a30f0636ba273dc3f9639e821d6"><td class="memItemLeft"><a id="a3bda7a30f0636ba273dc3f9639e821d6" name="a3bda7a30f0636ba273dc3f9639e821d6"></a>
+void&#160;</td><td class="memItemRight"><b>sinPilaSeRechazaAunqueHayaRespuestas</b> ()</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Tests de <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html#a6a2ff82d97b0ed4a1c40dd6510254f01">MotorNavegacion#retroceder</a></code> sobre el contenido compuesto (grafo raíz + subgrafos del sistema), recorriendo el de respiración. </p>
-<p>Cada respuesta apila un <code><a class="el" href="">PasoRecorrido</a></code> con las reglas que marcó; retroceder lo desapila, borra esa respuesta, desmarca solo esas reglas y vuelve a la pregunta sin reevaluar nada. Sin pila (sesión guardada antes de existir) el motor reproduce el recorrido. Los casos con la cola de la selección múltiple están en <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1motor_1_1MotorNavegacionColaTest.html">MotorNavegacionColaTest</a></code>. </p>
+<p>Cada respuesta apila un <code><a class="el" href="">PasoRecorrido</a></code> con las reglas que marcó; retroceder lo desapila, borra esa respuesta, desmarca solo esas reglas y vuelve a la pregunta sin reevaluar nada. Sin pila no se puede retroceder. Los casos con la cola de la selección múltiple están en <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1motor_1_1MotorNavegacionColaTest.html">MotorNavegacionColaTest</a></code>. </p>
 </div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/test/java/org/signbb/backend/navegacion/motor/<b>MotorNavegacionRetrocederTest.java</b></li>
 </ul>

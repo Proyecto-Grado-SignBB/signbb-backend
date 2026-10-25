@@ -11,11 +11,12 @@ var searchData=
   ['tipo_5fterminal_8',['TIPO_TERMINAL',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoMapper.html#a32794142a855ea33c99b9f52e4a98928',1,'org::signbb::backend::navegacion::datos::serializacion::GrafoClinicoMapper']]],
   ['tipointeraccion_9',['TipoInteraccion',['../enumorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1TipoInteraccion.html',1,'org::signbb::backend::observaciones::modelo']]],
   ['tipointeraccion_10',['tipoInteraccion',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#acc527d1cbcf00cb03997ddc119eb8cd4',1,'org::signbb::backend::navegacion::modelo::GrafoClinico']]],
-  ['tiponodo_11',['TipoNodo',['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1TipoNodo.html',1,'org::signbb::backend::autoria::modelo']]],
-  ['tipos_20de_20prueba_12',['Tipos de prueba',['../pruebas.html#autotoc_md53',1,'']]],
-  ['tipos_5finteraccion_5fvalidos_13',['TIPOS_INTERACCION_VALIDOS',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#aa3758f7b81004c118d2092459cb1e8ac',1,'org::signbb::backend::navegacion::modelo::Nodo']]],
-  ['tipos_5fvalidos_14',['TIPOS_VALIDOS',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#a872eb074d51806c826829b2f869a8fdb',1,'org::signbb::backend::navegacion::modelo::Nodo']]],
-  ['todaslasreglas_15',['todasLasReglas',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html#a0f732a5f2d06b14b51a5248d633b32fe',1,'org::signbb::backend::reglas::modelo::BaseReglas']]],
-  ['tokenemitido_16',['TokenEmitido',['../namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios.html#af6b83c9fb01353a61fd8b17b32edd8e6',1,'org::signbb::backend::seguridad::servicios']]],
-  ['tokens_20serviciotokenstest_17',['Tokens (&lt;span class=&quot;tt&quot;&gt;ServicioTokensTest&lt;/span&gt;)',['../pruebas_seguridad.html#autotoc_md47',1,'']]]
+  ['tipolimite_11',['TipoLimite',['../enumorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo_1_1TipoLimite.html',1,'org::signbb::backend::seguridad::modelo']]],
+  ['tiponodo_12',['TipoNodo',['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1TipoNodo.html',1,'org::signbb::backend::autoria::modelo']]],
+  ['tipos_20de_20prueba_13',['Tipos de prueba',['../pruebas.html#autotoc_md53',1,'']]],
+  ['tipos_5finteraccion_5fvalidos_14',['TIPOS_INTERACCION_VALIDOS',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#aa3758f7b81004c118d2092459cb1e8ac',1,'org::signbb::backend::navegacion::modelo::Nodo']]],
+  ['tipos_5fvalidos_15',['TIPOS_VALIDOS',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html#a872eb074d51806c826829b2f869a8fdb',1,'org::signbb::backend::navegacion::modelo::Nodo']]],
+  ['todaslasreglas_16',['todasLasReglas',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html#a0f732a5f2d06b14b51a5248d633b32fe',1,'org::signbb::backend::reglas::modelo::BaseReglas']]],
+  ['tokenemitido_17',['TokenEmitido',['../namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios.html#af6b83c9fb01353a61fd8b17b32edd8e6',1,'org::signbb::backend::seguridad::servicios']]],
+  ['tokens_20serviciotokenstest_18',['Tokens (&lt;span class=&quot;tt&quot;&gt;ServicioTokensTest&lt;/span&gt;)',['../pruebas_seguridad.html#autotoc_md47',1,'']]]
 ];

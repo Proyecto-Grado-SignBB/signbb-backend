@@ -120,8 +120,8 @@ Métodos públicos</h2></td></tr>
 <tr class="memitem:a8418e8e587c8ac071d3adec2c3d3352c" id="r_a8418e8e587c8ac071d3adec2c3d3352c"><td class="memItemLeft"><a id="a8418e8e587c8ac071d3adec2c3d3352c" name="a8418e8e587c8ac071d3adec2c3d3352c"></a>
 &#160;</td><td class="memItemRight"><b>PublicadorSubgrafo</b> (<a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafoClinico.html">RepositorioGrafoClinico</a> grafos, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1repositorios_1_1RepositorioBaseReglas.html">RepositorioBaseReglas</a> bases, <a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico.html">ResolvedorContenidoClinico</a> resolvedor, <a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorVersiones.html">ResolvedorVersiones</a> versiones, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html">ContextoClinico</a> contexto)</td></tr>
 <tr class="memdesc:a8418e8e587c8ac071d3adec2c3d3352c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta los repositorios del contenido clínico, el cache, las versiones y el contexto en memoria. <br /></td></tr>
-<tr class="memitem:a4d4fcc9001295d4c9854b1e16c74e328" id="r_a4d4fcc9001295d4c9854b1e16c74e328"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a4d4fcc9001295d4c9854b1e16c74e328">publicar</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1entidades_1_1BorradorSubgrafoEntity.html">BorradorSubgrafoEntity</a> borrador, Instant fecha)</td></tr>
-<tr class="memdesc:a4d4fcc9001295d4c9854b1e16c74e328"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publica el borrador.  <br /></td></tr>
+<tr class="memitem:a676d0e2b6d32872993f64f9b59aa3b93" id="r_a676d0e2b6d32872993f64f9b59aa3b93"><td class="memItemLeft"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1CompositorGrafoClinico.html#ac45f77a6fba2567fba2331ec17264af7">CompositorGrafoClinico.Contenido</a>&#160;</td><td class="memItemRight"><a class="el" href="#a676d0e2b6d32872993f64f9b59aa3b93">publicar</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1entidades_1_1BorradorSubgrafoEntity.html">BorradorSubgrafoEntity</a> borrador, Instant fecha)</td></tr>
+<tr class="memdesc:a676d0e2b6d32872993f64f9b59aa3b93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publica el borrador.  <br /></td></tr>
 <tr class="memitem:a1fa3560fde498c16739dfc66573b6fcb" id="r_a1fa3560fde498c16739dfc66573b6fcb"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a1fa3560fde498c16739dfc66573b6fcb">retirar</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1entidades_1_1BorradorSubgrafoEntity.html">BorradorSubgrafoEntity</a> borrador)</td></tr>
 <tr class="memdesc:a1fa3560fde498c16739dfc66573b6fcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retira un subgrafo publicado: quita su referencia y sus opciones del grafo raíz, borra su fila y borra su base de reglas, de modo que las cuidadoras que empiecen un recorrido nuevo ya no lo ven.  <br /></td></tr>
 </table><table class="memberdecls">
@@ -151,11 +151,11 @@ Arma el grafo raíz nuevo: un nodo <code class="JavaDocCode">referencia</code> <
 <li>
 Compone la raíz nueva con los demás subgrafos y todas las bases de reglas y reconstruye los TAD (<code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoMapper.html">GrafoClinicoMapper</a></code>, <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasMapper.html">BaseReglasMapper</a></code>), igual que <code class="JavaDocCode">ContextoClinico</code>. Si algo falla no se guarda nada. </li>
 <li>
-Guarda (o actualiza) la fila del subgrafo y la del grafo raíz, y una versión nueva e inmutable del grafo compuesto (<code><a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorVersiones.html">ResolvedorVersiones</a></code>). </li>
+Guarda (o actualiza) la fila del subgrafo y la del grafo raíz, y devuelve el contenido compuesto. La versión la registra quien completa la publicación (<code><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#aaecd85995e59fcdf0b3ba95a7b505b15">ServicioAutoriaImpl#publicar(Long)</a></code>), una sola vez. </li>
 <li>
 Cuando la transacción confirma, invalida el cache de Redis y hace que <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html">ContextoClinico</a></code> vuelva a resolver el contenido. </li>
 </ol>
-<p>Los recorridos en curso no se ven afectados: cada uno está atado a la versión con la que empezó y la termina con ella; los recorridos nuevos usan la versión recién publicada. </p>
+<p>Los recorridos en curso no se ven afectados: cada uno está atado a la versión con la que empezó y la termina con ella; los recorridos nuevos usan la versión que registre la publicación. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
 <a id="a80b83f035aeefb9363127e8a41ae4a3b" name="a80b83f035aeefb9363127e8a41ae4a3b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a80b83f035aeefb9363127e8a41ae4a3b">&#9670;&#160;</a></span>conReferencia()</h2>
@@ -195,14 +195,14 @@ Cuando la transacción confirma, invalida el cache de Redis y hace que <code><a 
 
 </div>
 </div>
-<a id="a4d4fcc9001295d4c9854b1e16c74e328" name="a4d4fcc9001295d4c9854b1e16c74e328"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d4fcc9001295d4c9854b1e16c74e328">&#9670;&#160;</a></span>publicar()</h2>
+<a id="a676d0e2b6d32872993f64f9b59aa3b93" name="a676d0e2b6d32872993f64f9b59aa3b93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a676d0e2b6d32872993f64f9b59aa3b93">&#9670;&#160;</a></span>publicar()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void org.signbb.backend.autoria.servicios.PublicadorSubgrafo.publicar </td>
+          <td class="memname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1CompositorGrafoClinico.html#ac45f77a6fba2567fba2331ec17264af7">CompositorGrafoClinico.Contenido</a> org.signbb.backend.autoria.servicios.PublicadorSubgrafo.publicar </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1entidades_1_1BorradorSubgrafoEntity.html">BorradorSubgrafoEntity</a></td>          <td class="paramname"><span class="paramname"><em>borrador</em></span>, </td>
         </tr>
@@ -216,6 +216,7 @@ Cuando la transacción confirma, invalida el cache de Redis y hace que <code><a 
 
 <p>Publica el borrador. </p>
 <p>No cambia su estado: eso lo hace quien llama, dentro de la misma transacción.</p>
+<dl class="section return"><dt>Devuelve</dt><dd>el grafo y las reglas ya compuestos, para registrar una sola versión </dd></dl>
 <dl class="exception"><dt>Excepciones</dt><dd>
   <table class="exception">
     <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ContenidoInvalidoException.html" title="El borrador no se puede publicar: tiene avisos bloqueantes o el contenido compuesto (raíz + subgrafos...">ContenidoInvalidoException</a></td><td>si hay avisos bloqueantes o el contenido compuesto no es válido </td></tr>

@@ -102,6 +102,8 @@ var annotated_dup =
             [ "ConfiguracionMantenimiento", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1ConfiguracionMantenimiento.html", null ],
             [ "LimpiadorImagenes", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorImagenes.html", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorImagenes" ],
             [ "LimpiadorImagenesTest", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorImagenesTest.html", null ],
+            [ "LimpiadorLimites", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorLimites.html", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorLimites" ],
+            [ "LimpiadorLimitesTest", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorLimitesTest.html", null ],
             [ "LimpiadorVersiones", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorVersiones.html", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorVersiones" ],
             [ "LimpiadorVersionesTest", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorVersionesTest.html", null ],
             [ "LimpiezaProgramada", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiezaProgramada.html", "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiezaProgramada" ],
@@ -116,6 +118,8 @@ var annotated_dup =
             [ "ControladorImagenes", "classorg_1_1signbb_1_1backend_1_1media_1_1ControladorImagenes.html", "classorg_1_1signbb_1_1backend_1_1media_1_1ControladorImagenes" ],
             [ "ControladorImagenesTest", "classorg_1_1signbb_1_1backend_1_1media_1_1ControladorImagenesTest.html", null ],
             [ "ImagenInvalidaException", "classorg_1_1signbb_1_1backend_1_1media_1_1ImagenInvalidaException.html", "classorg_1_1signbb_1_1backend_1_1media_1_1ImagenInvalidaException" ],
+            [ "ReferenciasImagenes", "classorg_1_1signbb_1_1backend_1_1media_1_1ReferenciasImagenes.html", "classorg_1_1signbb_1_1backend_1_1media_1_1ReferenciasImagenes" ],
+            [ "ReferenciasImagenesTest", "classorg_1_1signbb_1_1backend_1_1media_1_1ReferenciasImagenesTest.html", null ],
             [ "ServicioImagenes", "classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenes.html", "classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenes" ],
             [ "ServicioImagenesTest", "classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenesTest.html", null ]
           ] ],
@@ -244,22 +248,25 @@ var annotated_dup =
             ] ],
             [ "datos", "namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos.html", [
               [ "entidades", "namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1entidades.html", [
+                [ "LimiteIntentosEntity", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1entidades_1_1LimiteIntentosEntity.html", null ],
                 [ "UsuarioEntity", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1entidades_1_1UsuarioEntity.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1entidades_1_1UsuarioEntity" ]
               ] ],
               [ "repositorios", "namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios.html", [
+                [ "RepositorioLimiteIntentos", "interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios_1_1RepositorioLimiteIntentos.html", "interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios_1_1RepositorioLimiteIntentos" ],
                 [ "RepositorioUsuario", "interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios_1_1RepositorioUsuario.html", "interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios_1_1RepositorioUsuario" ]
               ] ]
             ] ],
             [ "modelo", "namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo.html", [
-              [ "Rol", "enumorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo_1_1Rol.html", "enumorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo_1_1Rol" ]
+              [ "Rol", "enumorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo_1_1Rol.html", "enumorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo_1_1Rol" ],
+              [ "TipoLimite", "enumorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo_1_1TipoLimite.html", "enumorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo_1_1TipoLimite" ]
             ] ],
             [ "servicios", "namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios.html", [
               [ "AccesoDenegadoException", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1AccesoDenegadoException.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1AccesoDenegadoException" ],
               [ "CredencialesInvalidasException", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CredencialesInvalidasException.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CredencialesInvalidasException" ],
               [ "CuentaInvalidaException", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CuentaInvalidaException.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CuentaInvalidaException" ],
               [ "IntentosExcedidosException", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1IntentosExcedidosException.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1IntentosExcedidosException" ],
-              [ "LimitadorIntentosLogin", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1LimitadorIntentosLogin.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1LimitadorIntentosLogin" ],
-              [ "LimitadorIntentosLoginTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1LimitadorIntentosLoginTest.html", null ],
+              [ "LimitadorIntentos", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1LimitadorIntentos.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1LimitadorIntentos" ],
+              [ "LimitadorIntentosTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1LimitadorIntentosTest.html", null ],
               [ "ServicioCuentas", "interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentas.html", "interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentas" ],
               [ "ServicioCuentasImpl", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentasImpl.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentasImpl" ],
               [ "ServicioCuentasImplTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentasImplTest.html", null ],

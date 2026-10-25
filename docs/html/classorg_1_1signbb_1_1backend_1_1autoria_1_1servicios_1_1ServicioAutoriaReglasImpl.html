@@ -126,9 +126,9 @@ Diagrama de herencia de org.signbb.backend.autoria.servicios.ServicioAutoriaRegl
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Métodos públicos</h2></td></tr>
-<tr class="memitem:aa05b7f0e25b6d0af8373abfe258e674a" id="r_aa05b7f0e25b6d0af8373abfe258e674a"><td class="memItemLeft"><a id="aa05b7f0e25b6d0af8373abfe258e674a" name="aa05b7f0e25b6d0af8373abfe258e674a"></a>
-&#160;</td><td class="memItemRight"><b>ServicioAutoriaReglasImpl</b> (<a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorBaseRegla.html">RepositorioBorradorBaseRegla</a> borradores, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorSubgrafo.html">RepositorioBorradorSubgrafo</a> subgrafos, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafoClinico.html">RepositorioGrafoClinico</a> grafos, <a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorRegla.html">PublicadorRegla</a> publicador, <a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ResolutorCatalogoNodos.html">ResolutorCatalogoNodos</a> catalogo)</td></tr>
-<tr class="memdesc:aa05b7f0e25b6d0af8373abfe258e674a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta los repositorios, el publicador y el catálogo de nodos. <br /></td></tr>
+<tr class="memitem:a5520104a7f80071cb31cf5dd5139033f" id="r_a5520104a7f80071cb31cf5dd5139033f"><td class="memItemLeft"><a id="a5520104a7f80071cb31cf5dd5139033f" name="a5520104a7f80071cb31cf5dd5139033f"></a>
+&#160;</td><td class="memItemRight"><b>ServicioAutoriaReglasImpl</b> (<a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorBaseRegla.html">RepositorioBorradorBaseRegla</a> borradores, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1repositorios_1_1RepositorioBorradorSubgrafo.html">RepositorioBorradorSubgrafo</a> subgrafos, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafoClinico.html">RepositorioGrafoClinico</a> grafos, <a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ResolutorCatalogoNodos.html">ResolutorCatalogoNodos</a> catalogo)</td></tr>
+<tr class="memdesc:a5520104a7f80071cb31cf5dd5139033f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta los repositorios y el catálogo de nodos. <br /></td></tr>
 <tr class="memitem:a8fd8c266289f038bf46f841b6292e34d" id="r_a8fd8c266289f038bf46f841b6292e34d"><td class="memItemLeft">List&lt; ResumenBaseReglaDTO &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a8fd8c266289f038bf46f841b6292e34d">listar</a> (UsuarioActual usuario)</td></tr>
 <tr class="memdesc:a8fd8c266289f038bf46f841b6292e34d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Borradores de bases de reglas del último editado al primero: los del propio médico, o todos si es supervisor.  <br /></td></tr>
 <tr class="memitem:a24d399836d17beaed2d66bd0429c9af4" id="r_a24d399836d17beaed2d66bd0429c9af4"><td class="memItemLeft">BaseReglaDTO&#160;</td><td class="memItemRight"><a class="el" href="#a24d399836d17beaed2d66bd0429c9af4">crear</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1BaseReglaRequest.html">BaseReglaRequest</a> datos, UsuarioActual usuario)</td></tr>
@@ -147,8 +147,6 @@ Métodos públicos</h2></td></tr>
 <tr class="memdesc:a83adc77eaaa7e99c3a82f4a8dfafbdcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Elimina una regla del borrador.  <br /></td></tr>
 <tr class="memitem:ac074648d3019d76cfed4359653c4d387" id="r_ac074648d3019d76cfed4359653c4d387"><td class="memItemLeft">List&lt; Aviso &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ac074648d3019d76cfed4359653c4d387">avisos</a> (Long id)</td></tr>
 <tr class="memdesc:ac074648d3019d76cfed4359653c4d387"><td class="mdescLeft">&#160;</td><td class="mdescRight">Avisos del borrador.  <br /></td></tr>
-<tr class="memitem:ace8a754ba014f807df33545932317f9a" id="r_ace8a754ba014f807df33545932317f9a"><td class="memItemLeft">BaseReglaDTO&#160;</td><td class="memItemRight"><a class="el" href="#ace8a754ba014f807df33545932317f9a">publicar</a> (Long id)</td></tr>
-<tr class="memdesc:ace8a754ba014f807df33545932317f9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publica el borrador como la base de reglas activa de su grafo.  <br /></td></tr>
 <tr class="memitem:af7172f96c84616ca6426fc61071b13e7" id="r_af7172f96c84616ca6426fc61071b13e7"><td class="memItemLeft">BaseReglaDTO&#160;</td><td class="memItemRight"><a class="el" href="#af7172f96c84616ca6426fc61071b13e7">descartarCambios</a> (Long id)</td></tr>
 <tr class="memdesc:af7172f96c84616ca6426fc61071b13e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Descarta los cambios sin publicar y vuelve a la última versión publicada.  <br /></td></tr>
 <tr class="memitem:a9dd709a20d7fb9712d245848c6ce2d5b" id="r_a9dd709a20d7fb9712d245848c6ce2d5b"><td class="memItemLeft">CatalogoDTO&#160;</td><td class="memItemRight"><a class="el" href="#a9dd709a20d7fb9712d245848c6ce2d5b">catalogo</a> (String grafoId)</td></tr>
@@ -412,27 +410,6 @@ Métodos públicos</h2></td></tr>
 <p>Borrador completo. </p>
 
 <p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html#a0b54c8a97709dba0340f0453f9f5d5c5">org.signbb.backend.autoria.servicios.ServicioAutoriaReglas</a>.</p>
-
-</div>
-</div>
-<a id="ace8a754ba014f807df33545932317f9a" name="ace8a754ba014f807df33545932317f9a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace8a754ba014f807df33545932317f9a">&#9670;&#160;</a></span>publicar()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">BaseReglaDTO org.signbb.backend.autoria.servicios.ServicioAutoriaReglasImpl.publicar </td>
-          <td>(</td>
-          <td class="paramtype">Long</td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Publica el borrador como la base de reglas activa de su grafo. </p>
-
-<p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html#a745db1295ccd1310bc6f01de46c1bd0d">org.signbb.backend.autoria.servicios.ServicioAutoriaReglas</a>.</p>
 
 </div>
 </div>

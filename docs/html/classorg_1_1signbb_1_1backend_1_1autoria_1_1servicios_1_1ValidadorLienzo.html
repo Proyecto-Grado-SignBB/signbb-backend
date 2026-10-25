@@ -138,7 +138,7 @@ static final int&#160;</td><td class="memItemRight"><b>MINIMO_RESPUESTAS</b> = 2
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Revisa el lienzo y devuelve los avisos para el médico, en lenguaje humano. </p>
-<p>Solo se revisan los nodos a los que se llega desde la primera pregunta, porque son los que se publican. Un nodo suelto da un único aviso, que no bloquea: al publicar se omite. Que dos respuestas de distinta gravedad lleguen a la misma pregunta no se avisa; al compilar se toma la mayor. </p>
+<p>Solo se revisan los nodos a los que se llega desde la primera pregunta. Un nodo suelto da un único aviso bloqueante: hay que conectarlo o eliminarlo antes de publicar. Que dos respuestas de distinta gravedad lleguen a la misma pregunta no se avisa; al compilar se toma la mayor. </p>
 </div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/main/java/org/signbb/backend/autoria/servicios/<b>ValidadorLienzo.java</b></li>
 </ul>

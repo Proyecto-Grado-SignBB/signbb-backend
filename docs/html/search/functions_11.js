@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['servicioautoriaimpl_0',['ServicioAutoriaImpl',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#ae4414b7110a00d7c95e5d062e1f86432',1,'org::signbb::backend::autoria::servicios::ServicioAutoriaImpl']]],
-  ['servicioautoriareglasimpl_1',['ServicioAutoriaReglasImpl',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImpl.html#aa05b7f0e25b6d0af8373abfe258e674a',1,'org::signbb::backend::autoria::servicios::ServicioAutoriaReglasImpl']]],
+  ['servicioautoriaimpl_0',['ServicioAutoriaImpl',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html#a0c6a5a1df393e6585c0ee54afd6b8921',1,'org::signbb::backend::autoria::servicios::ServicioAutoriaImpl']]],
+  ['servicioautoriareglasimpl_1',['ServicioAutoriaReglasImpl',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImpl.html#a5520104a7f80071cb31cf5dd5139033f',1,'org::signbb::backend::autoria::servicios::ServicioAutoriaReglasImpl']]],
   ['serviciocuentasimpl_2',['ServicioCuentasImpl',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentasImpl.html#a04192e75baa5b65f617500955f0cb091',1,'org::signbb::backend::seguridad::servicios::ServicioCuentasImpl']]],
-  ['servicioimagenes_3',['ServicioImagenes',['../classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenes.html#abdbf0ae080135e8f88a2209b9426745d',1,'org::signbb::backend::media::ServicioImagenes']]],
+  ['servicioimagenes_3',['ServicioImagenes',['../classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenes.html#abc23b9c1f9f74e9c7c2d5eacc20add0d',1,'org::signbb::backend::media::ServicioImagenes']]],
   ['servicionavegacionimpl_4',['ServicioNavegacionImpl',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImpl.html#af5ec517c37203c610d1940ff6fa25222',1,'org::signbb::backend::navegacion::servicios::ServicioNavegacionImpl']]],
   ['serviciorecorridosimpl_5',['ServicioRecorridosImpl',['../classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioRecorridosImpl.html#abaed17a225fecdb9366863d943103281',1,'org::signbb::backend::observaciones::servicios::ServicioRecorridosImpl']]],
   ['serviciorevisionimpl_6',['ServicioRevisionImpl',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioRevisionImpl.html#a39e37a9d222e77375787d815e894191d',1,'org::signbb::backend::autoria::servicios::ServicioRevisionImpl']]],

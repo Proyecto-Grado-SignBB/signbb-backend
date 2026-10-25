@@ -1,12 +1,12 @@
 var searchData=
 [
   ['backend_0',['SignBB — Backend',['../index.html',1,'']]],
-  ['backend_20en_20el_20host_1',['Parámetros de conexión (perfil &lt;span class=&quot;tt&quot;&gt;docker&lt;/span&gt; del backend en el host)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md80',1,'']]],
+  ['backend_20en_20el_20host_1',['Parámetros de conexión (perfil &lt;span class=&quot;tt&quot;&gt;docker&lt;/span&gt; del backend en el host)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md81',1,'']]],
   ['backendapplication_2',['BackendApplication',['../classorg_1_1signbb_1_1backend_1_1BackendApplication.html',1,'org::signbb::backend']]],
   ['backendapplicationtests_3',['BackendApplicationTests',['../classorg_1_1signbb_1_1backend_1_1BackendApplicationTests.html',1,'org::signbb::backend']]],
-  ['baja_4',['Dar de baja',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md77',1,'']]],
+  ['baja_4',['Dar de baja',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md78',1,'']]],
   ['base_20de_20datos_5',['Perfil de base de datos',['../index.html#autotoc_md69',1,'']]],
-  ['base_20de_20reglas_6',['Representacion visual de base de reglas',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md89',1,'']]],
+  ['base_20de_20reglas_6',['Representacion visual de base de reglas',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md90',1,'']]],
   ['basede_7',['baseDe',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html#a795d4cb8317af18d3cdf4d8782aadd92',1,'org::signbb::backend::navegacion::modelo::ContextoClinico']]],
   ['baseregladto_8',['BaseReglaDTO',['../namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a07da44516c2a38b6a6915c8639398b6d',1,'org::signbb::backend::autoria::controladores']]],
   ['basereglarequest_9',['BaseReglaRequest',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1BaseReglaRequest.html',1,'org::signbb::backend::autoria::controladores']]],
@@ -25,5 +25,7 @@ var searchData=
   ['borradorbasereglaentity_22',['BorradorBaseReglaEntity',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1entidades_1_1BorradorBaseReglaEntity.html',1,'org::signbb::backend::autoria::datos::entidades']]],
   ['borradorregla_23',['BorradorRegla',['../namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1modelo.html#ad877808e981157f30a3a0c5956f6183c',1,'org::signbb::backend::autoria::modelo']]],
   ['borradorsubgrafoentity_24',['BorradorSubgrafoEntity',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1entidades_1_1BorradorSubgrafoEntity.html',1,'org::signbb::backend::autoria::datos::entidades']]],
-  ['buscar_25',['buscar',['../classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html#a8d8bcc1535814ae66ee8717202e4fc7a',1,'org.signbb.backend.cache.RepositorioSesionRedis.buscar()'],['../interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html#a0269f24b995c4409bc97a23ec23a6514',1,'org.signbb.backend.navegacion.modelo.RepositorioSesion.buscar()']]]
+  ['borrar_25',['borrar',['../interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios_1_1RepositorioLimiteIntentos.html#ac9339d6421cb3f71f26c9e74e5c460f5',1,'org::signbb::backend::seguridad::datos::repositorios::RepositorioLimiteIntentos']]],
+  ['borrarvencidos_26',['borrarVencidos',['../interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios_1_1RepositorioLimiteIntentos.html#a65fdd24a020b7544496bf88175836043',1,'org::signbb::backend::seguridad::datos::repositorios::RepositorioLimiteIntentos']]],
+  ['buscar_27',['buscar',['../classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html#a8d8bcc1535814ae66ee8717202e4fc7a',1,'org.signbb.backend.cache.RepositorioSesionRedis.buscar()'],['../interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html#a0269f24b995c4409bc97a23ec23a6514',1,'org.signbb.backend.navegacion.modelo.RepositorioSesion.buscar()']]]
 ];

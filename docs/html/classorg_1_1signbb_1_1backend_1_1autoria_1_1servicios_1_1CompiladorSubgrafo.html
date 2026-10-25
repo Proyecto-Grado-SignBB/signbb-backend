@@ -124,7 +124,7 @@ Métodos públicos estáticos</h2></td></tr>
 <div class="textblock"><p>Traduce el lienzo de un borrador al documento de un subgrafo (<code class="JavaDocCode">GrafoClinicoJson</code>), el mismo formato de los subgrafos del sistema en <code class="JavaDocCode">static/grafo_sistema/</code>. </p>
 <ul>
 <li>
-Solo se compilan los nodos a los que se llega desde la primera pregunta; los sueltos se omiten. </li>
+Solo se compilan los nodos a los que se llega desde la primera pregunta. Un nodo suelto bloquea en <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzo.html">ValidadorLienzo</a></code>; si se compila un documento que no pasó por esa validación, se omite. </li>
 <li>
 Una pregunta queda como <code class="JavaDocCode">tipo: pregunta</code>, con <code class="JavaDocCode">SELECCION_MULTIPLE</code> si se pueden marcar varias respuestas y <code class="JavaDocCode">SELECCION_UNICA</code> si no. </li>
 <li>

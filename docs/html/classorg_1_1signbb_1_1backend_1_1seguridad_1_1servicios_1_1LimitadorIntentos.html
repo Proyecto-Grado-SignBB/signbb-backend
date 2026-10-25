@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SignBB: Referencia de la clase org.signbb.backend.seguridad.servicios.LimitadorIntentos</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">SignBB
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1LimitadorIntentos.html','','classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1LimitadorIntentos-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Referencia de la clase org.signbb.backend.seguridad.servicios.LimitadorIntentos</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Límite de intentos por correo/cuenta, persistido en PostgreSQL.  
+ <a href="#details">Más...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Métodos públicos</h2></td></tr>
+<tr class="memitem:afaf92ba151425855315a12e730096b8b" id="r_afaf92ba151425855315a12e730096b8b"><td class="memItemLeft"><a id="afaf92ba151425855315a12e730096b8b" name="afaf92ba151425855315a12e730096b8b"></a>
+&#160;</td><td class="memItemRight"><b>LimitadorIntentos</b> (<a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios_1_1RepositorioLimiteIntentos.html">RepositorioLimiteIntentos</a> repositorio, @Value(&quot;${signbb.seguridad.login.max-intentos:5}&quot;) int maximoLogin, @Value(&quot;${signbb.seguridad.login.bloqueo:15m}&quot;) Duration bloqueoLogin, @Value(&quot;${signbb.seguridad.registro.max-intentos:3}&quot;) int maximoRegistro, @Value(&quot;${signbb.seguridad.registro.bloqueo:1h}&quot;) Duration bloqueoRegistro)</td></tr>
+<tr class="memdesc:afaf92ba151425855315a12e730096b8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta el repositorio y los umbrales de ingreso y registro. <br /></td></tr>
+<tr class="memitem:a323a91c25e959c0af8d3d92d4b8476a9" id="r_a323a91c25e959c0af8d3d92d4b8476a9"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a323a91c25e959c0af8d3d92d4b8476a9">verificar</a> (<a class="el" href="enumorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo_1_1TipoLimite.html">TipoLimite</a> tipo, String correo)</td></tr>
+<tr class="memdesc:a323a91c25e959c0af8d3d92d4b8476a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Revisa que la cuenta no esté bloqueada.  <br /></td></tr>
+<tr class="memitem:afda3fde54ece4e2b24fd87c95ed4d972" id="r_afda3fde54ece4e2b24fd87c95ed4d972"><td class="memItemLeft"><a id="afda3fde54ece4e2b24fd87c95ed4d972" name="afda3fde54ece4e2b24fd87c95ed4d972"></a>
+void&#160;</td><td class="memItemRight"><b>registrarIntento</b> (<a class="el" href="enumorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo_1_1TipoLimite.html">TipoLimite</a> tipo, String correo)</td></tr>
+<tr class="memdesc:afda3fde54ece4e2b24fd87c95ed4d972"><td class="mdescLeft">&#160;</td><td class="mdescRight">Anota un intento y fija el bloqueo si se alcanzó el máximo. <br /></td></tr>
+<tr class="memitem:aed14cc758da04b98c86eb1edad83768a" id="r_aed14cc758da04b98c86eb1edad83768a"><td class="memItemLeft"><a id="aed14cc758da04b98c86eb1edad83768a" name="aed14cc758da04b98c86eb1edad83768a"></a>
+void&#160;</td><td class="memItemRight"><b>limpiar</b> (<a class="el" href="enumorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo_1_1TipoLimite.html">TipoLimite</a> tipo, String correo)</td></tr>
+<tr class="memdesc:aed14cc758da04b98c86eb1edad83768a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Borra el contador de la cuenta, por ejemplo tras un ingreso correcto. <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pac-static-methods" class="groupheader"><a id="pac-static-methods" name="pac-static-methods"></a>
+Funciones estáticas de paquete</h2></td></tr>
+<tr class="memitem:a4fe776c231438d9509f4825212cbe2e6" id="r_a4fe776c231438d9509f4825212cbe2e6"><td class="memItemLeft">static String&#160;</td><td class="memItemRight"><a class="el" href="#a4fe776c231438d9509f4825212cbe2e6">clave</a> (String correo)</td></tr>
+<tr class="memdesc:a4fe776c231438d9509f4825212cbe2e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hash SHA-256 del correo normalizado, o <code class="JavaDocCode">null</code> si viene vacío.  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
+<div class="textblock"><p>Límite de intentos por correo/cuenta, persistido en PostgreSQL. </p>
+<p>El alcance actual no limita por IP ni de forma global: solo por cuenta. El ingreso cuenta los fallos y borra el contador tras un ingreso correcto; el registro cuenta todos los intentos para una misma cuenta. La clave que se guarda es un hash del correo normalizado, no el correo en claro.</p>
+<p>Al vivir en PostgreSQL, una caída de Redis no desactiva el límite. Si la base de datos no responde, el ingreso tampoco puede validar la cuenta. </p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
+<a id="a4fe776c231438d9509f4825212cbe2e6" name="a4fe776c231438d9509f4825212cbe2e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fe776c231438d9509f4825212cbe2e6">&#9670;&#160;</a></span>clave()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">String org.signbb.backend.seguridad.servicios.LimitadorIntentos.clave </td>
+          <td>(</td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>correo</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel package">package</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Hash SHA-256 del correo normalizado, o <code class="JavaDocCode">null</code> si viene vacío. </p>
+<p>Se usa como clave para no guardar correos en claro. </p>
+
+</div>
+</div>
+<a id="a323a91c25e959c0af8d3d92d4b8476a9" name="a323a91c25e959c0af8d3d92d4b8476a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a323a91c25e959c0af8d3d92d4b8476a9">&#9670;&#160;</a></span>verificar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void org.signbb.backend.seguridad.servicios.LimitadorIntentos.verificar </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="enumorg_1_1signbb_1_1backend_1_1seguridad_1_1modelo_1_1TipoLimite.html">TipoLimite</a></td>          <td class="paramname"><span class="paramname"><em>tipo</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>correo</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Revisa que la cuenta no esté bloqueada. </p>
+<dl class="exception"><dt>Excepciones</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1IntentosExcedidosException.html" title="Demasiados intentos con la misma cuenta: el ingreso o el registro queda bloqueado un tiempo.">IntentosExcedidosException</a></td><td>si el bloqueo sigue vigente </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
+<li>backend/src/main/java/org/signbb/backend/seguridad/servicios/<b>LimitadorIntentos.java</b></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespaceorg.html">org</a></li><li class="navelem"><a href="namespaceorg_1_1signbb.html">signbb</a></li><li class="navelem"><a href="namespaceorg_1_1signbb_1_1backend.html">backend</a></li><li class="navelem"><a href="namespaceorg_1_1signbb_1_1backend_1_1seguridad.html">seguridad</a></li><li class="navelem"><a href="namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios.html">servicios</a></li><li class="navelem"><a href="classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1LimitadorIntentos.html">LimitadorIntentos</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
+  </ul>
+</div>
+</body>
+</html>

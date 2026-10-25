@@ -386,10 +386,11 @@ Menor <code class="JavaDocCode">orden</code> de llegada (la más antigua). </li>
 
 <p>Vuelve a la última pregunta respondida para que el cuidador cambie su respuesta. </p>
 <p>Funciona también con el recorrido finalizado (vuelve a la pregunta que lo cerró). Desapila el último <code><a class="el" href="">PasoRecorrido</a></code>: se borra (o restaura) su respuesta y se desmarcan solo las reglas que ese paso marcó, sin reevaluar las reglas.</p>
+<p>Un recorrido actual siempre apila un paso por respuesta. Una pila vacía corresponde a un recorrido sin respuestas o a una sesión heredada sin historial; en ambos casos no se puede retroceder.</p>
 <dl class="exception"><dt>Excepciones</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">IllegalArgumentException</td><td>si aún no hay ninguna respuesta. </td></tr>
-    <tr><td class="paramname">IllegalStateException</td><td>si la pregunta ya no existe en el contenido clínico, o si sin pila no se pudo reproducir el recorrido. </td></tr>
+    <tr><td class="paramname">IllegalArgumentException</td><td>si no hay pasos que deshacer. </td></tr>
+    <tr><td class="paramname">IllegalStateException</td><td>si la pregunta ya no existe en el contenido clínico. </td></tr>
   </table>
   </dd>
 </dl>

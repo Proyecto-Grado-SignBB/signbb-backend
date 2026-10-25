@@ -124,7 +124,10 @@ Métodos públicos</h2></td></tr>
 ResponseEntity&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1media.html#a91762c10bc5c270116b61b3161921619">ImagenSubidaDTO</a> &gt;&#160;</td><td class="memItemRight"><b>subir</b> (@RequestParam(&quot;archivo&quot;) MultipartFile archivo)  throws IOException </td></tr>
 <tr class="memdesc:a252a2e2d5062d01ea8e2d30b50612fd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sube una imagen. <br /></td></tr>
 <tr class="memitem:ade793cd5d2398e14e3f03f79a2a0b67e" id="r_ade793cd5d2398e14e3f03f79a2a0b67e"><td class="memItemLeft">ResponseEntity&lt; byte[]&gt;&#160;</td><td class="memItemRight"><a class="el" href="#ade793cd5d2398e14e3f03f79a2a0b67e">ver</a> (@PathVariable String nombre)</td></tr>
-<tr class="memdesc:ade793cd5d2398e14e3f03f79a2a0b67e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Entrega una imagen.  <br /></td></tr>
+<tr class="memdesc:ade793cd5d2398e14e3f03f79a2a0b67e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Entrega una imagen publicada.  <br /></td></tr>
+<tr class="memitem:aafe50d9e80fad864f41221fbcc620e7d" id="r_aafe50d9e80fad864f41221fbcc620e7d"><td class="memItemLeft"><a id="aafe50d9e80fad864f41221fbcc620e7d" name="aafe50d9e80fad864f41221fbcc620e7d"></a>
+ResponseEntity&lt; byte[]&gt;&#160;</td><td class="memItemRight"><b>verBorrador</b> (@PathVariable String nombre)</td></tr>
+<tr class="memdesc:aafe50d9e80fad864f41221fbcc620e7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Entrega una imagen al editor; requiere sesión de médico o supervisor. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Subir y ver las imágenes de las preguntas. </p>
@@ -132,7 +135,9 @@ ResponseEntity&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1medi
 <li>
 <code class="JavaDocCode">POST /api/autoria/imagenes</code> (campo <code class="JavaDocCode">archivo</code>): guarda la imagen y responde 201 con su nombre. 422 si no es válida, 503 si Silo no responde. </li>
 <li>
-<code class="JavaDocCode">GET /media/{nombre}</code>: entrega la imagen (la ven médico y cuidadora). 404 si no existe. </li>
+<code class="JavaDocCode">GET /media/{nombre}</code>: entrega una imagen publicada (la ven médico y cuidadora). 404 si no existe o solo está en un borrador. </li>
+<li>
+<code class="JavaDocCode">GET /api/autoria/imagenes/{nombre}</code>: entrega cualquier imagen al editor; requiere sesión de médico o supervisor. </li>
 </ul>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
 <a id="ade793cd5d2398e14e3f03f79a2a0b67e" name="ade793cd5d2398e14e3f03f79a2a0b67e"></a>
@@ -150,8 +155,8 @@ ResponseEntity&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1medi
       </table>
 </div><div class="memdoc">
 
-<p>Entrega una imagen. </p>
-<p>El nombre lleva un uuid y nunca cambia de contenido, así que se puede guardar en caché. </p>
+<p>Entrega una imagen publicada. </p>
+<p>Las imágenes que solo están en borradores no se exponen aquí. </p>
 
 </div>
 </div>

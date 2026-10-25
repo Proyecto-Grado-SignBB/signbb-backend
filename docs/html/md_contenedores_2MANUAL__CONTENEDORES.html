@@ -120,6 +120,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('md_contenedore
 <li><b>cache</b>: Redis 8 (Alpine) en el puerto <span class="tt">6379</span>, con healthcheck. Caché de los motores de navegación y reglas: guarda el contenido clínico activo (copia caliente de lo que vive en PostgreSQL) y las sesiones temporales de los recorridos en curso.</li>
 <li><b>backend</b>: la API de SignBB (Spring Boot), construida con <span class="tt">backend/Dockerfile</span>, en el puerto <span class="tt">8080</span>. Espera a que <span class="tt">db</span>, <span class="tt">cache</span> y <span class="tt">silo</span> estén sanos, se reinicia sola si cae (<span class="tt">restart: always</span>) y su healthcheck consulta <span class="tt">/actuator/health</span>.</li>
 </ul>
+<p>El frontend PWA (<span class="tt">ui-consulta</span>) se despliega aparte, en <span class="tt">signbb-frontend/deploy/</span>: una imagen con el build de producción y Caddy, que sirve la PWA por HTTPS y hace proxy de <span class="tt">/api</span> y <span class="tt">/media</span> al backend. No forma parte de este <span class="tt">compose.yaml</span> porque vive en el repositorio del frontend.</p>
 <p>Los datos persisten en los volúmenes <span class="tt">postgres_data</span>, <span class="tt">silo_data</span> y <span class="tt">redis_data</span> (Docker los lista con el prefijo del proyecto, p. ej. <span class="tt">contenedores_postgres_data</span>). En Redis la persistencia es AOF (<span class="tt">--appendonly yes</span>): las sesiones sobreviven reinicios del propio contenedor, no solo del backend.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md75"></a>
 Levantar</h1>
@@ -130,6 +131,17 @@ curl localhost:8080/actuator/health   # {"status":"UP"} cuando el backend está 
 </pre><p>Para desarrollar con el backend en el host (<span class="tt">./mvnw spring-boot:run</span> desde <span class="tt">backend</span>), se levanta solo la infraestructura: </p><pre class="fragment">docker compose up -d db adminer silo cache
 </pre><p>Si el backend del contenedor está corriendo, ocupa el puerto <span class="tt">8080</span>; detenlo antes con <span class="tt">docker compose stop backend</span>.</p>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md76"></a>
+Frontend PWA (Caddy)</h2>
+<p>La PWA de consulta se levanta desde <span class="tt">signbb-frontend/deploy/</span> con su propio compose (imagen de Caddy + build de <span class="tt">ui-consulta</span>): </p><pre class="fragment">cd signbb-frontend/deploy
+cp .env.example .env      # SIGNBB_DOMINIO y SIGNBB_BACKEND
+docker compose up -d --build
+</pre><p>El servicio <span class="tt">web</span> usa <span class="tt">network_mode: host</span> para escuchar en 80/443 y llegar al backend por <span class="tt">127.0.0.1:8080</span>, tanto si el backend corre en el host como si es el servicio <span class="tt">backend</span> de este compose (que publica <span class="tt">127.0.0.1:8080</span>). Caddy escucha solo en el 443 (la redirección desde el 80 está desactivada, así que nginx puede seguir en el 80). Si se quiere redirección <span class="tt"><a href="http://">http://</a></span> → <span class="tt"><a href="https://">https://</a></span>, liberar el 80 y quitar <span class="tt">auto_https disable_redirects</span> del <span class="tt">Caddyfile</span>.</p>
+<p>El certificado es de la CA interna de Caddy (<span class="tt">tls internal</span>), porque no hay certificados públicos para IPs privadas. La CA raíz se copia del volumen <span class="tt">signbb_caddy_data</span> y se instala una vez en cada dispositivo: </p><pre class="fragment">docker compose cp web:/data/caddy/pki/authorities/local/root.crt ./caddy-root.crt
+</pre><p>El detalle de instalación en Android/iOS, los comandos de operación, el backup de la CA, la actualización del frontend y el diagnóstico están en <span class="tt">signbb-frontend/deploy/README.md</span>.</p>
+<p>Para que Spring funcione detrás de Caddy, <span class="tt">application.properties</span> activa <span class="tt">server.forward-headers-strategy=framework</span> por defecto (se puede desactivar con <span class="tt">SERVER_FORWARD_HEADERS_STRATEGY=none</span>). En producción, añadir también el origen HTTPS a CORS: </p><pre class="fragment">export SIGNBB_CORS_ORIGENES=https://192.168.20.217,http://localhost:4200,http://localhost:4300
+./mvnw spring-boot:run
+</pre><p>El mismo <span class="tt">SIGNBB_CORS_ORIGENES</span> se puede definir en el <span class="tt">.env</span> de este compose. No se debe borrar <span class="tt">signbb_caddy_data</span> sin reinstalar la CA en los móviles: la CA cambia y los certificados anteriores dejan de ser válidos.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md77"></a>
 Variables de entorno</h2>
 <p>Todas tienen un valor de desarrollo, así que <span class="tt">docker compose up</span> funciona sin configurar nada. Para cambiarlas, exportarlas antes de levantar o escribirlas en un archivo <span class="tt">.env</span> en este directorio (no se versiona). Las que comparten nombre se usan en dos servicios a la vez, para que no queden distintas.</p>
 <table class="markdownTable">
@@ -153,15 +165,17 @@ Variables de entorno</h2>
 <td class="markdownTableBodyNone"><span class="tt">SIGNBB_SIEMBRA_ACTIVA</span>  </td><td class="markdownTableBodyNone">backend  </td><td class="markdownTableBodyNone"><span class="tt">true</span>  </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">SIGNBB_CORS_ORIGENES</span>  </td><td class="markdownTableBodyNone">backend  </td><td class="markdownTableBodyNone"><span class="tt"><a href="http://localhost:4200,http://localhost:4300">http://localhost:4200,http://localhost:4300</a></span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">SERVER_FORWARD_HEADERS_STRATEGY</span>  </td><td class="markdownTableBodyNone">backend  </td><td class="markdownTableBodyNone"><span class="tt">framework</span> (valor por defecto)  </td></tr>
 </table>
 <blockquote class="doxtable">
 <p>PostgreSQL y Silo leen su contraseña solo la primera vez, con el volumen vacío. Si se cambia después, hay que cambiarla también dentro del servicio o empezar de cero con <span class="tt">docker compose down -v</span>. </p>
 </blockquote>
 <p><b>Producción.</b> <span class="tt">SIGNBB_ENTORNO=produccion</span> obliga a dar valores propios a los secretos y <span class="tt">SIGNBB_DOCS_ACTIVAS=false</span>; si no, el backend no arranca y el log dice qué variable falta. <span class="tt">SIGNBB_SIEMBRA_ACTIVA=true</span> solo en el primer despliegue (siembra el contenido clínico) y <span class="tt">false</span> después.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md77"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md78"></a>
 Dar de baja</h1>
 <p>Detiene y elimina los contenedores, <b>conservando</b> los datos de los volúmenes: </p><pre class="fragment">docker compose down
-</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md78"></a>
+</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md79"></a>
 Eliminar los datos persistentes</h1>
 <p>Da de baja los servicios y además borra los volúmenes con los datos (base de datos, objetos de silo y caché/sesiones de Redis): </p><pre class="fragment">docker compose down -v
 </pre><blockquote class="doxtable">
@@ -169,7 +183,7 @@ Eliminar los datos persistentes</h1>
 <p>Actualizar el contenido clínico: <span class="tt">DatabaseInit</span> decide sembrar según el <span class="tt">id</span> del grafo raíz (<span class="tt">grafo_raiz</span>). Si se cambian los archivos de <span class="tt">backend/src/main/resources/static/grafo_sistema/</span> pero la base ya estaba sembrada, hay que borrar los volúmenes (<span class="tt">docker compose down -v</span>) y volver a levantar; de lo contrario se seguiría sirviendo el contenido anterior.</p>
 <p>Base local vieja: si el backend no arranca porque Hibernate dice que una tabla o columna no coincide con el esquema, la base se creó antes de Flyway con otra forma. <span class="tt">docker compose down -v</span> y volver a levantar la deja migrada. </p>
 </blockquote>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md79"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md80"></a>
 Acceso rápido</h1>
 <ul>
 <li><b>Adminer</b>: <span class="tt"><a href="http://localhost:8180">http://localhost:8180</a></span> — servidor <span class="tt">db</span>, base <span class="tt">signbb</span>, usuario <span class="tt">admin</span>, contraseña <span class="tt">example</span>.</li>
@@ -181,7 +195,7 @@ Acceso rápido</h1>
 <blockquote class="doxtable">
 <p><b>Puertos solo locales.</b> PostgreSQL, Adminer, Silo, Redis y el backend se publican en <span class="tt">127.0.0.1</span> (por ejemplo <span class="tt">127.0.0.1:5432</span>). Funcionan desde tu propio computador, pero no se ven desde otro equipo de la red. Si cambias el <span class="tt">compose.yaml</span>, aplica el cambio con <span class="tt">docker compose up -d</span>: los contenedores se recrean y los datos se conservan porque viven en volúmenes. </p>
 </blockquote>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md80"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md81"></a>
 Parámetros de conexión (perfil <span class="tt">docker</span> del backend en el host)</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">

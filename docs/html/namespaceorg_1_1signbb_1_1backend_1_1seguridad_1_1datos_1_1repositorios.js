@@ -1,4 +1,5 @@
 var namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios =
 [
+    [ "RepositorioLimiteIntentos", "interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios_1_1RepositorioLimiteIntentos.html", "interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios_1_1RepositorioLimiteIntentos" ],
     [ "RepositorioUsuario", "interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios_1_1RepositorioUsuario.html", "interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios_1_1RepositorioUsuario" ]
 ];

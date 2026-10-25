@@ -1,7 +1,7 @@
 var searchData=
 [
   ['y_20acceso_20politicaaccesoborradorestest_20guardiaautoriatest_0',['Autor y acceso (&lt;span class=&quot;tt&quot;&gt;PoliticaAccesoBorradoresTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;GuardiaAutoriaTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md11',1,'']]],
-  ['y_20color_1',['Grafo Activo y color',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md86',1,'']]],
+  ['y_20color_1',['Grafo Activo y color',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md87',1,'']]],
   ['y_20mapeo_20json_2',['Servicio de inferencia y mapeo JSON',['../pruebas_reglas.html#autotoc_md39',1,'']]],
   ['y_20por_20qué_20importa_3',['y por qué importa',['../pruebas_autoria.html#autotoc_md2',1,'Qué se prueba y por qué importa'],['../pruebas_navegacion.html#autotoc_md20',1,'Qué se prueba y por qué importa'],['../pruebas_observaciones.html#autotoc_md30',1,'Qué se prueba y por qué importa'],['../pruebas_seguridad.html#autotoc_md45',1,'Qué se prueba y por qué importa']]],
   ['y_20pruebas_4',['Construcción y pruebas',['../index.html#autotoc_md68',1,'']]],

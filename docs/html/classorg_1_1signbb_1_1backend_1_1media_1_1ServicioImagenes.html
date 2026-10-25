@@ -117,17 +117,57 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Métodos públicos</h2></td></tr>
-<tr class="memitem:abdbf0ae080135e8f88a2209b9426745d" id="r_abdbf0ae080135e8f88a2209b9426745d"><td class="memItemLeft"><a id="abdbf0ae080135e8f88a2209b9426745d" name="abdbf0ae080135e8f88a2209b9426745d"></a>
-&#160;</td><td class="memItemRight"><b>ServicioImagenes</b> (<a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html">AlmacenImagenes</a> almacen, @Value(&quot;${signbb.media.max-bytes:1048576}&quot;) long maxBytes)</td></tr>
-<tr class="memdesc:abdbf0ae080135e8f88a2209b9426745d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta el almacén y el tope de tamaño (<code class="JavaDocCode">signbb.media.max-bytes</code>). <br /></td></tr>
+<tr class="memitem:abc23b9c1f9f74e9c7c2d5eacc20add0d" id="r_abc23b9c1f9f74e9c7c2d5eacc20add0d"><td class="memItemLeft"><a id="abc23b9c1f9f74e9c7c2d5eacc20add0d" name="abc23b9c1f9f74e9c7c2d5eacc20add0d"></a>
+&#160;</td><td class="memItemRight"><b>ServicioImagenes</b> (<a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html">AlmacenImagenes</a> almacen, <a class="el" href="classorg_1_1signbb_1_1backend_1_1media_1_1ReferenciasImagenes.html">ReferenciasImagenes</a> referencias, @Value(&quot;${signbb.media.max-bytes:1048576}&quot;) long maxBytes)</td></tr>
+<tr class="memdesc:abc23b9c1f9f74e9c7c2d5eacc20add0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta el almacén, las referencias y el tope de tamaño (<code class="JavaDocCode">signbb.media.max-bytes</code>). <br /></td></tr>
 <tr class="memitem:a9a8284a9e7a947d08774e3e2a3795ef1" id="r_a9a8284a9e7a947d08774e3e2a3795ef1"><td class="memItemLeft">String&#160;</td><td class="memItemRight"><a class="el" href="#a9a8284a9e7a947d08774e3e2a3795ef1">subir</a> (byte[] datos)</td></tr>
-<tr class="memdesc:a9a8284a9e7a947d08774e3e2a3795ef1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valida y guarda una imagen.  <br /></td></tr>
+<tr class="memdesc:a9a8284a9e7a947d08774e3e2a3795ef1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valida, normaliza y guarda una imagen.  <br /></td></tr>
 <tr class="memitem:a5a96c967078241e3ced60aa72698978d" id="r_a5a96c967078241e3ced60aa72698978d"><td class="memItemLeft"><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html#a817aa15e6b1aed40bff6b8984cce28c7">AlmacenImagenes.Imagen</a>&#160;</td><td class="memItemRight"><a class="el" href="#a5a96c967078241e3ced60aa72698978d">obtener</a> (String nombre)</td></tr>
 <tr class="memdesc:a5a96c967078241e3ced60aa72698978d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lee una imagen guardada.  <br /></td></tr>
+<tr class="memitem:ae1d67258bed3af0a9b9ea0e3f80017e6" id="r_ae1d67258bed3af0a9b9ea0e3f80017e6"><td class="memItemLeft"><a id="ae1d67258bed3af0a9b9ea0e3f80017e6" name="ae1d67258bed3af0a9b9ea0e3f80017e6"></a>
+boolean&#160;</td><td class="memItemRight"><b>esPublicada</b> (String nombre)</td></tr>
+<tr class="memdesc:ae1d67258bed3af0a9b9ea0e3f80017e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">True si la imagen está referenciada por contenido publicado o una versión conservada. <br /></td></tr>
+<tr class="memitem:a1130ff550cf9e8807696dd07b432ea8e" id="r_a1130ff550cf9e8807696dd07b432ea8e"><td class="memItemLeft"><a id="a1130ff550cf9e8807696dd07b432ea8e" name="a1130ff550cf9e8807696dd07b432ea8e"></a>
+void&#160;</td><td class="memItemRight"><b>invalidarCachePublicadas</b> ()</td></tr>
+<tr class="memdesc:a1130ff550cf9e8807696dd07b432ea8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalida la lista de imágenes publicadas tras publicar o despublicar. <br /></td></tr>
+<tr class="memitem:ac9103492557c7c9358aacab809a6a419" id="r_ac9103492557c7c9358aacab809a6a419"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ac9103492557c7c9358aacab809a6a419">eliminarSiHuerfanas</a> (Set&lt; String &gt; nombres)</td></tr>
+<tr class="memdesc:ac9103492557c7c9358aacab809a6a419"><td class="mdescLeft">&#160;</td><td class="mdescRight">Borra de Silo las imágenes retiradas que ya no referencia nadie.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pac-static-methods" class="groupheader"><a id="pac-static-methods" name="pac-static-methods"></a>
+Funciones estáticas de paquete</h2></td></tr>
+<tr class="memitem:a7e151cc25406acfa709da0cff9dd59ad" id="r_a7e151cc25406acfa709da0cff9dd59ad"><td class="memItemLeft"><a id="a7e151cc25406acfa709da0cff9dd59ad" name="a7e151cc25406acfa709da0cff9dd59ad"></a>
+&#160;</td><td class="memItemRight"><b>[static initializer]</b></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pac-static-attribs" class="groupheader"><a id="pac-static-attribs" name="pac-static-attribs"></a>
+Atributos estáticos de paquete</h2></td></tr>
+<tr class="memitem:ae65ba61dd467f9e7b6e0816a9926aa71" id="r_ae65ba61dd467f9e7b6e0816a9926aa71"><td class="memItemLeft"><a id="ae65ba61dd467f9e7b6e0816a9926aa71" name="ae65ba61dd467f9e7b6e0816a9926aa71"></a>
+static final long&#160;</td><td class="memItemRight"><b>MAX_PIXELES</b> = 25_000_000L</td></tr>
+<tr class="memdesc:ae65ba61dd467f9e7b6e0816a9926aa71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Máximo de píxeles que se decodifican, para evitar bombas de descompresión. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Reglas de las imágenes de las preguntas: formato, tamaño y nombre. </p>
+<p>Antes de guardar, la imagen se decodifica, se aplica la orientación EXIF y se vuelve a codificar sin metadatos. Así el archivo que queda en Silo no conserva GPS, cámara, fechas, miniaturas ni comentarios. JPEG y PNG se mantienen; WebP se convierte a PNG si tiene transparencia o a JPEG si no, y los GIF estáticos se convierten a PNG. Los GIF animados se rechazan para no perder la animación. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
+<a id="ac9103492557c7c9358aacab809a6a419" name="ac9103492557c7c9358aacab809a6a419"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9103492557c7c9358aacab809a6a419">&#9670;&#160;</a></span>eliminarSiHuerfanas()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void org.signbb.backend.media.ServicioImagenes.eliminarSiHuerfanas </td>
+          <td>(</td>
+          <td class="paramtype">Set&lt; String &gt;</td>          <td class="paramname"><span class="paramname"><em>nombres</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Borra de Silo las imágenes retiradas que ya no referencia nadie. </p>
+<p>Si Silo falla, se registra y la limpieza diaria las recogerá después. </p>
+
+</div>
+</div>
 <a id="a5a96c967078241e3ced60aa72698978d" name="a5a96c967078241e3ced60aa72698978d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5a96c967078241e3ced60aa72698978d">&#9670;&#160;</a></span>obtener()</h2>
 
@@ -169,11 +209,11 @@ Métodos públicos</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Valida y guarda una imagen. </p>
+<p>Valida, normaliza y guarda una imagen. </p>
 <dl class="section return"><dt>Devuelve</dt><dd>el nombre con el que quedó guardada (uuid y extensión) </dd></dl>
 <dl class="exception"><dt>Excepciones</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1media_1_1ImagenInvalidaException.html" title="La imagen que se quiso subir no se puede aceptar; el mensaje es para el médico.">ImagenInvalidaException</a></td><td>si está vacía, pesa de más o no es png, jpeg, webp ni gif </td></tr>
+    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1media_1_1ImagenInvalidaException.html" title="La imagen que se quiso subir no se puede aceptar; el mensaje es para el médico.">ImagenInvalidaException</a></td><td>si está vacía, pesa de más, no es png, jpeg, webp ni gif, es animada o no se puede decodificar </td></tr>
     <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1media_1_1AlmacenNoDisponibleException.html" title="El almacén de imágenes (Silo) no responde.">AlmacenNoDisponibleException</a></td><td>si Silo no responde </td></tr>
   </table>
   </dd>

@@ -184,10 +184,10 @@ Edición (<span class="tt">EditorLienzoTest</span>)</h2>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
 Avisos (<span class="tt">ValidadorLienzoTest</span>)</h2>
 <ul>
-<li><b>Bloquean la publicación:</b> sin primera pregunta, texto vacío, menos de 2 respuestas, respuesta repetida, respuesta sin camino, conclusión sin desenlace y círculo.</li>
+<li><b>Bloquean la publicación:</b> sin primera pregunta, texto vacío, menos de 2 respuestas, respuesta repetida, respuesta sin camino, conclusión sin desenlace, círculo y nodo suelto.</li>
 <li>Los mensajes están en lenguaje humano, por ejemplo: «La respuesta "Más de
   39 °C" de "¿Cuánto marca el termómetro?" todavía no dice qué pasa después.».</li>
-<li><b>No bloquea:</b> un nodo suelto. Avisa que no se publicará.</li>
+<li>Un nodo suelto no se revisa por dentro: basta con conectarlo o eliminarlo.</li>
 <li><b>No se avisa</b> el choque de gravedades: se resuelve al compilar con la mayor, como se acordó.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
@@ -196,7 +196,7 @@ Compilar (<span class="tt">CompiladorSubgrafoTest</span>)</h2>
 <li>El <span class="tt">peso</span> de un nodo es la <b>mayor gravedad</b> de las respuestas que llegan a él; la primera pregunta lleva 1.</li>
 <li>"¿Puede marcar varias?" da <span class="tt">SELECCION_MULTIPLE</span>; si no, <span class="tt">SELECCION_UNICA</span>.</li>
 <li>Las conclusiones quedan como <span class="tt">terminal</span> con su desenlace y el mensaje como <span class="tt">label</span>.</li>
-<li>Los nodos sueltos no se publican.</li>
+<li>Los nodos sueltos bloquean la publicación; si se compila un documento que no pasó por la validación, se omiten.</li>
 <li>La salida pasa por <span class="tt">GrafoClinicoMapper.desde</span>, la misma validación estricta que el contenido del sistema.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md6"></a>

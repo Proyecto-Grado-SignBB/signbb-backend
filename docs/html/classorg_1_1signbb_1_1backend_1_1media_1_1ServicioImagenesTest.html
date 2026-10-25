@@ -112,26 +112,32 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 </div><!--header-->
 <div class="contents">
 
-<p>Tests de <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenes.html">ServicioImagenes</a></code>: formato, tamaño y nombre, con un almacén en memoria.  
+<p>Tests de <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenes.html">ServicioImagenes</a></code>: formato, tamaño, nombre, EXIF y orientación.  
  <a href="#details">Más...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pac-methods" class="groupheader"><a id="pac-methods" name="pac-methods"></a>
 Funciones de paquete</h2></td></tr>
 <tr class="memitem:a37b9528496c36c1445e5a4c573ecb25e" id="r_a37b9528496c36c1445e5a4c573ecb25e"><td class="memItemLeft"><a id="a37b9528496c36c1445e5a4c573ecb25e" name="a37b9528496c36c1445e5a4c573ecb25e"></a>
 void&#160;</td><td class="memItemRight"><b>preparar</b> ()</td></tr>
-<tr class="memitem:aaa7076fb5fb603ecfddd211232f6b133" id="r_aaa7076fb5fb603ecfddd211232f6b133"><td class="memItemLeft"><a id="aaa7076fb5fb603ecfddd211232f6b133" name="aaa7076fb5fb603ecfddd211232f6b133"></a>
-void&#160;</td><td class="memItemRight"><b>guardaLosCuatroFormatosConNombreUuidYSuExtension</b> ()</td></tr>
+<tr class="memitem:aaa3a7f7ffa6b0396a9197a79a63e77ce" id="r_aaa3a7f7ffa6b0396a9197a79a63e77ce"><td class="memItemLeft"><a id="aaa3a7f7ffa6b0396a9197a79a63e77ce" name="aaa3a7f7ffa6b0396a9197a79a63e77ce"></a>
+void&#160;</td><td class="memItemRight"><b>guardaLosCuatroFormatosSinMetadatos</b> ()  throws IOException </td></tr>
+<tr class="memitem:a814c4a08d8e4ee52f13c50f33e080ac3" id="r_a814c4a08d8e4ee52f13c50f33e080ac3"><td class="memItemLeft"><a id="a814c4a08d8e4ee52f13c50f33e080ac3" name="a814c4a08d8e4ee52f13c50f33e080ac3"></a>
+void&#160;</td><td class="memItemRight"><b>quitaElExifYAplicaLaOrientacion</b> ()  throws Exception </td></tr>
+<tr class="memitem:ab3d8ce49c664424f6cf7cfab02fdc110" id="r_ab3d8ce49c664424f6cf7cfab02fdc110"><td class="memItemLeft"><a id="ab3d8ce49c664424f6cf7cfab02fdc110" name="ab3d8ce49c664424f6cf7cfab02fdc110"></a>
+void&#160;</td><td class="memItemRight"><b>aplicaLaOrientacionTranspuestaYTransversa</b> ()  throws IOException </td></tr>
+<tr class="memitem:a3f9145f7e249732d4a4abcbb3640f039" id="r_a3f9145f7e249732d4a4abcbb3640f039"><td class="memItemLeft"><a id="a3f9145f7e249732d4a4abcbb3640f039" name="a3f9145f7e249732d4a4abcbb3640f039"></a>
+void&#160;</td><td class="memItemRight"><b>rechazaLasImagenesAnimadas</b> ()  throws IOException </td></tr>
 <tr class="memitem:acdadf68f8eeaf80f53deea1704e37006" id="r_acdadf68f8eeaf80f53deea1704e37006"><td class="memItemLeft"><a id="acdadf68f8eeaf80f53deea1704e37006" name="acdadf68f8eeaf80f53deea1704e37006"></a>
 void&#160;</td><td class="memItemRight"><b>rechazaLoQueNoEsUnaImagenPermitida</b> ()</td></tr>
 <tr class="memitem:a2076b5d2a1018e4796cdfed18a511936" id="r_a2076b5d2a1018e4796cdfed18a511936"><td class="memItemLeft"><a id="a2076b5d2a1018e4796cdfed18a511936" name="a2076b5d2a1018e4796cdfed18a511936"></a>
 void&#160;</td><td class="memItemRight"><b>rechazaLoQuePesaMasDelTope</b> ()</td></tr>
 <tr class="memitem:affd899df85865bfeb5c85880e2f61cb5" id="r_affd899df85865bfeb5c85880e2f61cb5"><td class="memItemLeft"><a id="affd899df85865bfeb5c85880e2f61cb5" name="affd899df85865bfeb5c85880e2f61cb5"></a>
-void&#160;</td><td class="memItemRight"><b>obtenerDevuelveLoGuardadoYRechazaNombresRaros</b> ()</td></tr>
+void&#160;</td><td class="memItemRight"><b>obtenerDevuelveLoGuardadoYRechazaNombresRaros</b> ()  throws IOException </td></tr>
 <tr class="memitem:a76cfe93a8e0654a5272a5e8e85da1527" id="r_a76cfe93a8e0654a5272a5e8e85da1527"><td class="memItemLeft"><a id="a76cfe93a8e0654a5272a5e8e85da1527" name="a76cfe93a8e0654a5272a5e8e85da1527"></a>
 void&#160;</td><td class="memItemRight"><b>nombresEnEncuentraLasImagenesDentroDeUnTextoSinImportarDondeEsten</b> ()</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
-<div class="textblock"><p>Tests de <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenes.html">ServicioImagenes</a></code>: formato, tamaño y nombre, con un almacén en memoria. </p>
+<div class="textblock"><p>Tests de <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1media_1_1ServicioImagenes.html">ServicioImagenes</a></code>: formato, tamaño, nombre, EXIF y orientación. </p>
 </div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/test/java/org/signbb/backend/media/<b>ServicioImagenesTest.java</b></li>
 </ul>

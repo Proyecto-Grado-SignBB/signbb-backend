@@ -117,6 +117,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Métodos públicos estáticos</h2></td></tr>
+<tr class="memitem:a9f0b2cfc821dfe9daf0c34348f3836b8" id="r_a9f0b2cfc821dfe9daf0c34348f3836b8"><td class="memItemLeft"><a id="a9f0b2cfc821dfe9daf0c34348f3836b8" name="a9f0b2cfc821dfe9daf0c34348f3836b8"></a>
+static boolean&#160;</td><td class="memItemRight"><b>esBaseRaiz</b> (String grafoId)</td></tr>
+<tr class="memdesc:a9f0b2cfc821dfe9daf0c34348f3836b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">True si el id corresponde al grafo raíz del sistema. <br /></td></tr>
 <tr class="memitem:ae6ee63bf1d37bb13846a2ba93a02a39b" id="r_ae6ee63bf1d37bb13846a2ba93a02a39b"><td class="memItemLeft"><a id="ae6ee63bf1d37bb13846a2ba93a02a39b" name="ae6ee63bf1d37bb13846a2ba93a02a39b"></a>
 static boolean&#160;</td><td class="memItemRight"><b>puedeLeer</b> (Long autorId, UsuarioActual usuario)</td></tr>
 <tr class="memdesc:ae6ee63bf1d37bb13846a2ba93a02a39b"><td class="mdescLeft">&#160;</td><td class="mdescRight">True si el usuario puede ver el borrador. <br /></td></tr>
@@ -126,6 +129,11 @@ static boolean&#160;</td><td class="memItemRight"><b>puedeEditar</b> (Long autor
 <tr class="memitem:a65b920029a8696cc578b9726299aae25" id="r_a65b920029a8696cc578b9726299aae25"><td class="memItemLeft"><a id="a65b920029a8696cc578b9726299aae25" name="a65b920029a8696cc578b9726299aae25"></a>
 static boolean&#160;</td><td class="memItemRight"><b>esAutor</b> (Long autorId, UsuarioActual usuario)</td></tr>
 <tr class="memdesc:a65b920029a8696cc578b9726299aae25"><td class="mdescLeft">&#160;</td><td class="mdescRight">True si el usuario es el autor del borrador. <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Atributos públicos estáticos</h2></td></tr>
+<tr class="memitem:aef7323c301818d403289ea35f2a12f02" id="r_aef7323c301818d403289ea35f2a12f02"><td class="memItemLeft">static final String&#160;</td><td class="memItemRight"><a class="el" href="#aef7323c301818d403289ea35f2a12f02">REGLAS_RAIZ_SIN_BASE</a></td></tr>
+<tr class="memdesc:aef7323c301818d403289ea35f2a12f02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mensaje cuando se intenta usar el grafo raíz en el módulo de reglas.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Quién puede leer y quién puede editar un borrador (subgrafo o base de reglas), según la cuenta de su autor: </p>
@@ -137,7 +145,34 @@ Editar: solo el autor. </li>
 <li>
 Un borrador sin autor (de antes de las cuentas) solo lo lee un supervisor y nadie lo edita. </li>
 </ul>
-</div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
+</div><a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Documentación de datos miembro</h2>
+<a id="aef7323c301818d403289ea35f2a12f02" name="aef7323c301818d403289ea35f2a12f02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef7323c301818d403289ea35f2a12f02">&#9670;&#160;</a></span>REGLAS_RAIZ_SIN_BASE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">final String org.signbb.backend.autoria.servicios.PoliticaAccesoBorradores.REGLAS_RAIZ_SIN_BASE</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Valor inicial:</b><div class="fragment"><div class="line">                                        =</div>
+<div class="line"><span class="stringliteral">&quot;El grafo raíz no tiene una base de reglas editable.&quot;</span></div>
+</div><!-- fragment -->
+<p>Mensaje cuando se intenta usar el grafo raíz en el módulo de reglas. </p>
+
+</div>
+</div>
+<hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/main/java/org/signbb/backend/autoria/servicios/<b>PoliticaAccesoBorradores.java</b></li>
 </ul>
 </div><!-- contents -->
