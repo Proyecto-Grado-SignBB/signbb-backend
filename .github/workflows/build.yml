@@ -53,9 +53,13 @@ jobs:
 
       # Los DAO solo usan consultas derivadas y JPQL con parámetros enlazados
       # (PreparedStatement); SQL nativo o armado a mano no pasa el build.
+      # Excepción: RepositorioLimiteIntentos usa un upsert atómico de PostgreSQL
+      # (INSERT ... ON CONFLICT) para el límite de intentos. Reemplazarlo por JPA
+      # exigiría locks y reintentos, y perdería la atomicidad actual.
       - name: Sin SQL nativo ni Statement
         run: |
-          if grep -rnE 'nativeQuery|createNativeQuery|createStatement|JdbcTemplate' src/main/java; then
+          if grep -rnE 'nativeQuery|createNativeQuery|createStatement|JdbcTemplate' src/main/java \
+            | grep -v 'src/main/java/org/signbb/backend/seguridad/datos/repositorios/RepositorioLimiteIntentos.java'; then
             echo "Se encontró SQL nativo o Statement en src/main/java" >&2
             exit 1
           fi
