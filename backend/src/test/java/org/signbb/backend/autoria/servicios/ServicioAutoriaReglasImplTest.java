@@ -31,6 +31,7 @@ import org.signbb.backend.autoria.modelo.Aviso;
 import org.signbb.backend.autoria.modelo.CopiaBaseReglaPublicada;
 import org.signbb.backend.autoria.modelo.DocumentoBaseRegla;
 import org.signbb.backend.autoria.modelo.EstadoBorrador;
+import org.signbb.backend.config.RecursoNoEncontradoException;
 import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
 import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico;
 import org.signbb.backend.navegacion.datos.serializacion.ContenidoEjemplo;
@@ -87,7 +88,7 @@ class ServicioAutoriaReglasImplTest {
     @Test
     void crearExigeNombre() {
         assertThrows(EdicionInvalidaException.class,
-                () -> servicio.crear(peticion("  ", "grafo_raiz"), MEDICO_A));
+                () -> servicio.crear(peticion("  ", "grafo_fiebre"), MEDICO_A));
     }
 
     @Test
@@ -115,6 +116,32 @@ class ServicioAutoriaReglasImplTest {
 
         servicio.listar(UsuariosPrueba.SUPERVISOR);
         verify(borradores).findAll(any(Sort.class));
+    }
+
+    @Test
+    void listarOmiteLaBaseRaiz() {
+        BorradorBaseReglaEntity raiz = BaseReglasFiebre.borrador(DocumentoBaseRegla.vacio());
+        raiz.setId(2L);
+        raiz.setGrafoId("grafo_raiz");
+        BorradorBaseReglaEntity subgrafo = BaseReglasFiebre.borrador(DocumentoBaseRegla.vacio());
+        when(borradores.findAll(any(Sort.class))).thenReturn(List.of(raiz, subgrafo));
+
+        var lista = servicio.listar(UsuariosPrueba.SUPERVISOR);
+
+        assertEquals(1, lista.size());
+        assertEquals("grafo_fiebre", lista.get(0).grafoId());
+    }
+
+    @Test
+    void laBaseRaizNoSeCreaNiSePublicaNiSeCataloga() {
+        assertThrows(EdicionInvalidaException.class,
+                () -> servicio.crear(peticion("Base raíz", "grafo_raiz"), MEDICO_A));
+        assertThrows(RecursoNoEncontradoException.class, () -> servicio.catalogo("grafo_raiz"));
+
+        BorradorBaseReglaEntity b = BaseReglasFiebre.borrador(DocumentoBaseRegla.vacio());
+        b.setGrafoId("grafo_raiz");
+        guardado(b);
+        assertThrows(EdicionInvalidaException.class, () -> servicio.publicar(b.getId()));
     }
 
     @Test

@@ -78,7 +78,11 @@ public class GuardiaAutoria {
 
     /** Exige que el usuario pueda ver la base de reglas. */
     public void leerBase(Long id, UsuarioActual usuario) {
-        if (!PoliticaAccesoBorradores.puedeLeer(base(id).getAutorId(), usuario)) {
+        BorradorBaseReglaEntity b = base(id);
+        if (PoliticaAccesoBorradores.esBaseRaiz(b.getGrafoId())) {
+            throw new RecursoNoEncontradoException("no hay una base de reglas para el grafo raíz.");
+        }
+        if (!PoliticaAccesoBorradores.puedeLeer(b.getAutorId(), usuario)) {
             throw new AccesoDenegadoException("Esta base de reglas es de otro médico.");
         }
     }
@@ -89,6 +93,9 @@ public class GuardiaAutoria {
      */
     public void editarBase(Long id, UsuarioActual usuario) {
         BorradorBaseReglaEntity b = base(id);
+        if (PoliticaAccesoBorradores.esBaseRaiz(b.getGrafoId())) {
+            throw new EdicionInvalidaException(PoliticaAccesoBorradores.REGLAS_RAIZ_SIN_BASE);
+        }
         if (!PoliticaAccesoBorradores.puedeEditar(b.getAutorId(), usuario)) {
             throw new AccesoDenegadoException("Solo el autor puede editar esta base de reglas.");
         }
@@ -103,6 +110,9 @@ public class GuardiaAutoria {
      * solo un supervisor. Si el grafo no existe lo dice después el servicio.
      */
     public void crearBase(String grafoId, UsuarioActual usuario) {
+        if (PoliticaAccesoBorradores.esBaseRaiz(grafoId == null ? null : grafoId.strip())) {
+            throw new EdicionInvalidaException(PoliticaAccesoBorradores.REGLAS_RAIZ_SIN_BASE);
+        }
         var subgrafo = grafoId == null ? null : subgrafos.findByGrafoId(grafoId.strip()).orElse(null);
         if (subgrafo != null) {
             if (!PoliticaAccesoBorradores.puedeEditar(subgrafo.getAutorId(), usuario)) {

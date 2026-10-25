@@ -25,6 +25,7 @@ import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorBaseRegl
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo;
 import org.signbb.backend.autoria.modelo.DocumentoBaseRegla;
 import org.signbb.backend.autoria.modelo.EstadoBorrador;
+import org.signbb.backend.config.RecursoNoEncontradoException;
 import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico;
 import org.signbb.backend.reglas.modelo.Condicion;
 import org.signbb.backend.reglas.modelo.NivelAlerta;
@@ -85,12 +86,9 @@ class ServicioAutoriaReglasAbstractoTest {
     }
 
     @Test
-    void crearBaseParaElGrafoRaiz() {
-        BaseReglaDTO dto = servicio.crear(peticion("Base raíz", "grafo_raiz"), MEDICO_A);
-
-        assertEquals("grafo_raiz", dto.grafoId());
-        assertEquals(EstadoBorrador.BORRADOR, dto.estado());
-        assertEquals(0, dto.reglas().size());
+    void crearBaseParaElGrafoRaizSeRechaza() {
+        assertThrows(EdicionInvalidaException.class,
+                () -> servicio.crear(peticion("Base raíz", "grafo_raiz"), MEDICO_A));
     }
 
     @Test
@@ -110,15 +108,16 @@ class ServicioAutoriaReglasAbstractoTest {
 
     @Test
     void crearRechazaUnaBaseDuplicada() {
-        when(borradores.existsByGrafoId("grafo_raiz")).thenReturn(true);
+        when(subgrafos.existsByGrafoId("grafo_x")).thenReturn(true);
+        when(borradores.existsByGrafoId("grafo_x")).thenReturn(true);
 
         assertThrows(EdicionInvalidaException.class,
-                () -> servicio.crear(peticion("Base", "grafo_raiz"), MEDICO_A));
+                () -> servicio.crear(peticion("Base", "grafo_x"), MEDICO_A));
     }
 
     @Test
     void agregarReglaGeneraElIdConCondicionesAbstractas() {
-        BorradorBaseReglaEntity b = guardado(borrador("grafo_raiz", DocumentoBaseRegla.vacio()));
+        BorradorBaseReglaEntity b = guardado(borrador("grafo_x", DocumentoBaseRegla.vacio()));
 
         BaseReglaDTO dto = servicio.agregarRegla(b.getId(), regla(List.of(
                 List.of(new Condicion(RESP, "op1"), new Condicion(RESP, "op2"),
@@ -130,7 +129,7 @@ class ServicioAutoriaReglasAbstractoTest {
 
     @Test
     void editarReglaConservaElId() {
-        BorradorBaseReglaEntity b = guardado(borrador("grafo_raiz", DocumentoBaseRegla.vacio()));
+        BorradorBaseReglaEntity b = guardado(borrador("grafo_x", DocumentoBaseRegla.vacio()));
         servicio.agregarRegla(b.getId(), regla(List.of(List.of(new Condicion(RESP, "op1")))));
 
         BaseReglaDTO dto = servicio.editarRegla(b.getId(), "R_1",
@@ -143,7 +142,7 @@ class ServicioAutoriaReglasAbstractoTest {
 
     @Test
     void eliminarReglaDejaLaBaseVacia() {
-        BorradorBaseReglaEntity b = guardado(borrador("grafo_raiz", DocumentoBaseRegla.vacio()));
+        BorradorBaseReglaEntity b = guardado(borrador("grafo_x", DocumentoBaseRegla.vacio()));
         servicio.agregarRegla(b.getId(), regla(List.of(List.of(new Condicion(RESP, "op1")))));
 
         BaseReglaDTO dto = servicio.eliminarRegla(b.getId(), "R_1");
@@ -153,7 +152,7 @@ class ServicioAutoriaReglasAbstractoTest {
 
     @Test
     void eliminarUnaBasePublicadaSeRechaza() {
-        BorradorBaseReglaEntity b = borrador("grafo_raiz", DocumentoBaseRegla.vacio());
+        BorradorBaseReglaEntity b = borrador("grafo_x", DocumentoBaseRegla.vacio());
         b.setPublicadoEn(Instant.now());
         guardado(b);
 
@@ -172,7 +171,7 @@ class ServicioAutoriaReglasAbstractoTest {
 
     @Test
     void publicarDelegaEnElPublicadorYQuedaPublicado() {
-        BorradorBaseReglaEntity b = guardado(borrador("grafo_raiz", DocumentoBaseRegla.vacio()));
+        BorradorBaseReglaEntity b = guardado(borrador("grafo_x", DocumentoBaseRegla.vacio()));
 
         BaseReglaDTO dto = servicio.publicar(b.getId());
 
@@ -182,12 +181,36 @@ class ServicioAutoriaReglasAbstractoTest {
 
     @Test
     void editarTrasPublicarMarcaCambiosSinPublicar() {
-        BorradorBaseReglaEntity b = borrador("grafo_raiz", DocumentoBaseRegla.vacio());
+        BorradorBaseReglaEntity b = borrador("grafo_x", DocumentoBaseRegla.vacio());
         b.setEstado(EstadoBorrador.PUBLICADO);
         guardado(b);
 
-        BaseReglaDTO dto = servicio.actualizar(b.getId(), peticion("Nuevo nombre", "grafo_raiz"));
+        BaseReglaDTO dto = servicio.actualizar(b.getId(), peticion("Nuevo nombre", "grafo_x"));
 
         assertEquals(EstadoBorrador.CAMBIOS_SIN_PUBLICAR, dto.estado());
+    }
+
+    @Test
+    void laBaseRaizNoSeLeeNiSeConsultaSuCatalogo() {
+        BorradorBaseReglaEntity b = guardado(borrador("grafo_raiz", DocumentoBaseRegla.vacio()));
+
+        assertThrows(RecursoNoEncontradoException.class, () -> servicio.obtener(b.getId()));
+        assertThrows(RecursoNoEncontradoException.class, () -> servicio.avisos(b.getId()));
+        assertThrows(RecursoNoEncontradoException.class, () -> servicio.catalogo("grafo_raiz"));
+    }
+
+    @Test
+    void lasOperacionesDeEscrituraSobreLaBaseRaizSeRechazan() {
+        BorradorBaseReglaEntity b = guardado(borrador("grafo_raiz", DocumentoBaseRegla.vacio()));
+        var datosRegla = regla(List.of(List.of(new Condicion(RESP, "op1"))));
+
+        assertThrows(EdicionInvalidaException.class,
+                () -> servicio.actualizar(b.getId(), peticion("Nuevo nombre", "grafo_raiz")));
+        assertThrows(EdicionInvalidaException.class, () -> servicio.agregarRegla(b.getId(), datosRegla));
+        assertThrows(EdicionInvalidaException.class, () -> servicio.editarRegla(b.getId(), "R_1", datosRegla));
+        assertThrows(EdicionInvalidaException.class, () -> servicio.eliminarRegla(b.getId(), "R_1"));
+        assertThrows(EdicionInvalidaException.class, () -> servicio.publicar(b.getId()));
+        assertThrows(EdicionInvalidaException.class, () -> servicio.descartarCambios(b.getId()));
+        assertThrows(EdicionInvalidaException.class, () -> servicio.eliminar(b.getId()));
     }
 }

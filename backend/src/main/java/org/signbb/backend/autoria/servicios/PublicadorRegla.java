@@ -75,6 +75,9 @@ public class PublicadorRegla {
      */
     @Transactional
     public void publicar(BorradorBaseReglaEntity borrador, Instant fecha) {
+        if (PoliticaAccesoBorradores.esBaseRaiz(borrador.getGrafoId())) {
+            throw new EdicionInvalidaException(PoliticaAccesoBorradores.REGLAS_RAIZ_SIN_BASE);
+        }
         List<Aviso> bloqueantes = ValidadorReglas.validar(borrador.getDocumento()).stream()
                 .filter(Aviso::bloqueante)
                 .toList();

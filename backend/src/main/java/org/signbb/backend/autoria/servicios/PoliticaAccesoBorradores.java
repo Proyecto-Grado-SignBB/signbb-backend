@@ -1,5 +1,6 @@
 package org.signbb.backend.autoria.servicios;
 
+import org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico;
 import org.signbb.backend.seguridad.modelo.UsuarioActual;
 
 /**
@@ -14,7 +15,16 @@ import org.signbb.backend.seguridad.modelo.UsuarioActual;
  */
 public final class PoliticaAccesoBorradores {
 
+    /** Mensaje cuando se intenta usar el grafo raíz en el módulo de reglas. */
+    public static final String REGLAS_RAIZ_SIN_BASE =
+            "El grafo raíz no tiene una base de reglas editable.";
+
     private PoliticaAccesoBorradores() {
+    }
+
+    /** True si el id corresponde al grafo raíz del sistema. */
+    public static boolean esBaseRaiz(String grafoId) {
+        return CompositorGrafoClinico.ID_RAIZ.equals(grafoId);
     }
 
     /** True si el usuario puede ver el borrador. */

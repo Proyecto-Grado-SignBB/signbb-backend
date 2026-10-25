@@ -45,6 +45,13 @@ class GuardiaAutoriaTest {
         BorradorBaseReglaEntity base = BaseReglasFiebre.borrador(DocumentoBaseRegla.vacio());
         base.setAutorId(MEDICO_A.id());
         when(bases.findById(base.getId())).thenReturn(Optional.of(base));
+
+        BorradorBaseReglaEntity baseRaiz = new BorradorBaseReglaEntity();
+        baseRaiz.setId(2L);
+        baseRaiz.setGrafoId("grafo_raiz");
+        baseRaiz.setAutorId(SUPERVISOR.id());
+        when(bases.findById(2L)).thenReturn(Optional.of(baseRaiz));
+
         guardia = new GuardiaAutoria(subgrafos, bases);
     }
 
@@ -88,9 +95,11 @@ class GuardiaAutoriaTest {
     }
 
     @Test
-    void laBaseDelGrafoRaizSoloLaCreaUnSupervisor() {
-        assertDoesNotThrow(() -> guardia.crearBase("grafo_raiz", SUPERVISOR));
-        assertThrows(AccesoDenegadoException.class, () -> guardia.crearBase("grafo_raiz", MEDICO_A));
+    void laBaseDelGrafoRaizNoSeCreaNiSeLeeNiSeEdita() {
+        assertThrows(EdicionInvalidaException.class, () -> guardia.crearBase("grafo_raiz", SUPERVISOR));
+        assertThrows(EdicionInvalidaException.class, () -> guardia.crearBase("grafo_raiz", MEDICO_A));
+        assertThrows(RecursoNoEncontradoException.class, () -> guardia.leerBase(2L, SUPERVISOR));
+        assertThrows(EdicionInvalidaException.class, () -> guardia.editarBase(2L, SUPERVISOR));
     }
 
     @Test

@@ -173,4 +173,13 @@ class PublicadorReglaTest {
         assertThrows(ContenidoInvalidoException.class, () -> publicador.publicar(borrador, FECHA));
         verify(bases, never()).save(any());
     }
+
+    @Test
+    void laBaseDelGrafoRaizNoSePublica() {
+        BorradorBaseReglaEntity borrador = BaseReglasFiebre.borrador(BaseReglasFiebre.conUrgencia());
+        borrador.setGrafoId("grafo_raiz");
+
+        assertThrows(EdicionInvalidaException.class, () -> publicador.publicar(borrador, FECHA));
+        verify(bases, never()).save(any());
+    }
 }

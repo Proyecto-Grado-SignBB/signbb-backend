@@ -60,6 +60,7 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
         List<BorradorBaseReglaEntity> lista = usuario.esSupervisor() ? borradores.findAll(orden)
                 : borradores.findByAutorId(usuario.id(), orden);
         return lista.stream()
+                .filter(b -> !PoliticaAccesoBorradores.esBaseRaiz(b.getGrafoId()))
                 .map(ResumenBaseReglaDTO::desde)
                 .toList();
     }
@@ -88,13 +89,13 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
     @Override
     @Transactional(readOnly = true)
     public BaseReglaDTO obtener(Long id) {
-        return dto(buscar(id));
+        return dto(buscarVisible(id));
     }
 
     @Override
     @Transactional
     public BaseReglaDTO actualizar(Long id, BaseReglaRequest datos) {
-        BorradorBaseReglaEntity b = buscar(id);
+        BorradorBaseReglaEntity b = buscarEditable(id);
         aplicarDatos(b, datos);
         marcarEditado(b);
         return dto(borradores.save(b));
@@ -103,7 +104,7 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
     @Override
     @Transactional
     public void eliminar(Long id) {
-        BorradorBaseReglaEntity b = buscar(id);
+        BorradorBaseReglaEntity b = buscarEditable(id);
         if (b.getPublicadoEn() != null) {
             throw new EdicionInvalidaException(
                     "Esta base de reglas ya está publicada y la cuidadora la usa: no se puede borrar.");
@@ -132,7 +133,7 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
     @Override
     @Transactional(readOnly = true)
     public List<Aviso> avisos(Long id) {
-        return avisosDe(buscar(id));
+        return avisosDe(buscarVisible(id));
     }
 
     /** Avisos de la base (estructura) más los de referencias al lienzo del subgrafo. */
@@ -153,7 +154,7 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
     @Override
     @Transactional
     public BaseReglaDTO publicar(Long id) {
-        BorradorBaseReglaEntity b = buscar(id);
+        BorradorBaseReglaEntity b = buscarEditable(id);
         exigirLienzoPublicado(b);
         Instant ahora = Instant.now();
         publicador.publicar(b, ahora);
@@ -167,7 +168,7 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
     @Override
     @Transactional
     public BaseReglaDTO descartarCambios(Long id) {
-        BorradorBaseReglaEntity b = buscar(id);
+        BorradorBaseReglaEntity b = buscarEditable(id);
         if (b.getPublicadoEn() == null) {
             throw new EdicionInvalidaException("Esta base de reglas todavía no se ha publicado, así que no hay "
                     + "una versión publicada a la que volver. Si ya no la quieres, puedes eliminarla.");
@@ -193,12 +194,15 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
     @Override
     @Transactional(readOnly = true)
     public CatalogoDTO catalogo(String grafoId) {
+        if (PoliticaAccesoBorradores.esBaseRaiz(grafoId)) {
+            throw new RecursoNoEncontradoException("no hay una base de reglas para el grafo raíz.");
+        }
         return catalogo.catalogo(grafoId);
     }
 
     /** Aplica una operación del editor y guarda. */
     private BaseReglaDTO editar(Long id, UnaryOperator<DocumentoBaseRegla> operacion) {
-        BorradorBaseReglaEntity b = buscar(id);
+        BorradorBaseReglaEntity b = buscarEditable(id);
         b.setDocumento(operacion.apply(b.getDocumento()));
         marcarEditado(b);
         return dto(borradores.save(b));
@@ -207,6 +211,24 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
     private BorradorBaseReglaEntity buscar(Long id) {
         return borradores.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException("no hay una base de reglas con id " + id));
+    }
+
+    /** Una base visible: la raíz no forma parte del módulo de autoría. */
+    private BorradorBaseReglaEntity buscarVisible(Long id) {
+        BorradorBaseReglaEntity b = buscar(id);
+        if (PoliticaAccesoBorradores.esBaseRaiz(b.getGrafoId())) {
+            throw new RecursoNoEncontradoException("no hay una base de reglas para el grafo raíz.");
+        }
+        return b;
+    }
+
+    /** Una base editable: la raíz no se modifica desde autoría. */
+    private BorradorBaseReglaEntity buscarEditable(Long id) {
+        BorradorBaseReglaEntity b = buscar(id);
+        if (PoliticaAccesoBorradores.esBaseRaiz(b.getGrafoId())) {
+            throw new EdicionInvalidaException(PoliticaAccesoBorradores.REGLAS_RAIZ_SIN_BASE);
+        }
+        return b;
     }
 
     private static void marcarEditado(BorradorBaseReglaEntity b) {
@@ -238,8 +260,10 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
         if (grafoId == null) {
             throw new EdicionInvalidaException("Elige el grafo al que pertenecen las reglas.");
         }
-        if (CompositorGrafoClinico.ID_RAIZ.equals(grafoId) || subgrafos.existsByGrafoId(grafoId)
-                || existeGrafoPublicado(grafoId)) {
+        if (PoliticaAccesoBorradores.esBaseRaiz(grafoId)) {
+            throw new EdicionInvalidaException(PoliticaAccesoBorradores.REGLAS_RAIZ_SIN_BASE);
+        }
+        if (subgrafos.existsByGrafoId(grafoId) || existeGrafoPublicado(grafoId)) {
             return grafoId;
         }
         throw new EdicionInvalidaException("Elige un grafo del sistema o un subgrafo que exista.");
