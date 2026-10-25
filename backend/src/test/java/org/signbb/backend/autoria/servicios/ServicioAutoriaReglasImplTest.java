@@ -24,7 +24,6 @@ import org.signbb.backend.autoria.controladores.BaseReglaDTO;
 import org.signbb.backend.autoria.controladores.BaseReglaRequest;
 import org.signbb.backend.autoria.controladores.ReglaRequest;
 import org.signbb.backend.autoria.datos.entidades.BorradorBaseReglaEntity;
-import org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorBaseRegla;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo;
 import org.signbb.backend.autoria.modelo.Aviso;
@@ -47,7 +46,6 @@ class ServicioAutoriaReglasImplTest {
 
     private RepositorioBorradorBaseRegla borradores;
     private RepositorioBorradorSubgrafo subgrafos;
-    private PublicadorRegla publicador;
     private ServicioAutoriaReglasImpl servicio;
 
     @BeforeEach
@@ -65,8 +63,7 @@ class ServicioAutoriaReglasImplTest {
         subgrafos = mock(RepositorioBorradorSubgrafo.class);
         when(subgrafos.findByGrafoId(anyString())).thenReturn(Optional.empty());
 
-        publicador = mock(PublicadorRegla.class);
-        servicio = new ServicioAutoriaReglasImpl(borradores, subgrafos, grafos, publicador,
+        servicio = new ServicioAutoriaReglasImpl(borradores, subgrafos, grafos,
                 mock(ResolutorCatalogoNodos.class));
     }
 
@@ -141,7 +138,7 @@ class ServicioAutoriaReglasImplTest {
         BorradorBaseReglaEntity b = BaseReglasFiebre.borrador(DocumentoBaseRegla.vacio());
         b.setGrafoId("grafo_raiz");
         guardado(b);
-        assertThrows(EdicionInvalidaException.class, () -> servicio.publicar(b.getId()));
+        assertThrows(EdicionInvalidaException.class, () -> servicio.descartarCambios(b.getId()));
     }
 
     @Test
@@ -162,35 +159,6 @@ class ServicioAutoriaReglasImplTest {
 
         assertEquals(1, dto.reglas().size());
         assertEquals("R_1", dto.reglas().get(0).id());
-    }
-
-    @Test
-    void publicarConElLienzoConCambiosSinPublicarSeRechaza() {
-        BorradorBaseReglaEntity b = guardado(BaseReglasFiebre.borrador(BaseReglasFiebre.conUrgencia()));
-        BorradorSubgrafoEntity lienzo = LienzoFiebre.borrador(LienzoFiebre.completo());
-        lienzo.setEstado(EstadoBorrador.CAMBIOS_SIN_PUBLICAR);
-        when(subgrafos.findByGrafoId("grafo_fiebre")).thenReturn(Optional.of(lienzo));
-
-        assertThrows(EdicionInvalidaException.class, () -> servicio.publicar(b.getId()));
-    }
-
-    @Test
-    void publicarMarcaElBorradorComoPublicado() {
-        BorradorBaseReglaEntity b = guardado(BaseReglasFiebre.borrador(BaseReglasFiebre.conUrgencia()));
-
-        BaseReglaDTO dto = servicio.publicar(b.getId());
-
-        assertEquals(EstadoBorrador.PUBLICADO, dto.estado());
-        verify(publicador).publicar(any(BorradorBaseReglaEntity.class), any(Instant.class));
-    }
-
-    @Test
-    void publicarGuardaLaCopiaParaDescartar() {
-        BorradorBaseReglaEntity b = guardado(BaseReglasFiebre.borrador(BaseReglasFiebre.conUrgencia()));
-
-        BaseReglaDTO dto = servicio.publicar(b.getId());
-
-        assertTrue(dto.puedeDescartar(), "tras publicar hay una copia a la que volver");
     }
 
     @Test

@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import static org.signbb.backend.seguridad.UsuariosPrueba.MEDICO_A;
@@ -20,7 +19,6 @@ import org.signbb.backend.autoria.controladores.BaseReglaDTO;
 import org.signbb.backend.autoria.controladores.BaseReglaRequest;
 import org.signbb.backend.autoria.controladores.ReglaRequest;
 import org.signbb.backend.autoria.datos.entidades.BorradorBaseReglaEntity;
-import org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorBaseRegla;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo;
 import org.signbb.backend.autoria.modelo.DocumentoBaseRegla;
@@ -31,7 +29,7 @@ import org.signbb.backend.reglas.modelo.Condicion;
 import org.signbb.backend.reglas.modelo.NivelAlerta;
 
 /**
- * CRUD y publicación de bases de reglas con datos abstractos
+ * CRUD de bases de reglas con datos abstractos
  * ({@code resp1/op1/op2/op3}) y todos los colaboradores simulados con Mockito:
  * no depende del dominio, de la base de datos ni de Redis.
  */
@@ -41,7 +39,6 @@ class ServicioAutoriaReglasAbstractoTest {
 
     private RepositorioBorradorBaseRegla borradores;
     private RepositorioBorradorSubgrafo subgrafos;
-    private PublicadorRegla publicador;
     private ServicioAutoriaReglasImpl servicio;
 
     @BeforeEach
@@ -56,8 +53,7 @@ class ServicioAutoriaReglasAbstractoTest {
         RepositorioGrafoClinico grafos = mock(RepositorioGrafoClinico.class);
         when(grafos.findAll()).thenReturn(List.of());
 
-        publicador = mock(PublicadorRegla.class);
-        servicio = new ServicioAutoriaReglasImpl(borradores, subgrafos, grafos, publicador,
+        servicio = new ServicioAutoriaReglasImpl(borradores, subgrafos, grafos,
                 mock(ResolutorCatalogoNodos.class));
     }
 
@@ -160,26 +156,6 @@ class ServicioAutoriaReglasAbstractoTest {
     }
 
     @Test
-    void publicarExigeQueElLienzoEstePublicado() {
-        BorradorBaseReglaEntity b = guardado(borrador("grafo_x", DocumentoBaseRegla.vacio()));
-        BorradorSubgrafoEntity lienzo = new BorradorSubgrafoEntity();
-        lienzo.setEstado(EstadoBorrador.CAMBIOS_SIN_PUBLICAR);
-        when(subgrafos.findByGrafoId("grafo_x")).thenReturn(Optional.of(lienzo));
-
-        assertThrows(EdicionInvalidaException.class, () -> servicio.publicar(b.getId()));
-    }
-
-    @Test
-    void publicarDelegaEnElPublicadorYQuedaPublicado() {
-        BorradorBaseReglaEntity b = guardado(borrador("grafo_x", DocumentoBaseRegla.vacio()));
-
-        BaseReglaDTO dto = servicio.publicar(b.getId());
-
-        assertEquals(EstadoBorrador.PUBLICADO, dto.estado());
-        verify(publicador).publicar(any(BorradorBaseReglaEntity.class), any(Instant.class));
-    }
-
-    @Test
     void editarTrasPublicarMarcaCambiosSinPublicar() {
         BorradorBaseReglaEntity b = borrador("grafo_x", DocumentoBaseRegla.vacio());
         b.setEstado(EstadoBorrador.PUBLICADO);
@@ -209,7 +185,6 @@ class ServicioAutoriaReglasAbstractoTest {
         assertThrows(EdicionInvalidaException.class, () -> servicio.agregarRegla(b.getId(), datosRegla));
         assertThrows(EdicionInvalidaException.class, () -> servicio.editarRegla(b.getId(), "R_1", datosRegla));
         assertThrows(EdicionInvalidaException.class, () -> servicio.eliminarRegla(b.getId(), "R_1"));
-        assertThrows(EdicionInvalidaException.class, () -> servicio.publicar(b.getId()));
         assertThrows(EdicionInvalidaException.class, () -> servicio.descartarCambios(b.getId()));
         assertThrows(EdicionInvalidaException.class, () -> servicio.eliminar(b.getId()));
     }

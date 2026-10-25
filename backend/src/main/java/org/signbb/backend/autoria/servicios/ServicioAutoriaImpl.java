@@ -6,23 +6,29 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.UnaryOperator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.signbb.backend.autoria.controladores.CategoriaDTO;
 import org.signbb.backend.autoria.controladores.NodoRequest;
 import org.signbb.backend.autoria.controladores.OpcionRequest;
 import org.signbb.backend.autoria.controladores.ResumenSubgrafoDTO;
 import org.signbb.backend.autoria.controladores.SubgrafoDTO;
 import org.signbb.backend.autoria.controladores.SubgrafoRequest;
+import org.signbb.backend.autoria.datos.entidades.BorradorBaseReglaEntity;
 import org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorBaseRegla;
 import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorSubgrafo;
 import org.signbb.backend.autoria.modelo.Aviso;
+import org.signbb.backend.autoria.modelo.CopiaBaseReglaPublicada;
 import org.signbb.backend.autoria.modelo.CopiaPublicada;
 import org.signbb.backend.autoria.modelo.DocumentoLienzo;
 import org.signbb.backend.autoria.modelo.EstadoBorrador;
 import org.signbb.backend.autoria.modelo.NodoLienzo;
+import org.signbb.backend.cache.ResolvedorVersiones;
 import org.signbb.backend.config.RecursoNoEncontradoException;
 import org.signbb.backend.media.ServicioImagenes;
 import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
@@ -44,6 +50,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ServicioAutoriaImpl implements ServicioAutoria {
 
+    private static final Logger log = LoggerFactory.getLogger(ServicioAutoriaImpl.class);
+
     /** Largo máximo del slug del {@code grafoId}. */
     private static final int LARGO_SLUG = 40;
 
@@ -52,20 +60,22 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
     private final RepositorioBaseReglas basesPublicadas;
     private final RepositorioGrafoClinico grafos;
     private final PublicadorSubgrafo publicador;
-    private final ServicioAutoriaReglas reglas;
+    private final PublicadorRegla publicadorRegla;
+    private final ResolvedorVersiones versiones;
     private final ServicioImagenes imagenes;
 
-    /** Inyecta los repositorios, el publicador, el servicio de reglas y las imágenes. */
+    /** Inyecta los repositorios, los publicadores, el resolvedor de versiones y las imágenes. */
     public ServicioAutoriaImpl(RepositorioBorradorSubgrafo borradores,
             RepositorioBorradorBaseRegla basesReglas, RepositorioBaseReglas basesPublicadas,
-            RepositorioGrafoClinico grafos, PublicadorSubgrafo publicador, ServicioAutoriaReglas reglas,
-            ServicioImagenes imagenes) {
+            RepositorioGrafoClinico grafos, PublicadorSubgrafo publicador, PublicadorRegla publicadorRegla,
+            ResolvedorVersiones versiones, ServicioImagenes imagenes) {
         this.borradores = borradores;
         this.basesReglas = basesReglas;
         this.basesPublicadas = basesPublicadas;
         this.grafos = grafos;
         this.publicador = publicador;
-        this.reglas = reglas;
+        this.publicadorRegla = publicadorRegla;
+        this.versiones = versiones;
         this.imagenes = imagenes;
     }
 
@@ -197,7 +207,7 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
                     "No se pudo publicar: revisa los avisos del lienzo y de las reglas.", bloqueantes);
         }
         Instant ahora = Instant.now();
-        publicador.publicar(b, ahora);
+        CompositorGrafoClinico.Contenido contenido = publicador.publicar(b, ahora);
         b.setEstado(EstadoBorrador.PUBLICADO);
         b.setPublicadoEn(ahora);
         b.setCopiaPublicada(new CopiaPublicada(b.getDocumento(), b.getNombre(), b.getPuenteId(),
@@ -207,8 +217,20 @@ public class ServicioAutoriaImpl implements ServicioAutoria {
         b.setRevisadoEn(null);
         b.setComentarioRevision(null);
         BorradorSubgrafoEntity guardado = borradores.save(b);
-        basesReglas.findByGrafoId(b.getGrafoId())
-                .ifPresent(base -> reglas.publicar(base.getId()));
+        Optional<BorradorBaseReglaEntity> base = basesReglas.findByGrafoId(b.getGrafoId());
+        if (base.isPresent()) {
+            BorradorBaseReglaEntity baseRegla = base.get();
+            contenido = publicadorRegla.publicar(baseRegla, ahora);
+            baseRegla.setEstado(EstadoBorrador.PUBLICADO);
+            baseRegla.setPublicadoEn(ahora);
+            baseRegla.setCopiaPublicada(new CopiaBaseReglaPublicada(baseRegla.getDocumento(),
+                    baseRegla.getNombre(), baseRegla.getDescripcion(), baseRegla.getAutor(),
+                    baseRegla.getInstitucion()));
+            basesReglas.save(baseRegla);
+        }
+        Long version = versiones.registrar(contenido.grafo(), contenido.reglas(),
+                "Publicación de '" + b.getGrafoId() + "'");
+        log.info("Subgrafo '{}' publicado con una versión nueva ({}).", b.getGrafoId(), version);
         PublicacionContenido.despuesDelCommit(imagenes::invalidarCachePublicadas);
         return dto(guardado);
     }

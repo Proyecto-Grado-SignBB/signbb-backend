@@ -7,7 +7,6 @@ import java.util.List;
 import org.signbb.backend.autoria.datos.entidades.BorradorBaseReglaEntity;
 import org.signbb.backend.autoria.modelo.Aviso;
 import org.signbb.backend.cache.ResolvedorContenidoClinico;
-import org.signbb.backend.cache.ResolvedorVersiones;
 import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
 import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico;
 import org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico;
@@ -33,11 +32,8 @@ import org.springframework.transaction.annotation.Transactional;
  * ({@code GrafoClinicoMapper}, {@code BaseReglasMapper}). Si algo falla no se
  * guarda nada.</li>
  * <li>Guarda (o actualiza) la fila de la base de reglas de ese grafo.</li>
- * <li>Guarda una versión nueva e inmutable del grafo y las reglas compuestos
- * ({@link ResolvedorVersiones}): los recorridos nuevos usan estas reglas y los
- * recorridos en curso conservan las de su versión.</li>
- * <li>Cuando la transacción confirma, invalida el cache de Redis y hace que
- * {@link ContextoClinico} vuelva a resolver el contenido.</li>
+ * <li>Devuelve el contenido compuesto; la publicación completa registra una
+ * sola versión con él y avisa al cache cuando la transacción confirma.</li>
  * </ol>
  *
  * <p>
@@ -52,16 +48,14 @@ public class PublicadorRegla {
     private final RepositorioGrafoClinico grafos;
     private final RepositorioBaseReglas bases;
     private final ResolvedorContenidoClinico resolvedor;
-    private final ResolvedorVersiones versiones;
     private final ContextoClinico contexto;
 
-    /** Inyecta los repositorios del contenido clínico, el cache, las versiones y el contexto en memoria. */
+    /** Inyecta los repositorios del contenido clínico, el cache y el contexto en memoria. */
     public PublicadorRegla(RepositorioGrafoClinico grafos, RepositorioBaseReglas bases,
-            ResolvedorContenidoClinico resolvedor, ResolvedorVersiones versiones, ContextoClinico contexto) {
+            ResolvedorContenidoClinico resolvedor, ContextoClinico contexto) {
         this.grafos = grafos;
         this.bases = bases;
         this.resolvedor = resolvedor;
-        this.versiones = versiones;
         this.contexto = contexto;
     }
 
@@ -69,12 +63,13 @@ public class PublicadorRegla {
      * Publica el borrador. No cambia su estado: eso lo hace quien llama,
      * dentro de la misma transacción.
      *
+     * @return el grafo y las reglas ya compuestos, para registrar una sola versión
      * @throws ContenidoInvalidoException si hay avisos bloqueantes, si el grafo
      *                                    destino no está publicado o el
      *                                    contenido compuesto no es válido
      */
     @Transactional
-    public void publicar(BorradorBaseReglaEntity borrador, Instant fecha) {
+    public CompositorGrafoClinico.Contenido publicar(BorradorBaseReglaEntity borrador, Instant fecha) {
         if (PoliticaAccesoBorradores.esBaseRaiz(borrador.getGrafoId())) {
             throw new EdicionInvalidaException(PoliticaAccesoBorradores.REGLAS_RAIZ_SIN_BASE);
         }
@@ -131,15 +126,14 @@ public class PublicadorRegla {
         }
         filaBase.setEstructura(compilada);
         bases.save(filaBase);
-        Long version = versiones.registrar(contenido.grafo(), contenido.reglas(),
-                "Publicación de reglas de '" + borrador.getGrafoId() + "'");
-        log.info("Base de reglas '{}' publicada para '{}' con {} regla(s) (versión {} del contenido).",
-                borrador.getNombre(), borrador.getGrafoId(), compilada.rules().size(), version);
+        log.info("Base de reglas '{}' publicada para '{}' con {} regla(s).",
+                borrador.getNombre(), borrador.getGrafoId(), compilada.rules().size());
 
         PublicacionContenido.despuesDelCommit(() -> {
             resolvedor.invalidar();
             contexto.recargar();
         });
+        return contenido;
     }
 
     /** True si hay un grafo publicado con ese id. */

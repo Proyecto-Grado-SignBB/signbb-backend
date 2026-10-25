@@ -51,9 +51,6 @@ public interface ServicioAutoriaReglas {
     /** Avisos del borrador. */
     List<Aviso> avisos(Long id);
 
-    /** Publica el borrador como la base de reglas activa de su grafo. */
-    BaseReglaDTO publicar(Long id);
-
     /** Descarta los cambios sin publicar y vuelve a la última versión publicada. */
     BaseReglaDTO descartarCambios(Long id);
 

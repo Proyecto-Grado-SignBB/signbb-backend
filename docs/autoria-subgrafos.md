@@ -37,7 +37,7 @@ Cada subgrafo puede tener además su **base de reglas clínicas** (reglas de ala
 3. **Compilar y publicar** (`3733bad`):
    - `CompiladorSubgrafo` convierte el lienzo en un `GrafoClinicoJson`. El peso es la mayor gravedad que llega al nodo, y el tipo de selección (única o múltiple) se respeta.
    - `PublicadorSubgrafo` guarda el subgrafo y agrega su opción y el nodo `ref_<grafoId>` en la pregunta puente del grafo raíz. Republicar no duplica nada.
-   - **Publicar el subgrafo publica también su base de reglas**: la acción es única y atómica (si algo falla, no se publica ni el grafo ni las reglas). Las reglas no se publican por su cuenta desde la interfaz; si cambian las reglas, se republica el subgrafo. El supervisor que es autor puede publicarlo directamente; los demás médicos, al aprobar su revisión. Para el grafo raíz (que no tiene subgrafo) la base no se publica desde aquí.
+   - **Publicar el subgrafo publica también su base de reglas**: la acción es única y atómica (si algo falla, no se publica ni el grafo ni las reglas). Las reglas no se publican por su cuenta desde la interfaz; si cambian las reglas, se republica el subgrafo. El supervisor que es autor puede publicarlo directamente; los demás médicos, al aprobar su revisión. Para el grafo raíz (que no tiene subgrafo) la base no se publica desde aquí. La publicación registra una sola versión, al final, con el grafo y las reglas ya publicados.
    - **Validación cruzada**: si el médico borra un nodo que una regla usa como condición o destino, `ValidadorLienzoReglas` lo detecta, muestra un aviso bloqueante que enlaza a las reglas y evita publicar.
    - Al publicar se invalida Redis y se recarga el `ContextoClinico`.
 4. **API `/api/autoria`** (`703ecc4`). Ver la tabla de la sección 4.

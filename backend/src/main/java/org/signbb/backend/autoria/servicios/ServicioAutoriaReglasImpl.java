@@ -39,17 +39,15 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
     private final RepositorioBorradorBaseRegla borradores;
     private final RepositorioBorradorSubgrafo subgrafos;
     private final RepositorioGrafoClinico grafos;
-    private final PublicadorRegla publicador;
     private final ResolutorCatalogoNodos catalogo;
 
-    /** Inyecta los repositorios, el publicador y el catálogo de nodos. */
+    /** Inyecta los repositorios y el catálogo de nodos. */
     public ServicioAutoriaReglasImpl(RepositorioBorradorBaseRegla borradores,
             RepositorioBorradorSubgrafo subgrafos, RepositorioGrafoClinico grafos,
-            PublicadorRegla publicador, ResolutorCatalogoNodos catalogo) {
+            ResolutorCatalogoNodos catalogo) {
         this.borradores = borradores;
         this.subgrafos = subgrafos;
         this.grafos = grafos;
-        this.publicador = publicador;
         this.catalogo = catalogo;
     }
 
@@ -149,20 +147,6 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
     /** DTO del borrador con los avisos de estructura y de referencias al lienzo. */
     private BaseReglaDTO dto(BorradorBaseReglaEntity b) {
         return BaseReglaDTO.desde(b, avisosDe(b));
-    }
-
-    @Override
-    @Transactional
-    public BaseReglaDTO publicar(Long id) {
-        BorradorBaseReglaEntity b = buscarEditable(id);
-        exigirLienzoPublicado(b);
-        Instant ahora = Instant.now();
-        publicador.publicar(b, ahora);
-        b.setEstado(EstadoBorrador.PUBLICADO);
-        b.setPublicadoEn(ahora);
-        b.setCopiaPublicada(new CopiaBaseReglaPublicada(b.getDocumento(), b.getNombre(),
-                b.getDescripcion(), b.getAutor(), b.getInstitucion()));
-        return dto(borradores.save(b));
     }
 
     @Override
@@ -273,22 +257,6 @@ public class ServicioAutoriaReglasImpl implements ServicioAutoriaReglas {
         return grafos.findAll().stream()
                 .map(GrafoClinicoEntity::getEstructura)
                 .anyMatch(d -> d != null && d.graph() != null && grafoId.equals(d.graph().id()));
-    }
-
-    /**
-     * Antes de publicar reglas de un subgrafo, el lienzo no puede tener cambios
-     * sin publicar: las reglas deben apuntar a lo que la cuidadora ya navega.
-     */
-    private void exigirLienzoPublicado(BorradorBaseReglaEntity b) {
-        if (CompositorGrafoClinico.ID_RAIZ.equals(b.getGrafoId())) {
-            return;
-        }
-        subgrafos.findByGrafoId(b.getGrafoId())
-                .filter(s -> s.getEstado() == EstadoBorrador.CAMBIOS_SIN_PUBLICAR)
-                .ifPresent(s -> {
-                    throw new EdicionInvalidaException(
-                            "El lienzo del subgrafo cambió: republica el subgrafo antes que sus reglas.");
-                });
     }
 
     /** Traduce la petición a los datos del editor; cada caso debe tener al menos una condición. */

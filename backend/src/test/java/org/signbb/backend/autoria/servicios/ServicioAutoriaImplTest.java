@@ -46,6 +46,7 @@ import org.signbb.backend.autoria.modelo.DocumentoLienzo;
 import org.signbb.backend.autoria.modelo.EstadoBorrador;
 import org.signbb.backend.autoria.modelo.Gravedad;
 import org.signbb.backend.autoria.modelo.TipoNodo;
+import org.signbb.backend.cache.ResolvedorVersiones;
 import org.signbb.backend.config.RecursoNoEncontradoException;
 import org.signbb.backend.media.ServicioImagenes;
 import org.signbb.backend.seguridad.UsuariosPrueba;
@@ -73,7 +74,8 @@ class ServicioAutoriaImplTest {
     private RepositorioBorradorBaseRegla basesReglas;
     private RepositorioBaseReglas basesPublicadas;
     private PublicadorSubgrafo publicador;
-    private ServicioAutoriaReglas reglas;
+    private PublicadorRegla publicadorRegla;
+    private ResolvedorVersiones versiones;
     private ServicioImagenes imagenes;
     private ServicioAutoriaImpl servicio;
 
@@ -93,10 +95,14 @@ class ServicioAutoriaImplTest {
         when(basesReglas.save(any(BorradorBaseReglaEntity.class))).thenAnswer(i -> i.getArgument(0));
         basesPublicadas = mock(RepositorioBaseReglas.class);
         publicador = mock(PublicadorSubgrafo.class);
-        reglas = mock(ServicioAutoriaReglas.class);
+        when(publicador.publicar(any(), any())).thenReturn(ContenidoEjemplo.compuesto());
+        publicadorRegla = mock(PublicadorRegla.class);
+        when(publicadorRegla.publicar(any(), any())).thenReturn(ContenidoEjemplo.compuesto());
+        versiones = mock(ResolvedorVersiones.class);
+        when(versiones.registrar(any(), any(), anyString())).thenReturn(1L);
         imagenes = mock(ServicioImagenes.class);
-        servicio = new ServicioAutoriaImpl(borradores, basesReglas, basesPublicadas, grafos, publicador, reglas,
-                imagenes);
+        servicio = new ServicioAutoriaImpl(borradores, basesReglas, basesPublicadas, grafos, publicador,
+                publicadorRegla, versiones, imagenes);
     }
 
     private static GrafoClinicoEntity fila(GrafoClinicoJson documento) {
@@ -286,7 +292,11 @@ class ServicioAutoriaImplTest {
         SubgrafoDTO dto = servicio.publicar(1L);
 
         assertEquals(EstadoBorrador.PUBLICADO, dto.estado());
-        verify(reglas).publicar(base.getId());
+        verify(publicadorRegla).publicar(eq(base), any(Instant.class));
+        assertEquals(EstadoBorrador.PUBLICADO, base.getEstado());
+        assertNotNull(base.getPublicadoEn());
+        assertNotNull(base.getCopiaPublicada());
+        verify(versiones).registrar(any(GrafoClinicoJson.class), any(), anyString());
     }
 
     @Test
@@ -295,7 +305,8 @@ class ServicioAutoriaImplTest {
 
         servicio.publicar(1L);
 
-        verify(reglas, never()).publicar(any());
+        verify(publicadorRegla, never()).publicar(any(), any());
+        verify(versiones).registrar(any(GrafoClinicoJson.class), any(), anyString());
     }
 
     @Test
@@ -310,7 +321,8 @@ class ServicioAutoriaImplTest {
         assertTrue(e.getAvisos().stream()
                 .anyMatch(a -> a.codigo() == Aviso.Codigo.REGLA_CONDICION_INVALIDA));
         verify(publicador, never()).publicar(any(), any());
-        verify(reglas, never()).publicar(any());
+        verify(publicadorRegla, never()).publicar(any(), any());
+        verify(versiones, never()).registrar(any(), any(), anyString());
     }
 
     @Test

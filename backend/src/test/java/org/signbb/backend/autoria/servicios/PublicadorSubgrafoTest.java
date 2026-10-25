@@ -246,26 +246,24 @@ class PublicadorSubgrafoTest {
     }
 
     @Test
-    void cadaPublicacionGuardaUnaVersionConElGrafoCompuesto() {
-        publicador.publicar(LienzoFiebre.borrador(LienzoFiebre.completo()), FECHA);
+    void publicarDevuelveElContenidoCompuesto() {
+        CompositorGrafoClinico.Contenido contenido =
+                publicador.publicar(LienzoFiebre.borrador(LienzoFiebre.completo()), FECHA);
 
-        ArgumentCaptor<GrafoClinicoJson> grafo = ArgumentCaptor.forClass(GrafoClinicoJson.class);
-        ArgumentCaptor<String> origen = ArgumentCaptor.forClass(String.class);
-        verify(versiones).registrar(grafo.capture(), any(), origen.capture());
-        assertTrue(grafo.getValue().graph().nodes().containsKey("grafo_fiebre/" + LienzoFiebre.INICIO),
-                "la versión trae el subgrafo recién publicado");
-        assertTrue(grafo.getValue().graph().nodes().containsKey("grafo_respiracion/q_resp_urgencia"),
+        assertTrue(contenido.grafo().graph().nodes().containsKey("grafo_fiebre/" + LienzoFiebre.INICIO),
+                "el contenido trae el subgrafo recién publicado");
+        assertTrue(contenido.grafo().graph().nodes().containsKey("grafo_respiracion/q_resp_urgencia"),
                 "y el resto del contenido");
-        assertTrue(origen.getValue().contains("grafo_fiebre"));
+        verify(versiones, never()).registrar(any(), any(), any());
     }
 
     @Test
-    void republicarGuardaOtraVersionSinTocarLaAnterior() {
+    void republicarVuelveAComponerSinRegistrarVersion() {
         BorradorSubgrafoEntity borrador = LienzoFiebre.borrador(LienzoFiebre.completo());
         publicador.publicar(borrador, FECHA);
         publicador.publicar(borrador, FECHA);
 
-        verify(versiones, times(2)).registrar(any(GrafoClinicoJson.class), any(), any(String.class));
+        verify(versiones, never()).registrar(any(), any(), any());
     }
 
     @Test
@@ -375,7 +373,7 @@ class PublicadorSubgrafoTest {
 
         ArgumentCaptor<GrafoClinicoJson> grafo = ArgumentCaptor.forClass(GrafoClinicoJson.class);
         ArgumentCaptor<String> origen = ArgumentCaptor.forClass(String.class);
-        verify(versiones, times(2)).registrar(grafo.capture(), any(), origen.capture());
+        verify(versiones, times(1)).registrar(grafo.capture(), any(), origen.capture());
         assertTrue(origen.getValue().startsWith("Despublicación"));
         assertTrue(origen.getValue().contains("grafo_fiebre"));
         assertFalse(grafo.getValue().graph().nodes().containsKey("grafo_fiebre/" + LienzoFiebre.INICIO));

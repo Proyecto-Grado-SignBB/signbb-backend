@@ -1,6 +1,7 @@
 package org.signbb.backend;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -157,8 +158,10 @@ class AutoriaIntegracionTest {
                 Desenlace.RECOMENDACION, null));
         assertEquals(List.of(), s.avisos());
 
+        long versionesAntes = versiones.count();
         s = autoria.publicar(borradorId);
         assertEquals(EstadoBorrador.PUBLICADO, s.estado());
+        assertEquals(versionesAntes + 1, versiones.count(), "publicar registra una sola versión");
         Long versionNueva = versiones.idMasReciente();
         assertNotNull(versionNueva, "publicar guarda una versión del contenido");
         assertTrue(ultimaVersionAntes == null || versionNueva > ultimaVersionAntes);
@@ -212,8 +215,13 @@ class AutoriaIntegracionTest {
                 List.of(List.of(new Condicion(inicio, "Menos de 38 °C"))), NivelAlerta.URGENCIA, urgId));
 
         // Publicar el subgrafo publica también la base (acción única).
+        long versionesAntes = versiones.count();
         s = autoria.publicar(borradorId);
         assertEquals(EstadoBorrador.PUBLICADO, s.estado());
+        assertEquals(versionesAntes + 1, versiones.count(), "publicar registra una sola versión");
+        var versionPublicada = versiones.findById(versiones.idMasReciente()).orElseThrow();
+        assertNotNull(versionPublicada.getReglas());
+        assertFalse(versionPublicada.getReglas().rules().isEmpty());
         assertTrue(basesPublicadas.findAll().stream().anyMatch(f -> f.getEstructura() != null
                         && grafoId.equals(f.getEstructura().grafoId())),
                 "la base de reglas queda publicada junto con el subgrafo");

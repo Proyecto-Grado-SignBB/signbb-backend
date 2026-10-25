@@ -38,8 +38,9 @@ import org.springframework.transaction.annotation.Transactional;
  * reglas y reconstruye los TAD ({@link GrafoClinicoMapper},
  * {@link BaseReglasMapper}), igual que {@code ContextoClinico}. Si algo
  * falla no se guarda nada.</li>
- * <li>Guarda (o actualiza) la fila del subgrafo y la del grafo raíz, y una
- * versión nueva e inmutable del grafo compuesto ({@link ResolvedorVersiones}).</li>
+ * <li>Guarda (o actualiza) la fila del subgrafo y la del grafo raíz, y devuelve
+ * el contenido compuesto. La versión la registra quien completa la publicación
+ * ({@link ServicioAutoriaImpl#publicar(Long)}), una sola vez.</li>
  * <li>Cuando la transacción confirma, invalida el cache de Redis y hace que
  * {@link ContextoClinico} vuelva a resolver el contenido.</li>
  * </ol>
@@ -47,7 +48,7 @@ import org.springframework.transaction.annotation.Transactional;
  * <p>
  * Los recorridos en curso no se ven afectados: cada uno está atado a la
  * versión con la que empezó y la termina con ella; los recorridos nuevos
- * usan la versión recién publicada.
+ * usan la versión que registre la publicación.
  */
 @Component
 public class PublicadorSubgrafo {
@@ -77,11 +78,12 @@ public class PublicadorSubgrafo {
      * Publica el borrador. No cambia su estado: eso lo hace quien llama,
      * dentro de la misma transacción.
      *
+     * @return el grafo y las reglas ya compuestos, para registrar una sola versión
      * @throws ContenidoInvalidoException si hay avisos bloqueantes o el
      *                                    contenido compuesto no es válido
      */
     @Transactional
-    public void publicar(BorradorSubgrafoEntity borrador, Instant fecha) {
+    public CompositorGrafoClinico.Contenido publicar(BorradorSubgrafoEntity borrador, Instant fecha) {
         List<Aviso> bloqueantes = ValidadorLienzo.validar(borrador.getDocumento()).stream()
                 .filter(Aviso::bloqueante)
                 .toList();
@@ -122,15 +124,14 @@ public class PublicadorSubgrafo {
         grafos.save(filaSubgrafo);
         filaRaiz.setEstructura(raiz);
         grafos.save(filaRaiz);
-        Long version = versiones.registrar(compuesto.grafo(), compuesto.reglas(),
-                "Publicación de '" + borrador.getGrafoId() + "'");
-        log.info("Subgrafo '{}' publicado en '{}' con {} nodos (versión {} del contenido).",
-                borrador.getGrafoId(), borrador.getPuenteId(), subgrafo.graph().nodes().size(), version);
+        log.info("Subgrafo '{}' publicado en '{}' con {} nodos.",
+                borrador.getGrafoId(), borrador.getPuenteId(), subgrafo.graph().nodes().size());
 
         PublicacionContenido.despuesDelCommit(() -> {
             resolvedor.invalidar();
             contexto.recargar();
         });
+        return compuesto;
     }
 
     /**
