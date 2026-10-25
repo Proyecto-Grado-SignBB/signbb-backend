@@ -12,36 +12,40 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 
-/** Tests de {@link LimpiezaProgramada}: primero versiones, luego imágenes, y un fallo no frena el otro paso. */
+/** Tests de {@link LimpiezaProgramada}: versiones, imágenes y límites; un fallo no frena los demás. */
 class LimpiezaProgramadaTest {
 
     private LimpiadorVersiones versiones;
     private LimpiadorImagenes imagenes;
+    private LimpiadorLimites limites;
     private LimpiezaProgramada limpieza;
 
     @BeforeEach
     void preparar() {
         versiones = mock(LimpiadorVersiones.class);
         imagenes = mock(LimpiadorImagenes.class);
-        limpieza = new LimpiezaProgramada(versiones, imagenes);
+        limites = mock(LimpiadorLimites.class);
+        limpieza = new LimpiezaProgramada(versiones, imagenes, limites);
     }
 
     @Test
-    void primeroLasVersionesYDespuesLasImagenes() {
+    void limpiaVersionesImagenesYLimitesEnEseOrden() {
         limpieza.ejecutar();
 
-        InOrder orden = inOrder(versiones, imagenes);
+        InOrder orden = inOrder(versiones, imagenes, limites);
         orden.verify(versiones).limpiar(any(Instant.class));
         orden.verify(imagenes).limpiar(any(Instant.class));
+        orden.verify(limites).limpiar(any(Instant.class));
     }
 
     @Test
-    void siFallanLasVersionesIgualLimpiaLasImagenes() {
+    void siFallanLasVersionesIgualLimpiaLasDemas() {
         when(versiones.limpiar(any(Instant.class))).thenThrow(new IllegalStateException("base caída"));
 
         limpieza.ejecutar();
 
         verify(imagenes).limpiar(any(Instant.class));
+        verify(limites).limpiar(any(Instant.class));
     }
 
     @Test
@@ -51,5 +55,16 @@ class LimpiezaProgramadaTest {
         limpieza.ejecutar();
 
         verify(versiones).limpiar(any(Instant.class));
+        verify(limites).limpiar(any(Instant.class));
+    }
+
+    @Test
+    void siFallanLosLimitesNoSePropagaElError() {
+        when(limites.limpiar(any(Instant.class))).thenThrow(new IllegalStateException("base caída"));
+
+        limpieza.ejecutar();
+
+        verify(versiones).limpiar(any(Instant.class));
+        verify(imagenes).limpiar(any(Instant.class));
     }
 }

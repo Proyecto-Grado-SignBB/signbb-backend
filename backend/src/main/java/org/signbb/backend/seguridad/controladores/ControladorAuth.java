@@ -1,9 +1,10 @@
 package org.signbb.backend.seguridad.controladores;
 
 import org.signbb.backend.autoria.controladores.ErrorAutoriaDTO;
+import org.signbb.backend.seguridad.modelo.TipoLimite;
 import org.signbb.backend.seguridad.modelo.UsuarioActual;
 import org.signbb.backend.seguridad.servicios.CredencialesInvalidasException;
-import org.signbb.backend.seguridad.servicios.LimitadorIntentosLogin;
+import org.signbb.backend.seguridad.servicios.LimitadorIntentos;
 import org.signbb.backend.seguridad.servicios.ServicioCuentas;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,10 +40,10 @@ import jakarta.validation.Valid;
 public class ControladorAuth {
 
     private final ServicioCuentas cuentas;
-    private final LimitadorIntentosLogin limitador;
+    private final LimitadorIntentos limitador;
 
-    /** Inyecta el servicio de cuentas y el limitador de intentos de ingreso. */
-    public ControladorAuth(ServicioCuentas cuentas, LimitadorIntentosLogin limitador) {
+    /** Inyecta el servicio de cuentas y el limitador de intentos. */
+    public ControladorAuth(ServicioCuentas cuentas, LimitadorIntentos limitador) {
         this.cuentas = cuentas;
         this.limitador = limitador;
     }
@@ -57,17 +58,23 @@ public class ControladorAuth {
             @ApiResponse(responseCode = "422", description = "Falta un dato, el correo ya existe o la "
                     + "contraseña tiene menos de 8 caracteres",
                     content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAutoriaDTO.class))),
+            @ApiResponse(responseCode = "429", description = "Demasiados intentos de registro con ese "
+                    + "correo (cabecera Retry-After en segundos)",
+                    content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @PostMapping("/registro")
     public ResponseEntity<SesionDTO> registro(@Valid @RequestBody RegistroRequest request) {
+        limitador.verificar(TipoLimite.REGISTRO_CUENTA, request.correo());
+        limitador.registrarIntento(TipoLimite.REGISTRO_CUENTA, request.correo());
         return ResponseEntity.status(HttpStatus.CREATED).body(cuentas.registrarPadre(request));
     }
 
     /** {@code POST /api/auth/login}: abre una sesión. */
     @Operation(summary = "Ingresa con correo y contraseña",
             description = "Devuelve el token, cuándo vence y la cuenta. Tras varios intentos fallidos "
-                    + "seguidos con el mismo correo, el ingreso se bloquea unos minutos.")
+                    + "seguidos con la misma cuenta, el ingreso se bloquea unos minutos.")
     @SecurityRequirements
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Sesión abierta"),
@@ -75,20 +82,20 @@ public class ControladorAuth {
                     + "inactiva (mismo mensaje en todos los casos)",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorAutoriaDTO.class))),
-            @ApiResponse(responseCode = "429", description = "Demasiados intentos fallidos con ese correo: "
+            @ApiResponse(responseCode = "429", description = "Demasiados intentos fallidos con esa cuenta: "
                     + "el ingreso queda bloqueado un rato (cabecera Retry-After en segundos)",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @PostMapping("/login")
     public SesionDTO login(@Valid @RequestBody LoginRequest request) {
-        limitador.verificar(request.correo());
+        limitador.verificar(TipoLimite.LOGIN_CUENTA, request.correo());
         try {
             SesionDTO sesion = cuentas.ingresar(request);
-            limitador.limpiar(request.correo());
+            limitador.limpiar(TipoLimite.LOGIN_CUENTA, request.correo());
             return sesion;
         } catch (CredencialesInvalidasException e) {
-            limitador.registrarFallo(request.correo());
+            limitador.registrarIntento(TipoLimite.LOGIN_CUENTA, request.correo());
             throw e;
         }
     }

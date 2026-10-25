@@ -3,8 +3,8 @@ package org.signbb.backend.seguridad.servicios;
 import java.time.Duration;
 
 /**
- * Demasiados intentos fallidos de ingreso con el mismo correo: el ingreso
- * queda bloqueado un tiempo. La API la responde como 429 con el mensaje y la
+ * Demasiados intentos con la misma cuenta: el ingreso o el registro queda
+ * bloqueado un tiempo. La API la responde como 429 con el mensaje y la
  * cabecera {@code Retry-After}.
  */
 public class IntentosExcedidosException extends RuntimeException {

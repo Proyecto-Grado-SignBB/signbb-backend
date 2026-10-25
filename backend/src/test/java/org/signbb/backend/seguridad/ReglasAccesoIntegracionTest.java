@@ -17,7 +17,8 @@ import org.junit.jupiter.api.Test;
 import org.signbb.backend.cache.RepositorioSesionRedis;
 import org.signbb.backend.observaciones.datos.repositorios.RepositorioRecorridos;
 import org.signbb.backend.seguridad.datos.repositorios.RepositorioUsuario;
-import org.signbb.backend.seguridad.servicios.LimitadorIntentosLogin;
+import org.signbb.backend.seguridad.modelo.TipoLimite;
+import org.signbb.backend.seguridad.servicios.LimitadorIntentos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -44,6 +45,9 @@ class ReglasAccesoIntegracionTest {
 
     @Autowired
     private RepositorioRecorridos recorridos;
+
+    @Autowired
+    private LimitadorIntentos limitador;
 
     @Autowired
     private StringRedisTemplate redis;
@@ -159,7 +163,27 @@ class ReglasAccesoIntegracionTest {
             // Otro correo no se ve afectado.
             api.registrarPadre("padre-libre");
         } finally {
-            redis.delete(LimitadorIntentosLogin.PREFIJO + padre.correo());
+            limitador.limpiar(TipoLimite.LOGIN_CUENTA, padre.correo());
+        }
+    }
+
+    @Test
+    void tresIntentosDeRegistroBloqueanElCuarto() throws Exception {
+        String correo = api.correo("registro-bloqueo");
+        try {
+            for (int i = 0; i < 3; i++) {
+                mvc.perform(post("/api/auth/registro").contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"nombre\":\"Padre\",\"correo\":\"" + correo
+                                + "\",\"contrasena\":\"" + ApiPrueba.CLAVE + "\"}"))
+                        .andExpect(status().is(i == 0 ? 201 : 422));
+            }
+            mvc.perform(post("/api/auth/registro").contentType(MediaType.APPLICATION_JSON)
+                    .content("{\"nombre\":\"Padre\",\"correo\":\"" + correo
+                            + "\",\"contrasena\":\"" + ApiPrueba.CLAVE + "\"}"))
+                    .andExpect(status().isTooManyRequests())
+                    .andExpect(header().exists("Retry-After"));
+        } finally {
+            limitador.limpiar(TipoLimite.REGISTRO_CUENTA, correo);
         }
     }
 
@@ -175,7 +199,7 @@ class ReglasAccesoIntegracionTest {
                 intentarIngreso(padre.correo(), "clave-mala").andExpect(status().isUnauthorized());
             }
         } finally {
-            redis.delete(LimitadorIntentosLogin.PREFIJO + padre.correo());
+            limitador.limpiar(TipoLimite.LOGIN_CUENTA, padre.correo());
         }
     }
 

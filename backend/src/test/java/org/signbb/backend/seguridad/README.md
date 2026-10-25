@@ -15,13 +15,14 @@ PostgreSQL y Redis, como el CI.
 
 | Paquete | Clase | Tests | Qué cubre |
 |---|---|---:|---|
-| `servicios` | `ServicioCuentasImplTest` | 22 | registro de padres, login, alta de médicos por el supervisor y activar o desactivar cuentas; una contraseña de más de 72 bytes da 422; el padre guarda, cambia o borra el teléfono de su pediatra y uno mal escrito da 422 |
+| `servicios` | `ServicioCuentasImplTest` | 23 | registro de padres, login, alta de médicos por el supervisor y activar o desactivar cuentas; una contraseña de más de 72 bytes da 422; el padre guarda, cambia o borra el teléfono de su pediatra y uno mal escrito da 422; un correo inexistente también ejecuta BCrypt |
+| `servicios` | `LimitadorIntentosTest` | 8 | límite por correo persistido en PostgreSQL: 5 fallos/15 min en ingreso, 3 intentos/1 h en registro, bloqueo vigente y vencido, clave hasheada y correo vacío |
 | `servicios` | `ServicioTokensTest` | 7 | el JWT lleva `sub`, `rol` y `nombre`; uno vencido o firmado con otra clave se rechaza; un secreto corto no arranca |
 | (raíz) | `InicializadorSeguridadTest` | 2 | el supervisor inicial se siembra una sola vez |
 | (raíz) | `VerificadorSecretosProduccionTest` | 11 | en producción no se aceptan los valores de ejemplo, la documentación de la API activa ni el registro de SQL encendido; un entorno mal escrito impide arrancar |
-| (raíz) | `ReglasAccesoIntegracionTest` | 19 | la cadena de filtros real: rutas públicas, `/actuator/health` abierto y el resto de Actuator sin exponer, 401 sin token, 403 por rol y dueño del recorrido; solo un padre guarda el teléfono del pediatra; un recorrido reiniciado o sin sesión da 410 |
+| (raíz) | `ReglasAccesoIntegracionTest` | 20 | la cadena de filtros real: rutas públicas, `/actuator/health` abierto y el resto de Actuator sin exponer, 401 sin token, 403 por rol y dueño del recorrido; solo un padre guarda el teléfono del pediatra; un recorrido reiniciado o sin sesión da 410; el cuarto registro con el mismo correo da 429 |
 
-En total son **61 pruebas** en estas clases. Las reglas de autor y de revisión de la autoría
+En total son **71 pruebas** en estas clases. Las reglas de autor y de revisión de la autoría
 (`GuardiaAutoriaTest`, `PoliticaAccesoBorradoresTest`, `ServicioRevisionImplTest`
 y `ControladorRevisionTest`) están en \ref pruebas_autoria; la del dueño del
 recorrido, en \ref pruebas_observaciones.
@@ -43,7 +44,13 @@ recorrido, en \ref pruebas_observaciones.
   una contraseña de menos de 8 caracteres dan **422**.
 - **Login.** Con los datos correctos devuelve el token. Si la contraseña está
   mal, el correo no existe o la cuenta está inactiva, responde **401 con el
-  mismo mensaje**, para no revelar cuál de las tres falló.
+  mismo mensaje**, para no revelar cuál de las tres falló. Un correo
+  inexistente también ejecuta BCrypt con un hash ficticio para igualar el
+  tiempo de respuesta.
+- **Límite de intentos.** Los contadores viven en PostgreSQL, no en Redis. El
+  ingreso se bloquea tras 5 fallos seguidos durante 15 minutos; el registro,
+  tras 3 intentos en 1 hora por correo. Un ingreso correcto borra el contador
+  de ingreso. El alcance actual no limita por IP.
 - **Cuentas clínicas.** El supervisor crea médicos con su institución. Crear un
   `PADRE` (o sin rol) por esa vía da 422: los padres solo se registran solos.
   Un supervisor no puede desactivarse a sí mismo.

@@ -27,11 +27,14 @@ public class LimpiezaProgramada {
 
     private final LimpiadorVersiones versiones;
     private final LimpiadorImagenes imagenes;
+    private final LimpiadorLimites limites;
 
-    /** Inyecta los dos limpiadores. */
-    public LimpiezaProgramada(LimpiadorVersiones versiones, LimpiadorImagenes imagenes) {
+    /** Inyecta los tres limpiadores. */
+    public LimpiezaProgramada(LimpiadorVersiones versiones, LimpiadorImagenes imagenes,
+            LimpiadorLimites limites) {
         this.versiones = versiones;
         this.imagenes = imagenes;
+        this.limites = limites;
     }
 
     /** Ejecuta la limpieza completa. */
@@ -48,6 +51,11 @@ public class LimpiezaProgramada {
             imagenes.limpiar(ahora);
         } catch (RuntimeException e) {
             log.error("Limpieza de imágenes falló: se reintenta mañana.", e);
+        }
+        try {
+            limites.limpiar(ahora);
+        } catch (RuntimeException e) {
+            log.error("Limpieza de límites falló: se reintenta mañana.", e);
         }
         log.info("Limpieza diaria: terminó.");
     }

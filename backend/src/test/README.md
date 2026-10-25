@@ -142,8 +142,9 @@ Silo.
   del servidor; si no hay grafos en la base, si Silo no responde al listar o si
   falla la lectura de un documento no borra nada; si falla borrar una sigue con
   las demás.
-- **`LimpiezaProgramadaTest`**: primero las versiones y después las imágenes;
-  si una parte falla la otra se ejecuta igual y el error no se propaga.
+- **`LimpiezaProgramadaTest`**: primero las versiones, después las imágenes y
+  al final los límites vencidos; si una parte falla las demás se ejecutan igual
+  y el error no se propaga.
 - **`ResolvedorVersionesTest`** (`olvidar`) y **`ContextoClinicoTest`**
   (`olvidar`): borran solo las claves y las versiones indicadas, y un fallo de
   Redis no rompe nada.

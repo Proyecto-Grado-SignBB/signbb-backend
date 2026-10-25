@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -132,6 +133,22 @@ class ServicioCuentasImplTest {
         assertEquals(claveMala, noExiste);
         assertEquals(claveMala, inactiva);
         assertEquals(claveMala, vacio);
+    }
+
+    @Test
+    void unCorreoInexistenteTambienVerificaUnaContrasenaFicticia() {
+        RepositorioUsuario usuariosVacios = mock(RepositorioUsuario.class);
+        PasswordEncoder codificadorFalso = mock(PasswordEncoder.class);
+        when(codificadorFalso.encode(anyString())).thenReturn("hash-ficticio");
+        when(codificadorFalso.matches("secreta123", "hash-ficticio")).thenReturn(false);
+        when(usuariosVacios.findByCorreo("nadie@correo.com")).thenReturn(Optional.empty());
+        ServicioCuentasImpl servicioFalso = new ServicioCuentasImpl(usuariosVacios, codificadorFalso,
+                mock(ServicioTokens.class));
+
+        assertThrows(CredencialesInvalidasException.class,
+                () -> servicioFalso.ingresar(new LoginRequest("nadie@correo.com", "secreta123")));
+
+        verify(codificadorFalso).matches("secreta123", "hash-ficticio");
     }
 
     @Test

@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.signbb.backend.config.PatronesTexto;
 import org.signbb.backend.config.RecursoNoEncontradoException;
@@ -50,12 +51,20 @@ public class ServicioCuentasImpl implements ServicioCuentas {
     private final PasswordEncoder codificador;
     private final ServicioTokens tokens;
 
+    /**
+     * Hash de una contraseña aleatoria que nunca coincide. Se usa para que un
+     * correo inexistente o inactivo también pague el costo de BCrypt y no se
+     * pueda enumerar cuentas midiendo el tiempo de respuesta.
+     */
+    private final String hashFicticio;
+
     /** Inyecta el repositorio, el codificador de contraseñas y el emisor de tokens. */
     public ServicioCuentasImpl(RepositorioUsuario usuarios, PasswordEncoder codificador,
             ServicioTokens tokens) {
         this.usuarios = usuarios;
         this.codificador = codificador;
         this.tokens = tokens;
+        this.hashFicticio = codificador.encode(UUID.randomUUID().toString());
     }
 
     @Override
@@ -70,7 +79,10 @@ public class ServicioCuentasImpl implements ServicioCuentas {
         String correo = normalizarCorreo(request.correo());
         String contrasena = request.contrasena() == null ? "" : request.contrasena();
         UsuarioEntity u = correo == null ? null : usuarios.findByCorreo(correo).orElse(null);
-        if (u == null || !u.isActivo() || !codificador.matches(contrasena, u.getHashContrasena())) {
+        boolean activo = u != null && u.isActivo();
+        String hash = activo ? u.getHashContrasena() : hashFicticio;
+        boolean coincide = codificador.matches(contrasena, hash);
+        if (u == null || !activo || !coincide) {
             throw new CredencialesInvalidasException(MENSAJE_INGRESO);
         }
         return sesion(u, request.esDispositivoSeguro());
@@ -163,13 +175,16 @@ public class ServicioCuentasImpl implements ServicioCuentas {
             throw new CuentaInvalidaException("La contraseña es demasiado larga: máximo "
                     + MAXIMO_BYTES_CONTRASENA + " bytes (las tildes y la ñ cuentan doble).");
         }
+        // Se calcula el hash antes de consultar el correo para que un correo
+        // repetido y uno nuevo tarden lo mismo en este punto.
+        String hash = codificador.encode(contrasena);
         if (usuarios.existsByCorreo(normalizado)) {
             throw new CuentaInvalidaException("Ya existe una cuenta con ese correo.");
         }
         UsuarioEntity u = new UsuarioEntity();
         u.setNombre(nombre.trim());
         u.setCorreo(normalizado);
-        u.setHashContrasena(codificador.encode(contrasena));
+        u.setHashContrasena(hash);
         u.setRol(rol);
         u.setInstitucion(institucion);
         u.setActivo(true);
