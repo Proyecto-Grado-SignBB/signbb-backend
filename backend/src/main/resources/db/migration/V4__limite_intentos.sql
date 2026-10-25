@@ -1,5 +1,5 @@
 -- =============================================================================
--- V3: límites de intentos de ingreso y de registro
+-- V4: límites de intentos de ingreso y de registro
 -- =============================================================================
 -- Los contadores viven en PostgreSQL para que el límite no dependa de Redis y
 -- sobreviva a reinicios del backend. La clave es un hash del correo
