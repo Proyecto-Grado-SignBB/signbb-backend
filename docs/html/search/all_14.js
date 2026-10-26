@@ -26,8 +26,5 @@ var searchData=
   ['versionconfecha_23',['VersionConFecha',['../classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1PoliticaRetencionVersiones.html#aa49b6674f308887c3306752f8949771a',1,'org::signbb::backend::mantenimiento::PoliticaRetencionVersiones']]],
   ['versioncontenidoentity_24',['VersionContenidoEntity',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1VersionContenidoEntity.html',1,'org.signbb.backend.navegacion.datos.entidades.VersionContenidoEntity'],['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1entidades_1_1VersionContenidoEntity.html#afb2dc003e489f4534a641c600cb99780',1,'org.signbb.backend.navegacion.datos.entidades.VersionContenidoEntity.VersionContenidoEntity()']]],
   ['versiones_20del_20contenido_20republicar_20sin_20romper_20recorridos_20en_20curso_25',['Versiones del contenido (republicar sin romper recorridos en curso)',['../pruebas_autoria.html#autotoc_md15',1,'']]],
-  ['versionesdeprueba_26',['VersionesDePrueba',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1VersionesDePrueba.html',1,'org::signbb::backend::navegacion::modelo']]],
-  ['visual_20de_20base_20de_20reglas_27',['Representacion visual de base de reglas',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md90',1,'']]],
-  ['visual_20de_20grafo_28',['Representacion visual de grafo',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md91',1,'']]],
-  ['visualmente_29',['Construir grafos visualmente',['../md_grafo__sistema_2reporte__grafo.html#autotoc_md89',1,'']]]
+  ['versionesdeprueba_26',['VersionesDePrueba',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1VersionesDePrueba.html',1,'org::signbb::backend::navegacion::modelo']]]
 ];

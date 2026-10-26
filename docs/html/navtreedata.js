@@ -123,18 +123,6 @@ var NAVTREE =
       [ "Acceso rápido", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md80", null ],
       [ "Parámetros de conexión (perfil <span class=\"tt\">docker</span> del backend en el host)", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md81", null ]
     ] ],
-    [ "Grafo sistema", "md_grafo__sistema_2reporte__grafo.html", [
-      [ "Indice", "md_grafo__sistema_2reporte__grafo.html#autotoc_md83", null ],
-      [ "Grafo Raíz", "md_grafo__sistema_2reporte__grafo.html#autotoc_md84", null ],
-      [ "Grafo Gastrointestinal", "md_grafo__sistema_2reporte__grafo.html#autotoc_md85", null ],
-      [ "Grafo Respiración", "md_grafo__sistema_2reporte__grafo.html#autotoc_md86", null ],
-      [ "Grafo Activo y color", "md_grafo__sistema_2reporte__grafo.html#autotoc_md87", null ],
-      [ "Herramientas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md88", [
-        [ "Construir grafos visualmente", "md_grafo__sistema_2reporte__grafo.html#autotoc_md89", null ],
-        [ "Representacion visual de base de reglas", "md_grafo__sistema_2reporte__grafo.html#autotoc_md90", null ],
-        [ "Representacion visual de grafo", "md_grafo__sistema_2reporte__grafo.html#autotoc_md91", null ]
-      ] ]
-    ] ],
     [ "Paquetes", "namespaces.html", [
       [ "Lista de paquetes", "namespaces.html", "namespaces_dup" ],
       [ "Miembros de paquete", "namespacemembers.html", [
@@ -164,7 +152,7 @@ var NAVTREEINDEX =
 "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioRecorridosImpl.html#a8cf93bc77d5e2e5b66486eb74b86f324",
 "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentasImpl.html#a04192e75baa5b65f617500955f0cb091",
 "interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html#aadb923acf25f3d789d3fc69231ca4b9f",
-"pruebas_autoria.html#autotoc_md17"
+"pruebas_cache.html#autotoc_md57"
 ];
 
 const SYNCONMSG = 'pulsar para deshabilitar sincronización';
