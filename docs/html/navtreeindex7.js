@@ -1,15 +1,5 @@
 var NAVTREEINDEX7 =
 {
-"pruebas_autoria.html#autotoc_md17":[1,3],
-"pruebas_autoria.html#autotoc_md2":[1,2],
-"pruebas_autoria.html#autotoc_md3":[1,2,0],
-"pruebas_autoria.html#autotoc_md4":[1,2,1],
-"pruebas_autoria.html#autotoc_md5":[1,2,2],
-"pruebas_autoria.html#autotoc_md6":[1,2,3],
-"pruebas_autoria.html#autotoc_md7":[1,2,4],
-"pruebas_autoria.html#autotoc_md8":[1,2,5],
-"pruebas_autoria.html#autotoc_md9":[1,2,6],
-"pruebas_cache.html":[7],
 "pruebas_cache.html#autotoc_md57":[7,0],
 "pruebas_cache.html#autotoc_md58":[7,1],
 "pruebas_cache.html#autotoc_md59":[7,2],

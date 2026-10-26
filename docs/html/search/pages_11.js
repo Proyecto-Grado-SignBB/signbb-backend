@@ -25,7 +25,7 @@ var searchData=
   ['sesiones_20en_20redis_22',['RepositorioSesionRedisTest — sesiones en Redis',['../pruebas_cache.html#autotoc_md59',1,'']]],
   ['signbb_20—_20backend_23',['SignBB — Backend',['../index.html',1,'']]],
   ['sin_20romper_20recorridos_20en_20curso_24',['Versiones del contenido (republicar sin romper recorridos en curso)',['../pruebas_autoria.html#autotoc_md15',1,'']]],
-  ['sistema_25',['sistema',['../md_grafo__sistema_2reporte__grafo.html',1,'Grafo sistema'],['../pruebas.html',1,'Pruebas del sistema']]],
+  ['sistema_25',['Pruebas del sistema',['../pruebas.html',1,'']]],
   ['suite_26',['suite',['../pruebas_autoria.html#autotoc_md0',1,'Mapa de la suite'],['../pruebas_navegacion.html#autotoc_md18',1,'Mapa de la suite'],['../pruebas_observaciones.html#autotoc_md29',1,'Mapa de la suite'],['../pruebas_reglas.html#autotoc_md35',1,'Mapa de la suite'],['../pruebas_seguridad.html#autotoc_md43',1,'Mapa de la suite']]],
   ['suite_20por_20módulo_27',['Suite por módulo',['../pruebas.html#autotoc_md54',1,'']]],
   ['supervisor_20inicial_20inicializadorseguridadtest_28',['Supervisor inicial (&lt;span class=&quot;tt&quot;&gt;InicializadorSeguridadTest&lt;/span&gt;)',['../pruebas_seguridad.html#autotoc_md48',1,'']]],
