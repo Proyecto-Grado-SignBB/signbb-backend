@@ -7,7 +7,6 @@ import java.util.Map;
 
 /**
  * Documento JSON de un grafo clínico: el formato de intercambio de
- * {@code static/ejemplo_grafo_raiz.json} y
  * {@code static/ejemplo_subgrafo_piel_ictericia.json}, usado además como
  * formato persistido en la columna {@code estructura} de
  * {@code GrafoClinicoEntity}.
@@ -30,57 +29,59 @@ import java.util.Map;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record GrafoClinicoJson(Grafo graph) {
 
-    /**
-     * Sección {@code graph} del documento. {@code preguntaInicial} es el nodo
-     * donde arranca el recorrido; {@code nodoInicial} es su nombre en el
-     * formato previo y se conserva solo para leer documentos antiguos.
-     */
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public record Grafo(
-            String id,
-            String label,
-            Boolean directed,
-            List<String> category,
-            String preguntaInicial,
-            String nodoInicial,
-            Map<String, Object> metadata,
-            Map<String, NodoJson> nodes,
-            List<Arista> edges) {
-    }
+        /**
+         * Sección {@code graph} del documento. {@code preguntaInicial} es el nodo
+         * donde arranca el recorrido; {@code nodoInicial} es su nombre en el
+         * formato previo y se conserva solo para leer documentos antiguos.
+         */
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        public record Grafo(
+                        String id,
+                        String label,
+                        Boolean directed,
+                        List<String> category,
+                        String preguntaInicial,
+                        String nodoInicial,
+                        Map<String, Object> metadata,
+                        Map<String, NodoJson> nodes,
+                        List<Arista> edges) {
+        }
 
-    /** Nodo del grafo: {@code label} es el contenido y el resto vive en metadata. */
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public record NodoJson(String label, MetadataNodo metadata) {
-    }
+        /**
+         * Nodo del grafo: {@code label} es el contenido y el resto vive en metadata.
+         */
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        public record NodoJson(String label, MetadataNodo metadata) {
+        }
 
-    /**
-     * Metadatos usados para reconstruir el TAD {@code Nodo}. {@code tipo} es
-     * {@code pregunta}, {@code terminal} o {@code referencia}; según el tipo
-     * aplican {@code tipoInteraccion} (pregunta), {@code desenlace}
-     * (terminal: {@code recomendacion}, {@code consulta_medica} o
-     * {@code urgencia}) o {@code grafoId} (referencia). {@code peso} va de 1 a
-     * 3. {@code peso} y {@code archivos} usan wrappers para tolerar campos
-     * ausentes en el JSON (Jackson 3 rechaza null sobre primitivas por
-     * defecto). {@code tipoInteraccion} ausente/null significa que
-     * {@code GrafoClinico.tipoInteraccion} lo infiere de las opciones del nodo.
-     */
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public record MetadataNodo(
-            String tipo,
-            String tipoInteraccion,
-            String desenlace,
-            String grafoId,
-            Integer peso,
-            Boolean archivos,
-            List<String> src) {
-    }
+        /**
+         * Metadatos usados para reconstruir el TAD {@code Nodo}. {@code tipo} es
+         * {@code pregunta}, {@code terminal} o {@code referencia}; según el tipo
+         * aplican {@code tipoInteraccion} (pregunta), {@code desenlace}
+         * (terminal: {@code recomendacion}, {@code consulta_medica} o
+         * {@code urgencia}) o {@code grafoId} (referencia). {@code peso} va de 1 a
+         * 3. {@code peso} y {@code archivos} usan wrappers para tolerar campos
+         * ausentes en el JSON (Jackson 3 rechaza null sobre primitivas por
+         * defecto). {@code tipoInteraccion} ausente/null significa que
+         * {@code GrafoClinico.tipoInteraccion} lo infiere de las opciones del nodo.
+         */
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        public record MetadataNodo(
+                        String tipo,
+                        String tipoInteraccion,
+                        String desenlace,
+                        String grafoId,
+                        Integer peso,
+                        Boolean archivos,
+                        List<String> src) {
+        }
 
-    /** Arista: referencia los nodos por id, nunca embebe el objeto {@code Nodo}. */
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public record Arista(
-            String source,
-            String relation,
-            String target,
-            Boolean directed) {
-    }
+        /** Arista: referencia los nodos por id, nunca embebe el objeto {@code Nodo}. */
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        public record Arista(
+                        String source,
+                        String relation,
+                        String target,
+                        Boolean directed) {
+        }
 }
