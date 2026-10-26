@@ -135,7 +135,7 @@ Clases</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Funciones</h2></td></tr>
 <tr class="memitem:a542aa5e19744a44057ea8f0e570e9680" id="r_a542aa5e19744a44057ea8f0e570e9680"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a542aa5e19744a44057ea8f0e570e9680">GrafoClinicoJson</a> (Grafo graph)</td></tr>
-<tr class="memdesc:a542aa5e19744a44057ea8f0e570e9680"><td class="mdescLeft">&#160;</td><td class="mdescRight">Documento JSON de un grafo clínico: el formato de intercambio de <code class="JavaDocCode">static/ejemplo_grafo_raiz.json</code> y <code class="JavaDocCode">static/ejemplo_subgrafo_piel_ictericia.json</code>, usado además como formato persistido en la columna <code class="JavaDocCode">estructura</code> de <code class="JavaDocCode">GrafoClinicoEntity</code>.  <br /></td></tr>
+<tr class="memdesc:a542aa5e19744a44057ea8f0e570e9680"><td class="mdescLeft">&#160;</td><td class="mdescRight">Documento JSON de un grafo clínico: el formato de intercambio de <code class="JavaDocCode">static/ejemplo_subgrafo_piel_ictericia.json</code>, usado además como formato persistido en la columna <code class="JavaDocCode">estructura</code> de <code class="JavaDocCode">GrafoClinicoEntity</code>.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Serializacion del grafo clinico desde JSON para el modulo de navegacion. </p>
@@ -155,7 +155,7 @@ Funciones</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Documento JSON de un grafo clínico: el formato de intercambio de <code class="JavaDocCode">static/ejemplo_grafo_raiz.json</code> y <code class="JavaDocCode">static/ejemplo_subgrafo_piel_ictericia.json</code>, usado además como formato persistido en la columna <code class="JavaDocCode">estructura</code> de <code class="JavaDocCode">GrafoClinicoEntity</code>. </p>
+<p>Documento JSON de un grafo clínico: el formato de intercambio de <code class="JavaDocCode">static/ejemplo_subgrafo_piel_ictericia.json</code>, usado además como formato persistido en la columna <code class="JavaDocCode">estructura</code> de <code class="JavaDocCode">GrafoClinicoEntity</code>. </p>
 <p>Hay dos clases de documento con el mismo formato: el <b>grafo raíz</b> del sistema (pregunta inicial, preguntas puente por categoría y nodos <code class="JavaDocCode">referencia</code>) y los <b>subgrafos</b> que crea el médico para una categoría. <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1CompositorGrafoClinico.html">CompositorGrafoClinico</a></code> los aplana en un único documento sin referencias antes de construir el TAD.</p>
 <p>Los nodos se almacenan una sola vez (indexados por id) y las aristas referencian nodos por id, de modo que la estructura interna queda inspeccionable (por SQL sobre el jsonb) y no se duplican datos entre elementos que apunten a los mismos nodos. El estado de navegación (<code class="JavaDocCode">bloqueado</code>) y los umbrales de peso (configuración de uso del TAD) no forman parte del documento. </p>
 <p>Sección <code class="JavaDocCode">graph</code> del documento. <code class="JavaDocCode">preguntaInicial</code> es el nodo donde arranca el recorrido; <code class="JavaDocCode">nodoInicial</code> es su nombre en el formato previo y se conserva solo para leer documentos antiguos.</p>
