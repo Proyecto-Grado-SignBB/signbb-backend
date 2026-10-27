@@ -1,0 +1,163 @@
+{
+  "grafoId": "grafo_gastro",
+  "rules": {
+    "R_GASTRO_URG": {
+      "nombre": "Urgencia Gastrointestinal",
+      "condiciones": [
+        [
+          {
+            "idNodo": "q_gastro_vomito",
+            "respuesta": "Vomita todo lo que ingiere"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_vomito",
+            "respuesta": "Vomita con fuerza/sale disparado"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_alimentacion",
+            "respuesta": "No logra alimentarse o rechaza pecho"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_alimentacion",
+            "respuesta": "Tose, atraganta, deja de respirar o cambia color al comer"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_abdomen",
+            "respuesta": "Barriga muy hinchada y dura/tensa"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_abdomen",
+            "respuesta": "Barriga hinchada + vómito o sangre en popó"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_abdomen",
+            "respuesta": "Barriga hinchada + no quiere comer o está decaído"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_popo",
+            "respuesta": "Popó blanco o gris claro"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_popo",
+            "respuesta": "Sangre roja en popó"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_popo",
+            "respuesta": "No hace popó + barriga hinchada o vómito"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_orina",
+            "respuesta": "Sangre roja en orina/pañal"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_orina",
+            "respuesta": "Muchas horas sin mojar ningún pañal"
+          }
+        ]
+      ],
+      "nodoDestino": "T_URGENCIA",
+      "nivel": "URGENCIA"
+    },
+    "R_GASTRO_CON": {
+      "nombre": "Consultar Gastrointestinal",
+      "condiciones": [
+        [
+          {
+            "idNodo": "q_gastro_vomito",
+            "respuesta": "Ha vomitado varias veces"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_alimentacion",
+            "respuesta": "Come mucho menos o succiona débil"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_alimentacion",
+            "respuesta": "Se queda dormido repetidamente al comer"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_alimentacion",
+            "respuesta": "Tarda mucho más de lo habitual"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_abdomen",
+            "respuesta": "Barriga más hinchada, pero blanda y come bien"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_popo",
+            "respuesta": "Cambió frecuencia o consistencia"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_popo",
+            "respuesta": "Mucho moco repetido"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_popo",
+            "respuesta": "Muchas más o menos deposiciones"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_popo",
+            "respuesta": "Deposiciones más líquidas de lo habitual"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_orina",
+            "respuesta": "Mojando menos pañales"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_orina",
+            "respuesta": "Olor diferente o fuerte persistente"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_orina",
+            "respuesta": "Llora/molesta al orinar"
+          }
+        ]
+      ],
+      "nodoDestino": "T_CONSULTA",
+      "nivel": "CONSULTAR_MEDICO"
+    }
+  }
+}

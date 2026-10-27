@@ -126,6 +126,8 @@ Diagrama de herencia de org.signbb.backend.navegacion.servicios.ServicioNavegaci
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Métodos públicos</h2></td></tr>
+<tr class="memitem:a1f5ff7a1af826f7857c64e63fc51486b" id="r_a1f5ff7a1af826f7857c64e63fc51486b"><td class="memItemLeft">boolean&#160;</td><td class="memItemRight"><a class="el" href="#a1f5ff7a1af826f7857c64e63fc51486b">consultaDisponible</a> ()</td></tr>
+<tr class="memdesc:a1f5ff7a1af826f7857c64e63fc51486b"><td class="mdescLeft">&#160;</td><td class="mdescRight">True si el contenido vigente permite iniciar una consulta: hay al menos una opción desde la pregunta inicial.  <br /></td></tr>
 <tr class="memitem:a82ef31a7df53d5d7161870795111854f" id="r_a82ef31a7df53d5d7161870795111854f"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#a82ef31a7df53d5d7161870795111854f">iniciar</a> ()</td></tr>
 <tr class="memdesc:a82ef31a7df53d5d7161870795111854f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inicia un recorrido sobre el grafo clínico cargado y devuelve la primera pregunta.  <br /></td></tr>
 <tr class="memitem:a129f8a32cea64590bfe65f6db56c16a6" id="r_a129f8a32cea64590bfe65f6db56c16a6"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#a129f8a32cea64590bfe65f6db56c16a6">responder</a> (String recorridoId, String respuesta)</td></tr>
@@ -142,6 +144,28 @@ Métodos públicos</h2></td></tr>
 <p>Expone el recorrido guiado como operaciones sin estado por petición: <code><a class="el" href="#a82ef31a7df53d5d7161870795111854f">iniciar</a></code> abre un recorrido y devuelve la primera pregunta; <code><a class="el" href="#a129f8a32cea64590bfe65f6db56c16a6">responder</a></code> registra una respuesta y avanza un paso; <code><a class="el" href="#af7511e879f969f2609b1fbcd19d0b56e">consultar</a></code> devuelve el estado actual; <code><a class="el" href="#a7075fd56cad7c7d69503cc97280e13a0">retroceder</a></code> vuelve a la pregunta anterior para cambiar su respuesta.</p>
 <p>MODIFICADO: se agrega la sobrecarga <code><a class="el" href="">responder(String, List)</a></code> para selección múltiple. La firma de un solo <code class="JavaDocCode">String</code> no cambia. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
+<a id="a1f5ff7a1af826f7857c64e63fc51486b" name="a1f5ff7a1af826f7857c64e63fc51486b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f5ff7a1af826f7857c64e63fc51486b">&#9670;&#160;</a></span>consultaDisponible()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">boolean org.signbb.backend.navegacion.servicios.ServicioNavegacion.consultaDisponible </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>True si el contenido vigente permite iniciar una consulta: hay al menos una opción desde la pregunta inicial. </p>
+<p>Es false cuando no queda ningún subgrafo publicado. </p>
+
+<p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImpl.html#abd109f9d1a6f08831bcba506b957dd8c">org.signbb.backend.navegacion.servicios.ServicioNavegacionImpl</a>.</p>
+
+</div>
+</div>
 <a id="af7511e879f969f2609b1fbcd19d0b56e" name="af7511e879f969f2609b1fbcd19d0b56e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af7511e879f969f2609b1fbcd19d0b56e">&#9670;&#160;</a></span>consultar()</h2>
 
@@ -179,6 +203,12 @@ Métodos públicos</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Inicia un recorrido sobre el grafo clínico cargado y devuelve la primera pregunta. </p>
+<dl class="exception"><dt>Excepciones</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ConsultaNoDisponibleException.html" title="No hay ningún subgrafo publicado, así que el contenido clínico no tiene opciones desde la pregunta in...">ConsultaNoDisponibleException</a></td><td>si no hay ningún subgrafo publicado </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Implementado en <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacionImpl.html#aab2e1089853199ea85ca0a6c2ac40d7f">org.signbb.backend.navegacion.servicios.ServicioNavegacionImpl</a>.</p>
 

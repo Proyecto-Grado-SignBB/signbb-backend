@@ -1,0 +1,378 @@
+{
+  "rules": {
+    "R_RESP_URG": {
+      "nombre": "Urgencia Respiración",
+      "condiciones": [
+        [
+          {
+            "idNodo": "q_resp_vista",
+            "respuesta": "Respira persistentemente rápido (≥60/min)"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_resp_vista",
+            "respuesta": "Aleteo nasal"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_resp_vista",
+            "respuesta": "Se le hunde el pecho"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_resp_vista",
+            "respuesta": "Labios o cara azules/grises"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_resp_sonidos",
+            "respuesta": "Quejido al respirar"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_resp_sonidos",
+            "respuesta": "Pausas o Apneas con cambio de color"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_resp_nariz",
+            "respuesta": "Congestión no permite alimentarse"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_resp_nariz",
+            "respuesta": "Más respiración rápida, quejido, etc."
+          }
+        ]
+      ],
+      "nodoDestino": "T_URGENCIA",
+      "nivel": "URGENCIA"
+    },
+    "R_RESP_CON": {
+      "nombre": "Consultar Respiración",
+      "condiciones": [
+        [
+          {
+            "idNodo": "q_resp_vista",
+            "respuesta": "Respira diferente sin esfuerzo"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_resp_sonidos",
+            "respuesta": "Ruido al respirar que antes no hacía"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_resp_sonidos",
+            "respuesta": "Presenta tos pero respira tranquilo"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_resp_nariz",
+            "respuesta": "Congestión cuesta alimentar pero completa tomas"
+          }
+        ]
+      ],
+      "nodoDestino": "T_CONSULTA",
+      "nivel": "CONSULTAR_MEDICO"
+    },
+    "R_GASTRO_URG": {
+      "nombre": "Urgencia Gastrointestinal",
+      "condiciones": [
+        [
+          {
+            "idNodo": "q_gastro_vomito",
+            "respuesta": "Vomita todo lo que ingiere"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_vomito",
+            "respuesta": "Vomita con fuerza/sale disparado"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_alimentacion",
+            "respuesta": "No logra alimentarse o rechaza pecho"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_alimentacion",
+            "respuesta": "Tose, atraganta, deja de respirar o cambia color al comer"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_abdomen",
+            "respuesta": "Barriga muy hinchada y dura/tensa"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_abdomen",
+            "respuesta": "Barriga hinchada + vómito o sangre en popó"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_abdomen",
+            "respuesta": "Barriga hinchada + no quiere comer o está decaído"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_popo",
+            "respuesta": "Popó blanco o gris claro"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_popo",
+            "respuesta": "Sangre roja en popó"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_popo",
+            "respuesta": "No hace popó + barriga hinchada o vómito"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_orina",
+            "respuesta": "Sangre roja en orina/pañal"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_orina",
+            "respuesta": "Muchas horas sin mojar ningún pañal"
+          }
+        ]
+      ],
+      "nodoDestino": "T_URGENCIA",
+      "nivel": "URGENCIA"
+    },
+    "R_GASTRO_CON": {
+      "nombre": "Consultar Gastrointestinal",
+      "condiciones": [
+        [
+          {
+            "idNodo": "q_gastro_vomito",
+            "respuesta": "Ha vomitado varias veces"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_alimentacion",
+            "respuesta": "Come mucho menos o succiona débil"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_alimentacion",
+            "respuesta": "Se queda dormido repetidamente al comer"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_alimentacion",
+            "respuesta": "Tarda mucho más de lo habitual"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_abdomen",
+            "respuesta": "Barriga más hinchada, pero blanda y come bien"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_popo",
+            "respuesta": "Cambió frecuencia o consistencia"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_popo",
+            "respuesta": "Mucho moco repetido"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_popo",
+            "respuesta": "Muchas más o menos deposiciones"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_popo",
+            "respuesta": "Deposiciones más líquidas de lo habitual"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_orina",
+            "respuesta": "Mojando menos pañales"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_orina",
+            "respuesta": "Olor diferente o fuerte persistente"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_gastro_orina",
+            "respuesta": "Llora/molesta al orinar"
+          }
+        ]
+      ],
+      "nodoDestino": "T_CONSULTA",
+      "nivel": "CONSULTAR_MEDICO"
+    },
+    "R_NEURO_URG": {
+      "nombre": "Urgencia Actividad y Color",
+      "condiciones": [
+        [
+          {
+            "idNodo": "q_neuro_tono",
+            "respuesta": "Mucho más dormido / cuesta despertarlo"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_neuro_tono",
+            "respuesta": "Más flojito de lo habitual"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_neuro_tono",
+            "respuesta": "Más tieso de lo habitual / cuerpo rígido"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_neuro_tono",
+            "respuesta": "Movimientos anormales o repetitivos"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_neuro_llanto",
+            "respuesta": "Llanto inconsolable"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_neuro_color",
+            "respuesta": "Amarillo por debajo del ombligo o piernas"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_neuro_color",
+            "respuesta": "Palmas de manos o plantas amarillas"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_neuro_color",
+            "respuesta": "Amarillo + muy dormido/no come"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_neuro_color",
+            "respuesta": "Amarillo en primeras 24 horas"
+          }
+        ]
+      ],
+      "nodoDestino": "T_URGENCIA",
+      "nivel": "URGENCIA"
+    },
+    "R_NEURO_CON": {
+      "nombre": "Consultar Actividad y Color",
+      "condiciones": [
+        [
+          {
+            "idNodo": "q_neuro_llanto",
+            "respuesta": "Más irritable/llora más, pero calma"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_neuro_color",
+            "respuesta": "Color amarillo en ojos, cara o hasta pecho"
+          }
+        ]
+      ],
+      "nodoDestino": "T_CONSULTA",
+      "nivel": "CONSULTAR_MEDICO"
+    },
+    "R_CAB_URG": {
+      "nombre": "Urgencia Cabeza, Ojos y Oídos",
+      "condiciones": [
+        [
+          {
+            "idNodo": "q_cab_gate_fontanela",
+            "respuesta": "Sí"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_cab_ojos",
+            "respuesta": "Pus en ojo e hinchado/rojo"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_cab_oidos",
+            "respuesta": "Pus o secreción amarilla/verdosa de oído"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_cab_oidos",
+            "respuesta": "Sangre de oído"
+          }
+        ]
+      ],
+      "nodoDestino": "T_URGENCIA",
+      "nivel": "URGENCIA"
+    },
+    "R_CAB_CON": {
+      "nombre": "Consultar Cabeza, Ojos y Oídos",
+      "condiciones": [
+        [
+          {
+            "idNodo": "q_cab_ojos",
+            "respuesta": "Secreción repetida en ojo, sin hinchar"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_cab_oidos",
+            "respuesta": "Líquido transparente del oído (no agua de baño)"
+          }
+        ]
+      ],
+      "nodoDestino": "T_CONSULTA",
+      "nivel": "CONSULTAR_MEDICO"
+    }
+  }
+}

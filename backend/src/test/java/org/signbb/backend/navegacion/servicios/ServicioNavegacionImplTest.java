@@ -1,8 +1,10 @@
 package org.signbb.backend.navegacion.servicios;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -43,6 +45,7 @@ class ServicioNavegacionImplTest {
     /** Respuesta que descarta los signos de alarma y avanza a la alerta media. */
     private static final String NINGUNO = "No, ninguno de los anteriores";
 
+    private ContextoClinico contexto;
     private ServicioNavegacion servicio;
 
     /** Doble de prueba de {@link RepositorioSesion} que no necesita Redis. */
@@ -88,8 +91,9 @@ class ServicioNavegacionImplTest {
         CompositorGrafoClinico.Contenido contenido = ContenidoEjemplo.compuesto();
         GrafoClinico grafo = GrafoClinicoMapper.desde(contenido.grafo());
         BaseReglas base = BaseReglasMapper.desde(contenido.reglas(), grafo);
-        ContextoClinico contexto = mock(ContextoClinico.class);
+        contexto = mock(ContextoClinico.class);
         when(contexto.idVersionActual()).thenReturn(1L);
+        when(contexto.getGrafo()).thenReturn(grafo);
         when(contexto.grafoDe(any())).thenReturn(grafo);
         when(contexto.baseDe(any())).thenReturn(base);
 
@@ -112,6 +116,22 @@ class ServicioNavegacionImplTest {
         assertEquals("EN_CURSO", inicio.estado());
         assertEquals("pregunta_inicial", inicio.pregunta().id());
         assertNull(inicio.resultado());
+    }
+
+    @Test
+    void conSubgrafosPublicadosLaConsultaEstaDisponible() {
+        assertTrue(servicio.consultaDisponible());
+    }
+
+    @Test
+    void sinSubgrafosLaConsultaNoEstaDisponibleYNoSePuedeIniciar() {
+        GrafoClinico soloRaiz = GrafoClinicoMapper.desde(CompositorGrafoClinico
+                .componer(ContenidoEjemplo.raiz(), List.of(), List.of()).grafo());
+        when(contexto.getGrafo()).thenReturn(soloRaiz);
+        when(contexto.grafoDe(any())).thenReturn(soloRaiz);
+
+        assertFalse(servicio.consultaDisponible());
+        assertThrows(ConsultaNoDisponibleException.class, () -> servicio.iniciar());
     }
 
     @Test

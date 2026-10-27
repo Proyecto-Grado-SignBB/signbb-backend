@@ -767,6 +767,32 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorAutoriaDTO"
+  /api/consulta/disponibilidad:
+    get:
+      tags:
+      - Consulta
+      summary: Consulta si la navegación está disponible
+      description: "Devuelve disponible=false cuando no hay ningún subgrafo publicado;\
+        \ en ese caso la pantalla de inicio muestra el mensaje y deshabilita la\
+        \ consulta."
+      operationId: disponibilidad
+      responses:
+        "200":
+          description: Disponibilidad de la consulta
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  disponible:
+                    type: boolean
+                  mensaje:
+                    type: string
+                    nullable: true
+        "401":
+          description: Sin sesión
+        "403":
+          description: La cuenta no es de familia
   /api/recorridos:
     get:
       tags:
@@ -798,7 +824,12 @@ paths:
               schema:
                 $ref: "#/components/schemas/RecorridoDTO"
         "503":
-          description: Caché de sesiones (Redis) no disponible
+          description: "No hay subgrafos publicados o el caché de sesiones (Redis)\
+            \ no está disponible"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorAutoriaDTO"
   /api/recorridos/{recorridoId}/retroceder:
     post:
       tags:
@@ -940,7 +971,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorAutoriaDTO"
         "422":
-          description: "No está publicado, o era el único subgrafo publicado"
+          description: "No está publicado o el contenido restante no es válido"
           content:
             application/json:
               schema:

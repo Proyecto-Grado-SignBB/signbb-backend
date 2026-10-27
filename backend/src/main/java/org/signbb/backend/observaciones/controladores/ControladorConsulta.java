@@ -45,6 +45,11 @@ import jakarta.validation.Valid;
  * MODIFICADO (CU10/CU11): consultar, responder y retroceder revisan además que
  * la consulta siga vigente; si venció tras 8 horas sin actividad o ya se
  * reinició, responden 410. Se agrega {@code reiniciar}.
+ *
+ * <p>
+ * También expone {@code GET /api/consulta/disponibilidad} para que el inicio
+ * deshabilite la consulta cuando no hay ningún subgrafo publicado, y
+ * {@code POST /api/recorridos} responde 503 en ese caso.
  */
 @RestController
 @RequestMapping("/api")
@@ -73,12 +78,34 @@ public class ControladorConsulta {
                     + "recorrido se envía en el cuerpo y se usa en las operaciones siguientes.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Recorrido creado con su primera pregunta"),
-            @ApiResponse(responseCode = "503", description = "Caché de sesiones (Redis) no disponible",
-                    content = @Content)
+            @ApiResponse(responseCode = "503", description = "No hay subgrafos publicados o el caché de "
+                    + "sesiones (Redis) no está disponible",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })
     @PostMapping("/recorridos")
     public ResponseEntity<RecorridoDTO> iniciar(UsuarioActual usuario) {
         return ResponseEntity.ok(servicioRecorridos.iniciar(usuario));
+    }
+
+    /**
+     * {@code GET /api/consulta/disponibilidad}: indica si la pantalla de inicio
+     * puede habilitar «Comenzar consulta». Es false cuando no hay ningún
+     * subgrafo publicado.
+     */
+    @Operation(summary = "Consulta si la navegación está disponible",
+            description = "Devuelve disponible=false cuando no hay subgrafos publicados; en ese caso "
+                    + "la pantalla de inicio muestra el mensaje y deshabilita la consulta.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Disponibilidad de la consulta"),
+            @ApiResponse(responseCode = "401", description = "Sin sesión", content = @Content),
+            @ApiResponse(responseCode = "403", description = "La cuenta no es de familia", content = @Content)
+    })
+    @GetMapping("/consulta/disponibilidad")
+    public ResponseEntity<DisponibilidadDTO> disponibilidad() {
+        return ResponseEntity.ok(servicioNavegacion.consultaDisponible()
+                ? DisponibilidadDTO.habilitada()
+                : DisponibilidadDTO.noDisponible());
     }
 
     /** {@code GET /api/recorridos}: "Mis recorridos" del padre. */

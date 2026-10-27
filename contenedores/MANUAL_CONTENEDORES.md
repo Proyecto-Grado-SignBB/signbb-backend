@@ -98,6 +98,14 @@ nombre se usan en dos servicios a la vez, para que no queden distintas.
 | `SIGNBB_SUPERVISOR_CONTRASENA` | backend | `Supervisor123` |
 | `SIGNBB_DOCS_ACTIVAS` | backend | `true` |
 | `SIGNBB_SIEMBRA_ACTIVA` | backend | `true` |
+| `SIGNBB_SEED_DEMO_ACTIVA` | backend | `false` |
+| `SIGNBB_SEED_MEDICO_NOMBRE` | backend | `Médico ejemplo - Neonatologo` |
+| `SIGNBB_SEED_MEDICO_CORREO` | backend | `medico.ejemplo@signbb.local` |
+| `SIGNBB_SEED_MEDICO_CONTRASENA` | backend | `Medico123` |
+| `SIGNBB_SEED_MEDICO_INSTITUCION` | backend | `Fundación Canguro` |
+| `SIGNBB_SEED_PADRE_NOMBRE` | backend | `Padre ejemplo` |
+| `SIGNBB_SEED_PADRE_CORREO` | backend | `padre.ejemplo@signbb.local` |
+| `SIGNBB_SEED_PADRE_CONTRASENA` | backend | `Padre123` |
 | `SIGNBB_CORS_ORIGENES` | backend | `http://localhost:4200,http://localhost:4300` |
 | `SERVER_FORWARD_HEADERS_STRATEGY` | backend | `framework` (valor por defecto) |
 
@@ -108,7 +116,19 @@ nombre se usan en dos servicios a la vez, para que no queden distintas.
 **Producción.** `SIGNBB_ENTORNO=produccion` obliga a dar valores propios a los
 secretos y `SIGNBB_DOCS_ACTIVAS=false`; si no, el backend no arranca y el log
 dice qué variable falta. `SIGNBB_SIEMBRA_ACTIVA=true` solo en el primer
-despliegue (siembra el contenido clínico) y `false` después.
+despliegue (siembra el grafo raíz; los subgrafos se publican después) y
+`false` después. `SIGNBB_SEED_DEMO_ACTIVA` debe quedar en `false`: crea cuentas
+de ejemplo y publica los cuatro subgrafos de demo. Para sembrar el entorno de
+demo, enciéndelo junto con la siembra y luego bórralo o ponlo en `false`.
+
+**Seed de demo.** Con `SIGNBB_SEED_DEMO_ACTIVA=true` se crean:
+
+- Médico: `medico.ejemplo@signbb.local` / `Medico123`, autor de los 4 subgrafos.
+- Padre: `padre.ejemplo@signbb.local` / `Padre123`.
+
+El seed es idempotente. Para volver a sembrarlo desde cero hay que borrar
+PostgreSQL y Redis (`docker compose down -v`), porque las versiones y el caché
+pueden conservar contenido anterior.
 
 ## Dar de baja
 
@@ -126,16 +146,17 @@ datos, objetos de silo y caché/sesiones de Redis):
 
 > Advertencia: el borrado es irreversible. Tras vaciar la base, el siguiente
 > arranque del backend vuelve a crear las tablas con las migraciones de Flyway
-> y siembra de nuevo el grafo clínico y las reglas (`DatabaseInit`, si
-> `SIGNBB_SIEMBRA_ACTIVA` es `true`), pues la siembra solo se omite cuando ya
-> existe el grafo raíz. Las sesiones de recorridos en curso guardadas en
-> Redis y los objetos de silo no se recuperan de ninguna otra fuente.
+> y, si `SIGNBB_SIEMBRA_ACTIVA` es `true`, siembra **solo el grafo raíz**.
+> Los subgrafos y sus bases de reglas ya no se cargan automáticamente: se
+> crean y publican desde la app de autoría o se importan con el seed de datos
+> de pruebas/demo. Las sesiones de recorridos en curso guardadas en Redis y
+> los objetos de silo no se recuperan de ninguna otra fuente.
 >
 > Actualizar el contenido clínico: `DatabaseInit` decide sembrar según el `id`
-> del grafo raíz (`grafo_raiz`). Si se cambian los archivos de
-> `backend/src/main/resources/static/grafo_sistema/` pero la base ya estaba
-> sembrada, hay que borrar los volúmenes (`docker compose down -v`) y volver a
-> levantar; de lo contrario se seguiría sirviendo el contenido anterior.
+> del grafo raíz (`grafo_raiz`). Si se cambian los archivos del grafo raíz pero
+> la base ya estaba sembrada, hay que borrar los volúmenes
+> (`docker compose down -v`) y volver a levantar; los subgrafos publicados
+> también se pierden.
 >
 > Base local vieja: si el backend no arranca porque Hibernate dice que una
 > tabla o columna no coincide con el esquema, la base se creó antes de Flyway

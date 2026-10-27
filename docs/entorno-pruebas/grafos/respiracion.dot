@@ -1,0 +1,53 @@
+digraph grafo_respiracion {
+// Generado desde la definición de grafo_sistema
+graph [ranksep=1.4, nodesep=1.0];
+node [fontname="Helvetica", style=filled, fillcolor=white, margin=0.2];
+edge [fontname="Helvetica", fontsize=10];
+
+// ENTRADA
+q_resp_gate_vista [label="¿Notas que respira muy rápido, con esfuerzo, distinto o con un color raro?", color=black];
+q_resp_gate_sonidos [label="¿Hace ruidos, tos o pausas al respirar?", color=black];
+q_resp_gate_nariz [label="¿Tiene congestión, estornudos o hipo?", color=black];
+
+// SELECCIÓN MÚLTIPLE
+q_resp_vista [label="Marca todo lo que veas.", color=blue, fontcolor=blue];
+q_resp_sonidos [label="Marca todo lo que escuches.", color=blue, fontcolor=blue];
+q_resp_nariz [label="Marca todo lo que notes.", color=blue, fontcolor=blue];
+
+// TERMINALES
+T_URGENCIA [label="URGENCIA\nLleva a tu bebé a urgencias ahora.", shape=doublecircle, color=red, fontcolor=red];
+T_CONSULTA [label="CONSULTAR_MEDICO\nContacta hoy al Programa Madre Canguro.", shape=doublecircle, color=yellow, fontcolor=darkgoldenrod];
+T_NORMAL [label="NORMAL\nLo que observas puede ser normal. Sigue observando.", shape=doublecircle, color=green, fontcolor=darkgreen];
+
+// FLUJO: LO QUE VE
+q_resp_gate_vista -> q_resp_vista [label="Sí"];
+q_resp_gate_vista -> q_resp_gate_sonidos [label="No"];
+q_resp_vista -> T_URGENCIA [label="Respira persistentemente rápido (≥60/min) (3)"];
+q_resp_vista -> T_URGENCIA [label="Aleteo nasal (3)"];
+q_resp_vista -> T_URGENCIA [label="Se le hunde el pecho (3)"];
+q_resp_vista -> T_URGENCIA [label="Labios o cara azules/grises (3)"];
+q_resp_vista -> T_CONSULTA [label="Respira diferente sin esfuerzo (2)"];
+q_resp_vista -> T_NORMAL [label="A veces respira más rápido y luego normal (1)"];
+q_resp_vista -> T_NORMAL [label="Manos o pies azulados, pero labios rosados (1)"];
+
+// FLUJO: LO QUE OYE
+q_resp_gate_sonidos -> q_resp_sonidos [label="Sí"];
+q_resp_gate_sonidos -> q_resp_gate_nariz [label="No"];
+q_resp_sonidos -> T_URGENCIA [label="Quejido al respirar (3)"];
+q_resp_sonidos -> T_URGENCIA [label="Pausas o Apneas con cambio de color (3)"];
+q_resp_sonidos -> T_CONSULTA [label="Ruido al respirar que antes no hacía (2)"];
+q_resp_sonidos -> T_CONSULTA [label="Presenta tos pero respira tranquilo (2)"];
+q_resp_sonidos -> T_NORMAL [label="Pausas cortas sin cambiar de color (1)"];
+q_resp_sonidos -> T_NORMAL [label="Ruiditos pero respira tranquilo (1)"];
+
+// FLUJO: LA NARIZ
+q_resp_gate_nariz -> q_resp_nariz [label="Sí"];
+q_resp_gate_nariz -> T_NORMAL [label="No"];
+q_resp_nariz -> T_URGENCIA [label="Congestión no permite alimentarse (3)"];
+q_resp_nariz -> T_URGENCIA [label="Más respiración rápida, quejido, etc. (3)"];
+q_resp_nariz -> T_CONSULTA [label="Congestión cuesta alimentar pero completa tomas (2)"];
+q_resp_nariz -> T_NORMAL [label="Moquitos pero respira/come bien (1)"];
+q_resp_nariz -> T_NORMAL [label="Estornuda de vez en cuando (1)"];
+q_resp_nariz -> T_NORMAL [label="Tiene hipo (1)"];
+
+}

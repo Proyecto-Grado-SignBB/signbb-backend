@@ -1,0 +1,63 @@
+digraph grafo_gastro {
+// Generado desde grafo_gastro.json — Evaluación Gastrointestinal
+// Configuración general
+graph [ranksep=1.5, nodesep=1.2];
+node [fontname="Helvetica", style=filled, fillcolor=white, margin=0.2];
+edge [fontname="Helvetica", fontsize=11, minlen=2];
+
+// NODOS
+q_gastro_gate [label="¿Nota algo distinto en su alimentación o digestión?", color=black];
+q_gastro_areas [label="Marca todo lo que quieras revisar.", color=blue, fontcolor=blue];
+q_gastro_vomito [label="Marca todo lo que notes sobre el vómito.", color=blue, fontcolor=blue];
+q_gastro_alimentacion [label="Marca todo lo que notes al alimentarlo.", color=blue, fontcolor=blue];
+q_gastro_abdomen [label="Marca todo lo que notes en su barriga.", color=blue, fontcolor=blue];
+q_gastro_popo [label="Marca todo lo que notes en su popó.", color=blue, fontcolor=blue];
+q_gastro_orina [label="Marca todo lo que notes en su orina.", color=blue, fontcolor=blue];
+T_URGENCIA [label="URGENCIA\nLleva a tu bebé a urgencias ahora.", shape=doublecircle, color=red, fontcolor=red];
+T_CONSULTA [label="CONSULTAR_MEDICO\nContacta hoy al Programa Madre Canguro.", shape=doublecircle, color=yellow, fontcolor=darkgoldenrod];
+T_NORMAL [label="NORMAL\nLo que observas puede ser normal. Sigue observando.", shape=doublecircle, color=green, fontcolor=darkgreen];
+
+// ARISTAS
+q_gastro_gate -> q_gastro_areas [label="\n   Sí   \n"];
+q_gastro_gate -> T_NORMAL [label="\n   No   \n"];
+q_gastro_areas -> q_gastro_vomito [label="\n   Vómito (3)   \n"];
+q_gastro_areas -> q_gastro_alimentacion [label="\n   Alimentación (3)   \n"];
+q_gastro_areas -> q_gastro_abdomen [label="\n   Barriga (3)   \n"];
+q_gastro_areas -> q_gastro_popo [label="\n   Popó (3)   \n"];
+q_gastro_areas -> q_gastro_orina [label="\n   Orina (3)   \n"];
+q_gastro_vomito -> T_URGENCIA [label="\n   Vomita todo lo que ingiere (3)   \n"];
+q_gastro_vomito -> T_URGENCIA [label="\n   Vomita con fuerza/sale disparado (3)   \n"];
+q_gastro_vomito -> T_CONSULTA [label="\n   Ha vomitado varias veces (2)   \n"];
+q_gastro_vomito -> T_NORMAL [label="\n   Vomita una sola vez y después bien (1)   \n"];
+q_gastro_vomito -> T_NORMAL [label="\n   Regurgitador feliz (1)   \n"];
+q_gastro_alimentacion -> T_URGENCIA [label="\n   No logra alimentarse o rechaza pecho (3)   \n"];
+q_gastro_alimentacion -> T_URGENCIA [label="\n   Tose, atraganta, deja de respirar o cambia color al comer (3)   \n"];
+q_gastro_alimentacion -> T_CONSULTA [label="\n   Come mucho menos o succiona débil (2)   \n"];
+q_gastro_alimentacion -> T_CONSULTA [label="\n   Se queda dormido repetidamente al comer (2)   \n"];
+q_gastro_alimentacion -> T_CONSULTA [label="\n   Tarda mucho más de lo habitual (2)   \n"];
+q_gastro_alimentacion -> T_NORMAL [label="\n   Se alimenta como siempre (1)   \n"];
+q_gastro_abdomen -> T_URGENCIA [label="\n   Barriga muy hinchada y dura/tensa (3)   \n"];
+q_gastro_abdomen -> T_URGENCIA [label="\n   Barriga hinchada + vómito o sangre en popó (3)   \n"];
+q_gastro_abdomen -> T_URGENCIA [label="\n   Barriga hinchada + no quiere comer o está decaído (3)   \n"];
+q_gastro_abdomen -> T_CONSULTA [label="\n   Barriga más hinchada, pero blanda y come bien (2)   \n"];
+q_gastro_abdomen -> T_NORMAL [label="\n   Barriga redondita después de comer, blanda (1)   \n"];
+q_gastro_popo -> T_URGENCIA [label="\n   Popó blanco o gris claro (3)   \n"];
+q_gastro_popo -> T_URGENCIA [label="\n   Sangre roja en popó (3)   \n"];
+q_gastro_popo -> T_URGENCIA [label="\n   No hace popó + barriga hinchada o vómito (3)   \n"];
+q_gastro_popo -> T_CONSULTA [label="\n   Cambió frecuencia o consistencia (2)   \n"];
+q_gastro_popo -> T_CONSULTA [label="\n   Mucho moco repetido (2)   \n"];
+q_gastro_popo -> T_CONSULTA [label="\n   Muchas más o menos deposiciones (2)   \n"];
+q_gastro_popo -> T_CONSULTA [label="\n   Deposiciones más líquidas de lo habitual (2)   \n"];
+q_gastro_popo -> T_NORMAL [label="\n   Popó amarillo, verde, café o mostaza (1)   \n"];
+q_gastro_popo -> T_NORMAL [label="\n   Aguado o con grumitos, bebé bien (1)   \n"];
+q_gastro_popo -> T_NORMAL [label="\n   Hace fuerza/puja y popó blando (1)   \n"];
+q_gastro_popo -> T_NORMAL [label="\n   Popó negro en los primeros 3 días (1)   \n"];
+q_gastro_popo -> T_NORMAL [label="\n   Pasa días sin popó, pero come bien y barriga blanda (1)   \n"];
+q_gastro_orina -> T_URGENCIA [label="\n   Sangre roja en orina/pañal (3)   \n"];
+q_gastro_orina -> T_URGENCIA [label="\n   Muchas horas sin mojar ningún pañal (3)   \n"];
+q_gastro_orina -> T_CONSULTA [label="\n   Mojando menos pañales (2)   \n"];
+q_gastro_orina -> T_CONSULTA [label="\n   Olor diferente o fuerte persistente (2)   \n"];
+q_gastro_orina -> T_CONSULTA [label="\n   Llora/molesta al orinar (2)   \n"];
+q_gastro_orina -> T_NORMAL [label="\n   Moja pañales habitual / amarilla clara (1)   \n"];
+q_gastro_orina -> T_NORMAL [label="\n   Mancha rosada/naranja en los primeros días (1)   \n"];
+}

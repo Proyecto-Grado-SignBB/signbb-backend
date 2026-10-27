@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 </div><!--header-->
 <div class="contents">
 
-<p>Contenido clínico del classpath (<code class="JavaDocCode">static/grafo_sistema/</code>): el grafo raíz del sistema y los tres subgrafos publicados (respiración, gastrointestinal y actividad/color), cada uno con su base de reglas.  
+<p>Contenido clínico de ejemplo: el grafo raíz del sistema y, para tests y demo, los tres subgrafos de respiración, gastrointestinal y actividad/color, cada uno con su base de reglas.  
  <a href="#details">Más...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
@@ -139,13 +139,13 @@ Atributos públicos estáticos</h2></td></tr>
 static final String&#160;</td><td class="memItemRight"><b>RUTA_RAIZ</b> = &quot;static/grafo_sistema/grafo_raiz.json&quot;</td></tr>
 <tr class="memdesc:a7be4a8023852932c6b579b6bd6334ae4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Grafo raíz del sistema. <br /></td></tr>
 <tr class="memitem:a0ffb4628b295d39f9561a30258b6a313" id="r_a0ffb4628b295d39f9561a30258b6a313"><td class="memItemLeft">static final List&lt; String &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a0ffb4628b295d39f9561a30258b6a313">RUTAS_SUBGRAFOS</a></td></tr>
-<tr class="memdesc:a0ffb4628b295d39f9561a30258b6a313"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subgrafos publicados, uno por categoría.  <br /></td></tr>
+<tr class="memdesc:a0ffb4628b295d39f9561a30258b6a313"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subgrafos de ejemplo (classpath de pruebas), uno por categoría.  <br /></td></tr>
 <tr class="memitem:af46c3fb53def17c4375332bc495bf8b8" id="r_af46c3fb53def17c4375332bc495bf8b8"><td class="memItemLeft">static final List&lt; String &gt;&#160;</td><td class="memItemRight"><a class="el" href="#af46c3fb53def17c4375332bc495bf8b8">RUTAS_REGLAS</a></td></tr>
-<tr class="memdesc:af46c3fb53def17c4375332bc495bf8b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bases de reglas, una por subgrafo.  <br /></td></tr>
+<tr class="memdesc:af46c3fb53def17c4375332bc495bf8b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bases de reglas de los subgrafos de ejemplo (classpath de pruebas).  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
-<div class="textblock"><p>Contenido clínico del classpath (<code class="JavaDocCode">static/grafo_sistema/</code>): el grafo raíz del sistema y los tres subgrafos publicados (respiración, gastrointestinal y actividad/color), cada uno con su base de reglas. </p>
-<p>Es la semilla de <code class="JavaDocCode">DatabaseInit</code> y el contenido de la demo y de los tests; el runtime no lo lee (resuelve desde la base de datos). Reúne en un solo lugar las rutas y la composición para que todos usen el mismo grafo. </p>
+<div class="textblock"><p>Contenido clínico de ejemplo: el grafo raíz del sistema y, para tests y demo, los tres subgrafos de respiración, gastrointestinal y actividad/color, cada uno con su base de reglas. </p>
+<p>Solo el grafo raíz es semilla de <code class="JavaDocCode">DatabaseInit</code>. Los subgrafos y sus reglas viven en el classpath de pruebas (<code class="JavaDocCode">src/test/resources</code>) y no se cargan en el runtime: se usarán en la fase de datos (seed de pruebas y demo). Reúne en un solo lugar las rutas y la composición para que tests y demo usen el mismo contenido. </p>
 </div><a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Documentación de datos miembro</h2>
 <a id="af46c3fb53def17c4375332bc495bf8b8" name="af46c3fb53def17c4375332bc495bf8b8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af46c3fb53def17c4375332bc495bf8b8">&#9670;&#160;</a></span>RUTAS_REGLAS</h2>
@@ -171,7 +171,7 @@ static final String&#160;</td><td class="memItemRight"><b>RUTA_RAIZ</b> = &quot;
 <div class="line"><span class="stringliteral">&quot;static/grafo_sistema/reglas_gastro.json&quot;</span>,</div>
 <div class="line"><span class="stringliteral">&quot;static/grafo_sistema/reglas_activo_color.json&quot;</span>)</div>
 </div><!-- fragment -->
-<p>Bases de reglas, una por subgrafo. </p>
+<p>Bases de reglas de los subgrafos de ejemplo (classpath de pruebas). </p>
 
 </div>
 </div>
@@ -199,7 +199,7 @@ static final String&#160;</td><td class="memItemRight"><b>RUTA_RAIZ</b> = &quot;
 <div class="line"><span class="stringliteral">&quot;static/grafo_sistema/grafo_gastro.json&quot;</span>,</div>
 <div class="line"><span class="stringliteral">&quot;static/grafo_sistema/grafo_activo_color.json&quot;</span>)</div>
 </div><!-- fragment -->
-<p>Subgrafos publicados, uno por categoría. </p>
+<p>Subgrafos de ejemplo (classpath de pruebas), uno por categoría. </p>
 
 </div>
 </div>

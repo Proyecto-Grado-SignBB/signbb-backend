@@ -1,30 +1,4 @@
 var searchData=
 [
-  ['cómo_20ejecutarlas_0',['Cómo ejecutarlas',['../pruebas_autoria.html#autotoc_md17',1,'Cómo ejecutarlas'],['../pruebas_navegacion.html#autotoc_md27',1,'Cómo ejecutarlas'],['../pruebas_observaciones.html#autotoc_md34',1,'Cómo ejecutarlas'],['../pruebas_reglas.html#autotoc_md42',1,'Cómo ejecutarlas'],['../pruebas_seguridad.html#autotoc_md51',1,'Cómo ejecutarlas'],['../pruebas.html#autotoc_md52',1,'Cómo ejecutarlas'],['../pruebas_cache.html#autotoc_md63',1,'Cómo ejecutarlas']]],
-  ['cache_1',['Pruebas del cache',['../pruebas_cache.html',1,'']]],
-  ['cache_20aside_20del_20contenido_2',['ResolvedorContenidoClinicoTest — resolución cache-aside del contenido',['../pruebas_cache.html#autotoc_md58',1,'']]],
-  ['cacheredisintegraciontest_20—_20integración_3',['CacheRedisIntegracionTest — integración',['../pruebas_cache.html#autotoc_md61',1,'']]],
-  ['caddy_4',['Frontend PWA (Caddy)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md76',1,'']]],
-  ['candado_20por_20recorrido_5',['CandadoRecorridoRedisTest — candado por recorrido',['../pruebas_cache.html#autotoc_md60',1,'']]],
-  ['candadorecorridoredistest_20—_20candado_20por_20recorrido_6',['CandadoRecorridoRedisTest — candado por recorrido',['../pruebas_cache.html#autotoc_md60',1,'']]],
-  ['captura_20de_20la_20respuesta_20serviciocapturaimpltest_7',['Captura de la respuesta (&lt;span class=&quot;tt&quot;&gt;ServicioCapturaImplTest&lt;/span&gt;)',['../pruebas_observaciones.html#autotoc_md31',1,'']]],
-  ['ci_8',['Resultados en CI',['../pruebas.html#autotoc_md56',1,'']]],
-  ['cola_20de_20la_20selección_20múltiple_9',['ColaSeleccionMultipleRedisIntegracionTest — cola de la selección múltiple',['../pruebas_cache.html#autotoc_md62',1,'']]],
-  ['cola_20de_20la_20selección_20múltiple_20motornavegacioncolatest_20ordencolatest_10',['Cola de la selección múltiple (&lt;span class=&quot;tt&quot;&gt;MotorNavegacionColaTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;OrdenColaTest&lt;/span&gt;)',['../pruebas_navegacion.html#autotoc_md24',1,'']]],
-  ['colaseleccionmultipleredisintegraciontest_20—_20cola_20de_20la_20selección_20múltiple_11',['ColaSeleccionMultipleRedisIntegracionTest — cola de la selección múltiple',['../pruebas_cache.html#autotoc_md62',1,'']]],
-  ['compiladorreglastest_20validadorreglastest_20publicadorreglatest_12',['Reglas: compilar, validar y publicar (&lt;span class=&quot;tt&quot;&gt;CompiladorReglasTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;ValidadorReglasTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;PublicadorReglaTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md9',1,'']]],
-  ['compiladorsubgrafotest_13',['Compilar (&lt;span class=&quot;tt&quot;&gt;CompiladorSubgrafoTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md5',1,'']]],
-  ['compilar_20compiladorsubgrafotest_14',['Compilar (&lt;span class=&quot;tt&quot;&gt;CompiladorSubgrafoTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md5',1,'']]],
-  ['compilar_20validar_20y_20publicar_20compiladorreglastest_20validadorreglastest_20publicadorreglatest_15',['Reglas: compilar, validar y publicar (&lt;span class=&quot;tt&quot;&gt;CompiladorReglasTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;ValidadorReglasTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;PublicadorReglaTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md9',1,'']]],
-  ['conexión_20perfil_20docker_20del_20backend_20en_20el_20host_16',['Parámetros de conexión (perfil &lt;span class=&quot;tt&quot;&gt;docker&lt;/span&gt; del backend en el host)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md81',1,'']]],
-  ['construcción_20y_20pruebas_17',['Construcción y pruebas',['../index.html#autotoc_md68',1,'']]],
-  ['contenedores_18',['Manual de contenedores',['../md_contenedores_2MANUAL__CONTENEDORES.html',1,'']]],
-  ['contenido_19',['ResolvedorContenidoClinicoTest — resolución cache-aside del contenido',['../pruebas_cache.html#autotoc_md58',1,'']]],
-  ['contenido_20republicar_20sin_20romper_20recorridos_20en_20curso_20',['Versiones del contenido (republicar sin romper recorridos en curso)',['../pruebas_autoria.html#autotoc_md15',1,'']]],
-  ['controladorautoriatest_21',['API (&lt;span class=&quot;tt&quot;&gt;ControladorAutoriaTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md13',1,'']]],
-  ['controladorrevisiontest_22',['Revisión del supervisor (&lt;span class=&quot;tt&quot;&gt;ServicioRevisionImplTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;ControladorRevisionTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md12',1,'']]],
-  ['crud_20y_20publicación_20servicioautoriareglasimpltest_20servicioautoriareglasabstractotest_23',['Reglas: CRUD y publicación (&lt;span class=&quot;tt&quot;&gt;ServicioAutoriaReglasImplTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;ServicioAutoriaReglasAbstractoTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md10',1,'']]],
-  ['cuentas_20serviciocuentasimpltest_24',['Cuentas (&lt;span class=&quot;tt&quot;&gt;ServicioCuentasImplTest&lt;/span&gt;)',['../pruebas_seguridad.html#autotoc_md46',1,'']]],
-  ['cuentas_20y_20seguridad_25',['Cuentas y seguridad',['../index.html#autotoc_md70',1,'']]],
-  ['curso_26',['Versiones del contenido (republicar sin romper recorridos en curso)',['../pruebas_autoria.html#autotoc_md15',1,'']]]
+  ['3_20pasos_20que_20seguimos_0',['3. Pasos que seguimos',['../md_docs_2autoria-subgrafos.html#autotoc_md87',1,'']]]
 ];

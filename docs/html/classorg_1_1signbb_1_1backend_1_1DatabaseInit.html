@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 </div><!--header-->
 <div class="contents">
 
-<p>Inicialización de la base de datos: siembra el contenido clínico (<code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1ContenidoEjemplo.html">ContenidoEjemplo</a></code>: grafo raíz, los subgrafos de respiración, gastrointestinal y actividad/color, cada uno con su base de reglas) cuando aún no existe el grafo raíz.  
+<p>Inicialización de la base de datos: siembra solo el grafo raíz del sistema (<code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1ContenidoEjemplo.html#a7aa187e97d8a3af41762a2f2849ae4a1">ContenidoEjemplo#raiz()</a></code>) cuando aún no existe.  
  <a href="#details">Más...</a></p>
 <div class="dynheader">
 Diagrama de herencia de org.signbb.backend.DatabaseInit</div>
@@ -123,16 +123,17 @@ Diagrama de herencia de org.signbb.backend.DatabaseInit</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Métodos públicos</h2></td></tr>
-<tr class="memitem:aa9edc86c02b80cc56763463d9dbe79e8" id="r_aa9edc86c02b80cc56763463d9dbe79e8"><td class="memItemLeft"><a id="aa9edc86c02b80cc56763463d9dbe79e8" name="aa9edc86c02b80cc56763463d9dbe79e8"></a>
-&#160;</td><td class="memItemRight"><b>DatabaseInit</b> (<a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafoClinico.html">RepositorioGrafoClinico</a> repositorioGrafos, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1repositorios_1_1RepositorioBaseReglas.html">RepositorioBaseReglas</a> repositorioBases)</td></tr>
-<tr class="memdesc:aa9edc86c02b80cc56763463d9dbe79e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta los repositorios de grafos clínicos y bases de reglas. <br /></td></tr>
+<tr class="memitem:a1fc73a8070da9ae87b444f4eaff113d1" id="r_a1fc73a8070da9ae87b444f4eaff113d1"><td class="memItemLeft"><a id="a1fc73a8070da9ae87b444f4eaff113d1" name="a1fc73a8070da9ae87b444f4eaff113d1"></a>
+&#160;</td><td class="memItemRight"><b>DatabaseInit</b> (<a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios_1_1RepositorioGrafoClinico.html">RepositorioGrafoClinico</a> repositorioGrafos, <a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1ResolvedorContenidoClinico.html">ResolvedorContenidoClinico</a> resolvedor)</td></tr>
+<tr class="memdesc:a1fc73a8070da9ae87b444f4eaff113d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta el repositorio de grafos y el resolvedor del cache de contenido. <br /></td></tr>
 <tr class="memitem:aa28a974f7934d651e009779df0ad6ca3" id="r_aa28a974f7934d651e009779df0ad6ca3"><td class="memItemLeft"><a id="aa28a974f7934d651e009779df0ad6ca3" name="aa28a974f7934d651e009779df0ad6ca3"></a>
 void&#160;</td><td class="memItemRight"><b>run</b> (String... args)</td></tr>
-<tr class="memdesc:aa28a974f7934d651e009779df0ad6ca3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Siembra el contenido de ejemplo si el grafo raíz no existe. <br /></td></tr>
+<tr class="memdesc:aa28a974f7934d651e009779df0ad6ca3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Siembra el grafo raíz si no existe. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
-<div class="textblock"><p>Inicialización de la base de datos: siembra el contenido clínico (<code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1ContenidoEjemplo.html">ContenidoEjemplo</a></code>: grafo raíz, los subgrafos de respiración, gastrointestinal y actividad/color, cada uno con su base de reglas) cuando aún no existe el grafo raíz. </p>
-<p>Antes de guardar se compone el contenido y se reconstruyen los TAD, de modo que solo se persisten datos válidos (pesos fuera de 1–3, referencias colgantes, niveles inválidos o aristas rotas fallan aquí). Cada documento se guarda por separado y tal cual viene del JSON, para conservar los metadatos de presentación (autor, categoría) que el TAD no almacena; la composición se repite al resolver el contenido. La siembra es idempotente: si el grafo raíz ya está, no hace nada. Las filas del formato previo no se tocan; el resolvedor las ignora.</p>
+<div class="textblock"><p>Inicialización de la base de datos: siembra solo el grafo raíz del sistema (<code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1ContenidoEjemplo.html#a7aa187e97d8a3af41762a2f2849ae4a1">ContenidoEjemplo#raiz()</a></code>) cuando aún no existe. </p>
+<p>Los subgrafos y sus bases de reglas ya no se cargan automáticamente: se crean y publican desde el módulo de autoría (o con el seed de datos que se defina para las pruebas y la demo).</p>
+<p>Antes de guardar se compone el contenido y se reconstruyen los TAD, de modo que solo se persisten datos válidos. La siembra es idempotente: si el grafo raíz ya está, no hace nada. Como la base de reglas del grafo raíz es del sistema y no se siembra por defecto, el contenido inicial queda sin bases; el resolvedor devuelve una base vacía hasta que se publique un subgrafo.</p>
 <p>MODIFICADO (1.6): solo existe si <code class="JavaDocCode">signbb.siembra.activa</code> vale <code class="JavaDocCode">true</code> (<code class="JavaDocCode">SIGNBB_SIEMBRA_ACTIVA</code>, encendida por defecto para desarrollo y CI). En producción se enciende en el primer despliegue y luego se apaga. </p>
 </div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/main/java/org/signbb/backend/<b>DatabaseInit.java</b></li>

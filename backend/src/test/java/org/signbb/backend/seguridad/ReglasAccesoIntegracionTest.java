@@ -15,7 +15,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.signbb.backend.cache.RepositorioSesionRedis;
+import org.signbb.backend.cache.ResolvedorContenidoClinico;
+import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
+import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico;
+import org.signbb.backend.navegacion.datos.serializacion.ContenidoEjemplo;
+import org.signbb.backend.navegacion.modelo.ContextoClinico;
 import org.signbb.backend.observaciones.datos.repositorios.RepositorioRecorridos;
+import org.signbb.backend.reglas.datos.entidades.BaseReglasEntity;
+import org.signbb.backend.reglas.datos.repositorios.RepositorioBaseReglas;
 import org.signbb.backend.seguridad.datos.repositorios.RepositorioUsuario;
 import org.signbb.backend.seguridad.modelo.TipoLimite;
 import org.signbb.backend.seguridad.servicios.LimitadorIntentos;
@@ -52,18 +59,71 @@ class ReglasAccesoIntegracionTest {
     @Autowired
     private StringRedisTemplate redis;
 
+    @Autowired
+    private RepositorioGrafoClinico grafos;
+
+    @Autowired
+    private RepositorioBaseReglas bases;
+
+    @Autowired
+    private ResolvedorContenidoClinico resolvedor;
+
+    @Autowired
+    private ContextoClinico contextoClinico;
+
     private ApiPrueba api;
     private MockMvc mvc;
+    private GrafoClinicoEntity subgrafoAgregado;
+    private BaseReglasEntity baseAgregada;
 
     @BeforeEach
     void preparar() {
         api = new ApiPrueba(contexto, usuarios);
         mvc = api.mvc();
+        asegurarContenidoNavegable();
+    }
+
+    /**
+     * Estas pruebas inician recorridos reales. La siembra por defecto deja solo
+     * el grafo raíz, así que se asegura el subgrafo de respiración del fixture
+     * (la raíz ya tiene su referencia).
+     */
+    private void asegurarContenidoNavegable() {
+        GrafoClinicoEntity subgrafo = new GrafoClinicoEntity();
+        subgrafo.setEstructura(ContenidoEjemplo.subgrafos().get(0));
+        boolean existeSubgrafo = grafos.findAll().stream()
+                .map(GrafoClinicoEntity::getEstructura)
+                .anyMatch(d -> d != null && d.graph() != null
+                        && "grafo_respiracion".equals(d.graph().id()));
+        if (!existeSubgrafo) {
+            subgrafoAgregado = grafos.save(subgrafo);
+        }
+        String grafoId = subgrafo.getEstructura().graph().id();
+        boolean existeBase = bases.findAll().stream()
+                .map(BaseReglasEntity::getEstructura)
+                .anyMatch(b -> b != null && grafoId.equals(b.grafoId()));
+        if (!existeBase) {
+            BaseReglasEntity base = new BaseReglasEntity();
+            base.setEstructura(ContenidoEjemplo.bases().get(0));
+            baseAgregada = bases.save(base);
+        }
+        resolvedor.invalidar();
+        contextoClinico.recargar();
     }
 
     @AfterEach
     void limpiar() {
         api.limpiar();
+        if (subgrafoAgregado != null) {
+            grafos.delete(subgrafoAgregado);
+        }
+        if (baseAgregada != null) {
+            bases.delete(baseAgregada);
+        }
+        if (subgrafoAgregado != null || baseAgregada != null) {
+            resolvedor.invalidar();
+            contextoClinico.recargar();
+        }
     }
 
     /** Pide ingresar con ese correo y clave, sin exigir el resultado. */
@@ -80,6 +140,7 @@ class ReglasAccesoIntegracionTest {
                 .andExpect(jsonPath("$.mensaje").isNotEmpty())
                 .andExpect(jsonPath("$.avisos").isArray());
         mvc.perform(post("/api/recorridos")).andExpect(status().isUnauthorized());
+        mvc.perform(get("/api/consulta/disponibilidad")).andExpect(status().isUnauthorized());
         mvc.perform(get("/api/usuarios")).andExpect(status().isUnauthorized());
         mvc.perform(get("/api/auth/yo")).andExpect(status().isUnauthorized());
     }
@@ -217,6 +278,8 @@ class ReglasAccesoIntegracionTest {
         mvc.perform(conToken(get("/api/usuarios"), padre)).andExpect(status().isForbidden());
         mvc.perform(conToken(get("/api/auth/yo"), padre)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.rol").value("PADRE"));
+        mvc.perform(conToken(get("/api/consulta/disponibilidad"), padre)).andExpect(status().isOk())
+                .andExpect(jsonPath("$.disponible").value(true));
     }
 
     @Test
@@ -225,6 +288,7 @@ class ReglasAccesoIntegracionTest {
 
         mvc.perform(conToken(get("/api/autoria/categorias"), medico)).andExpect(status().isOk());
         mvc.perform(conToken(post("/api/recorridos"), medico)).andExpect(status().isForbidden());
+        mvc.perform(conToken(get("/api/consulta/disponibilidad"), medico)).andExpect(status().isForbidden());
         mvc.perform(conToken(get("/api/usuarios"), medico)).andExpect(status().isForbidden());
         mvc.perform(conToken(get("/api/autoria/revisiones"), medico)).andExpect(status().isForbidden());
         mvc.perform(conToken(post("/api/autoria/subgrafos/1/aprobar"), medico)).andExpect(status().isForbidden());

@@ -102,7 +102,7 @@ un supervisor ve todo, pero solo edita y publica directamente lo propio.
 | POST | `/subgrafos/{id}/publicar` | **Supervisor autor:** publica directamente el subgrafo **y su base de reglas**, sin pasar por revisión. Se permite desde `BORRADOR` o `CAMBIOS_SIN_PUBLICAR`, y si solo cambiaron las reglas de uno ya publicado |
 | POST | `/subgrafos/{id}/rechazar` | **Supervisor que no sea el autor:** lo devuelve con `{"comentario"}` (obligatorio) |
 | POST | `/subgrafos/{id}/descartar` | Descartar los cambios sin publicar y volver a la última publicación |
-| POST | `/subgrafos/{id}/despublicar` | **Supervisor.** Despublicar: quita el subgrafo y su base de reglas; los borradores (lienzo y reglas) vuelven a `BORRADOR` con su documento intacto (422 si no está publicado o si es el único subgrafo publicado) |
+| POST | `/subgrafos/{id}/despublicar` | **Supervisor.** Despublicar: quita el subgrafo y su base de reglas; los borradores (lienzo y reglas) vuelven a `BORRADOR` con su documento intacto (422 si no está publicado o si el contenido restante no es válido). Si era el último subgrafo de su categoría, la categoría deja de mostrarse; si no queda ninguno, la consulta queda no disponible |
 
 Reglas (`/api/autoria/bases`):
 
@@ -234,7 +234,7 @@ npx ng test ui-autoria --watch=false --browsers=ChromeHeadless
 curl http://localhost:8080/api/autoria/categorias     # en Windows: curl.exe ...
 ```
 
-Debe listar piel, temperatura, respiración, gastrointestinal y neurológico. **Si salen las categorías viejas**, falta el `docker compose down -v`. `DatabaseInit` solo siembra si no existe un grafo raíz.
+Debe listar las cinco categorías del grafo raíz: piel, temperatura, respiración, gastrointestinal y neurológico. Si no aparecen, revisa que el backend haya arrancado con `SIGNBB_SIEMBRA_ACTIVA=true` y que la base no tenga un `grafo_raiz` viejo. `DatabaseInit` solo siembra el grafo raíz si no existe; los subgrafos ya no se siembran, se publican desde autoría o se cargan con el seed de datos.
 
 ### Prueba sugerida: «Ictericia en la piel»
 
@@ -273,7 +273,7 @@ La tarea corre sola a las 3:30. Para probarla sin esperar, cambia temporalmente 
 - [ ] **Prueba de punta a punta con la app de la cuidadora (`ui-consulta`)** sobre las ramas integradas.
 
 ### Importantes
-- [x] **Despublicar** un subgrafo publicado (`POST /subgrafos/{id}/despublicar`). Quita su opción y su nodo `ref_<grafoId>` del grafo raíz, borra su fila y su base de reglas, guarda una versión nueva del contenido y los borradores (lienzo y reglas) vuelven a `BORRADOR` con su documento intacto (se pueden corregir y republicar, o borrar). Los recorridos en curso no se cortan: cada cuidadora termina con la versión con la que empezó. No se deja despublicar el único subgrafo publicado.
+- [x] **Despublicar** un subgrafo publicado (`POST /subgrafos/{id}/despublicar`). Quita su opción y su nodo `ref_<grafoId>` del grafo raíz, borra su fila y su base de reglas, guarda una versión nueva del contenido y los borradores (lienzo y reglas) vuelven a `BORRADOR` con su documento intacto (se pueden corregir y republicar, o borrar). Los recorridos en curso no se cortan: cada cuidadora termina con la versión con la que empezó. Si era el único subgrafo de su categoría, la categoría deja de mostrarse; si no queda ninguno, la consulta queda no disponible y el inicio muestra «La consulta no está disponible en estos momentos».
 - [ ] **Retiro urgente** (opcional, más adelante): cortar también los recorridos en curso por un subgrafo retirado por un error clínico grave. Hoy quien ya iba por él sigue viéndolo hasta que termine.
 - [ ] **Cambiar la categoría** después de crear. Hoy se muestra pero no se edita; habría que mover la opción entre preguntas puente al republicar.
 - [ ] **Vista previa como cuidadora** antes de publicar: recorrer el subgrafo con el mismo motor sin publicarlo.
@@ -291,6 +291,6 @@ La tarea corre sola a las 3:30. Para probarla sin esperar, cambia temporalmente 
 ## 7. Cosas a tener en cuenta
 
 - **El compositor poda las preguntas raíz sin opciones.** Por eso una categoría nueva aparece sola cuando alguien publica en ella.
-- **`grafo_raiz.json` está en dos lugares:** `backend/src/main/resources/static/grafo_sistema/` y `grafo_sistema/`. Deben quedar iguales.
+- **`grafo_raiz.json` está en dos lugares:** la fuente de autoría en `grafo_sistema/` (raíz del workspace) y la copia que siembra `DatabaseInit` en `backend/src/main/resources/static/grafo_sistema/`. Deben quedar iguales. La copia de documentación vive en `docs/entorno-pruebas/datos/`.
 - **No commitear `docs/html` generado en macOS.** Lo regenera el bot de Doxygen en el CI, y en macOS salen archivos duplicados. Por lo mismo, hay que hacer `git pull --rebase` antes de pushear al back, porque el bot sube commits.
 - **El front tiene un presupuesto de 4 kB por estilo de componente.** Los estilos compartidos de los modales y los campos están en `core/ui/_modal.scss` y `core/ui/_campo.scss`.

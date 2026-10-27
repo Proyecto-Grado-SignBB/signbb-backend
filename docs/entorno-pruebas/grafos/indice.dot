@@ -1,0 +1,9 @@
+digraph indiceNodos {
+n_pregunta_op_multiple [label="Nodo pregunta: opción múltiple", color=blue];
+n_pregunta_op_selunica [label="Nodo pregunta: selección única"];
+n_referencia[label="Nodo referencia", color=purple, fontcolor=purple];
+n_terminal_urgencia [label="Nodo terminal: urgencia", shape=doublecircle, color=red, fontcolor=red]; 
+n_terminal_consulta [label="Nodo terminal: consultar médico", shape=doublecircle, color=yellow, fontcolor=darkgoldenrod];
+T_NORMAL [label="Nodo terminal: normal", shape=doublecircle, color=green, fontcolor=darkgreen];
+n_peso [label="En selección múltiple:\n(3) urgencia · (2) consultar médico · (1) normal", shape=note, color=gray, fontcolor=gray];
+}

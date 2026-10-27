@@ -120,7 +120,13 @@ public class ContextoClinico {
                 ? new BaseReglas()
                 : BaseReglasMapper.desde(reglasDeVersion, g);
 
-        if (!g.rutaValida()) {
+        boolean disponible = g.obtenerNodoInicial()
+                .map(nodo -> g.esNodoTerminal(nodo) || !g.obtenerOpciones(nodo).isEmpty())
+                .orElse(false);
+        if (!disponible) {
+            log.info("El contenido clínico (versión {}) no tiene subgrafos publicados: la consulta "
+                    + "queda no disponible hasta que se publique uno.", id);
+        } else if (!g.rutaValida()) {
             log.warn("El grafo clínico (versión {}) no cumple rutaValida(): puede haber nodos huérfanos "
                     + "o preguntas sin salida (p. ej. una pregunta sin arista de entrada).", id);
         }

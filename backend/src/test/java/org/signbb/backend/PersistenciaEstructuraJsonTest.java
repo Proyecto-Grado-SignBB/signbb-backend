@@ -96,11 +96,10 @@ class PersistenciaEstructuraJsonTest {
   }
 
   @Test
-  void siembraInicialDejaDatosConsultables() {
+  void siembraInicialDejaElGrafoRaizConsultable() {
     assertTrue(grafos.findAll().stream()
         .anyMatch(f -> "grafo_raiz".equals(f.getEstructura().graph().id())),
         "DatabaseInit debe sembrar el grafo raíz");
-    assertTrue(grafos.count() >= 2, "DatabaseInit debe sembrar el grafo raíz y el subgrafo de ejemplo");
-    assertTrue(bases.count() >= 1, "DatabaseInit debe sembrar la base de reglas de ejemplo");
+    // Los subgrafos y las bases ya no se siembran; los crea el módulo de autoría.
   }
 }

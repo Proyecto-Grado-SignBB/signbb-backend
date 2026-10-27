@@ -1,0 +1,31 @@
+digraph grafo_cabeza {
+// Generado desde grafo_cabeza.json — Evaluación de Cabeza, Ojos y Oídos
+// Configuración general
+node [fontname="Helvetica", style=filled, fillcolor=white];
+edge [fontname="Helvetica", fontsize=10];
+
+// NODOS
+q_cab_gate_fontanela [label="¿La mollera (fontanela) se ve abultada o hinchada cuando el bebé está tranquilo?", color=black];
+q_cab_gate_ojos [label="¿Notas algo en sus ojos?", color=black];
+q_cab_gate_oidos [label="¿Notas algo en sus oídos?", color=black];
+q_cab_ojos [label="Marca todo lo que veas.", color=blue, fontcolor=blue];
+q_cab_oidos [label="Marca todo lo que notes.", color=blue, fontcolor=blue];
+T_URGENCIA [label="URGENCIA\nLleva a tu bebé a urgencias ahora.", shape=doublecircle, color=red, fontcolor=red];
+T_CONSULTA [label="CONSULTAR_MEDICO\nContacta hoy al Programa Madre Canguro.", shape=doublecircle, color=yellow, fontcolor=darkgoldenrod];
+T_NORMAL [label="NORMAL\nLo que observas puede ser normal. Sigue observando.", shape=doublecircle, color=green, fontcolor=darkgreen];
+
+// ARISTAS
+q_cab_gate_fontanela -> T_URGENCIA [label="\n   Sí   \n"];
+q_cab_gate_fontanela -> q_cab_gate_ojos [label="\n   No   \n"];
+q_cab_gate_ojos -> q_cab_ojos [label="\n   Sí   \n"];
+q_cab_gate_ojos -> q_cab_gate_oidos [label="\n   No   \n"];
+q_cab_ojos -> T_NORMAL [label="\n   Ojos con lagañas pero no rojo/hinchado (1)   \n"];
+q_cab_ojos -> T_CONSULTA [label="\n   Secreción repetida en ojo, sin hinchar (2)   \n"];
+q_cab_ojos -> T_URGENCIA [label="\n   Pus en ojo e hinchado/rojo (3)   \n"];
+q_cab_gate_oidos -> q_cab_oidos [label="\n   Sí   \n"];
+q_cab_gate_oidos -> T_NORMAL [label="\n   No   \n"];
+q_cab_oidos -> T_URGENCIA [label="\n   Pus o secreción amarilla/verdosa de oído (3)   \n"];
+q_cab_oidos -> T_URGENCIA [label="\n   Sangre de oído (3)   \n"];
+q_cab_oidos -> T_CONSULTA [label="\n   Líquido transparente del oído (no agua de baño) (2)   \n"];
+q_cab_oidos -> T_NORMAL [label="\n   Cera amarilla/café normal o agua de baño (1)   \n"];
+}

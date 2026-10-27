@@ -20,7 +20,25 @@ Desde el directorio `backend`:
     ./mvnw verify            # build completo, igual que en CI (GitHub Actions)
 
 La demo del motor por consola (`DemoTriajeRunner`) está apagada; se enciende
-con `SIGNBB_DEMO_ACTIVA=true`.
+con `SIGNBB_DEMO_ACTIVA=true`. Necesita los subgrafos de ejemplo de
+`src/test/resources`; en el jar de runtime no están y la demo se omite.
+
+### Pruebas
+
+La suite requiere PostgreSQL y Redis. Desde `backend`:
+
+```bash
+./mvnw test
+./mvnw -Dtest=MotorNavegacionTest test
+./mvnw -Dtest=MotorNavegacionTest#metodo test
+./mvnw verify
+```
+
+Los resultados quedan en `target/surefire-reports`. La suite está descrita en
+`backend/src/test/PRUEBAS.md` y en Doxygen (`\ref pruebas`).
+
+Las pruebas de punta a punto que usan el seed de demo se describen en
+[`docs/entorno-pruebas/entorno-pruebas.md`](docs/entorno-pruebas/entorno-pruebas.md).
 
 ## Perfil de base de datos
 
@@ -55,9 +73,19 @@ Flyway se marca como versión 1 y recibe solo las siguientes. Si al arrancar
 Hibernate dice que una tabla o columna no coincide (bases locales muy viejas),
 borra los volúmenes con `docker compose down -v`.
 
-> Si la base ya estaba sembrada con una versión previa del grafo, hay que
-> borrar los volúmenes (`docker compose down -v`) para que `DatabaseInit`
-> vuelva a sembrar el contenido nuevo: el grafo raíz conserva el mismo `id`.
+> `DatabaseInit` solo comprueba la existencia de `grafo_raiz`. Si cambian los
+> archivos del grafo raíz en una base ya sembrada, hay que borrar los volúmenes
+> (`docker compose down -v`) y volver a levantar; eso también borra los
+> subgrafos publicados y las sesiones de Redis. Los subgrafos de ejemplo ya no
+> se siembran.
+
+**Contenido inicial.** `DatabaseInit` siembra solo el grafo raíz
+(`static/grafo_sistema/grafo_raiz.json`) cuando la base no tiene `grafo_raiz`;
+no crea subgrafos ni bases de reglas. Los subgrafos y sus reglas se publican
+desde la app de autoría o se cargan con el seed de datos de pruebas/demo.
+Mientras no exista al menos un subgrafo publicado, la app de consulta muestra
+«La consulta no está disponible en estos momentos» y deshabilita el inicio;
+`POST /api/recorridos` responde 503.
 
 ## Cuentas y seguridad
 
@@ -78,6 +106,23 @@ Para ingresar: `POST /api/auth/login` con `{"correo", "contrasena"}` devuelve
 arrancar. En desarrollo es `supervisor@signbb.local` / `Supervisor123`;
 **cámbialo** fuera de tu máquina con las variables de abajo.
 
+**Seed de demo.** Con `SIGNBB_SEED_DEMO_ACTIVA=true`, después de la siembra del
+grafo raíz, el backend crea el médico y el padre de ejemplo y publica los cuatro
+subgrafos de `src/main/resources/seed/demo/` usando el flujo real de autoría. El
+médico queda como autor de los subgrafos y de sus bases de reglas. Cuentas de
+desarrollo:
+
+- Médico: `medico.ejemplo@signbb.local` / `Medico123`, institución
+  `Fundación Canguro`.
+- Padre: `padre.ejemplo@signbb.local` / `Padre123`.
+
+El seed es idempotente y está apagado por defecto. Si cambian los JSON del seed
+y quieres volver a sembrar desde cero, borra PostgreSQL y Redis
+(`docker compose down -v`).
+
+El detalle de usuarios, grafos, bases de reglas y scripts está en
+[`docs/entorno-pruebas/entorno-pruebas.md`](docs/entorno-pruebas/entorno-pruebas.md).
+
 **Variables de entorno:**
 
 | Variable | Para qué | Valor de desarrollo |
@@ -92,7 +137,15 @@ arrancar. En desarrollo es `supervisor@signbb.local` / `Supervisor123`;
 | `SIGNBB_MEDIA_SECRET_KEY` | Clave de Silo (imágenes) | `ejemplo123` |
 | `SIGNBB_DOCS_ACTIVAS` | `false` apaga Swagger UI y `/v3/api-docs` (responden 404). **Obligatorio en producción** | `true` |
 | `SIGNBB_SHOW_SQL` | `true` imprime el SQL en consola. En producción la app no arranca si está en `true` | `false` |
-| `SIGNBB_SIEMBRA_ACTIVA` | Siembra el contenido clínico de ejemplo si falta el grafo raíz (`DatabaseInit`). En producción, `true` solo en el primer despliegue | `true` |
+| `SIGNBB_SIEMBRA_ACTIVA` | Siembra solo el grafo raíz si falta (`DatabaseInit`). En producción, `true` solo en el primer despliegue | `true` |
+| `SIGNBB_SEED_DEMO_ACTIVA` | Crea las cuentas de demo y publica los 4 subgrafos de `seed/demo/`. **No usar en producción** | `false` |
+| `SIGNBB_SEED_MEDICO_NOMBRE` | Nombre del médico de demo | `Médico ejemplo - Neonatologo` |
+| `SIGNBB_SEED_MEDICO_CORREO` | Correo del médico de demo | `medico.ejemplo@signbb.local` |
+| `SIGNBB_SEED_MEDICO_CONTRASENA` | Contraseña del médico de demo | `Medico123` |
+| `SIGNBB_SEED_MEDICO_INSTITUCION` | Institución del médico de demo | `Fundación Canguro` |
+| `SIGNBB_SEED_PADRE_NOMBRE` | Nombre del padre de demo | `Padre ejemplo` |
+| `SIGNBB_SEED_PADRE_CORREO` | Correo del padre de demo | `padre.ejemplo@signbb.local` |
+| `SIGNBB_SEED_PADRE_CONTRASENA` | Contraseña del padre de demo | `Padre123` |
 | `SIGNBB_DEMO_ACTIVA` | Imprime la demo del motor al arrancar (`DemoTriajeRunner`) | `false` |
 | `SIGNBB_DB_URL` | URL JDBC de PostgreSQL | `jdbc:postgresql://localhost:5432/signbb` |
 | `SIGNBB_DB_USUARIO` | Usuario de PostgreSQL | `admin` |
@@ -130,10 +183,12 @@ repositorio:
     doxygen Doxyfile
 
 El HTML resultante queda en `docs/html` (abrir `docs/html/index.html`).
-La fuente es `backend/src/main/java` y `backend/src/test/java`, configurada en
-el `Doxyfile`.
+La fuente es `backend/src/main/java`, `backend/src/test/java` y los markdown de
+`docs/`, configuración en el `Doxyfile`. El informe de entorno de pruebas queda
+en [`docs/entorno-pruebas/entorno-pruebas.md`](docs/entorno-pruebas/entorno-pruebas.md)
+y sus tablas de reglas en `docs/entorno-pruebas/reglas/`.
 
-### Pruebas
+### Pruebas en Doxygen
 
 La suite de pruebas está documentada en la sección \ref pruebas del Doxygen:
 tipos de prueba, cómo ejecutarlas y el detalle por módulo (navegación, reglas,
@@ -143,6 +198,22 @@ El diagrama de arquitectura por módulos (`docs/diagramas/arquitectura_modulos.s
 se regenera desde su fuente PlantUML:
 
     java -jar plantuml.jar -tsvg docs/diagramas/arquitectura_modulos.puml
+
+### Grafos y reglas
+
+Los DOT/SVG, los JSON y las tablas de reglas de la documentación viven en
+`docs/entorno-pruebas/`. Para regenerar todos los SVG y las tablas Markdown:
+
+```bash
+cd docs/entorno-pruebas
+./scripts/regenerar_grafos.sh
+```
+
+También se puede regenerar un grafo suelto:
+
+```bash
+dot -Tsvg grafos/raiz.dot -o grafos/raiz.svg
+```
 
 ### API REST (OpenAPI)
 

@@ -1,0 +1,416 @@
+{
+  "graph": {
+    "id": "grafo_gastro",
+    "label": "Evaluación Gastrointestinal",
+    "directed": true,
+    "category": [
+      "vomito",
+      "alimentacion",
+      "abdomen",
+      "deposiciones",
+      "orina"
+    ],
+    "preguntaInicial": "q_gastro_gate",
+    "metadata": {
+      "autor": "Sistema SignBB",
+      "fechaCreacion": "2026-10-07T18:00:00Z",
+      "descripcion": "Subgrafo de alimentación, vómito, abdomen, deposiciones y orina."
+    },
+    "nodes": {
+      "q_gastro_gate": {
+        "label": "¿Nota algo distinto en su alimentación o digestión?",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_UNICA",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "q_gastro_areas": {
+        "label": "Marca todo lo que quieras revisar.",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_MULTIPLE",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "q_gastro_vomito": {
+        "label": "Marca todo lo que notes sobre el vómito.",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_MULTIPLE",
+          "peso": 3,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "q_gastro_alimentacion": {
+        "label": "Marca todo lo que notes al alimentarlo.",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_MULTIPLE",
+          "peso": 3,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "q_gastro_abdomen": {
+        "label": "Marca todo lo que notes en su barriga.",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_MULTIPLE",
+          "peso": 3,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "q_gastro_popo": {
+        "label": "Marca todo lo que notes en su popó.",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_MULTIPLE",
+          "peso": 3,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "q_gastro_orina": {
+        "label": "Marca todo lo que notes en su orina.",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_MULTIPLE",
+          "peso": 3,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "T_URGENCIA": {
+        "label": "URGENCIA\nLleva a tu bebé a urgencias ahora.",
+        "metadata": {
+          "tipo": "terminal",
+          "desenlace": "urgencia",
+          "peso": 3,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "T_CONSULTA": {
+        "label": "CONSULTAR_MEDICO\nContacta hoy al Programa Madre Canguro.",
+        "metadata": {
+          "tipo": "terminal",
+          "desenlace": "consulta_medica",
+          "peso": 2,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "T_NORMAL": {
+        "label": "NORMAL\nLo que observas puede ser normal. Sigue observando.",
+        "metadata": {
+          "tipo": "terminal",
+          "desenlace": "recomendacion",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      }
+    },
+    "edges": [
+      {
+        "source": "q_gastro_gate",
+        "relation": "Sí",
+        "target": "q_gastro_areas",
+        "directed": true
+      },
+      {
+        "source": "q_gastro_gate",
+        "relation": "No",
+        "target": "T_NORMAL",
+        "directed": true
+      },
+      {
+        "source": "q_gastro_areas",
+        "relation": "Vómito",
+        "target": "q_gastro_vomito",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_gastro_areas",
+        "relation": "Alimentación",
+        "target": "q_gastro_alimentacion",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_gastro_areas",
+        "relation": "Barriga",
+        "target": "q_gastro_abdomen",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_gastro_areas",
+        "relation": "Popó",
+        "target": "q_gastro_popo",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_gastro_areas",
+        "relation": "Orina",
+        "target": "q_gastro_orina",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_gastro_vomito",
+        "relation": "Vomita todo lo que ingiere",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_gastro_vomito",
+        "relation": "Vomita con fuerza/sale disparado",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_gastro_vomito",
+        "relation": "Ha vomitado varias veces",
+        "target": "T_CONSULTA",
+        "directed": true,
+        "peso": 2
+      },
+      {
+        "source": "q_gastro_vomito",
+        "relation": "Vomita una sola vez y después bien",
+        "target": "T_NORMAL",
+        "directed": true,
+        "peso": 1
+      },
+      {
+        "source": "q_gastro_vomito",
+        "relation": "Regurgitador feliz",
+        "target": "T_NORMAL",
+        "directed": true,
+        "peso": 1
+      },
+      {
+        "source": "q_gastro_alimentacion",
+        "relation": "No logra alimentarse o rechaza pecho",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_gastro_alimentacion",
+        "relation": "Tose, atraganta, deja de respirar o cambia color al comer",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_gastro_alimentacion",
+        "relation": "Come mucho menos o succiona débil",
+        "target": "T_CONSULTA",
+        "directed": true,
+        "peso": 2
+      },
+      {
+        "source": "q_gastro_alimentacion",
+        "relation": "Se queda dormido repetidamente al comer",
+        "target": "T_CONSULTA",
+        "directed": true,
+        "peso": 2
+      },
+      {
+        "source": "q_gastro_alimentacion",
+        "relation": "Tarda mucho más de lo habitual",
+        "target": "T_CONSULTA",
+        "directed": true,
+        "peso": 2
+      },
+      {
+        "source": "q_gastro_alimentacion",
+        "relation": "Se alimenta como siempre",
+        "target": "T_NORMAL",
+        "directed": true,
+        "peso": 1
+      },
+      {
+        "source": "q_gastro_abdomen",
+        "relation": "Barriga muy hinchada y dura/tensa",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_gastro_abdomen",
+        "relation": "Barriga hinchada + vómito o sangre en popó",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_gastro_abdomen",
+        "relation": "Barriga hinchada + no quiere comer o está decaído",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_gastro_abdomen",
+        "relation": "Barriga más hinchada, pero blanda y come bien",
+        "target": "T_CONSULTA",
+        "directed": true,
+        "peso": 2
+      },
+      {
+        "source": "q_gastro_abdomen",
+        "relation": "Barriga redondita después de comer, blanda",
+        "target": "T_NORMAL",
+        "directed": true,
+        "peso": 1
+      },
+      {
+        "source": "q_gastro_popo",
+        "relation": "Popó blanco o gris claro",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_gastro_popo",
+        "relation": "Sangre roja en popó",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_gastro_popo",
+        "relation": "No hace popó + barriga hinchada o vómito",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_gastro_popo",
+        "relation": "Cambió frecuencia o consistencia",
+        "target": "T_CONSULTA",
+        "directed": true,
+        "peso": 2
+      },
+      {
+        "source": "q_gastro_popo",
+        "relation": "Mucho moco repetido",
+        "target": "T_CONSULTA",
+        "directed": true,
+        "peso": 2
+      },
+      {
+        "source": "q_gastro_popo",
+        "relation": "Muchas más o menos deposiciones",
+        "target": "T_CONSULTA",
+        "directed": true,
+        "peso": 2
+      },
+      {
+        "source": "q_gastro_popo",
+        "relation": "Deposiciones más líquidas de lo habitual",
+        "target": "T_CONSULTA",
+        "directed": true,
+        "peso": 2
+      },
+      {
+        "source": "q_gastro_popo",
+        "relation": "Popó amarillo, verde, café o mostaza",
+        "target": "T_NORMAL",
+        "directed": true,
+        "peso": 1
+      },
+      {
+        "source": "q_gastro_popo",
+        "relation": "Aguado o con grumitos, bebé bien",
+        "target": "T_NORMAL",
+        "directed": true,
+        "peso": 1
+      },
+      {
+        "source": "q_gastro_popo",
+        "relation": "Hace fuerza/puja y popó blando",
+        "target": "T_NORMAL",
+        "directed": true,
+        "peso": 1
+      },
+      {
+        "source": "q_gastro_popo",
+        "relation": "Popó negro en los primeros 3 días",
+        "target": "T_NORMAL",
+        "directed": true,
+        "peso": 1
+      },
+      {
+        "source": "q_gastro_popo",
+        "relation": "Pasa días sin popó, pero come bien y barriga blanda",
+        "target": "T_NORMAL",
+        "directed": true,
+        "peso": 1
+      },
+      {
+        "source": "q_gastro_orina",
+        "relation": "Sangre roja en orina/pañal",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_gastro_orina",
+        "relation": "Muchas horas sin mojar ningún pañal",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_gastro_orina",
+        "relation": "Mojando menos pañales",
+        "target": "T_CONSULTA",
+        "directed": true,
+        "peso": 2
+      },
+      {
+        "source": "q_gastro_orina",
+        "relation": "Olor diferente o fuerte persistente",
+        "target": "T_CONSULTA",
+        "directed": true,
+        "peso": 2
+      },
+      {
+        "source": "q_gastro_orina",
+        "relation": "Llora/molesta al orinar",
+        "target": "T_CONSULTA",
+        "directed": true,
+        "peso": 2
+      },
+      {
+        "source": "q_gastro_orina",
+        "relation": "Moja pañales habitual / amarilla clara",
+        "target": "T_NORMAL",
+        "directed": true,
+        "peso": 1
+      },
+      {
+        "source": "q_gastro_orina",
+        "relation": "Mancha rosada/naranja en los primeros días",
+        "target": "T_NORMAL",
+        "directed": true,
+        "peso": 1
+      }
+    ]
+  }
+}

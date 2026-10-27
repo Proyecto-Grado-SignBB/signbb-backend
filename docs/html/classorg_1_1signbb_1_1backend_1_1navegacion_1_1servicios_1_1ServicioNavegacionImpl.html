@@ -129,6 +129,8 @@ Métodos públicos</h2></td></tr>
 <tr class="memitem:af5ec517c37203c610d1940ff6fa25222" id="r_af5ec517c37203c610d1940ff6fa25222"><td class="memItemLeft"><a id="af5ec517c37203c610d1940ff6fa25222" name="af5ec517c37203c610d1940ff6fa25222"></a>
 &#160;</td><td class="memItemRight"><b>ServicioNavegacionImpl</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html">ContextoClinico</a> contexto, <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html">MotorNavegacion</a> motor, <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html">RepositorioSesion</a> repositorioSesion)</td></tr>
 <tr class="memdesc:af5ec517c37203c610d1940ff6fa25222"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inyecta el contexto clínico, el motor y el repositorio de sesiones. <br /></td></tr>
+<tr class="memitem:abd109f9d1a6f08831bcba506b957dd8c" id="r_abd109f9d1a6f08831bcba506b957dd8c"><td class="memItemLeft">boolean&#160;</td><td class="memItemRight"><a class="el" href="#abd109f9d1a6f08831bcba506b957dd8c">consultaDisponible</a> ()</td></tr>
+<tr class="memdesc:abd109f9d1a6f08831bcba506b957dd8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">True si el contenido vigente tiene opciones desde la pregunta inicial.  <br /></td></tr>
 <tr class="memitem:aab2e1089853199ea85ca0a6c2ac40d7f" id="r_aab2e1089853199ea85ca0a6c2ac40d7f"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#aab2e1089853199ea85ca0a6c2ac40d7f">iniciar</a> ()</td></tr>
 <tr class="memdesc:aab2e1089853199ea85ca0a6c2ac40d7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abre una sesión nueva y devuelve la primera pregunta del recorrido.  <br /></td></tr>
 <tr class="memitem:aca3129f76f650bab7d85ac7b05b3495b" id="r_aca3129f76f650bab7d85ac7b05b3495b"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#aca3129f76f650bab7d85ac7b05b3495b">responder</a> (String recorridoId, String respuesta)</td></tr>
@@ -139,12 +141,39 @@ Métodos públicos</h2></td></tr>
 <tr class="memdesc:a354917ea71546b7fcede2c7adbaf394d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vuelve a la pregunta anterior y guarda la sesión con el estado ya recalculado, para que el siguiente <code class="JavaDocCode">responder</code> parta de él.  <br /></td></tr>
 <tr class="memitem:a273ef4bb1ad2e9dfde22507a5c68875d" id="r_a273ef4bb1ad2e9dfde22507a5c68875d"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#a273ef4bb1ad2e9dfde22507a5c68875d">consultar</a> (String recorridoId)</td></tr>
 <tr class="memdesc:a273ef4bb1ad2e9dfde22507a5c68875d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Devuelve el estado actual del recorrido (pregunta pendiente o desenlace).  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pac-static-methods" class="groupheader"><a id="pac-static-methods" name="pac-static-methods"></a>
+Funciones estáticas de paquete</h2></td></tr>
+<tr class="memitem:af481dc77db12f1cfa464043f753b3397" id="r_af481dc77db12f1cfa464043f753b3397"><td class="memItemLeft"><a id="af481dc77db12f1cfa464043f753b3397" name="af481dc77db12f1cfa464043f753b3397"></a>
+static boolean&#160;</td><td class="memItemRight"><b>hayOpcionesDesdeInicio</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html">GrafoClinico</a> grafo)</td></tr>
+<tr class="memdesc:af481dc77db12f1cfa464043f753b3397"><td class="mdescLeft">&#160;</td><td class="mdescRight">True si el grafo tiene una pregunta inicial con opciones, o si su nodo inicial ya es terminal (un contenido mínimo que produce un resultado). <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Implementación del módulo de navegación sobre el motor real: cablea el <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html">MotorNavegacion</a></code> (recorrido guiado + reglas) con el <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html">ContextoClinico</a></code> (grafo y reglas en memoria) y el <code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html">RepositorioSesion</a></code> (estado del recorrido entre peticiones). </p>
 <p>Cada recorrido queda atado a la versión del contenido clínico vigente cuando empieza (<code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html#af205fee68cb3ddae0b4da912f79ad140">ContextoClinico#idVersionActual()</a></code>) y la usa hasta terminar, aunque el médico publique cambios mientras tanto.</p>
 <p>MODIFICADO: se agrega <code><a class="el" href="">responder(String, List)</a></code> para selección múltiple, con la misma estructura que el <code><a class="el" href="#aca3129f76f650bab7d85ac7b05b3495b">responder(String, String)</a></code> ya existente (que no cambia). </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
+<a id="abd109f9d1a6f08831bcba506b957dd8c" name="abd109f9d1a6f08831bcba506b957dd8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd109f9d1a6f08831bcba506b957dd8c">&#9670;&#160;</a></span>consultaDisponible()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">boolean org.signbb.backend.navegacion.servicios.ServicioNavegacionImpl.consultaDisponible </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>True si el contenido vigente tiene opciones desde la pregunta inicial. </p>
+
+<p>Implementa <a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html#a1f5ff7a1af826f7857c64e63fc51486b">org.signbb.backend.navegacion.servicios.ServicioNavegacion</a>.</p>
+
+</div>
+</div>
 <a id="a273ef4bb1ad2e9dfde22507a5c68875d" name="a273ef4bb1ad2e9dfde22507a5c68875d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a273ef4bb1ad2e9dfde22507a5c68875d">&#9670;&#160;</a></span>consultar()</h2>
 

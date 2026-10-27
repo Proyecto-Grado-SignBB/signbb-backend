@@ -198,8 +198,7 @@ class AutoriaIntegracionTest {
         String id = r.recorridoId();
         r = navegacion.responder(id, "neurologico");
         assertEquals("puente_neuro", r.pregunta().id());
-        assertTrue(r.pregunta().opciones().contains("iniciar"), "la opción del sistema sigue");
-        assertTrue(r.pregunta().opciones().contains(ETIQUETA), "y aparece la del subgrafo nuevo");
+        assertTrue(r.pregunta().opciones().contains(ETIQUETA), "aparece la opción del subgrafo nuevo");
 
         r = navegacion.responder(id, ETIQUETA);
         assertEquals(grafoId + "/" + inicio, r.pregunta().id());

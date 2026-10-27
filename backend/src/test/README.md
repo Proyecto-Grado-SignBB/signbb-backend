@@ -30,16 +30,17 @@ Con el template de Redis y los repositorios simulados (Mockito):
   nunca es dependencia dura).
 - **Redis caído al escribir**: la resolución igual retorna el documento;
   solo se pierde la copia caliente.
-- **Base sin contenido**: `IllegalStateException` explícito — el classpath
-  NO es un mecanismo de fallback en runtime, solo la semilla de
-  `DatabaseInit`.
+- **Base sin grafo raíz**: `IllegalStateException` explícito — el classpath
+  NO es un mecanismo de fallback en runtime; solo `grafo_raiz.json` es semilla
+  de `DatabaseInit`. Una base con raíz pero sin subgrafos es válida: compone la
+  pregunta inicial sin opciones y la consulta queda no disponible.
 - **`invalidar()`**: borra las claves de contenido (el hook del futuro
   módulo de Autoría).
 
 ## RepositorioSesionRedisTest — sesiones en Redis
 
-Con un template simulado respaldado por un mapa en memoria y el contenido
-real (grafo y reglas de `static/grafo_sistema/`):
+Con un template simulado respaldado por un mapa en memoria y el contenido de
+prueba (grafo y reglas de `src/test/resources/static/grafo_sistema/`):
 
 - **Round-trip EN_CURSO**: crear y buscar restaura respuestas acumuladas y
   la pregunta pendiente (reconstruida por id contra el grafo vigente).

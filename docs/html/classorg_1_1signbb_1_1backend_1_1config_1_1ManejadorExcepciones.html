@@ -138,6 +138,8 @@ ResponseEntity&lt; ErrorAutoriaDTO &gt;&#160;</td><td class="memItemRight"><b>ma
 <tr class="memitem:a47da4350124a737dd82b564443c76571" id="r_a47da4350124a737dd82b564443c76571"><td class="memItemLeft"><a id="a47da4350124a737dd82b564443c76571" name="a47da4350124a737dd82b564443c76571"></a>
 ResponseEntity&lt; Void &gt;&#160;</td><td class="memItemRight"><b>manejarCacheNoDisponible</b> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1CacheNoDisponibleException.html">CacheNoDisponibleException</a> ex)</td></tr>
 <tr class="memdesc:a47da4350124a737dd82b564443c76571"><td class="mdescLeft">&#160;</td><td class="mdescRight">MODIFICADO (cache): Redis no disponible para sesiones — 503 para que el cliente sepa que es transitorio y reintente; degradar a memoria crearía inconsistencias entre sesiones. <br /></td></tr>
+<tr class="memitem:a8aa577bb7a063cf4f1f8269ea1443e52" id="r_a8aa577bb7a063cf4f1f8269ea1443e52"><td class="memItemLeft">ResponseEntity&lt; ErrorAutoriaDTO &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a8aa577bb7a063cf4f1f8269ea1443e52">manejarConsultaNoDisponible</a> (<a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ConsultaNoDisponibleException.html">ConsultaNoDisponibleException</a> ex)</td></tr>
+<tr class="memdesc:a8aa577bb7a063cf4f1f8269ea1443e52"><td class="mdescLeft">&#160;</td><td class="mdescRight">No hay subgrafos publicados: 503 con el mensaje que muestra la app.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Errores específicos del backend. </p>
@@ -181,6 +183,26 @@ ResponseEntity&lt; Void &gt;&#160;</td><td class="memItemRight"><b>manejarCacheN
 
 <p>MODIFICADO: agregado para que las opciones inválidas del cuidador (validadas en <code class="JavaDocCode">ServicioCapturaImpl</code>) respondan 400 en vez de caer como 500 sin manejar. </p>
 <p>Sigue el mismo patrón que el handler de arriba: sin cuerpo, solo el status. </p>
+
+</div>
+</div>
+<a id="a8aa577bb7a063cf4f1f8269ea1443e52" name="a8aa577bb7a063cf4f1f8269ea1443e52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8aa577bb7a063cf4f1f8269ea1443e52">&#9670;&#160;</a></span>manejarConsultaNoDisponible()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ResponseEntity&lt; ErrorAutoriaDTO &gt; org.signbb.backend.config.ManejadorExcepciones.manejarConsultaNoDisponible </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ConsultaNoDisponibleException.html">ConsultaNoDisponibleException</a></td>          <td class="paramname"><span class="paramname"><em>ex</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>No hay subgrafos publicados: 503 con el mensaje que muestra la app. </p>
+<p>Se distingue de <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1cache_1_1CacheNoDisponibleException.html">CacheNoDisponibleException</a></code> porque esta sí lleva cuerpo y no se debe reintentar sin que el contenido cambie. </p>
 
 </div>
 </div>

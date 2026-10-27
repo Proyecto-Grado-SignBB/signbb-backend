@@ -1,30 +1,4 @@
 var searchData=
 [
-  ['backend_0',['SignBB — Backend',['../index.html',1,'']]],
-  ['backend_20en_20el_20host_1',['Parámetros de conexión (perfil &lt;span class=&quot;tt&quot;&gt;docker&lt;/span&gt; del backend en el host)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md81',1,'']]],
-  ['backendapplication_2',['BackendApplication',['../classorg_1_1signbb_1_1backend_1_1BackendApplication.html',1,'org::signbb::backend']]],
-  ['backendapplicationtests_3',['BackendApplicationTests',['../classorg_1_1signbb_1_1backend_1_1BackendApplicationTests.html',1,'org::signbb::backend']]],
-  ['baja_4',['Dar de baja',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md78',1,'']]],
-  ['base_20de_20datos_5',['Perfil de base de datos',['../index.html#autotoc_md69',1,'']]],
-  ['basede_6',['baseDe',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html#a795d4cb8317af18d3cdf4d8782aadd92',1,'org::signbb::backend::navegacion::modelo::ContextoClinico']]],
-  ['baseregladto_7',['BaseReglaDTO',['../namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1controladores.html#a07da44516c2a38b6a6915c8639398b6d',1,'org::signbb::backend::autoria::controladores']]],
-  ['basereglarequest_8',['BaseReglaRequest',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1BaseReglaRequest.html',1,'org::signbb::backend::autoria::controladores']]],
-  ['basereglas_9',['BaseReglas',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglas.html',1,'org::signbb::backend::reglas::modelo']]],
-  ['basereglas_20basereglastest_10',['TAD &lt;span class=&quot;tt&quot;&gt;BaseReglas&lt;/span&gt; (&lt;span class=&quot;tt&quot;&gt;BaseReglasTest&lt;/span&gt;)',['../pruebas_reglas.html#autotoc_md37',1,'']]],
-  ['basereglasentity_11',['BaseReglasEntity',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1entidades_1_1BaseReglasEntity.html',1,'org::signbb::backend::reglas::datos::entidades']]],
-  ['basereglasfiebre_12',['BaseReglasFiebre',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1BaseReglasFiebre.html',1,'org::signbb::backend::autoria::servicios']]],
-  ['basereglasjson_13',['BaseReglasJson',['../namespaceorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion.html#a9d5f998a118a8ea75cb48d25d1c44760',1,'org::signbb::backend::reglas::datos::serializacion']]],
-  ['basereglasmapper_14',['BaseReglasMapper',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasMapper.html',1,'org::signbb::backend::reglas::datos::serializacion']]],
-  ['basereglasmappertest_15',['BaseReglasMapperTest',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasMapperTest.html',1,'org.signbb.backend.reglas.datos.serializacion.BaseReglasMapperTest'],['../pruebas_reglas.html#autotoc_md41',1,'Mapeo JSON (&lt;span class=&quot;tt&quot;&gt;BaseReglasMapperTest&lt;/span&gt;)']]],
-  ['basereglasparser_16',['BaseReglasParser',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1datos_1_1serializacion_1_1BaseReglasParser.html',1,'org::signbb::backend::reglas::datos::serializacion']]],
-  ['basereglastest_17',['BaseReglasTest',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1BaseReglasTest.html',1,'org.signbb.backend.reglas.modelo.BaseReglasTest'],['../pruebas_reglas.html#autotoc_md37',1,'TAD &lt;span class=&quot;tt&quot;&gt;BaseReglas&lt;/span&gt; (&lt;span class=&quot;tt&quot;&gt;BaseReglasTest&lt;/span&gt;)']]],
-  ['bases_18',['bases',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1ContenidoEjemplo.html#a1f3c0f00a7c0127d62b627430f7040a5',1,'org::signbb::backend::navegacion::datos::serializacion::ContenidoEjemplo']]],
-  ['bloquearruta_19',['bloquearRuta',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#a612bdd6d0d822ea5be85c367bb50edcf',1,'org::signbb::backend::navegacion::modelo::GrafoClinico']]],
-  ['borrador_20',['borrador',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1BaseReglasFiebre.html#ab02eba04af9802d11ecb92bd4e908261',1,'org.signbb.backend.autoria.servicios.BaseReglasFiebre.borrador()'],['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1LienzoFiebre.html#a14aa9c71f832f72b05cf686c56e3f720',1,'org.signbb.backend.autoria.servicios.LienzoFiebre.borrador()']]],
-  ['borradorbasereglaentity_21',['BorradorBaseReglaEntity',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1entidades_1_1BorradorBaseReglaEntity.html',1,'org::signbb::backend::autoria::datos::entidades']]],
-  ['borradorregla_22',['BorradorRegla',['../namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1modelo.html#ad877808e981157f30a3a0c5956f6183c',1,'org::signbb::backend::autoria::modelo']]],
-  ['borradorsubgrafoentity_23',['BorradorSubgrafoEntity',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1datos_1_1entidades_1_1BorradorSubgrafoEntity.html',1,'org::signbb::backend::autoria::datos::entidades']]],
-  ['borrar_24',['borrar',['../interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios_1_1RepositorioLimiteIntentos.html#ac9339d6421cb3f71f26c9e74e5c460f5',1,'org::signbb::backend::seguridad::datos::repositorios::RepositorioLimiteIntentos']]],
-  ['borrarvencidos_25',['borrarVencidos',['../interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios_1_1RepositorioLimiteIntentos.html#a65fdd24a020b7544496bf88175836043',1,'org::signbb::backend::seguridad::datos::repositorios::RepositorioLimiteIntentos']]],
-  ['buscar_26',['buscar',['../classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html#a8d8bcc1535814ae66ee8717202e4fc7a',1,'org.signbb.backend.cache.RepositorioSesionRedis.buscar()'],['../interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html#a0269f24b995c4409bc97a23ec23a6514',1,'org.signbb.backend.navegacion.modelo.RepositorioSesion.buscar()']]]
+  ['2_20ramas_20y_20cómo_20están_0',['2. Ramas y cómo están',['../md_docs_2autoria-subgrafos.html#autotoc_md86',1,'']]]
 ];

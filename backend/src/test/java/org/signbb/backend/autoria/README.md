@@ -109,8 +109,8 @@ neurológica (`puente_neuro`).
   y los demás subgrafos no cambian.
 - Guarda una versión nueva del contenido (origen "Despublicación de ...") sin
   el subgrafo, e invalida Redis y recarga el contexto después de guardar.
-- **No guarda nada** si es el único subgrafo publicado (la app de las
-  cuidadoras se quedaría sin contenido).
+- Si era el único subgrafo publicado, la raíz queda solo con la pregunta
+  inicial sin opciones y la consulta no disponible; la operación no se bloquea.
 - Un subgrafo despublicado se puede volver a publicar sin duplicar la opción.
 
 ### Servicio (`ServicioAutoriaImplTest`)
@@ -192,7 +192,7 @@ con un comentario.
 - Quien no es el autor recibe **403** al editar y al abrir lo de otro.
 - Un id inexistente da 404 y una edición concurrente (`@Version`) da 409.
 - Despublicar responde 200 con el borrador en `BORRADOR`; 422 con el mensaje si
-  no estaba publicado o era el único subgrafo publicado; 404 si no existe.
+  no estaba publicado o el contenido restante no es válido; 404 si no existe.
 - Quitar el destino de una respuesta acepta `{"nodoId": null}`.
 
 ### Punta a punta (`AutoriaIntegracionTest`)

@@ -266,7 +266,7 @@ public class ControladorAutoria {
             @ApiResponse(responseCode = "409", description = "Otra persona lo cambió al mismo tiempo",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorAutoriaDTO.class))),
-            @ApiResponse(responseCode = "422", description = "No está publicado, o era el único subgrafo publicado",
+            @ApiResponse(responseCode = "422", description = "No está publicado o el contenido restante no es válido",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorAutoriaDTO.class)))
     })

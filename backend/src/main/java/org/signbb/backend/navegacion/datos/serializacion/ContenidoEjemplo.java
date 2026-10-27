@@ -9,27 +9,29 @@ import org.signbb.backend.reglas.datos.serializacion.BaseReglasParser;
 import org.springframework.core.io.ClassPathResource;
 
 /**
- * Contenido clínico del classpath ({@code static/grafo_sistema/}): el grafo
- * raíz del sistema y los tres subgrafos publicados (respiración,
- * gastrointestinal y actividad/color), cada uno con su base de reglas.
+ * Contenido clínico de ejemplo: el grafo raíz del sistema y, para tests y
+ * demo, los tres subgrafos de respiración, gastrointestinal y actividad/color,
+ * cada uno con su base de reglas.
  *
  * <p>
- * Es la semilla de {@code DatabaseInit} y el contenido de la demo y de los
- * tests; el runtime no lo lee (resuelve desde la base de datos). Reúne en un
- * solo lugar las rutas y la composición para que todos usen el mismo grafo.
+ * Solo el grafo raíz es semilla de {@code DatabaseInit}. Los subgrafos y sus
+ * reglas viven en el classpath de pruebas ({@code src/test/resources}) y no se
+ * cargan en el runtime: se usarán en la fase de datos (seed de pruebas y
+ * demo). Reúne en un solo lugar las rutas y la composición para que tests y
+ * demo usen el mismo contenido.
  */
 public final class ContenidoEjemplo {
 
     /** Grafo raíz del sistema. */
     public static final String RUTA_RAIZ = "static/grafo_sistema/grafo_raiz.json";
 
-    /** Subgrafos publicados, uno por categoría. */
+    /** Subgrafos de ejemplo (classpath de pruebas), uno por categoría. */
     public static final List<String> RUTAS_SUBGRAFOS = List.of(
             "static/grafo_sistema/grafo_respiracion.json",
             "static/grafo_sistema/grafo_gastro.json",
             "static/grafo_sistema/grafo_activo_color.json");
 
-    /** Bases de reglas, una por subgrafo. */
+    /** Bases de reglas de los subgrafos de ejemplo (classpath de pruebas). */
     public static final List<String> RUTAS_REGLAS = List.of(
             "static/grafo_sistema/reglas_respiracion.json",
             "static/grafo_sistema/reglas_gastro.json",

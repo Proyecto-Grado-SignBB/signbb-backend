@@ -42,7 +42,8 @@ import jakarta.servlet.http.HttpServletResponse;
  * <ul>
  * <li>Públicas: preflight {@code OPTIONS}, registro e ingreso, imágenes
  * ({@code /media}) y la documentación (Swagger y {@code /v3/api-docs}).</li>
- * <li>{@code /api/recorridos/**} y {@code PUT /api/auth/yo/pediatra}: PADRE.</li>
+ * <li>{@code /api/recorridos/**}, {@code /api/consulta/**} y
+ * {@code PUT /api/auth/yo/pediatra}: PADRE.</li>
  * <li>{@code /api/usuarios/**}, {@code /api/autoria/revisiones} y aprobar,
  * rechazar, publicar directamente o despublicar un subgrafo: MEDICO_SUPERVISOR.</li>
  * <li>El resto de {@code /api/autoria/**}: MEDICO o MEDICO_SUPERVISOR.</li>
@@ -93,7 +94,8 @@ public class ConfiguracionSeguridad {
                         .requestMatchers(HttpMethod.GET, "/actuator/health", "/actuator/health/**").permitAll()
                         .requestMatchers("/v3/api-docs", "/v3/api-docs/**", "/v3/api-docs.yaml",
                                 "/swagger-ui/**", "/swagger-ui.html", "/error").permitAll()
-                        .requestMatchers("/api/recorridos", "/api/recorridos/**").hasRole(Rol.PADRE.name())
+                        .requestMatchers("/api/recorridos", "/api/recorridos/**",
+                                "/api/consulta", "/api/consulta/**").hasRole(Rol.PADRE.name())
                         .requestMatchers(HttpMethod.PUT, "/api/auth/yo/pediatra").hasRole(Rol.PADRE.name())
                         .requestMatchers("/api/usuarios", "/api/usuarios/**",
                                 "/api/autoria/revisiones", "/api/autoria/revisiones/**").hasRole(SUPERVISOR)

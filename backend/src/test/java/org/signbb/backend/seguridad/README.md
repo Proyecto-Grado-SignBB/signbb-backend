@@ -20,7 +20,7 @@ PostgreSQL y Redis, como el CI.
 | `servicios` | `ServicioTokensTest` | 7 | el JWT lleva `sub`, `rol` y `nombre`; uno vencido o firmado con otra clave se rechaza; un secreto corto no arranca |
 | (raíz) | `InicializadorSeguridadTest` | 2 | el supervisor inicial se siembra una sola vez |
 | (raíz) | `VerificadorSecretosProduccionTest` | 11 | en producción no se aceptan los valores de ejemplo, la documentación de la API activa ni el registro de SQL encendido; un entorno mal escrito impide arrancar |
-| (raíz) | `ReglasAccesoIntegracionTest` | 20 | la cadena de filtros real: rutas públicas, `/actuator/health` abierto y el resto de Actuator sin exponer, 401 sin token, 403 por rol y dueño del recorrido; solo un padre guarda el teléfono del pediatra; un recorrido reiniciado o sin sesión da 410; el cuarto registro con el mismo correo da 429 |
+| (raíz) | `ReglasAccesoIntegracionTest` | 20 | la cadena de filtros real: rutas públicas, `/actuator/health` abierto y el resto de Actuator sin exponer, 401 sin token, 403 por rol y dueño del recorrido, `GET /api/consulta/disponibilidad` solo para padres; solo un padre guarda el teléfono del pediatra; un recorrido reiniciado o sin sesión da 410; el cuarto registro con el mismo correo da 429 |
 
 En total son **71 pruebas** en estas clases. Las reglas de autor y de revisión de la autoría
 (`GuardiaAutoriaTest`, `PoliticaAccesoBorradoresTest`, `ServicioRevisionImplTest`
@@ -35,6 +35,9 @@ recorrido, en \ref pruebas_observaciones.
 - `ApiPrueba`: MockMvc con la cadena de seguridad real; ingresa, registra
   padres, crea cuentas clínicas con el supervisor sembrado y borra al final las
   cuentas que creó.
+- `ReglasAccesoIntegracionTest` inserta el subgrafo de respiración del fixture
+  si no hay contenido navegable y lo elimina al terminar: la siembra ya no
+  carga subgrafos.
 
 ## Qué se prueba y por qué importa
 

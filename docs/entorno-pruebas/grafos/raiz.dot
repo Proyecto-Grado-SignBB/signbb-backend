@@ -1,0 +1,32 @@
+digraph grafo_raiz {
+// Generado desde la definición de grafo_sistema
+graph [ranksep=1.2, nodesep=0.9];
+node [fontname="Helvetica", style=filled, fillcolor=white, margin=0.2];
+edge [fontname="Helvetica", fontsize=10];
+
+// CATEGORÍAS
+pregunta_inicial [label="¿Sientes que tu bebé está diferente a como normalmente es?\nSeleccione las categorías a consultar", color=blue, fontcolor=blue];
+puente_respiracion [label="¿Qué nota en la respiración o la nariz?", color=black];
+puente_gastro [label="¿Qué nota en la alimentación, el vómito, la barriga, el popó o la orina?", color=black];
+puente_neuro [label="¿Qué nota en la actividad, el color o el llanto?", color=black];
+puente_cabeza [label="¿Qué nota en la cabeza, los ojos o los oídos?", color=black];
+
+// REFERENCIAS
+ref_grafo_respiracion [label="Grafo de Respiración y Nariz", color=purple, fontcolor=purple];
+ref_grafo_gastro [label="Grafo Gastrointestinal", color=purple, fontcolor=purple];
+ref_grafo_activo_color [label="Grafo de Actividad y Color", color=purple, fontcolor=purple];
+ref_grafo_cabeza [label="Grafo de Cabeza, Ojos y Oídos", color=purple, fontcolor=purple];
+
+// CATEGORÍAS
+pregunta_inicial -> puente_respiracion [label="Respiración (3)"];
+pregunta_inicial -> puente_gastro [label="Gastrointestinal (3)"];
+pregunta_inicial -> puente_neuro [label="Actividad y color (3)"];
+pregunta_inicial -> puente_cabeza [label="Cabeza, ojos y oídos (3)"];
+
+// REFERENCIAS
+puente_respiracion -> ref_grafo_respiracion [label="Revisar respiración y nariz"];
+puente_gastro -> ref_grafo_gastro [label="Revisar digestión"];
+puente_neuro -> ref_grafo_activo_color [label="Revisar actividad y color"];
+puente_cabeza -> ref_grafo_cabeza [label="Revisar cabeza, ojos y oídos"];
+
+}

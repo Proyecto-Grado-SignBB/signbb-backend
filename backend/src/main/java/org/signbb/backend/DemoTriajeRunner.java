@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 /**
@@ -99,6 +100,11 @@ public class DemoTriajeRunner implements CommandLineRunner {
     /** Ejecuta las seis secciones de la demo al arrancar la app. */
     @Override
     public void run(String... args) {
+        if (!new ClassPathResource(ContenidoEjemplo.RUTAS_SUBGRAFOS.get(0)).exists()) {
+            System.out.println("Demo omitida: los subgrafos de ejemplo ya no están en el classpath "
+                    + "de runtime. Viven en src/test/resources para los tests y la fase de datos.");
+            return;
+        }
         GrafoClinico g = new GrafoClinico();
         construirGrafo(g);
 

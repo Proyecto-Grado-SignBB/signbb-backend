@@ -5,6 +5,9 @@ var hierarchy =
       [ "org.signbb.backend.media.AlmacenImagenesS3", "classorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenesS3.html", null ]
     ] ],
     [ "org.signbb.backend.seguridad.ApiPrueba", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ApiPrueba.html", null ],
+    [ "ApplicationRunner", null, [
+      [ "org.signbb.backend.seed.SeedDemoRunner", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoRunner.html", null ]
+    ] ],
     [ "org.signbb.backend.ArranqueCondicionalTest", "classorg_1_1signbb_1_1backend_1_1ArranqueCondicionalTest.html", null ],
     [ "org.signbb.backend.AutoriaIntegracionTest", "classorg_1_1signbb_1_1backend_1_1AutoriaIntegracionTest.html", null ],
     [ "org.signbb.backend.BackendApplication", "classorg_1_1signbb_1_1backend_1_1BackendApplication.html", null ],
@@ -59,6 +62,8 @@ var hierarchy =
       [ "org.signbb.backend.seguridad.ConvertidorJwtUsuario", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConvertidorJwtUsuario.html", null ]
     ] ],
     [ "org.signbb.backend.seguridad.ConvertidorJwtUsuarioTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConvertidorJwtUsuarioTest.html", null ],
+    [ "org.signbb.backend.seed.SeedDemoProperties.Cuenta", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoProperties_1_1Cuenta.html", null ],
+    [ "org.signbb.backend.DatabaseInitTest", "classorg_1_1signbb_1_1backend_1_1DatabaseInitTest.html", null ],
     [ "org.signbb.backend.autoria.modelo.Desenlace", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Desenlace.html", null ],
     [ "org.signbb.backend.autoria.controladores.DespuesDeRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1DespuesDeRequest.html", null ],
     [ "org.signbb.backend.autoria.controladores.DestinoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1DestinoRequest.html", null ],
@@ -168,6 +173,7 @@ var hierarchy =
       [ "org.signbb.backend.media.AlmacenNoDisponibleException", "classorg_1_1signbb_1_1backend_1_1media_1_1AlmacenNoDisponibleException.html", null ],
       [ "org.signbb.backend.media.ImagenInvalidaException", "classorg_1_1signbb_1_1backend_1_1media_1_1ImagenInvalidaException.html", null ],
       [ "org.signbb.backend.navegacion.modelo.RecorridoOcupadoException", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RecorridoOcupadoException.html", null ],
+      [ "org.signbb.backend.navegacion.servicios.ConsultaNoDisponibleException", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ConsultaNoDisponibleException.html", null ],
       [ "org.signbb.backend.observaciones.servicios.PreguntaDesactualizadaException", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1PreguntaDesactualizadaException.html", null ],
       [ "org.signbb.backend.observaciones.servicios.RecorridoFinalizadoException", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1RecorridoFinalizadoException.html", null ],
       [ "org.signbb.backend.observaciones.servicios.RecorridoVencidoException", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1RecorridoVencidoException.html", null ],
@@ -176,6 +182,12 @@ var hierarchy =
       [ "org.signbb.backend.seguridad.servicios.CuentaInvalidaException", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CuentaInvalidaException.html", null ],
       [ "org.signbb.backend.seguridad.servicios.IntentosExcedidosException", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1IntentosExcedidosException.html", null ]
     ] ],
+    [ "org.signbb.backend.seed.SeedDemoProperties", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoProperties.html", null ],
+    [ "org.signbb.backend.seed.SeedDemoRunnerTest", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoRunnerTest.html", null ],
+    [ "org.signbb.backend.seed.SeedDemoService", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoService.html", null ],
+    [ "org.signbb.backend.seed.SeedDemoServiceTest", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoServiceTest.html", null ],
+    [ "org.signbb.backend.seed.SeedGraphConverter", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedGraphConverter.html", null ],
+    [ "org.signbb.backend.seed.SeedGraphConverterTest", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedGraphConverterTest.html", null ],
     [ "org.signbb.backend.observaciones.modelo.SeleccionCuidador", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1SeleccionCuidador.html", null ],
     [ "org.signbb.backend.observaciones.modelo.SeleccionCuidadorTest", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1SeleccionCuidadorTest.html", null ],
     [ "org.signbb.backend.autoria.servicios.ServicioAutoria", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html", [

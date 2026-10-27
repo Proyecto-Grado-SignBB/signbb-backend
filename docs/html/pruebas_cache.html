@@ -131,12 +131,12 @@ ResolvedorContenidoClinicoTest — resolución cache-aside del contenido</h1>
 <li><b>Miss</b>: se lee la fila de la base de datos y se puebla el cache con TTL de 24 horas (<span class="tt">signbb:contenido:v2:grafo</span> / <span class="tt">signbb:contenido:v2:reglas</span>).</li>
 <li><b>Redis caído al leer</b>: se degrada a la base de datos sin fallar (Redis nunca es dependencia dura).</li>
 <li><b>Redis caído al escribir</b>: la resolución igual retorna el documento; solo se pierde la copia caliente.</li>
-<li><b>Base sin contenido</b>: <span class="tt">IllegalStateException</span> explícito — el classpath NO es un mecanismo de fallback en runtime, solo la semilla de <span class="tt">DatabaseInit</span>.</li>
+<li><b>Base sin grafo raíz</b>: <span class="tt">IllegalStateException</span> explícito — el classpath NO es un mecanismo de fallback en runtime; solo <span class="tt">grafo_raiz.json</span> es semilla de <span class="tt">DatabaseInit</span>. Una base con raíz pero sin subgrafos es válida: compone la pregunta inicial sin opciones y la consulta queda no disponible.</li>
 <li><b><span class="tt">invalidar()</span></b>: borra las claves de contenido (el hook del futuro módulo de Autoría).</li>
 </ul>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md59"></a>
 RepositorioSesionRedisTest — sesiones en Redis</h1>
-<p>Con un template simulado respaldado por un mapa en memoria y el contenido real (grafo y reglas de <span class="tt">static/grafo_sistema/</span>):</p>
+<p>Con un template simulado respaldado por un mapa en memoria y el contenido de prueba (grafo y reglas de <span class="tt">src/test/resources/static/grafo_sistema/</span>):</p>
 <ul>
 <li><b>Round-trip EN_CURSO</b>: crear y buscar restaura respuestas acumuladas y la pregunta pendiente (reconstruida por id contra el grafo vigente).</li>
 <li><b>Round-trip FINALIZADO</b>: guardar y buscar restaura nivel, destino, razones (por id de regla), camino causal y puntaje.</li>

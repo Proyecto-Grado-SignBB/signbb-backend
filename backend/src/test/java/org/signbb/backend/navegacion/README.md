@@ -36,8 +36,9 @@ están documentadas en [`backend/src/test/README.md`](../../../../../README.md).
 - **Contenido del sistema.** Es el que usan `MotorNavegacionTest`,
   `MotorNavegacionRetrocederTest` y `ServicioNavegacionImplTest`:
   `ContenidoEjemplo.compuesto()`, que une el grafo raíz con los subgrafos de
-  respiración, gastrointestinal y actividad/color (`static/grafo_sistema/`) y
-  sus reglas, tal como lo siembra `DatabaseInit`. El camino que más se prueba
+  respiración, gastrointestinal y actividad/color y sus reglas. Es un fixture
+  del classpath de pruebas (`src/test/resources/static/grafo_sistema/`);
+  `DatabaseInit` ya no siembra subgrafos. El camino que más se prueba
   es `pregunta_inicial → puente_respiracion → q_resp_urgencia →
   q_resp_consulta → q_resp_normal`. En las reglas, un signo de alarma
   (por ejemplo "Quejido al respirar") dispara R_RESP_URG (URGENCIA) y uno de

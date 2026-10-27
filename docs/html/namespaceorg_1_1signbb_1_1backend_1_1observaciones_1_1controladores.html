@@ -126,6 +126,8 @@ Clases</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Funciones</h2></td></tr>
+<tr class="memitem:af3d0a616ec51a97089c93684e305ffbc" id="r_af3d0a616ec51a97089c93684e305ffbc"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#af3d0a616ec51a97089c93684e305ffbc">DisponibilidadDTO</a> ( @Schema(description=&quot;True si se puede iniciar una consulta&quot;) boolean disponible, @Schema(description=&quot;Mensaje para el cuidador cuando no está disponible&quot;) String mensaje)</td></tr>
+<tr class="memdesc:af3d0a616ec51a97089c93684e305ffbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disponibilidad de la consulta para la pantalla de inicio del cuidador.  <br /></td></tr>
 <tr class="memitem:a2f368d75b8f21bae8eb5faff593fdca9" id="r_a2f368d75b8f21bae8eb5faff593fdca9"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#a2f368d75b8f21bae8eb5faff593fdca9">PasoCausalDTO</a> ( @Schema(description=&quot;Id del nodo alcanzado&quot;) String nodoId, @Schema(description=&quot;Condición de la arista por la que se llegó (la respuesta a la pregunta &quot;+&quot;del paso anterior); vacía para el nodo inicial&quot;) String condicion, @Schema(description=&quot;Texto del nodo alcanzado: la pregunta, o el mensaje si es el desenlace&quot;) String contenido)</td></tr>
 <tr class="memdesc:a2f368d75b8f21bae8eb5faff593fdca9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Un paso del camino causal hacia el desenlace: el <code class="JavaDocCode">nodoId</code> alcanzado, la <code class="JavaDocCode">condicion</code> de la arista por la que se llegó (vacía para el nodo inicial) y el <code class="JavaDocCode">contenido</code> del nodo.  <br /></td></tr>
 <tr class="memitem:ae74b565ebb1b3c310c943c6178db09ea" id="r_ae74b565ebb1b3c310c943c6178db09ea"><td class="memItemLeft">record&#160;</td><td class="memItemRight"><a class="el" href="#ae74b565ebb1b3c310c943c6178db09ea">PreguntaDTO</a> ( @Schema(description=&quot;Id del nodo pregunta&quot;) String id, @Schema(description=&quot;Contenido de la pregunta&quot;) String texto, @Schema(description=&quot;Etiquetas de las respuestas válidas&quot;) List&lt; String &gt; opciones, @Schema(description=&quot;Si la pregunta tiene imágenes de apoyo&quot;) boolean tieneImagenes, @Schema(description=&quot;Rutas de las imágenes; vacía si no tiene&quot;) List&lt; String &gt; imagenes, @Schema(description=&quot;Tipo de interacción: SI_NO, SELECCION_UNICA o SELECCION_MULTIPLE&quot;) String tipoInteraccion)</td></tr>
@@ -143,6 +145,38 @@ record&#160;</td><td class="memItemRight"><b>RecomendacionDTO</b> ( @Schema(desc
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Controladores REST de las consultas guiadas. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones</h2>
+<a id="af3d0a616ec51a97089c93684e305ffbc" name="af3d0a616ec51a97089c93684e305ffbc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3d0a616ec51a97089c93684e305ffbc">&#9670;&#160;</a></span>DisponibilidadDTO()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">record org.signbb.backend.observaciones.controladores.DisponibilidadDTO </td>
+          <td>(</td>
+          <td class="paramtype">@Schema(description=&quot;True si se puede iniciar una consulta&quot;) boolean</td>          <td class="paramname"><span class="paramname"><em>disponible</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">@Schema(description=&quot;Mensaje para el cuidador cuando no está disponible&quot;) String</td>          <td class="paramname"><span class="paramname"><em>mensaje</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disponibilidad de la consulta para la pantalla de inicio del cuidador. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">disponible</td><td>si hay al menos un subgrafo publicado que permite iniciar un recorrido </td></tr>
+    <tr><td class="paramname">mensaje</td><td>texto para el cuidador cuando no está disponible; nulo si sí </td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Consulta disponible.</p>
+<p>Consulta no disponible porque no hay subgrafos publicados.</p>
+
+</div>
+</div>
 <a id="a2f368d75b8f21bae8eb5faff593fdca9" name="a2f368d75b8f21bae8eb5faff593fdca9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2f368d75b8f21bae8eb5faff593fdca9">&#9670;&#160;</a></span>PasoCausalDTO()</h2>
 

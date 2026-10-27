@@ -120,6 +120,8 @@ Métodos públicos</h2></td></tr>
 <tr class="memitem:a75fb60c3ca3a3d5ae7987213af2b21d3" id="r_a75fb60c3ca3a3d5ae7987213af2b21d3"><td class="memItemLeft"><a id="a75fb60c3ca3a3d5ae7987213af2b21d3" name="a75fb60c3ca3a3d5ae7987213af2b21d3"></a>
 ResponseEntity&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#a9da8fa006ec65b04cc12de8f45952e05">RecorridoDTO</a> &gt;&#160;</td><td class="memItemRight"><b>iniciar</b> (UsuarioActual usuario)</td></tr>
 <tr class="memdesc:a75fb60c3ca3a3d5ae7987213af2b21d3"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code class="JavaDocCode">POST /api/recorridos</code>: inicia un recorrido y devuelve la primera pregunta. <br /></td></tr>
+<tr class="memitem:a10137e1916212d5d8d077c65fd3b3bfa" id="r_a10137e1916212d5d8d077c65fd3b3bfa"><td class="memItemLeft">ResponseEntity&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#af3d0a616ec51a97089c93684e305ffbc">DisponibilidadDTO</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a10137e1916212d5d8d077c65fd3b3bfa">disponibilidad</a> ()</td></tr>
+<tr class="memdesc:a10137e1916212d5d8d077c65fd3b3bfa"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code class="JavaDocCode">GET /api/consulta/disponibilidad</code>: indica si la pantalla de inicio puede habilitar «Comenzar consulta».  <br /></td></tr>
 <tr class="memitem:a33d1b6a84b63ad0952a650b0a440856b" id="r_a33d1b6a84b63ad0952a650b0a440856b"><td class="memItemLeft"><a id="a33d1b6a84b63ad0952a650b0a440856b" name="a33d1b6a84b63ad0952a650b0a440856b"></a>
 ResponseEntity&lt; List&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#a332d9ae5a35730076d3cbbffaef0dfc3">ResumenRecorridoDTO</a> &gt; &gt;&#160;</td><td class="memItemRight"><b>misRecorridos</b> (UsuarioActual usuario)</td></tr>
 <tr class="memdesc:a33d1b6a84b63ad0952a650b0a440856b"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code class="JavaDocCode">GET /api/recorridos</code>: "Mis recorridos" del padre. <br /></td></tr>
@@ -139,8 +141,29 @@ ResponseEntity&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1obse
 <div class="textblock"><p>Controlador REST de la consulta guiada del cuidador. </p>
 <p>MODIFICADO: <code class="JavaDocCode">responder</code> ahora pasa por <code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCaptura.html">ServicioCaptura</a></code> en vez de llamar a <code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1ServicioNavegacion.html">ServicioNavegacion</a></code> directamente, para que toda respuesta (una opción o varias) quede validada y auditada. <code class="JavaDocCode">iniciar</code> y <code class="JavaDocCode">consultar</code> no cambian — no reciben una observación del cuidador. <code class="JavaDocCode">responder</code> y <code class="JavaDocCode">retroceder</code> van con candado por recorrido y guardan Redis y Postgres como "todo o nada" (ver <code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCaptura.html">ServicioCaptura</a></code>).</p>
 <p>Cada recorrido es del padre que lo inició (<code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioRecorridos.html">ServicioRecorridos</a></code>): antes de responder, retroceder o consultar se revisa que sea suyo y, si no, se responde 404 para no revelar que existe.</p>
-<p>MODIFICADO (CU10/CU11): consultar, responder y retroceder revisan además que la consulta siga vigente; si venció tras 8 horas sin actividad o ya se reinició, responden 410. Se agrega <code class="JavaDocCode">reiniciar</code>. </p>
+<p>MODIFICADO (CU10/CU11): consultar, responder y retroceder revisan además que la consulta siga vigente; si venció tras 8 horas sin actividad o ya se reinició, responden 410. Se agrega <code class="JavaDocCode">reiniciar</code>.</p>
+<p>También expone <code class="JavaDocCode">GET /api/consulta/disponibilidad</code> para que el inicio deshabilite la consulta cuando no hay ningún subgrafo publicado, y <code class="JavaDocCode">POST /api/recorridos</code> responde 503 en ese caso. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
+<a id="a10137e1916212d5d8d077c65fd3b3bfa" name="a10137e1916212d5d8d077c65fd3b3bfa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10137e1916212d5d8d077c65fd3b3bfa">&#9670;&#160;</a></span>disponibilidad()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ResponseEntity&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#af3d0a616ec51a97089c93684e305ffbc">DisponibilidadDTO</a> &gt; org.signbb.backend.observaciones.controladores.ControladorConsulta.disponibilidad </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code class="JavaDocCode">GET /api/consulta/disponibilidad</code>: indica si la pantalla de inicio puede habilitar «Comenzar consulta». </p>
+<p>Es false cuando no hay ningún subgrafo publicado. </p>
+
+</div>
+</div>
 <a id="a9c009b1391a60c569866a3e7834f6882" name="a9c009b1391a60c569866a3e7834f6882"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9c009b1391a60c569866a3e7834f6882">&#9670;&#160;</a></span>responder()</h2>
 

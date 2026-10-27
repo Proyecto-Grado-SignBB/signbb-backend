@@ -139,8 +139,11 @@ public class PublicadorSubgrafo {
      * raíz, borra su fila y borra su base de reglas, de modo que las cuidadoras
      * que empiecen un recorrido nuevo ya no lo ven. Los recorridos en curso
      * terminan con la versión con la que empezaron (grafo y reglas quedan
-     * congelados en su versión). Si el contenido que queda no es válido (por
-     * ejemplo, era el único subgrafo publicado), no se guarda nada.
+     * congelados en su versión). Si era el último subgrafo de su categoría, la
+     * categoría deja de mostrarse; si era el último del sistema, la
+     * composición conserva solo la pregunta inicial sin opciones y la consulta
+     * queda no disponible hasta que se publique otro. Si el contenido que
+     * queda no es válido, no se guarda nada.
      *
      * @param borrador borrador del subgrafo que se retira
      * @throws ContenidoInvalidoException si el contenido restante no se puede componer
@@ -166,10 +169,6 @@ public class PublicadorSubgrafo {
         if (filaRaiz == null) {
             throw new IllegalStateException("no hay grafo raíz ('" + CompositorGrafoClinico.ID_RAIZ
                     + "') en la base de datos");
-        }
-        if (restantes.isEmpty()) {
-            throw new ContenidoInvalidoException("Este es el único subgrafo publicado: si se despublica, la "
-                    + "app de las cuidadoras se quedaría sin nada que mostrar. Publica otro antes.", List.of());
         }
         List<BaseReglasJson> reglasRestantes = new ArrayList<>();
         List<BaseReglasEntity> basesBorrar = new ArrayList<>();

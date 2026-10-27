@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['fixture_0',['Fixture',['../pruebas_autoria.html#autotoc_md1',1,'']]],
-  ['fixtures_1',['Fixtures',['../pruebas_navegacion.html#autotoc_md19',1,'']]],
-  ['frontend_20pwa_20caddy_2',['Frontend PWA (Caddy)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md76',1,'']]]
+  ['6_20pendientes_20para_20tener_20completa_20la_20parte_20de_20subgrafos_20clínicos_0',['6. Pendientes para tener completa la parte de subgrafos clínicos',['../md_docs_2autoria-subgrafos.html#autotoc_md98',1,'']]]
 ];

@@ -5,6 +5,7 @@ import java.util.List;
 import org.signbb.backend.autoria.controladores.ErrorAutoriaDTO;
 import org.signbb.backend.cache.CacheNoDisponibleException;
 import org.signbb.backend.navegacion.modelo.RecorridoOcupadoException;
+import org.signbb.backend.navegacion.servicios.ConsultaNoDisponibleException;
 import org.signbb.backend.observaciones.servicios.PreguntaDesactualizadaException;
 import org.signbb.backend.observaciones.servicios.RecorridoFinalizadoException;
 import org.signbb.backend.observaciones.servicios.RecorridoVencidoException;
@@ -90,5 +91,16 @@ public class ManejadorExcepciones {
     @ExceptionHandler(CacheNoDisponibleException.class)
     public ResponseEntity<Void> manejarCacheNoDisponible(CacheNoDisponibleException ex) {
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
+    }
+
+    /**
+     * No hay subgrafos publicados: 503 con el mensaje que muestra la app. Se
+     * distingue de {@link CacheNoDisponibleException} porque esta sí lleva
+     * cuerpo y no se debe reintentar sin que el contenido cambie.
+     */
+    @ExceptionHandler(ConsultaNoDisponibleException.class)
+    public ResponseEntity<ErrorAutoriaDTO> manejarConsultaNoDisponible(ConsultaNoDisponibleException ex) {
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(new ErrorAutoriaDTO(ex.getMessage(), List.of()));
     }
 }

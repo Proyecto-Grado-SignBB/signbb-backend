@@ -1,0 +1,32 @@
+{
+  "subgrafos": [
+    {
+      "grafo": "grafo_respiracion.json",
+      "reglas": "reglas_respiracion.json",
+      "puenteId": "puente_respiracion",
+      "categoria": "Respiración",
+      "etiquetaOpcion": "Revisar respiración y nariz"
+    },
+    {
+      "grafo": "grafo_gastro.json",
+      "reglas": "reglas_gastro.json",
+      "puenteId": "puente_gastro",
+      "categoria": "Gastrointestinal",
+      "etiquetaOpcion": "Revisar digestión"
+    },
+    {
+      "grafo": "grafo_activo_color.json",
+      "reglas": "reglas_activo_color.json",
+      "puenteId": "puente_neuro",
+      "categoria": "Actividad y color",
+      "etiquetaOpcion": "Revisar actividad y color"
+    },
+    {
+      "grafo": "grafo_cabeza.json",
+      "reglas": "reglas_cabeza.json",
+      "puenteId": "puente_cabeza",
+      "categoria": "Cabeza, ojos y oídos",
+      "etiquetaOpcion": "Revisar cabeza, ojos y oídos"
+    }
+  ]
+}

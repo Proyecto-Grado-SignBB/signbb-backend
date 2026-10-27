@@ -1,0 +1,91 @@
+{
+  "grafoId": "grafo_respiracion",
+  "rules": {
+    "R_RESP_URG": {
+      "nombre": "Urgencia Respiración",
+      "condiciones": [
+        [
+          {
+            "idNodo": "q_resp_vista",
+            "respuesta": "Respira persistentemente rápido (≥60/min)"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_resp_vista",
+            "respuesta": "Aleteo nasal"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_resp_vista",
+            "respuesta": "Se le hunde el pecho"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_resp_vista",
+            "respuesta": "Labios o cara azules/grises"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_resp_sonidos",
+            "respuesta": "Quejido al respirar"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_resp_sonidos",
+            "respuesta": "Pausas o Apneas con cambio de color"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_resp_nariz",
+            "respuesta": "Congestión no permite alimentarse"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_resp_nariz",
+            "respuesta": "Más respiración rápida, quejido, etc."
+          }
+        ]
+      ],
+      "nodoDestino": "T_URGENCIA",
+      "nivel": "URGENCIA"
+    },
+    "R_RESP_CON": {
+      "nombre": "Consultar Respiración",
+      "condiciones": [
+        [
+          {
+            "idNodo": "q_resp_vista",
+            "respuesta": "Respira diferente sin esfuerzo"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_resp_sonidos",
+            "respuesta": "Ruido al respirar que antes no hacía"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_resp_sonidos",
+            "respuesta": "Presenta tos pero respira tranquilo"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_resp_nariz",
+            "respuesta": "Congestión cuesta alimentar pero completa tomas"
+          }
+        ]
+      ],
+      "nodoDestino": "T_CONSULTA",
+      "nivel": "CONSULTAR_MEDICO"
+    }
+  }
+}

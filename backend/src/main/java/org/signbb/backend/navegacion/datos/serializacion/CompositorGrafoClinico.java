@@ -32,7 +32,10 @@ import tools.jackson.databind.node.ObjectNode;
  * ({@code grafoId/idLocal}) para que dos médicos puedan usar el mismo id sin
  * choques. Si el subgrafo no existe, la arista se omite con un aviso.</li>
  * <li>Poda las preguntas de la raíz que quedaron sin opciones (un puente sin
- * subgrafos), lo que a su vez quita esa categoría de la pregunta inicial.</li>
+ * subgrafos), lo que a su vez quita esa categoría de la pregunta inicial. La
+ * pregunta inicial se conserva aunque quede sin opciones: así el contenido
+ * sigue siendo reconstruible y la consulta puede reportarse como no
+ * disponible.</li>
  * <li>Une las bases de reglas: las de un subgrafo se prefijan con su
  * {@code grafoId} (id de regla, {@code idNodo} de cada condición y
  * {@code nodoDestino}); las del grafo raíz ya usan ids prefijados y se copian
@@ -70,9 +73,6 @@ public final class CompositorGrafoClinico {
      *                                  referencias anidadas, base sin
      *                                  {@code grafoId}) o si dos reglas
      *                                  quedan con el mismo id.
-     * @throws IllegalStateException    si tras omitir los subgrafos
-     *                                  inexistentes la pregunta inicial queda
-     *                                  sin opciones.
      */
     public static Contenido componer(GrafoClinicoJson raiz, List<GrafoClinicoJson> subgrafos,
             List<BaseReglasJson> bases) {
@@ -119,18 +119,21 @@ public final class CompositorGrafoClinico {
                     prefijar(grafoId, GrafoClinicoMapper.inicialDe(subgrafo)), arista.directed()));
         }
 
-        podarPreguntasSinOpciones(nodosRaiz, nodos, aristas);
+        podarPreguntasSinOpciones(preguntaInicial, nodosRaiz, nodos, aristas);
         if (!nodos.containsKey(preguntaInicial)) {
-            throw new IllegalStateException(
-                    "no hay subgrafos publicados: la pregunta inicial '" + preguntaInicial
-                            + "' quedó sin opciones");
+            throw new IllegalArgumentException(
+                    "la pregunta inicial '" + preguntaInicial + "' no existe en el grafo raíz");
         }
 
+        Map<String, Set<String>> opciones = new LinkedHashMap<>();
+        for (GrafoClinicoJson.Arista arista : aristas) {
+            opciones.computeIfAbsent(arista.source(), id -> new LinkedHashSet<>()).add(arista.relation());
+        }
         GrafoClinicoJson grafo = new GrafoClinicoJson(new GrafoClinicoJson.Grafo(
                 grafoRaiz.id(), grafoRaiz.label(), true, List.of(), preguntaInicial, null,
                 grafoRaiz.metadata(), nodos, aristas));
         BaseReglasJson reglas = new BaseReglasJson(grafoRaiz.id(),
-                unirReglas(grafoRaiz.id(), incrustados, bases));
+                unirReglas(grafoRaiz.id(), incrustados, bases, nodos.keySet(), opciones));
         return new Contenido(grafo, reglas);
     }
 
@@ -185,9 +188,11 @@ public final class CompositorGrafoClinico {
      * Elimina, hasta que no quede ninguna, las preguntas de la raíz sin
      * aristas de salida junto con las aristas que llegan a ellas. Así un
      * puente cuyos subgrafos no existen desaparece, y con él la opción de su
-     * categoría en la pregunta inicial.
+     * categoría en la pregunta inicial. La pregunta inicial no se poda: si no
+     * queda ninguna categoría, se conserva sin opciones para representar que
+     * la consulta no está disponible.
      */
-    private static void podarPreguntasSinOpciones(Set<String> nodosRaiz,
+    private static void podarPreguntasSinOpciones(String preguntaInicial, Set<String> nodosRaiz,
             Map<String, GrafoClinicoJson.NodoJson> nodos, List<GrafoClinicoJson.Arista> aristas) {
         boolean cambio = true;
         while (cambio) {
@@ -197,7 +202,7 @@ public final class CompositorGrafoClinico {
                 boolean esPregunta = nodo != null && nodo.metadata() != null
                         && "pregunta".equals(nodo.metadata().tipo());
                 boolean tieneSalidas = aristas.stream().anyMatch(a -> a.source().equals(id));
-                if (esPregunta && !tieneSalidas) {
+                if (esPregunta && !tieneSalidas && !id.equals(preguntaInicial)) {
                     log.warn("La pregunta '{}' de la raíz quedó sin opciones: se poda.", id);
                     nodos.remove(id);
                     nodosRaiz.remove(id);
@@ -209,12 +214,14 @@ public final class CompositorGrafoClinico {
     }
 
     /**
-     * Une las bases de reglas. Las del grafo raíz se copian tal cual; las de un
-     * subgrafo incrustado se prefijan; las de un subgrafo no incrustado se
-     * omiten con un aviso, porque sus nodos no están en el grafo compuesto.
+     * Une las bases de reglas. Las del grafo raíz se copian tal cual, salvo las
+     * que usan nodos de subgrafos que no están publicados; las de un subgrafo
+     * incrustado se prefijan; las de un subgrafo no incrustado se omiten con un
+     * aviso, porque sus nodos no están en el grafo compuesto.
      */
     private static Map<String, BaseReglasJson.ReglaJson> unirReglas(String idRaiz,
-            Set<String> incrustados, List<BaseReglasJson> bases) {
+            Set<String> incrustados, List<BaseReglasJson> bases, Set<String> nodosCompuestos,
+            Map<String, Set<String>> opcionesCompuestas) {
         Map<String, BaseReglasJson.ReglaJson> unidas = new LinkedHashMap<>();
         for (BaseReglasJson base : bases == null ? List.<BaseReglasJson>of() : bases) {
             if (base == null || base.rules() == null) {
@@ -231,6 +238,11 @@ public final class CompositorGrafoClinico {
                 continue;
             }
             for (Map.Entry<String, BaseReglasJson.ReglaJson> e : base.rules().entrySet()) {
+                if (deLaRaiz && !referenciasValidas(e.getValue(), nodosCompuestos, opcionesCompuestas)) {
+                    log.warn("La regla '{}' de la base del grafo raíz se omite: usa nodos u opciones "
+                            + "que no están en el contenido publicado.", e.getKey());
+                    continue;
+                }
                 String idRegla = deLaRaiz ? e.getKey() : prefijar(grafoId, e.getKey());
                 BaseReglasJson.ReglaJson regla = deLaRaiz ? e.getValue() : prefijarRegla(grafoId, e.getValue());
                 if (unidas.put(idRegla, regla) != null) {
@@ -239,6 +251,39 @@ public final class CompositorGrafoClinico {
             }
         }
         return unidas;
+    }
+
+    /** True si el destino y todas las condiciones de la regla existen en el contenido compuesto. */
+    private static boolean referenciasValidas(BaseReglasJson.ReglaJson regla, Set<String> nodos,
+            Map<String, Set<String>> opciones) {
+        if (regla == null) {
+            return true;
+        }
+        if (regla.nodoDestino() != null && !nodos.contains(regla.nodoDestino())) {
+            return false;
+        }
+        return condicionesEnElGrafo(regla.condiciones(), nodos, opciones);
+    }
+
+    /** Recorre la FND de condiciones y comprueba cada {@code idNodo} y su respuesta. */
+    private static boolean condicionesEnElGrafo(JsonNode nodo, Set<String> nodos,
+            Map<String, Set<String>> opciones) {
+        if (nodo == null) {
+            return true;
+        }
+        if (nodo.isArray()) {
+            for (JsonNode hijo : nodo) {
+                if (!condicionesEnElGrafo(hijo, nodos, opciones)) {
+                    return false;
+                }
+            }
+        } else if (nodo.isObject() && nodo.has("idNodo")) {
+            String idNodo = nodo.get("idNodo").asText();
+            String respuesta = nodo.path("respuesta").asText();
+            return nodos.contains(idNodo)
+                    && opciones.getOrDefault(idNodo, Set.of()).contains(respuesta);
+        }
+        return true;
     }
 
     /** Prefija {@code nodoDestino} y el {@code idNodo} de cada condición. */

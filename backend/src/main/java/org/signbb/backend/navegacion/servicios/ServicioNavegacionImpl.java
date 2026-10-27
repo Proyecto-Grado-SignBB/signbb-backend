@@ -43,12 +43,21 @@ public class ServicioNavegacionImpl implements ServicioNavegacion {
         this.repositorioSesion = repositorioSesion;
     }
 
+    /** True si el contenido vigente tiene opciones desde la pregunta inicial. */
+    @Override
+    public boolean consultaDisponible() {
+        return hayOpcionesDesdeInicio(contexto.getGrafo());
+    }
+
     /** Abre una sesión nueva y devuelve la primera pregunta del recorrido. */
     @Override
     public RecorridoDTO iniciar() {
         // El recorrido queda atado a la versión vigente y la termina con ella
         Long version = contexto.idVersionActual();
         GrafoClinico grafo = contexto.grafoDe(version);
+        if (!hayOpcionesDesdeInicio(grafo)) {
+            throw new ConsultaNoDisponibleException();
+        }
         EstadoPaciente estado = new EstadoPaciente(UUID.randomUUID().toString());
         ResultadoPaso paso = motor.iniciar(estado, grafo);
         SesionTriaje sesion = repositorioSesion.crear(estado, paso, version);
@@ -122,5 +131,15 @@ public class ServicioNavegacionImpl implements ServicioNavegacion {
     public RecorridoDTO consultar(String recorridoId) {
         SesionTriaje sesion = repositorioSesion.buscar(recorridoId);
         return RecorridoDTO.desde(recorridoId, contexto.grafoDe(sesion.getVersionId()), sesion.getUltimoPaso());
+    }
+
+    /**
+     * True si el grafo tiene una pregunta inicial con opciones, o si su nodo
+     * inicial ya es terminal (un contenido mínimo que produce un resultado).
+     */
+    static boolean hayOpcionesDesdeInicio(GrafoClinico grafo) {
+        return grafo.obtenerNodoInicial()
+                .map(nodo -> grafo.esNodoTerminal(nodo) || !grafo.obtenerOpciones(nodo).isEmpty())
+                .orElse(false);
     }
 }

@@ -51,11 +51,18 @@ contexto completo:
 - `BackendApplicationTests` — *smoke test*: el contexto de la aplicación carga. Con
   `ddl-auto=validate`, además comprueba que las migraciones de Flyway dejan el
   esquema que esperan las entidades.
-- `ArranqueCondicionalTest` — la siembra (`DatabaseInit`) y la demo de consola
-  (`DemoTriajeRunner`) solo existen si `signbb.siembra.activa` /
-  `signbb.demo.activa` valen `true` (sin base de datos).
+- `ArranqueCondicionalTest` — la siembra (`DatabaseInit`), la demo de consola
+  (`DemoTriajeRunner`) y el seed de demo (`SeedDemoRunner`) solo existen si sus
+  banderas valen `true` (sin base de datos).
+- `seed/SeedGraphConverterTest` — los JSON de `seed/demo/` se convierten a
+  lienzo/reglas, pasan las validaciones y vuelven a compilar con el mismo
+  contenido y pesos.
+- `seed/SeedDemoServiceTest` — el seed no duplica cuentas ni subgrafos cuando
+  ya existen.
 - `PersistenciaEstructuraJsonTest` — ida y vuelta de los documentos JSON por la
-  columna `estructura` (`jsonb`) y verificación de la siembra de `DatabaseInit`.
+  columna `estructura` (`jsonb`) y verificación de que `DatabaseInit` sembró el
+  grafo raíz. Los tests que necesitan contenido navegable insertan un subgrafo
+  de ejemplo y lo eliminan al terminar.
 - `AutoriaIntegracionTest` — de punta a punta: armar un subgrafo con el servicio,
   aprobarlo (publicarlo) y recorrerlo como la cuidadora (ver \ref pruebas_autoria).
 - `seguridad/ReglasAccesoIntegracionTest` — la cadena de filtros real: 401 sin

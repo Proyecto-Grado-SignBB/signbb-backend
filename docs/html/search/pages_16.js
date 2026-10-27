@@ -1,9 +1,12 @@
 var searchData=
 [
-  ['—_20backend_0',['SignBB — Backend',['../index.html',1,'']]],
-  ['—_20candado_20por_20recorrido_1',['CandadoRecorridoRedisTest — candado por recorrido',['../pruebas_cache.html#autotoc_md60',1,'']]],
-  ['—_20cola_20de_20la_20selección_20múltiple_2',['ColaSeleccionMultipleRedisIntegracionTest — cola de la selección múltiple',['../pruebas_cache.html#autotoc_md62',1,'']]],
-  ['—_20integración_3',['CacheRedisIntegracionTest — integración',['../pruebas_cache.html#autotoc_md61',1,'']]],
-  ['—_20resolución_20cache_20aside_20del_20contenido_4',['ResolvedorContenidoClinicoTest — resolución cache-aside del contenido',['../pruebas_cache.html#autotoc_md58',1,'']]],
-  ['—_20sesiones_20en_20redis_5',['RepositorioSesionRedisTest — sesiones en Redis',['../pruebas_cache.html#autotoc_md59',1,'']]]
+  ['qué_20es_20esta_20parte_0',['1. Qué es esta parte',['../md_docs_2autoria-subgrafos.html#autotoc_md85',1,'']]],
+  ['qué_20falta_1',['SignBB · Autoría de subgrafos clínicos: qué se hizo y qué falta',['../md_docs_2autoria-subgrafos.html',1,'']]],
+  ['qué_20importa_2',['qué importa',['../pruebas_autoria.html#autotoc_md2',1,'Qué se prueba y por qué importa'],['../pruebas_navegacion.html#autotoc_md20',1,'Qué se prueba y por qué importa'],['../pruebas_observaciones.html#autotoc_md30',1,'Qué se prueba y por qué importa'],['../pruebas_seguridad.html#autotoc_md45',1,'Qué se prueba y por qué importa']]],
+  ['qué_20se_20hizo_20y_20qué_20falta_3',['SignBB · Autoría de subgrafos clínicos: qué se hizo y qué falta',['../md_docs_2autoria-subgrafos.html',1,'']]],
+  ['qué_20se_20prueba_20y_20por_20qué_20importa_4',['Qué se prueba y por qué importa',['../pruebas_autoria.html#autotoc_md2',1,'Qué se prueba y por qué importa'],['../pruebas_navegacion.html#autotoc_md20',1,'Qué se prueba y por qué importa'],['../pruebas_observaciones.html#autotoc_md30',1,'Qué se prueba y por qué importa'],['../pruebas_seguridad.html#autotoc_md45',1,'Qué se prueba y por qué importa']]],
+  ['qué_20se_20quitó_20en_20la_20reorganización_5',['Qué se quitó en la reorganización',['../pruebas_navegacion.html#autotoc_md26',1,'']]],
+  ['que_20el_20back_20responde_20mac_20y_20windows_6',['Verificar que el back responde (Mac y Windows)',['../md_docs_2autoria-subgrafos.html#autotoc_md94',1,'']]],
+  ['que_20seguimos_7',['3. Pasos que seguimos',['../md_docs_2autoria-subgrafos.html#autotoc_md87',1,'']]],
+  ['quitó_20en_20la_20reorganización_8',['Qué se quitó en la reorganización',['../pruebas_navegacion.html#autotoc_md26',1,'']]]
 ];

@@ -242,7 +242,7 @@ Cuando la transacción confirma, invalida el cache de Redis y hace que <code><a 
 </div><div class="memdoc">
 
 <p>Retira un subgrafo publicado: quita su referencia y sus opciones del grafo raíz, borra su fila y borra su base de reglas, de modo que las cuidadoras que empiecen un recorrido nuevo ya no lo ven. </p>
-<p>Los recorridos en curso terminan con la versión con la que empezaron (grafo y reglas quedan congelados en su versión). Si el contenido que queda no es válido (por ejemplo, era el único subgrafo publicado), no se guarda nada.</p>
+<p>Los recorridos en curso terminan con la versión con la que empezaron (grafo y reglas quedan congelados en su versión). Si era el último subgrafo de su categoría, la categoría deja de mostrarse; si era el último del sistema, la composición conserva solo la pregunta inicial sin opciones y la consulta queda no disponible hasta que se publique otro. Si el contenido que queda no es válido, no se guarda nada.</p>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">borrador</td><td>borrador del subgrafo que se retira </td></tr>

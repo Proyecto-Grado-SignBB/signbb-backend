@@ -35,6 +35,8 @@ import tools.jackson.databind.ObjectMapper;
  * subgrafo por médico) y cada base de reglas con su {@code grafoId}. Este
  * resolvedor los compone con {@link CompositorGrafoClinico} y cachea el
  * resultado plano, que es lo único que ven {@code ContextoClinico} y el motor.
+ * Los subgrafos son opcionales: una instalación recién sembrada solo tiene la
+ * raíz y compone una pregunta inicial sin opciones (consulta no disponible).
  */
 @Component
 public class ResolvedorContenidoClinico {

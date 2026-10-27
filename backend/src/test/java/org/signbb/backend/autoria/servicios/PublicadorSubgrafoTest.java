@@ -327,6 +327,20 @@ class PublicadorSubgrafoTest {
     }
 
     @Test
+    void retirarElUnicoSubgrafoDeUnaCategoriaDeshabilitaEsaCategoria() {
+        BorradorSubgrafoEntity sistema = new BorradorSubgrafoEntity();
+        sistema.setGrafoId("grafo_activo_color");
+
+        publicador.retirar(sistema);
+
+        GrafoClinico tad = contenidoNavegable();
+        assertEquals(List.of("respiracion", "gastrointestinal"),
+                tad.obtenerOpciones(tad.obtenerNodoInicial().orElseThrow()).stream()
+                        .map(Respuesta::getCondicion).toList());
+        assertTrue(tad.obtenerNodoPorId("puente_neuro").isEmpty());
+    }
+
+    @Test
     void retirarNoTocaLosDemasSubgrafos() {
         BorradorSubgrafoEntity borrador = fiebrePublicada();
         List<GrafoClinicoJson> antes = filas.stream().map(GrafoClinicoEntity::getEstructura)
@@ -395,22 +409,22 @@ class PublicadorSubgrafoTest {
     }
 
     @Test
-    void siEsElUnicoSubgrafoPublicadoNoSeRetiraNiSeGuardaNada() {
+    void siEsElUnicoSubgrafoPublicadoSeRetiraYLaRaizQuedaSinOpciones() {
         BorradorSubgrafoEntity borrador = fiebrePublicada();
         filas.removeIf(f -> !CompositorGrafoClinico.ID_RAIZ.equals(f.getEstructura().graph().id())
                 && !"grafo_fiebre".equals(f.getEstructura().graph().id()));
         clearInvocations(grafos, resolvedor, contexto, versiones);
 
-        ContenidoInvalidoException e = assertThrows(ContenidoInvalidoException.class,
-                () -> publicador.retirar(borrador));
+        publicador.retirar(borrador);
 
-        assertTrue(e.getMessage().contains("único subgrafo publicado"));
-        verify(grafos, never()).save(any());
-        verify(grafos, never()).delete(any());
-        verify(bases, never()).delete(any(BaseReglasEntity.class));
-        verify(versiones, never()).registrar(any(), any(), any());
-        verify(resolvedor, never()).invalidar();
-        verify(contexto, never()).recargar();
+        assertEquals(1, filas.size(), "solo queda el grafo raíz");
+        GrafoClinico tad = contenidoNavegable();
+        assertEquals(1, tad.size(), "la composición conserva solo la pregunta inicial");
+        assertEquals(0, tad.obtenerOpciones(tad.obtenerNodoInicial().orElseThrow()).size());
+        verify(grafos).delete(any(GrafoClinicoEntity.class));
+        verify(versiones).registrar(any(), any(), any());
+        verify(resolvedor).invalidar();
+        verify(contexto).recargar();
     }
 
     @Test

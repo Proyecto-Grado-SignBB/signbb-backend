@@ -22,8 +22,17 @@ import org.signbb.backend.observaciones.controladores.RecorridoDTO;
 public interface ServicioNavegacion {
 
     /**
+     * True si el contenido vigente permite iniciar una consulta: hay al menos
+     * una opción desde la pregunta inicial. Es false cuando no queda ningún
+     * subgrafo publicado.
+     */
+    boolean consultaDisponible();
+
+    /**
      * Inicia un recorrido sobre el grafo clínico cargado y devuelve la primera
      * pregunta.
+     *
+     * @throws ConsultaNoDisponibleException si no hay ningún subgrafo publicado
      */
     RecorridoDTO iniciar();
 

@@ -1,0 +1,160 @@
+{
+  "graph": {
+    "id": "grafo_raiz",
+    "label": "Grafo raíz de SignBB",
+    "directed": true,
+    "category": [],
+    "preguntaInicial": "pregunta_inicial",
+    "metadata": {
+      "autor": "Sistema SignBB",
+      "fechaCreacion": "2026-10-07T18:00:00Z",
+      "descripcion": "Orquestador principal"
+    },
+    "nodes": {
+      "pregunta_inicial": {
+        "label": "¿Sientes que tu bebé está diferente a como normalmente es?\nSeleccione las categorías a consultar",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_MULTIPLE",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "puente_respiracion": {
+        "label": "¿Qué nota en la respiración o la nariz?",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_UNICA",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "puente_gastro": {
+        "label": "¿Qué nota en la alimentación, el vómito, la barriga, el popó o la orina?",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_UNICA",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "puente_neuro": {
+        "label": "¿Qué nota en la actividad, el color o el llanto?",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_UNICA",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "puente_cabeza": {
+        "label": "¿Qué nota en la cabeza, los ojos o los oídos?",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_UNICA",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "ref_grafo_respiracion": {
+        "label": "Grafo de Respiración y Nariz",
+        "metadata": {
+          "tipo": "referencia",
+          "grafoId": "grafo_respiracion",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "ref_grafo_gastro": {
+        "label": "Grafo Gastrointestinal",
+        "metadata": {
+          "tipo": "referencia",
+          "grafoId": "grafo_gastro",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "ref_grafo_activo_color": {
+        "label": "Grafo de Actividad y Color",
+        "metadata": {
+          "tipo": "referencia",
+          "grafoId": "grafo_activo_color",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "ref_grafo_cabeza": {
+        "label": "Grafo de Cabeza, Ojos y Oídos",
+        "metadata": {
+          "tipo": "referencia",
+          "grafoId": "grafo_cabeza",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      }
+    },
+    "edges": [
+      {
+        "source": "pregunta_inicial",
+        "relation": "Respiración",
+        "target": "puente_respiracion",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "pregunta_inicial",
+        "relation": "Gastrointestinal",
+        "target": "puente_gastro",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "pregunta_inicial",
+        "relation": "Actividad y color",
+        "target": "puente_neuro",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "pregunta_inicial",
+        "relation": "Cabeza, ojos y oídos",
+        "target": "puente_cabeza",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "puente_respiracion",
+        "relation": "Revisar respiración y nariz",
+        "target": "ref_grafo_respiracion",
+        "directed": true
+      },
+      {
+        "source": "puente_gastro",
+        "relation": "Revisar digestión",
+        "target": "ref_grafo_gastro",
+        "directed": true
+      },
+      {
+        "source": "puente_neuro",
+        "relation": "Revisar actividad y color",
+        "target": "ref_grafo_activo_color",
+        "directed": true
+      },
+      {
+        "source": "puente_cabeza",
+        "relation": "Revisar cabeza, ojos y oídos",
+        "target": "ref_grafo_cabeza",
+        "directed": true
+      }
+    ]
+  }
+}

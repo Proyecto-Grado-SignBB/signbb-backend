@@ -1,6 +1,7 @@
 var classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1ControladorConsulta =
 [
     [ "consultar", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1ControladorConsulta.html#a227c37f5e30ba1d770d9ea50958bfef2", null ],
+    [ "disponibilidad", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1ControladorConsulta.html#a10137e1916212d5d8d077c65fd3b3bfa", null ],
     [ "iniciar", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1ControladorConsulta.html#a75fb60c3ca3a3d5ae7987213af2b21d3", null ],
     [ "misRecorridos", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1ControladorConsulta.html#a33d1b6a84b63ad0952a650b0a440856b", null ],
     [ "reiniciar", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores_1_1ControladorConsulta.html#ab84cfdbbb8c8d211f0a10e8966eefb2e", null ],

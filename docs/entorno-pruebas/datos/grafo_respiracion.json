@@ -1,0 +1,280 @@
+{
+  "graph": {
+    "id": "grafo_respiracion",
+    "label": "Evaluación de Respiración y Nariz",
+    "directed": true,
+    "category": [
+      "respiracion",
+      "nariz"
+    ],
+    "preguntaInicial": "q_resp_gate_vista",
+    "metadata": {
+      "autor": "Sistema SignBB",
+      "fechaCreacion": "2026-10-07T18:00:00Z",
+      "descripcion": "Subgrafo de respiración y nariz con preguntas de observación y selección múltiple."
+    },
+    "nodes": {
+      "q_resp_gate_vista": {
+        "label": "¿Notas que respira muy rápido, con esfuerzo, distinto o con un color raro?",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_UNICA",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "q_resp_gate_sonidos": {
+        "label": "¿Hace ruidos, tos o pausas al respirar?",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_UNICA",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "q_resp_gate_nariz": {
+        "label": "¿Tiene congestión, estornudos o hipo?",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_UNICA",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "q_resp_vista": {
+        "label": "Marca todo lo que veas.",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_MULTIPLE",
+          "peso": 3,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "q_resp_sonidos": {
+        "label": "Marca todo lo que escuches.",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_MULTIPLE",
+          "peso": 3,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "q_resp_nariz": {
+        "label": "Marca todo lo que notes.",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_MULTIPLE",
+          "peso": 3,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "T_URGENCIA": {
+        "label": "URGENCIA\nLleva a tu bebé a urgencias ahora.",
+        "metadata": {
+          "tipo": "terminal",
+          "desenlace": "urgencia",
+          "peso": 3,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "T_CONSULTA": {
+        "label": "CONSULTAR_MEDICO\nContacta hoy al Programa Madre Canguro.",
+        "metadata": {
+          "tipo": "terminal",
+          "desenlace": "consulta_medica",
+          "peso": 2,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "T_NORMAL": {
+        "label": "NORMAL\nLo que observas puede ser normal. Sigue observando.",
+        "metadata": {
+          "tipo": "terminal",
+          "desenlace": "recomendacion",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      }
+    },
+    "edges": [
+      {
+        "source": "q_resp_gate_vista",
+        "relation": "Sí",
+        "target": "q_resp_vista",
+        "directed": true
+      },
+      {
+        "source": "q_resp_gate_vista",
+        "relation": "No",
+        "target": "q_resp_gate_sonidos",
+        "directed": true
+      },
+      {
+        "source": "q_resp_vista",
+        "relation": "Respira persistentemente rápido (≥60/min)",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_resp_vista",
+        "relation": "Aleteo nasal",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_resp_vista",
+        "relation": "Se le hunde el pecho",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_resp_vista",
+        "relation": "Labios o cara azules/grises",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_resp_vista",
+        "relation": "Respira diferente sin esfuerzo",
+        "target": "T_CONSULTA",
+        "directed": true,
+        "peso": 2
+      },
+      {
+        "source": "q_resp_vista",
+        "relation": "A veces respira más rápido y luego normal",
+        "target": "T_NORMAL",
+        "directed": true,
+        "peso": 1
+      },
+      {
+        "source": "q_resp_vista",
+        "relation": "Manos o pies azulados, pero labios rosados",
+        "target": "T_NORMAL",
+        "directed": true,
+        "peso": 1
+      },
+      {
+        "source": "q_resp_gate_sonidos",
+        "relation": "Sí",
+        "target": "q_resp_sonidos",
+        "directed": true
+      },
+      {
+        "source": "q_resp_gate_sonidos",
+        "relation": "No",
+        "target": "q_resp_gate_nariz",
+        "directed": true
+      },
+      {
+        "source": "q_resp_sonidos",
+        "relation": "Quejido al respirar",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_resp_sonidos",
+        "relation": "Pausas o Apneas con cambio de color",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_resp_sonidos",
+        "relation": "Ruido al respirar que antes no hacía",
+        "target": "T_CONSULTA",
+        "directed": true,
+        "peso": 2
+      },
+      {
+        "source": "q_resp_sonidos",
+        "relation": "Presenta tos pero respira tranquilo",
+        "target": "T_CONSULTA",
+        "directed": true,
+        "peso": 2
+      },
+      {
+        "source": "q_resp_sonidos",
+        "relation": "Pausas cortas sin cambiar de color",
+        "target": "T_NORMAL",
+        "directed": true,
+        "peso": 1
+      },
+      {
+        "source": "q_resp_sonidos",
+        "relation": "Ruiditos pero respira tranquilo",
+        "target": "T_NORMAL",
+        "directed": true,
+        "peso": 1
+      },
+      {
+        "source": "q_resp_gate_nariz",
+        "relation": "Sí",
+        "target": "q_resp_nariz",
+        "directed": true
+      },
+      {
+        "source": "q_resp_gate_nariz",
+        "relation": "No",
+        "target": "T_NORMAL",
+        "directed": true
+      },
+      {
+        "source": "q_resp_nariz",
+        "relation": "Congestión no permite alimentarse",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_resp_nariz",
+        "relation": "Más respiración rápida, quejido, etc.",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_resp_nariz",
+        "relation": "Congestión cuesta alimentar pero completa tomas",
+        "target": "T_CONSULTA",
+        "directed": true,
+        "peso": 2
+      },
+      {
+        "source": "q_resp_nariz",
+        "relation": "Moquitos pero respira/come bien",
+        "target": "T_NORMAL",
+        "directed": true,
+        "peso": 1
+      },
+      {
+        "source": "q_resp_nariz",
+        "relation": "Estornuda de vez en cuando",
+        "target": "T_NORMAL",
+        "directed": true,
+        "peso": 1
+      },
+      {
+        "source": "q_resp_nariz",
+        "relation": "Tiene hipo",
+        "target": "T_NORMAL",
+        "directed": true,
+        "peso": 1
+      }
+    ]
+  }
+}

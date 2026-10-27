@@ -114,14 +114,76 @@ var NAVTREE =
       [ "Limpieza programada (<span class=\"tt\">mantenimiento</span>)", "pruebas_cache.html#autotoc_md65", null ]
     ] ],
     [ "Manual de contenedores", "md_contenedores_2MANUAL__CONTENEDORES.html", [
-      [ "Levantar", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md75", [
-        [ "Frontend PWA (Caddy)", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md76", null ],
-        [ "Variables de entorno", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md77", null ]
+      [ "Levantar", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md77", [
+        [ "Frontend PWA (Caddy)", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md78", null ],
+        [ "Variables de entorno", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md79", null ]
       ] ],
-      [ "Dar de baja", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md78", null ],
-      [ "Eliminar los datos persistentes", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md79", null ],
-      [ "Acceso rápido", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md80", null ],
-      [ "Parámetros de conexión (perfil <span class=\"tt\">docker</span> del backend en el host)", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md81", null ]
+      [ "Dar de baja", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md80", null ],
+      [ "Eliminar los datos persistentes", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md81", null ],
+      [ "Acceso rápido", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md82", null ],
+      [ "Parámetros de conexión (perfil <span class=\"tt\">docker</span> del backend en el host)", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md83", null ]
+    ] ],
+    [ "SignBB · Autoría de subgrafos clínicos: qué se hizo y qué falta", "md_docs_2autoria-subgrafos.html", [
+      [ "1. Qué es esta parte", "md_docs_2autoria-subgrafos.html#autotoc_md85", null ],
+      [ "2. Ramas y cómo están", "md_docs_2autoria-subgrafos.html#autotoc_md86", null ],
+      [ "3. Pasos que seguimos", "md_docs_2autoria-subgrafos.html#autotoc_md87", [
+        [ "Back (<span class=\"tt\">signbb-backend</span>, rama <span class=\"tt\">autoria</span>)", "md_docs_2autoria-subgrafos.html#autotoc_md88", null ],
+        [ "Front (<span class=\"tt\">signbb-frontend</span>, rama <span class=\"tt\">autoria</span>, proyecto <span class=\"tt\">ui-autoria</span>)", "md_docs_2autoria-subgrafos.html#autotoc_md89", null ]
+      ] ],
+      [ "4. API (<span class=\"tt\">/api/autoria</span>)", "md_docs_2autoria-subgrafos.html#autotoc_md90", null ],
+      [ "5. Cómo probarlo en local", "md_docs_2autoria-subgrafos.html#autotoc_md91", [
+        [ "Mac (Terminal, zsh)", "md_docs_2autoria-subgrafos.html#autotoc_md92", null ],
+        [ "Windows (PowerShell)", "md_docs_2autoria-subgrafos.html#autotoc_md93", null ],
+        [ "Verificar que el back responde (Mac y Windows)", "md_docs_2autoria-subgrafos.html#autotoc_md94", null ],
+        [ "Prueba sugerida: «Ictericia en la piel»", "md_docs_2autoria-subgrafos.html#autotoc_md95", null ],
+        [ "Probar la limpieza a mano", "md_docs_2autoria-subgrafos.html#autotoc_md96", null ],
+        [ "Errores a verificar", "md_docs_2autoria-subgrafos.html#autotoc_md97", null ]
+      ] ],
+      [ "6. Pendientes para tener completa la parte de subgrafos clínicos", "md_docs_2autoria-subgrafos.html#autotoc_md98", [
+        [ "Imprescindibles", "md_docs_2autoria-subgrafos.html#autotoc_md99", null ],
+        [ "Importantes", "md_docs_2autoria-subgrafos.html#autotoc_md100", null ],
+        [ "Detalles menores", "md_docs_2autoria-subgrafos.html#autotoc_md101", null ]
+      ] ],
+      [ "7. Cosas a tener en cuenta", "md_docs_2autoria-subgrafos.html#autotoc_md102", null ]
+    ] ],
+    [ "Entorno de pruebas y demo", "entorno_pruebas.html", [
+      [ "Usuarios creados", "entorno_pruebas.html#autotoc_md103", null ],
+      [ "Cómo se ejecuta el seed", "entorno_pruebas.html#autotoc_md104", [
+        [ "Backend local", "entorno_pruebas.html#autotoc_md105", null ],
+        [ "Docker", "entorno_pruebas.html#autotoc_md106", null ]
+      ] ],
+      [ "Grafos", "entorno_pruebas.html#autotoc_md107", [
+        [ "Índice de nodos", "entorno_pruebas.html#autotoc_md108", null ],
+        [ "Grafo raíz", "entorno_pruebas.html#autotoc_md109", null ],
+        [ "Respiración y nariz", "entorno_pruebas.html#autotoc_md110", null ],
+        [ "Gastrointestinal", "entorno_pruebas.html#autotoc_md111", null ],
+        [ "Actividad y color", "entorno_pruebas.html#autotoc_md112", null ],
+        [ "Cabeza, ojos y oídos", "entorno_pruebas.html#autotoc_md113", null ]
+      ] ],
+      [ "Bases de reglas", "entorno_pruebas.html#autotoc_md114", null ],
+      [ "Scripts de ayuda", "entorno_pruebas.html#autotoc_md115", [
+        [ "<span class=\"tt\">json_a_dot.py</span>", "entorno_pruebas.html#autotoc_md116", null ],
+        [ "<span class=\"tt\">reglas_a_markdown.py</span>", "entorno_pruebas.html#autotoc_md117", null ],
+        [ "<span class=\"tt\">regenerar_grafos.sh</span>", "entorno_pruebas.html#autotoc_md118", null ]
+      ] ],
+      [ "Validación del entorno", "entorno_pruebas.html#autotoc_md119", [
+        [ "Pruebas automáticas", "entorno_pruebas.html#autotoc_md120", null ],
+        [ "Comprobaciones del seed", "entorno_pruebas.html#autotoc_md121", null ]
+      ] ],
+      [ "Notas", "entorno_pruebas.html#autotoc_md122", null ]
+    ] ],
+    [ "base_reglas", "md_docs_2entorno-pruebas_2reglas_2base__reglas.html", null ],
+    [ "Base de reglas: grafo_activo_color", "md_docs_2entorno-pruebas_2reglas_2reglas__activo__color.html", [
+      [ "Resumen por nivel", "md_docs_2entorno-pruebas_2reglas_2reglas__activo__color.html#autotoc_md125", null ]
+    ] ],
+    [ "Base de reglas: grafo_cabeza", "md_docs_2entorno-pruebas_2reglas_2reglas__cabeza.html", [
+      [ "Resumen por nivel", "md_docs_2entorno-pruebas_2reglas_2reglas__cabeza.html#autotoc_md127", null ]
+    ] ],
+    [ "Base de reglas: grafo_gastro", "md_docs_2entorno-pruebas_2reglas_2reglas__gastro.html", [
+      [ "Resumen por nivel", "md_docs_2entorno-pruebas_2reglas_2reglas__gastro.html#autotoc_md129", null ]
+    ] ],
+    [ "Base de reglas: grafo_respiracion", "md_docs_2entorno-pruebas_2reglas_2reglas__respiracion.html", [
+      [ "Resumen por nivel", "md_docs_2entorno-pruebas_2reglas_2reglas__respiracion.html#autotoc_md131", null ]
     ] ],
     [ "Paquetes", "namespaces.html", [
       [ "Lista de paquetes", "namespaces.html", "namespaces_dup" ],
@@ -146,13 +208,13 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicacionContenido.html#af687f4a58f75dbd8da6fd209368809e4",
-"classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorVersiones.html",
-"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#aa6ed3f9eeae098b862e80145ffcc5722",
-"classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioRecorridosImpl.html#a8cf93bc77d5e2e5b66486eb74b86f324",
-"classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentasImpl.html#a04192e75baa5b65f617500955f0cb091",
-"interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html#aadb923acf25f3d789d3fc69231ca4b9f",
-"pruebas_cache.html#autotoc_md57"
+"classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicacionContenido.html#aaeae45121c670112bc5c6bda98a41db4",
+"classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorLimites.html#a7e55812805a78118aec5a88da133bdb4",
+"classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a97f41cd544308a79e4d51e8fef9077fa",
+"classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImplTest.html",
+"classorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1entidades_1_1LimiteIntentosEntity.html",
+"interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#a51eb82c2819b3ad6b5219465089a5364",
+"namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1modelo.html#aacdec638daf4aef95fe4c47d86d1f537"
 ];
 
 const SYNCONMSG = 'pulsar para deshabilitar sincronización';

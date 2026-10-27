@@ -11,7 +11,8 @@ on:
       - 'Doxyfile'
       - 'README.md'
       - 'contenedores/MANUAL_CONTENEDORES.md'
-      - 'grafo_sistema/**'
+      - 'docs/**/*.md'
+      - 'docs/entorno-pruebas/**'
       - 'docs/img/**'
       - '.github/workflows/docs.yml'
 

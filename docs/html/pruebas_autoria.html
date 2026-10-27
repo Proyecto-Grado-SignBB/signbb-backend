@@ -212,7 +212,7 @@ Despublicar (<span class="tt">PublicadorSubgrafoTest</span>)</h2>
 <ul>
 <li><span class="tt">retirar</span> quita la fila del subgrafo, su nodo <span class="tt">ref_&lt;grafoId&gt;</span> y las aristas que lo tocan; la pregunta puente vuelve a tener solo sus opciones de antes y los demás subgrafos no cambian.</li>
 <li>Guarda una versión nueva del contenido (origen "Despublicación de ...") sin el subgrafo, e invalida Redis y recarga el contexto después de guardar.</li>
-<li><b>No guarda nada</b> si es el único subgrafo publicado (la app de las cuidadoras se quedaría sin contenido).</li>
+<li>Si era el único subgrafo publicado, la raíz queda solo con la pregunta inicial sin opciones y la consulta no disponible; la operación no se bloquea.</li>
 <li>Un subgrafo despublicado se puede volver a publicar sin duplicar la opción.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
@@ -270,7 +270,7 @@ API (<span class="tt">ControladorAutoriaTest</span>)</h2>
 <li>Una edición inválida responde <b>422 con <span class="tt">{mensaje, avisos: []}</span></b>.</li>
 <li>Quien no es el autor recibe <b>403</b> al editar y al abrir lo de otro.</li>
 <li>Un id inexistente da 404 y una edición concurrente (<span class="tt">@Version</span>) da 409.</li>
-<li>Despublicar responde 200 con el borrador en <span class="tt">BORRADOR</span>; 422 con el mensaje si no estaba publicado o era el único subgrafo publicado; 404 si no existe.</li>
+<li>Despublicar responde 200 con el borrador en <span class="tt">BORRADOR</span>; 422 con el mensaje si no estaba publicado o el contenido restante no es válido; 404 si no existe.</li>
 <li>Quitar el destino de una respuesta acepta <span class="tt">{"nodoId": null}</span>.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md14"></a>

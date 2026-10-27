@@ -205,7 +205,7 @@ services:
   # ===========================================================================
   # Se construye con backend/Dockerfile. Arranca cuando la base, Redis y Silo
   # están sanos; Flyway migra el esquema y, si SIGNBB_SIEMBRA_ACTIVA es true,
-  # se siembra el contenido clínico de ejemplo.
+  # se siembra solo el grafo raíz del sistema.
   # ===========================================================================
   backend:
     build: ../backend
@@ -239,6 +239,14 @@ services:
       SIGNBB_SUPERVISOR_CONTRASENA: ${SIGNBB_SUPERVISOR_CONTRASENA:-Supervisor123}
       SIGNBB_DOCS_ACTIVAS: ${SIGNBB_DOCS_ACTIVAS:-true}
       SIGNBB_SIEMBRA_ACTIVA: ${SIGNBB_SIEMBRA_ACTIVA:-true}
+      SIGNBB_SEED_DEMO_ACTIVA: ${SIGNBB_SEED_DEMO_ACTIVA:-false}
+      SIGNBB_SEED_MEDICO_NOMBRE: ${SIGNBB_SEED_MEDICO_NOMBRE:-Médico ejemplo - Neonatologo}
+      SIGNBB_SEED_MEDICO_CORREO: ${SIGNBB_SEED_MEDICO_CORREO:-medico.ejemplo@signbb.local}
+      SIGNBB_SEED_MEDICO_CONTRASENA: ${SIGNBB_SEED_MEDICO_CONTRASENA:-Medico123}
+      SIGNBB_SEED_MEDICO_INSTITUCION: ${SIGNBB_SEED_MEDICO_INSTITUCION:-Fundación Canguro}
+      SIGNBB_SEED_PADRE_NOMBRE: ${SIGNBB_SEED_PADRE_NOMBRE:-Padre ejemplo}
+      SIGNBB_SEED_PADRE_CORREO: ${SIGNBB_SEED_PADRE_CORREO:-padre.ejemplo@signbb.local}
+      SIGNBB_SEED_PADRE_CONTRASENA: ${SIGNBB_SEED_PADRE_CONTRASENA:-Padre123}
       SIGNBB_CORS_ORIGENES: ${SIGNBB_CORS_ORIGENES:-http://localhost:4200,http://localhost:4300}
       # Detrás de Caddy: Spring debe ver el esquema https y el host originales
       # para no tratar como CORS las peticiones del mismo origen.

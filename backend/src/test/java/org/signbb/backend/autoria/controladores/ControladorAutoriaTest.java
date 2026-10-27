@@ -252,15 +252,14 @@ class ControladorAutoriaTest {
     }
 
     @Test
-    void despublicarElUnicoSubgrafoPublicadoResponde422ConElMensaje() throws Exception {
+    void despublicarConContenidoRestanteInvalidoResponde422ConElMensaje() throws Exception {
         when(servicio.despublicar(1L)).thenThrow(new ContenidoInvalidoException(
-                "Este es el único subgrafo publicado: si se despublica, la app de las cuidadoras se quedaría "
-                        + "sin nada que mostrar. Publica otro antes.", List.of()));
+                "El subgrafo no se pudo despublicar: el contenido restante no es válido", List.of()));
 
         MockHttpServletResponse r = ejecutar(post("/api/autoria/subgrafos/1/despublicar"));
 
         assertEquals(422, r.getStatus());
-        assertTrue(cuerpo(r).contains("único subgrafo publicado"));
+        assertTrue(cuerpo(r).contains("contenido restante no es válido"));
         assertTrue(cuerpo(r).contains("\"avisos\":[]"));
     }
 

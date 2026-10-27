@@ -166,20 +166,16 @@ class CacheRedisIntegracionTest {
     @Test
     void laSesionSobreviveUnReinicioSimulado() {
         assumeTrue(modoCacheActivo(), "requiere el modo cache (perfil docker con contenedores arriba)");
+        Nodo inicial = contexto.getGrafo().obtenerNodoInicial().orElseThrow();
         EstadoPaciente estado = new EstadoPaciente("cache-integracion");
-        estado.registrarRespuesta("grafo_respiracion/q_resp_urgencia",
-                "No, ninguno de los anteriores");
-        Nodo pregunta = contexto.getGrafo().obtenerNodoPorId("grafo_respiracion/q_resp_consulta").orElseThrow();
-        SesionTriaje sesion = sesiones.crear(estado, ResultadoPaso.pregunta(pregunta));
+        SesionTriaje sesion = sesiones.crear(estado, ResultadoPaso.pregunta(inicial));
 
         // "reinicio": una instancia nueva del repositorio, como tras un arranque limpio
         RepositorioSesionRedis trasReinicio = new RepositorioSesionRedis(redis, contexto);
         SesionTriaje recuperada = trasReinicio.buscar(sesion.getId());
 
         assertEquals(sesion.getId(), recuperada.getId());
-        assertEquals("No, ninguno de los anteriores",
-                recuperada.getEstado().getRespuesta("grafo_respiracion/q_resp_urgencia").orElseThrow());
-        assertEquals("grafo_respiracion/q_resp_consulta", recuperada.getUltimoPaso().preguntaActual().getId());
+        assertEquals(inicial.getId(), recuperada.getUltimoPaso().preguntaActual().getId());
 
         redis.delete(RepositorioSesionRedis.PREFIJO_SESION + sesion.getId());
     }

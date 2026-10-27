@@ -1,0 +1,55 @@
+{
+  "grafoId": "grafo_cabeza",
+  "rules": {
+    "R_CAB_URG": {
+      "nombre": "Urgencia Cabeza, Ojos y Oídos",
+      "condiciones": [
+        [
+          {
+            "idNodo": "q_cab_gate_fontanela",
+            "respuesta": "Sí"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_cab_ojos",
+            "respuesta": "Pus en ojo e hinchado/rojo"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_cab_oidos",
+            "respuesta": "Pus o secreción amarilla/verdosa de oído"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_cab_oidos",
+            "respuesta": "Sangre de oído"
+          }
+        ]
+      ],
+      "nodoDestino": "T_URGENCIA",
+      "nivel": "URGENCIA"
+    },
+    "R_CAB_CON": {
+      "nombre": "Consultar Cabeza, Ojos y Oídos",
+      "condiciones": [
+        [
+          {
+            "idNodo": "q_cab_ojos",
+            "respuesta": "Secreción repetida en ojo, sin hinchar"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_cab_oidos",
+            "respuesta": "Líquido transparente del oído (no agua de baño)"
+          }
+        ]
+      ],
+      "nodoDestino": "T_CONSULTA",
+      "nivel": "CONSULTAR_MEDICO"
+    }
+  }
+}

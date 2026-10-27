@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.signbb.backend.config.ManejadorErroresGenerales;
 import org.signbb.backend.config.ManejadorExcepciones;
 import org.signbb.backend.navegacion.modelo.RecorridoOcupadoException;
+import org.signbb.backend.navegacion.servicios.ConsultaNoDisponibleException;
 import org.signbb.backend.navegacion.servicios.ServicioNavegacion;
 import org.signbb.backend.observaciones.servicios.PreguntaDesactualizadaException;
 import org.signbb.backend.observaciones.servicios.RecorridoFinalizadoException;
@@ -45,16 +46,18 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
  */
 class ControladorConsultaTest {
 
+    private ServicioNavegacion navegacion;
     private ServicioCaptura captura;
     private ServicioRecorridos recorridos;
     private MockMvc mvc;
 
     @BeforeEach
     void preparar() {
+        navegacion = mock(ServicioNavegacion.class);
         captura = mock(ServicioCaptura.class);
         recorridos = mock(ServicioRecorridos.class);
         ControladorConsulta controlador = new ControladorConsulta();
-        ReflectionTestUtils.setField(controlador, "servicioNavegacion", mock(ServicioNavegacion.class));
+        ReflectionTestUtils.setField(controlador, "servicioNavegacion", navegacion);
         ReflectionTestUtils.setField(controlador, "servicioCaptura", captura);
         ReflectionTestUtils.setField(controlador, "servicioRecorridos", recorridos);
         mvc = MockMvcBuilders.standaloneSetup(controlador)
@@ -66,6 +69,39 @@ class ControladorConsultaTest {
     private MockHttpServletResponse responder(String json) throws Exception {
         return mvc.perform(post("/api/recorridos/r1/respuestas").contentType(MediaType.APPLICATION_JSON)
                 .content(json)).andReturn().getResponse();
+    }
+
+    @Test
+    void laDisponibilidadEsFalseCuandoNoHaySubgrafos() throws Exception {
+        when(navegacion.consultaDisponible()).thenReturn(false);
+
+        MockHttpServletResponse r = mvc.perform(get("/api/consulta/disponibilidad"))
+                .andReturn().getResponse();
+
+        assertEquals(200, r.getStatus());
+        assertTrue(r.getContentAsString(StandardCharsets.UTF_8).contains("\"disponible\":false"));
+        assertTrue(r.getContentAsString(StandardCharsets.UTF_8).contains(ConsultaNoDisponibleException.MENSAJE));
+    }
+
+    @Test
+    void laDisponibilidadEsTrueCuandoHaySubgrafos() throws Exception {
+        when(navegacion.consultaDisponible()).thenReturn(true);
+
+        MockHttpServletResponse r = mvc.perform(get("/api/consulta/disponibilidad"))
+                .andReturn().getResponse();
+
+        assertEquals(200, r.getStatus());
+        assertTrue(r.getContentAsString(StandardCharsets.UTF_8).contains("\"disponible\":true"));
+    }
+
+    @Test
+    void iniciarSinSubgrafosResponde503ConElMensaje() throws Exception {
+        when(recorridos.iniciar(any())).thenThrow(new ConsultaNoDisponibleException());
+
+        MockHttpServletResponse r = mvc.perform(post("/api/recorridos")).andReturn().getResponse();
+
+        assertEquals(503, r.getStatus());
+        assertTrue(r.getContentAsString(StandardCharsets.UTF_8).contains(ConsultaNoDisponibleException.MENSAJE));
     }
 
     @Test

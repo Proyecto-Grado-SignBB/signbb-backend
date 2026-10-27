@@ -136,9 +136,33 @@ class CompositorGrafoClinicoTest {
   }
 
   @Test
-  void sinSubgrafosPublicadosFalla() {
-    assertThrows(IllegalStateException.class,
-        () -> CompositorGrafoClinico.componer(doc(RAIZ), List.of(), List.of()));
+  void sinSubgrafosPublicadosConservaLaPreguntaInicialSinOpciones() {
+    CompositorGrafoClinico.Contenido contenido =
+        CompositorGrafoClinico.componer(doc(RAIZ), List.of(), List.of());
+
+    assertEquals(List.of("ini"), List.copyOf(contenido.grafo().graph().nodes().keySet()));
+    assertEquals("ini", contenido.grafo().graph().preguntaInicial());
+    assertTrue(contenido.grafo().graph().edges().isEmpty());
+    // El TAD se puede reconstruir aunque la consulta no sea navegable.
+    GrafoClinico grafo = GrafoClinicoMapper.desde(contenido.grafo());
+    assertEquals(0, grafo.obtenerOpciones(grafo.obtenerNodoInicial().orElseThrow()).size());
+  }
+
+  @Test
+  void lasReglasDeLaRaizQueUsanSubgrafosNoPublicadosSeOmiten() {
+    CompositorGrafoClinico.Contenido contenido = componerA1(
+        base(reglas("grafo_raiz", "R_PUBLICADA", "a1/q", "a1/fin")),
+        base(reglas("grafo_raiz", "R_OCULTA", "a2/q", "a2/fin")));
+
+    assertEquals(List.of("R_PUBLICADA"), List.copyOf(contenido.reglas().rules().keySet()));
+  }
+
+  @Test
+  void lasReglasDeLaRaizConRespuestasQueYaNoSonOpcionSeOmiten() {
+    CompositorGrafoClinico.Contenido contenido = componerA1(
+        base(reglas("grafo_raiz", "R_CATEGORIA_BORRADA", "ini", "a1/fin")));
+
+    assertTrue(contenido.reglas().rules().isEmpty());
   }
 
   @Test

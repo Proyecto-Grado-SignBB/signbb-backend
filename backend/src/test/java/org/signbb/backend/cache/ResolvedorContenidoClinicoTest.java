@@ -135,6 +135,19 @@ class ResolvedorContenidoClinicoTest {
     }
 
     @Test
+    void sinSubgrafosComponeSoloLaPreguntaInicial() {
+        when(grafos.findAll()).thenReturn(List.of(filaRaiz));
+        when(bases.findAll()).thenReturn(List.of());
+
+        GrafoClinicoJson documento = resolvedor.documentoGrafo();
+
+        assertEquals(1, documento.graph().nodes().size());
+        assertEquals("pregunta_inicial", documento.graph().preguntaInicial());
+        assertTrue(documento.graph().edges().isEmpty());
+        assertTrue(resolvedor.documentoReglas().rules().isEmpty());
+    }
+
+    @Test
     void sinGrafoRaizFallaConErrorExplicito() {
         when(grafos.findAll()).thenReturn(List.of(filaSubgrafo));
 

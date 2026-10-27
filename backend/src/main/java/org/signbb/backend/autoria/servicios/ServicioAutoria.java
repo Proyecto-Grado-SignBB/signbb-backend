@@ -76,8 +76,7 @@ public interface ServicioAutoria {
      * en curso terminan con la versión con la que empezaron.
      *
      * @throws EdicionInvalidaException   si el subgrafo no está publicado (422)
-     * @throws ContenidoInvalidoException si el contenido restante no es válido, por
-     *                                    ejemplo si era el único publicado (422)
+     * @throws ContenidoInvalidoException si el contenido restante no es válido (422)
      */
     SubgrafoDTO despublicar(Long id);
 

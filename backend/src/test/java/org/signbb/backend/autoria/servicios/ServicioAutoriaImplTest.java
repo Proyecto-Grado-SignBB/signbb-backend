@@ -475,7 +475,7 @@ class ServicioAutoriaImplTest {
     void siElContenidoQueQuedaNoEsValidoElBorradorSigueSiendoPublicado() {
         BorradorSubgrafoEntity b = guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
         servicio.publicar(1L);
-        doThrow(new ContenidoInvalidoException("Este es el único subgrafo publicado", List.of()))
+        doThrow(new ContenidoInvalidoException("El contenido que queda no es válido", List.of()))
                 .when(publicador).retirar(b);
 
         assertThrows(ContenidoInvalidoException.class, () -> servicio.despublicar(1L));

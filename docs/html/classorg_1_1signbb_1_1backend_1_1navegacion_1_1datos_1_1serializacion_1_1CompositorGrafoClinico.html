@@ -146,7 +146,7 @@ Copia los nodos y aristas de la raíz, salvo los nodos <code class="JavaDocCode"
 <li>
 Cada arista que llega a una <code class="JavaDocCode">referencia</code> se redirige a la <code class="JavaDocCode">preguntaInicial</code> del subgrafo indicado por <code class="JavaDocCode">grafoId</code>, cuyos nodos y aristas se incrustan una sola vez con los ids prefijados (<code class="JavaDocCode">grafoId/idLocal</code>) para que dos médicos puedan usar el mismo id sin choques. Si el subgrafo no existe, la arista se omite con un aviso. </li>
 <li>
-Poda las preguntas de la raíz que quedaron sin opciones (un puente sin subgrafos), lo que a su vez quita esa categoría de la pregunta inicial. </li>
+Poda las preguntas de la raíz que quedaron sin opciones (un puente sin subgrafos), lo que a su vez quita esa categoría de la pregunta inicial. La pregunta inicial se conserva aunque quede sin opciones: así el contenido sigue siendo reconstruible y la consulta puede reportarse como no disponible. </li>
 <li>
 Une las bases de reglas: las de un subgrafo se prefijan con su <code class="JavaDocCode">grafoId</code> (id de regla, <code class="JavaDocCode">idNodo</code> de cada condición y <code class="JavaDocCode">nodoDestino</code>); las del grafo raíz ya usan ids prefijados y se copian tal cual, lo que permite reglas que combinan signos de varias categorías. </li>
 </ol>
@@ -188,7 +188,6 @@ Une las bases de reglas: las de un subgrafo se prefijan con su <code class="Java
 <dl class="exception"><dt>Excepciones</dt><dd>
   <table class="exception">
     <tr><td class="paramname">IllegalArgumentException</td><td>si un documento está mal formado (sin id, ids duplicados, subgrafo con referencias anidadas, base sin <code class="JavaDocCode">grafoId</code>) o si dos reglas quedan con el mismo id. </td></tr>
-    <tr><td class="paramname">IllegalStateException</td><td>si tras omitir los subgrafos inexistentes la pregunta inicial queda sin opciones. </td></tr>
   </table>
   </dd>
 </dl>
