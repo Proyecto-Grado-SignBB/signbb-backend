@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['zsh_0',['Mac (Terminal, zsh)',['../md_docs_2autoria-subgrafos.html#autotoc_md92',1,'']]]
+  ['zsh_0',['Mac (Terminal, zsh)',['../md_docs_2autoria-subgrafos.html#autotoc_md93',1,'']]]
 ];

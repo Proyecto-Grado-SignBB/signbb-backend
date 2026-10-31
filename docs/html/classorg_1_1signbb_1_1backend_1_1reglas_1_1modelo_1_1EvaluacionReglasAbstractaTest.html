@@ -117,24 +117,14 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pac-methods" class="groupheader"><a id="pac-methods" name="pac-methods"></a>
 Funciones de paquete</h2></td></tr>
-<tr class="memitem:a048c3ee82805fe57c9cca97f3e999a1d" id="r_a048c3ee82805fe57c9cca97f3e999a1d"><td class="memItemLeft"><a id="a048c3ee82805fe57c9cca97f3e999a1d" name="a048c3ee82805fe57c9cca97f3e999a1d"></a>
-void&#160;</td><td class="memItemRight"><b>unaSolaCondicionSeCumpleConLaRespuestaMarcada</b> ()</td></tr>
-<tr class="memitem:a0d060c56fb1a806ace1f6ebf70162152" id="r_a0d060c56fb1a806ace1f6ebf70162152"><td class="memItemLeft"><a id="a0d060c56fb1a806ace1f6ebf70162152" name="a0d060c56fb1a806ace1f6ebf70162152"></a>
-void&#160;</td><td class="memItemRight"><b>unCasoConVariasCondicionesRequiereTodas</b> ()</td></tr>
-<tr class="memitem:af92193f3c552f53ae04c29bd25e077b6" id="r_af92193f3c552f53ae04c29bd25e077b6"><td class="memItemLeft"><a id="af92193f3c552f53ae04c29bd25e077b6" name="af92193f3c552f53ae04c29bd25e077b6"></a>
-void&#160;</td><td class="memItemRight"><b>unCasoConVariasCondicionesFallaSiFaltaUna</b> ()</td></tr>
 <tr class="memitem:ae2dd3bafa772a9140e46eab4198e0ba5" id="r_ae2dd3bafa772a9140e46eab4198e0ba5"><td class="memItemLeft"><a id="ae2dd3bafa772a9140e46eab4198e0ba5" name="ae2dd3bafa772a9140e46eab4198e0ba5"></a>
 void&#160;</td><td class="memItemRight"><b>variosCasosSeCombinanConO</b> ()</td></tr>
 <tr class="memitem:ad40e784ba9f5e062ccb68aca9f7f97ab" id="r_ad40e784ba9f5e062ccb68aca9f7f97ab"><td class="memItemLeft"><a id="ad40e784ba9f5e062ccb68aca9f7f97ab" name="ad40e784ba9f5e062ccb68aca9f7f97ab"></a>
 void&#160;</td><td class="memItemRight"><b>variasOpcionesDeLaMismaPreguntaSeCombinanConAnd</b> ()</td></tr>
-<tr class="memitem:ac285ba2ddb4fa28addf6a884a7d0a3a7" id="r_ac285ba2ddb4fa28addf6a884a7d0a3a7"><td class="memItemLeft"><a id="ac285ba2ddb4fa28addf6a884a7d0a3a7" name="ac285ba2ddb4fa28addf6a884a7d0a3a7"></a>
-void&#160;</td><td class="memItemRight"><b>elServicioEligeElNivelMasSevero</b> ()</td></tr>
-<tr class="memitem:acc9fd9703b8693065197c3cdce636dec" id="r_acc9fd9703b8693065197c3cdce636dec"><td class="memItemLeft"><a id="acc9fd9703b8693065197c3cdce636dec" name="acc9fd9703b8693065197c3cdce636dec"></a>
-void&#160;</td><td class="memItemRight"><b>sinReglasActivadasElResultadoEsNormal</b> ()</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Evaluación de reglas con datos abstractos (<code class="JavaDocCode">resp1/op1/op2/op3</code>) y los TADs <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html">EstadoPaciente</a></code> y <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Nodo.html">Nodo</a></code> simulados con Mockito: no depende del dominio ni de la base de datos. </p>
-<p>Cubre una condición, varias condiciones (AND dentro de un caso), varios casos (OR de la FND), combinación de varias opciones de la misma pregunta y la resolución por severidad del servicio. </p>
+<p>Conserva los dos casos que no cubren las otras suites: varios casos (OR de la FND) y varias opciones de la misma pregunta (AND). </p>
 </div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/test/java/org/signbb/backend/reglas/modelo/<b>EvaluacionReglasAbstractaTest.java</b></li>
 </ul>

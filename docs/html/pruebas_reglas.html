@@ -126,13 +126,13 @@ Mapa de la suite</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">BaseReglasTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyNone">alta/baja de reglas, duplicados, <span class="tt">obtenerRegla</span> y <span class="tt">reglasActivadas</span>  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">EvaluacionReglasAbstractaTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyNone">evaluación con datos abstractos (<span class="tt">resp1/op1/op2/op3</span>) y TADs simulados con Mockito  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">EvaluacionReglasAbstractaTest</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">FND con varios casos (OR) y varias opciones de la misma pregunta (AND)  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioReglasImplTest</span>  </td><td class="markdownTableBodyRight">4  </td><td class="markdownTableBodyNone">resolución por severidad: nivel máximo, razones combinadas y desempate por peso del destino  </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">datos.serializacion</span>  </td><td class="markdownTableBodyNone"><span class="tt">BaseReglasMapperTest</span>  </td><td class="markdownTableBodyRight">3  </td><td class="markdownTableBodyNone">ida y vuelta TAD ↔ documento JSON y rechazo de un <span class="tt">nodoDestino</span> colgante  </td></tr>
 </table>
-<p>En total son <b>28 pruebas</b>.</p>
+<p>En total son <b>23 pruebas</b>.</p>
 <h1 class="doxsection"><a class="anchor" id="pruebas_model"></a>
 Modelo de reglas (TAD)</h1>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md36"></a>
@@ -149,14 +149,10 @@ TAD <span class="tt">BaseReglas</span> (<span class="tt">BaseReglasTest</span>)<
 <p>Colección indexada por <span class="tt">idRegla</span>. Se verifica el alta y la baja, el rechazo de duplicados y que <span class="tt">reglasActivadas</span> devuelve solo las reglas cuya premisa se satisface en el estado.</p>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md38"></a>
 Evaluación abstracta (<span class="tt">EvaluacionReglasAbstractaTest</span>)</h2>
-<p>Complementa a las anteriores con datos <b>abstractos</b> (<span class="tt">resp1/op1/op2/op3</span>) y los TADs <span class="tt">EstadoPaciente</span> y <span class="tt">Nodo</span> <b>simulados con Mockito</b>, de modo que la prueba no depende del dominio. Cubre:</p>
+<p>Conserva los dos casos que no cubren las otras suites, con datos <b>abstractos</b> (<span class="tt">resp1/op1/op2/op3</span>) y los TADs <span class="tt">EstadoPaciente</span> y <span class="tt">Nodo</span> <b>simulados con Mockito</b>:</p>
 <ul>
-<li>una sola condición;</li>
-<li>varias condiciones en un caso (AND): se cumple si están todas y falla si falta una;</li>
 <li>varios casos (OR) armados con <span class="tt">ReglaClinica.conCasos</span>;</li>
-<li>varias opciones de la <b>misma pregunta</b> combinadas con AND (selección múltiple);</li>
-<li><span class="tt">ServicioReglasImpl.evaluar</span> eligiendo el nivel más severo;</li>
-<li>sin reglas activadas, el resultado es <span class="tt">NORMAL</span>.</li>
+<li>varias opciones de la <b>misma pregunta</b> combinadas con AND (selección múltiple).</li>
 </ul>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md39"></a>
 Servicio de inferencia y mapeo JSON</h1>

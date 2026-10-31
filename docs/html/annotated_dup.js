@@ -64,7 +64,6 @@ var annotated_dup =
               [ "ServicioAutoriaImpl", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl" ],
               [ "ServicioAutoriaImplTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImplTest.html", null ],
               [ "ServicioAutoriaReglas", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas" ],
-              [ "ServicioAutoriaReglasAbstractoTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasAbstractoTest.html", null ],
               [ "ServicioAutoriaReglasImpl", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImpl.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImpl" ],
               [ "ServicioAutoriaReglasImplTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImplTest.html", null ],
               [ "ServicioRevision", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioRevision.html", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioRevision" ],
@@ -148,7 +147,6 @@ var annotated_dup =
               [ "Contexto", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto" ],
               [ "ContextoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico" ],
               [ "ContextoClinicoTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinicoTest.html", null ],
-              [ "ContextoTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoTest.html", null ],
               [ "EstadoPaciente", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente" ],
               [ "EstadoPacienteNavegacionTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPacienteNavegacionTest.html", null ],
               [ "EstadoPacienteTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPacienteTest.html", null ],
@@ -244,9 +242,7 @@ var annotated_dup =
           [ "seed", "namespaceorg_1_1signbb_1_1backend_1_1seed.html", [
             [ "SeedDemoProperties", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoProperties.html", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoProperties" ],
             [ "SeedDemoRunner", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoRunner.html", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoRunner" ],
-            [ "SeedDemoRunnerTest", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoRunnerTest.html", null ],
             [ "SeedDemoService", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoService.html", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoService" ],
-            [ "SeedDemoServiceTest", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoServiceTest.html", null ],
             [ "SeedGraphConverter", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedGraphConverter.html", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedGraphConverter" ],
             [ "SeedGraphConverterTest", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedGraphConverterTest.html", null ]
           ] ],
@@ -296,13 +292,11 @@ var annotated_dup =
             [ "VerificadorSecretosProduccion", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1VerificadorSecretosProduccion.html", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1VerificadorSecretosProduccion" ],
             [ "VerificadorSecretosProduccionTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1VerificadorSecretosProduccionTest.html", null ]
           ] ],
-          [ "ArranqueCondicionalTest", "classorg_1_1signbb_1_1backend_1_1ArranqueCondicionalTest.html", null ],
           [ "AutoriaIntegracionTest", "classorg_1_1signbb_1_1backend_1_1AutoriaIntegracionTest.html", null ],
           [ "BackendApplication", "classorg_1_1signbb_1_1backend_1_1BackendApplication.html", null ],
           [ "BackendApplicationTests", "classorg_1_1signbb_1_1backend_1_1BackendApplicationTests.html", null ],
           [ "CacheRedisIntegracionTest", "classorg_1_1signbb_1_1backend_1_1CacheRedisIntegracionTest.html", null ],
           [ "DatabaseInit", "classorg_1_1signbb_1_1backend_1_1DatabaseInit.html", "classorg_1_1signbb_1_1backend_1_1DatabaseInit" ],
-          [ "DatabaseInitTest", "classorg_1_1signbb_1_1backend_1_1DatabaseInitTest.html", null ],
           [ "DemoTriajeRunner", "classorg_1_1signbb_1_1backend_1_1DemoTriajeRunner.html", "classorg_1_1signbb_1_1backend_1_1DemoTriajeRunner" ],
           [ "PersistenciaEstructuraJsonTest", "classorg_1_1signbb_1_1backend_1_1PersistenciaEstructuraJsonTest.html", null ]
         ] ]

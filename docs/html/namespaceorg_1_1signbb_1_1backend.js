@@ -9,13 +9,11 @@ var namespaceorg_1_1signbb_1_1backend =
     [ "reglas", "namespaceorg_1_1signbb_1_1backend_1_1reglas.html", "namespaceorg_1_1signbb_1_1backend_1_1reglas" ],
     [ "seed", "namespaceorg_1_1signbb_1_1backend_1_1seed.html", "namespaceorg_1_1signbb_1_1backend_1_1seed" ],
     [ "seguridad", "namespaceorg_1_1signbb_1_1backend_1_1seguridad.html", "namespaceorg_1_1signbb_1_1backend_1_1seguridad" ],
-    [ "ArranqueCondicionalTest", "classorg_1_1signbb_1_1backend_1_1ArranqueCondicionalTest.html", null ],
     [ "AutoriaIntegracionTest", "classorg_1_1signbb_1_1backend_1_1AutoriaIntegracionTest.html", null ],
     [ "BackendApplication", "classorg_1_1signbb_1_1backend_1_1BackendApplication.html", null ],
     [ "BackendApplicationTests", "classorg_1_1signbb_1_1backend_1_1BackendApplicationTests.html", null ],
     [ "CacheRedisIntegracionTest", "classorg_1_1signbb_1_1backend_1_1CacheRedisIntegracionTest.html", null ],
     [ "DatabaseInit", "classorg_1_1signbb_1_1backend_1_1DatabaseInit.html", "classorg_1_1signbb_1_1backend_1_1DatabaseInit" ],
-    [ "DatabaseInitTest", "classorg_1_1signbb_1_1backend_1_1DatabaseInitTest.html", null ],
     [ "DemoTriajeRunner", "classorg_1_1signbb_1_1backend_1_1DemoTriajeRunner.html", "classorg_1_1signbb_1_1backend_1_1DemoTriajeRunner" ],
     [ "PersistenciaEstructuraJsonTest", "classorg_1_1signbb_1_1backend_1_1PersistenciaEstructuraJsonTest.html", null ]
 ];

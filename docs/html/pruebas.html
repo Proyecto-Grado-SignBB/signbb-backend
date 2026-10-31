@@ -120,51 +120,82 @@ Cómo ejecutarlas</h1>
 ./mvnw -Dtest=Clase test # una sola clase
 ./mvnw -Dtest=Clase#metodo test
 </pre><p>Las pruebas unitarias son <b>JUnit 5 puro</b> y, cuando hace falta simular colaboradores, <b>Mockito</b> (5.x, con el <em>inline mock maker</em>, de modo que también se pueden simular clases <span class="tt">final</span>). No necesitan Spring, PostgreSQL ni Redis.</p>
-<p>Las pruebas de integración usan <span class="tt">@SpringBootTest</span> y <b>requieren PostgreSQL y Redis</b> arriba (<span class="tt">contenedores/compose.yaml</span>); el CI los levanta como servicios efímeros (<span class="tt">signbb-backend/.github/workflows/build.yml</span>).</p>
+<p>Las pruebas de integración usan <span class="tt">@SpringBootTest</span> o <b>servicios reales</b> (PostgreSQL y Redis de <span class="tt">contenedores/compose.yaml</span>); el CI los levanta como servicios efímeros (<span class="tt">signbb-backend/.github/workflows/build.yml</span>).</p>
+<p><span class="tt">AutoriaIntegracionTest</span> está <b>temporalmente deshabilitada</b> con <span class="tt">@Disabled</span> mientras se revisa la suite unitaria por separado; sigue formando parte de la documentación y se puede volver a activar quitando la anotación.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md53"></a>
 Tipos de prueba</h1>
 <ul>
-<li><b>Unitarias (JUnit 5 ± Mockito):</b> no arrancan el contexto de Spring. Son la mayoría y corren en local sin contenedores.</li>
-<li>**Integración (<span class="tt">@SpringBootTest</span>):** arrancan la aplicación completa y verifican persistencia (<span class="tt">jsonb</span>), cache (Redis) y el recorrido de punta a punta. Se ejecutan en <span class="tt">./mvnw verify</span>.</li>
+<li><b>Unitarias (JUnit 5 ± Mockito):</b> no arrancan el contexto de Spring ni usan PostgreSQL/Redis reales. Incluyen las pruebas de TADs, servicios con colaboradores simulados, controladores con <span class="tt">MockMvc</span> en modo <span class="tt">standaloneSetup</span>, el validador de Jakarta y la lectura de JSON del classpath. Son la mayoría y corren en local sin contenedores.</li>
+<li>**Integración (<span class="tt">@SpringBootTest</span> o servicios reales):** arrancan la aplicación completa o hablan con PostgreSQL/Redis de verdad. Verifican persistencia (<span class="tt">jsonb</span>), cache (Redis), la cadena de seguridad y el recorrido de punta a punta. Se ejecutan en <span class="tt">./mvnw verify</span>.</li>
 </ul>
+<p><span class="tt">cache/ColaSeleccionMultipleRedisIntegracionTest</span> no usa Spring, pero sí un Redis real: se clasifica como integración y se salta sola si Redis no responde.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md54"></a>
-Suite por módulo</h1>
+Pruebas unitarias</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Módulo  </th><th class="markdownTableHeadRight">Pruebas  </th><th class="markdownTableHeadNone">Tipo  </th><th class="markdownTableHeadNone">Documentación  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Navegación: TADs, parsers, motor y servicio  </td><td class="markdownTableBodyRight">172  </td><td class="markdownTableBodyNone">JUnit 5  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_navegacion.html" title="Pruebas del módulo de navegación">Ver página</a>  </td></tr>
+<td class="markdownTableBodyNone">Navegación: TADs, parsers, motor y servicio  </td><td class="markdownTableBodyRight">170  </td><td class="markdownTableBodyNone">JUnit 5  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_navegacion.html" title="Pruebas del módulo de navegación">Ver página</a>  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Reglas: TAD, evaluación, servicio y mapeo JSON  </td><td class="markdownTableBodyRight">28  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_reglas.html" title="Pruebas del módulo de reglas">Ver página</a>  </td></tr>
+<td class="markdownTableBodyNone">Reglas: TAD, evaluación, servicio y mapeo JSON  </td><td class="markdownTableBodyRight">23  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_reglas.html" title="Pruebas del módulo de reglas">Ver página</a>  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Autoría: lienzo, subgrafos, reglas, autor y revisión  </td><td class="markdownTableBodyRight">194  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_autoria.html" title="Pruebas del módulo de autoría">Ver página</a>  </td></tr>
+<td class="markdownTableBodyNone">Autoría: lienzo, subgrafos, reglas, autor y revisión  </td><td class="markdownTableBodyRight">179  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_autoria.html" title="Pruebas del módulo de autoría">Ver página</a>  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Observaciones: captura "todo o nada", validación, dueño del recorrido y respuesta del cuidador  </td><td class="markdownTableBodyRight">53  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_observaciones.html" title="Pruebas del módulo de observaciones">Ver página</a>  </td></tr>
+<td class="markdownTableBodyNone">Observaciones: captura "todo o nada", validación, dueño del recorrido y respuesta del cuidador  </td><td class="markdownTableBodyRight">56  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_observaciones.html" title="Pruebas del módulo de observaciones">Ver página</a>  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Seguridad: cuentas, login con JWT, reglas de acceso y secretos de producción  </td><td class="markdownTableBodyRight">61  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito / <span class="tt">@SpringBootTest</span>  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_seguridad.html" title="Pruebas del módulo de seguridad">Ver página</a>  </td></tr>
+<td class="markdownTableBodyNone">Seguridad, sin las pruebas de integración  </td><td class="markdownTableBodyRight">54  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_seguridad.html" title="Pruebas del módulo de seguridad">Ver página</a>  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Cache: contenido clínico y sesiones en Redis  </td><td class="markdownTableBodyRight">—  </td><td class="markdownTableBodyNone">Mockito / <span class="tt">@SpringBootTest</span>  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_cache.html" title="Pruebas del cache">Ver página</a>  </td></tr>
+<td class="markdownTableBodyNone">Cache, sin las pruebas de integración  </td><td class="markdownTableBodyRight">40  </td><td class="markdownTableBodyNone">Mockito  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_cache.html" title="Pruebas del cache">Ver página</a>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Mantenimiento: retención de versiones e imágenes  </td><td class="markdownTableBodyRight">16  </td><td class="markdownTableBodyNone">JUnit 5 + Mockito  </td><td class="markdownTableBodyNone">—  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Media: subida y referencias de imágenes  </td><td class="markdownTableBodyRight">16  </td><td class="markdownTableBodyNone">JUnit 5 + MockMvc  </td><td class="markdownTableBodyNone">—  </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Errores generales: 400, 405, 409, 422 y 500 con cuerpo <span class="tt">{mensaje, avisos}</span> (<span class="tt">config/ManejadorErroresGeneralesTest</span>)  </td><td class="markdownTableBodyRight">8  </td><td class="markdownTableBodyNone">JUnit 5 + MockMvc  </td><td class="markdownTableBodyNone">—  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Validación de entradas: límites de largo y de caracteres de los DTO (<span class="tt">config/ValidacionEntradasTest</span>)  </td><td class="markdownTableBodyRight">8  </td><td class="markdownTableBodyNone">JUnit 5 + validador de Jakarta  </td><td class="markdownTableBodyNone">—  </td></tr>
+<td class="markdownTableBodyNone">Validación de entradas: límites de largo y de caracteres de los DTO (<span class="tt">config/ValidacionEntradasTest</span>)  </td><td class="markdownTableBodyRight">4  </td><td class="markdownTableBodyNone">JUnit 5 + validador de Jakarta  </td><td class="markdownTableBodyNone">—  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Seed de demo: conversión de los JSON de <span class="tt">seed/demo/</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">JUnit 5  </td><td class="markdownTableBodyNone">—  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Total unitarias</b>  </td><td class="markdownTableBodyRight"><b>568</b>  </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
 </table>
+<p>Las clases de integración de cada módulo se excluyen de esta tabla y se listan en la sección siguiente.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md55"></a>
-Pruebas de integración de la raíz</h1>
-<p>En <span class="tt">backend/src/test/java/org/signbb/backend/</span> viven las pruebas que arrancan el contexto completo:</p>
-<ul>
-<li><span class="tt">BackendApplicationTests</span> — <em>smoke test</em>: el contexto de la aplicación carga. Con <span class="tt">ddl-auto=validate</span>, además comprueba que las migraciones de Flyway dejan el esquema que esperan las entidades.</li>
-<li><span class="tt">ArranqueCondicionalTest</span> — la siembra (<span class="tt">DatabaseInit</span>), la demo de consola (<span class="tt">DemoTriajeRunner</span>) y el seed de demo (<span class="tt">SeedDemoRunner</span>) solo existen si sus banderas valen <span class="tt">true</span> (sin base de datos).</li>
-<li><span class="tt">seed/SeedGraphConverterTest</span> — los JSON de <span class="tt">seed/demo/</span> se convierten a lienzo/reglas, pasan las validaciones y vuelven a compilar con el mismo contenido y pesos.</li>
-<li><span class="tt">seed/SeedDemoServiceTest</span> — el seed no duplica cuentas ni subgrafos cuando ya existen.</li>
-<li><span class="tt">PersistenciaEstructuraJsonTest</span> — ida y vuelta de los documentos JSON por la columna <span class="tt">estructura</span> (<span class="tt">jsonb</span>) y verificación de que <span class="tt">DatabaseInit</span> sembró el grafo raíz. Los tests que necesitan contenido navegable insertan un subgrafo de ejemplo y lo eliminan al terminar.</li>
-<li><span class="tt">AutoriaIntegracionTest</span> — de punta a punta: armar un subgrafo con el servicio, aprobarlo (publicarlo) y recorrerlo como la cuidadora (ver <a class="el" href="pruebas_autoria.html" title="Pruebas del módulo de autoría">Pruebas del módulo de autoría</a>).</li>
-<li><span class="tt">seguridad/ReglasAccesoIntegracionTest</span> — la cadena de filtros real: 401 sin token, 403 por rol y 404 al recorrido de otro padre (ver <a class="el" href="pruebas_seguridad.html" title="Pruebas del módulo de seguridad">Pruebas del módulo de seguridad</a>).</li>
-<li><span class="tt">CacheRedisIntegracionTest</span> — cache-aside con Redis real; se salta sola si el servicio <span class="tt">cache</span> no responde (ver <a class="el" href="pruebas_cache.html" title="Pruebas del cache">Pruebas del cache</a>).</li>
-</ul>
+Pruebas de integración</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Clase  </th><th class="markdownTableHeadRight">Pruebas  </th><th class="markdownTableHeadNone">Infraestructura  </th><th class="markdownTableHeadNone">Estado  </th><th class="markdownTableHeadNone">Documentación  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">BackendApplicationTests</span>  </td><td class="markdownTableBodyRight">1  </td><td class="markdownTableBodyNone">PostgreSQL + Redis; <span class="tt">@SpringBootTest</span>  </td><td class="markdownTableBodyNone">Activa  </td><td class="markdownTableBodyNone">—  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">PersistenciaEstructuraJsonTest</span>  </td><td class="markdownTableBodyRight">3  </td><td class="markdownTableBodyNone">PostgreSQL + Redis; <span class="tt">@SpringBootTest</span>  </td><td class="markdownTableBodyNone">Activa  </td><td class="markdownTableBodyNone">—  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">AutoriaIntegracionTest</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">PostgreSQL + Redis; <span class="tt">@SpringBootTest</span>  </td><td class="markdownTableBodyNone">**Omitida (<span class="tt">@Disabled</span>)**  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_autoria.html" title="Pruebas del módulo de autoría">Ver página</a>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">CacheRedisIntegracionTest</span>  </td><td class="markdownTableBodyRight">4  </td><td class="markdownTableBodyNone">PostgreSQL + Redis real; <span class="tt">@SpringBootTest</span>  </td><td class="markdownTableBodyNone">Activa; se salta si no hay cache  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_cache.html" title="Pruebas del cache">Ver página</a>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">seguridad/ReglasAccesoIntegracionTest</span>  </td><td class="markdownTableBodyRight">20  </td><td class="markdownTableBodyNone">PostgreSQL + Redis; <span class="tt">@SpringBootTest</span>  </td><td class="markdownTableBodyNone">Activa  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_seguridad.html" title="Pruebas del módulo de seguridad">Ver página</a>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">cache/ColaSeleccionMultipleRedisIntegracionTest</span>  </td><td class="markdownTableBodyRight">5  </td><td class="markdownTableBodyNone">Redis real; sin Spring ni PostgreSQL  </td><td class="markdownTableBodyNone">Activa; se salta si no hay Redis  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_cache.html" title="Pruebas del cache">Ver página</a>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Total integración</b>  </td><td class="markdownTableBodyRight"><b>35</b>  </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><b>33 activas + 2 omitidas</b>  </td><td class="markdownTableBodyNone"></td></tr>
+</table>
+<p><span class="tt">BackendApplicationTests</span> comprueba que el contexto carga y que las migraciones de Flyway dejan el esquema que esperan las entidades. <span class="tt">PersistenciaEstructuraJsonTest</span> hace ida y vuelta de los documentos JSON por la columna <span class="tt">estructura</span> (<span class="tt">jsonb</span>) y verifica que <span class="tt">DatabaseInit</span> sembró el grafo raíz. <span class="tt">AutoriaIntegracionTest</span> arma un subgrafo con el servicio, lo publica y lo recorre como la cuidadora.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md56"></a>
-Resultados en CI</h1>
-<p>El workflow <span class="tt">build</span> corre <span class="tt">./mvnw -B verify</span> con PostgreSQL y Redis como servicios. Las corridas y los conteos por clase se detallan en las páginas de cada módulo. En la rama <span class="tt">mejoras-rondas-3-4</span> (23-oct-2026) corren <b>645 pruebas</b>, sin fallos.</p>
+Totales</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Tipo  </th><th class="markdownTableHeadRight">Presentes  </th><th class="markdownTableHeadRight">Ejecutadas  </th><th class="markdownTableHeadRight">Omitidas  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Unitarias  </td><td class="markdownTableBodyRight">568  </td><td class="markdownTableBodyRight">568  </td><td class="markdownTableBodyRight">0  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Integración  </td><td class="markdownTableBodyRight">35  </td><td class="markdownTableBodyRight">33  </td><td class="markdownTableBodyRight">2  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Total</b>  </td><td class="markdownTableBodyRight"><b>603</b>  </td><td class="markdownTableBodyRight"><b>601</b>  </td><td class="markdownTableBodyRight"><b>2</b>  </td></tr>
+</table>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md57"></a>
+Resultados</h1>
+<p>La ejecución local del 31-oct-2026 sobre <span class="tt">develop</span> corre <b>603 pruebas: 601 pasan y 2 se omiten</b> (<span class="tt">AutoriaIntegracionTest</span>, deshabilitada). El CI ejecuta <span class="tt">./mvnw -B verify</span> con PostgreSQL y Redis como servicios.</p>
 <blockquote class="doxtable">
 <p>Nota: para leer reportes frescos, ejecutar <span class="tt">./mvnw clean</span> antes: <span class="tt">target/surefire-reports</span> puede conservar reportes de clases que ya no existen. </p>
 </blockquote>

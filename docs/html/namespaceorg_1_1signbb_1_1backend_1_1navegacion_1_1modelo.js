@@ -4,7 +4,6 @@ var namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo =
     [ "Contexto", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto" ],
     [ "ContextoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico" ],
     [ "ContextoClinicoTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinicoTest.html", null ],
-    [ "ContextoTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoTest.html", null ],
     [ "EstadoPaciente", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente" ],
     [ "EstadoPacienteNavegacionTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPacienteNavegacionTest.html", null ],
     [ "EstadoPacienteTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPacienteTest.html", null ],

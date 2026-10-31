@@ -8,7 +8,6 @@ var hierarchy =
     [ "ApplicationRunner", null, [
       [ "org.signbb.backend.seed.SeedDemoRunner", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoRunner.html", null ]
     ] ],
-    [ "org.signbb.backend.ArranqueCondicionalTest", "classorg_1_1signbb_1_1backend_1_1ArranqueCondicionalTest.html", null ],
     [ "org.signbb.backend.AutoriaIntegracionTest", "classorg_1_1signbb_1_1backend_1_1AutoriaIntegracionTest.html", null ],
     [ "org.signbb.backend.BackendApplication", "classorg_1_1signbb_1_1backend_1_1BackendApplication.html", null ],
     [ "org.signbb.backend.BackendApplicationTests", "classorg_1_1signbb_1_1backend_1_1BackendApplicationTests.html", null ],
@@ -45,7 +44,6 @@ var hierarchy =
     [ "org.signbb.backend.navegacion.modelo.Contexto", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html", null ],
     [ "org.signbb.backend.navegacion.modelo.ContextoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html", null ],
     [ "org.signbb.backend.navegacion.modelo.ContextoClinicoTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinicoTest.html", null ],
-    [ "org.signbb.backend.navegacion.modelo.ContextoTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoTest.html", null ],
     [ "org.signbb.backend.seguridad.controladores.ControladorAuth", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores_1_1ControladorAuth.html", null ],
     [ "org.signbb.backend.autoria.controladores.ControladorAutoria", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoria.html", null ],
     [ "org.signbb.backend.autoria.controladores.ControladorAutoriaTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1ControladorAutoriaTest.html", null ],
@@ -63,7 +61,6 @@ var hierarchy =
     ] ],
     [ "org.signbb.backend.seguridad.ConvertidorJwtUsuarioTest", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConvertidorJwtUsuarioTest.html", null ],
     [ "org.signbb.backend.seed.SeedDemoProperties.Cuenta", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoProperties_1_1Cuenta.html", null ],
-    [ "org.signbb.backend.DatabaseInitTest", "classorg_1_1signbb_1_1backend_1_1DatabaseInitTest.html", null ],
     [ "org.signbb.backend.autoria.modelo.Desenlace", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Desenlace.html", null ],
     [ "org.signbb.backend.autoria.controladores.DespuesDeRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1DespuesDeRequest.html", null ],
     [ "org.signbb.backend.autoria.controladores.DestinoRequest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1DestinoRequest.html", null ],
@@ -183,9 +180,7 @@ var hierarchy =
       [ "org.signbb.backend.seguridad.servicios.IntentosExcedidosException", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1IntentosExcedidosException.html", null ]
     ] ],
     [ "org.signbb.backend.seed.SeedDemoProperties", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoProperties.html", null ],
-    [ "org.signbb.backend.seed.SeedDemoRunnerTest", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoRunnerTest.html", null ],
     [ "org.signbb.backend.seed.SeedDemoService", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoService.html", null ],
-    [ "org.signbb.backend.seed.SeedDemoServiceTest", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoServiceTest.html", null ],
     [ "org.signbb.backend.seed.SeedGraphConverter", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedGraphConverter.html", null ],
     [ "org.signbb.backend.seed.SeedGraphConverterTest", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedGraphConverterTest.html", null ],
     [ "org.signbb.backend.observaciones.modelo.SeleccionCuidador", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo_1_1SeleccionCuidador.html", null ],
@@ -197,7 +192,6 @@ var hierarchy =
     [ "org.signbb.backend.autoria.servicios.ServicioAutoriaReglas", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html", [
       [ "org.signbb.backend.autoria.servicios.ServicioAutoriaReglasImpl", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImpl.html", null ]
     ] ],
-    [ "org.signbb.backend.autoria.servicios.ServicioAutoriaReglasAbstractoTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasAbstractoTest.html", null ],
     [ "org.signbb.backend.autoria.servicios.ServicioAutoriaReglasImplTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImplTest.html", null ],
     [ "org.signbb.backend.observaciones.servicios.ServicioCaptura", "interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCaptura.html", [
       [ "org.signbb.backend.observaciones.servicios.ServicioCapturaImpl", "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl.html", null ]
