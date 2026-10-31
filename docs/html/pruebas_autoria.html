@@ -129,19 +129,19 @@ Mapa de la suite</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">CompiladorSubgrafoTest</span>  </td><td class="markdownTableBodyRight">8  </td><td class="markdownTableBodyNone">lienzo → <span class="tt">GrafoClinicoJson</span>: pesos, tipos, aristas y metadata  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">PublicadorSubgrafoTest</span>  </td><td class="markdownTableBodyRight">22  </td><td class="markdownTableBodyNone">upsert del subgrafo y de la opción en la raíz; categoría nueva visible; invalidar el contenido; rechazos; despublicar  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">PublicadorSubgrafoTest</span>  </td><td class="markdownTableBodyRight">24  </td><td class="markdownTableBodyNone">upsert del subgrafo y de la opción en la raíz; categoría nueva visible; invalidar el contenido; rechazos; despublicar  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioAutoriaImplTest</span>  </td><td class="markdownTableBodyRight">31  </td><td class="markdownTableBodyNone">categorías, ids de grafo, datos del subgrafo (nombre para la familia obligatorio), autor tomado de la cuenta, "Mis subgrafos", estados, descartar cambios, despublicar y errores  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioAutoriaImplTest</span>  </td><td class="markdownTableBodyRight">38  </td><td class="markdownTableBodyNone">categorías, ids de grafo, datos del subgrafo (nombre para la familia obligatorio), autor tomado de la cuenta, "Mis subgrafos", estados, descartar cambios, despublicar y errores  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">PoliticaAccesoBorradoresTest</span>  </td><td class="markdownTableBodyRight">4  </td><td class="markdownTableBodyNone">quién lee y quién edita un borrador: autor, otro médico, supervisor y borrador sin autor  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">GuardiaAutoriaTest</span>  </td><td class="markdownTableBodyRight">9  </td><td class="markdownTableBodyNone">la política aplicada a subgrafos y bases (403/404), quién crea una base y el bloqueo mientras está en revisión  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">GuardiaAutoriaTest</span>  </td><td class="markdownTableBodyRight">13  </td><td class="markdownTableBodyNone">la política aplicada a subgrafos y bases (403/404), quién crea una base y el bloqueo mientras está en revisión  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioRevisionImplTest</span>  </td><td class="markdownTableBodyRight">13  </td><td class="markdownTableBodyNone">enviar, retirar, aprobar (publica) y rechazar con comentario; nadie aprueba lo suyo  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">controladores</span>  </td><td class="markdownTableBodyNone"><span class="tt">ControladorAutoriaTest</span>  </td><td class="markdownTableBodyRight">19  </td><td class="markdownTableBodyNone">códigos HTTP y cuerpos de error de la API <span class="tt">/api/autoria</span>; 403 a quien no es el autor  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">controladores</span>  </td><td class="markdownTableBodyNone"><span class="tt">ControladorAutoriaTest</span>  </td><td class="markdownTableBodyRight">8  </td><td class="markdownTableBodyNone">códigos HTTP representativos de la API <span class="tt">/api/autoria</span>: 201, 403, 404, 409, 422 y 204  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">controladores</span>  </td><td class="markdownTableBodyNone"><span class="tt">ControladorRevisionTest</span>  </td><td class="markdownTableBodyRight">8  </td><td class="markdownTableBodyNone">códigos HTTP de enviar, retirar, revisiones, aprobar y rechazar  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">controladores</span>  </td><td class="markdownTableBodyNone"><span class="tt">ControladorRevisionTest</span>  </td><td class="markdownTableBodyRight">4  </td><td class="markdownTableBodyNone">códigos HTTP de enviar, aprobar y rechazar  </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">NodoLienzoTest</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">el JSON del nodo: las imágenes se guardan y se leen, y un nodo guardado sin imágenes se lee con la lista vacía  </td></tr>
 <tr class="markdownTableRowEven">
@@ -151,15 +151,13 @@ Mapa de la suite</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ResolutorCatalogoNodosTest</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">el catálogo de nodos (de un lienzo y del grafo raíz) pone el desenlace en los terminales  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">PublicadorReglaTest</span>  </td><td class="markdownTableBodyRight">6  </td><td class="markdownTableBodyNone">publica/reemplaza la base de reglas de un grafo, recompone el contenido y registra una versión  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">PublicadorReglaTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyNone">publica/reemplaza la base de reglas de un grafo, recompone el contenido y registra una versión  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioAutoriaReglasImplTest</span>  </td><td class="markdownTableBodyRight">13  </td><td class="markdownTableBodyNone">CRUD de la base de reglas, autor tomado de la cuenta, "Mis bases", publicación y descartar cambios  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioAutoriaReglasImplTest</span>  </td><td class="markdownTableBodyRight">12  </td><td class="markdownTableBodyNone">CRUD de la base de reglas, autor tomado de la cuenta, "Mis bases", publicación y descartar cambios  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioAutoriaReglasAbstractoTest</span>  </td><td class="markdownTableBodyRight">11  </td><td class="markdownTableBodyNone">CRUD y publicación con datos abstractos y colaboradores simulados (Mockito)  </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">(raíz)  </td><td class="markdownTableBodyNone"><span class="tt">AutoriaIntegracionTest</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">de punta a punta: armar, aprobar (publicar) y recorrer como cuidadora  </td></tr>
+<td class="markdownTableBodyNone">(raíz)  </td><td class="markdownTableBodyNone"><span class="tt">AutoriaIntegracionTest</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">de punta a punta: armar, aprobar (publicar) y recorrer como cuidadora; <b>deshabilitada temporalmente</b>  </td></tr>
 </table>
-<p>En total son <b>194 pruebas</b>.</p>
+<p>En total son <b>179 pruebas unitarias</b>. Las 2 de integración (<span class="tt">AutoriaIntegracionTest</span>) se cuentan aparte y están deshabilitadas con <span class="tt">@Disabled</span> mientras se revisa la suite unitaria.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md1"></a>
 Fixture</h1>
 <p><span class="tt">servicios/LienzoFiebre</span> arma, con las mismas operaciones del editor, el lienzo de fiebre del deck: </p><pre class="fragment">¿Cuánto marca el termómetro?
@@ -233,12 +231,11 @@ Reglas: compilar, validar y publicar (<span class="tt">CompiladorReglasTest</spa
 <li>Al publicar se <b>reemplaza</b> la base del grafo en el conjunto de bases, se recompone el contenido (grafo + reglas) y, tras el commit, se invalida el cache y se recarga el contexto. No se guarda nada si la composición no es válida.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md10"></a>
-Reglas: CRUD y publicación (<span class="tt">ServicioAutoriaReglasImplTest</span>, <span class="tt">ServicioAutoriaReglasAbstractoTest</span>)</h2>
+Reglas: CRUD y publicación (<span class="tt">ServicioAutoriaReglasImplTest</span>)</h2>
 <ul>
 <li><b>CRUD del borrador:</b> crear la base de un grafo, agregar/editar/eliminar reglas (ids <span class="tt">R_N</span> no reutilizados) y listar.</li>
 <li><b>Estados:</b> editar una base publicada la deja en <span class="tt">CAMBIOS_SIN_PUBLICAR</span>; una base publicada no se puede borrar.</li>
 <li><b>Publicación:</b> exige que el lienzo del subgrafo esté publicado (sin <span class="tt">CAMBIOS_SIN_PUBLICAR</span>) y delega en <span class="tt">PublicadorRegla</span>.</li>
-<li>La suite <b>abstracta</b> repite el CRUD con datos <span class="tt">op1/op2/op3</span> y todos los colaboradores simulados con Mockito, sin depender del dominio.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md11"></a>
 Autor y acceso (<span class="tt">PoliticaAccesoBorradoresTest</span>, <span class="tt">GuardiaAutoriaTest</span>)</h2>
@@ -268,15 +265,15 @@ API (<span class="tt">ControladorAutoriaTest</span>)</h2>
 <ul>
 <li>Crear responde 201 y borrar 204.</li>
 <li>Una edición inválida responde <b>422 con <span class="tt">{mensaje, avisos: []}</span></b>.</li>
-<li>Quien no es el autor recibe <b>403</b> al editar y al abrir lo de otro.</li>
+<li>Quien no es el autor recibe <b>403</b> al editar.</li>
 <li>Un id inexistente da 404 y una edición concurrente (<span class="tt">@Version</span>) da 409.</li>
-<li>Despublicar responde 200 con el borrador en <span class="tt">BORRADOR</span>; 422 con el mensaje si no estaba publicado o el contenido restante no es válido; 404 si no existe.</li>
-<li>Quitar el destino de una respuesta acepta <span class="tt">{"nodoId": null}</span>.</li>
+<li>Despublicar responde 200 con el borrador en <span class="tt">BORRADOR</span> y 422 con el mensaje si el contenido restante no es válido.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
-Punta a punta (<span class="tt">AutoriaIntegracionTest</span>)</h2>
+Punta a punta (<span class="tt">AutoriaIntegracionTest</span>, deshabilitada temporalmente)</h2>
 <p>Arma con el servicio un subgrafo de fiebre (una pregunta y dos conclusiones), lo aprueba (es decir, lo publica) y lo recorre con <span class="tt">ServicioNavegacion</span>: <span class="tt">pregunta_inicial → neurologico → puente_neuro → opción nueva → pregunta
 del subgrafo → "Más de 39 °C" → URGENCIA</span>. En <span class="tt">puente_neuro</span> siguen las opciones del sistema y aparece la nueva. No es <span class="tt">@Transactional</span>, porque la recarga del contenido ocurre después del commit; al terminar borra lo que creó, restaura el grafo raíz e invalida el contenido.</p>
+<p>Está <b>deshabilitada temporalmente</b> con <span class="tt">@Disabled</span> mientras se revisa la suite unitaria por separado. Para volver a ejecutarla, quitar la anotación y levantar PostgreSQL y Redis.</p>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
 Versiones del contenido (republicar sin romper recorridos en curso)</h2>
 <ul>

@@ -27,7 +27,6 @@ var namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios =
     [ "ServicioAutoriaImpl", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImpl" ],
     [ "ServicioAutoriaImplTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaImplTest.html", null ],
     [ "ServicioAutoriaReglas", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas" ],
-    [ "ServicioAutoriaReglasAbstractoTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasAbstractoTest.html", null ],
     [ "ServicioAutoriaReglasImpl", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImpl.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImpl" ],
     [ "ServicioAutoriaReglasImplTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglasImplTest.html", null ],
     [ "ServicioRevision", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioRevision.html", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioRevision" ],
