@@ -151,13 +151,11 @@ Pruebas unitarias</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Media: subida y referencias de imágenes  </td><td class="markdownTableBodyRight">16  </td><td class="markdownTableBodyNone">JUnit 5 + MockMvc  </td><td class="markdownTableBodyNone">—  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Errores generales: 400, 405, 409, 422 y 500 con cuerpo <span class="tt">{mensaje, avisos}</span> (<span class="tt">config/ManejadorErroresGeneralesTest</span>)  </td><td class="markdownTableBodyRight">8  </td><td class="markdownTableBodyNone">JUnit 5 + MockMvc  </td><td class="markdownTableBodyNone">—  </td></tr>
+<td class="markdownTableBodyNone">Errores generales: 400, 405, 409 y 500 con cuerpo <span class="tt">{mensaje, avisos}</span> (<span class="tt">config/ManejadorErroresGeneralesTest</span>)  </td><td class="markdownTableBodyRight">4  </td><td class="markdownTableBodyNone">JUnit 5 + MockMvc  </td><td class="markdownTableBodyNone">—  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Validación de entradas: límites de largo y de caracteres de los DTO (<span class="tt">config/ValidacionEntradasTest</span>)  </td><td class="markdownTableBodyRight">4  </td><td class="markdownTableBodyNone">JUnit 5 + validador de Jakarta  </td><td class="markdownTableBodyNone">—  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Seed de demo: conversión de los JSON de <span class="tt">seed/demo/</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">JUnit 5  </td><td class="markdownTableBodyNone">—  </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>Total unitarias</b>  </td><td class="markdownTableBodyRight"><b>568</b>  </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"><b>Total unitarias</b>  </td><td class="markdownTableBodyRight"><b>562</b>  </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
 </table>
 <p>Las clases de integración de cada módulo se excluyen de esta tabla y se listan en la sección siguiente.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md55"></a>
@@ -187,16 +185,24 @@ Totales</h1>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Tipo  </th><th class="markdownTableHeadRight">Presentes  </th><th class="markdownTableHeadRight">Ejecutadas  </th><th class="markdownTableHeadRight">Omitidas  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Unitarias  </td><td class="markdownTableBodyRight">568  </td><td class="markdownTableBodyRight">568  </td><td class="markdownTableBodyRight">0  </td></tr>
+<td class="markdownTableBodyNone">Unitarias  </td><td class="markdownTableBodyRight">562  </td><td class="markdownTableBodyRight">562  </td><td class="markdownTableBodyRight">0  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Integración  </td><td class="markdownTableBodyRight">35  </td><td class="markdownTableBodyRight">33  </td><td class="markdownTableBodyRight">2  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>Total</b>  </td><td class="markdownTableBodyRight"><b>603</b>  </td><td class="markdownTableBodyRight"><b>601</b>  </td><td class="markdownTableBodyRight"><b>2</b>  </td></tr>
+<td class="markdownTableBodyNone"><b>Total</b>  </td><td class="markdownTableBodyRight"><b>597</b>  </td><td class="markdownTableBodyRight"><b>595</b>  </td><td class="markdownTableBodyRight"><b>2</b>  </td></tr>
 </table>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md57"></a>
 Resultados</h1>
-<p>La ejecución local del 31-oct-2026 sobre <span class="tt">develop</span> corre <b>603 pruebas: 601 pasan y 2 se omiten</b> (<span class="tt">AutoriaIntegracionTest</span>, deshabilitada). El CI ejecuta <span class="tt">./mvnw -B verify</span> con PostgreSQL y Redis como servicios.</p>
-<blockquote class="doxtable">
+<p>La ejecución local del 31-oct-2026 sobre <span class="tt">develop</span> corre <b>597 pruebas: 595 pasan y 2 se omiten</b> (<span class="tt">AutoriaIntegracionTest</span>, deshabilitada). El CI ejecuta <span class="tt">./mvnw -B verify</span> con PostgreSQL y Redis como servicios.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md58"></a>
+Cobertura</h1>
+<p>El backend usa <b>JaCoCo</b>. El informe se genera en cada <span class="tt">test</span>: </p><pre class="fragment">./mvnw test
+# abrir target/site/jacoco/index.html
+</pre><p>En la corrida del 31-oct-2026 el informe marca <b>81,6 % de líneas</b> y <b>80,6 % de instrucciones</b>. Incluye desglose por paquete y por clase.</p>
+<p>Para el frontend, Angular genera la cobertura con el flag <span class="tt">--code-coverage</span>: </p><pre class="fragment">npx ng test --watch=false --code-coverage
+# abrir coverage/ui-consulta/index.html, coverage/ui-autoria/index.html
+# o coverage/ui-compartida/index.html
+</pre><blockquote class="doxtable">
 <p>Nota: para leer reportes frescos, ejecutar <span class="tt">./mvnw clean</span> antes: <span class="tt">target/surefire-reports</span> puede conservar reportes de clases que ya no existen. </p>
 </blockquote>
 </div></div><!-- contents -->

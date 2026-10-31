@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['nariz_0',['Respiración y nariz',['../entorno_pruebas.html#autotoc_md111',1,'']]],
+  ['nariz_0',['Respiración y nariz',['../entorno_pruebas.html#autotoc_md112',1,'']]],
   ['navegación_1',['Pruebas del módulo de navegación',['../pruebas_navegacion.html',1,'']]],
   ['navegar_2',['navegar',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinico.html#a663b63be985b0f89a5f7e62f56350c4a',1,'org::signbb::backend::navegacion::modelo::GrafoClinico']]],
-  ['nivel_3',['nivel',['../md_docs_2entorno-pruebas_2reglas_2base__reglas.html#autotoc_md124',1,'Resumen por nivel'],['../md_docs_2entorno-pruebas_2reglas_2reglas__activo__color.html#autotoc_md126',1,'Resumen por nivel'],['../md_docs_2entorno-pruebas_2reglas_2reglas__cabeza.html#autotoc_md128',1,'Resumen por nivel'],['../md_docs_2entorno-pruebas_2reglas_2reglas__gastro.html#autotoc_md130',1,'Resumen por nivel'],['../md_docs_2entorno-pruebas_2reglas_2reglas__respiracion.html#autotoc_md132',1,'Resumen por nivel']]],
+  ['nivel_3',['nivel',['../md_docs_2entorno-pruebas_2reglas_2base__reglas.html#autotoc_md125',1,'Resumen por nivel'],['../md_docs_2entorno-pruebas_2reglas_2reglas__activo__color.html#autotoc_md127',1,'Resumen por nivel'],['../md_docs_2entorno-pruebas_2reglas_2reglas__cabeza.html#autotoc_md129',1,'Resumen por nivel'],['../md_docs_2entorno-pruebas_2reglas_2reglas__gastro.html#autotoc_md131',1,'Resumen por nivel'],['../md_docs_2entorno-pruebas_2reglas_2reglas__respiracion.html#autotoc_md133',1,'Resumen por nivel']]],
   ['nivelalerta_4',['NivelAlerta',['../enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1NivelAlerta.html',1,'org::signbb::backend::reglas::modelo']]],
   ['niveldeldesenlace_5',['nivelDelDesenlace',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html#a3e003da3c44ac4b0df6b3fc6d11f32ff',1,'org::signbb::backend::navegacion::servicios::MotorNavegacion']]],
   ['no_5fdisponible_6',['NO_DISPONIBLE',['../classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioRecorridosImpl.html#ab7fc889c42ddf448d6111ed4d86d32bd',1,'org::signbb::backend::observaciones::servicios::ServicioRecorridosImpl']]],
@@ -11,13 +11,13 @@ var searchData=
   ['nodolienzo_8',['NodoLienzo',['../namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1modelo.html#a8e19ec99bb608a32559f963276243163',1,'org::signbb::backend::autoria::modelo']]],
   ['nodolienzotest_9',['NodoLienzoTest',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1NodoLienzoTest.html',1,'org::signbb::backend::autoria::modelo']]],
   ['nodorequest_10',['NodoRequest',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1NodoRequest.html',1,'org.signbb.backend.autoria.controladores.NodoRequest'],['../classorg_1_1signbb_1_1backend_1_1autoria_1_1controladores_1_1NodoRequest.html#a42af4abbc88a73de0818376c8b1ad37e',1,'org.signbb.backend.autoria.controladores.NodoRequest.NodoRequest()']]],
-  ['nodos_11',['Índice de nodos',['../entorno_pruebas.html#autotoc_md109',1,'']]],
+  ['nodos_11',['Índice de nodos',['../entorno_pruebas.html#autotoc_md110',1,'']]],
   ['nodotest_12',['NodoTest',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1NodoTest.html',1,'org::signbb::backend::navegacion::modelo']]],
   ['nombre_13',['nombre',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ValidadorLienzo.html#afdd868ee1cce540cbd8efea3db359194',1,'org::signbb::backend::autoria::servicios::ValidadorLienzo']]],
   ['normal_14',['NORMAL',['../enumorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1NivelAlerta.html#ad20739cdb6a47e7f201d4a70aba3f5ae',1,'org::signbb::backend::reglas::modelo::NivelAlerta']]],
   ['normalizado_15',['normalizado',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorLienzo.html#aa069d92f3506d2f9720a3b72bf1380f3',1,'org::signbb::backend::autoria::servicios::EditorLienzo']]],
   ['normalizarcorreo_16',['normalizarCorreo',['../classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1ServicioCuentasImpl.html#ae7e061fc16ff5139f59a04f64a3a140f',1,'org::signbb::backend::seguridad::servicios::ServicioCuentasImpl']]],
-  ['notas_17',['Notas',['../pruebas_cache.html#autotoc_md65',1,'Notas'],['../entorno_pruebas.html#autotoc_md123',1,'Notas']]],
+  ['notas_17',['Notas',['../pruebas_cache.html#autotoc_md66',1,'Notas'],['../entorno_pruebas.html#autotoc_md124',1,'Notas']]],
   ['nuevasesion_18',['nuevaSesion',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html#a1f0db75bb5a3575a99b347657fb7b02b',1,'org::signbb::backend::navegacion::modelo::Contexto']]],
   ['nuevousuariorequest_19',['NuevoUsuarioRequest',['../namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores.html#ac19e260efe62ce27b6f19177a00559fa',1,'org::signbb::backend::seguridad::controladores']]]
 ];

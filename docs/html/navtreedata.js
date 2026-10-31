@@ -101,90 +101,91 @@ var NAVTREE =
       [ "Pruebas unitarias", "pruebas.html#autotoc_md54", null ],
       [ "Pruebas de integración", "pruebas.html#autotoc_md55", null ],
       [ "Totales", "pruebas.html#autotoc_md56", null ],
-      [ "Resultados", "pruebas.html#autotoc_md57", null ]
+      [ "Resultados", "pruebas.html#autotoc_md57", null ],
+      [ "Cobertura", "pruebas.html#autotoc_md58", null ]
     ] ],
     [ "Pruebas del cache", "pruebas_cache.html", [
-      [ "Ubicación", "pruebas_cache.html#autotoc_md58", null ],
-      [ "ResolvedorContenidoClinicoTest — resolución cache-aside del contenido", "pruebas_cache.html#autotoc_md59", null ],
-      [ "RepositorioSesionRedisTest — sesiones en Redis", "pruebas_cache.html#autotoc_md60", null ],
-      [ "CandadoRecorridoRedisTest — candado por recorrido", "pruebas_cache.html#autotoc_md61", null ],
-      [ "CacheRedisIntegracionTest — integración", "pruebas_cache.html#autotoc_md62", null ],
-      [ "ColaSeleccionMultipleRedisIntegracionTest — cola de la selección múltiple", "pruebas_cache.html#autotoc_md63", null ],
-      [ "Cómo ejecutarlas", "pruebas_cache.html#autotoc_md64", null ],
-      [ "Notas", "pruebas_cache.html#autotoc_md65", null ],
-      [ "Limpieza programada (<span class=\"tt\">mantenimiento</span>)", "pruebas_cache.html#autotoc_md66", null ]
+      [ "Ubicación", "pruebas_cache.html#autotoc_md59", null ],
+      [ "ResolvedorContenidoClinicoTest — resolución cache-aside del contenido", "pruebas_cache.html#autotoc_md60", null ],
+      [ "RepositorioSesionRedisTest — sesiones en Redis", "pruebas_cache.html#autotoc_md61", null ],
+      [ "CandadoRecorridoRedisTest — candado por recorrido", "pruebas_cache.html#autotoc_md62", null ],
+      [ "CacheRedisIntegracionTest — integración", "pruebas_cache.html#autotoc_md63", null ],
+      [ "ColaSeleccionMultipleRedisIntegracionTest — cola de la selección múltiple", "pruebas_cache.html#autotoc_md64", null ],
+      [ "Cómo ejecutarlas", "pruebas_cache.html#autotoc_md65", null ],
+      [ "Notas", "pruebas_cache.html#autotoc_md66", null ],
+      [ "Limpieza programada (<span class=\"tt\">mantenimiento</span>)", "pruebas_cache.html#autotoc_md67", null ]
     ] ],
     [ "Manual de contenedores", "md_contenedores_2MANUAL__CONTENEDORES.html", [
-      [ "Levantar", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md78", [
-        [ "Frontend PWA (Caddy)", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md79", null ],
-        [ "Variables de entorno", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md80", null ]
+      [ "Levantar", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md79", [
+        [ "Frontend PWA (Caddy)", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md80", null ],
+        [ "Variables de entorno", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md81", null ]
       ] ],
-      [ "Dar de baja", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md81", null ],
-      [ "Eliminar los datos persistentes", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md82", null ],
-      [ "Acceso rápido", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md83", null ],
-      [ "Parámetros de conexión (perfil <span class=\"tt\">docker</span> del backend en el host)", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md84", null ]
+      [ "Dar de baja", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md82", null ],
+      [ "Eliminar los datos persistentes", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md83", null ],
+      [ "Acceso rápido", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md84", null ],
+      [ "Parámetros de conexión (perfil <span class=\"tt\">docker</span> del backend en el host)", "md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md85", null ]
     ] ],
     [ "SignBB · Autoría de subgrafos clínicos: qué se hizo y qué falta", "md_docs_2autoria-subgrafos.html", [
-      [ "1. Qué es esta parte", "md_docs_2autoria-subgrafos.html#autotoc_md86", null ],
-      [ "2. Ramas y cómo están", "md_docs_2autoria-subgrafos.html#autotoc_md87", null ],
-      [ "3. Pasos que seguimos", "md_docs_2autoria-subgrafos.html#autotoc_md88", [
-        [ "Back (<span class=\"tt\">signbb-backend</span>, rama <span class=\"tt\">autoria</span>)", "md_docs_2autoria-subgrafos.html#autotoc_md89", null ],
-        [ "Front (<span class=\"tt\">signbb-frontend</span>, rama <span class=\"tt\">autoria</span>, proyecto <span class=\"tt\">ui-autoria</span>)", "md_docs_2autoria-subgrafos.html#autotoc_md90", null ]
+      [ "1. Qué es esta parte", "md_docs_2autoria-subgrafos.html#autotoc_md87", null ],
+      [ "2. Ramas y cómo están", "md_docs_2autoria-subgrafos.html#autotoc_md88", null ],
+      [ "3. Pasos que seguimos", "md_docs_2autoria-subgrafos.html#autotoc_md89", [
+        [ "Back (<span class=\"tt\">signbb-backend</span>, rama <span class=\"tt\">autoria</span>)", "md_docs_2autoria-subgrafos.html#autotoc_md90", null ],
+        [ "Front (<span class=\"tt\">signbb-frontend</span>, rama <span class=\"tt\">autoria</span>, proyecto <span class=\"tt\">ui-autoria</span>)", "md_docs_2autoria-subgrafos.html#autotoc_md91", null ]
       ] ],
-      [ "4. API (<span class=\"tt\">/api/autoria</span>)", "md_docs_2autoria-subgrafos.html#autotoc_md91", null ],
-      [ "5. Cómo probarlo en local", "md_docs_2autoria-subgrafos.html#autotoc_md92", [
-        [ "Mac (Terminal, zsh)", "md_docs_2autoria-subgrafos.html#autotoc_md93", null ],
-        [ "Windows (PowerShell)", "md_docs_2autoria-subgrafos.html#autotoc_md94", null ],
-        [ "Verificar que el back responde (Mac y Windows)", "md_docs_2autoria-subgrafos.html#autotoc_md95", null ],
-        [ "Prueba sugerida: «Ictericia en la piel»", "md_docs_2autoria-subgrafos.html#autotoc_md96", null ],
-        [ "Probar la limpieza a mano", "md_docs_2autoria-subgrafos.html#autotoc_md97", null ],
-        [ "Errores a verificar", "md_docs_2autoria-subgrafos.html#autotoc_md98", null ]
+      [ "4. API (<span class=\"tt\">/api/autoria</span>)", "md_docs_2autoria-subgrafos.html#autotoc_md92", null ],
+      [ "5. Cómo probarlo en local", "md_docs_2autoria-subgrafos.html#autotoc_md93", [
+        [ "Mac (Terminal, zsh)", "md_docs_2autoria-subgrafos.html#autotoc_md94", null ],
+        [ "Windows (PowerShell)", "md_docs_2autoria-subgrafos.html#autotoc_md95", null ],
+        [ "Verificar que el back responde (Mac y Windows)", "md_docs_2autoria-subgrafos.html#autotoc_md96", null ],
+        [ "Prueba sugerida: «Ictericia en la piel»", "md_docs_2autoria-subgrafos.html#autotoc_md97", null ],
+        [ "Probar la limpieza a mano", "md_docs_2autoria-subgrafos.html#autotoc_md98", null ],
+        [ "Errores a verificar", "md_docs_2autoria-subgrafos.html#autotoc_md99", null ]
       ] ],
-      [ "6. Pendientes para tener completa la parte de subgrafos clínicos", "md_docs_2autoria-subgrafos.html#autotoc_md99", [
-        [ "Imprescindibles", "md_docs_2autoria-subgrafos.html#autotoc_md100", null ],
-        [ "Importantes", "md_docs_2autoria-subgrafos.html#autotoc_md101", null ],
-        [ "Detalles menores", "md_docs_2autoria-subgrafos.html#autotoc_md102", null ]
+      [ "6. Pendientes para tener completa la parte de subgrafos clínicos", "md_docs_2autoria-subgrafos.html#autotoc_md100", [
+        [ "Imprescindibles", "md_docs_2autoria-subgrafos.html#autotoc_md101", null ],
+        [ "Importantes", "md_docs_2autoria-subgrafos.html#autotoc_md102", null ],
+        [ "Detalles menores", "md_docs_2autoria-subgrafos.html#autotoc_md103", null ]
       ] ],
-      [ "7. Cosas a tener en cuenta", "md_docs_2autoria-subgrafos.html#autotoc_md103", null ]
+      [ "7. Cosas a tener en cuenta", "md_docs_2autoria-subgrafos.html#autotoc_md104", null ]
     ] ],
     [ "Entorno de pruebas y demo", "entorno_pruebas.html", [
-      [ "Usuarios creados", "entorno_pruebas.html#autotoc_md104", null ],
-      [ "Cómo se ejecuta el seed", "entorno_pruebas.html#autotoc_md105", [
-        [ "Backend local", "entorno_pruebas.html#autotoc_md106", null ],
-        [ "Docker", "entorno_pruebas.html#autotoc_md107", null ]
+      [ "Usuarios creados", "entorno_pruebas.html#autotoc_md105", null ],
+      [ "Cómo se ejecuta el seed", "entorno_pruebas.html#autotoc_md106", [
+        [ "Backend local", "entorno_pruebas.html#autotoc_md107", null ],
+        [ "Docker", "entorno_pruebas.html#autotoc_md108", null ]
       ] ],
-      [ "Grafos", "entorno_pruebas.html#autotoc_md108", [
-        [ "Índice de nodos", "entorno_pruebas.html#autotoc_md109", null ],
-        [ "Grafo raíz", "entorno_pruebas.html#autotoc_md110", null ],
-        [ "Respiración y nariz", "entorno_pruebas.html#autotoc_md111", null ],
-        [ "Gastrointestinal", "entorno_pruebas.html#autotoc_md112", null ],
-        [ "Actividad y color", "entorno_pruebas.html#autotoc_md113", null ],
-        [ "Cabeza, ojos y oídos", "entorno_pruebas.html#autotoc_md114", null ]
+      [ "Grafos", "entorno_pruebas.html#autotoc_md109", [
+        [ "Índice de nodos", "entorno_pruebas.html#autotoc_md110", null ],
+        [ "Grafo raíz", "entorno_pruebas.html#autotoc_md111", null ],
+        [ "Respiración y nariz", "entorno_pruebas.html#autotoc_md112", null ],
+        [ "Gastrointestinal", "entorno_pruebas.html#autotoc_md113", null ],
+        [ "Actividad y color", "entorno_pruebas.html#autotoc_md114", null ],
+        [ "Cabeza, ojos y oídos", "entorno_pruebas.html#autotoc_md115", null ]
       ] ],
-      [ "Bases de reglas", "entorno_pruebas.html#autotoc_md115", null ],
-      [ "Scripts de ayuda", "entorno_pruebas.html#autotoc_md116", [
-        [ "<span class=\"tt\">json_a_dot.py</span>", "entorno_pruebas.html#autotoc_md117", null ],
-        [ "<span class=\"tt\">reglas_a_markdown.py</span>", "entorno_pruebas.html#autotoc_md118", null ],
-        [ "<span class=\"tt\">regenerar_grafos.sh</span>", "entorno_pruebas.html#autotoc_md119", null ]
+      [ "Bases de reglas", "entorno_pruebas.html#autotoc_md116", null ],
+      [ "Scripts de ayuda", "entorno_pruebas.html#autotoc_md117", [
+        [ "<span class=\"tt\">json_a_dot.py</span>", "entorno_pruebas.html#autotoc_md118", null ],
+        [ "<span class=\"tt\">reglas_a_markdown.py</span>", "entorno_pruebas.html#autotoc_md119", null ],
+        [ "<span class=\"tt\">regenerar_grafos.sh</span>", "entorno_pruebas.html#autotoc_md120", null ]
       ] ],
-      [ "Validación del entorno", "entorno_pruebas.html#autotoc_md120", [
-        [ "Pruebas automáticas", "entorno_pruebas.html#autotoc_md121", null ],
-        [ "Comprobaciones del seed", "entorno_pruebas.html#autotoc_md122", null ]
+      [ "Validación del entorno", "entorno_pruebas.html#autotoc_md121", [
+        [ "Pruebas automáticas", "entorno_pruebas.html#autotoc_md122", null ],
+        [ "Comprobaciones del seed", "entorno_pruebas.html#autotoc_md123", null ]
       ] ],
-      [ "Notas", "entorno_pruebas.html#autotoc_md123", null ]
+      [ "Notas", "entorno_pruebas.html#autotoc_md124", null ]
     ] ],
     [ "base_reglas", "md_docs_2entorno-pruebas_2reglas_2base__reglas.html", null ],
     [ "Base de reglas: grafo_activo_color", "md_docs_2entorno-pruebas_2reglas_2reglas__activo__color.html", [
-      [ "Resumen por nivel", "md_docs_2entorno-pruebas_2reglas_2reglas__activo__color.html#autotoc_md126", null ]
+      [ "Resumen por nivel", "md_docs_2entorno-pruebas_2reglas_2reglas__activo__color.html#autotoc_md127", null ]
     ] ],
     [ "Base de reglas: grafo_cabeza", "md_docs_2entorno-pruebas_2reglas_2reglas__cabeza.html", [
-      [ "Resumen por nivel", "md_docs_2entorno-pruebas_2reglas_2reglas__cabeza.html#autotoc_md128", null ]
+      [ "Resumen por nivel", "md_docs_2entorno-pruebas_2reglas_2reglas__cabeza.html#autotoc_md129", null ]
     ] ],
     [ "Base de reglas: grafo_gastro", "md_docs_2entorno-pruebas_2reglas_2reglas__gastro.html", [
-      [ "Resumen por nivel", "md_docs_2entorno-pruebas_2reglas_2reglas__gastro.html#autotoc_md130", null ]
+      [ "Resumen por nivel", "md_docs_2entorno-pruebas_2reglas_2reglas__gastro.html#autotoc_md131", null ]
     ] ],
     [ "Base de reglas: grafo_respiracion", "md_docs_2entorno-pruebas_2reglas_2reglas__respiracion.html", [
-      [ "Resumen por nivel", "md_docs_2entorno-pruebas_2reglas_2reglas__respiracion.html#autotoc_md132", null ]
+      [ "Resumen por nivel", "md_docs_2entorno-pruebas_2reglas_2reglas__respiracion.html#autotoc_md133", null ]
     ] ],
     [ "Paquetes", "namespaces.html", [
       [ "Lista de paquetes", "namespaces.html", "namespaces_dup" ],
@@ -213,9 +214,9 @@ var NAVTREEINDEX =
 "classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorVersiones.html#a33ac6449cb298da24f46dd7ed3317297",
 "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#ad89abc8c8597a9492b02814dfa269cb1",
 "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioRecorridosImpl.html#a3742fa4b7e5cdcd60a10451343d31097",
-"classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CredencialesInvalidasException.html#a1f080ea7d279d309d05cc7e3a7a6b8b4",
-"interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#ac36cd7fe0acfde52ee6de8f8477b96fc",
-"namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos.html"
+"classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1CuentaInvalidaException.html",
+"interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#ac779d4076811e4ef0f371da4e9e429a4",
+"namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1repositorios.html"
 ];
 
 const SYNCONMSG = 'pulsar para deshabilitar sincronización';

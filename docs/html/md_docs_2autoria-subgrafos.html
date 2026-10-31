@@ -111,18 +111,18 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('md_docs_2autor
   <div class="headertitle"><div class="title">SignBB · Autoría de subgrafos clínicos: qué se hizo y qué falta </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md85"></a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md86"></a></p>
 <blockquote class="doxtable">
 <p>Resumen para el equipo · actualizado el 16-oct-2026 </p>
 </blockquote>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md86"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md87"></a>
 1. Qué es esta parte</h1>
 <p>El <b>médico</b> arma en un lienzo un <em>subgrafo clínico</em>, es decir, el camino de preguntas que lleva a una conclusión para un signo. Al <b>publicarlo</b>, ese subgrafo aparece como una opción nueva en la app de la <b>cuidadora</b>, dentro de la categoría que eligió el médico.</p>
 <div class="fragment"><div class="line">Cuidadora:  ¿Qué le pasa al bebé?  ──piel──▶  ¿Qué cambio observa en la piel o los ojos?</div>
 <div class="line">                                                 └─ «Piel u ojos amarillos»  ◀── lo agrega el médico al publicar</div>
 <div class="line">                                                       └─ preguntas del subgrafo … → Recomendación / Consulta / Urgencia</div>
 </div><!-- fragment --><p>Cada subgrafo puede tener además su <b>base de reglas clínicas</b> (reglas de alarma en FND: OR de casos, cada caso un AND de condiciones). Las reglas se editan en su propia pantalla y <b>se publican junto con el subgrafo</b>.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md87"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md88"></a>
 2. Ramas y cómo están</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -141,9 +141,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('md_docs_2autor
 <li><b>No se ha hecho merge</b> de <span class="tt">autoria</span> hacia <span class="tt">navegacion</span>, <span class="tt">develop</span> ni <span class="tt">main</span>.</li>
 <li>Las reglas usan el formato FND plano (<span class="tt">casos: Condicion[][]</span>). El Y/O anidado de <span class="tt">feature/motor-and-or</span> quedó descartado por ahora.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md88"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md89"></a>
 3. Pasos que seguimos</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md89"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md90"></a>
 Back (<span class="tt">signbb-backend</span>, rama <span class="tt">autoria</span>)</h2>
 <ol type="1">
 <li><b>Modelo y persistencia del borrador</b> (<span class="tt">c545730</span>): <span class="tt">BorradorSubgrafoEntity</span>, que guarda el lienzo como JSON (<span class="tt">DocumentoLienzo</span>, <span class="tt">NodoLienzo</span>, <span class="tt">RespuestaLienzo</span>). Lleva <span class="tt">@Version</span> para detectar ediciones simultáneas y los estados <span class="tt">BORRADOR</span>, <span class="tt">PUBLICADO</span> y <span class="tt">CAMBIOS_SIN_PUBLICAR</span>. Es independiente del grafo publicado.</li>
@@ -186,7 +186,7 @@ Back (<span class="tt">signbb-backend</span>, rama <span class="tt">autoria</spa
 <li><b>Documentación de la API</b> (Simón, <span class="tt">7bbe192</span>): springdoc y <span class="tt">docs/api/openapi.yaml</span>.</li>
 <li><b>Pruebas</b> (Simón, <span class="tt">45eb370</span>, <span class="tt">2423a0d</span>): pruebas unitarias del motor de reglas y de la autoría de reglas, el plan de pruebas (<span class="tt">Plan_pruebas_navegacion_SignBB.xlsx</span>) y <span class="tt">pruebas_manuales/pruebas_versiones.md</span>.</li>
 </ol>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md90"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md91"></a>
 Front (<span class="tt">signbb-frontend</span>, rama <span class="tt">autoria</span>, proyecto <span class="tt">ui-autoria</span>)</h2>
 <ol type="1">
 <li><b>Cliente de la API nueva</b> (<span class="tt">c383d0d</span>): <span class="tt">core/http/autoria.ts</span> y <span class="tt">models/lienzo.model.ts</span>. Reemplazan <span class="tt">autoria.model.ts</span> y la API vieja <span class="tt">/grafos</span>.</li>
@@ -217,7 +217,7 @@ Front (<span class="tt">signbb-frontend</span>, rama <span class="tt">autoria</s
 </li>
 <li><b>Documentación del front con Compodoc</b> (Simón, <span class="tt">e04c0f6</span>): <span class="tt">npm run docs</span> genera la documentación de las tres apps en <span class="tt">docs/</span>.</li>
 </ol>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md91"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md92"></a>
 4. API (<span class="tt">/api/autoria</span>)</h1>
 <p>En la rama <span class="tt">seguridad</span> todo <span class="tt">/api/autoria</span> pide token de <span class="tt">MEDICO</span> o <span class="tt">MEDICO_SUPERVISOR</span> (ver el README raíz). El autor y la institución salen de la cuenta: si el request los trae, se ignoran. Cada médico ve y edita solo lo suyo; un supervisor ve todo, pero solo edita y publica directamente lo propio.</p>
 <table class="markdownTable">
@@ -275,7 +275,7 @@ Front (<span class="tt">signbb-frontend</span>, rama <span class="tt">autoria</s
 </table>
 <p><span class="tt">POST /subgrafos/{id}/publicar</span> es exclusivo del supervisor autor: publica directamente el subgrafo y su base de reglas, sin revisión. La base de reglas no tiene un <span class="tt">POST /bases/{id}/publicar</span> propio: se publica con el subgrafo. El resto de los médicos publica al aprobar su revisión; si cambian solo las reglas de un subgrafo publicado, el supervisor puede republicarlo directamente y los demás lo envían a revisión.</p>
 <p>La especificación completa está en <span class="tt">docs/api/openapi.yaml</span>.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md92"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md93"></a>
 5. Cómo probarlo en local</h1>
 <p><b>Requisitos:</b> Java 25, Docker Desktop (encendido), Node.js con npm y Git. Maven no hace falta, porque se usa el wrapper (<span class="tt">mvnw</span> / <span class="tt">mvnw.cmd</span>).</p>
 <p><b>Puertos:</b></p>
@@ -294,7 +294,7 @@ Front (<span class="tt">signbb-frontend</span>, rama <span class="tt">autoria</s
 <td class="markdownTableBodyNone">Redis  </td><td class="markdownTableBodyNone"><span class="tt">localhost:6379</span>  </td></tr>
 </table>
 <p>Las rutas son relativas a la raíz de cada repo.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md93"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md94"></a>
 Mac (Terminal, zsh)</h2>
 <p><b>Back:</b> </p><div class="fragment"><div class="line">cd signbb-backend</div>
 <div class="line">git fetch origin &amp;&amp; git checkout autoria &amp;&amp; git pull</div>
@@ -319,7 +319,7 @@ Mac (Terminal, zsh)</h2>
 <div class="line">cd signbb-frontend</div>
 <div class="line">CHROME_BIN=&quot;/Applications/Google Chrome.app/Contents/MacOS/Google Chrome&quot; \</div>
 <div class="line">  npx ng test ui-autoria --watch=false --browsers=ChromeHeadless</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md94"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md95"></a>
 Windows (PowerShell)</h2>
 <p><b>Back:</b> </p><div class="fragment"><div class="line">cd signbb-backend</div>
 <div class="line">git fetch origin; git checkout autoria; git pull</div>
@@ -349,11 +349,11 @@ Windows (PowerShell)</h2>
 <li><b>Necesitas <span class="tt">curl</span>.</b> Usa <span class="tt">curl.exe</span>; en PowerShell, <span class="tt">curl</span> es un alias de <span class="tt">Invoke-WebRequest</span>.</li>
 <li><b>Errores de <span class="tt">JAVA_HOME</span>.</b> Verifica que <span class="tt">java -version</span> muestre la 25.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md95"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md96"></a>
 Verificar que el back responde (Mac y Windows)</h2>
 <div class="fragment"><div class="line">curl http://localhost:8080/api/autoria/categorias     # en Windows: curl.exe ...</div>
 </div><!-- fragment --><p>Debe listar las cinco categorías del grafo raíz: piel, temperatura, respiración, gastrointestinal y neurológico. Si no aparecen, revisa que el backend haya arrancado con <span class="tt">SIGNBB_SIEMBRA_ACTIVA=true</span> y que la base no tenga un <span class="tt">grafo_raiz</span> viejo. <span class="tt">DatabaseInit</span> solo siembra el grafo raíz si no existe; los subgrafos ya no se siembran, se publican desde autoría o se cargan con el seed de datos.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md96"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md97"></a>
 Prueba sugerida: «Ictericia en la piel»</h2>
 <ol type="1">
 <li>En <span class="tt"><a href="http://localhost:4300">http://localhost:4300</a></span>, crea un subgrafo con la categoría <b>Piel</b> y el nombre para la familia «Piel u ojos amarillos».</li>
@@ -361,7 +361,7 @@ Prueba sugerida: «Ictericia en la piel»</h2>
 <li>Publica.</li>
 <li>En <span class="tt"><a href="http://localhost:4200">http://localhost:4200</a></span> (cuidadora), entra a Piel y verifica que aparece «Piel u ojos amarillos» y que se recorre hasta la conclusión.</li>
 </ol>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md97"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md98"></a>
 Probar la limpieza a mano</h2>
 <p>La tarea corre sola a las 3:30. Para probarla sin esperar, cambia temporalmente en <span class="tt">backend/src/main/resources/application.properties</span> la línea <span class="tt">signbb.limpieza.cron=0 * * * * *</span> (corre cada minuto) y reinicia el back.</p>
 <ol type="1">
@@ -370,16 +370,16 @@ Probar la limpieza a mano</h2>
 <li><b>Versiones:</b> publica y despublica más de 20 veces (o inserta filas en <span class="tt">version_contenido</span>) y mira el log: <span class="tt">Limpieza de versiones: se borraron N de M</span>. La versión vigente y las 20 más recientes deben seguir en la tabla.</li>
 <li>Deja el cron y la gracia como estaban antes de commitear.</li>
 </ol>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md98"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md99"></a>
 Errores a verificar</h2>
 <ul>
 <li>Crear sin nombre para la familia no debe dejar.</li>
 <li>Eliminar debe mostrar el diálogo de la app, no el del navegador.</li>
 <li>Con el back apagado (Ctrl+C en su terminal), el error debe salir dentro del diálogo.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md99"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md100"></a>
 6. Pendientes para tener completa la parte de subgrafos clínicos</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md100"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md101"></a>
 Imprescindibles</h2>
 <ul class="check">
 <li class="checked"><b>Reglas clínicas en los subgrafos.</b> Hecho por Simón: editor de reglas en FND plano, versionadas junto al grafo y publicadas con el subgrafo.</li>
@@ -401,7 +401,7 @@ Imprescindibles</h2>
 <ul class="check">
 <li class="unchecked"><b>Prueba de punta a punta con la app de la cuidadora (<span class="tt">ui-consulta</span>)</b> sobre las ramas integradas.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md101"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md102"></a>
 Importantes</h2>
 <ul class="check">
 <li class="checked"><b>Despublicar</b> un subgrafo publicado (<span class="tt">POST /subgrafos/{id}/despublicar</span>). Quita su opción y su nodo <span class="tt">ref_&lt;grafoId&gt;</span> del grafo raíz, borra su fila y su base de reglas, guarda una versión nueva del contenido y los borradores (lienzo y reglas) vuelven a <span class="tt">BORRADOR</span> con su documento intacto (se pueden corregir y republicar, o borrar). Los recorridos en curso no se cortan: cada cuidadora termina con la versión con la que empezó. Si era el único subgrafo de su categoría, la categoría deja de mostrarse; si no queda ninguno, la consulta queda no disponible y el inicio muestra «La consulta no está disponible en estos momentos».</li>
@@ -423,7 +423,7 @@ Importantes</h2>
 <ul class="check">
 <li class="unchecked"><b>Administrar categorías desde la interfaz.</b> Hoy se agregan editando <span class="tt">grafo_raiz.json</span>, que existe en dos copias que deben quedar idénticas, y requiere volver a sembrar la base.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md102"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md103"></a>
 Detalles menores</h2>
 <ul class="check">
 <li class="unchecked">Si falla la carga de la pregunta puente en el lienzo, no se avisa: el modal de publicar simplemente no la nombra.</li>
@@ -437,7 +437,7 @@ Detalles menores</h2>
 <ul class="check">
 <li class="unchecked">Accesibilidad del lienzo: navegar con teclado entre nodos.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md103"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md104"></a>
 7. Cosas a tener en cuenta</h1>
 <ul>
 <li><b>El compositor poda las preguntas raíz sin opciones.</b> Por eso una categoría nueva aparece sola cuando alguien publica en ella.</li>
