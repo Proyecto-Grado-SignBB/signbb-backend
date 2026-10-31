@@ -53,10 +53,9 @@ Redis real: se clasifica como integración y se salta sola si Redis no responde.
 | Cache, sin las pruebas de integración | 40 | Mockito | \ref pruebas_cache "Ver página" |
 | Mantenimiento: retención de versiones e imágenes | 16 | JUnit 5 + Mockito | — |
 | Media: subida y referencias de imágenes | 16 | JUnit 5 + MockMvc | — |
-| Errores generales: 400, 405, 409, 422 y 500 con cuerpo `{mensaje, avisos}` (`config/ManejadorErroresGeneralesTest`) | 8 | JUnit 5 + MockMvc | — |
+| Errores generales: 400, 405, 409 y 500 con cuerpo `{mensaje, avisos}` (`config/ManejadorErroresGeneralesTest`) | 4 | JUnit 5 + MockMvc | — |
 | Validación de entradas: límites de largo y de caracteres de los DTO (`config/ValidacionEntradasTest`) | 4 | JUnit 5 + validador de Jakarta | — |
-| Seed de demo: conversión de los JSON de `seed/demo/` | 2 | JUnit 5 | — |
-| **Total unitarias** | **568** | | |
+| **Total unitarias** | **562** | | |
 
 Las clases de integración de cada módulo se excluyen de esta tabla y se
 listan en la sección siguiente.
@@ -83,15 +82,31 @@ un subgrafo con el servicio, lo publica y lo recorre como la cuidadora.
 
 | Tipo | Presentes | Ejecutadas | Omitidas |
 |---|---:|---:|---:|
-| Unitarias | 568 | 568 | 0 |
+| Unitarias | 562 | 562 | 0 |
 | Integración | 35 | 33 | 2 |
-| **Total** | **603** | **601** | **2** |
+| **Total** | **597** | **595** | **2** |
 
 ## Resultados
 
-La ejecución local del 31-oct-2026 sobre `develop` corre **603 pruebas: 601
+La ejecución local del 31-oct-2026 sobre `develop` corre **597 pruebas: 595
 pasan y 2 se omiten** (`AutoriaIntegracionTest`, deshabilitada). El CI ejecuta
 `./mvnw -B verify` con PostgreSQL y Redis como servicios.
+
+## Cobertura
+
+El backend usa **JaCoCo**. El informe se genera en cada `test`:
+
+    ./mvnw test
+    # abrir target/site/jacoco/index.html
+
+En la corrida del 31-oct-2026 el informe marca **81,6 % de líneas** y **80,6 %
+de instrucciones**. Incluye desglose por paquete y por clase.
+
+Para el frontend, Angular genera la cobertura con el flag `--code-coverage`:
+
+    npx ng test --watch=false --code-coverage
+    # abrir coverage/ui-consulta/index.html, coverage/ui-autoria/index.html
+    # o coverage/ui-compartida/index.html
 
 > Nota: para leer reportes frescos, ejecutar `./mvnw clean` antes: `target/surefire-reports`
 > puede conservar reportes de clases que ya no existen.
