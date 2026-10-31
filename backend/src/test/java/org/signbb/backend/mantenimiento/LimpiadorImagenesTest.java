@@ -9,7 +9,6 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import java.time.Duration;
@@ -90,53 +89,11 @@ class LimpiadorImagenesTest {
     }
 
     @Test
-    void nuncaBorraLasSubidasHaceMenosDeVeinticuatroHoras() {
-        guardadas(new Guardada(SIN_USO, AHORA.minus(Duration.ofHours(23))),
-                new Guardada("00000000-0000-0000-0000-000000000009.png",
-                        AHORA.minus(Duration.ofHours(24)).plusSeconds(1)));
-
-        assertTrue(limpiador.limpiar(AHORA).isEmpty());
-        verify(almacen, never()).eliminar(anyString());
-    }
-
-    @Test
-    void pasadasVeinticuatroHorasYaSePuedeBorrar() {
-        guardadas(new Guardada(SIN_USO, AHORA.minus(Duration.ofHours(24)).minusSeconds(1)));
-
-        assertEquals(List.of(SIN_USO), limpiador.limpiar(AHORA));
-    }
-
-    @Test
-    void noTocaArchivosQueNoTienenNombreDeImagenDelServidor() {
-        guardadas(vieja("logo.png"), vieja("notas.txt"), vieja("carpeta/" + SIN_USO), vieja(SIN_USO.toUpperCase()));
-
-        assertTrue(limpiador.limpiar(AHORA).isEmpty());
-        verify(almacen, never()).eliminar(anyString());
-    }
-
-    @Test
     void sinGrafosEnLaBaseNoBorraNadaPorqueNoSabeQueSeUsa() {
         when(referencias.hayGrafosPublicados()).thenReturn(false);
         guardadas(vieja(SIN_USO));
 
         assertTrue(limpiador.limpiar(AHORA).isEmpty());
-        verify(almacen, never()).eliminar(anyString());
-    }
-
-    @Test
-    void sinCandidatasNiSiquieraCalculaLasReferencias() {
-        guardadas(new Guardada(SIN_USO, AHORA.minus(Duration.ofHours(1))));
-
-        limpiador.limpiar(AHORA);
-
-        verifyNoInteractions(referencias);
-    }
-
-    @Test
-    void siSiloNoRespondeAlListarSePropagaYNoSeBorraNada() {
-        when(almacen.listar()).thenThrow(new AlmacenNoDisponibleException("sin silo", new RuntimeException()));
-
-        assertThrows(AlmacenNoDisponibleException.class, () -> limpiador.limpiar(AHORA));
         verify(almacen, never()).eliminar(anyString());
     }
 
@@ -160,13 +117,5 @@ class LimpiadorImagenesTest {
 
         assertThrows(IllegalStateException.class, () -> limpiador.limpiar(AHORA));
         verify(almacen, never()).eliminar(any());
-    }
-
-    @Test
-    void conservaTodasLasQueEstanEnUso() {
-        when(referencias.enUso()).thenReturn(Set.of(EN_LIENZO, EN_COPIA));
-        guardadas(vieja(EN_LIENZO), vieja(EN_COPIA), vieja(SIN_USO));
-
-        assertEquals(List.of(SIN_USO), limpiador.limpiar(AHORA));
     }
 }

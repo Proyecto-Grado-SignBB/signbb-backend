@@ -136,16 +136,14 @@ Silo.
   que lleguen.
 - **`LimpiadorVersionesTest`**: borra de la base y después de Redis
   (`ResolvedorVersiones.olvidar`) y de la memoria (`ContextoClinico.olvidar`);
-  si no hay nada que borrar no toca nada.
+  con 20 versiones o menos no toca nada.
 - **`LimpiadorImagenesTest`**: borra solo la imagen que no usa ningún lienzo,
-  ninguna copia publicada, ningún grafo ni ninguna versión conservada; nunca
-  las subidas hace menos de 24 h ni archivos que no tengan nombre de imagen
-  del servidor; si no hay grafos en la base, si Silo no responde al listar o si
-  falla la lectura de un documento no borra nada; si falla borrar una sigue con
-  las demás.
-- **`LimpiezaProgramadaTest`**: primero las versiones, después las imágenes y
-  al final los límites vencidos; si una parte falla las demás se ejecutan igual
-  y el error no se propaga.
+  ninguna copia publicada, ningún grafo ni ninguna versión conservada; si no
+  hay grafos en la base no borra nada porque no sabe qué se usa; si no puede
+  calcular las referencias no borra nada; si falla borrar una sigue con las
+  demás.
+- **`LimpiezaProgramadaTest`**: si falla la limpieza de versiones, las demás
+  se ejecutan igual y el error no se propaga.
 - **`ResolvedorVersionesTest`** (`olvidar`) y **`ContextoClinicoTest`**
   (`olvidar`): borran solo las claves y las versiones indicadas, y un fallo de
   Redis no rompe nada.

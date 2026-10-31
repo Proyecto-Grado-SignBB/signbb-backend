@@ -18,23 +18,24 @@ PostgreSQL y Redis, como el CI.
 | `servicios` | `EditorLienzoTest` | 25 | el "+", enlazar a una pregunta existente, editar y eliminar nodos; lo que el editor rechaza |
 | `servicios` | `ValidadorLienzoTest` | 10 | un caso por cada aviso; nodos sueltos y choque de gravedades |
 | `servicios` | `CompiladorSubgrafoTest` | 8 | lienzo → `GrafoClinicoJson`: pesos, tipos, aristas y metadata |
-| `servicios` | `PublicadorSubgrafoTest` | 22 | upsert del subgrafo y de la opción en la raíz; categoría nueva visible; invalidar el contenido; rechazos; despublicar |
-| `servicios` | `ServicioAutoriaImplTest` | 31 | categorías, ids de grafo, datos del subgrafo (nombre para la familia obligatorio), autor tomado de la cuenta, "Mis subgrafos", estados, descartar cambios, despublicar y errores |
+| `servicios` | `PublicadorSubgrafoTest` | 24 | upsert del subgrafo y de la opción en la raíz; categoría nueva visible; invalidar el contenido; rechazos; despublicar |
+| `servicios` | `ServicioAutoriaImplTest` | 38 | categorías, ids de grafo, datos del subgrafo (nombre para la familia obligatorio), autor tomado de la cuenta, "Mis subgrafos", estados, descartar cambios, despublicar y errores |
 | `servicios` | `PoliticaAccesoBorradoresTest` | 4 | quién lee y quién edita un borrador: autor, otro médico, supervisor y borrador sin autor |
-| `servicios` | `GuardiaAutoriaTest` | 9 | la política aplicada a subgrafos y bases (403/404), quién crea una base y el bloqueo mientras está en revisión |
+| `servicios` | `GuardiaAutoriaTest` | 13 | la política aplicada a subgrafos y bases (403/404), quién crea una base y el bloqueo mientras está en revisión |
 | `servicios` | `ServicioRevisionImplTest` | 13 | enviar, retirar, aprobar (publica) y rechazar con comentario; nadie aprueba lo suyo |
-| `controladores` | `ControladorAutoriaTest` | 19 | códigos HTTP y cuerpos de error de la API `/api/autoria`; 403 a quien no es el autor |
-| `controladores` | `ControladorRevisionTest` | 8 | códigos HTTP de enviar, retirar, revisiones, aprobar y rechazar |
+| `controladores` | `ControladorAutoriaTest` | 8 | códigos HTTP representativos de la API `/api/autoria`: 201, 403, 404, 409, 422 y 204 |
+| `controladores` | `ControladorRevisionTest` | 4 | códigos HTTP de enviar, aprobar y rechazar |
 | `modelo` | `NodoLienzoTest` | 2 | el JSON del nodo: las imágenes se guardan y se leen, y un nodo guardado sin imágenes se lee con la lista vacía |
 | `servicios` | `CompiladorReglasTest` | 3 | borrador de reglas → `BaseReglasJson` (FND, niveles) |
 | `servicios` | `ValidadorReglasTest` | 6 | un aviso por cada problema del borrador de reglas |
 | `servicios` | `ResolutorCatalogoNodosTest` | 2 | el catálogo de nodos (de un lienzo y del grafo raíz) pone el desenlace en los terminales |
-| `servicios` | `PublicadorReglaTest` | 6 | publica/reemplaza la base de reglas de un grafo, recompone el contenido y registra una versión |
-| `servicios` | `ServicioAutoriaReglasImplTest` | 13 | CRUD de la base de reglas, autor tomado de la cuenta, "Mis bases", publicación y descartar cambios |
-| `servicios` | `ServicioAutoriaReglasAbstractoTest` | 11 | CRUD y publicación con datos abstractos y colaboradores simulados (Mockito) |
-| (raíz) | `AutoriaIntegracionTest` | 2 | de punta a punta: armar, aprobar (publicar) y recorrer como cuidadora |
+| `servicios` | `PublicadorReglaTest` | 7 | publica/reemplaza la base de reglas de un grafo, recompone el contenido y registra una versión |
+| `servicios` | `ServicioAutoriaReglasImplTest` | 12 | CRUD de la base de reglas, autor tomado de la cuenta, "Mis bases", publicación y descartar cambios |
+| (raíz) | `AutoriaIntegracionTest` | 2 | de punta a punta: armar, aprobar (publicar) y recorrer como cuidadora; **deshabilitada temporalmente** |
 
-En total son **194 pruebas**.
+En total son **179 pruebas unitarias**. Las 2 de integración
+(`AutoriaIntegracionTest`) se cuentan aparte y están deshabilitadas con
+`@Disabled` mientras se revisa la suite unitaria.
 
 ## Fixture
 
@@ -140,15 +141,13 @@ neurológica (`puente_neuro`).
   cache y se recarga el contexto. No se guarda nada si la composición no es
   válida.
 
-### Reglas: CRUD y publicación (`ServicioAutoriaReglasImplTest`, `ServicioAutoriaReglasAbstractoTest`)
+### Reglas: CRUD y publicación (`ServicioAutoriaReglasImplTest`)
 - **CRUD del borrador:** crear la base de un grafo, agregar/editar/eliminar
   reglas (ids `R_N` no reutilizados) y listar.
 - **Estados:** editar una base publicada la deja en `CAMBIOS_SIN_PUBLICAR`;
   una base publicada no se puede borrar.
 - **Publicación:** exige que el lienzo del subgrafo esté publicado (sin
   `CAMBIOS_SIN_PUBLICAR`) y delega en `PublicadorRegla`.
-- La suite **abstracta** repite el CRUD con datos `op1/op2/op3` y todos los
-  colaboradores simulados con Mockito, sin depender del dominio.
 
 ### Autor y acceso (`PoliticaAccesoBorradoresTest`, `GuardiaAutoriaTest`)
 Cada subgrafo y cada base de reglas guarda el `autorId` de quien lo creó; el
@@ -189,13 +188,12 @@ con un comentario.
 ### API (`ControladorAutoriaTest`)
 - Crear responde 201 y borrar 204.
 - Una edición inválida responde **422 con `{mensaje, avisos: []}`**.
-- Quien no es el autor recibe **403** al editar y al abrir lo de otro.
+- Quien no es el autor recibe **403** al editar.
 - Un id inexistente da 404 y una edición concurrente (`@Version`) da 409.
-- Despublicar responde 200 con el borrador en `BORRADOR`; 422 con el mensaje si
-  no estaba publicado o el contenido restante no es válido; 404 si no existe.
-- Quitar el destino de una respuesta acepta `{"nodoId": null}`.
+- Despublicar responde 200 con el borrador en `BORRADOR` y 422 con el mensaje
+  si el contenido restante no es válido.
 
-### Punta a punta (`AutoriaIntegracionTest`)
+### Punta a punta (`AutoriaIntegracionTest`, deshabilitada temporalmente)
 Arma con el servicio un subgrafo de fiebre (una pregunta y dos
 conclusiones), lo aprueba (es decir, lo publica) y lo recorre con `ServicioNavegacion`:
 `pregunta_inicial → neurologico → puente_neuro → opción nueva → pregunta
@@ -203,6 +201,10 @@ del subgrafo → "Más de 39 °C" → URGENCIA`. En `puente_neuro` siguen las
 opciones del sistema y aparece la nueva. No es `@Transactional`, porque la
 recarga del contenido ocurre después del commit; al terminar borra lo que
 creó, restaura el grafo raíz e invalida el contenido.
+
+Está **deshabilitada temporalmente** con `@Disabled` mientras se revisa la
+suite unitaria por separado. Para volver a ejecutarla, quitar la anotación y
+levantar PostgreSQL y Redis.
 
 ### Versiones del contenido (republicar sin romper recorridos en curso)
 - `PublicadorSubgrafoTest`: cada publicación guarda una versión con el grafo

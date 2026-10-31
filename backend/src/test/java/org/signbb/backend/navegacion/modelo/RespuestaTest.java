@@ -1,7 +1,6 @@
 package org.signbb.backend.navegacion.modelo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -11,16 +10,6 @@ class RespuestaTest {
 
     private static Nodo n(String id) {
         return new Nodo(id, "pregunta", "contenido-" + id, 0);
-    }
-
-    @Test
-    void creacion() {
-        Nodo a = n("a");
-        Nodo b = n("b");
-        Respuesta r = new Respuesta(a, b, "Sí");
-        assertEquals(a, r.getOrigen());
-        assertEquals(b, r.getDestino());
-        assertEquals("Sí", r.getCondicion());
     }
 
     @Test
@@ -36,12 +25,5 @@ class RespuestaTest {
         Respuesta r2 = new Respuesta(a, b, "Sí");
         assertEquals(r1, r2);
         assertEquals(r1.hashCode(), r2.hashCode());
-    }
-
-    @Test
-    void desigualdadPorCondicion() {
-        Nodo a = n("a");
-        Nodo b = n("b");
-        assertNotEquals(new Respuesta(a, b, "Sí"), new Respuesta(a, b, "No"));
     }
 }

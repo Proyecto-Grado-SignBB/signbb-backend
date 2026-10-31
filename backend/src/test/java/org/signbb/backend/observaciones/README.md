@@ -11,9 +11,9 @@ y reenvía** la respuesta del cuidador hacia el motor de navegación. Son
 | `servicios` | `ServicioCapturaImplTest` | 15 | valida la selección contra la pregunta actual, audita la observación (con el padre que respondió), reenvía al servicio de navegación y guarda "todo o nada" con candado por recorrido (también al retroceder) y rechaza con 409 una respuesta para una pregunta que ya no es la actual |
 | `servicios` | `ServicioRecorridosImplTest` | 20 | el recorrido queda a nombre del padre, otro padre recibe 404 y el estado y resultado se guardan al terminar o retroceder; un recorrido sin sesión queda vencido (410) y reiniciar lo marca abandonado y empieza otro |
 | `modelo` | `SeleccionCuidadorTest` | 6 | validación del constructor de `SeleccionCuidador` según el tipo de interacción |
-| `controladores` | `ControladorConsultaTest` | 12 | una respuesta vacía da 400 (no 500), una respuesta válida llega al servicio, una de más de 200 caracteres da 422, un recorrido ocupado da 409 al responder y al retroceder, el id de la pregunta llega al servicio y una pregunta que ya no es la actual da 409; un recorrido vencido da 410, reiniciar devuelve el nuevo y reiniciar uno terminado da 409 |
+| `controladores` | `ControladorConsultaTest` | 15 | una respuesta vacía da 400 (no 500), una respuesta válida llega al servicio, una de más de 200 caracteres da 422, un recorrido ocupado da 409 al responder y al retroceder, el id de la pregunta llega al servicio y una pregunta que ya no es la actual da 409; un recorrido vencido da 410, reiniciar devuelve el nuevo y reiniciar uno terminado da 409 |
 
-En total son **53 pruebas**. La regla de dueño también se prueba con la cadena
+En total son **56 pruebas**. La regla de dueño también se prueba con la cadena
 de seguridad real en `seguridad/ReglasAccesoIntegracionTest`.
 
 ## Qué se prueba y por qué importa

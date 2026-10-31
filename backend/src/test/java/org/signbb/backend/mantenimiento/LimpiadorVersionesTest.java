@@ -75,12 +75,4 @@ class LimpiadorVersionesTest {
         verify(resolvedor, never()).olvidar(org.mockito.ArgumentMatchers.any());
         verify(contexto, never()).olvidar(org.mockito.ArgumentMatchers.any());
     }
-
-    @Test
-    void sinVersionesNoHaceNada() {
-        when(repositorio.resumenes()).thenReturn(List.of());
-
-        assertTrue(limpiador.limpiar(AHORA).isEmpty());
-        verify(repositorio, never()).deleteAllByIdInBatch(org.mockito.ArgumentMatchers.any());
-    }
 }

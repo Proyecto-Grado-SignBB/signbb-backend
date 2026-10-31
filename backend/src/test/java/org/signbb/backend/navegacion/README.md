@@ -11,23 +11,24 @@ datos y sin Redis), así que corren igual en local y en GitHub Actions.
 
 | Paquete | Clase | Tests | Qué cubre |
 |---|---|---:|---|
-| `modelo` | `EstadoPacienteTest` | 10 | memoria de trabajo: respuestas, puntaje y la pila de pasos para retroceder |
-| `modelo` | `EstadoPacienteNavegacionTest` | 10 | cola de opciones pendientes, ruta, recomendaciones y su foto para deshacer |
+| `modelo` | `EstadoPacienteTest` | 9 | memoria de trabajo: respuestas, puntaje y la pila de pasos para retroceder |
+| `modelo` | `EstadoPacienteNavegacionTest` | 9 | cola de opciones pendientes, ruta, recomendaciones y su foto para deshacer |
 | `modelo` | `GrafoClinicoTest` | 25 | TAD del grafo: nodos, aristas, rutas válidas, ciclos, camino causal y tipo de interacción |
-| `modelo` | `NodoTest`, `RespuestaTest` | 6 + 4 | validación e igualdad de nodos y aristas |
-| `modelo` | `ContextoTest` | 7 | historial de sesiones de un paciente |
-| `modelo` | `ResultadoPasoRecomendacionesTest` | 3 | recomendaciones del resultado de un paso |
+| `modelo` | `NodoTest`, `RespuestaTest` | 3 + 2 | validación e igualdad de nodos y aristas |
+| `modelo` | `ResultadoPasoRecomendacionesTest` | 1 | recomendaciones del resultado de un paso |
+| `modelo` | `ContextoClinicoTest` | 7 | versiones del contenido clínico en memoria |
 | `datos.serializacion` | `GrafoClinicoMapperTest` | 15 | JSON ↔ TAD del grafo; rechazo de contenido inválido |
-| `datos.serializacion` | `CompositorGrafoClinicoTest` | 14 | composición raíz + subgrafos y prefijo de ids y reglas |
+| `datos.serializacion` | `CompositorGrafoClinicoTest` | 16 | composición raíz + subgrafos y prefijo de ids y reglas |
 | `datos.serializacion` | `JsonParserTest` | 11 | lectura de reglas en FND y rechazo de reglas mal formadas |
 | `motor` | `MotorNavegacionTest` | 10 | recorrido sobre el contenido del sistema: alertas por reglas y validación de respuestas |
-| `motor` | `MotorNavegacionRetrocederTest` | 9 | volver a la pregunta anterior con la pila de pasos |
+| `motor` | `MotorNavegacionRetrocederTest` | 8 | volver a la pregunta anterior con la pila de pasos |
 | `motor` | `MotorNavegacionLimiteTest` | 8 | máximo de preguntas (10 por defecto) |
 | `motor` | `MotorNavegacionColaTest` | 23 | cola de la selección múltiple: ramas, alertas, umbral, reglas y retroceder |
 | `motor` | `OrdenColaTest` | 7 | orden de la cola: gravedad, peso y antigüedad |
-| `servicios` | `ServicioNavegacionImplTest` | 10 | la fachada de la API: iniciar, responder, consultar, retroceder y errores; el camino del resultado trae el texto de cada pregunta y las razones son nombres de reglas |
+| `servicios` | `ServicioNavegacionImplTest` | 12 | la fachada de la API: iniciar, responder, consultar, retroceder y errores; el camino del resultado trae el texto de cada pregunta y las razones son nombres de reglas |
+| `servicios` | `ServicioNavegacionVersionesTest` | 4 | un recorrido en curso conserva su versión del contenido |
 
-En total son **172 pruebas**. Las pruebas de la sesión en Redis
+En total son **170 pruebas**. Las pruebas de la sesión en Redis
 (`cache/RepositorioSesionRedisTest` y `cache/ColaSeleccionMultipleRedisIntegracionTest`)
 están documentadas en [`backend/src/test/README.md`](../../../../../README.md).
 
@@ -125,6 +126,7 @@ disparó. Retroceder lo desapila.
 | `MotorNavegacionSeleccionMultipleTest` | Escrito contra firmas "inferidas" y duplicado por `MotorNavegacionColaTest`. |
 | `motor/README.md`, `docs/img/grafo_norm.svg`, `docs/img/grafo_sec.svg` | Solo documentaban los dos ejemplos anteriores. |
 | Dos tests de retroceder solapados en `MotorNavegacionTest` | Se fundieron en uno al pasar a `MotorNavegacionRetrocederTest`. |
+| `modelo/ContextoTest` (7) | El TAD `Contexto` no tiene referencias en `src/main`: la navegación usa `ContextoClinico`. |
 
 Los tests que estaban en el paquete viejo `org.signbb.backend.model` se
 movieron a `navegacion.modelo` y `navegacion.datos.serializacion` sin cambiar
@@ -147,32 +149,11 @@ Desde `backend/`:
 
 ## Resultados en GitHub Actions
 
-Corrida del workflow `build` (`./mvnw -B verify`, con PostgreSQL y Redis como
-servicios) sobre el commit `518f775`, el merge de `tests-navegacion` en
-`navegacion`, el 9 de octubre de 2026:
+Corrida histórica del workflow `build` (`./mvnw -B verify`, con PostgreSQL y
+Redis como servicios) sobre el commit `518f775`, el merge de `tests-navegacion`
+en `navegacion`, el 9 de octubre de 2026:
 [run 37948316527](https://github.com/Proyecto-Grado-SignBB/signbb-backend/actions/runs/37948316527).
 **BUILD SUCCESS.**
 
-| Clase | Tests | Fallos | Errores |
-|---|---:|---:|---:|
-| `modelo.EstadoPacienteTest` | 10 | 0 | 0 |
-| `modelo.EstadoPacienteNavegacionTest` | 10 | 0 | 0 |
-| `modelo.GrafoClinicoTest` | 25 | 0 | 0 |
-| `modelo.NodoTest` | 6 | 0 | 0 |
-| `modelo.RespuestaTest` | 4 | 0 | 0 |
-| `modelo.ContextoTest` | 7 | 0 | 0 |
-| `modelo.ResultadoPasoRecomendacionesTest` | 3 | 0 | 0 |
-| `datos.serializacion.GrafoClinicoMapperTest` | 15 | 0 | 0 |
-| `datos.serializacion.CompositorGrafoClinicoTest` | 14 | 0 | 0 |
-| `datos.serializacion.JsonParserTest` | 11 | 0 | 0 |
-| `motor.MotorNavegacionTest` | 10 | 0 | 0 |
-| `motor.MotorNavegacionRetrocederTest` | 9 | 0 | 0 |
-| `motor.MotorNavegacionLimiteTest` | 8 | 0 | 0 |
-| `motor.MotorNavegacionColaTest` | 23 | 0 | 0 |
-| `motor.OrdenColaTest` | 7 | 0 | 0 |
-| `servicios.ServicioNavegacionImplTest` | 10 | 0 | 0 |
-| **Módulo de navegación** | **172** | **0** | **0** |
-
-La suite completa del backend corrió **234 pruebas, 0 fallos, 0 errores y 0
-omitidas**: con Redis como servicio del CI, las de integración de
-`CacheRedisIntegracionTest` ya no se saltan.
+Tras los recortes del 31-oct-2026, el módulo tiene **170 pruebas** y la suite
+completa del backend **603** (2 omitidas por `AutoriaIntegracionTest`).

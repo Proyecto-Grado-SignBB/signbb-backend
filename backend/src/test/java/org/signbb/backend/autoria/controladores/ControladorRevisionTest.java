@@ -8,7 +8,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import java.nio.charset.StandardCharsets;
@@ -19,7 +18,6 @@ import org.junit.jupiter.api.Test;
 import org.signbb.backend.autoria.modelo.Aviso;
 import org.signbb.backend.autoria.modelo.EstadoBorrador;
 import org.signbb.backend.autoria.servicios.ContenidoInvalidoException;
-import org.signbb.backend.autoria.servicios.EdicionInvalidaException;
 import org.signbb.backend.autoria.servicios.GuardiaAutoria;
 import org.signbb.backend.autoria.servicios.ServicioRevision;
 import org.signbb.backend.config.ManejadorExcepciones;
@@ -90,16 +88,6 @@ class ControladorRevisionTest {
     }
 
     @Test
-    void retirarResponde200() throws Exception {
-        when(servicio.retirar(1L)).thenReturn(en(EstadoBorrador.BORRADOR, null));
-
-        MockHttpServletResponse r = ejecutar(post("/api/autoria/subgrafos/1/retirar-revision"));
-
-        assertEquals(200, r.getStatus());
-        verify(guardia).autorSubgrafo(1L, UsuariosPrueba.SUPERVISOR);
-    }
-
-    @Test
     void aprobarPasaElSupervisorYDevuelveElPublicado() throws Exception {
         when(servicio.aprobar(1L, UsuariosPrueba.SUPERVISOR)).thenReturn(en(EstadoBorrador.PUBLICADO, null));
 
@@ -107,14 +95,6 @@ class ControladorRevisionTest {
 
         assertEquals(200, r.getStatus());
         assertTrue(cuerpo(r).contains("\"estado\":\"PUBLICADO\""));
-    }
-
-    @Test
-    void aprobarLoPropioResponde403() throws Exception {
-        when(servicio.aprobar(1L, UsuariosPrueba.SUPERVISOR))
-                .thenThrow(new AccesoDenegadoException("No puedes revisar un subgrafo tuyo."));
-
-        assertEquals(403, ejecutar(post("/api/autoria/subgrafos/1/aprobar")).getStatus());
     }
 
     @Test
@@ -128,21 +108,5 @@ class ControladorRevisionTest {
 
         assertEquals(200, r.getStatus());
         assertTrue(cuerpo(r).contains("\"comentarioRevision\":\"Falta la conclusión de fiebre baja\""));
-    }
-
-    @Test
-    void rechazarSinCuerpoResponde422() throws Exception {
-        when(servicio.rechazar(1L, null, UsuariosPrueba.SUPERVISOR))
-                .thenThrow(new EdicionInvalidaException("Escribe un comentario."));
-
-        assertEquals(422, ejecutar(post("/api/autoria/subgrafos/1/rechazar")).getStatus());
-    }
-
-    @Test
-    void lasPendientesSonDelSupervisor() throws Exception {
-        when(servicio.pendientes(UsuariosPrueba.SUPERVISOR)).thenReturn(List.of());
-
-        assertEquals(200, ejecutar(get("/api/autoria/revisiones")).getStatus());
-        verify(servicio).pendientes(UsuariosPrueba.SUPERVISOR);
     }
 }

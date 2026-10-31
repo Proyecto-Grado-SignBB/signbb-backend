@@ -18,11 +18,12 @@ PostgreSQL y Redis, como el CI.
 | `servicios` | `ServicioCuentasImplTest` | 23 | registro de padres, login, alta de médicos por el supervisor y activar o desactivar cuentas; una contraseña de más de 72 bytes da 422; el padre guarda, cambia o borra el teléfono de su pediatra y uno mal escrito da 422; un correo inexistente también ejecuta BCrypt |
 | `servicios` | `LimitadorIntentosTest` | 8 | límite por correo persistido en PostgreSQL: 5 fallos/15 min en ingreso, 3 intentos/1 h en registro, bloqueo vigente y vencido, clave hasheada y correo vacío |
 | `servicios` | `ServicioTokensTest` | 7 | el JWT lleva `sub`, `rol` y `nombre`; uno vencido o firmado con otra clave se rechaza; un secreto corto no arranca |
+| `servicios` | `ConvertidorJwtUsuarioTest` | 3 | el token se traduce a `UsuarioActual` con su rol y sus datos |
 | (raíz) | `InicializadorSeguridadTest` | 2 | el supervisor inicial se siembra una sola vez |
 | (raíz) | `VerificadorSecretosProduccionTest` | 11 | en producción no se aceptan los valores de ejemplo, la documentación de la API activa ni el registro de SQL encendido; un entorno mal escrito impide arrancar |
 | (raíz) | `ReglasAccesoIntegracionTest` | 20 | la cadena de filtros real: rutas públicas, `/actuator/health` abierto y el resto de Actuator sin exponer, 401 sin token, 403 por rol y dueño del recorrido, `GET /api/consulta/disponibilidad` solo para padres; solo un padre guarda el teléfono del pediatra; un recorrido reiniciado o sin sesión da 410; el cuarto registro con el mismo correo da 429 |
 
-En total son **71 pruebas** en estas clases. Las reglas de autor y de revisión de la autoría
+En total son **74 pruebas** en estas clases. Las reglas de autor y de revisión de la autoría
 (`GuardiaAutoriaTest`, `PoliticaAccesoBorradoresTest`, `ServicioRevisionImplTest`
 y `ControladorRevisionTest`) están en \ref pruebas_autoria; la del dueño del
 recorrido, en \ref pruebas_observaciones.

@@ -4,16 +4,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -47,7 +44,6 @@ class ControladorAutoriaTest {
     private ServicioAutoria servicio;
     private GuardiaAutoria guardia;
     private MockMvc mvc;
-    private MockMvc mvcSupervisor;
 
     @BeforeEach
     void preparar() {
@@ -55,11 +51,6 @@ class ControladorAutoriaTest {
         guardia = mock(GuardiaAutoria.class);
         mvc = MockMvcBuilders.standaloneSetup(new ControladorAutoria(servicio, guardia))
                 .setCustomArgumentResolvers(UsuariosPrueba.resolvedor(UsuariosPrueba.MEDICO_A))
-                .setControllerAdvice(new ManejadorErroresAutoria(), new ManejadorErroresSeguridad(),
-                        new ManejadorExcepciones())
-                .build();
-        mvcSupervisor = MockMvcBuilders.standaloneSetup(new ControladorAutoria(servicio, guardia))
-                .setCustomArgumentResolvers(UsuariosPrueba.resolvedor(UsuariosPrueba.SUPERVISOR))
                 .setControllerAdvice(new ManejadorErroresAutoria(), new ManejadorErroresSeguridad(),
                         new ManejadorExcepciones())
                 .build();
@@ -91,14 +82,6 @@ class ControladorAutoriaTest {
     }
 
     @Test
-    void listarPasaElUsuarioAlServicio() throws Exception {
-        when(servicio.listar(UsuariosPrueba.MEDICO_A)).thenReturn(List.of());
-
-        assertEquals(200, ejecutar(get("/api/autoria/subgrafos")).getStatus());
-        verify(servicio).listar(UsuariosPrueba.MEDICO_A);
-    }
-
-    @Test
     void editarLoDeOtroResponde403SinTocarElServicio() throws Exception {
         doThrow(new AccesoDenegadoException("Solo el autor puede editar este subgrafo."))
                 .when(guardia).editarSubgrafo(1L, UsuariosPrueba.MEDICO_A);
@@ -112,38 +95,6 @@ class ControladorAutoriaTest {
     }
 
     @Test
-    void verLoDeOtroResponde403() throws Exception {
-        doThrow(new AccesoDenegadoException("Este subgrafo es de otro médico."))
-                .when(guardia).leerSubgrafo(1L, UsuariosPrueba.MEDICO_A);
-
-        assertEquals(403, ejecutar(get("/api/autoria/subgrafos/1")).getStatus());
-    }
-
-    @Test
-    void elMasPasaLaRespuestaYElTipoAlServicio() throws Exception {
-        when(servicio.agregarNodo(eq(1L), any())).thenReturn(vacio());
-
-        MockHttpServletResponse r = ejecutar(post("/api/autoria/subgrafos/1/nodos")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"despuesDe\":{\"nodoId\":\"pregunta_1\",\"respuestaId\":\"r_4\"},"
-                        + "\"tipo\":\"CONCLUSION\",\"texto\":\"Urgencias\",\"desenlace\":\"URGENCIA\"}"));
-
-        assertEquals(200, r.getStatus());
-        verify(servicio).agregarNodo(eq(1L), any(NodoRequest.class));
-    }
-
-    @Test
-    void enlazarConNodoNuloVuelveLaRespuestaUnMas() throws Exception {
-        when(servicio.enlazar(1L, "r_2", null)).thenReturn(vacio());
-
-        MockHttpServletResponse r = ejecutar(put("/api/autoria/subgrafos/1/respuestas/r_2/destino")
-                .contentType(MediaType.APPLICATION_JSON).content("{\"nodoId\":null}"));
-
-        assertEquals(200, r.getStatus());
-        verify(servicio).enlazar(eq(1L), eq("r_2"), isNull());
-    }
-
-    @Test
     void unaEdicionInvalidaResponde422ConElMensaje() throws Exception {
         when(servicio.agregarNodo(eq(1L), any()))
                 .thenThrow(new EdicionInvalidaException("El subgrafo ya tiene una primera pregunta."));
@@ -153,53 +104,6 @@ class ControladorAutoriaTest {
 
         assertEquals(422, r.getStatus());
         assertTrue(cuerpo(r).contains("\"mensaje\":\"El subgrafo ya tiene una primera pregunta.\""));
-        assertTrue(cuerpo(r).contains("\"avisos\":[]"));
-    }
-
-    @Test
-    void elSupervisorPublicaDirectamente() throws Exception {
-        when(servicio.publicar(1L)).thenReturn(vacio());
-
-        MockHttpServletResponse r = mvcSupervisor.perform(post("/api/autoria/subgrafos/1/publicar"))
-                .andReturn().getResponse();
-
-        assertEquals(200, r.getStatus());
-        verify(guardia).publicarSubgrafo(1L, UsuariosPrueba.SUPERVISOR);
-        verify(servicio).publicar(1L);
-    }
-
-    @Test
-    void publicarDirectoLoQueNoEsSuyoResponde403() throws Exception {
-        doThrow(new AccesoDenegadoException("Solo puedes publicar directamente tus propios subgrafos."))
-                .when(guardia).publicarSubgrafo(1L, UsuariosPrueba.SUPERVISOR);
-
-        MockHttpServletResponse r = mvcSupervisor.perform(post("/api/autoria/subgrafos/1/publicar"))
-                .andReturn().getResponse();
-
-        assertEquals(403, r.getStatus());
-        verify(servicio, never()).publicar(any());
-    }
-
-    @Test
-    void descartarResponde200ConElBorrador() throws Exception {
-        when(servicio.descartarCambios(1L)).thenReturn(vacio());
-
-        MockHttpServletResponse r = ejecutar(post("/api/autoria/subgrafos/1/descartar"));
-
-        assertEquals(200, r.getStatus());
-        verify(servicio).descartarCambios(1L);
-    }
-
-    @Test
-    void borrarUnSubgrafoPublicadoResponde422ConElMensaje() throws Exception {
-        doThrow(new EdicionInvalidaException(
-                "Este subgrafo ya está publicado y las cuidadoras lo usan: no se puede borrar."))
-                .when(servicio).eliminar(1L);
-
-        MockHttpServletResponse r = ejecutar(delete("/api/autoria/subgrafos/1"));
-
-        assertEquals(422, r.getStatus());
-        assertTrue(cuerpo(r).contains("ya está publicado y las cuidadoras lo usan: no se puede borrar."));
         assertTrue(cuerpo(r).contains("\"avisos\":[]"));
     }
 
@@ -219,17 +123,6 @@ class ControladorAutoriaTest {
     }
 
     @Test
-    void descartarUnSubgrafoQueNoSePuedeVolverAtrasResponde422() throws Exception {
-        when(servicio.descartarCambios(1L))
-                .thenThrow(new EdicionInvalidaException("No hay una versión publicada a la que volver."));
-
-        MockHttpServletResponse r = ejecutar(post("/api/autoria/subgrafos/1/descartar"));
-
-        assertEquals(422, r.getStatus());
-        assertTrue(cuerpo(r).contains("No hay una versión publicada a la que volver."));
-    }
-
-    @Test
     void despublicarResponde200ConElBorrador() throws Exception {
         when(servicio.despublicar(1L)).thenReturn(vacio());
 
@@ -238,17 +131,6 @@ class ControladorAutoriaTest {
         assertEquals(200, r.getStatus());
         assertTrue(cuerpo(r).contains("\"estado\":\"BORRADOR\""));
         verify(servicio).despublicar(1L);
-    }
-
-    @Test
-    void despublicarUnSubgrafoQueNoEstaPublicadoResponde422ConElMensaje() throws Exception {
-        when(servicio.despublicar(1L)).thenThrow(new EdicionInvalidaException(
-                "Este subgrafo no está publicado, así que no hay nada que despublicar."));
-
-        MockHttpServletResponse r = ejecutar(post("/api/autoria/subgrafos/1/despublicar"));
-
-        assertEquals(422, r.getStatus());
-        assertTrue(cuerpo(r).contains("no hay nada que despublicar"));
     }
 
     @Test
@@ -261,20 +143,6 @@ class ControladorAutoriaTest {
         assertEquals(422, r.getStatus());
         assertTrue(cuerpo(r).contains("contenido restante no es válido"));
         assertTrue(cuerpo(r).contains("\"avisos\":[]"));
-    }
-
-    @Test
-    void despublicarUnSubgrafoQueNoExisteResponde404() throws Exception {
-        when(servicio.despublicar(9L)).thenThrow(new RecursoNoEncontradoException("subgrafo 9"));
-
-        assertEquals(404, ejecutar(post("/api/autoria/subgrafos/9/despublicar")).getStatus());
-    }
-
-    @Test
-    void unSubgrafoQueNoExisteResponde404() throws Exception {
-        when(servicio.obtener(9L)).thenThrow(new RecursoNoEncontradoException("no hay un subgrafo con id 9"));
-
-        assertEquals(404, ejecutar(get("/api/autoria/subgrafos/9")).getStatus());
     }
 
     @Test

@@ -14,11 +14,11 @@ Pruebas del paquete `org.signbb.backend.reglas`: los **TAD** de reglas
 |---|---|---:|---|
 | `modelo` | `ReglaClinicaTest` | 7 | creación y validación de `ReglaClinica`; condiciones AND cumplidas/incumplidas; igualdad por `idRegla`; copia defensiva |
 | `modelo` | `BaseReglasTest` | 7 | alta/baja de reglas, duplicados, `obtenerRegla` y `reglasActivadas` |
-| `modelo` | `EvaluacionReglasAbstractaTest` | 7 | evaluación con datos abstractos (`resp1/op1/op2/op3`) y TADs simulados con Mockito |
+| `modelo` | `EvaluacionReglasAbstractaTest` | 2 | FND con varios casos (OR) y varias opciones de la misma pregunta (AND) |
 | `servicios` | `ServicioReglasImplTest` | 4 | resolución por severidad: nivel máximo, razones combinadas y desempate por peso del destino |
 | `datos.serializacion` | `BaseReglasMapperTest` | 3 | ida y vuelta TAD ↔ documento JSON y rechazo de un `nodoDestino` colgante |
 
-En total son **28 pruebas**.
+En total son **23 pruebas**.
 
 ## Modelo de reglas (TAD) {#pruebas_model}
 
@@ -39,18 +39,13 @@ duplicados y que `reglasActivadas` devuelve solo las reglas cuya premisa se
 satisface en el estado.
 
 ### Evaluación abstracta (`EvaluacionReglasAbstractaTest`)
-Complementa a las anteriores con datos **abstractos** (`resp1/op1/op2/op3`) y
-los TADs `EstadoPaciente` y `Nodo` **simulados con Mockito**, de modo que la
-prueba no depende del dominio. Cubre:
+Conserva los dos casos que no cubren las otras suites, con datos
+**abstractos** (`resp1/op1/op2/op3`) y los TADs `EstadoPaciente` y `Nodo`
+**simulados con Mockito**:
 
-- una sola condición;
-- varias condiciones en un caso (AND): se cumple si están todas y falla si
-  falta una;
 - varios casos (OR) armados con `ReglaClinica.conCasos`;
 - varias opciones de la **misma pregunta** combinadas con AND (selección
-  múltiple);
-- `ServicioReglasImpl.evaluar` eligiendo el nivel más severo;
-- sin reglas activadas, el resultado es `NORMAL`.
+  múltiple).
 
 ## Servicio de inferencia y mapeo JSON
 

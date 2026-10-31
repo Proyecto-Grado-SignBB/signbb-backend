@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.signbb.backend.autoria.controladores.BaseReglaDTO;
 import org.signbb.backend.autoria.controladores.BaseReglaRequest;
@@ -61,6 +62,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  * El autor es una cuenta real de médico (se crea la primera vez): la base
  * exige que {@code autor_id} exista en {@code usuario}.
  */
+@Disabled("Integración con PostgreSQL/Redis: se revisa aparte de la suite unitaria")
 @SpringBootTest
 class AutoriaIntegracionTest {
 

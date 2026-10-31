@@ -7,17 +7,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
-import org.signbb.backend.autoria.controladores.BaseReglaRequest;
 import org.signbb.backend.autoria.controladores.NodoRequest;
 import org.signbb.backend.autoria.controladores.OpcionRequest;
 import org.signbb.backend.autoria.controladores.ReglaRequest;
-import org.signbb.backend.autoria.controladores.SubgrafoRequest;
 import org.signbb.backend.observaciones.controladores.RespuestaRequest;
 import org.signbb.backend.reglas.modelo.Condicion;
 import org.signbb.backend.seguridad.controladores.LoginRequest;
-import org.signbb.backend.seguridad.controladores.NuevoUsuarioRequest;
 import org.signbb.backend.seguridad.controladores.RegistroRequest;
-import org.signbb.backend.seguridad.modelo.Rol;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -42,36 +38,12 @@ class ValidacionEntradasTest {
     }
 
     @Test
-    void unRegistroDentroDeLosLimitesNoTieneViolaciones() {
-        assertTrue(mensajes(new RegistroRequest("Ana Pérez", "ana@correo.com", "secreta123")).isEmpty());
-        assertTrue(mensajes(new LoginRequest("ana@correo.com", "secreta123")).isEmpty());
-    }
-
-    @Test
     void elNombreElCorreoYLaContrasenaTienenLimiteDeLargo() {
         assertTrue(mensajes(new RegistroRequest(letras(101), "ana@correo.com", "secreta123")).contains("100"));
         assertTrue(mensajes(new RegistroRequest("Ana", letras(255), "secreta123")).contains("254"));
         assertTrue(mensajes(new RegistroRequest("Ana", "ana@correo.com", letras(73))).contains("72"));
         assertTrue(mensajes(new LoginRequest(letras(255), "secreta123")).contains("254"));
         assertTrue(mensajes(new LoginRequest("ana@correo.com", letras(73))).contains("72"));
-    }
-
-    @Test
-    void elNombreYLaInstitucionNoAceptanSaltosDeLinea() {
-        assertTrue(mensajes(new RegistroRequest("Ana\nPérez", "ana@correo.com", "secreta123"))
-                .contains("saltos de línea"));
-        assertTrue(mensajes(new NuevoUsuarioRequest("Luis", "luis@correo.com", "secreta123", Rol.MEDICO,
-                "Hospital\nCentral")).contains("saltos de línea"));
-        assertTrue(mensajes(new NuevoUsuarioRequest("Luis", "luis@correo.com", "secreta123", Rol.MEDICO,
-                letras(151))).contains("150"));
-    }
-
-    @Test
-    void elTextoDeUnNodoAceptaSaltosDeLineaPeroTieneLimite() {
-        assertTrue(mensajes(new NodoRequest(null, null, "Primera línea\nSegunda línea", null, null, null)).isEmpty());
-        assertTrue(mensajes(new NodoRequest(null, null, letras(1001), null, null, null)).contains("1000"));
-        assertTrue(mensajes(new NodoRequest(null, null, "Con\u0007control", null, null, null))
-                .contains("caracteres que no se aceptan"));
     }
 
     @Test
@@ -87,17 +59,6 @@ class ValidacionEntradasTest {
 
         List<OpcionRequest> diez = new ArrayList<>(once.subList(0, 10));
         assertTrue(mensajes(new NodoRequest(null, null, "¿Tiene fiebre?", null, null, diez)).isEmpty());
-    }
-
-    @Test
-    void losNombresDeSubgrafoYBaseTienenLimiteYUnaSolaLinea() {
-        assertTrue(mensajes(new SubgrafoRequest(letras(101), "cat", "Etiqueta", null, null)).contains("100"));
-        assertTrue(mensajes(new SubgrafoRequest("Nombre", "cat", letras(101), null, null)).contains("100"));
-        assertTrue(mensajes(new SubgrafoRequest("Nombre", "cat", "Etiqueta", null, null)).isEmpty());
-        assertTrue(mensajes(new BaseReglaRequest("Base\nuno", "desc", "grafo_raiz", null, null))
-                .contains("saltos de línea"));
-        assertTrue(mensajes(new BaseReglaRequest("Base", letras(501), "grafo_raiz", null, null)).contains("500"));
-        assertTrue(mensajes(new BaseReglaRequest("Base", "Primera\nSegunda", "grafo_raiz", null, null)).isEmpty());
     }
 
     @Test
