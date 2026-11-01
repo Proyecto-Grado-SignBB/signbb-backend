@@ -116,15 +116,15 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('pruebas_reglas
 <p>Índice general de la suite: <a class="el" href="pruebas.html" title="Pruebas del sistema">Pruebas del sistema</a>. </p>
 </blockquote>
 <p>Pruebas del paquete <span class="tt"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1reglas.html" title="Módulo del motor de reglas clínicas.">org.signbb.backend.reglas</a></span>: los <b>TAD</b> de reglas (<span class="tt">reglas.modelo</span>), el <b>servicio de inferencia</b> (<span class="tt">reglas.servicios</span>) y el <b>mapeo JSON</b> de la base de reglas (<span class="tt">reglas.datos.serializacion</span>). Son <b>JUnit 5 puro</b> y, en la suite abstracta, <b>Mockito</b> para simular los TADs <span class="tt">EstadoPaciente</span> y <span class="tt">Nodo</span>.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md35"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
 Mapa de la suite</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Paquete  </th><th class="markdownTableHeadNone">Clase  </th><th class="markdownTableHeadRight">Tests  </th><th class="markdownTableHeadNone">Qué cubre  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">ReglaClinicaTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyNone">creación y validación de <span class="tt">ReglaClinica</span>; condiciones AND cumplidas/incumplidas; igualdad por <span class="tt">idRegla</span>; copia defensiva  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">ReglaClinicaTest</span>  </td><td class="markdownTableBodyRight">5  </td><td class="markdownTableBodyNone">creación y validación; condiciones AND cumplidas/incumplidas  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">BaseReglasTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyNone">alta/baja de reglas, duplicados, <span class="tt">obtenerRegla</span> y <span class="tt">reglasActivadas</span>  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">BaseReglasTest</span>  </td><td class="markdownTableBodyRight">5  </td><td class="markdownTableBodyNone">alta/baja de reglas, <span class="tt">obtenerRegla</span> y <span class="tt">reglasActivadas</span>  </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">EvaluacionReglasAbstractaTest</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">FND con varios casos (OR) y varias opciones de la misma pregunta (AND)  </td></tr>
 <tr class="markdownTableRowEven">
@@ -132,31 +132,29 @@ Mapa de la suite</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">datos.serializacion</span>  </td><td class="markdownTableBodyNone"><span class="tt">BaseReglasMapperTest</span>  </td><td class="markdownTableBodyRight">3  </td><td class="markdownTableBodyNone">ida y vuelta TAD ↔ documento JSON y rechazo de un <span class="tt">nodoDestino</span> colgante  </td></tr>
 </table>
-<p>En total son <b>23 pruebas</b>.</p>
+<p>En total son <b>19 pruebas</b>.</p>
 <h1 class="doxsection"><a class="anchor" id="pruebas_model"></a>
 Modelo de reglas (TAD)</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md36"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
 TAD <span class="tt">ReglaClinica</span> (<span class="tt">ReglaClinicaTest</span>)</h2>
 <p>La premisa es una fórmula en <b>forma normal disyuntiva</b> (FND): un caso es una conjunción (AND) de condiciones y la regla se satisface si <b>al menos un</b> caso se cumple (OR). El constructor plano (lista de <span class="tt">Condicion</span>) equivale a un único caso (AND). Se verifica que:</p>
 <ul>
 <li>una regla sin condiciones o con componentes nulos se rechaza;</li>
-<li><span class="tt">condicionesCumplidas</span> exige <b>todas</b> las condiciones del caso;</li>
-<li>el destino, el nivel y las condiciones hoja se exponen como copias;</li>
-<li>la identidad de la regla está dada por <span class="tt">idRegla</span>.</li>
+<li><span class="tt">condicionesCumplidas</span> exige <b>todas</b> las condiciones del caso.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md37"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md32"></a>
 TAD <span class="tt">BaseReglas</span> (<span class="tt">BaseReglasTest</span>)</h2>
-<p>Colección indexada por <span class="tt">idRegla</span>. Se verifica el alta y la baja, el rechazo de duplicados y que <span class="tt">reglasActivadas</span> devuelve solo las reglas cuya premisa se satisface en el estado.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md38"></a>
+<p>Colección indexada por <span class="tt">idRegla</span>. Se verifica el alta y la baja y que <span class="tt">reglasActivadas</span> devuelve solo las reglas cuya premisa se satisface en el estado.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md33"></a>
 Evaluación abstracta (<span class="tt">EvaluacionReglasAbstractaTest</span>)</h2>
 <p>Conserva los dos casos que no cubren las otras suites, con datos <b>abstractos</b> (<span class="tt">resp1/op1/op2/op3</span>) y los TADs <span class="tt">EstadoPaciente</span> y <span class="tt">Nodo</span> <b>simulados con Mockito</b>:</p>
 <ul>
 <li>varios casos (OR) armados con <span class="tt">ReglaClinica.conCasos</span>;</li>
 <li>varias opciones de la <b>misma pregunta</b> combinadas con AND (selección múltiple).</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md39"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md34"></a>
 Servicio de inferencia y mapeo JSON</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md40"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md35"></a>
 Servicio de inferencia (<span class="tt">ServicioReglasImplTest</span>)</h2>
 <p>Implementa la fase de <b>resolución de conflicto</b> del motor de reglas (Algoritmo 3 del diseño): cuando varias reglas se activan a la vez, gana el <b>nivel más severo</b> (<span class="tt">NORMAL &lt; CONSULTAR_MEDICO &lt; URGENCIA</span>); entre las del nivel máximo se <b>combinan todas como razones</b> y el destino es el de <b>mayor peso</b> (el signo más crítico). Se cubre:</p>
 <ul>
@@ -165,7 +163,7 @@ Servicio de inferencia (<span class="tt">ServicioReglasImplTest</span>)</h2>
 <li>niveles mixtos → gana el más severo;</li>
 <li>empate de nivel con destinos de distinto peso → gana el de mayor peso.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md41"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md36"></a>
 Mapeo JSON (<span class="tt">BaseReglasMapperTest</span>)</h2>
 <p>Verifica la ida y vuelta entre el TAD <span class="tt">BaseReglas</span> y el documento JSON de intercambio, que conserva la <b>forma normal disyuntiva</b> en <span class="tt">condiciones</span>:</p>
 <ul>
@@ -173,7 +171,7 @@ Mapeo JSON (<span class="tt">BaseReglasMapperTest</span>)</h2>
 <li>el <span class="tt">nodoDestino</span> se serializa <b>por id</b> (nunca se embebe el nodo);</li>
 <li>un <span class="tt">nodoDestino</span> que no existe en el grafo se <b>rechaza</b> al reconstruir.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md42"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md37"></a>
 Cómo ejecutarlas</h1>
 <pre class="fragment">./mvnw test -Dtest='org.signbb.backend.reglas.**'
 </pre><p>No requieren PostgreSQL ni Redis.</p>

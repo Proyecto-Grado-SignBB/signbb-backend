@@ -15,7 +15,6 @@ var namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios =
     [ "GuardiaAutoriaTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1GuardiaAutoriaTest.html", null ],
     [ "LienzoFiebre", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1LienzoFiebre.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1LienzoFiebre" ],
     [ "PoliticaAccesoBorradores", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PoliticaAccesoBorradores.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PoliticaAccesoBorradores" ],
-    [ "PoliticaAccesoBorradoresTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PoliticaAccesoBorradoresTest.html", null ],
     [ "PublicacionContenido", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicacionContenido.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicacionContenido" ],
     [ "PublicadorRegla", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorRegla.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorRegla" ],
     [ "PublicadorReglaTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorReglaTest.html", null ],

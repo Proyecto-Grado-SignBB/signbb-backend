@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('index.html',''
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_README"></a></p>
 <p>Backend del sistema SignBB: triaje clínico guiado por un grafo de navegación y un motor de reglas.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md69"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md66"></a>
 Requisitos</h1>
 <ul>
 <li>Java SDK 25</li>
@@ -122,13 +122,13 @@ Requisitos</h1>
 <li>Docker + Docker Compose (PostgreSQL y Redis de <span class="tt">contenedores/compose.yaml</span>)</li>
 <li>Doxygen (solo para regenerar la documentación)</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md70"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md67"></a>
 Construcción y pruebas</h1>
 <p>Desde el directorio <span class="tt">backend</span>: </p><pre class="fragment">./mvnw test              # compila y ejecuta la suite de tests
 ./mvnw spring-boot:run   # arranca la aplicación
 ./mvnw verify            # build completo, igual que en CI (GitHub Actions)
 </pre><p>La demo del motor por consola (<span class="tt">DemoTriajeRunner</span>) está apagada; se enciende con <span class="tt">SIGNBB_DEMO_ACTIVA=true</span>. Necesita los subgrafos de ejemplo de <span class="tt">src/test/resources</span>; en el jar de runtime no están y la demo se omite.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md71"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md68"></a>
 Pruebas</h2>
 <p>La suite requiere PostgreSQL y Redis. Desde <span class="tt">backend</span>:</p>
 <div class="fragment"><div class="line">./mvnw test</div>
@@ -137,7 +137,7 @@ Pruebas</h2>
 <div class="line">./mvnw verify</div>
 </div><!-- fragment --><p>Los resultados quedan en <span class="tt">target/surefire-reports</span>. La suite está descrita en <span class="tt">backend/src/test/PRUEBAS.md</span> y en Doxygen (<span class="tt">\ref pruebas</span>).</p>
 <p>Las pruebas de punta a punto que usan el seed de demo se describen en <a class="el" href="entorno_pruebas.html#md_docs_2entorno-pruebas_2entorno-pruebas" title="docs/entorno-pruebas/entorno-pruebas.md"><span class="tt">docs/entorno-pruebas/entorno-pruebas.md</span></a>.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md72"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md69"></a>
 Perfil de base de datos</h1>
 <p>El backend usa un único perfil, <span class="tt">docker</span> (definido en <span class="tt">backend/src/main/resources/application.properties</span> con <span class="tt">spring.profiles.active=docker</span>): <b>PostgreSQL</b> en <span class="tt">localhost:5432</span> (base <span class="tt">signbb</span>) y <b>Redis</b> en <span class="tt">localhost:6379</span>, ambos desde <span class="tt">contenedores/compose.yaml</span>. Los datos persisten en los volúmenes del compose. Ver <span class="tt">contenedores/MANUAL_CONTENEDORES.md</span> para levantar y administrar los servicios.</p>
 <p>Hay dos formas de trabajar:</p>
@@ -154,7 +154,7 @@ Perfil de base de datos</h1>
 <p><span class="tt">DatabaseInit</span> solo comprueba la existencia de <span class="tt">grafo_raiz</span>. Si cambian los archivos del grafo raíz en una base ya sembrada, hay que borrar los volúmenes (<span class="tt">docker compose down -v</span>) y volver a levantar; eso también borra los subgrafos publicados y las sesiones de Redis. Los subgrafos de ejemplo ya no se siembran. </p>
 </blockquote>
 <p><b>Contenido inicial.</b> <span class="tt">DatabaseInit</span> siembra solo el grafo raíz (<span class="tt">static/grafo_sistema/grafo_raiz.json</span>) cuando la base no tiene <span class="tt">grafo_raiz</span>; no crea subgrafos ni bases de reglas. Los subgrafos y sus reglas se publican desde la app de autoría o se cargan con el seed de datos de pruebas/demo. Mientras no exista al menos un subgrafo publicado, la app de consulta muestra «La consulta no está disponible en estos momentos» y deshabilita el inicio; <span class="tt">POST /api/recorridos</span> responde 503.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md73"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md70"></a>
 Cuentas y seguridad</h1>
 <p>La API pide un token JWT (<span class="tt">Authorization: Bearer &lt;token&gt;</span>) salvo en el login, el registro, <span class="tt">/media</span>, Swagger y <span class="tt">GET /actuator/health</span> (solo dice <span class="tt">UP</span> o <span class="tt">DOWN</span>; el resto de Actuator no se expone). Hay tres roles:</p>
 <table class="markdownTable">
@@ -241,22 +241,22 @@ Cuentas y seguridad</h1>
 <p><b>Si ya tenías la base de antes de las cuentas</b>, borra los volúmenes (<span class="tt">docker compose down -v</span>). Hibernate guarda el estado del borrador con un <em>check constraint</em> que no conoce el estado nuevo <span class="tt">EN_REVISION</span>, y los borradores viejos no tienen autor. </p>
 </blockquote>
 <p>La prueba manual del módulo (con <span class="tt">curl</span> y por las pantallas) está en <span class="tt">pruebas_manuales/pruebas_seguridad.md</span>.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md74"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md71"></a>
 Documentación</h1>
 <p>La documentación del código se genera con Doxygen desde la raíz del repositorio: </p><pre class="fragment">doxygen Doxyfile
 </pre><p>El HTML resultante queda en <span class="tt">docs/html</span> (abrir <span class="tt">docs/html/index.html</span>). La fuente es <span class="tt">backend/src/main/java</span>, <span class="tt">backend/src/test/java</span> y los markdown de <span class="tt">docs/</span>, configuración en el <span class="tt">Doxyfile</span>. El informe de entorno de pruebas queda en <a class="el" href="entorno_pruebas.html#md_docs_2entorno-pruebas_2entorno-pruebas" title="docs/entorno-pruebas/entorno-pruebas.md"><span class="tt">docs/entorno-pruebas/entorno-pruebas.md</span></a> y sus tablas de reglas en <span class="tt">docs/entorno-pruebas/reglas/</span>.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md75"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md72"></a>
 Pruebas en Doxygen</h2>
 <p>La suite de pruebas está documentada en la sección <a class="el" href="pruebas.html" title="Pruebas del sistema">Pruebas del sistema</a> del Doxygen: tipos de prueba, cómo ejecutarlas y el detalle por módulo (navegación, reglas, modelo de reglas, autoría, observaciones y cache).</p>
 <p>El diagrama de arquitectura por módulos (<span class="tt">docs/diagramas/arquitectura_modulos.svg</span>) se regenera desde su fuente PlantUML: </p><pre class="fragment">java -jar plantuml.jar -tsvg docs/diagramas/arquitectura_modulos.puml
-</pre><h2 class="doxsection"><a class="anchor" id="autotoc_md76"></a>
+</pre><h2 class="doxsection"><a class="anchor" id="autotoc_md73"></a>
 Grafos y reglas</h2>
 <p>Los DOT/SVG, los JSON y las tablas de reglas de la documentación viven en <span class="tt">docs/entorno-pruebas/</span>. Para regenerar todos los SVG y las tablas Markdown:</p>
 <div class="fragment"><div class="line">cd docs/entorno-pruebas</div>
 <div class="line">./scripts/regenerar_grafos.sh</div>
 </div><!-- fragment --><p>También se puede regenerar un grafo suelto:</p>
 <div class="fragment"><div class="line">dot -Tsvg grafos/raiz.dot -o grafos/raiz.svg</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md77"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md74"></a>
 API REST (OpenAPI)</h2>
 <p>La API se documenta con <b>springdoc-openapi</b> a partir de los controladores. Con la aplicación arriba:</p>
 <ul>

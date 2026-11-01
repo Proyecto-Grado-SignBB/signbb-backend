@@ -116,126 +116,118 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('pruebas_navega
 <p>Índice general de la suite: <a class="el" href="pruebas.html" title="Pruebas del sistema">Pruebas del sistema</a>. </p>
 </blockquote>
 <p>Pruebas unitarias del paquete <span class="tt"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion.html" title="Módulo de navegación de recorridos por el grafo clínico (en construcción).">org.signbb.backend.navegacion</a></span>: los TADs del recorrido, la lectura del contenido clínico, el motor de navegación y el servicio que usa la API REST. Son JUnit 5 <b>puro</b> (sin Spring, sin base de datos y sin Redis), así que corren igual en local y en GitHub Actions.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md12"></a>
+Enfoque</h1>
+<p>Desde el 31-oct-2026 la suite se enfoca en el <b>comportamiento esperado de los CU01, CU03, CU08 y CU09</b> y en las excepciones que el SRS documenta. Se retiraron los bordes técnicos que no cambian el comportamiento observable: empates de la cola, destinos repetidos, formatos legados, copias defensivas y variantes de configuración inválida.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
 Mapa de la suite</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Paquete  </th><th class="markdownTableHeadNone">Clase  </th><th class="markdownTableHeadRight">Tests  </th><th class="markdownTableHeadNone">Qué cubre  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">EstadoPacienteTest</span>  </td><td class="markdownTableBodyRight">9  </td><td class="markdownTableBodyNone">memoria de trabajo: respuestas, puntaje y la pila de pasos para retroceder  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">EstadoPacienteTest</span>  </td><td class="markdownTableBodyRight">5  </td><td class="markdownTableBodyNone">memoria de trabajo: respuestas, puntaje y pila de pasos  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">EstadoPacienteNavegacionTest</span>  </td><td class="markdownTableBodyRight">9  </td><td class="markdownTableBodyNone">cola de opciones pendientes, ruta, recomendaciones y su foto para deshacer  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">EstadoPacienteNavegacionTest</span>  </td><td class="markdownTableBodyRight">5  </td><td class="markdownTableBodyNone">cola, ruta, foto y restauración al retroceder  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">GrafoClinicoTest</span>  </td><td class="markdownTableBodyRight">25  </td><td class="markdownTableBodyNone">TAD del grafo: nodos, aristas, rutas válidas, ciclos, camino causal y tipo de interacción  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">GrafoClinicoTest</span>  </td><td class="markdownTableBodyRight">10  </td><td class="markdownTableBodyNone">nodos, aristas, rutas, ciclos, paso, camino causal y tipo de interacción  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">NodoTest</span>, <span class="tt">RespuestaTest</span>  </td><td class="markdownTableBodyRight">3 + 2  </td><td class="markdownTableBodyNone">validación e igualdad de nodos y aristas  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">NodoTest</span>, <span class="tt">RespuestaTest</span>  </td><td class="markdownTableBodyRight">2 + 1  </td><td class="markdownTableBodyNone">validación e igualdad de nodos y aristas  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">ResultadoPasoRecomendacionesTest</span>  </td><td class="markdownTableBodyRight">1  </td><td class="markdownTableBodyNone">recomendaciones del resultado de un paso  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">ResultadoPasoRecomendacionesTest</span>  </td><td class="markdownTableBodyRight">1  </td><td class="markdownTableBodyNone">recomendaciones con su camino  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">ContextoClinicoTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyNone">versiones del contenido clínico en memoria  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">ContextoClinicoTest</span>  </td><td class="markdownTableBodyRight">4  </td><td class="markdownTableBodyNone">versiones del contenido clínico en memoria  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">datos.serializacion</span>  </td><td class="markdownTableBodyNone"><span class="tt">GrafoClinicoMapperTest</span>  </td><td class="markdownTableBodyRight">15  </td><td class="markdownTableBodyNone">JSON ↔ TAD del grafo; rechazo de contenido inválido  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">datos.serializacion</span>  </td><td class="markdownTableBodyNone"><span class="tt">GrafoClinicoMapperTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyNone">JSON ↔ TAD del grafo y rechazo de referencias inválidas  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">datos.serializacion</span>  </td><td class="markdownTableBodyNone"><span class="tt">CompositorGrafoClinicoTest</span>  </td><td class="markdownTableBodyRight">16  </td><td class="markdownTableBodyNone">composición raíz + subgrafos y prefijo de ids y reglas  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">datos.serializacion</span>  </td><td class="markdownTableBodyNone"><span class="tt">CompositorGrafoClinicoTest</span>  </td><td class="markdownTableBodyRight">10  </td><td class="markdownTableBodyNone">composición raíz + subgrafos, prefijo de ids y reglas  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">datos.serializacion</span>  </td><td class="markdownTableBodyNone"><span class="tt">JsonParserTest</span>  </td><td class="markdownTableBodyRight">11  </td><td class="markdownTableBodyNone">lectura de reglas en FND y rechazo de reglas mal formadas  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">datos.serializacion</span>  </td><td class="markdownTableBodyNone"><span class="tt">JsonParserTest</span>  </td><td class="markdownTableBodyRight">5  </td><td class="markdownTableBodyNone">reglas en FND y rechazo de destinos inválidos  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">motor</span>  </td><td class="markdownTableBodyNone"><span class="tt">MotorNavegacionTest</span>  </td><td class="markdownTableBodyRight">10  </td><td class="markdownTableBodyNone">recorrido sobre el contenido del sistema: alertas por reglas y validación de respuestas  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">motor</span>  </td><td class="markdownTableBodyNone"><span class="tt">MotorNavegacionTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyNone">recorrido, alertas y respuesta inválida  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">motor</span>  </td><td class="markdownTableBodyNone"><span class="tt">MotorNavegacionRetrocederTest</span>  </td><td class="markdownTableBodyRight">8  </td><td class="markdownTableBodyNone">volver a la pregunta anterior con la pila de pasos  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">motor</span>  </td><td class="markdownTableBodyNone"><span class="tt">MotorNavegacionRetrocederTest</span>  </td><td class="markdownTableBodyRight">4  </td><td class="markdownTableBodyNone">volver a la pregunta anterior y deshacer reglas  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">motor</span>  </td><td class="markdownTableBodyNone"><span class="tt">MotorNavegacionLimiteTest</span>  </td><td class="markdownTableBodyRight">8  </td><td class="markdownTableBodyNone">máximo de preguntas (10 por defecto)  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">motor</span>  </td><td class="markdownTableBodyNone"><span class="tt">MotorNavegacionLimiteTest</span>  </td><td class="markdownTableBodyRight">3  </td><td class="markdownTableBodyNone">máximo de preguntas y alerta que gana al límite  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">motor</span>  </td><td class="markdownTableBodyNone"><span class="tt">MotorNavegacionColaTest</span>  </td><td class="markdownTableBodyRight">23  </td><td class="markdownTableBodyNone">cola de la selección múltiple: ramas, alertas, umbral, reglas y retroceder  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">motor</span>  </td><td class="markdownTableBodyNone"><span class="tt">MotorNavegacionColaTest</span>  </td><td class="markdownTableBodyRight">10  </td><td class="markdownTableBodyNone">cola de selección múltiple, alertas y retroceso  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">motor</span>  </td><td class="markdownTableBodyNone"><span class="tt">OrdenColaTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyNone">orden de la cola: gravedad, peso y antigüedad  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">motor</span>  </td><td class="markdownTableBodyNone"><span class="tt">OrdenColaTest</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">gravedad primero y mejor opción  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioNavegacionImplTest</span>  </td><td class="markdownTableBodyRight">12  </td><td class="markdownTableBodyNone">la fachada de la API: iniciar, responder, consultar, retroceder y errores; el camino del resultado trae el texto de cada pregunta y las razones son nombres de reglas  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioNavegacionImplTest</span>  </td><td class="markdownTableBodyRight">10  </td><td class="markdownTableBodyNone">iniciar, responder, consultar, retroceder, resultado y 404  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioNavegacionVersionesTest</span>  </td><td class="markdownTableBodyRight">4  </td><td class="markdownTableBodyNone">un recorrido en curso conserva su versión del contenido  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioNavegacionVersionesTest</span>  </td><td class="markdownTableBodyRight">3  </td><td class="markdownTableBodyNone">un recorrido conserva su versión del contenido  </td></tr>
 </table>
-<p>En total son <b>170 pruebas</b>. Las pruebas de la sesión en Redis (<span class="tt">cache/RepositorioSesionRedisTest</span> y <span class="tt">cache/ColaSeleccionMultipleRedisIntegracionTest</span>) están documentadas en <a class="el" href="pruebas_cache.html#md_backend_2src_2test_2README" title="backend/src/test/README.md"><span class="tt">backend/src/test/README.md</span></a>.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
+<p>En total son <b>89 pruebas</b>. Las pruebas de la sesión en Redis (<span class="tt">cache/RepositorioSesionRedisTest</span> y <span class="tt">cache/ColaSeleccionMultipleRedisIntegracionTest</span>) están documentadas en <a class="el" href="pruebas_cache.html#md_backend_2src_2test_2README" title="backend/src/test/README.md"><span class="tt">backend/src/test/README.md</span></a>.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
 Fixtures</h1>
 <ul>
 <li><b>Contenido del sistema.</b> Es el que usan <span class="tt">MotorNavegacionTest</span>, <span class="tt">MotorNavegacionRetrocederTest</span> y <span class="tt">ServicioNavegacionImplTest</span>: <span class="tt">ContenidoEjemplo.compuesto()</span>, que une el grafo raíz con los subgrafos de respiración, gastrointestinal y actividad/color y sus reglas. Es un fixture del classpath de pruebas (<span class="tt">src/test/resources/static/grafo_sistema/</span>); <span class="tt">DatabaseInit</span> ya no siembra subgrafos. El camino que más se prueba es <span class="tt">pregunta_inicial → puente_respiracion → q_resp_urgencia →
-  q_resp_consulta → q_resp_normal</span>. En las reglas, un signo de alarma (por ejemplo "Quejido al respirar") dispara R_RESP_URG (URGENCIA) y uno de alerta media dispara R_RESP_CON (CONSULTAR_MEDICO); sin signos se cierra en NORMAL.</li>
-<li><b>Grafos mínimos armados en código.</b> Los usan <span class="tt">MotorNavegacionLimiteTest</span> (una cadena de 12 preguntas), <span class="tt">MotorNavegacionColaTest</span> y <span class="tt">OrdenColaTest</span>. Sirven para casos que el contenido real no muestra, como recorridos largos o varias ramas pendientes.</li>
+  q_resp_consulta → q_resp_normal</span>.</li>
+<li><b>Grafos mínimos armados en código.</b> Los usan <span class="tt">MotorNavegacionLimiteTest</span> (una cadena de 12 preguntas), <span class="tt">MotorNavegacionColaTest</span> y <span class="tt">OrdenColaTest</span>.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
 Qué se prueba y por qué importa</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
-Alertas y validación (<span class="tt">MotorNavegacionTest</span>)</h2>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
+CU01/CU03: recorrido y resultado (<span class="tt">MotorNavegacionTest</span>)</h2>
 <ul>
 <li>El recorrido cruza de la raíz al subgrafo y una respuesta sin signos de alarma cierra en <b>NORMAL</b>.</li>
-<li>Cada regla clínica lleva a su desenlace: un signo de alarma da URGENCIA y uno de alerta media da CONSULTAR_MEDICO. Que <b>gane el nivel más grave</b> cuando se disparan varias reglas se prueba en <span class="tt">OrdenColaTest</span> y <span class="tt">MotorNavegacionColaTest</span>.</li>
-<li>Una respuesta inválida (que no es una opción de la pregunta, varias opciones en una pregunta de selección única, una opción repetida o una respuesta sobre un terminal) se <b>rechaza antes de tocar el estado</b>. Así no quedan hechos falsos que después disparen reglas.</li>
+<li>Cada regla clínica lleva a su desenlace: un signo de alarma da URGENCIA y uno de alerta media da CONSULTAR_MEDICO.</li>
+<li>Una respuesta que no es opción se rechaza antes de tocar el estado, como única prueba representativa de entrada inválida.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
-Retroceder (<span class="tt">MotorNavegacionRetrocederTest</span>)</h2>
-<p>Cada respuesta apila un paso con la pregunta, las opciones y las reglas que disparó. Retroceder lo desapila.</p><ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
+RF21: retroceder (<span class="tt">MotorNavegacionRetrocederTest</span>)</h2>
+<ul>
 <li>Vuelve a la pregunta anterior, borra solo esa respuesta y permite tomar otro camino.</li>
-<li><b>Deshace solo las reglas de la respuesta descartada.</b> Después de retroceder desde una URGENCIA, responder "No, ninguno de los anteriores" sigue a la siguiente pregunta sin alerta, y volver a marcar el signo dispara la regla de nuevo.</li>
-<li><b>No reevalúa las reglas.</b> Se comprueba con un <em>spy</em> que <span class="tt">evaluar</span> no se llama al retroceder.</li>
-<li>Se puede retroceder varias veces seguidas. Retroceder sin respuestas es un error de la petición (<span class="tt">IllegalArgumentException</span>, HTTP 400).</li>
-<li><b>Contenido cambiado.</b> Si la pregunta a la que se vuelve ya no existe en el contenido clínico, se lanza <span class="tt">IllegalStateException</span> en lugar de devolver un nodo inexistente.</li>
-<li><b>Sesiones guardadas antes de existir la pila.</b> Se reproduce el recorrido y la pila queda reconstruida. Si el contenido cambió, también se lanza <span class="tt">IllegalStateException</span>.</li>
+<li>Deshace solo las reglas de la respuesta descartada y permite volver a dispararlas.</li>
+<li>Se puede retroceder varias veces seguidas; sin respuestas es un error 400.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md23"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
 Límite de preguntas (<span class="tt">MotorNavegacionLimiteTest</span>)</h2>
 <ul>
-<li>Cuando el cuidador llega a la pregunta número 10, el recorrido cierra en <b>NORMAL</b> con el nodo de sistema <span class="tt">sistema/limite_preguntas</span>, para que ninguna sesión quede abierta indefinidamente.</li>
-<li>Una regla o un terminal en la décima respuesta le ganan al límite. Es decir, una alerta nunca queda tapada por el corte.</li>
-<li>El límite se puede configurar (<span class="tt">signbb.navegacion.max-preguntas</span>) y un valor menor que 1 se rechaza.</li>
-<li><b>Las respuestas deshechas no cuentan.</b> Retroceder y volver a responder no acerca el corte.</li>
-<li>Desde el cierre por límite se puede retroceder a la décima pregunta.</li>
-<li><b>Por qué NORMAL.</b> Si en diez preguntas no apareció ninguna señal de alarma, no hay razón clínica para una alerta. Es una decisión del equipo (23 de octubre de 2026, ítem 2.5 del plan) que se revisará con el asesor clínico; estas pruebas la fijan para que un cambio sea a propósito.</li>
+<li>Al llegar a la pregunta número 10 el recorrido cierra en <b>NORMAL</b> con el nodo <span class="tt">sistema/limite_preguntas</span>.</li>
+<li>Una regla en la décima respuesta gana al límite: una alerta nunca queda tapada por el corte.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md24"></a>
-Cola de la selección múltiple (<span class="tt">MotorNavegacionColaTest</span>, <span class="tt">OrdenColaTest</span>)</h2>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
+Cola de selección múltiple (<span class="tt">MotorNavegacionColaTest</span>, <span class="tt">OrdenColaTest</span>)</h2>
 <ul>
-<li>Se sigue a fondo la opción más grave y las demás quedan pendientes.</li>
-<li>Una alerta anula las recomendaciones de ramas anteriores.</li>
-<li>No se repiten destinos ni preguntas.</li>
-<li>Se prueba la interacción de la cola con el umbral, con las reglas compuerta y con retroceder.</li>
+<li>Se sigue a fondo la rama más grave y las demás quedan pendientes.</li>
+<li>Las recomendaciones conservan su camino causal.</li>
+<li>Una alerta termina el recorrido y descarta la cola.</li>
+<li>Se puede retroceder desde el resultado final y desde la selección múltiple.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md25"></a>
-Servicio (<span class="tt">ServicioNavegacionImplTest</span>)</h2>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
+Servicio (<span class="tt">ServicioNavegacionImplTest</span>, <span class="tt">ServicioNavegacionVersionesTest</span>)</h2>
 <ul>
 <li><span class="tt">iniciar</span> abre un recorrido EN_CURSO en <span class="tt">pregunta_inicial</span>.</li>
-<li>Cada respuesta y cada retroceso <b>quedan guardados</b>: <span class="tt">consultar</span> los refleja y la siguiente respuesta parte de ese estado.</li>
+<li>Cada respuesta y cada retroceso quedan guardados y <span class="tt">consultar</span> los refleja.</li>
 <li>Una selección múltiple con un signo de alarma cierra en URGENCIA.</li>
-<li><b>Un recorrido FINALIZADO no acepta más respuestas</b> y sigue devolviendo su desenlace.</li>
-<li><b>Errores.</b> Un id inexistente da <span class="tt">RecursoNoEncontradoException</span> (HTTP 404) y una lista de respuestas vacía se rechaza.</li>
+<li>Un recorrido FINALIZADO no acepta más respuestas y sigue devolviendo su desenlace; un id inexistente da 404.</li>
+<li>Un recorrido en curso conserva la versión del contenido con la que empezó.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md26"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
 Qué se quitó en la reorganización</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Archivo  </th><th class="markdownTableHeadNone">Motivo  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">MotorNavegacionNormalizacionTest</span> + <span class="tt">ejemplo_*_norm.json</span>  </td><td class="markdownTableBodyNone">Grafo de normalización de bases de datos, no clínico. La regla compuerta ya se prueba en <span class="tt">MotorNavegacionColaTest</span>.  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">MotorNavegacionNormalizacionTest</span> + <span class="tt">ejemplo_*_norm.json</span>  </td><td class="markdownTableBodyNone">Grafo de normalización de bases de datos, no clínico.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">MotorNavegacionSeguridadTest</span> + <span class="tt">ejemplo_*_sec.json</span>  </td><td class="markdownTableBodyNone">Grafo de ciberseguridad, no clínico. El desempate y las reglas AND/OR ya están en <span class="tt">OrdenColaTest</span>, <span class="tt">MotorNavegacionTest</span> (R2/R3) y <span class="tt">JsonParserTest</span>.  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">MotorNavegacionSeguridadTest</span> + <span class="tt">ejemplo_*_sec.json</span>  </td><td class="markdownTableBodyNone">Grafo de ciberseguridad, no clínico.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">MotorNavegacionSeleccionMultipleTest</span>  </td><td class="markdownTableBodyNone">Escrito contra firmas "inferidas" y duplicado por <span class="tt">MotorNavegacionColaTest</span>.  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">MotorNavegacionSeleccionMultipleTest</span>  </td><td class="markdownTableBodyNone">Duplicado por <span class="tt">MotorNavegacionColaTest</span>.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">motor/README.md</span>, <span class="tt">docs/img/grafo_norm.svg</span>, <span class="tt">docs/img/grafo_sec.svg</span>  </td><td class="markdownTableBodyNone">Solo documentaban los dos ejemplos anteriores.  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">modelo/ContextoTest</span> (7)  </td><td class="markdownTableBodyNone">El TAD <span class="tt">Contexto</span> no tiene referencias en <span class="tt">src/main</span>.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Dos tests de retroceder solapados en <span class="tt">MotorNavegacionTest</span>  </td><td class="markdownTableBodyNone">Se fundieron en uno al pasar a <span class="tt">MotorNavegacionRetrocederTest</span>.  </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">modelo/ContextoTest</span> (7)  </td><td class="markdownTableBodyNone">El TAD <span class="tt">Contexto</span> no tiene referencias en <span class="tt">src/main</span>: la navegación usa <span class="tt">ContextoClinico</span>.  </td></tr>
+<td class="markdownTableBodyNone">Bordes técnicos del 31-oct-2026  </td><td class="markdownTableBodyNone">Empates de cola, destinos repetidos, preguntas repetidas, umbrales combinados, reglas compuerta, formatos legados, copias defensivas y variantes de configuración inválida.  </td></tr>
 </table>
-<p>Los tests que estaban en el paquete viejo <span class="tt">org.signbb.backend.model</span> se movieron a <span class="tt">navegacion.modelo</span> y <span class="tt">navegacion.datos.serializacion</span> sin cambiar su contenido. Los de reglas (<span class="tt">BaseReglasTest</span>, <span class="tt">ReglaClinicaTest</span> y <span class="tt">EvaluacionReglasAbstractaTest</span>) están en <span class="tt">reglas.modelo</span> (ver <a class="el" href="pruebas_reglas.html#pruebas_model" title="Modelo de reglas (TAD)">Modelo de reglas (TAD)</a>).</p>
-<p>Se descartó un caso: restaurar las respuestas previas cuando una regla compuerta vuelve a preguntar algo ya respondido. Con la cola, el motor ya no vuelve a preguntar una pregunta respondida (sigue las respuestas guardadas), así que ese caso ya no se alcanza por el motor. Lo que sí se mantiene probado a nivel del TAD es que restaurar las previas funciona, en <span class="tt">EstadoPacienteTest.desapilarRestauraLasRespuestasPrevias</span>.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md27"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
 Cómo ejecutarlas</h1>
-<p>Desde <span class="tt">backend/</span>: </p><pre class="fragment">./mvnw test -Dtest='org.signbb.backend.navegacion.**'   # solo el módulo (no necesita PostgreSQL ni Redis)
-./mvnw verify                                           # suite completa, como el CI (contenedores arriba)
-</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md28"></a>
-Resultados en GitHub Actions</h1>
-<p>Corrida histórica del workflow <span class="tt">build</span> (<span class="tt">./mvnw -B verify</span>, con PostgreSQL y Redis como servicios) sobre el commit <span class="tt">518f775</span>, el merge de <span class="tt">tests-navegacion</span> en <span class="tt">navegacion</span>, el 9 de octubre de 2026: <a href="https://github.com/Proyecto-Grado-SignBB/signbb-backend/actions/runs/37948316527">run 37948316527</a>. <b>BUILD SUCCESS.</b></p>
-<p>Tras los recortes del 31-oct-2026, el módulo tiene <b>170 pruebas</b> y la suite completa del backend <b>603</b> (2 omitidas por <span class="tt">AutoriaIntegracionTest</span>). </p>
+<p>Desde <span class="tt">backend/</span>: </p><pre class="fragment">./mvnw test -Dtest='org.signbb.backend.navegacion.**'   # solo el módulo
+./mvnw verify                                           # suite completa, como el CI
+</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md23"></a>
+Resultados</h1>
+<p>Corrida histórica del workflow <span class="tt">build</span> sobre el commit <span class="tt">518f775</span>: <a href="https://github.com/Proyecto-Grado-SignBB/signbb-backend/actions/runs/37948316527">run 37948316527</a>. <b>BUILD SUCCESS.</b></p>
+<p>Tras el recorte del 31-oct-2026, el módulo tiene <b>89 pruebas</b> y la suite completa del backend <b>364</b> (2 omitidas por <span class="tt">AutoriaIntegracionTest</span>). </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

@@ -138,13 +138,13 @@ Métodos públicos</h2></td></tr>
 <tr class="memitem:a1c3e1faf84cd27af5ca07f832d975061" id="r_a1c3e1faf84cd27af5ca07f832d975061"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a1c3e1faf84cd27af5ca07f832d975061">exigirVigente</a> (String recorridoId)</td></tr>
 <tr class="memdesc:a1c3e1faf84cd27af5ca07f832d975061"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exige que el recorrido se pueda seguir.  <br /></td></tr>
 <tr class="memitem:abef0c51107158b237d782379f3ebf6c7" id="r_abef0c51107158b237d782379f3ebf6c7"><td class="memItemLeft">RecorridoDTO&#160;</td><td class="memItemRight"><a class="el" href="#abef0c51107158b237d782379f3ebf6c7">reiniciar</a> (String recorridoId, UsuarioActual padre)</td></tr>
-<tr class="memdesc:abef0c51107158b237d782379f3ebf6c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reinicia la consulta (CU11): el recorrido queda <code class="JavaDocCode">ABANDONADO</code>, se borra su sesión y empieza uno nuevo a nombre del mismo padre.  <br /></td></tr>
+<tr class="memdesc:abef0c51107158b237d782379f3ebf6c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reinicia la consulta (CU09): el recorrido queda <code class="JavaDocCode">ABANDONADO</code>, se borra su sesión y empieza uno nuevo a nombre del mismo padre.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Dueño de cada recorrido: lo registra al iniciarlo, revisa que quien lo consulta o responde sea el padre que lo inició y lleva su estado para "Mis
 recorridos". </p>
 <p>La navegación (<code class="JavaDocCode">ServicioNavegacion</code>) no cambia.</p>
-<p>MODIFICADO (CU10/CU11): se agregan <code><a class="el" href="#a1c3e1faf84cd27af5ca07f832d975061">exigirVigente(String)</a></code>, que detecta una consulta vencida (410) y la marca <code class="JavaDocCode">VENCIDO</code>, y <code><a class="el" href="#abef0c51107158b237d782379f3ebf6c7">reiniciar(String, UsuarioActual)</a></code>; "Mis recorridos" marca como vencidas las consultas en curso cuya sesión ya no existe. </p>
+<p>MODIFICADO (CU09): se agregan <code><a class="el" href="#a1c3e1faf84cd27af5ca07f832d975061">exigirVigente(String)</a></code>, que detecta una consulta vencida (410) y la marca <code class="JavaDocCode">VENCIDO</code>, y <code><a class="el" href="#abef0c51107158b237d782379f3ebf6c7">reiniciar(String, UsuarioActual)</a></code>; "Mis recorridos" marca como vencidas las consultas en curso cuya sesión ya no existe. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
 <a id="a052394ecc9424fbe8d4ae62a42fe37da" name="a052394ecc9424fbe8d4ae62a42fe37da"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a052394ecc9424fbe8d4ae62a42fe37da">&#9670;&#160;</a></span>actualizar()</h2>
@@ -239,7 +239,7 @@ recorridos". </p>
 <p>Si estaba en curso y su sesión venció, lo marca <code class="JavaDocCode">VENCIDO</code> antes de fallar.</p>
 <dl class="exception"><dt>Excepciones</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1RecorridoVencidoException.html" title="El recorrido ya no se puede seguir (CU10): su sesión venció tras 8 horas sin actividad,...">RecorridoVencidoException</a></td><td>si venció o se reinició (410) </td></tr>
+    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1RecorridoVencidoException.html" title="El recorrido ya no se puede seguir (CU09): su sesión venció tras 8 horas sin actividad,...">RecorridoVencidoException</a></td><td>si venció o se reinició (410) </td></tr>
   </table>
   </dd>
 </dl>
@@ -288,12 +288,12 @@ recorridos". </p>
       </table>
 </div><div class="memdoc">
 
-<p>Reinicia la consulta (CU11): el recorrido queda <code class="JavaDocCode">ABANDONADO</code>, se borra su sesión y empieza uno nuevo a nombre del mismo padre. </p>
+<p>Reinicia la consulta (CU09): el recorrido queda <code class="JavaDocCode">ABANDONADO</code>, se borra su sesión y empieza uno nuevo a nombre del mismo padre. </p>
 <dl class="section return"><dt>Devuelve</dt><dd>la primera pregunta del recorrido nuevo </dd></dl>
 <dl class="exception"><dt>Excepciones</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1RecorridoFinalizadoException.html" title="Se pidió reiniciar (CU11) un recorrido que ya terminó.">RecorridoFinalizadoException</a></td><td>si el recorrido ya terminó (409) </td></tr>
-    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1RecorridoVencidoException.html" title="El recorrido ya no se puede seguir (CU10): su sesión venció tras 8 horas sin actividad,...">RecorridoVencidoException</a></td><td>si ya se había reiniciado (410) </td></tr>
+    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1RecorridoFinalizadoException.html" title="Se pidió reiniciar (CU09) un recorrido que ya terminó.">RecorridoFinalizadoException</a></td><td>si el recorrido ya terminó (409) </td></tr>
+    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1RecorridoVencidoException.html" title="El recorrido ya no se puede seguir (CU09): su sesión venció tras 8 horas sin actividad,...">RecorridoVencidoException</a></td><td>si ya se había reiniciado (410) </td></tr>
     <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RecorridoOcupadoException.html" title="Otra operación está cambiando ahora mismo el mismo recorrido.">org.signbb.backend.navegacion.modelo.RecorridoOcupadoException</a></td><td>si otra operación lo está cambiando (409) </td></tr>
   </table>
   </dd>

@@ -10,12 +10,12 @@ var searchData=
   ['findbyrolinorderbynombreasc_7',['findByRolInOrderByNombreAsc',['../interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios_1_1RepositorioUsuario.html#a1ba696b3552bac51127c80ef100588fb',1,'org::signbb::backend::seguridad::datos::repositorios::RepositorioUsuario']]],
   ['findbytipoandclave_8',['findByTipoAndClave',['../interfaceorg_1_1signbb_1_1backend_1_1seguridad_1_1datos_1_1repositorios_1_1RepositorioLimiteIntentos.html#af015e8942e9b2f379c592d53ed451695',1,'org::signbb::backend::seguridad::datos::repositorios::RepositorioLimiteIntentos']]],
   ['findbyusuarioidorderbyiniciadoendesc_9',['findByUsuarioIdOrderByIniciadoEnDesc',['../interfaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios_1_1RepositorioRecorridos.html#a9a604b473cf3e7101f5ff8c91b48dd38',1,'org::signbb::backend::observaciones::datos::repositorios::RepositorioRecorridos']]],
-  ['fixture_10',['Fixture',['../pruebas_autoria.html#autotoc_md1',1,'']]],
-  ['fixtures_11',['Fixtures',['../pruebas_navegacion.html#autotoc_md19',1,'']]],
+  ['fixture_10',['Fixture',['../pruebas_autoria.html#autotoc_md2',1,'']]],
+  ['fixtures_11',['Fixtures',['../pruebas_navegacion.html#autotoc_md14',1,'']]],
   ['formatoimagen_12',['FormatoImagen',['../namespaceorg_1_1signbb_1_1backend_1_1media.html#ae3e8c63af3474301ed955064478ad959',1,'org::signbb::backend::media']]],
   ['fotografiarnavegacion_13',['fotografiarNavegacion',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a54a3953e76e293a433912b4a650b84a8',1,'org::signbb::backend::navegacion::modelo::EstadoPaciente']]],
   ['fotonavegacion_14',['FotoNavegacion',['../namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#ad0a916e226b0a74974b6aa0f13ad7ef4',1,'org::signbb::backend::navegacion::modelo']]],
-  ['front_20signbb_20frontend_20rama_20autoria_20proyecto_20ui_20autoria_15',['Front (&lt;span class=&quot;tt&quot;&gt;signbb-frontend&lt;/span&gt;, rama &lt;span class=&quot;tt&quot;&gt;autoria&lt;/span&gt;, proyecto &lt;span class=&quot;tt&quot;&gt;ui-autoria&lt;/span&gt;)',['../md_docs_2autoria-subgrafos.html#autotoc_md91',1,'']]],
-  ['frontend_20pwa_20caddy_16',['Frontend PWA (Caddy)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md80',1,'']]],
-  ['frontend_20rama_20autoria_20proyecto_20ui_20autoria_17',['Front (&lt;span class=&quot;tt&quot;&gt;signbb-frontend&lt;/span&gt;, rama &lt;span class=&quot;tt&quot;&gt;autoria&lt;/span&gt;, proyecto &lt;span class=&quot;tt&quot;&gt;ui-autoria&lt;/span&gt;)',['../md_docs_2autoria-subgrafos.html#autotoc_md91',1,'']]]
+  ['front_20signbb_20frontend_20rama_20autoria_20proyecto_20ui_20autoria_15',['Front (&lt;span class=&quot;tt&quot;&gt;signbb-frontend&lt;/span&gt;, rama &lt;span class=&quot;tt&quot;&gt;autoria&lt;/span&gt;, proyecto &lt;span class=&quot;tt&quot;&gt;ui-autoria&lt;/span&gt;)',['../md_docs_2autoria-subgrafos.html#autotoc_md88',1,'']]],
+  ['frontend_20pwa_20caddy_16',['Frontend PWA (Caddy)',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md77',1,'']]],
+  ['frontend_20rama_20autoria_20proyecto_20ui_20autoria_17',['Front (&lt;span class=&quot;tt&quot;&gt;signbb-frontend&lt;/span&gt;, rama &lt;span class=&quot;tt&quot;&gt;autoria&lt;/span&gt;, proyecto &lt;span class=&quot;tt&quot;&gt;ui-autoria&lt;/span&gt;)',['../md_docs_2autoria-subgrafos.html#autotoc_md88',1,'']]]
 ];

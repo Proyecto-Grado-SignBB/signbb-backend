@@ -13,6 +13,7 @@ var namespaceorg_1_1signbb_1_1backend =
     [ "BackendApplication", "classorg_1_1signbb_1_1backend_1_1BackendApplication.html", null ],
     [ "BackendApplicationTests", "classorg_1_1signbb_1_1backend_1_1BackendApplicationTests.html", null ],
     [ "CacheRedisIntegracionTest", "classorg_1_1signbb_1_1backend_1_1CacheRedisIntegracionTest.html", null ],
+    [ "ConsultaIntegracionTest", "classorg_1_1signbb_1_1backend_1_1ConsultaIntegracionTest.html", null ],
     [ "DatabaseInit", "classorg_1_1signbb_1_1backend_1_1DatabaseInit.html", "classorg_1_1signbb_1_1backend_1_1DatabaseInit" ],
     [ "DemoTriajeRunner", "classorg_1_1signbb_1_1backend_1_1DemoTriajeRunner.html", "classorg_1_1signbb_1_1backend_1_1DemoTriajeRunner" ],
     [ "PersistenciaEstructuraJsonTest", "classorg_1_1signbb_1_1backend_1_1PersistenciaEstructuraJsonTest.html", null ]

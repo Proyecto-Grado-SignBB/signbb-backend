@@ -115,50 +115,49 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('pruebas_autori
 <blockquote class="doxtable">
 <p>Índice general de la suite: <a class="el" href="pruebas.html" title="Pruebas del sistema">Pruebas del sistema</a>. </p>
 </blockquote>
-<p>Pruebas del paquete <span class="tt"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1autoria.html" title="Módulo de autoría: el médico arma un subgrafo clínico en un lienzo (una pregunta y un &quot;+&quot; por cada re...">org.signbb.backend.autoria</a></span>, el que permite que un médico arme un subgrafo clínico en el lienzo (un "+" en cada respuesta), vea los avisos y lo publique para que quede navegable en la app de la cuidadora; y definir la <b>base de reglas</b> de un grafo (CRUD del borrador y publicación).</p>
+<p>Pruebas del paquete <span class="tt"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1autoria.html" title="Módulo de autoría: el médico arma un subgrafo clínico en un lienzo (una pregunta y un &quot;+&quot; por cada re...">org.signbb.backend.autoria</a></span>, el que permite que un médico arme un subgrafo clínico en el lienzo, lo edite, defina sus reglas y lo envíe a revisión; y que un supervisor lo apruebe o lo rechace.</p>
 <p>Las unitarias son JUnit 5 y Mockito, sin Spring, base de datos ni Redis. La de integración (<span class="tt">AutoriaIntegracionTest</span>) levanta la aplicación completa con PostgreSQL y Redis, como el CI.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md0"></a>
+Enfoque</h1>
+<p>Desde el 31-oct-2026 la suite se enfoca en el <b>comportamiento esperado de los CU02, CU06, CU07, CU08 y CU12</b> y en las excepciones que el SRS documenta. Se retiraron los bordes técnicos que no cambian el comportamiento observable: limpieza de imágenes en Silo, transiciones imposibles, colisiones de ids, variantes de 404 y detalles de caché.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md1"></a>
 Mapa de la suite</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Paquete  </th><th class="markdownTableHeadNone">Clase  </th><th class="markdownTableHeadRight">Tests  </th><th class="markdownTableHeadNone">Qué cubre  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">EditorLienzoTest</span>  </td><td class="markdownTableBodyRight">25  </td><td class="markdownTableBodyNone">el "+", enlazar a una pregunta existente, editar y eliminar nodos; lo que el editor rechaza  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">EditorLienzoTest</span>  </td><td class="markdownTableBodyRight">14  </td><td class="markdownTableBodyNone">primera pregunta, "+", enlazar, editar, eliminar, validaciones e imágenes  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ValidadorLienzoTest</span>  </td><td class="markdownTableBodyRight">10  </td><td class="markdownTableBodyNone">un caso por cada aviso; nodos sueltos y choque de gravedades  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ValidadorLienzoTest</span>  </td><td class="markdownTableBodyRight">6  </td><td class="markdownTableBodyNone">avisos bloqueantes del borrador  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">CompiladorSubgrafoTest</span>  </td><td class="markdownTableBodyRight">8  </td><td class="markdownTableBodyNone">lienzo → <span class="tt">GrafoClinicoJson</span>: pesos, tipos, aristas y metadata  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">CompiladorSubgrafoTest</span>  </td><td class="markdownTableBodyRight">6  </td><td class="markdownTableBodyNone">lienzo → <span class="tt">GrafoClinicoJson</span>: pesos, tipos, aristas y salida válida  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">PublicadorSubgrafoTest</span>  </td><td class="markdownTableBodyRight">24  </td><td class="markdownTableBodyNone">upsert del subgrafo y de la opción en la raíz; categoría nueva visible; invalidar el contenido; rechazos; despublicar  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">PublicadorSubgrafoTest</span>  </td><td class="markdownTableBodyRight">12  </td><td class="markdownTableBodyNone">publicar, enlazar el puente, recomponer, despublicar y versionar  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioAutoriaImplTest</span>  </td><td class="markdownTableBodyRight">38  </td><td class="markdownTableBodyNone">categorías, ids de grafo, datos del subgrafo (nombre para la familia obligatorio), autor tomado de la cuenta, "Mis subgrafos", estados, descartar cambios, despublicar y errores  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioAutoriaImplTest</span>  </td><td class="markdownTableBodyRight">19  </td><td class="markdownTableBodyNone">categorías, borradores, autor, estados, publicar, descartar y despublicar  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">PoliticaAccesoBorradoresTest</span>  </td><td class="markdownTableBodyRight">4  </td><td class="markdownTableBodyNone">quién lee y quién edita un borrador: autor, otro médico, supervisor y borrador sin autor  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioRevisionImplTest</span>  </td><td class="markdownTableBodyRight">10  </td><td class="markdownTableBodyNone">enviar, retirar, aprobar, rechazar y pendientes  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">GuardiaAutoriaTest</span>  </td><td class="markdownTableBodyRight">13  </td><td class="markdownTableBodyNone">la política aplicada a subgrafos y bases (403/404), quién crea una base y el bloqueo mientras está en revisión  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">GuardiaAutoriaTest</span>  </td><td class="markdownTableBodyRight">8  </td><td class="markdownTableBodyNone">autor, otro médico, supervisor y revisión  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioRevisionImplTest</span>  </td><td class="markdownTableBodyRight">13  </td><td class="markdownTableBodyNone">enviar, retirar, aprobar (publica) y rechazar con comentario; nadie aprueba lo suyo  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioAutoriaReglasImplTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyNone">CRUD de la base de reglas y estados  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">controladores</span>  </td><td class="markdownTableBodyNone"><span class="tt">ControladorAutoriaTest</span>  </td><td class="markdownTableBodyRight">8  </td><td class="markdownTableBodyNone">códigos HTTP representativos de la API <span class="tt">/api/autoria</span>: 201, 403, 404, 409, 422 y 204  </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">controladores</span>  </td><td class="markdownTableBodyNone"><span class="tt">ControladorRevisionTest</span>  </td><td class="markdownTableBodyRight">4  </td><td class="markdownTableBodyNone">códigos HTTP de enviar, aprobar y rechazar  </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">NodoLienzoTest</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">el JSON del nodo: las imágenes se guardan y se leen, y un nodo guardado sin imágenes se lee con la lista vacía  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">PublicadorReglaTest</span>  </td><td class="markdownTableBodyRight">5  </td><td class="markdownTableBodyNone">publicar/reemplazar la base de reglas  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">CompiladorReglasTest</span>  </td><td class="markdownTableBodyRight">3  </td><td class="markdownTableBodyNone">borrador de reglas → <span class="tt">BaseReglasJson</span> (FND, niveles)  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ValidadorReglasTest</span>  </td><td class="markdownTableBodyRight">6  </td><td class="markdownTableBodyNone">un aviso por cada problema del borrador de reglas  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ValidadorReglasTest</span>  </td><td class="markdownTableBodyRight">5  </td><td class="markdownTableBodyNone">avisos del borrador de reglas  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ResolutorCatalogoNodosTest</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">el catálogo de nodos (de un lienzo y del grafo raíz) pone el desenlace en los terminales  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ResolutorCatalogoNodosTest</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">catálogo de nodos con desenlace en terminales  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">PublicadorReglaTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyNone">publica/reemplaza la base de reglas de un grafo, recompone el contenido y registra una versión  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">controladores</span>  </td><td class="markdownTableBodyNone"><span class="tt">ControladorAutoriaTest</span>  </td><td class="markdownTableBodyRight">5  </td><td class="markdownTableBodyNone">códigos HTTP representativos de la API  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioAutoriaReglasImplTest</span>  </td><td class="markdownTableBodyRight">12  </td><td class="markdownTableBodyNone">CRUD de la base de reglas, autor tomado de la cuenta, "Mis bases", publicación y descartar cambios  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">controladores</span>  </td><td class="markdownTableBodyNone"><span class="tt">ControladorRevisionTest</span>  </td><td class="markdownTableBodyRight">3  </td><td class="markdownTableBodyNone">códigos HTTP de enviar, aprobar y rechazar  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">(raíz)  </td><td class="markdownTableBodyNone"><span class="tt">AutoriaIntegracionTest</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">de punta a punta: armar, aprobar (publicar) y recorrer como cuidadora; <b>deshabilitada temporalmente</b>  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">NodoLienzoTest</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">JSON del nodo y compatibilidad con lienzos sin imágenes  </td></tr>
 </table>
-<p>En total son <b>179 pruebas unitarias</b>. Las 2 de integración (<span class="tt">AutoriaIntegracionTest</span>) se cuentan aparte y están deshabilitadas con <span class="tt">@Disabled</span> mientras se revisa la suite unitaria.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md1"></a>
+<p>En total son <b>107 pruebas unitarias</b>. Las 2 de integración (<span class="tt">AutoriaIntegracionTest</span>) se cuentan aparte y están deshabilitadas con <span class="tt">@Disabled</span> mientras se revisa la suite unitaria.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
 Fixture</h1>
 <p><span class="tt">servicios/LienzoFiebre</span> arma, con las mismas operaciones del editor, el lienzo de fiebre del deck: </p><pre class="fragment">¿Cuánto marca el termómetro?
 ├─ Menos de 38 °C (LEVE) ──────┐
@@ -166,135 +165,74 @@ Fixture</h1>
 │                                  ├─ Sí (MODERADA) → Consultar al médico
 │                                  └─ No (LEVE) → Recomendación
 └─ Más de 39 °C (GRAVE) → Lleve al bebé a urgencias ahora.
-</pre><p>"Menos de 38 °C" llega a una pregunta que ya existía (la opción "Pregunta
-existente" del panel), así que esa pregunta recibe dos respuestas de distinta gravedad. El borrador de prueba es <span class="tt">grafo_fiebre</span>, de la categoría neurológica (<span class="tt">puente_neuro</span>).</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
+</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
 Qué se prueba y por qué importa</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
-Edición (<span class="tt">EditorLienzoTest</span>)</h2>
-<ul>
-<li><b>El "+".</b> Crea el nodo y conecta la respuesta. Sin respuesta crea la primera pregunta; una segunda primera pregunta, o empezar con una conclusión, se rechaza. Una respuesta que ya tiene camino no acepta otro.</li>
-<li><b>Pregunta existente.</b> Solo se puede ir a una pregunta, no a la misma, y nunca a una que ya lleva de vuelta al origen: <b>no se pueden crear círculos</b>. Quitar el enlace deja la respuesta como "+" otra vez.</li>
-<li><b>Editar.</b> Las respuestas que vienen con id conservan su destino, las nuevas nacen como "+" y el tipo del nodo no cambia.</li>
-<li><b>Eliminar.</b> Las respuestas que llegaban vuelven a ser "+" y se poda solo la rama que quedó sin camino; lo que ya estaba suelto se conserva.</li>
-<li>Los ids los genera el servidor (<span class="tt">pregunta_N</span>, <span class="tt">conclusion_N</span>, <span class="tt">r_N</span>) y no se reutilizan.</li>
-</ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
-Avisos (<span class="tt">ValidadorLienzoTest</span>)</h2>
+CU02: crear grafo (<span class="tt">EditorLienzoTest</span>, <span class="tt">ValidadorLienzoTest</span>, <span class="tt">CompiladorSubgrafoTest</span>)</h2>
 <ul>
-<li><b>Bloquean la publicación:</b> sin primera pregunta, texto vacío, menos de 2 respuestas, respuesta repetida, respuesta sin camino, conclusión sin desenlace, círculo y nodo suelto.</li>
-<li>Los mensajes están en lenguaje humano, por ejemplo: «La respuesta "Más de
-  39 °C" de "¿Cuánto marca el termómetro?" todavía no dice qué pasa después.».</li>
-<li>Un nodo suelto no se revisa por dentro: basta con conectarlo o eliminarlo.</li>
-<li><b>No se avisa</b> el choque de gravedades: se resuelve al compilar con la mayor, como se acordó.</li>
+<li>La primera pregunta es el inicio y sus respuestas quedan como "+".</li>
+<li>El "+" crea el nodo y conecta la respuesta; también se puede enlazar a una pregunta existente.</li>
+<li>Se rechazan una segunda primera pregunta, empezar con una conclusión, una conclusión sin desenlace y un círculo.</li>
+<li>Los avisos bloqueantes impiden publicar: sin primera pregunta, respuesta sin camino, una sola respuesta, conclusión incompleta y nodo suelto.</li>
+<li>El compilador conserva datos, pesos, tipo de interacción, terminales y aristas, y la salida pasa por el mapper estricto.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
-Compilar (<span class="tt">CompiladorSubgrafoTest</span>)</h2>
+CU07: editar grafo (<span class="tt">EditorLienzoTest</span>, <span class="tt">ServicioAutoriaImplTest</span>)</h2>
 <ul>
-<li>El <span class="tt">peso</span> de un nodo es la <b>mayor gravedad</b> de las respuestas que llegan a él; la primera pregunta lleva 1.</li>
-<li>"¿Puede marcar varias?" da <span class="tt">SELECCION_MULTIPLE</span>; si no, <span class="tt">SELECCION_UNICA</span>.</li>
-<li>Las conclusiones quedan como <span class="tt">terminal</span> con su desenlace y el mensaje como <span class="tt">label</span>.</li>
-<li>Los nodos sueltos bloquean la publicación; si se compila un documento que no pasó por la validación, se omiten.</li>
-<li>La salida pasa por <span class="tt">GrafoClinicoMapper.desde</span>, la misma validación estricta que el contenido del sistema.</li>
+<li>Editar conserva los destinos de las respuestas que ya tenían id y crea las nuevas.</li>
+<li>Eliminar un nodo devuelve a "+" las respuestas que llegaban y poda la rama que quedó sin camino.</li>
+<li>Editar un borrador publicado lo deja en <span class="tt">CAMBIOS_SIN_PUBLICAR</span>.</li>
+<li>Descartar cambios devuelve el borrador a su última publicación.</li>
+<li>Un borrador publicado no se puede borrar.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
-Publicar (<span class="tt">PublicadorSubgrafoTest</span>)</h2>
+CU06: definir reglas (<span class="tt">EditorLienzoTest</span>, <span class="tt">CompiladorReglasTest</span>, <span class="tt">ValidadorReglasTest</span>, <span class="tt">ServicioAutoriaReglasImplTest</span>, <span class="tt">PublicadorReglaTest</span>)</h2>
 <ul>
-<li>Guarda el subgrafo y agrega, en la pregunta puente del grafo raíz, la opción del subgrafo y su nodo <span class="tt">ref_&lt;grafoId&gt;</span>. <b>Republicar no duplica</b> ni la opción ni el nodo.</li>
-<li>Publicar en una categoría que todavía no tenía subgrafos (piel o temperatura) la hace aparecer en la pregunta inicial de la cuidadora.</li>
-<li>Después del commit invalida el contenido en Redis y recarga el que está en memoria (<span class="tt">ContextoClinico.recargar()</span>), en ese orden.</li>
-<li><b>No guarda nada</b> si hay avisos bloqueantes, si la opción ya existe en la pregunta puente (por ejemplo "Iniciar"), si la pregunta puente no está o si el contenido compuesto no pasa la validación.</li>
+<li>La base de reglas se crea para un grafo válido y el autor sale de la cuenta.</li>
+<li>Se agregan reglas con ids <span class="tt">R_N</span> y se conserva la FND (casos y condiciones).</li>
+<li>Faltar nombre, condiciones, destino o un nivel de alerta válido bloquea la publicación.</li>
+<li>Publicar reemplaza la base del grafo, recompone el contenido y registra una versión.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
-Despublicar (<span class="tt">PublicadorSubgrafoTest</span>)</h2>
+CU08/CU12: publicar y revisar (<span class="tt">PublicadorSubgrafoTest</span>, <span class="tt">ServicioRevisionImplTest</span>, <span class="tt">GuardiaAutoriaTest</span>, controladores)</h2>
 <ul>
-<li><span class="tt">retirar</span> quita la fila del subgrafo, su nodo <span class="tt">ref_&lt;grafoId&gt;</span> y las aristas que lo tocan; la pregunta puente vuelve a tener solo sus opciones de antes y los demás subgrafos no cambian.</li>
-<li>Guarda una versión nueva del contenido (origen "Despublicación de ...") sin el subgrafo, e invalida Redis y recarga el contexto después de guardar.</li>
-<li>Si era el único subgrafo publicado, la raíz queda solo con la pregunta inicial sin opciones y la consulta no disponible; la operación no se bloquea.</li>
-<li>Un subgrafo despublicado se puede volver a publicar sin duplicar la opción.</li>
+<li>Publicar guarda el subgrafo, agrega la opción en la pregunta puente y publica también su base de reglas.</li>
+<li>Republicar no duplica la referencia ni la opción.</li>
+<li>Con avisos bloqueantes no se guarda nada; si la composición falla, tampoco.</li>
+<li>Despublicar retira la fila, la referencia y la opción; guarda una versión nueva y permite volver a publicar.</li>
+<li>Enviar a revisión valida los avisos y deja el borrador en revisión; retirar lo devuelve a borrador o a cambios sin publicar.</li>
+<li>Aprobar publica y guarda el revisor; nadie aprueba lo suyo.</li>
+<li>Rechazar exige comentario y devuelve el borrador con él.</li>
+<li>Las pendientes excluyen las del propio supervisor.</li>
+<li>Solo el autor edita su subgrafo; el supervisor puede leer y revisar.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
-Servicio (<span class="tt">ServicioAutoriaImplTest</span>)</h2>
+API (<span class="tt">ControladorAutoriaTest</span>, <span class="tt">ControladorRevisionTest</span>)</h2>
 <ul>
-<li>Las categorías salen de las preguntas puente del grafo raíz: piel, temperatura, respiración, gastrointestinal y neurológico. Piel y temperatura se ofrecen aunque todavía no tengan subgrafos.</li>
-<li>El <span class="tt">grafoId</span> se arma con el nombre, sin tildes ni signos (<span class="tt">grafo_fiebre_en_ninos_pequenos</span>) y con sufijo si ya existe (<span class="tt">grafo_respiracion_3</span>).</li>
-<li>Editar un subgrafo publicado lo deja en <b>CAMBIOS_SIN_PUBLICAR</b>; publicar lo vuelve a <b>PUBLICADO</b>.</li>
-<li>El nombre para la familia (<span class="tt">etiquetaOpcion</span>) es obligatorio: sin él, crear o editar responde 422.</li>
-<li>Un borrador publicado no se puede borrar; un id inexistente da 404.</li>
-<li>Despublicar devuelve el borrador a <b>BORRADOR</b> (sin <span class="tt">publicadoEn</span> ni copia publicada, con el lienzo y los datos intactos); se rechaza si nunca se publicó, y si el contenido restante no es válido el borrador sigue <b>PUBLICADO</b>. Ya despublicado se puede republicar o borrar.</li>
+<li>Crear responde 201, borrar 204 y una edición inválida 422 con <span class="tt">{mensaje, avisos: []}</span>.</li>
+<li>Editar lo de otro da 403; una edición concurrente da 409.</li>
+<li>Enviar con avisos da 422; aprobar y rechazar responden 200.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
-Reglas: compilar, validar y publicar (<span class="tt">CompiladorReglasTest</span>, <span class="tt">ValidadorReglasTest</span>, <span class="tt">PublicadorReglaTest</span>)</h2>
-<ul>
-<li>La base de reglas del borrador se compila a <span class="tt">BaseReglasJson</span> conservando la <b>FND</b> (casos y condiciones), el nivel y el <span class="tt">nodoDestino</span>.</li>
-<li><span class="tt">ValidadorReglas</span> produce un aviso por cada problema del borrador (sin nombre, sin destino, con nodos inexistentes, etc.).</li>
-<li>Al publicar se <b>reemplaza</b> la base del grafo en el conjunto de bases, se recompone el contenido (grafo + reglas) y, tras el commit, se invalida el cache y se recarga el contexto. No se guarda nada si la composición no es válida.</li>
-</ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md10"></a>
-Reglas: CRUD y publicación (<span class="tt">ServicioAutoriaReglasImplTest</span>)</h2>
-<ul>
-<li><b>CRUD del borrador:</b> crear la base de un grafo, agregar/editar/eliminar reglas (ids <span class="tt">R_N</span> no reutilizados) y listar.</li>
-<li><b>Estados:</b> editar una base publicada la deja en <span class="tt">CAMBIOS_SIN_PUBLICAR</span>; una base publicada no se puede borrar.</li>
-<li><b>Publicación:</b> exige que el lienzo del subgrafo esté publicado (sin <span class="tt">CAMBIOS_SIN_PUBLICAR</span>) y delega en <span class="tt">PublicadorRegla</span>.</li>
-</ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md11"></a>
-Autor y acceso (<span class="tt">PoliticaAccesoBorradoresTest</span>, <span class="tt">GuardiaAutoriaTest</span>)</h2>
-<p>Cada subgrafo y cada base de reglas guarda el <span class="tt">autorId</span> de quien lo creó; el nombre y la institución salen de la cuenta y se ignora lo que mande el request. La política es:</p>
-<ul>
-<li><b>Leer:</b> el autor o un supervisor. Otro médico recibe 403 y un id inexistente, 404.</li>
-<li><b>Editar</b> (datos, nodos, reglas, descartar, eliminar): solo el autor. Un supervisor tampoco edita lo de otro.</li>
-<li><b>Borradores sin autor</b> (datos de antes de las cuentas): solo los lee un supervisor.</li>
-<li><b>Crear una base de reglas:</b> solo el autor del subgrafo de ese <span class="tt">grafoId</span>; la del grafo raíz (o de un grafo del sistema), solo un supervisor.</li>
-<li><b>En revisión</b> nadie edita el subgrafo ni su base (422); el autor sí puede retirarlo y el supervisor verlo.</li>
-<li>"Mis subgrafos" y "Mis bases" (<span class="tt">listar</span>) traen solo lo del médico; el supervisor ve todo.</li>
-</ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md12"></a>
-Revisión del supervisor (<span class="tt">ServicioRevisionImplTest</span>, <span class="tt">ControladorRevisionTest</span>)</h2>
-<p>Ya no se publica directo: el autor <b>envía a revisión</b> y un supervisor que no sea el autor <b>aprueba</b> (eso publica el subgrafo y sus reglas) o <b>rechaza</b> con un comentario.</p>
-<ul>
-<li>Enviar con avisos bloqueantes da 422 con la lista y no cambia nada; enviar dos veces, o algo publicado sin cambios, también da 422. Un subgrafo publicado sí se envía si cambiaron sus reglas.</li>
-<li>Enviar borra el comentario del rechazo anterior.</li>
-<li>Retirar (o rechazar) lo devuelve a <span class="tt">BORRADOR</span> si nunca se publicó, o a <span class="tt">CAMBIOS_SIN_PUBLICAR</span> si ya tenía publicación.</li>
-<li>Aprobar algo que no está en revisión da 422 y aprobar lo propio da <b>403</b>, aunque quien lo intente sea supervisor. Al aprobar se guardan el revisor y la fecha.</li>
-<li>Rechazar sin comentario da 422.</li>
-<li>Las revisiones pendientes excluyen las del propio supervisor.</li>
-<li>Los endpoints <span class="tt">publicar</span> ya no existen (404 o 405).</li>
-</ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
-API (<span class="tt">ControladorAutoriaTest</span>)</h2>
-<ul>
-<li>Crear responde 201 y borrar 204.</li>
-<li>Una edición inválida responde <b>422 con <span class="tt">{mensaje, avisos: []}</span></b>.</li>
-<li>Quien no es el autor recibe <b>403</b> al editar.</li>
-<li>Un id inexistente da 404 y una edición concurrente (<span class="tt">@Version</span>) da 409.</li>
-<li>Despublicar responde 200 con el borrador en <span class="tt">BORRADOR</span> y 422 con el mensaje si el contenido restante no es válido.</li>
-</ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
-Punta a punta (<span class="tt">AutoriaIntegracionTest</span>, deshabilitada temporalmente)</h2>
-<p>Arma con el servicio un subgrafo de fiebre (una pregunta y dos conclusiones), lo aprueba (es decir, lo publica) y lo recorre con <span class="tt">ServicioNavegacion</span>: <span class="tt">pregunta_inicial → neurologico → puente_neuro → opción nueva → pregunta
-del subgrafo → "Más de 39 °C" → URGENCIA</span>. En <span class="tt">puente_neuro</span> siguen las opciones del sistema y aparece la nueva. No es <span class="tt">@Transactional</span>, porque la recarga del contenido ocurre después del commit; al terminar borra lo que creó, restaura el grafo raíz e invalida el contenido.</p>
-<p>Está <b>deshabilitada temporalmente</b> con <span class="tt">@Disabled</span> mientras se revisa la suite unitaria por separado. Para volver a ejecutarla, quitar la anotación y levantar PostgreSQL y Redis.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
-Versiones del contenido (republicar sin romper recorridos en curso)</h2>
-<ul>
-<li><span class="tt">PublicadorSubgrafoTest</span>: cada publicación guarda una versión con el grafo compuesto (el subgrafo nuevo y el resto del contenido); republicar guarda otra; si no se puede publicar no se guarda ninguna.</li>
-<li><span class="tt">cache/ResolvedorVersionesTest</span>: la vigente es la más reciente; sin versiones la primera es una foto del contenido actual; una clave de Redis por versión; si Redis no responde se lee de la base.</li>
-<li><span class="tt">navegacion/modelo/ContextoClinicoTest</span>: cada versión tiene su propio grafo, se carga una sola vez y <span class="tt">recargar()</span> hace que lo nuevo use la versión nueva.</li>
-<li><span class="tt">navegacion/servicios/ServicioNavegacionVersionesTest</span>: un recorrido en curso sigue con su versión aunque se publique otra; los nuevos usan la nueva; una sesión guardada antes de las versiones usa la vigente.</li>
-</ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
-Imágenes de las preguntas</h2>
-<ul>
-<li><span class="tt">EditorLienzoTest</span>: una pregunta admite hasta 3 imágenes; se rechazan más de 3, repetidas y nombres que no dio el servidor; editar sin mandar <span class="tt">imagenes</span> conserva las actuales y mandar <span class="tt">[]</span> las quita; una conclusión no lleva.</li>
-<li><span class="tt">CompiladorSubgrafoTest</span>: las imágenes salen en <span class="tt">metadata.archivos</span> y <span class="tt">metadata.src</span> de la pregunta.</li>
-<li><span class="tt">NodoLienzoTest</span>: un lienzo guardado antes de las imágenes se sigue leyendo.</li>
-<li><span class="tt">media/ServicioImagenesTest</span> y <span class="tt">media/ControladorImagenesTest</span>: formato (por la firma del archivo, no por el nombre), tope de 1 MB, 201 / 422 / 503 al subir y 200 / 404 al ver. Usan un almacén en memoria: <b>no necesitan Silo</b>. Con Silo levantado se prueba a mano subiendo una imagen desde el lienzo.</li>
-</ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
+Qué se quitó en la reorganización</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Archivo  </th><th class="markdownTableHeadNone">Motivo  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">ServicioAutoriaReglasAbstractoTest</span> (11)  </td><td class="markdownTableBodyNone">Repetía el CRUD de <span class="tt">ServicioAutoriaReglasImplTest</span> con mocks.  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">PoliticaAccesoBorradoresTest</span> (4)  </td><td class="markdownTableBodyNone">La misma política se ejercita en <span class="tt">GuardiaAutoriaTest</span>.  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Bordes técnicos del 31-oct-2026  </td><td class="markdownTableBodyNone">Limpieza de imágenes en Silo, descartes sin cambios, despublicar casos límite, colisiones de <span class="tt">grafoId</span>, bases raíz, doble envío y variantes de 404.  </td></tr>
+</table>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md10"></a>
 Cómo ejecutarlas</h1>
-<p>Desde <span class="tt">backend/</span>: </p><pre class="fragment">./mvnw test -Dtest='org.signbb.backend.autoria.**'   # unitarias (no necesitan PostgreSQL ni Redis)
-./mvnw verify                                        # suite completa, como el CI (contenedores arriba)
-</pre> </div></div><!-- contents -->
+<p>Desde <span class="tt">backend/</span>: </p><pre class="fragment">./mvnw test -Dtest='org.signbb.backend.autoria.**'   # unitarias
+./mvnw verify                                        # suite completa, como el CI
+</pre><h1 class="doxsection"><a class="anchor" id="autotoc_md11"></a>
+Resultados</h1>
+<p>Tras el recorte del 31-oct-2026, el módulo tiene <b>107 pruebas unitarias</b> y la suite completa del backend <b>364</b> (2 omitidas por <span class="tt">AutoriaIntegracionTest</span>). </p>
+</div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">

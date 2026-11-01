@@ -113,24 +113,24 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('pruebas_observ
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_backend_2src_2test_2java_2org_2signbb_2backend_2observaciones_2README"></a></p>
 <p>Pruebas del paquete <span class="tt"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1observaciones.html" title="Módulo de consultas guiadas para las observaciones del cuidador (en construcción).">org.signbb.backend.observaciones</a></span>, el que <b>valida, audita y reenvía</b> la respuesta del cuidador hacia el motor de navegación. Son <b>JUnit 5 + Mockito</b>, sin Spring, base de datos ni Redis.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md29"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md24"></a>
 Mapa de la suite</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Paquete  </th><th class="markdownTableHeadNone">Clase  </th><th class="markdownTableHeadRight">Tests  </th><th class="markdownTableHeadNone">Qué cubre  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioCapturaImplTest</span>  </td><td class="markdownTableBodyRight">15  </td><td class="markdownTableBodyNone">valida la selección contra la pregunta actual, audita la observación (con el padre que respondió), reenvía al servicio de navegación y guarda "todo o nada" con candado por recorrido (también al retroceder) y rechaza con 409 una respuesta para una pregunta que ya no es la actual  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioCapturaImplTest</span>  </td><td class="markdownTableBodyRight">9  </td><td class="markdownTableBodyNone">valida la selección, audita la observación, reenvía al motor y guarda "todo o nada" con candado; rechaza 409 si la pregunta ya no es la actual  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioRecorridosImplTest</span>  </td><td class="markdownTableBodyRight">20  </td><td class="markdownTableBodyNone">el recorrido queda a nombre del padre, otro padre recibe 404 y el estado y resultado se guardan al terminar o retroceder; un recorrido sin sesión queda vencido (410) y reiniciar lo marca abandonado y empieza otro  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioRecorridosImplTest</span>  </td><td class="markdownTableBodyRight">11  </td><td class="markdownTableBodyNone">el recorrido queda a nombre del padre, otro padre recibe 404, el estado se guarda al terminar o retroceder, un recorrido sin sesión da 410 y reiniciar lo marca abandonado  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">SeleccionCuidadorTest</span>  </td><td class="markdownTableBodyRight">6  </td><td class="markdownTableBodyNone">validación del constructor de <span class="tt">SeleccionCuidador</span> según el tipo de interacción  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">SeleccionCuidadorTest</span>  </td><td class="markdownTableBodyRight">4  </td><td class="markdownTableBodyNone">validación básica de <span class="tt">SeleccionCuidador</span> según el tipo de interacción  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">controladores</span>  </td><td class="markdownTableBodyNone"><span class="tt">ControladorConsultaTest</span>  </td><td class="markdownTableBodyRight">15  </td><td class="markdownTableBodyNone">una respuesta vacía da 400 (no 500), una respuesta válida llega al servicio, una de más de 200 caracteres da 422, un recorrido ocupado da 409 al responder y al retroceder, el id de la pregunta llega al servicio y una pregunta que ya no es la actual da 409; un recorrido vencido da 410, reiniciar devuelve el nuevo y reiniciar uno terminado da 409  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">controladores</span>  </td><td class="markdownTableBodyNone"><span class="tt">ControladorConsultaTest</span>  </td><td class="markdownTableBodyRight">10  </td><td class="markdownTableBodyNone">una respuesta vacía da 400, una válida llega al servicio, una de más de 200 caracteres da 422, un recorrido ocupado da 409, una pregunta desactualizada da 409 y un recorrido vencido da 410  </td></tr>
 </table>
-<p>En total son <b>56 pruebas</b>. La regla de dueño también se prueba con la cadena de seguridad real en <span class="tt">seguridad/ReglasAccesoIntegracionTest</span>.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
+<p>En total son <b>34 pruebas</b>. La regla de dueño también se prueba con la cadena de seguridad real en <span class="tt">seguridad/ReglasAccesoIntegracionTest</span>.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md25"></a>
 Qué se prueba y por qué importa</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md26"></a>
 Captura de la respuesta (<span class="tt">ServicioCapturaImplTest</span>)</h2>
 <p>Con <span class="tt">ServicioNavegacion</span> y <span class="tt">RepositorioObservaciones</span> <b>simulados con Mockito</b>:</p>
 <ul>
@@ -138,23 +138,23 @@ Captura de la respuesta (<span class="tt">ServicioCapturaImplTest</span>)</h2>
 <li>una <b>selección múltiple</b> se reenvía completa: la captura <b>nunca decide</b> cuál opción domina (eso es del motor);</li>
 <li>una opción que <b>no pertenece</b> a la pregunta actual se rechaza <b>antes</b> de tocar el motor y <b>sin</b> guardar observación;</li>
 <li>si el recorrido ya está <span class="tt">FINALIZADO</span>, no se responde ni se audita;</li>
-<li><b>todo o nada</b>: la sesión en Redis, la observación y la fila del recorrido se guardan dentro de una sola transacción de Postgres. Si falla la observación, el guardado del recorrido o el cierre de la transacción, se revierte Postgres y la sesión de Redis vuelve a la copia tomada antes; si tampoco se puede devolver la sesión, sale el error original;</li>
-<li><b>pregunta esperada</b>: si la petición trae el id de la pregunta que contesta y ya no es la actual, se rechaza con <span class="tt">PreguntaDesactualizadaException</span> (409) sin registrar ni avanzar nada; sin id funciona como antes, y si el recorrido ya terminó se devuelve tal cual;</li>
-<li><b>candado ocupado</b>: si otra operación tiene el candado del recorrido, no se toca nada (ni navegación, ni sesión, ni transacción);</li>
-<li><b>retroceder</b> sigue las mismas reglas (transacción, devolver la sesión si falla).</li>
+<li><b>todo o nada</b>: la sesión en Redis, la observación y la fila del recorrido se guardan en una sola transacción; si falla la observación, se revierte Postgres y la sesión vuelve a la copia tomada antes;</li>
+<li><b>pregunta esperada</b>: si la petición trae el id de la pregunta que contesta y ya no es la actual, se rechaza con <span class="tt">PreguntaDesactualizadaException</span> (409) sin registrar ni avanzar nada;</li>
+<li><b>candado ocupado</b>: si otra operación tiene el candado del recorrido, no se toca nada;</li>
+<li><b>retroceder</b> sigue las mismas reglas.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md32"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md27"></a>
 Dueño del recorrido (<span class="tt">ServicioRecorridosImplTest</span>)</h2>
 <p>Con <span class="tt">ServicioNavegacion</span> y <span class="tt">RepositorioRecorridos</span> simulados:</p>
 <ul>
 <li><span class="tt">iniciar</span> guarda la fila <span class="tt">recorrido</span> con el id del padre;</li>
 <li>el dueño pasa; otro padre o un id inexistente reciben <b>404</b> con el mismo mensaje, para no revelar que el recorrido existe;</li>
 <li>al llegar a <span class="tt">FINALIZADO</span> se guardan el nivel y el mensaje; al retroceder desde el final se borran y vuelve a <span class="tt">EN_CURSO</span>;</li>
-<li>"Mis recorridos" lista solo los del padre; los que siguen en curso sin sesión en Redis (venció a las 8 h) pasan a <span class="tt">VENCIDO</span>, y si Redis no responde la lista sale igual;</li>
-<li><b>vigente</b> (CU10): un recorrido en curso sin sesión se marca <span class="tt">VENCIDO</span> y da 410; uno reiniciado (<span class="tt">ABANDONADO</span>) da 410 con su propio mensaje; uno terminado pasa;</li>
-<li><b>reiniciar</b> (CU11): con el candado del recorrido, lo marca <span class="tt">ABANDONADO</span>, inicia uno nuevo en la misma transacción y después borra la sesión vieja (si Redis falla en ese paso solo se registra); uno terminado da 409 y uno ya reiniciado da 410.</li>
+<li>"Mis recorridos" lista solo los del padre; los que siguen en curso sin sesión en Redis (venció a las 8 h) pasan a <span class="tt">VENCIDO</span>;</li>
+<li><b>vigente</b> (CU09): un recorrido en curso sin sesión se marca <span class="tt">VENCIDO</span> y da 410; uno reiniciado (<span class="tt">ABANDONADO</span>) da 410 con su propio mensaje; uno terminado pasa;</li>
+<li><b>reiniciar</b> (CU09): con el candado del recorrido, lo marca <span class="tt">ABANDONADO</span>, inicia uno nuevo en la misma transacción y después borra la sesión vieja.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md33"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md28"></a>
 Validación de la selección (<span class="tt">SeleccionCuidadorTest</span>)</h2>
 <p><span class="tt">SeleccionCuidador</span> es el value object que normaliza lo que marcó el cuidador según el <span class="tt">TipoInteraccion</span>:</p>
 <ul>
@@ -162,7 +162,7 @@ Validación de la selección (<span class="tt">SeleccionCuidadorTest</span>)</h2
 <li><span class="tt">SELECCION_MULTIPLE</span> acepta varias;</li>
 <li>se rechazan la lista vacía y el <span class="tt">recorridoId</span> vacío.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md34"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md29"></a>
 Cómo ejecutarlas</h1>
 <pre class="fragment">./mvnw test -Dtest='org.signbb.backend.observaciones.**'
 </pre><p>No requieren PostgreSQL ni Redis.</p>

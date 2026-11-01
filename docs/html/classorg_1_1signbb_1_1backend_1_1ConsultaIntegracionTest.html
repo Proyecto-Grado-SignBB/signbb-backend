@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.18.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SignBB: Referencia de la clase org.signbb.backend.autoria.servicios.PoliticaAccesoBorradoresTest</title>
+<title>SignBB: Referencia de la clase org.signbb.backend.ConsultaIntegracionTest</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="codefolding.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', codefold.init);
   </div>
 </div>
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PoliticaAccesoBorradoresTest.html','','classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PoliticaAccesoBorradoresTest-members'); });
+document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1signbb_1_1backend_1_1ConsultaIntegracionTest.html','','classorg_1_1signbb_1_1backend_1_1ConsultaIntegracionTest-members'); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -108,28 +108,29 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">Referencia de la clase org.signbb.backend.autoria.servicios.PoliticaAccesoBorradoresTest</div></div>
+  <div class="headertitle"><div class="title">Referencia de la clase org.signbb.backend.ConsultaIntegracionTest</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Tests de <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PoliticaAccesoBorradores.html">PoliticaAccesoBorradores</a></code>: el autor lee y edita, otro médico no hace nada, el supervisor solo lee, y un borrador sin autor solo lo lee un supervisor.  
+<p>Flujo HTTP completo de la cuidadora (CU01/CU03/CU09) con PostgreSQL y Redis reales: inicia un recorrido, responde por la API, llega a un resultado y lo vuelve a consultar.  
  <a href="#details">Más...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pac-methods" class="groupheader"><a id="pac-methods" name="pac-methods"></a>
 Funciones de paquete</h2></td></tr>
-<tr class="memitem:a1729c6efb8bd408770462b3054f7b1d8" id="r_a1729c6efb8bd408770462b3054f7b1d8"><td class="memItemLeft"><a id="a1729c6efb8bd408770462b3054f7b1d8" name="a1729c6efb8bd408770462b3054f7b1d8"></a>
-void&#160;</td><td class="memItemRight"><b>elAutorLeeYEdita</b> ()</td></tr>
-<tr class="memitem:a30b0ee72ed0a3583649050af94050ac4" id="r_a30b0ee72ed0a3583649050af94050ac4"><td class="memItemLeft"><a id="a30b0ee72ed0a3583649050af94050ac4" name="a30b0ee72ed0a3583649050af94050ac4"></a>
-void&#160;</td><td class="memItemRight"><b>otroMedicoNiLeeNiEdita</b> ()</td></tr>
-<tr class="memitem:aea631413d3cc2d7dd3cbc1c1ffa3630c" id="r_aea631413d3cc2d7dd3cbc1c1ffa3630c"><td class="memItemLeft"><a id="aea631413d3cc2d7dd3cbc1c1ffa3630c" name="aea631413d3cc2d7dd3cbc1c1ffa3630c"></a>
-void&#160;</td><td class="memItemRight"><b>elSupervisorLeePeroNoEditaLoDeOtro</b> ()</td></tr>
-<tr class="memitem:a12c4a73893c1fc77561b9712550b1f7a" id="r_a12c4a73893c1fc77561b9712550b1f7a"><td class="memItemLeft"><a id="a12c4a73893c1fc77561b9712550b1f7a" name="a12c4a73893c1fc77561b9712550b1f7a"></a>
-void&#160;</td><td class="memItemRight"><b>unBorradorSinAutorSoloLoLeeUnSupervisor</b> ()</td></tr>
+<tr class="memitem:abd965a6ab1b7c3be09d4afa188c3b629" id="r_abd965a6ab1b7c3be09d4afa188c3b629"><td class="memItemLeft"><a id="abd965a6ab1b7c3be09d4afa188c3b629" name="abd965a6ab1b7c3be09d4afa188c3b629"></a>
+void&#160;</td><td class="memItemRight"><b>preparar</b> ()  throws Exception </td></tr>
+<tr class="memitem:ac00f656f10901225797058771ad25904" id="r_ac00f656f10901225797058771ad25904"><td class="memItemLeft"><a id="ac00f656f10901225797058771ad25904" name="ac00f656f10901225797058771ad25904"></a>
+void&#160;</td><td class="memItemRight"><b>limpiar</b> ()</td></tr>
+<tr class="memitem:a8704c00f1c8c23a01654858749b6d712" id="r_a8704c00f1c8c23a01654858749b6d712"><td class="memItemLeft"><a id="a8704c00f1c8c23a01654858749b6d712" name="a8704c00f1c8c23a01654858749b6d712"></a>
+void&#160;</td><td class="memItemRight"><b>elRecorridoNormalLlegaANormalYSePuedeConsultarDespues</b> ()  throws Exception </td></tr>
+<tr class="memitem:a76e8f8c217825a196f6eaf80217b9af1" id="r_a76e8f8c217825a196f6eaf80217b9af1"><td class="memItemLeft"><a id="a76e8f8c217825a196f6eaf80217b9af1" name="a76e8f8c217825a196f6eaf80217b9af1"></a>
+void&#160;</td><td class="memItemRight"><b>unSignoDeAlarmaLlegaAUrgenciaPorLaApi</b> ()  throws Exception </td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
-<div class="textblock"><p>Tests de <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PoliticaAccesoBorradores.html">PoliticaAccesoBorradores</a></code>: el autor lee y edita, otro médico no hace nada, el supervisor solo lee, y un borrador sin autor solo lo lee un supervisor. </p>
+<div class="textblock"><p>Flujo HTTP completo de la cuidadora (CU01/CU03/CU09) con PostgreSQL y Redis reales: inicia un recorrido, responde por la API, llega a un resultado y lo vuelve a consultar. </p>
+<p>La fuente de datos es el fixture de navegación de <code class="JavaDocCode">src/test/resources/static/grafo_sistema/</code>, cargado con <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1ContenidoEjemplo.html">ContenidoEjemplo</a></code>. La prueba registra una versión de contenido propia y la borra al terminar; no depende del seed de demo ni de la versión vigente del entorno. </p>
 </div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
-<li>backend/src/test/java/org/signbb/backend/autoria/servicios/<b>PoliticaAccesoBorradoresTest.java</b></li>
+<li>backend/src/test/java/org/signbb/backend/<b>ConsultaIntegracionTest.java</b></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -144,7 +145,7 @@ void&#160;</td><td class="memItemRight"><b>unBorradorSinAutorSoloLoLeeUnSupervis
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="namespaceorg.html">org</a></li><li class="navelem"><a href="namespaceorg_1_1signbb.html">signbb</a></li><li class="navelem"><a href="namespaceorg_1_1signbb_1_1backend.html">backend</a></li><li class="navelem"><a href="namespaceorg_1_1signbb_1_1backend_1_1autoria.html">autoria</a></li><li class="navelem"><a href="namespaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios.html">servicios</a></li><li class="navelem"><a href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PoliticaAccesoBorradoresTest.html">PoliticaAccesoBorradoresTest</a></li>
+    <li class="navelem"><a href="namespaceorg.html">org</a></li><li class="navelem"><a href="namespaceorg_1_1signbb.html">signbb</a></li><li class="navelem"><a href="namespaceorg_1_1signbb_1_1backend.html">backend</a></li><li class="navelem"><a href="classorg_1_1signbb_1_1backend_1_1ConsultaIntegracionTest.html">ConsultaIntegracionTest</a></li>
     <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
   </ul>
 </div>

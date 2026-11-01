@@ -129,26 +129,14 @@ void&#160;</td><td class="memItemRight"><b>rechazaOpcionQueNoEstaEnLaPreguntaAct
 void&#160;</td><td class="memItemRight"><b>noHaceNadaSiElRecorridoYaFinalizo</b> ()</td></tr>
 <tr class="memitem:a16ed95740403755dc3f00339344a417e" id="r_a16ed95740403755dc3f00339344a417e"><td class="memItemLeft"><a id="a16ed95740403755dc3f00339344a417e" name="a16ed95740403755dc3f00339344a417e"></a>
 void&#160;</td><td class="memItemRight"><b>siLaPreguntaEsperadaYaNoEsLaActualNoRegistraNiAvanzaNada</b> ()</td></tr>
-<tr class="memitem:a18e2dbbdc988bf6dabd280060b477724" id="r_a18e2dbbdc988bf6dabd280060b477724"><td class="memItemLeft"><a id="a18e2dbbdc988bf6dabd280060b477724" name="a18e2dbbdc988bf6dabd280060b477724"></a>
-void&#160;</td><td class="memItemRight"><b>siLaPreguntaEsperadaEsLaActualResponde</b> ()</td></tr>
-<tr class="memitem:ac52fd8c5e6bb8f8981450e8189d85aa5" id="r_ac52fd8c5e6bb8f8981450e8189d85aa5"><td class="memItemLeft"><a id="ac52fd8c5e6bb8f8981450e8189d85aa5" name="ac52fd8c5e6bb8f8981450e8189d85aa5"></a>
-void&#160;</td><td class="memItemRight"><b>siElRecorridoYaTerminoNoFallaAunqueLaPreguntaEsperadaSeaOtra</b> ()</td></tr>
 <tr class="memitem:ac93a0ae3234cfc7ee5d735b64b93ffd4" id="r_ac93a0ae3234cfc7ee5d735b64b93ffd4"><td class="memItemLeft"><a id="ac93a0ae3234cfc7ee5d735b64b93ffd4" name="ac93a0ae3234cfc7ee5d735b64b93ffd4"></a>
 void&#160;</td><td class="memItemRight"><b>avanzaGuardaLaObservacionYElRecorridoEnUnaSolaTransaccion</b> ()</td></tr>
 <tr class="memitem:ab192da7a49383b934218d57abb361173" id="r_ab192da7a49383b934218d57abb361173"><td class="memItemLeft"><a id="ab192da7a49383b934218d57abb361173" name="ab192da7a49383b934218d57abb361173"></a>
 void&#160;</td><td class="memItemRight"><b>siFallaLaObservacionRevierteYDevuelveLaSesionAComoEstaba</b> ()</td></tr>
-<tr class="memitem:ac530687fd7e4a54bd3ea79674b90c8ee" id="r_ac530687fd7e4a54bd3ea79674b90c8ee"><td class="memItemLeft"><a id="ac530687fd7e4a54bd3ea79674b90c8ee" name="ac530687fd7e4a54bd3ea79674b90c8ee"></a>
-void&#160;</td><td class="memItemRight"><b>siFallaGuardarElRecorridoRevierteYDevuelveLaSesionAComoEstaba</b> ()</td></tr>
-<tr class="memitem:a9647bea935e60cf0ec15cc2c47d28b70" id="r_a9647bea935e60cf0ec15cc2c47d28b70"><td class="memItemLeft"><a id="a9647bea935e60cf0ec15cc2c47d28b70" name="a9647bea935e60cf0ec15cc2c47d28b70"></a>
-void&#160;</td><td class="memItemRight"><b>siFallaElCierreDeLaTransaccionTambienDevuelveLaSesion</b> ()</td></tr>
-<tr class="memitem:a9e929a22511ebd1d728d0df4de85f5f9" id="r_a9e929a22511ebd1d728d0df4de85f5f9"><td class="memItemLeft"><a id="a9e929a22511ebd1d728d0df4de85f5f9" name="a9e929a22511ebd1d728d0df4de85f5f9"></a>
-void&#160;</td><td class="memItemRight"><b>siNoSePuedeDevolverLaSesionSaleElErrorOriginalConElSegundoAnexado</b> ()</td></tr>
 <tr class="memitem:ae463731b512ff4dfb215c67d75b7c078" id="r_ae463731b512ff4dfb215c67d75b7c078"><td class="memItemLeft"><a id="ae463731b512ff4dfb215c67d75b7c078" name="ae463731b512ff4dfb215c67d75b7c078"></a>
 void&#160;</td><td class="memItemRight"><b>siElCandadoEstaTomadoNoTocaNada</b> ()</td></tr>
 <tr class="memitem:a08a69f6df63a37fe139e380b39bba2af" id="r_a08a69f6df63a37fe139e380b39bba2af"><td class="memItemLeft"><a id="a08a69f6df63a37fe139e380b39bba2af" name="a08a69f6df63a37fe139e380b39bba2af"></a>
 void&#160;</td><td class="memItemRight"><b>retrocederGuardaElRecorridoEnUnaSolaTransaccion</b> ()</td></tr>
-<tr class="memitem:a5c91960bb6d0271c635e051a20d93814" id="r_a5c91960bb6d0271c635e051a20d93814"><td class="memItemLeft"><a id="a5c91960bb6d0271c635e051a20d93814" name="a5c91960bb6d0271c635e051a20d93814"></a>
-void&#160;</td><td class="memItemRight"><b>siFallaAlRetrocederDevuelveLaSesionAComoEstaba</b> ()</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Pruebas de <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioCapturaImpl.html">ServicioCapturaImpl</a></code> con la navegación, los repositorios y el gestor de transacciones simulados: validación de la respuesta, y que guardar sea "todo o nada" (si algo falla, Postgres revierte y la sesión de Redis vuelve a como estaba). </p>

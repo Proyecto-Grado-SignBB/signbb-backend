@@ -117,67 +117,67 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('pruebas_seguri
 </blockquote>
 <p>Pruebas del paquete <span class="tt"><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1seguridad.html" title="Módulo de seguridad: cuentas, roles y sesión con JWT.">org.signbb.backend.seguridad</a></span>: cuentas, roles, login con JWT y la cadena de filtros que decide qué puede hacer cada rol. Los roles son <span class="tt">PADRE</span> (se registra solo y hace recorridos), <span class="tt">MEDICO</span> (arma grafos y reglas) y <span class="tt">MEDICO_SUPERVISOR</span> (además revisa lo de otros médicos y administra cuentas).</p>
 <p>Las unitarias son JUnit 5 y Mockito, sin Spring, base de datos ni Redis. La de integración (<span class="tt">ReglasAccesoIntegracionTest</span>) levanta la aplicación completa con PostgreSQL y Redis, como el CI.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md43"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md38"></a>
 Mapa de la suite</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Paquete  </th><th class="markdownTableHeadNone">Clase  </th><th class="markdownTableHeadRight">Tests  </th><th class="markdownTableHeadNone">Qué cubre  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioCuentasImplTest</span>  </td><td class="markdownTableBodyRight">23  </td><td class="markdownTableBodyNone">registro de padres, login, alta de médicos por el supervisor y activar o desactivar cuentas; una contraseña de más de 72 bytes da 422; el padre guarda, cambia o borra el teléfono de su pediatra y uno mal escrito da 422; un correo inexistente también ejecuta BCrypt  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioCuentasImplTest</span>  </td><td class="markdownTableBodyRight">15  </td><td class="markdownTableBodyNone">registro de padres, login, alta de médicos por el supervisor y activar o desactivar cuentas; el padre guarda, cambia o borra el teléfono de su pediatra y uno mal escrito da 422  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">LimitadorIntentosTest</span>  </td><td class="markdownTableBodyRight">8  </td><td class="markdownTableBodyNone">límite por correo persistido en PostgreSQL: 5 fallos/15 min en ingreso, 3 intentos/1 h en registro, bloqueo vigente y vencido, clave hasheada y correo vacío  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">LimitadorIntentosTest</span>  </td><td class="markdownTableBodyRight">5  </td><td class="markdownTableBodyNone">límite por correo persistido en PostgreSQL: 5 fallos/15 min en ingreso, bloqueo vigente y vencido, clave hasheada  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioTokensTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyNone">el JWT lleva <span class="tt">sub</span>, <span class="tt">rol</span> y <span class="tt">nombre</span>; uno vencido o firmado con otra clave se rechaza; un secreto corto no arranca  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioTokensTest</span>  </td><td class="markdownTableBodyRight">5  </td><td class="markdownTableBodyNone">el JWT lleva <span class="tt">sub</span>, <span class="tt">rol</span> y <span class="tt">nombre</span>; uno vencido o firmado con otra clave se rechaza; un secreto corto no arranca  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ConvertidorJwtUsuarioTest</span>  </td><td class="markdownTableBodyRight">3  </td><td class="markdownTableBodyNone">el token se traduce a <span class="tt">UsuarioActual</span> con su rol y sus datos  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ConvertidorJwtUsuarioTest</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">el token se traduce a <span class="tt">UsuarioActual</span> y una cuenta con sesiones cerradas da 401  </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">(raíz)  </td><td class="markdownTableBodyNone"><span class="tt">InicializadorSeguridadTest</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">el supervisor inicial se siembra una sola vez  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">(raíz)  </td><td class="markdownTableBodyNone"><span class="tt">VerificadorSecretosProduccionTest</span>  </td><td class="markdownTableBodyRight">11  </td><td class="markdownTableBodyNone">en producción no se aceptan los valores de ejemplo, la documentación de la API activa ni el registro de SQL encendido; un entorno mal escrito impide arrancar  </td></tr>
+<td class="markdownTableBodyNone">(raíz)  </td><td class="markdownTableBodyNone"><span class="tt">VerificadorSecretosProduccionTest</span>  </td><td class="markdownTableBodyRight">6  </td><td class="markdownTableBodyNone">en producción no se aceptan los valores de ejemplo, la documentación de la API activa ni el registro de SQL encendido; un entorno mal escrito impide arrancar  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">(raíz)  </td><td class="markdownTableBodyNone"><span class="tt">ReglasAccesoIntegracionTest</span>  </td><td class="markdownTableBodyRight">20  </td><td class="markdownTableBodyNone">la cadena de filtros real: rutas públicas, <span class="tt">/actuator/health</span> abierto y el resto de Actuator sin exponer, 401 sin token, 403 por rol y dueño del recorrido, <span class="tt">GET /api/consulta/disponibilidad</span> solo para padres; solo un padre guarda el teléfono del pediatra; un recorrido reiniciado o sin sesión da 410; el cuarto registro con el mismo correo da 429  </td></tr>
+<td class="markdownTableBodyNone">(raíz)  </td><td class="markdownTableBodyNone"><span class="tt">ReglasAccesoIntegracionTest</span>  </td><td class="markdownTableBodyRight">14  </td><td class="markdownTableBodyNone">la cadena de filtros real: rutas públicas, <span class="tt">/actuator/health</span> abierto y el resto de Actuator sin exponer, 401 sin token, 403 por rol y dueño del recorrido, <span class="tt">GET /api/consulta/disponibilidad</span> solo para padres; solo un padre guarda el teléfono del pediatra; un recorrido reiniciado o sin sesión da 410; el cuarto registro con el mismo correo da 429  </td></tr>
 </table>
-<p>En total son <b>74 pruebas</b> en estas clases. Las reglas de autor y de revisión de la autoría (<span class="tt">GuardiaAutoriaTest</span>, <span class="tt">PoliticaAccesoBorradoresTest</span>, <span class="tt">ServicioRevisionImplTest</span> y <span class="tt">ControladorRevisionTest</span>) están en <a class="el" href="pruebas_autoria.html" title="Pruebas del módulo de autoría">Pruebas del módulo de autoría</a>; la del dueño del recorrido, en <a class="el" href="pruebas_observaciones.html" title="Pruebas del módulo de observaciones">Pruebas del módulo de observaciones</a>.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md44"></a>
+<p>En total son <b>49 pruebas</b> en estas clases. Las reglas de autor y de revisión de la autoría (<span class="tt">GuardiaAutoriaTest</span>, <span class="tt">ServicioRevisionImplTest</span> y <span class="tt">ControladorRevisionTest</span>) están en <a class="el" href="pruebas_autoria.html" title="Pruebas del módulo de autoría">Pruebas del módulo de autoría</a>; la del dueño del recorrido, en <a class="el" href="pruebas_observaciones.html" title="Pruebas del módulo de observaciones">Pruebas del módulo de observaciones</a>.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md39"></a>
 Ayudas de prueba</h1>
 <ul>
 <li><span class="tt">UsuariosPrueba</span>: usuarios fijos (<span class="tt">MEDICO_A</span>, <span class="tt">MEDICO_B</span>, <span class="tt">SUPERVISOR</span>) y un resolvedor de <span class="tt">UsuarioActual</span> para los <span class="tt">standaloneSetup</span> de MockMvc, sin Spring Security.</li>
 <li><span class="tt">ApiPrueba</span>: MockMvc con la cadena de seguridad real; ingresa, registra padres, crea cuentas clínicas con el supervisor sembrado y borra al final las cuentas que creó.</li>
 <li><span class="tt">ReglasAccesoIntegracionTest</span> inserta el subgrafo de respiración del fixture si no hay contenido navegable y lo elimina al terminar: la siembra ya no carga subgrafos.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md45"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md40"></a>
 Qué se prueba y por qué importa</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md46"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md41"></a>
 Cuentas (<span class="tt">ServicioCuentasImplTest</span>)</h2>
 <ul>
 <li><b>Registro de padres.</b> El correo se guarda en minúsculas y sin espacios y solo se guarda el hash BCrypt. Un correo repetido, un correo mal escrito o una contraseña de menos de 8 caracteres dan <b>422</b>.</li>
-<li><b>Login.</b> Con los datos correctos devuelve el token. Si la contraseña está mal, el correo no existe o la cuenta está inactiva, responde <b>401 con el mismo mensaje</b>, para no revelar cuál de las tres falló. Un correo inexistente también ejecuta BCrypt con un hash ficticio para igualar el tiempo de respuesta.</li>
-<li><b>Límite de intentos.</b> Los contadores viven en PostgreSQL, no en Redis. El ingreso se bloquea tras 5 fallos seguidos durante 15 minutos; el registro, tras 3 intentos en 1 hora por correo. Un ingreso correcto borra el contador de ingreso. El alcance actual no limita por IP.</li>
+<li><b>Login.</b> Con los datos correctos devuelve el token. Si la contraseña está mal, el correo no existe o la cuenta está inactiva, responde <b>401 con el mismo mensaje</b>, para no revelar cuál de las tres falló.</li>
+<li><b>Límite de intentos.</b> Los contadores viven en PostgreSQL, no en Redis. El ingreso se bloquea tras 5 fallos seguidos durante 15 minutos. Un ingreso correcto borra el contador de ingreso.</li>
 <li><b>Cuentas clínicas.</b> El supervisor crea médicos con su institución. Crear un <span class="tt">PADRE</span> (o sin rol) por esa vía da 422: los padres solo se registran solos. Un supervisor no puede desactivarse a sí mismo.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md47"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md42"></a>
 Tokens (<span class="tt">ServicioTokensTest</span>)</h2>
 <p>El token se firma con HS256 y el resource server lo valida: se rechaza si venció o si se firmó con otra clave. Un secreto de menos de 32 bytes impide arrancar, para que nadie despliegue con una clave débil por descuido.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md48"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md43"></a>
 Supervisor inicial (<span class="tt">InicializadorSeguridadTest</span>)</h2>
 <p>Si no hay ningún <span class="tt">MEDICO_SUPERVISOR</span>, se crea uno con la contraseña cifrada. Si ya hay alguno, no hace nada, así que reiniciar el back no duplica cuentas.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md49"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md44"></a>
 Secretos de producción (<span class="tt">VerificadorSecretosProduccionTest</span>)</h2>
-<p>Con <span class="tt">SIGNBB_ENTORNO=produccion</span>, la app no arranca si el secreto JWT, la contraseña del supervisor inicial o las claves de Silo valen lo mismo que en desarrollo, o si Swagger y <span class="tt">/v3/api-docs</span> siguen activos (<span class="tt">SIGNBB_DOCS_ACTIVAS</span> distinto de <span class="tt">false</span>), o si el registro de SQL está encendido (<span class="tt">SIGNBB_SHOW_SQL=true</span>), y el mensaje nombra las variables sin mostrar los valores. En desarrollo se aceptan. Un entorno mal escrito también impide arrancar, y una prueba comprueba que los valores de ejemplo del código sigan iguales a los de <span class="tt">application.properties</span> y <span class="tt">application-docker.properties</span>, y otra que la variable de la documentación esté conectada a springdoc y otra que el registro de SQL esté apagado por defecto.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md50"></a>
+<p>Con <span class="tt">SIGNBB_ENTORNO=produccion</span>, la app no arranca si el secreto JWT, la contraseña del supervisor inicial o las claves de Silo valen lo mismo que en desarrollo, o si Swagger y <span class="tt">/v3/api-docs</span> siguen activos (<span class="tt">SIGNBB_DOCS_ACTIVAS</span> distinto de <span class="tt">false</span>), o si el registro de SQL está encendido (<span class="tt">SIGNBB_SHOW_SQL=true</span>), y el mensaje nombra las variables sin mostrar los valores. Un entorno mal escrito también impide arrancar.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md45"></a>
 Reglas de acceso (<span class="tt">ReglasAccesoIntegracionTest</span>)</h2>
 <p>Con la aplicación completa:</p>
 <ul>
 <li>sin token, la autoría, los recorridos, los usuarios y <span class="tt">/auth/yo</span> dan <b>401</b> con el mismo JSON <span class="tt">{mensaje, avisos}</span> que ya entiende el front;</li>
-<li>Swagger, <span class="tt">/media</span>, el login y el registro no piden token, y el <em>preflight</em> <span class="tt">OPTIONS</span> del front responde 200;</li>
-<li><span class="tt">GET /actuator/health</span> responde 200 con <span class="tt">{"status":"UP"}</span> sin token y sin detalles; <span class="tt">/actuator/env</span> y <span class="tt">/actuator/beans</span> no responden 200 ni con el token del supervisor;</li>
+<li>Swagger, <span class="tt">/media</span>, el login y el registro no piden token;</li>
+<li>cerrar todas las sesiones invalida los tokens anteriores; cinco fallos bloquean el ingreso y un ingreso correcto reinicia el contador;</li>
 <li>un <span class="tt">PADRE</span> recibe <b>403</b> en la autoría y en los usuarios;</li>
 <li>un <span class="tt">MEDICO</span> recibe 403 en los recorridos, los usuarios, las revisiones, aprobar, rechazar y despublicar;</li>
 <li>un recorrido solo lo ve quien lo inició: otro padre recibe <b>404</b> al consultarlo, responderlo o retrocederlo, y no lo ve en "Mis recorridos";</li>
 <li>no se puede crear un <span class="tt">PADRE</span> por la API clínica;</li>
 <li>un token alterado da 401, y el token de una cuenta desactivada deja de servir.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md51"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md46"></a>
 Cómo ejecutarlas</h1>
 <pre class="fragment">./mvnw test -Dtest='org.signbb.backend.seguridad.**'
 </pre><p><span class="tt">ReglasAccesoIntegracionTest</span> requiere PostgreSQL y Redis arriba (<span class="tt">contenedores/compose.yaml</span>); las demás no.</p>

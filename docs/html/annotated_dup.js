@@ -52,7 +52,6 @@ var annotated_dup =
               [ "GuardiaAutoriaTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1GuardiaAutoriaTest.html", null ],
               [ "LienzoFiebre", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1LienzoFiebre.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1LienzoFiebre" ],
               [ "PoliticaAccesoBorradores", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PoliticaAccesoBorradores.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PoliticaAccesoBorradores" ],
-              [ "PoliticaAccesoBorradoresTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PoliticaAccesoBorradoresTest.html", null ],
               [ "PublicacionContenido", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicacionContenido.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicacionContenido" ],
               [ "PublicadorRegla", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorRegla.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorRegla" ],
               [ "PublicadorReglaTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorReglaTest.html", null ],
@@ -295,6 +294,7 @@ var annotated_dup =
           [ "BackendApplication", "classorg_1_1signbb_1_1backend_1_1BackendApplication.html", null ],
           [ "BackendApplicationTests", "classorg_1_1signbb_1_1backend_1_1BackendApplicationTests.html", null ],
           [ "CacheRedisIntegracionTest", "classorg_1_1signbb_1_1backend_1_1CacheRedisIntegracionTest.html", null ],
+          [ "ConsultaIntegracionTest", "classorg_1_1signbb_1_1backend_1_1ConsultaIntegracionTest.html", null ],
           [ "DatabaseInit", "classorg_1_1signbb_1_1backend_1_1DatabaseInit.html", "classorg_1_1signbb_1_1backend_1_1DatabaseInit" ],
           [ "DemoTriajeRunner", "classorg_1_1signbb_1_1backend_1_1DemoTriajeRunner.html", "classorg_1_1signbb_1_1backend_1_1DemoTriajeRunner" ],
           [ "PersistenciaEstructuraJsonTest", "classorg_1_1signbb_1_1backend_1_1PersistenciaEstructuraJsonTest.html", null ]
