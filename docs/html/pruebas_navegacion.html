@@ -161,8 +161,8 @@ Mapa de la suite</h1>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
 Fixtures</h1>
 <ul>
-<li><b>Contenido del sistema.</b> Es el que usan <span class="tt">MotorNavegacionTest</span>, <span class="tt">MotorNavegacionRetrocederTest</span> y <span class="tt">ServicioNavegacionImplTest</span>: <span class="tt">ContenidoEjemplo.compuesto()</span>, que une el grafo raíz con los subgrafos de respiración, gastrointestinal y actividad/color y sus reglas. Es un fixture del classpath de pruebas (<span class="tt">src/test/resources/static/grafo_sistema/</span>); <span class="tt">DatabaseInit</span> ya no siembra subgrafos. El camino que más se prueba es <span class="tt">pregunta_inicial → puente_respiracion → q_resp_urgencia →
-  q_resp_consulta → q_resp_normal</span>.</li>
+<li><b>Contenido del sistema.</b> Es el que usan <span class="tt">MotorNavegacionTest</span>, <span class="tt">MotorNavegacionRetrocederTest</span> y <span class="tt">ServicioNavegacionImplTest</span>: <span class="tt">ContenidoEjemplo.compuesto()</span>, que une la raíz real del sistema (<span class="tt">src/main/resources/static/grafo_sistema/grafo_raiz.json</span>) con los cuatro subgrafos y reglas del seed de demo (<span class="tt">src/main/resources/seed/demo/</span>). <span class="tt">DatabaseInit</span> siembra la raíz; los subgrafos se publican con el seed de demo. El camino que más se prueba es <span class="tt">pregunta_inicial → Actividad y color → Revisar actividad y color →
+  q_neuro_gate</span>.</li>
 <li><b>Grafos mínimos armados en código.</b> Los usan <span class="tt">MotorNavegacionLimiteTest</span> (una cadena de 12 preguntas), <span class="tt">MotorNavegacionColaTest</span> y <span class="tt">OrdenColaTest</span>.</li>
 </ul>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
@@ -227,7 +227,7 @@ Cómo ejecutarlas</h1>
 </pre><h1 class="doxsection"><a class="anchor" id="autotoc_md23"></a>
 Resultados</h1>
 <p>Corrida histórica del workflow <span class="tt">build</span> sobre el commit <span class="tt">518f775</span>: <a href="https://github.com/Proyecto-Grado-SignBB/signbb-backend/actions/runs/37948316527">run 37948316527</a>. <b>BUILD SUCCESS.</b></p>
-<p>Tras el recorte del 31-oct-2026, el módulo tiene <b>89 pruebas</b> y la suite completa del backend <b>364</b> (2 omitidas por <span class="tt">AutoriaIntegracionTest</span>). </p>
+<p>Tras el recorte del 31-oct-2026, el módulo tiene <b>89 pruebas</b> y la suite completa del backend <b>364</b>. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

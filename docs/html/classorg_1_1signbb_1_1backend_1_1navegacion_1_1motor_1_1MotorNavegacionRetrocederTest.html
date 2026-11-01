@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 </div><!--header-->
 <div class="contents">
 
-<p>Tests de <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html#a6a2ff82d97b0ed4a1c40dd6510254f01">MotorNavegacion#retroceder</a></code> sobre el contenido compuesto (grafo raíz + subgrafos del sistema), recorriendo el de respiración.  
+<p>Tests de <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html#a6a2ff82d97b0ed4a1c40dd6510254f01">MotorNavegacion#retroceder</a></code> sobre el contenido real del seed, recorriendo actividad y color.  
  <a href="#details">Más...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pac-methods" class="groupheader"><a id="pac-methods" name="pac-methods"></a>
@@ -129,8 +129,8 @@ void&#160;</td><td class="memItemRight"><b>dosVecesSeguidasVuelveDosPreguntas</b
 void&#160;</td><td class="memItemRight"><b>sinRespuestasSeRechaza</b> ()</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
-<div class="textblock"><p>Tests de <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html#a6a2ff82d97b0ed4a1c40dd6510254f01">MotorNavegacion#retroceder</a></code> sobre el contenido compuesto (grafo raíz + subgrafos del sistema), recorriendo el de respiración. </p>
-<p>Cada respuesta apila un <code><a class="el" href="">PasoRecorrido</a></code> con las reglas que marcó; retroceder lo desapila, borra esa respuesta, desmarca solo esas reglas y vuelve a la pregunta sin reevaluar nada. Sin pila no se puede retroceder. Los casos con la cola de la selección múltiple están en <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1motor_1_1MotorNavegacionColaTest.html">MotorNavegacionColaTest</a></code>. </p>
+<div class="textblock"><p>Tests de <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1servicios_1_1MotorNavegacion.html#a6a2ff82d97b0ed4a1c40dd6510254f01">MotorNavegacion#retroceder</a></code> sobre el contenido real del seed, recorriendo actividad y color. </p>
+<p>Cada respuesta apila un paso con las reglas que marcó; retroceder lo desapila, borra esa respuesta, desmarca solo esas reglas y vuelve a la pregunta anterior. </p>
 </div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/test/java/org/signbb/backend/navegacion/motor/<b>MotorNavegacionRetrocederTest.java</b></li>
 </ul>

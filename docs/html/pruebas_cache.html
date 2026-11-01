@@ -135,7 +135,7 @@ ResolvedorContenidoClinicoTest — resolución cache-aside del contenido</h1>
 </ul>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md58"></a>
 RepositorioSesionRedisTest — sesiones en Redis</h1>
-<p>Con un template simulado respaldado por un mapa en memoria y el contenido de prueba (grafo y reglas de <span class="tt">src/test/resources/static/grafo_sistema/</span>):</p>
+<p>Con un template simulado respaldado por un mapa en memoria y el contenido de prueba (raíz del sistema y subgrafos/reglas del seed de demo, vía <span class="tt">ContenidoEjemplo</span>):</p>
 <ul>
 <li><b>Round-trip EN_CURSO</b>: crear y buscar restaura respuestas acumuladas y la pregunta pendiente (reconstruida por id contra el grafo vigente).</li>
 <li><b>Round-trip FINALIZADO</b>: guardar y buscar restaura nivel, destino, razones (por id de regla), camino causal y puntaje.</li>

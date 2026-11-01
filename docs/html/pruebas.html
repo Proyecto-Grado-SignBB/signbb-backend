@@ -121,7 +121,6 @@ Cómo ejecutarlas</h1>
 ./mvnw -Dtest=Clase#metodo test
 </pre><p>Las pruebas unitarias son <b>JUnit 5 puro</b> y, cuando hace falta simular colaboradores, <b>Mockito</b> (5.x, con el <em>inline mock maker</em>, de modo que también se pueden simular clases <span class="tt">final</span>). No necesitan Spring, PostgreSQL ni Redis.</p>
 <p>Las pruebas de integración usan <span class="tt">@SpringBootTest</span> o <b>servicios reales</b> (PostgreSQL y Redis de <span class="tt">contenedores/compose.yaml</span>); el CI los levanta como servicios efímeros (<span class="tt">signbb-backend/.github/workflows/build.yml</span>).</p>
-<p><span class="tt">AutoriaIntegracionTest</span> está <b>temporalmente deshabilitada</b> con <span class="tt">@Disabled</span> mientras se revisa la suite unitaria por separado; sigue formando parte de la documentación y se puede volver a activar quitando la anotación.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md48"></a>
 Tipos de prueba</h1>
 <ul>
@@ -138,7 +137,7 @@ Trazabilidad con los casos de uso</h1>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">CU  </th><th class="markdownTableHeadNone">Pruebas principales  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">CU01 Consultar signos de alarma  </td><td class="markdownTableBodyNone"><span class="tt">MotorNavegacionTest</span>, <span class="tt">ServicioNavegacionImplTest</span>, <span class="tt">ConsultaIntegracionTest</span>, <span class="tt">AutoriaIntegracionTest</span> (integración, deshabilitada)  </td></tr>
+<td class="markdownTableBodyNone">CU01 Consultar signos de alarma  </td><td class="markdownTableBodyNone"><span class="tt">MotorNavegacionTest</span>, <span class="tt">ServicioNavegacionImplTest</span>, <span class="tt">ConsultaIntegracionTest</span>, <span class="tt">AutoriaIntegracionTest</span> (integración)  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">CU02 Crear grafo clínico  </td><td class="markdownTableBodyNone"><span class="tt">EditorLienzoTest</span>, <span class="tt">ValidadorLienzoTest</span>, <span class="tt">CompiladorSubgrafoTest</span>, <span class="tt">ServicioAutoriaImplTest</span>  </td></tr>
 <tr class="markdownTableRowOdd">
@@ -201,7 +200,7 @@ Pruebas de integración</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">PersistenciaEstructuraJsonTest</span>  </td><td class="markdownTableBodyRight">3  </td><td class="markdownTableBodyNone">PostgreSQL + Redis; <span class="tt">@SpringBootTest</span>  </td><td class="markdownTableBodyNone">Activa  </td><td class="markdownTableBodyNone">—  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">AutoriaIntegracionTest</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">PostgreSQL + Redis; <span class="tt">@SpringBootTest</span>  </td><td class="markdownTableBodyNone">**Omitida (<span class="tt">@Disabled</span>)**  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_autoria.html" title="Pruebas del módulo de autoría">Ver página</a>  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">AutoriaIntegracionTest</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">PostgreSQL + Redis; <span class="tt">@SpringBootTest</span>  </td><td class="markdownTableBodyNone">Activa  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_autoria.html" title="Pruebas del módulo de autoría">Ver página</a>  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">CacheRedisIntegracionTest</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">PostgreSQL + Redis real; <span class="tt">@SpringBootTest</span>  </td><td class="markdownTableBodyNone">Activa; se salta si no hay cache  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_cache.html" title="Pruebas del cache">Ver página</a>  </td></tr>
 <tr class="markdownTableRowOdd">
@@ -211,7 +210,7 @@ Pruebas de integración</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">ConsultaIntegracionTest</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">PostgreSQL + Redis; <span class="tt">@SpringBootTest</span>  </td><td class="markdownTableBodyNone">Activa  </td><td class="markdownTableBodyNone"><a class="el" href="pruebas_navegacion.html" title="Pruebas del módulo de navegación">Ver página</a>  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>Total integración</b>  </td><td class="markdownTableBodyRight"><b>27</b>  </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><b>25 activas + 2 omitidas</b>  </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"><b>Total integración</b>  </td><td class="markdownTableBodyRight"><b>27</b>  </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><b>27 activas</b>  </td><td class="markdownTableBodyNone"></td></tr>
 </table>
 <p><span class="tt">BackendApplicationTests</span> comprueba que el contexto carga y que las migraciones de Flyway dejan el esquema que esperan las entidades. <span class="tt">PersistenciaEstructuraJsonTest</span> hace ida y vuelta de los documentos JSON por la columna <span class="tt">estructura</span> (<span class="tt">jsonb</span>) y verifica que <span class="tt">DatabaseInit</span> sembró el grafo raíz. <span class="tt">AutoriaIntegracionTest</span> arma un subgrafo con el servicio, lo publica y lo recorre como la cuidadora. <span class="tt">ConsultaIntegracionTest</span> recorre el flujo HTTP completo de CU01/CU03/CU09 sobre una versión del fixture de navegación.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md53"></a>
@@ -222,18 +221,18 @@ Totales</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Unitarias  </td><td class="markdownTableBodyRight">337  </td><td class="markdownTableBodyRight">337  </td><td class="markdownTableBodyRight">0  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Integración  </td><td class="markdownTableBodyRight">27  </td><td class="markdownTableBodyRight">25  </td><td class="markdownTableBodyRight">2  </td></tr>
+<td class="markdownTableBodyNone">Integración  </td><td class="markdownTableBodyRight">27  </td><td class="markdownTableBodyRight">27  </td><td class="markdownTableBodyRight">0  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>Total</b>  </td><td class="markdownTableBodyRight"><b>364</b>  </td><td class="markdownTableBodyRight"><b>362</b>  </td><td class="markdownTableBodyRight"><b>2</b>  </td></tr>
+<td class="markdownTableBodyNone"><b>Total</b>  </td><td class="markdownTableBodyRight"><b>364</b>  </td><td class="markdownTableBodyRight"><b>364</b>  </td><td class="markdownTableBodyRight"><b>0</b>  </td></tr>
 </table>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md54"></a>
 Resultados</h1>
-<p>La ejecución local del 31-oct-2026 sobre <span class="tt">develop</span> corre <b>364 pruebas: 362 pasan y 2 se omiten</b> (<span class="tt">AutoriaIntegracionTest</span>, deshabilitada). El CI ejecuta <span class="tt">./mvnw -B verify</span> con PostgreSQL y Redis como servicios.</p>
+<p>La ejecución local del 31-oct-2026 sobre <span class="tt">develop</span> corre <b>364 pruebas, todas pasan</b>. El CI ejecuta <span class="tt">./mvnw -B verify</span> con PostgreSQL y Redis como servicios.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md55"></a>
 Cobertura</h1>
 <p>El backend usa <b>JaCoCo</b>. El informe se genera en cada <span class="tt">test</span>: </p><pre class="fragment">./mvnw test
 # abrir target/site/jacoco/index.html
-</pre><p>En la corrida del 31-oct-2026 el informe marca <b>75,2 % de líneas</b> y <b>74,6 % de instrucciones</b>. Incluye desglose por paquete y por clase.</p>
+</pre><p>En la corrida del 31-oct-2026 el informe marca <b>75,5 % de líneas</b> y <b>75,0 % de instrucciones</b>. Incluye desglose por paquete y por clase.</p>
 <p>Para el frontend, Angular genera la cobertura con el flag <span class="tt">--code-coverage</span>: </p><pre class="fragment">npx ng test --watch=false --code-coverage
 # abrir coverage/ui-consulta/index.html, coverage/ui-autoria/index.html
 # o coverage/ui-compartida/index.html
