@@ -138,7 +138,7 @@ RepositorioSesionRedisTest — sesiones en Redis</h1>
 <p>Con un template simulado respaldado por un mapa en memoria y el contenido de prueba (raíz del sistema y subgrafos/reglas del seed de demo, vía <span class="tt">ContenidoEjemplo</span>):</p>
 <ul>
 <li><b>Round-trip EN_CURSO</b>: crear y buscar restaura respuestas acumuladas y la pregunta pendiente (reconstruida por id contra el grafo vigente).</li>
-<li><b>Round-trip FINALIZADO</b>: guardar y buscar restaura nivel, destino, razones (por id de regla), camino causal y puntaje.</li>
+<li><b>Round-trip FINALIZADO</b>: guardar y buscar restaura nivel, destino, razones (por id de regla) y camino causal.</li>
 <li><b>Sesión inexistente</b>: 404 (<span class="tt">RecursoNoEncontradoException</span>).</li>
 <li><b>Redis caído al buscar o guardar</b>: <span class="tt">CacheNoDisponibleException</span> (el <span class="tt">ControllerAdvice</span> la responde como 503; nunca degrada a memoria para evitar sesiones que aparecen y desaparecen).</li>
 <li><b><span class="tt">existe</span> y <span class="tt">eliminar</span></b>: <span class="tt">existe</span> dice si la clave sigue en Redis (una sesión vencida a las 8 h ya no está) y <span class="tt">eliminar</span> borra la del recorrido reiniciado.</li>

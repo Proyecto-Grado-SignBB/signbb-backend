@@ -117,19 +117,14 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Métodos públicos</h2></td></tr>
-<tr class="memitem:ad89abc8c8597a9492b02814dfa269cb1" id="r_ad89abc8c8597a9492b02814dfa269cb1"><td class="memItemLeft"><a id="ad89abc8c8597a9492b02814dfa269cb1" name="ad89abc8c8597a9492b02814dfa269cb1"></a>
-&#160;</td><td class="memItemRight"><b>EstadoPaciente</b> (String idSesion)</td></tr>
-<tr class="memdesc:ad89abc8c8597a9492b02814dfa269cb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea la sesión de triaje vacía. <br /></td></tr>
-<tr class="memitem:a57d254543b6c75e786f94457007cb5dc" id="r_a57d254543b6c75e786f94457007cb5dc"><td class="memItemLeft"><a id="a57d254543b6c75e786f94457007cb5dc" name="a57d254543b6c75e786f94457007cb5dc"></a>
-String&#160;</td><td class="memItemRight"><b>getIdSesion</b> ()</td></tr>
-<tr class="memdesc:a57d254543b6c75e786f94457007cb5dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identificador de la sesión. <br /></td></tr>
+<tr class="memitem:a1d7673c0d1747381e33e7599db55e487" id="r_a1d7673c0d1747381e33e7599db55e487"><td class="memItemLeft"><a id="a1d7673c0d1747381e33e7599db55e487" name="a1d7673c0d1747381e33e7599db55e487"></a>
+&#160;</td><td class="memItemRight"><b>EstadoPaciente</b> ()</td></tr>
+<tr class="memdesc:a1d7673c0d1747381e33e7599db55e487"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea la sesión de triaje vacía. <br /></td></tr>
 <tr class="memitem:aa6ed3f9eeae098b862e80145ffcc5722" id="r_aa6ed3f9eeae098b862e80145ffcc5722"><td class="memItemLeft"><a id="aa6ed3f9eeae098b862e80145ffcc5722" name="aa6ed3f9eeae098b862e80145ffcc5722"></a>
 void&#160;</td><td class="memItemRight"><b>registrarRespuesta</b> (String idNodo, String respuesta)</td></tr>
 <tr class="memdesc:aa6ed3f9eeae098b862e80145ffcc5722"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registra una respuesta única para el nodo dado, sobrescribiendo lo que hubiera (contrato histórico de respuesta única). <br /></td></tr>
 <tr class="memitem:a15396011e57b9eb822b4519a417d2983" id="r_a15396011e57b9eb822b4519a417d2983"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a15396011e57b9eb822b4519a417d2983">registrarRespuestas</a> (String idNodo, List&lt; String &gt; respuestasMarcadas)</td></tr>
 <tr class="memdesc:a15396011e57b9eb822b4519a417d2983"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registra todas las opciones marcadas por el cuidador para el nodo dado (selección múltiple).  <br /></td></tr>
-<tr class="memitem:a97f41cd544308a79e4d51e8fef9077fa" id="r_a97f41cd544308a79e4d51e8fef9077fa"><td class="memItemLeft">Optional&lt; String &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a97f41cd544308a79e4d51e8fef9077fa">getRespuesta</a> (String idNodo)</td></tr>
-<tr class="memdesc:a97f41cd544308a79e4d51e8fef9077fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primera respuesta registrada para <code class="JavaDocCode">idNodo</code>, si existe.  <br /></td></tr>
 <tr class="memitem:a27335a5b97fc21155783f7a729231f71" id="r_a27335a5b97fc21155783f7a729231f71"><td class="memItemLeft"><a id="a27335a5b97fc21155783f7a729231f71" name="a27335a5b97fc21155783f7a729231f71"></a>
 List&lt; String &gt;&#160;</td><td class="memItemRight"><b>getRespuestas</b> (String idNodo)</td></tr>
 <tr class="memdesc:a27335a5b97fc21155783f7a729231f71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copia de todas las respuestas registradas para <code class="JavaDocCode">idNodo</code>. <br /></td></tr>
@@ -186,23 +181,12 @@ boolean&#160;</td><td class="memItemRight"><b>reglaDisparada</b> (String idRegla
 <tr class="memitem:a60d0e8204b999e4e78061da4bd366d34" id="r_a60d0e8204b999e4e78061da4bd366d34"><td class="memItemLeft"><a id="a60d0e8204b999e4e78061da4bd366d34" name="a60d0e8204b999e4e78061da4bd366d34"></a>
 Set&lt; String &gt;&#160;</td><td class="memItemRight"><b>reglasDisparadas</b> ()</td></tr>
 <tr class="memdesc:a60d0e8204b999e4e78061da4bd366d34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copia de las reglas ya disparadas, en orden de inserción. <br /></td></tr>
-<tr class="memitem:a3add1935843d981ff05b90ac1cfb9962" id="r_a3add1935843d981ff05b90ac1cfb9962"><td class="memItemLeft"><a id="a3add1935843d981ff05b90ac1cfb9962" name="a3add1935843d981ff05b90ac1cfb9962"></a>
-void&#160;</td><td class="memItemRight"><b>sumarPuntaje</b> (int delta)</td></tr>
-<tr class="memdesc:a3add1935843d981ff05b90ac1cfb9962"><td class="mdescLeft">&#160;</td><td class="mdescRight">Suma puntos al puntaje de la sesión. <br /></td></tr>
-<tr class="memitem:a1d2f57bfa6a76787ba621bb8a3e3b3cd" id="r_a1d2f57bfa6a76787ba621bb8a3e3b3cd"><td class="memItemLeft"><a id="a1d2f57bfa6a76787ba621bb8a3e3b3cd" name="a1d2f57bfa6a76787ba621bb8a3e3b3cd"></a>
-int&#160;</td><td class="memItemRight"><b>getPuntaje</b> ()</td></tr>
-<tr class="memdesc:a1d2f57bfa6a76787ba621bb8a3e3b3cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Puntaje acumulado de la sesión. <br /></td></tr>
 <tr class="memitem:a64696f31f73d34102f5d965db0ede57d" id="r_a64696f31f73d34102f5d965db0ede57d"><td class="memItemLeft">List&lt; <a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#a6d07b4c9c8333aa7b1c485f9f2ec8af8">Sintoma</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a64696f31f73d34102f5d965db0ede57d">sintomas</a> ()</td></tr>
 <tr class="memdesc:a64696f31f73d34102f5d965db0ede57d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copia de los síntomas registrados (no expone la estructura interna).  <br /></td></tr>
-<tr class="memitem:a9059c481166e855a25805260afec2b3c" id="r_a9059c481166e855a25805260afec2b3c"><td class="memItemLeft"><a id="a9059c481166e855a25805260afec2b3c" name="a9059c481166e855a25805260afec2b3c"></a>
-int&#160;</td><td class="memItemRight"><b>size</b> ()</td></tr>
-<tr class="memdesc:a9059c481166e855a25805260afec2b3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Número de nodos con al menos una respuesta registrada. <br /></td></tr>
-<tr class="memitem:ac04888eef47e9a7ccc6a8012591f05a0" id="r_ac04888eef47e9a7ccc6a8012591f05a0"><td class="memItemLeft"><a id="ac04888eef47e9a7ccc6a8012591f05a0" name="ac04888eef47e9a7ccc6a8012591f05a0"></a>
-String&#160;</td><td class="memItemRight"><b>toString</b> ()</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>TAD <a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html" title="TAD EstadoPaciente (Sección 4.2 del documento de diseño).">EstadoPaciente</a> (Sección 4.2 del documento de diseño). </p>
-<p>Representa una sesión de triaje en curso: las respuestas del padre a las preguntas del grafo y el puntaje acumulado. No contiene lógica de inferencia — solo almacena y consulta.</p>
+<p>Representa una sesión de triaje en curso: las respuestas del padre a las preguntas del grafo. No contiene lógica de inferencia — solo almacena y consulta.</p>
 <p>Se usa <code class="JavaDocCode">LinkedHashMap</code> para conservar el orden de inserción de las respuestas (mismo comportamiento determinista que el dict de Python).</p>
 <p>MODIFICADO (multi-respuesta): una pregunta de selección múltiple puede registrar varias respuestas para el mismo nodo. <code><a class="el" href="#aa6ed3f9eeae098b862e80145ffcc5722">registrarRespuesta</a></code> mantiene el contrato histórico (sobrescribe con una sola), mientras que <code><a class="el" href="#a15396011e57b9eb822b4519a417d2983">registrarRespuestas</a></code> guarda todas las opciones marcadas; las reglas las consultan con <code><a class="el" href="#a27335a5b97fc21155783f7a729231f71">getRespuestas</a></code>. También se recuerdan las reglas ya disparadas (<code><a class="el" href="#a8b06d81c3f04f4079fea3b7bd44e6e7e">marcarReglaDisparada</a></code>) para que el encadenamiento hacia adelante no vuelva a activarlas cuando una regla redirige el recorrido.</p>
 <p>MODIFICADO (retroceder): cada respuesta del recorrido se anota en una pila de <code><a class="el" href="namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html#a7da30e7dd7e57c08db6f24b16e46290c">PasoRecorrido</a></code> con las reglas que marcó. <code><a class="el" href="#abe0217d4542dabcb0cdfddc041f6afdc">desapilarPaso</a></code> deshace el último paso entero (su respuesta y sus reglas) sin reevaluar nada; quién apila y cuándo lo decide el motor de navegación.</p>
@@ -281,26 +265,6 @@ String&#160;</td><td class="memItemRight"><b>toString</b> ()</td></tr>
 <p>Anota una opción marcada por el cuidador que el recorrido todavía no sigue. </p>
 <p>Recibe el número de orden de llegada, que desempata a igual gravedad.</p>
 <dl class="section return"><dt>Devuelve</dt><dd><code class="JavaDocCode">true</code> si se agregó; <code class="JavaDocCode">false</code> (sin consumir número de orden) si ya había una opción pendiente hacia el mismo destino. </dd></dl>
-
-</div>
-</div>
-<a id="a97f41cd544308a79e4d51e8fef9077fa" name="a97f41cd544308a79e4d51e8fef9077fa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a97f41cd544308a79e4d51e8fef9077fa">&#9670;&#160;</a></span>getRespuesta()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Optional&lt; String &gt; org.signbb.backend.navegacion.modelo.EstadoPaciente.getRespuesta </td>
-          <td>(</td>
-          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>idNodo</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Primera respuesta registrada para <code class="JavaDocCode">idNodo</code>, si existe. </p>
-<p>Para selección múltiple use <code><a class="el" href="#a27335a5b97fc21155783f7a729231f71">getRespuestas</a></code>. </p>
 
 </div>
 </div>

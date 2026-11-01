@@ -125,7 +125,7 @@ Mapa de la suite</h1>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Paquete  </th><th class="markdownTableHeadNone">Clase  </th><th class="markdownTableHeadRight">Tests  </th><th class="markdownTableHeadNone">Qué cubre  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">EstadoPacienteTest</span>  </td><td class="markdownTableBodyRight">5  </td><td class="markdownTableBodyNone">memoria de trabajo: respuestas, puntaje y pila de pasos  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">EstadoPacienteTest</span>  </td><td class="markdownTableBodyRight">3  </td><td class="markdownTableBodyNone">memoria de trabajo: respuestas y pila de pasos  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">EstadoPacienteNavegacionTest</span>  </td><td class="markdownTableBodyRight">5  </td><td class="markdownTableBodyNone">cola, ruta, foto y restauración al retroceder  </td></tr>
 <tr class="markdownTableRowOdd">
@@ -157,7 +157,7 @@ Mapa de la suite</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ServicioNavegacionVersionesTest</span>  </td><td class="markdownTableBodyRight">3  </td><td class="markdownTableBodyNone">un recorrido conserva su versión del contenido  </td></tr>
 </table>
-<p>En total son <b>89 pruebas</b>. Las pruebas de la sesión en Redis (<span class="tt">cache/RepositorioSesionRedisTest</span> y <span class="tt">cache/ColaSeleccionMultipleRedisIntegracionTest</span>) están documentadas en <a class="el" href="pruebas_cache.html#md_backend_2src_2test_2README" title="backend/src/test/README.md"><span class="tt">backend/src/test/README.md</span></a>.</p>
+<p>En total son <b>87 pruebas</b>. Las pruebas de la sesión en Redis (<span class="tt">cache/RepositorioSesionRedisTest</span> y <span class="tt">cache/ColaSeleccionMultipleRedisIntegracionTest</span>) están documentadas en <a class="el" href="pruebas_cache.html#md_backend_2src_2test_2README" title="backend/src/test/README.md"><span class="tt">backend/src/test/README.md</span></a>.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
 Fixtures</h1>
 <ul>
@@ -216,7 +216,7 @@ Qué se quitó en la reorganización</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">MotorNavegacionSeleccionMultipleTest</span>  </td><td class="markdownTableBodyNone">Duplicado por <span class="tt">MotorNavegacionColaTest</span>.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">modelo/ContextoTest</span> (7)  </td><td class="markdownTableBodyNone">El TAD <span class="tt">Contexto</span> no tiene referencias en <span class="tt">src/main</span>.  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">modelo/ContextoTest</span> y <span class="tt">modelo/Contexto</span>  </td><td class="markdownTableBodyNone">El TAD <span class="tt">Contexto</span> no tiene referencias en <span class="tt">src/main</span>; el contexto real es <span class="tt">ContextoClinico</span>.  </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Bordes técnicos del 31-oct-2026  </td><td class="markdownTableBodyNone">Empates de cola, destinos repetidos, preguntas repetidas, umbrales combinados, reglas compuerta, formatos legados, copias defensivas y variantes de configuración inválida.  </td></tr>
 </table>
@@ -227,7 +227,7 @@ Cómo ejecutarlas</h1>
 </pre><h1 class="doxsection"><a class="anchor" id="autotoc_md23"></a>
 Resultados</h1>
 <p>Corrida histórica del workflow <span class="tt">build</span> sobre el commit <span class="tt">518f775</span>: <a href="https://github.com/Proyecto-Grado-SignBB/signbb-backend/actions/runs/37948316527">run 37948316527</a>. <b>BUILD SUCCESS.</b></p>
-<p>Tras el recorte del 31-oct-2026, el módulo tiene <b>89 pruebas</b> y la suite completa del backend <b>364</b>. </p>
+<p>Tras el recorte del 31-oct-2026, el módulo tiene <b>87 pruebas</b> y la suite completa del backend <b>362</b>. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

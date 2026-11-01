@@ -143,7 +143,6 @@ var annotated_dup =
             ] ],
             [ "modelo", "namespaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo.html", [
               [ "CandadoRecorrido", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1CandadoRecorrido.html", "interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1CandadoRecorrido" ],
-              [ "Contexto", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto" ],
               [ "ContextoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico" ],
               [ "ContextoClinicoTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinicoTest.html", null ],
               [ "EstadoPaciente", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente" ],

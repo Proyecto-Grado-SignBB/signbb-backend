@@ -1,6 +1,6 @@
 var classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente =
 [
-    [ "EstadoPaciente", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#ad89abc8c8597a9492b02814dfa269cb1", null ],
+    [ "EstadoPaciente", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a1d7673c0d1747381e33e7599db55e487", null ],
     [ "agregarARuta", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a8a1decaea29e4d86bd849f66c359c53e", null ],
     [ "apilarPaso", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a0e2c1cc1b30fbd08661f2bacdce15280", null ],
     [ "cola", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a79547dbef2d969f7f8b20882a152808b", null ],
@@ -9,9 +9,6 @@ var classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente =
     [ "desapilarPaso", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#abe0217d4542dabcb0cdfddc041f6afdc", null ],
     [ "encolarOpcion", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a18524e1493c4fdc4541359e13c02fb25", null ],
     [ "fotografiarNavegacion", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a54a3953e76e293a433912b4a650b84a8", null ],
-    [ "getIdSesion", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a57d254543b6c75e786f94457007cb5dc", null ],
-    [ "getPuntaje", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a1d2f57bfa6a76787ba621bb8a3e3b3cd", null ],
-    [ "getRespuesta", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a97f41cd544308a79e4d51e8fef9077fa", null ],
     [ "getRespuestas", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a27335a5b97fc21155783f7a729231f71", null ],
     [ "marcarReglaDisparada", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a8b06d81c3f04f4079fea3b7bd44e6e7e", null ],
     [ "pasos", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a4c3daa5c83f7994a8b2b37788ab32ddb", null ],
@@ -26,7 +23,5 @@ var classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente =
     [ "restaurarNavegacion", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a48b19ed819cf3b882775a16fcfbaebf4", null ],
     [ "ruta", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a57bf71f72882d52bb6dfee5657262fe4", null ],
     [ "sintomas", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a64696f31f73d34102f5d965db0ede57d", null ],
-    [ "size", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a9059c481166e855a25805260afec2b3c", null ],
-    [ "sumarPuntaje", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a3add1935843d981ff05b90ac1cfb9962", null ],
     [ "vaciarCola", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html#a3d6be5a30433d66f2e711ba0662eeecd", null ]
 ];

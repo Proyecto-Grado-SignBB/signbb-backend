@@ -42,7 +42,6 @@ var hierarchy =
     [ "org.signbb.backend.seguridad.ConfiguracionSeguridad", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1ConfiguracionSeguridad.html", null ],
     [ "org.signbb.backend.ConsultaIntegracionTest", "classorg_1_1signbb_1_1backend_1_1ConsultaIntegracionTest.html", null ],
     [ "org.signbb.backend.navegacion.datos.serializacion.ContenidoEjemplo", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1ContenidoEjemplo.html", null ],
-    [ "org.signbb.backend.navegacion.modelo.Contexto", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1Contexto.html", null ],
     [ "org.signbb.backend.navegacion.modelo.ContextoClinico", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html", null ],
     [ "org.signbb.backend.navegacion.modelo.ContextoClinicoTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinicoTest.html", null ],
     [ "org.signbb.backend.seguridad.controladores.ControladorAuth", "classorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores_1_1ControladorAuth.html", null ],
