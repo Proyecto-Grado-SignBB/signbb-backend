@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['gastrointestinal_0',['Gastrointestinal',['../entorno_pruebas.html#autotoc_md112',1,'']]],
+  ['gastrointestinal_0',['Gastrointestinal',['../entorno_pruebas.html#autotoc_md113',1,'']]],
   ['getavisos_1',['getAvisos',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ContenidoInvalidoException.html#af755d437f0bcd57950f263f8f69a660a',1,'org::signbb::backend::autoria::servicios::ContenidoInvalidoException']]],
   ['getbase_2',['getBase',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html#a81a1376e12179a5b9ed00d50086d8b02',1,'org::signbb::backend::navegacion::modelo::ContextoClinico']]],
   ['getcasos_3',['getCasos',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a568b484c581e2b1363fa1ad6d654a03f',1,'org::signbb::backend::reglas::modelo::ReglaClinica']]],
@@ -31,7 +31,7 @@ var searchData=
   ['getversionid_28',['getVersionId',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1SesionTriaje.html#a77b5334f11535c0a272c9dff2c8cfa00',1,'org::signbb::backend::navegacion::modelo::SesionTriaje']]],
   ['github_20actions_29',['Resultados en GitHub Actions',['../pruebas_navegacion.html#autotoc_md28',1,'']]],
   ['gracia_30',['GRACIA',['../classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorImagenes.html#a65d4167b48255cc76d51a40b0f1a932f',1,'org.signbb.backend.mantenimiento.LimpiadorImagenes.GRACIA'],['../classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1PoliticaRetencionVersiones.html#ae9ae2bb653f689e90feb3a1266fcec64',1,'org.signbb.backend.mantenimiento.PoliticaRetencionVersiones.GRACIA']]],
-  ['grafo_20raíz_31',['Grafo raíz',['../entorno_pruebas.html#autotoc_md110',1,'']]],
+  ['grafo_20raíz_31',['Grafo raíz',['../entorno_pruebas.html#autotoc_md111',1,'']]],
   ['grafo_5factivo_5fcolor_32',['Base de reglas: grafo_activo_color',['../md_docs_2entorno-pruebas_2reglas_2reglas__activo__color.html',1,'']]],
   ['grafo_5fcabeza_33',['Base de reglas: grafo_cabeza',['../md_docs_2entorno-pruebas_2reglas_2reglas__cabeza.html',1,'']]],
   ['grafo_5fgastro_34',['Base de reglas: grafo_gastro',['../md_docs_2entorno-pruebas_2reglas_2reglas__gastro.html',1,'']]],
@@ -44,8 +44,8 @@ var searchData=
   ['grafoclinicoparser_41',['GrafoClinicoParser',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoParser.html',1,'org::signbb::backend::navegacion::datos::serializacion']]],
   ['grafoclinicotest_42',['GrafoClinicoTest',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinicoTest.html',1,'org::signbb::backend::navegacion::modelo']]],
   ['grafode_43',['grafoDe',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html#a21614470c12cf34f5a30f0e47be2a86f',1,'org::signbb::backend::navegacion::modelo::ContextoClinico']]],
-  ['grafos_44',['Grafos',['../entorno_pruebas.html#autotoc_md108',1,'']]],
-  ['grafos_20y_20reglas_45',['Grafos y reglas',['../index.html#autotoc_md75',1,'']]],
+  ['grafos_44',['Grafos',['../entorno_pruebas.html#autotoc_md109',1,'']]],
+  ['grafos_20y_20reglas_45',['Grafos y reglas',['../index.html#autotoc_md76',1,'']]],
   ['gravedad_46',['Gravedad',['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Gravedad.html',1,'org.signbb.backend.autoria.modelo.Gravedad'],['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Gravedad.html#a92d5df61d1ba15011abf3d2d4a08145a',1,'org.signbb.backend.autoria.modelo.Gravedad.Gravedad()']]],
   ['guardada_47',['Guardada',['../interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html#a87cc878de7953d039f8d5426408577bb',1,'org::signbb::backend::media::AlmacenImagenes']]],
   ['guardar_48',['guardar',['../classorg_1_1signbb_1_1backend_1_1cache_1_1RepositorioSesionRedis.html#a729ae735b80ba5657d98d85b90d3ac27',1,'org.signbb.backend.cache.RepositorioSesionRedis.guardar()'],['../interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html#af5271ffa6cb874b958bdff77d5559932',1,'org.signbb.backend.media.AlmacenImagenes.guardar()'],['../classorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenesS3.html#ae8df76ad227116afd813726965d23789',1,'org.signbb.backend.media.AlmacenImagenesS3.guardar()'],['../interfaceorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1RepositorioSesion.html#a4dfd943b7a34ac405e62906b3b3b11d2',1,'org.signbb.backend.navegacion.modelo.RepositorioSesion.guardar()']]],

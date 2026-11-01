@@ -243,8 +243,7 @@ var annotated_dup =
             [ "SeedDemoProperties", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoProperties.html", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoProperties" ],
             [ "SeedDemoRunner", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoRunner.html", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoRunner" ],
             [ "SeedDemoService", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoService.html", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedDemoService" ],
-            [ "SeedGraphConverter", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedGraphConverter.html", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedGraphConverter" ],
-            [ "SeedGraphConverterTest", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedGraphConverterTest.html", null ]
+            [ "SeedGraphConverter", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedGraphConverter.html", "classorg_1_1signbb_1_1backend_1_1seed_1_1SeedGraphConverter" ]
           ] ],
           [ "seguridad", "namespaceorg_1_1signbb_1_1backend_1_1seguridad.html", [
             [ "controladores", "namespaceorg_1_1signbb_1_1backend_1_1seguridad_1_1controladores.html", [
