@@ -70,7 +70,7 @@ class MotorNavegacionRetrocederTest {
 
     @Test
     void vuelveALaPreguntaAnteriorBorraSuRespuestaYPermiteOtroCamino() {
-        EstadoPaciente e = new EstadoPaciente("s");
+        EstadoPaciente e = new EstadoPaciente();
         Nodo tono = hastaTono(motor, e);
         assertEquals(NivelAlerta.NORMAL,
                 motor.paso(grafo, base, e, tono, NORMAL).nivel());
@@ -90,7 +90,7 @@ class MotorNavegacionRetrocederTest {
 
     @Test
     void deshaceSoloLasReglasDeEsePasoYSePuedenVolverADisparar() {
-        EstadoPaciente e = new EstadoPaciente("s");
+        EstadoPaciente e = new EstadoPaciente();
         assertEquals(NivelAlerta.URGENCIA,
                 motor.paso(grafo, base, e, hastaTono(motor, e), ALARMA).nivel());
 
@@ -111,20 +111,19 @@ class MotorNavegacionRetrocederTest {
 
     @Test
     void dosVecesSeguidasVuelveDosPreguntas() {
-        EstadoPaciente e = new EstadoPaciente("s");
+        EstadoPaciente e = new EstadoPaciente();
         hastaTono(motor, e);
 
         motor.retroceder(grafo, base, e);
         ResultadoPaso atras = motor.retroceder(grafo, base, e);
 
         assertEquals(id("q_neuro_gate"), atras.preguntaActual().getId());
-        assertEquals(2, e.size());
         assertEquals(2, e.pasos().size());
     }
 
     @Test
     void sinRespuestasSeRechaza() {
-        EstadoPaciente e = new EstadoPaciente("s");
+        EstadoPaciente e = new EstadoPaciente();
         motor.iniciar(e, grafo);
 
         assertThrows(IllegalArgumentException.class, () -> motor.retroceder(grafo, base, e));

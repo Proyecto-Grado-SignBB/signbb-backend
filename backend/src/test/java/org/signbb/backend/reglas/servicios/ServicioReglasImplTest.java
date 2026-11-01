@@ -58,7 +58,7 @@ class ServicioReglasImplTest {
                 base.agregarRegla(r2);
                 base.agregarRegla(r3);
 
-                EstadoPaciente estado = new EstadoPaciente("sesion-test");
+                EstadoPaciente estado = new EstadoPaciente();
                 estado.registrarRespuesta("pregunta_coloracion", "SI");
                 estado.registrarRespuesta("pregunta_tiempo", "MAS_DE_24_HORAS");
                 estado.registrarRespuesta("pregunta_letargo", "SI");
@@ -81,7 +81,7 @@ class ServicioReglasImplTest {
                                 List.of(new Condicion("pregunta_coloracion", "SI")),
                                 destino("consulta_medica_urgente"), NivelAlerta.URGENCIA));
 
-                EstadoPaciente estado = new EstadoPaciente("sesion-test-2");
+                EstadoPaciente estado = new EstadoPaciente();
                 // Sin respuestas registradas: ninguna condición se cumple.
 
                 ResultadoInferencia inferencia = servicio.evaluar(base, estado);
@@ -106,7 +106,7 @@ class ServicioReglasImplTest {
                                 List.of(new Condicion("pregunta_alimentacion", "SI")),
                                 destinoConsulta, NivelAlerta.CONSULTAR_MEDICO));
 
-                EstadoPaciente estado = new EstadoPaciente("sesion-test-3");
+                EstadoPaciente estado = new EstadoPaciente();
                 estado.registrarRespuesta("pregunta_letargo", "SI");
                 estado.registrarRespuesta("pregunta_alimentacion", "SI");
 
@@ -135,7 +135,7 @@ class ServicioReglasImplTest {
                                 List.of(new Condicion("signo_critico", "SI")),
                                 destinoCritico, NivelAlerta.URGENCIA));
 
-                EstadoPaciente estado = new EstadoPaciente("sesion-peso");
+                EstadoPaciente estado = new EstadoPaciente();
                 estado.registrarRespuesta("signo_leve", "SI");
                 estado.registrarRespuesta("signo_critico", "SI");
 

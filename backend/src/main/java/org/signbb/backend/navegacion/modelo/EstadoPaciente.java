@@ -13,8 +13,8 @@ import java.util.Set;
  *
  * <p>
  * Representa una sesión de triaje en curso: las respuestas del padre a las
- * preguntas del grafo y el puntaje acumulado. No contiene lógica de
- * inferencia — solo almacena y consulta.
+ * preguntas del grafo. No contiene lógica de inferencia — solo almacena y
+ * consulta.
  *
  * <p>
  * Se usa {@code LinkedHashMap} para conservar el orden de inserción de las
@@ -48,7 +48,6 @@ import java.util.Set;
  */
 public final class EstadoPaciente {
 
-    private final String idSesion;
     private final Map<String, List<String>> respuestas = new LinkedHashMap<>();
     private final Set<String> reglasDisparadas = new LinkedHashSet<>();
     private final List<PasoRecorrido> pasos = new ArrayList<>();
@@ -56,19 +55,9 @@ public final class EstadoPaciente {
     private final List<PasoRuta> ruta = new ArrayList<>();
     private final Map<String, List<PasoRuta>> recomendaciones = new LinkedHashMap<>();
     private int siguienteOrden = 0;
-    private int puntaje = 0;
 
     /** Crea la sesión de triaje vacía. */
-    public EstadoPaciente(String idSesion) {
-        if (idSesion == null || idSesion.isEmpty()) {
-            throw new IllegalArgumentException("idSesion debe ser una cadena no vacía");
-        }
-        this.idSesion = idSesion;
-    }
-
-    /** Identificador de la sesión. */
-    public String getIdSesion() {
-        return idSesion;
+    public EstadoPaciente() {
     }
 
     /**
@@ -98,18 +87,6 @@ public final class EstadoPaciente {
             copia.add(r);
         }
         respuestas.put(idNodo, copia);
-    }
-
-    /**
-     * Primera respuesta registrada para {@code idNodo}, si existe. Para
-     * selección múltiple use {@link #getRespuestas}.
-     */
-    public Optional<String> getRespuesta(String idNodo) {
-        List<String> valores = respuestas.get(idNodo);
-        if (valores == null || valores.isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(valores.get(0));
     }
 
     /** Copia de todas las respuestas registradas para {@code idNodo}. */
@@ -286,16 +263,6 @@ public final class EstadoPaciente {
         return new LinkedHashSet<>(reglasDisparadas);
     }
 
-    /** Suma puntos al puntaje de la sesión. */
-    public void sumarPuntaje(int delta) {
-        puntaje += delta;
-    }
-
-    /** Puntaje acumulado de la sesión. */
-    public int getPuntaje() {
-        return puntaje;
-    }
-
     /**
      * Copia de los síntomas registrados (no expone la estructura interna). Un
      * nodo de selección múltiple aporta un síntoma por cada respuesta marcada.
@@ -308,16 +275,5 @@ public final class EstadoPaciente {
             }
         }
         return lista;
-    }
-
-    /** Número de nodos con al menos una respuesta registrada. */
-    public int size() {
-        return respuestas.size();
-    }
-
-    @Override
-    public String toString() {
-        return "EstadoPaciente(idSesion='" + idSesion + "', respuestas="
-                + respuestas.size() + ", puntaje=" + puntaje + ")";
     }
 }

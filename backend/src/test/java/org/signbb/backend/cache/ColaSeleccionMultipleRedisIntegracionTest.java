@@ -148,7 +148,7 @@ class ColaSeleccionMultipleRedisIntegracionTest {
 
     /** Crea la sesión en Redis con la primera pregunta del recorrido. */
     private String iniciarSesion() {
-        EstadoPaciente estado = new EstadoPaciente("integracion-cola");
+        EstadoPaciente estado = new EstadoPaciente();
         ResultadoPaso inicial = motor.iniciar(estado, grafo);
         String id = repositorioNuevo().crear(estado, inicial).getId();
         sesionesCreadas.add(id);

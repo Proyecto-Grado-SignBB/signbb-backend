@@ -147,11 +147,11 @@ class JsonParserTest {
     BaseReglas base = BaseReglasParser.parseJsonToBaseReglas(json, g);
     ReglaClinica regla = base.obtenerRegla("R_OR");
 
-    EstadoPaciente soloLetargo = new EstadoPaciente("s1");
+    EstadoPaciente soloLetargo = new EstadoPaciente();
     soloLetargo.registrarRespuesta("letargo", "SI");
     assertTrue(regla.condicionesCumplidas(soloLetargo));
 
-    EstadoPaciente ninguno = new EstadoPaciente("s2");
+    EstadoPaciente ninguno = new EstadoPaciente();
     ninguno.registrarRespuesta("letargo", "NO");
     ninguno.registrarRespuesta("sangre", "NO");
     assertFalse(regla.condicionesCumplidas(ninguno));
@@ -179,12 +179,12 @@ class JsonParserTest {
     BaseReglas base = BaseReglasParser.parseJsonToBaseReglas(json, g);
     ReglaClinica regla = base.obtenerRegla("R_MIX");
 
-    EstadoPaciente completo = new EstadoPaciente("s3");
+    EstadoPaciente completo = new EstadoPaciente();
     completo.registrarRespuesta("coloracion", "SI");
     completo.registrarRespuesta("sangre", "SI");
     assertTrue(regla.condicionesCumplidas(completo));
 
-    EstadoPaciente sinRama = new EstadoPaciente("s4");
+    EstadoPaciente sinRama = new EstadoPaciente();
     sinRama.registrarRespuesta("coloracion", "SI");
     assertFalse(regla.condicionesCumplidas(sinRama));
 

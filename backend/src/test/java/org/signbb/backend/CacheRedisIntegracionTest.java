@@ -155,7 +155,7 @@ class CacheRedisIntegracionTest {
     void laSesionSobreviveUnReinicioSimulado() {
         assumeTrue(modoCacheActivo(), "requiere el modo cache (perfil docker con contenedores arriba)");
         Nodo inicial = contexto.getGrafo().obtenerNodoInicial().orElseThrow();
-        EstadoPaciente estado = new EstadoPaciente("cache-integracion");
+        EstadoPaciente estado = new EstadoPaciente();
         SesionTriaje sesion = sesiones.crear(estado, ResultadoPaso.pregunta(inicial));
 
         // "reinicio": una instancia nueva del repositorio, como tras un arranque limpio

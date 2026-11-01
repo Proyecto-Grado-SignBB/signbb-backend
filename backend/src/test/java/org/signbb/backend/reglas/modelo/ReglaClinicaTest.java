@@ -46,7 +46,7 @@ class ReglaClinicaTest {
                 ReglaClinica r = new ReglaClinica("r1", "n",
                                 List.of(new Condicion("fiebre", "Sí"), new Condicion("temp", "≥38°C")),
                                 destino(), NivelAlerta.CONSULTAR_MEDICO);
-                EstadoPaciente e = new EstadoPaciente("s1");
+                EstadoPaciente e = new EstadoPaciente();
                 e.registrarRespuesta("fiebre", "Sí");
                 e.registrarRespuesta("temp", "≥38°C");
                 assertTrue(r.condicionesCumplidas(e));
@@ -57,7 +57,7 @@ class ReglaClinicaTest {
                 ReglaClinica r = new ReglaClinica("r1", "n",
                                 List.of(new Condicion("fiebre", "Sí"), new Condicion("temp", "≥38°C")),
                                 destino(), NivelAlerta.CONSULTAR_MEDICO);
-                EstadoPaciente e = new EstadoPaciente("s1");
+                EstadoPaciente e = new EstadoPaciente();
                 e.registrarRespuesta("fiebre", "Sí");
                 assertFalse(r.condicionesCumplidas(e));
         }
@@ -67,7 +67,7 @@ class ReglaClinicaTest {
                 ReglaClinica r = new ReglaClinica("r1", "n",
                                 List.of(new Condicion("fiebre", "Sí")), destino(),
                                 NivelAlerta.CONSULTAR_MEDICO);
-                EstadoPaciente e = new EstadoPaciente("s1");
+                EstadoPaciente e = new EstadoPaciente();
                 e.registrarRespuesta("fiebre", "No");
                 assertFalse(r.condicionesCumplidas(e));
         }

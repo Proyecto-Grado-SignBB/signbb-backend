@@ -65,7 +65,7 @@ cubrir todos los bordes técnicos ni combinaciones internas.
 
 | Módulo | Pruebas | Tipo | Documentación |
 |---|---:|---|---|
-| Navegación: TADs, parsers, motor y servicio | 89 | JUnit 5 | \ref pruebas_navegacion "Ver página" |
+| Navegación: TADs, parsers, motor y servicio | 87 | JUnit 5 | \ref pruebas_navegacion "Ver página" |
 | Reglas: TAD, evaluación, servicio y mapeo JSON | 19 | JUnit 5 + Mockito | \ref pruebas_reglas "Ver página" |
 | Autoría: lienzo, subgrafos, reglas, autor y revisión | 107 | JUnit 5 + Mockito | \ref pruebas_autoria "Ver página" |
 | Observaciones: captura "todo o nada", validación, dueño del recorrido y respuesta del cuidador | 34 | JUnit 5 + Mockito | \ref pruebas_observaciones "Ver página" |
@@ -75,7 +75,7 @@ cubrir todos los bordes técnicos ni combinaciones internas.
 | Media: subida y referencias de imágenes | 12 | JUnit 5 + MockMvc | — |
 | Errores generales: 400, 405, 409 y 500 con cuerpo `{mensaje, avisos}` (`config/ManejadorErroresGeneralesTest`) | 4 | JUnit 5 + MockMvc | — |
 | Validación de entradas: límites de largo y de caracteres de los DTO (`config/ValidacionEntradasTest`) | 4 | JUnit 5 + validador de Jakarta | — |
-| **Total unitarias** | **337** | | |
+| **Total unitarias** | **335** | | |
 
 Las clases de integración de cada módulo se excluyen de esta tabla y se
 listan en la sección siguiente.
@@ -105,13 +105,13 @@ una versión del fixture de navegación.
 
 | Tipo | Presentes | Ejecutadas | Omitidas |
 |---|---:|---:|---:|
-| Unitarias | 337 | 337 | 0 |
+| Unitarias | 335 | 335 | 0 |
 | Integración | 27 | 27 | 0 |
-| **Total** | **364** | **364** | **0** |
+| **Total** | **362** | **362** | **0** |
 
 ## Resultados
 
-La ejecución local del 31-oct-2026 sobre `develop` corre **364 pruebas, todas
+La ejecución local del 31-oct-2026 sobre `develop` corre **362 pruebas, todas
 pasan**. El CI ejecuta `./mvnw -B verify` con PostgreSQL y Redis como servicios.
 
 ## Cobertura
@@ -121,7 +121,7 @@ El backend usa **JaCoCo**. El informe se genera en cada `test`:
     ./mvnw test
     # abrir target/site/jacoco/index.html
 
-En la corrida del 31-oct-2026 el informe marca **75,5 % de líneas** y **75,0 %
+En la corrida del 31-oct-2026 el informe marca **75,9 % de líneas** y **75,4 %
 de instrucciones**. Incluye desglose por paquete y por clase.
 
 Para el frontend, Angular genera la cobertura con el flag `--code-coverage`:

@@ -1,7 +1,6 @@
 package org.signbb.backend.navegacion.servicios;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.signbb.backend.navegacion.modelo.ContextoClinico;
 import org.signbb.backend.navegacion.modelo.EstadoPaciente;
@@ -58,7 +57,7 @@ public class ServicioNavegacionImpl implements ServicioNavegacion {
         if (!hayOpcionesDesdeInicio(grafo)) {
             throw new ConsultaNoDisponibleException();
         }
-        EstadoPaciente estado = new EstadoPaciente(UUID.randomUUID().toString());
+        EstadoPaciente estado = new EstadoPaciente();
         ResultadoPaso paso = motor.iniciar(estado, grafo);
         SesionTriaje sesion = repositorioSesion.crear(estado, paso, version);
         return RecorridoDTO.desde(sesion.getId(), grafo, paso);

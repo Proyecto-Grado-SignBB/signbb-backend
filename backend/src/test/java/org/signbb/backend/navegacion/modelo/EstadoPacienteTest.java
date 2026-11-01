@@ -2,46 +2,28 @@ package org.signbb.backend.navegacion.modelo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
-/** Tests del TAD EstadoPaciente (migrados de tests/test_estado_paciente.py). */
+/** Tests del TAD EstadoPaciente (memoria de trabajo del recorrido). */
 class EstadoPacienteTest {
 
     @Test
-    void creacion() {
-        EstadoPaciente e = new EstadoPaciente("s1");
-        assertEquals("s1", e.getIdSesion());
-        assertEquals(0, e.getPuntaje());
-        assertEquals(0, e.size());
-    }
-
-    @Test
     void registrarYConsultarRespuesta() {
-        EstadoPaciente e = new EstadoPaciente("s1");
+        EstadoPaciente e = new EstadoPaciente();
         e.registrarRespuesta("fiebre", "Sí");
         e.registrarRespuesta("temp", "≥38°C");
-        assertEquals(Optional.of("Sí"), e.getRespuesta("fiebre"));
-        assertEquals(Optional.of("≥38°C"), e.getRespuesta("temp"));
-        assertTrue(e.getRespuesta("no_existe").isEmpty());
-        assertEquals(2, e.size());
-    }
 
-    @Test
-    void puntaje() {
-        EstadoPaciente e = new EstadoPaciente("s1");
-        e.sumarPuntaje(5);
-        e.sumarPuntaje(3);
-        assertEquals(8, e.getPuntaje());
+        assertEquals(List.of("Sí"), e.getRespuestas("fiebre"));
+        assertEquals(List.of("≥38°C"), e.getRespuestas("temp"));
+        assertTrue(e.getRespuestas("no_existe").isEmpty());
     }
 
     @Test
     void desapilarBorraLaRespuestaYDesmarcaSoloSusReglas() {
-        EstadoPaciente e = new EstadoPaciente("s1");
+        EstadoPaciente e = new EstadoPaciente();
         e.registrarRespuesta("p1", "SI");
         e.marcarReglaDisparada("R0");
         e.apilarPaso(new PasoRecorrido("p1", List.of("SI"), List.of(), List.of()));
@@ -61,7 +43,7 @@ class EstadoPacienteTest {
     @Test
     void desapilarRestauraLasRespuestasPrevias() {
         // Una compuerta llevó a responder de nuevo p1: al deshacer vuelve la respuesta vieja.
-        EstadoPaciente e = new EstadoPaciente("s1");
+        EstadoPaciente e = new EstadoPaciente();
         e.registrarRespuesta("p1", "SI");
         e.apilarPaso(new PasoRecorrido("p1", List.of("SI"), List.of(), List.of()));
         e.registrarRespuesta("p1", "NO");

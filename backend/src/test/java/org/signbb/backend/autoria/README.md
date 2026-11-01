@@ -121,4 +121,4 @@ Desde `backend/`:
 ## Resultados
 
 Tras el recorte del 31-oct-2026, el módulo tiene **107 pruebas unitarias** y la
-suite completa del backend **364**.
+suite completa del backend **362**.

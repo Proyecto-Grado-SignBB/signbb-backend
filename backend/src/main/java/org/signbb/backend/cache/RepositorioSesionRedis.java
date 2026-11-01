@@ -112,7 +112,7 @@ public class RepositorioSesionRedis implements RepositorioSesion {
 
     /** Reconstruye la sesión desde su forma serializable, resolviendo referencias por id. */
     private SesionTriaje reconstruir(SesionJson json) {
-        EstadoPaciente estado = new EstadoPaciente(json.id());
+        EstadoPaciente estado = new EstadoPaciente();
         for (Map.Entry<String, List<String>> e : json.respuestas().entrySet()) {
             estado.registrarRespuestas(e.getKey(), e.getValue());
         }
@@ -121,7 +121,6 @@ public class RepositorioSesionRedis implements RepositorioSesion {
                 estado.marcarReglaDisparada(idRegla);
             }
         }
-        estado.sumarPuntaje(json.puntaje());
         if (json.navegacion() != null) {
             estado.restaurarNavegacion(json.navegacion().aFoto());
         }

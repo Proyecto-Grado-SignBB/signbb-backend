@@ -183,18 +183,18 @@ public class DemoTriajeRunner implements CommandLineRunner {
         String normal = CompositorGrafoClinico.prefijar(SUBGRAFO_RESPIRACION, "q_resp_normal");
 
         System.out.println("\nEscenario 1: quejido al respirar (R_RESP_URG URGENCIA)");
-        EstadoPaciente grave = new EstadoPaciente("sesion-demo-1");
+        EstadoPaciente grave = new EstadoPaciente();
         grave.registrarRespuesta(urgencia, "Quejido al respirar");
         imprimirEvaluacion(base, grave);
 
         System.out.println("\nEscenario 2: sin signos de alarma, tos con respiración tranquila (R_RESP_CON CONSULTAR_MEDICO)");
-        EstadoPaciente moderado = new EstadoPaciente("sesion-demo-2");
+        EstadoPaciente moderado = new EstadoPaciente();
         moderado.registrarRespuesta(urgencia, "No, ninguno de los anteriores");
         moderado.registrarRespuesta(consulta, "Presenta tos pero respira tranquilo");
         imprimirEvaluacion(base, moderado);
 
         System.out.println("\nEscenario 3: solo condiciones comunes (nivel implícito NORMAL)");
-        EstadoPaciente tranquilo = new EstadoPaciente("sesion-demo-3");
+        EstadoPaciente tranquilo = new EstadoPaciente();
         tranquilo.registrarRespuesta(normal, "Estornudos o hipo");
         imprimirEvaluacion(base, tranquilo);
     }

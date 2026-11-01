@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.signbb.backend.navegacion.modelo.FotoNavegacion;
 import org.signbb.backend.navegacion.modelo.OpcionPendiente;
 import org.signbb.backend.navegacion.modelo.PasoCausal;
@@ -38,11 +40,11 @@ import org.signbb.backend.reglas.modelo.ReglaClinica;
  * recorrido; las sesiones anteriores a las versiones no la traen ({@code null})
  * y usan la vigente.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public record SesionJson(
         String id,
         Map<String, List<String>> respuestas,
         List<String> reglasDisparadas,
-        int puntaje,
         PasoJson ultimoPaso,
         List<PasoRecorridoJson> historial,
         NavegacionJson navegacion,
@@ -163,8 +165,7 @@ public record SesionJson(
                         .map(r -> new RecomendacionJson(r.nodo().getId(), caminoJson(r.camino())))
                         .toList());
         return new SesionJson(sesion.getId(), respuestas,
-                List.copyOf(sesion.getEstado().reglasDisparadas()),
-                sesion.getEstado().getPuntaje(), pasoJson,
+                List.copyOf(sesion.getEstado().reglasDisparadas()), pasoJson,
                 sesion.getEstado().pasos().stream()
                         .map(p -> new PasoRecorridoJson(p.idPregunta(), p.respuestas(),
                                 p.respuestasPrevias(), p.reglasMarcadas(),

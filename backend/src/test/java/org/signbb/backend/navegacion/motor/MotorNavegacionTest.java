@@ -82,7 +82,7 @@ class MotorNavegacionTest {
 
     @Test
     void iniciarDevuelveLaPreguntaInicialDeLaRaiz() {
-        ResultadoPaso paso = motor.iniciar(new EstadoPaciente("s"), grafo);
+        ResultadoPaso paso = motor.iniciar(new EstadoPaciente(), grafo);
 
         assertFalse(paso.finalizado());
         assertEquals("pregunta_inicial", paso.preguntaActual().getId());
@@ -90,7 +90,7 @@ class MotorNavegacionTest {
 
     @Test
     void laRaizEnlazaConLaPreguntaInicialDelSubgrafo() {
-        EstadoPaciente e = new EstadoPaciente("s");
+        EstadoPaciente e = new EstadoPaciente();
         Nodo inicial = motor.iniciar(e, grafo).preguntaActual();
 
         ResultadoPaso trasCategoria = motor.paso(grafo, base, e, inicial, CATEGORIA);
@@ -104,7 +104,7 @@ class MotorNavegacionTest {
 
     @Test
     void sinSignosDeAlarmaTerminaEnNormal() {
-        EstadoPaciente e = new EstadoPaciente("s");
+        EstadoPaciente e = new EstadoPaciente();
 
         ResultadoPaso paso = motor.paso(grafo, base, e, hastaSubgrafo(e), NORMAL);
 
@@ -116,7 +116,7 @@ class MotorNavegacionTest {
 
     @Test
     void unSignoDeAlarmaDisparaUrgencia() {
-        EstadoPaciente e = new EstadoPaciente("s");
+        EstadoPaciente e = new EstadoPaciente();
 
         ResultadoPaso paso = motor.paso(grafo, base, e, hastaUrgencia(e), ALARMA);
 
@@ -128,7 +128,7 @@ class MotorNavegacionTest {
 
     @Test
     void unSignoDeAlertaMediaDisparaConsulta() {
-        EstadoPaciente e = new EstadoPaciente("s");
+        EstadoPaciente e = new EstadoPaciente();
 
         ResultadoPaso paso = motor.paso(grafo, base, e, hastaConsulta(e), CONSULTA);
 
@@ -140,7 +140,7 @@ class MotorNavegacionTest {
 
     @Test
     void laSeleccionMultipleSinReglasAvanzaPorLaMejorOpcionYEncolaElResto() {
-        EstadoPaciente e = new EstadoPaciente("s");
+        EstadoPaciente e = new EstadoPaciente();
         Nodo inicial = motor.iniciar(e, grafo).preguntaActual();
 
         ResultadoPaso paso = motor.paso(grafo, base, e, inicial,
@@ -153,7 +153,7 @@ class MotorNavegacionTest {
 
     @Test
     void respuestaQueNoEsOpcionSeRechazaSinTocarElEstado() {
-        EstadoPaciente e = new EstadoPaciente("s");
+        EstadoPaciente e = new EstadoPaciente();
         Nodo puerta = hastaSubgrafo(e);
 
         assertThrows(IllegalArgumentException.class,

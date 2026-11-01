@@ -57,7 +57,7 @@ class BaseReglasTest {
                 List.of(new Condicion("fiebre", "Sí"), new Condicion("letargo", "Sí"))));
         b.agregarRegla(regla("r3", List.of(new Condicion("tos", "Sí"))));
 
-        EstadoPaciente e = new EstadoPaciente("s1");
+        EstadoPaciente e = new EstadoPaciente();
         e.registrarRespuesta("fiebre", "Sí");
         e.registrarRespuesta("letargo", "Sí");
 
@@ -72,7 +72,7 @@ class BaseReglasTest {
     void reglasActivadasNinguna() {
         BaseReglas b = new BaseReglas();
         b.agregarRegla(regla("r1", List.of(new Condicion("fiebre", "Sí"))));
-        EstadoPaciente e = new EstadoPaciente("s1");
+        EstadoPaciente e = new EstadoPaciente();
         assertTrue(b.reglasActivadas(e).isEmpty());
     }
 }

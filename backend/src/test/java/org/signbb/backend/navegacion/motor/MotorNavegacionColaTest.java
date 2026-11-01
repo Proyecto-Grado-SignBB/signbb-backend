@@ -44,7 +44,7 @@ class MotorNavegacionColaTest {
     void preparar() {
         grafo = new GrafoClinico();
         base = new BaseReglas();
-        estado = new EstadoPaciente("sesion-prueba");
+        estado = new EstadoPaciente();
         motor = new MotorNavegacion(new ServicioReglasImpl());
         nodos.clear();
         pregunta("inicio", 0);

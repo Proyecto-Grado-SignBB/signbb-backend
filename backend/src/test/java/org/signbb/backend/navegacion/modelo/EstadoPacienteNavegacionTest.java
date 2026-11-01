@@ -27,7 +27,7 @@ class EstadoPacienteNavegacionTest {
 
     @Test
     void encolarAsignaOrdenCrecienteYRechazaDestinoRepetido() {
-        EstadoPaciente e = new EstadoPaciente("s");
+        EstadoPaciente e = new EstadoPaciente();
         assertTrue(e.encolarOpcion("q1", "A", "d1", List.of()));
         assertTrue(e.encolarOpcion("q1", "B", "d2", List.of()));
         assertFalse(e.encolarOpcion("q2", "C", "d1", List.of()), "d1 ya está pendiente");
@@ -44,7 +44,7 @@ class EstadoPacienteNavegacionTest {
 
     @Test
     void quitarYVaciarCola() {
-        EstadoPaciente e = new EstadoPaciente("s");
+        EstadoPaciente e = new EstadoPaciente();
         e.encolarOpcion("q1", "A", "d1", List.of());
         e.encolarOpcion("q1", "B", "d2", List.of());
         OpcionPendiente primera = e.cola().get(0);
@@ -59,7 +59,7 @@ class EstadoPacienteNavegacionTest {
 
     @Test
     void laOpcionGuardaSuCaminoYElEstadoNoExponeSuListaInterna() {
-        EstadoPaciente e = new EstadoPaciente("s");
+        EstadoPaciente e = new EstadoPaciente();
         e.encolarOpcion("q1", "A", "d1", camino("q1", "d1"));
         assertEquals(camino("q1", "d1"), e.cola().get(0).camino());
 
@@ -69,7 +69,7 @@ class EstadoPacienteNavegacionTest {
 
     @Test
     void fotoYRestauracionDevuelvenLaNavegacionAlInstanteDeLaFoto() {
-        EstadoPaciente e = new EstadoPaciente("s");
+        EstadoPaciente e = new EstadoPaciente();
         e.encolarOpcion("q1", "A", "d1", camino("q1", "d1"));
         e.agregarARuta(new PasoRuta("q1", ""));
         e.registrarRecomendacion("r1", camino("q1", "r1"));
@@ -92,7 +92,7 @@ class EstadoPacienteNavegacionTest {
 
     @Test
     void desapilarPasoRestauraLaFotoDeNavegacionDeEsePaso() {
-        EstadoPaciente e = new EstadoPaciente("s");
+        EstadoPaciente e = new EstadoPaciente();
         FotoNavegacion antes = e.fotografiarNavegacion();
         e.registrarRespuestas("p1", List.of("A", "B"));
         e.apilarPaso(new PasoRecorrido("p1", List.of("A", "B"), List.of(), List.of(), antes));

@@ -19,7 +19,7 @@ variantes de configuración inválida.
 
 | Paquete | Clase | Tests | Qué cubre |
 |---|---|---:|---|
-| `modelo` | `EstadoPacienteTest` | 5 | memoria de trabajo: respuestas, puntaje y pila de pasos |
+| `modelo` | `EstadoPacienteTest` | 3 | memoria de trabajo: respuestas y pila de pasos |
 | `modelo` | `EstadoPacienteNavegacionTest` | 5 | cola, ruta, foto y restauración al retroceder |
 | `modelo` | `GrafoClinicoTest` | 10 | nodos, aristas, rutas, ciclos, paso, camino causal y tipo de interacción |
 | `modelo` | `NodoTest`, `RespuestaTest` | 2 + 1 | validación e igualdad de nodos y aristas |
@@ -36,7 +36,7 @@ variantes de configuración inválida.
 | `servicios` | `ServicioNavegacionImplTest` | 10 | iniciar, responder, consultar, retroceder, resultado y 404 |
 | `servicios` | `ServicioNavegacionVersionesTest` | 3 | un recorrido conserva su versión del contenido |
 
-En total son **89 pruebas**. Las pruebas de la sesión en Redis
+En total son **87 pruebas**. Las pruebas de la sesión en Redis
 (`cache/RepositorioSesionRedisTest` y `cache/ColaSeleccionMultipleRedisIntegracionTest`)
 están documentadas en [`backend/src/test/README.md`](../../../../../README.md).
 
@@ -98,7 +98,7 @@ están documentadas en [`backend/src/test/README.md`](../../../../../README.md).
 | `MotorNavegacionNormalizacionTest` + `ejemplo_*_norm.json` | Grafo de normalización de bases de datos, no clínico. |
 | `MotorNavegacionSeguridadTest` + `ejemplo_*_sec.json` | Grafo de ciberseguridad, no clínico. |
 | `MotorNavegacionSeleccionMultipleTest` | Duplicado por `MotorNavegacionColaTest`. |
-| `modelo/ContextoTest` (7) | El TAD `Contexto` no tiene referencias en `src/main`. |
+| `modelo/ContextoTest` y `modelo/Contexto` | El TAD `Contexto` no tiene referencias en `src/main`; el contexto real es `ContextoClinico`. |
 | Bordes técnicos del 31-oct-2026 | Empates de cola, destinos repetidos, preguntas repetidas, umbrales combinados, reglas compuerta, formatos legados, copias defensivas y variantes de configuración inválida. |
 
 ## Cómo ejecutarlas
@@ -114,5 +114,5 @@ Corrida histórica del workflow `build` sobre el commit `518f775`:
 [run 37948316527](https://github.com/Proyecto-Grado-SignBB/signbb-backend/actions/runs/37948316527).
 **BUILD SUCCESS.**
 
-Tras el recorte del 31-oct-2026, el módulo tiene **89 pruebas** y la suite
-completa del backend **364**.
+Tras el recorte del 31-oct-2026, el módulo tiene **87 pruebas** y la suite
+completa del backend **362**.

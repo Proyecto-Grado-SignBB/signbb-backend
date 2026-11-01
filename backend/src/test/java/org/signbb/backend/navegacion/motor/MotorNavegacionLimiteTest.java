@@ -67,7 +67,7 @@ class MotorNavegacionLimiteTest {
 
     @Test
     void antesDelLimiteElRecorridoSigue() {
-        ResultadoPaso paso = responderSi(motor, sinReglas, new EstadoPaciente("s"), 9);
+        ResultadoPaso paso = responderSi(motor, sinReglas, new EstadoPaciente(), 9);
 
         assertFalse(paso.finalizado());
         assertEquals("p10", paso.preguntaActual().getId());
@@ -75,7 +75,7 @@ class MotorNavegacionLimiteTest {
 
     @Test
     void alLlegarAlLimiteCierraConRecomendacionNormal() {
-        ResultadoPaso paso = responderSi(motor, sinReglas, new EstadoPaciente("s"), 10);
+        ResultadoPaso paso = responderSi(motor, sinReglas, new EstadoPaciente(), 10);
 
         assertTrue(paso.finalizado());
         assertEquals(NivelAlerta.NORMAL, paso.nivel());
@@ -91,7 +91,7 @@ class MotorNavegacionLimiteTest {
         base.agregarRegla(new ReglaClinica("R", "décimo signo", List.of(new Condicion("p10", "SI")),
                 grafo.obtenerNodoPorId("urgencia").orElseThrow(), NivelAlerta.URGENCIA));
 
-        ResultadoPaso paso = responderSi(motor, base, new EstadoPaciente("s"), 10);
+        ResultadoPaso paso = responderSi(motor, base, new EstadoPaciente(), 10);
 
         assertEquals("urgencia", paso.destino().getId());
         assertEquals(NivelAlerta.URGENCIA, paso.nivel());

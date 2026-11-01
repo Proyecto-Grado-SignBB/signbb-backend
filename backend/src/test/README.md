@@ -42,7 +42,7 @@ prueba (raíz del sistema y subgrafos/reglas del seed de demo, vía `ContenidoEj
 - **Round-trip EN_CURSO**: crear y buscar restaura respuestas acumuladas y
   la pregunta pendiente (reconstruida por id contra el grafo vigente).
 - **Round-trip FINALIZADO**: guardar y buscar restaura nivel, destino,
-  razones (por id de regla), camino causal y puntaje.
+  razones (por id de regla) y camino causal.
 - **Sesión inexistente**: 404 (`RecursoNoEncontradoException`).
 - **Redis caído al buscar o guardar**: `CacheNoDisponibleException`
   (el `ControllerAdvice` la responde como 503; nunca degrada a memoria para
