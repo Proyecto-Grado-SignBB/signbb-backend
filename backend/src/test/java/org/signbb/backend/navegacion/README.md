@@ -44,12 +44,13 @@ están documentadas en [`backend/src/test/README.md`](../../../../../README.md).
 
 - **Contenido del sistema.** Es el que usan `MotorNavegacionTest`,
   `MotorNavegacionRetrocederTest` y `ServicioNavegacionImplTest`:
-  `ContenidoEjemplo.compuesto()`, que une el grafo raíz con los subgrafos de
-  respiración, gastrointestinal y actividad/color y sus reglas. Es un fixture
-  del classpath de pruebas (`src/test/resources/static/grafo_sistema/`);
-  `DatabaseInit` ya no siembra subgrafos. El camino que más se prueba es
-  `pregunta_inicial → puente_respiracion → q_resp_urgencia →
-  q_resp_consulta → q_resp_normal`.
+  `ContenidoEjemplo.compuesto()`, que une la raíz real del sistema
+  (`src/main/resources/static/grafo_sistema/grafo_raiz.json`) con los cuatro
+  subgrafos y reglas del seed de demo (`src/main/resources/seed/demo/`).
+  `DatabaseInit` siembra la raíz; los subgrafos se publican con el seed de demo.
+  El camino que más se prueba es
+  `pregunta_inicial → Actividad y color → Revisar actividad y color →
+  q_neuro_gate`.
 - **Grafos mínimos armados en código.** Los usan `MotorNavegacionLimiteTest`
   (una cadena de 12 preguntas), `MotorNavegacionColaTest` y `OrdenColaTest`.
 
@@ -114,4 +115,4 @@ Corrida histórica del workflow `build` sobre el commit `518f775`:
 **BUILD SUCCESS.**
 
 Tras el recorte del 31-oct-2026, el módulo tiene **89 pruebas** y la suite
-completa del backend **364** (2 omitidas por `AutoriaIntegracionTest`).
+completa del backend **364**.

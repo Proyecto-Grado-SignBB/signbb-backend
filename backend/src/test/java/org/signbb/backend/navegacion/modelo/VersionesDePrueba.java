@@ -24,7 +24,7 @@ public final class VersionesDePrueba {
         GrafoClinicoJson.Grafo g = grafo.graph();
         List<GrafoClinicoJson.Arista> aristas = new ArrayList<>(g.edges());
         aristas.add(new GrafoClinicoJson.Arista("pregunta_inicial", OPCION_NUEVA,
-                "grafo_respiracion/q_resp_urgencia", true));
+                "grafo_activo_color/q_neuro_gate", true));
         Map<String, GrafoClinicoJson.NodoJson> nodos = new LinkedHashMap<>(g.nodes());
         return new GrafoClinicoJson(new GrafoClinicoJson.Grafo(g.id(), g.label(), g.directed(), g.category(),
                 g.preguntaInicial(), g.nodoInicial(), g.metadata(), nodos, aristas));

@@ -195,21 +195,19 @@ class CompositorGrafoClinicoTest {
     GrafoClinico grafo = GrafoClinicoMapper.desde(contenido.grafo());
     BaseReglas reglas = BaseReglasMapper.desde(contenido.reglas(), grafo);
 
-    // Raíz (4) + respiración (6) + gastro (10) + activo/color (13).
-    assertEquals(33, grafo.size());
+    // Raíz (6) + respiración (9) + gastro (10) + activo/color (8) + cabeza (8).
+    assertEquals(40, grafo.size());
     // Dos reglas por subgrafo (las NORMAL son implícitas y no se siembran).
-    assertEquals(6, reglas.size());
-    // Piel y temperatura todavía no tienen subgrafos: sus puentes se podan y
-    // la cuidadora no ve esas categorías hasta que se publique uno.
-    assertEquals(List.of("respiracion", "gastrointestinal", "neurologico"),
+    assertEquals(8, reglas.size());
+    assertEquals(List.of("Respiración", "Gastrointestinal", "Actividad y color", "Cabeza, ojos y oídos"),
         grafo.obtenerOpciones(grafo.obtenerNodoInicial().orElseThrow())
             .stream().map(r -> r.getCondicion()).toList());
-    assertTrue(grafo.obtenerNodoPorId("puente_piel").isEmpty());
-    assertTrue(grafo.obtenerNodoPorId("puente_temperatura").isEmpty());
+    assertTrue(grafo.obtenerNodoPorId("puente_cabeza").isPresent());
     // Cada subgrafo conserva su terminal normal (síntomas no dañinos).
-    assertTrue(grafo.obtenerNodoPorId("grafo_respiracion/normal_1").isPresent());
-    assertTrue(grafo.obtenerNodoPorId("grafo_gastro/normal_1").isPresent());
-    assertTrue(grafo.obtenerNodoPorId("grafo_activo_color/normal_1").isPresent());
+    assertTrue(grafo.obtenerNodoPorId("grafo_respiracion/T_NORMAL").isPresent());
+    assertTrue(grafo.obtenerNodoPorId("grafo_gastro/T_NORMAL").isPresent());
+    assertTrue(grafo.obtenerNodoPorId("grafo_activo_color/T_NORMAL").isPresent());
+    assertTrue(grafo.obtenerNodoPorId("grafo_cabeza/T_NORMAL").isPresent());
     assertTrue(grafo.rutaValida());
     assertTrue(grafo.validarCiclo());
   }

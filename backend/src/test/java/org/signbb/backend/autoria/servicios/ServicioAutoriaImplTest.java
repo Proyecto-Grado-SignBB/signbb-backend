@@ -120,12 +120,11 @@ class ServicioAutoriaImplTest {
     void lasCategoriasSonLasPreguntasPuenteDeLaRaiz() {
         List<CategoriaDTO> categorias = servicio.categorias();
 
-        // Piel y temperatura se ofrecen aunque todavía no tengan subgrafos.
-        assertEquals(List.of("puente_piel", "puente_temperatura", "puente_respiracion", "puente_gastro",
-                "puente_neuro"), categorias.stream().map(CategoriaDTO::puenteId).toList());
-        assertEquals(List.of("piel", "temperatura", "respiracion", "gastrointestinal", "neurologico"),
+        assertEquals(List.of("puente_respiracion", "puente_gastro", "puente_neuro", "puente_cabeza"),
+                categorias.stream().map(CategoriaDTO::puenteId).toList());
+        assertEquals(List.of("Respiración", "Gastrointestinal", "Actividad y color", "Cabeza, ojos y oídos"),
                 categorias.stream().map(CategoriaDTO::nombre).toList());
-        assertTrue(categorias.get(0).pregunta().startsWith("¿Qué cambio observa en la piel"));
+        assertTrue(categorias.get(0).pregunta().contains("respiración"));
     }
 
     @Test
@@ -135,7 +134,7 @@ class ServicioAutoriaImplTest {
 
         assertEquals("grafo_fiebre_en_ninos_pequenos", dto.grafoId());
         assertEquals("Fiebre en niños pequeños", dto.nombre());
-        assertEquals("neurologico", dto.categoria());
+        assertEquals("Actividad y color", dto.categoria());
         assertEquals("Fiebre o calentura", dto.etiquetaOpcion());
         assertEquals(EstadoBorrador.BORRADOR, dto.estado());
         assertTrue(dto.nodos().isEmpty());
@@ -175,7 +174,7 @@ class ServicioAutoriaImplTest {
     @Test
     void sinNombreParaLaFamiliaSeRechaza() {
         EdicionInvalidaException e = assertThrows(EdicionInvalidaException.class,
-                () -> servicio.crear(new SubgrafoRequest("Ictericia en la piel", "puente_piel", "  ", null, null),
+                () -> servicio.crear(new SubgrafoRequest("Ictericia en la piel", "puente_cabeza", "  ", null, null),
                         MEDICO_A));
 
         assertTrue(e.getMessage().contains("familias"));
@@ -302,7 +301,7 @@ class ServicioAutoriaImplTest {
         assertEquals(LienzoFiebre.completo(), b.getDocumento());
         assertEquals("Fiebre", dto.nombre());
         assertEquals("puente_neuro", dto.puenteId());
-        assertEquals("neurologico", dto.categoria());
+        assertEquals("Actividad y color", dto.categoria());
         assertEquals("Fiebre o temperatura alta", dto.etiquetaOpcion());
     }
 

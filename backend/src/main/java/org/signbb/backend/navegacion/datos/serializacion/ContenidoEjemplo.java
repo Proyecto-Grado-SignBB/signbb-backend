@@ -9,33 +9,32 @@ import org.signbb.backend.reglas.datos.serializacion.BaseReglasParser;
 import org.springframework.core.io.ClassPathResource;
 
 /**
- * Contenido clínico de ejemplo: el grafo raíz del sistema y, para tests y
- * demo, los tres subgrafos de respiración, gastrointestinal y actividad/color,
- * cada uno con su base de reglas.
+ * Contenido clínico real del sistema: el grafo raíz que siembra
+ * {@code DatabaseInit} y los subgrafos con sus reglas del seed de demo.
  *
  * <p>
- * Solo el grafo raíz es semilla de {@code DatabaseInit}. Los subgrafos y sus
- * reglas viven en el classpath de pruebas ({@code src/test/resources}) y no se
- * cargan en el runtime: se usarán en la fase de datos (seed de pruebas y
- * demo). Reúne en un solo lugar las rutas y la composición para que tests y
- * demo usen el mismo contenido.
+ * La raíz y los subgrafos viven en {@code src/main/resources}: la misma fuente
+ * que usa el sistema en runtime. Los tests cargan este contenido para no
+ * mantener una copia distinta de las categorías, preguntas y opciones.
  */
 public final class ContenidoEjemplo {
 
-    /** Grafo raíz del sistema. */
+    /** Grafo raíz del sistema (el mismo que siembra {@code DatabaseInit}). */
     public static final String RUTA_RAIZ = "static/grafo_sistema/grafo_raiz.json";
 
-    /** Subgrafos de ejemplo (classpath de pruebas), uno por categoría. */
+    /** Subgrafos publicados por el seed de demo, uno por categoría. */
     public static final List<String> RUTAS_SUBGRAFOS = List.of(
-            "static/grafo_sistema/grafo_respiracion.json",
-            "static/grafo_sistema/grafo_gastro.json",
-            "static/grafo_sistema/grafo_activo_color.json");
+            "seed/demo/grafo_respiracion.json",
+            "seed/demo/grafo_gastro.json",
+            "seed/demo/grafo_activo_color.json",
+            "seed/demo/grafo_cabeza.json");
 
-    /** Bases de reglas de los subgrafos de ejemplo (classpath de pruebas). */
+    /** Bases de reglas de los subgrafos del seed de demo. */
     public static final List<String> RUTAS_REGLAS = List.of(
-            "static/grafo_sistema/reglas_respiracion.json",
-            "static/grafo_sistema/reglas_gastro.json",
-            "static/grafo_sistema/reglas_activo_color.json");
+            "seed/demo/reglas_respiracion.json",
+            "seed/demo/reglas_gastro.json",
+            "seed/demo/reglas_activo_color.json",
+            "seed/demo/reglas_cabeza.json");
 
     private ContenidoEjemplo() {
     }

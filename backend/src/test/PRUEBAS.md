@@ -22,10 +22,6 @@ Las pruebas de integración usan `@SpringBootTest` o **servicios reales**
 (PostgreSQL y Redis de `contenedores/compose.yaml`); el CI los levanta como
 servicios efímeros (`signbb-backend/.github/workflows/build.yml`).
 
-`AutoriaIntegracionTest` está **temporalmente deshabilitada** con `@Disabled`
-mientras se revisa la suite unitaria por separado; sigue formando parte de la
-documentación y se puede volver a activar quitando la anotación.
-
 ## Tipos de prueba
 
 - **Unitarias (JUnit 5 ± Mockito):** no arrancan el contexto de Spring ni usan
@@ -52,7 +48,7 @@ cubrir todos los bordes técnicos ni combinaciones internas.
 
 | CU | Pruebas principales |
 |---|---|
-| CU01 Consultar signos de alarma | `MotorNavegacionTest`, `ServicioNavegacionImplTest`, `ConsultaIntegracionTest`, `AutoriaIntegracionTest` (integración, deshabilitada) |
+| CU01 Consultar signos de alarma | `MotorNavegacionTest`, `ServicioNavegacionImplTest`, `ConsultaIntegracionTest`, `AutoriaIntegracionTest` (integración) |
 | CU02 Crear grafo clínico | `EditorLienzoTest`, `ValidadorLienzoTest`, `CompiladorSubgrafoTest`, `ServicioAutoriaImplTest` |
 | CU03 Navegar grafo | `MotorNavegacionTest`, `MotorNavegacionColaTest`, `MotorNavegacionRetrocederTest`, `OrdenColaTest`, `ConsultaIntegracionTest` |
 | CU04 Consultar historial | `ServicioRecorridosImplTest`, `ControladorConsultaTest` |
@@ -90,12 +86,12 @@ listan en la sección siguiente.
 |---|---:|---|---|---|
 | `BackendApplicationTests` | 1 | PostgreSQL + Redis; `@SpringBootTest` | Activa | — |
 | `PersistenciaEstructuraJsonTest` | 3 | PostgreSQL + Redis; `@SpringBootTest` | Activa | — |
-| `AutoriaIntegracionTest` | 2 | PostgreSQL + Redis; `@SpringBootTest` | **Omitida (`@Disabled`)** | \ref pruebas_autoria "Ver página" |
+| `AutoriaIntegracionTest` | 2 | PostgreSQL + Redis; `@SpringBootTest` | Activa | \ref pruebas_autoria "Ver página" |
 | `CacheRedisIntegracionTest` | 2 | PostgreSQL + Redis real; `@SpringBootTest` | Activa; se salta si no hay cache | \ref pruebas_cache "Ver página" |
 | `seguridad/ReglasAccesoIntegracionTest` | 14 | PostgreSQL + Redis; `@SpringBootTest` | Activa | \ref pruebas_seguridad "Ver página" |
 | `cache/ColaSeleccionMultipleRedisIntegracionTest` | 3 | Redis real; sin Spring ni PostgreSQL | Activa; se salta si no hay Redis | \ref pruebas_cache "Ver página" |
 | `ConsultaIntegracionTest` | 2 | PostgreSQL + Redis; `@SpringBootTest` | Activa | \ref pruebas_navegacion "Ver página" |
-| **Total integración** | **27** | | **25 activas + 2 omitidas** | |
+| **Total integración** | **27** | | **27 activas** | |
 
 `BackendApplicationTests` comprueba que el contexto carga y que las migraciones
 de Flyway dejan el esquema que esperan las entidades. `PersistenciaEstructuraJsonTest`
@@ -110,14 +106,13 @@ una versión del fixture de navegación.
 | Tipo | Presentes | Ejecutadas | Omitidas |
 |---|---:|---:|---:|
 | Unitarias | 337 | 337 | 0 |
-| Integración | 27 | 25 | 2 |
-| **Total** | **364** | **362** | **2** |
+| Integración | 27 | 27 | 0 |
+| **Total** | **364** | **364** | **0** |
 
 ## Resultados
 
-La ejecución local del 31-oct-2026 sobre `develop` corre **364 pruebas: 362
-pasan y 2 se omiten** (`AutoriaIntegracionTest`, deshabilitada). El CI ejecuta
-`./mvnw -B verify` con PostgreSQL y Redis como servicios.
+La ejecución local del 31-oct-2026 sobre `develop` corre **364 pruebas, todas
+pasan**. El CI ejecuta `./mvnw -B verify` con PostgreSQL y Redis como servicios.
 
 ## Cobertura
 
@@ -126,7 +121,7 @@ El backend usa **JaCoCo**. El informe se genera en cada `test`:
     ./mvnw test
     # abrir target/site/jacoco/index.html
 
-En la corrida del 31-oct-2026 el informe marca **75,2 % de líneas** y **74,6 %
+En la corrida del 31-oct-2026 el informe marca **75,5 % de líneas** y **75,0 %
 de instrucciones**. Incluye desglose por paquete y por clase.
 
 Para el frontend, Angular genera la cobertura con el flag `--code-coverage`:

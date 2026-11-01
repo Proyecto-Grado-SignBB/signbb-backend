@@ -117,7 +117,7 @@ class PublicadorSubgrafoTest {
     void guardaElSubgrafoYLoEnlazaDesdeSuPreguntaPuente() {
         publicador.publicar(LienzoFiebre.borrador(LienzoFiebre.completo()), FECHA);
 
-        assertEquals(5, filas.size(), "raíz + 3 subgrafos del sistema + el nuevo");
+        assertEquals(6, filas.size(), "raíz + 4 subgrafos del sistema + el nuevo");
         assertEquals(LienzoFiebre.INICIO, documento("grafo_fiebre").graph().preguntaInicial());
 
         GrafoClinicoJson.Grafo raiz = documento(CompositorGrafoClinico.ID_RAIZ).graph();
@@ -139,7 +139,7 @@ class PublicadorSubgrafoTest {
 
         Nodo puente = tad.obtenerNodoPorId("puente_neuro").orElseThrow();
         List<Respuesta> opciones = tad.obtenerOpciones(puente);
-        assertEquals(List.of("iniciar", ETIQUETA), opciones.stream().map(Respuesta::getCondicion).toList());
+        assertEquals(List.of("Revisar actividad y color", ETIQUETA), opciones.stream().map(Respuesta::getCondicion).toList());
         assertEquals("grafo_fiebre/" + LienzoFiebre.INICIO, opciones.get(1).getDestino().getId());
     }
 
@@ -161,7 +161,7 @@ class PublicadorSubgrafoTest {
 
         publicador.publicar(borrador, FECHA);
 
-        assertEquals(5, filas.size());
+        assertEquals(6, filas.size());
         assertEquals(List.of(new GrafoClinicoJson.Arista("puente_neuro", "Tiene fiebre", REFERENCIA, true)),
                 aristasHaciaLaReferencia());
     }
@@ -198,7 +198,7 @@ class PublicadorSubgrafoTest {
 
         assertTrue(contenido.grafo().graph().nodes().containsKey("grafo_fiebre/" + LienzoFiebre.INICIO),
                 "el contenido trae el subgrafo recién publicado");
-        assertTrue(contenido.grafo().graph().nodes().containsKey("grafo_respiracion/q_resp_urgencia"),
+        assertTrue(contenido.grafo().graph().nodes().containsKey("grafo_respiracion/q_resp_gate_vista"),
                 "y el resto del contenido");
         verify(versiones, never()).registrar(any(), any(), any());
     }
@@ -232,7 +232,7 @@ class PublicadorSubgrafoTest {
 
         publicador.retirar(borrador);
 
-        assertEquals(4, filas.size(), "raíz + 3 subgrafos del sistema");
+        assertEquals(5, filas.size(), "raíz + 4 subgrafos del sistema");
         assertTrue(filas.stream().noneMatch(f -> "grafo_fiebre".equals(f.getEstructura().graph().id())));
         GrafoClinicoJson.Grafo raiz = documento(CompositorGrafoClinico.ID_RAIZ).graph();
         assertFalse(raiz.nodes().containsKey(REFERENCIA));
@@ -247,7 +247,7 @@ class PublicadorSubgrafoTest {
 
         GrafoClinico tad = contenidoNavegable();
         Nodo puente = tad.obtenerNodoPorId("puente_neuro").orElseThrow();
-        assertEquals(List.of("iniciar"), tad.obtenerOpciones(puente).stream()
+        assertEquals(List.of("Revisar actividad y color"), tad.obtenerOpciones(puente).stream()
                 .map(Respuesta::getCondicion).toList());
         assertTrue(tad.obtenerNodoPorId("grafo_fiebre/" + LienzoFiebre.INICIO).isEmpty());
     }
@@ -276,7 +276,7 @@ class PublicadorSubgrafoTest {
         assertTrue(origen.getValue().startsWith("Despublicación"));
         assertTrue(origen.getValue().contains("grafo_fiebre"));
         assertFalse(grafo.getValue().graph().nodes().containsKey("grafo_fiebre/" + LienzoFiebre.INICIO));
-        assertTrue(grafo.getValue().graph().nodes().containsKey("grafo_respiracion/q_resp_urgencia"));
+        assertTrue(grafo.getValue().graph().nodes().containsKey("grafo_respiracion/q_resp_gate_vista"));
     }
 
     @Test
@@ -286,7 +286,7 @@ class PublicadorSubgrafoTest {
 
         publicador.publicar(borrador, FECHA);
 
-        assertEquals(5, filas.size());
+        assertEquals(6, filas.size());
         assertEquals(List.of(new GrafoClinicoJson.Arista("puente_neuro", ETIQUETA, REFERENCIA, true)),
                 aristasHaciaLaReferencia());
     }

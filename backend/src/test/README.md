@@ -37,7 +37,7 @@ Con el template de Redis y los repositorios simulados (Mockito):
 ## RepositorioSesionRedisTest — sesiones en Redis
 
 Con un template simulado respaldado por un mapa en memoria y el contenido de
-prueba (grafo y reglas de `src/test/resources/static/grafo_sistema/`):
+prueba (raíz del sistema y subgrafos/reglas del seed de demo, vía `ContenidoEjemplo`):
 
 - **Round-trip EN_CURSO**: crear y buscar restaura respuestas acumuladas y
   la pregunta pendiente (reconstruida por id contra el grafo vigente).

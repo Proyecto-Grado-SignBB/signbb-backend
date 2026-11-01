@@ -86,7 +86,7 @@ final class LienzoFiebre {
         b.setGrafoId("grafo_fiebre");
         b.setNombre("Fiebre");
         b.setPuenteId("puente_neuro");
-        b.setCategoria("neurologico");
+        b.setCategoria("Actividad y color");
         b.setEtiquetaOpcion("Fiebre o temperatura alta");
         b.setAutor("Dra. Prueba");
         b.setInstitucion("Hospital de prueba");

@@ -39,8 +39,7 @@ variantes de 404 y detalles de caché.
 | `modelo` | `NodoLienzoTest` | 2 | JSON del nodo y compatibilidad con lienzos sin imágenes |
 
 En total son **107 pruebas unitarias**. Las 2 de integración
-(`AutoriaIntegracionTest`) se cuentan aparte y están deshabilitadas con
-`@Disabled` mientras se revisa la suite unitaria.
+(`AutoriaIntegracionTest`) se cuentan aparte.
 
 ## Fixture
 
@@ -122,4 +121,4 @@ Desde `backend/`:
 ## Resultados
 
 Tras el recorte del 31-oct-2026, el módulo tiene **107 pruebas unitarias** y la
-suite completa del backend **364** (2 omitidas por `AutoriaIntegracionTest`).
+suite completa del backend **364**.

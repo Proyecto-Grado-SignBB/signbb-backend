@@ -38,17 +38,20 @@ import com.jayway.jsonpath.JsonPath;
  * vuelve a consultar.
  *
  * <p>
- * La fuente de datos es el fixture de navegación de
- * {@code src/test/resources/static/grafo_sistema/}, cargado con
- * {@link ContenidoEjemplo}. La prueba registra una versión de contenido propia
- * y la borra al terminar; no depende del seed de demo ni de la versión vigente
- * del entorno.
+ * La fuente de datos es la raíz del sistema y los subgrafos/reglas del seed de
+ * demo, cargados con {@link ContenidoEjemplo}. La prueba registra una versión
+ * de contenido propia y la borra al terminar; no depende de que el seed de demo
+ * esté activo en la base ni de la versión vigente del entorno.
  */
 @SpringBootTest
 class ConsultaIntegracionTest {
 
-    private static final String RESPUESTA_INICIAR = "iniciar";
-    private static final String NINGUNO = "No, ninguno de los anteriores";
+    private static final String CATEGORIA = "Actividad y color";
+    private static final String REVISAR = "Revisar actividad y color";
+    private static final String SI = "Sí";
+    private static final String MOVIMIENTO = "Movimiento y tono";
+    private static final String ALARMA = "Mucho más dormido / cuesta despertarlo";
+    private static final String NO = "No";
 
     @Autowired
     private WebApplicationContext contexto;
@@ -116,18 +119,14 @@ class ConsultaIntegracionTest {
     void elRecorridoNormalLlegaANormalYSePuedeConsultarDespues() throws Exception {
         String id = iniciar();
 
-        assertEquals("puente_respiracion", responder(id, "{\"respuesta\":\"respiracion\"}"));
-        assertEquals("grafo_respiracion/q_resp_urgencia",
-                responder(id, "{\"respuesta\":\"" + RESPUESTA_INICIAR + "\"}"));
-        assertEquals("grafo_respiracion/q_resp_consulta",
-                responder(id, "{\"respuesta\":\"" + NINGUNO + "\"}"));
-        assertEquals("grafo_respiracion/q_resp_normal",
-                responder(id, "{\"respuesta\":\"" + NINGUNO + "\"}"));
+        assertEquals("puente_neuro", responder(id, "{\"respuesta\":\"" + CATEGORIA + "\"}"));
+        assertEquals("grafo_activo_color/q_neuro_gate",
+                responder(id, "{\"respuesta\":\"" + REVISAR + "\"}"));
 
-        String cuerpo = responderCuerpo(id, "{\"respuesta\":\"No, no presenta anomalías\"}");
+        String cuerpo = responderCuerpo(id, "{\"respuesta\":\"" + NO + "\"}");
         assertEquals("FINALIZADO", JsonPath.read(cuerpo, "$.estado"));
         assertEquals("NORMAL", JsonPath.read(cuerpo, "$.resultado.nivel"));
-        assertEquals("grafo_respiracion/normal_1", JsonPath.read(cuerpo, "$.resultado.destinoId"));
+        assertEquals("grafo_activo_color/T_NORMAL", JsonPath.read(cuerpo, "$.resultado.destinoId"));
         assertTrue(((List<?>) JsonPath.read(cuerpo, "$.resultado.razones")).isEmpty());
 
         MvcResult consulta = mvc.perform(conToken(get("/api/recorridos/{id}", id), padre.token()))
@@ -141,15 +140,17 @@ class ConsultaIntegracionTest {
     void unSignoDeAlarmaLlegaAUrgenciaPorLaApi() throws Exception {
         String id = iniciar();
 
-        responder(id, "{\"respuesta\":\"respiracion\"}");
-        responder(id, "{\"respuesta\":\"" + RESPUESTA_INICIAR + "\"}");
+        responder(id, "{\"respuesta\":\"" + CATEGORIA + "\"}");
+        responder(id, "{\"respuesta\":\"" + REVISAR + "\"}");
+        responder(id, "{\"respuesta\":\"" + SI + "\"}");
+        responder(id, "{\"respuesta\":\"" + MOVIMIENTO + "\"}");
 
-        String cuerpo = responderCuerpo(id, "{\"respuesta\":\"Quejido al respirar\"}");
+        String cuerpo = responderCuerpo(id, "{\"respuesta\":\"" + ALARMA + "\"}");
         assertEquals("FINALIZADO", JsonPath.read(cuerpo, "$.estado"));
         assertEquals("URGENCIA", JsonPath.read(cuerpo, "$.resultado.nivel"));
-        assertEquals("grafo_respiracion/urgencia_1", JsonPath.read(cuerpo, "$.resultado.destinoId"));
+        assertEquals("grafo_activo_color/T_URGENCIA", JsonPath.read(cuerpo, "$.resultado.destinoId"));
         assertTrue(((List<?>) JsonPath.read(cuerpo, "$.resultado.razones"))
-                .contains("Regla Respiración Urgencia"));
+                .contains("Urgencia Actividad y Color"));
         assertTrue(((List<?>) JsonPath.read(cuerpo, "$.resultado.caminoCausal")).size() > 0);
     }
 
@@ -162,7 +163,7 @@ class ConsultaIntegracionTest {
         recorridosCreados.add(id);
         assertEquals("pregunta_inicial", JsonPath.read(cuerpo, "$.pregunta.id"));
         List<String> opciones = JsonPath.read(cuerpo, "$.pregunta.opciones");
-        assertTrue(opciones.contains("respiracion"), "opciones: " + opciones);
+        assertTrue(opciones.contains(CATEGORIA), "opciones: " + opciones);
         return id;
     }
 

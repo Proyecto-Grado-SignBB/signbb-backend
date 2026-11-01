@@ -62,7 +62,7 @@ class ControladorRevisionTest {
     }
 
     private static SubgrafoDTO en(EstadoBorrador estado, String comentario) {
-        return new SubgrafoDTO(1L, "grafo_fiebre", "Fiebre", "puente_neuro", "neurologico", "Fiebre", "Dra. A",
+        return new SubgrafoDTO(1L, "grafo_fiebre", "Fiebre", "puente_neuro", "Actividad y color", "Fiebre", "Dra. A",
                 null, estado, null, List.of(), List.of(), null, null, null, false, 10L, comentario, null);
     }
 

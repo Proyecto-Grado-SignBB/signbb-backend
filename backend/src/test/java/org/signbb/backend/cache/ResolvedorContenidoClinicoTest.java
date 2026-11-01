@@ -78,7 +78,7 @@ class ResolvedorContenidoClinicoTest {
         when(valores.get(ResolvedorContenidoClinico.CLAVE_GRAFO))
                 .thenReturn(new ObjectMapper().writeValueAsString(compuesto));
 
-        assertEquals(33, resolvedor.documentoGrafo().graph().nodes().size());
+        assertEquals(40, resolvedor.documentoGrafo().graph().nodes().size());
         verify(grafos, never()).findAll();
     }
 
@@ -90,8 +90,8 @@ class ResolvedorContenidoClinicoTest {
         GrafoClinicoJson documento = resolvedor.documentoGrafo();
 
         // Raíz sin referencias ni puentes vacíos (2) + subgrafo de respiración (6).
-        assertEquals(8, documento.graph().nodes().size());
-        assertTrue(documento.graph().nodes().containsKey("grafo_respiracion/q_resp_urgencia"));
+        assertEquals(11, documento.graph().nodes().size());
+        assertTrue(documento.graph().nodes().containsKey("grafo_respiracion/q_resp_gate_vista"));
         verify(valores).set(eq(ResolvedorContenidoClinico.CLAVE_GRAFO), anyString(),
                 eq(Duration.ofHours(24)));
         verify(valores).set(eq(ResolvedorContenidoClinico.CLAVE_REGLAS), anyString(),
@@ -105,7 +105,7 @@ class ResolvedorContenidoClinicoTest {
         when(grafos.findAll()).thenReturn(List.of(filaRaiz, filaSubgrafo));
         when(bases.findAll()).thenReturn(List.of(filaReglas));
 
-        assertEquals(8, resolvedor.documentoGrafo().graph().nodes().size());
+        assertEquals(11, resolvedor.documentoGrafo().graph().nodes().size());
     }
 
     @Test

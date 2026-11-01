@@ -65,7 +65,7 @@ class ControladorAutoriaTest {
     }
 
     private static SubgrafoDTO vacio() {
-        return new SubgrafoDTO(1L, "grafo_fiebre", "Fiebre", "puente_neuro", "neurologico", "Fiebre", null, null,
+        return new SubgrafoDTO(1L, "grafo_fiebre", "Fiebre", "puente_neuro", "Actividad y color", "Fiebre", null, null,
                 EstadoBorrador.BORRADOR, null, List.of(), List.of(), null, null, null, false, 10L, null, null);
     }
 

@@ -10,7 +10,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.signbb.backend.autoria.controladores.BaseReglaDTO;
 import org.signbb.backend.autoria.controladores.BaseReglaRequest;
@@ -35,6 +34,7 @@ import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
 import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico;
 import org.signbb.backend.navegacion.datos.repositorios.RepositorioVersionContenido;
 import org.signbb.backend.navegacion.datos.serializacion.CompositorGrafoClinico;
+import org.signbb.backend.navegacion.datos.serializacion.ContenidoEjemplo;
 import org.signbb.backend.navegacion.datos.serializacion.GrafoClinicoJson;
 import org.signbb.backend.navegacion.modelo.ContextoClinico;
 import org.signbb.backend.navegacion.servicios.ServicioNavegacion;
@@ -62,7 +62,6 @@ import org.springframework.boot.test.context.SpringBootTest;
  * El autor es una cuenta real de médico (se crea la primera vez): la base
  * exige que {@code autor_id} exista en {@code usuario}.
  */
-@Disabled("Integración con PostgreSQL/Redis: se revisa aparte de la suite unitaria")
 @SpringBootTest
 class AutoriaIntegracionTest {
 
@@ -112,7 +111,12 @@ class AutoriaIntegracionTest {
 
     @BeforeEach
     void guardarRaiz() {
-        raizOriginal = filaRaiz().getEstructura();
+        GrafoClinicoEntity raiz = filaRaiz();
+        raizOriginal = raiz.getEstructura();
+        raiz.setEstructura(ContenidoEjemplo.raiz());
+        grafos.save(raiz);
+        resolvedor.invalidar();
+        contexto.recargar();
         ultimaVersionAntes = versiones.idMasReciente();
         UsuarioEntity cuenta = usuarios.findByCorreo(CORREO_AUTOR).orElseGet(() -> {
             UsuarioEntity u = new UsuarioEntity();
@@ -198,7 +202,7 @@ class AutoriaIntegracionTest {
 
         RecorridoDTO r = navegacion.iniciar();
         String id = r.recorridoId();
-        r = navegacion.responder(id, "neurologico");
+        r = navegacion.responder(id, "Actividad y color");
         assertEquals("puente_neuro", r.pregunta().id());
         assertTrue(r.pregunta().opciones().contains(ETIQUETA), "aparece la opción del subgrafo nuevo");
 
@@ -257,7 +261,7 @@ class AutoriaIntegracionTest {
 
         RecorridoDTO r = navegacion.iniciar();
         String id = r.recorridoId();
-        navegacion.responder(id, "neurologico");
+        navegacion.responder(id, "Actividad y color");
         navegacion.responder(id, etiqueta);
         r = navegacion.responder(id, "Menos de 38 °C");
         assertEquals("FINALIZADO", r.estado());

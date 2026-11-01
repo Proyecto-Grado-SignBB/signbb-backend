@@ -34,16 +34,19 @@ import org.signbb.backend.reglas.servicios.ServicioReglasImpl;
 
 /**
  * Tests del servicio de navegación (la fachada que usa el controlador REST)
- * sobre el contenido compuesto y un almacén de sesiones en memoria de prueba:
- * abrir un recorrido, responder, consultar y volver atrás guardando siempre la
- * sesión, más los errores de un recorrido inexistente o una respuesta vacía.
+ * sobre el contenido real del seed y un almacén de sesiones en memoria:
+ * iniciar, responder, consultar y retroceder guardando siempre la sesión.
  */
 class ServicioNavegacionImplTest {
 
-    private static final String URGENCIA = "grafo_respiracion/q_resp_urgencia";
-
-    /** Respuesta que descarta los signos de alarma y avanza a la alerta media. */
-    private static final String NINGUNO = "No, ninguno de los anteriores";
+    private static final String CATEGORIA = "Actividad y color";
+    private static final String REVISAR = "Revisar actividad y color";
+    private static final String SI = "Sí";
+    private static final String MOVIMIENTO = "Movimiento y tono";
+    private static final String LLANTO = "Llanto e irritabilidad";
+    private static final String ALARMA = "Mucho más dormido / cuesta despertarlo";
+    private static final String CONSULTA = "Más irritable/llora más, pero calma";
+    private static final String NORMAL = "Sobresaltos mientras duerme y luego normal";
 
     private ContextoClinico contexto;
     private ServicioNavegacion servicio;
@@ -101,11 +104,23 @@ class ServicioNavegacionImplTest {
                 new RepositorioSesionEnMemoria());
     }
 
-    /** Abre un recorrido y lo lleva hasta la pregunta de signos de alarma. */
-    private String hastaUrgencia() {
+    /** Abre un recorrido y lo lleva hasta la pregunta de tono. */
+    private String hastaTono() {
         String id = servicio.iniciar().recorridoId();
-        servicio.responder(id, "respiracion");
-        servicio.responder(id, "iniciar");
+        servicio.responder(id, CATEGORIA);
+        servicio.responder(id, REVISAR);
+        servicio.responder(id, SI);
+        servicio.responder(id, MOVIMIENTO);
+        return id;
+    }
+
+    /** Abre un recorrido y lo lleva hasta la pregunta de llanto. */
+    private String hastaLlanto() {
+        String id = servicio.iniciar().recorridoId();
+        servicio.responder(id, CATEGORIA);
+        servicio.responder(id, REVISAR);
+        servicio.responder(id, SI);
+        servicio.responder(id, LLANTO);
         return id;
     }
 
@@ -136,18 +151,19 @@ class ServicioNavegacionImplTest {
 
     @Test
     void cadaRespuestaQuedaGuardadaYLaConsultaLaRefleja() {
-        String id = hastaUrgencia();
+        String id = hastaLlanto();
 
-        assertEquals(URGENCIA, servicio.consultar(id).pregunta().id());
-        assertEquals("grafo_respiracion/q_resp_consulta", servicio.responder(id, NINGUNO).pregunta().id());
-        assertEquals("grafo_respiracion/q_resp_consulta", servicio.consultar(id).pregunta().id());
+        assertEquals("grafo_activo_color/q_neuro_llanto", servicio.consultar(id).pregunta().id());
+        assertEquals("grafo_activo_color/T_CONSULTA", servicio.responder(id, CONSULTA).resultado().destinoId());
+        assertEquals("FINALIZADO", servicio.consultar(id).estado());
+        assertEquals("CONSULTAR_MEDICO", servicio.consultar(id).resultado().nivel());
     }
 
     @Test
     void seleccionMultipleConUnaAlertaCierraEnUrgencia() {
-        String id = hastaUrgencia();
+        String id = hastaTono();
 
-        RecorridoDTO urgencia = servicio.responder(id, List.of("Quejido al respirar", "Aleteo nasal"));
+        RecorridoDTO urgencia = servicio.responder(id, List.of(ALARMA, "Más flojito de lo habitual"));
 
         assertEquals("FINALIZADO", urgencia.estado());
         assertEquals("URGENCIA", urgencia.resultado().nivel());
@@ -156,28 +172,27 @@ class ServicioNavegacionImplTest {
 
     @Test
     void elCaminoDelResultadoTraeElTextoDeCadaPreguntaYLasRazonesSonNombres() {
-        String id = hastaUrgencia();
-        String textoUrgencia = servicio.consultar(id).pregunta().texto();
+        String id = hastaTono();
+        String textoTono = servicio.consultar(id).pregunta().texto();
 
-        RecorridoDTO cierre = servicio.responder(id, "Quejido al respirar");
+        RecorridoDTO cierre = servicio.responder(id, ALARMA);
 
         List<PasoCausalDTO> camino = cierre.resultado().caminoCausal();
         PasoCausalDTO ultimo = camino.get(camino.size() - 1);
         PasoCausalDTO previo = camino.get(camino.size() - 2);
-        // lo cierra una regla, no una arista: el terminal llega sin condición
         assertEquals("", ultimo.condicion());
         assertEquals(cierre.resultado().mensaje(), ultimo.contenido());
-        assertEquals(URGENCIA, previo.nodoId());
-        assertEquals(textoUrgencia, previo.contenido());
-        assertEquals(List.of("Regla Respiración Urgencia"), cierre.resultado().razones());
+        assertEquals("grafo_activo_color/q_neuro_tono", previo.nodoId());
+        assertEquals(textoTono, previo.contenido());
+        assertEquals(List.of("Urgencia Actividad y Color"), cierre.resultado().razones());
     }
 
     @Test
     void unRecorridoFinalizadoNoAceptaMasRespuestas() {
-        String id = hastaUrgencia();
-        RecorridoDTO cierre = servicio.responder(id, "Quejido al respirar");
+        String id = hastaTono();
+        RecorridoDTO cierre = servicio.responder(id, ALARMA);
 
-        RecorridoDTO otraVez = servicio.responder(id, NINGUNO);
+        RecorridoDTO otraVez = servicio.responder(id, NORMAL);
 
         assertEquals("FINALIZADO", otraVez.estado());
         assertEquals(cierre.resultado().destinoId(), otraVez.resultado().destinoId());
@@ -192,26 +207,26 @@ class ServicioNavegacionImplTest {
 
     @Test
     void retrocederQuedaGuardadoYLaConsultaLoRefleja() {
-        String id = hastaUrgencia();
-        servicio.responder(id, NINGUNO);
+        String id = hastaTono();
+        servicio.responder(id, NORMAL);
 
         RecorridoDTO atras = servicio.retroceder(id);
 
         assertEquals("EN_CURSO", atras.estado());
-        assertEquals(URGENCIA, atras.pregunta().id());
-        assertEquals(URGENCIA, servicio.consultar(id).pregunta().id());
+        assertEquals("grafo_activo_color/q_neuro_tono", atras.pregunta().id());
+        assertEquals("grafo_activo_color/q_neuro_tono", servicio.consultar(id).pregunta().id());
     }
 
     @Test
     void trasRetrocederSePuedeCambiarLaRespuesta() {
-        String id = hastaUrgencia();
-        assertEquals("EN_CURSO", servicio.responder(id, NINGUNO).estado());
+        String id = hastaTono();
+        assertEquals("FINALIZADO", servicio.responder(id, NORMAL).estado());
         servicio.retroceder(id);
 
-        RecorridoDTO conUrgencia = servicio.responder(id, "Quejido al respirar");
+        RecorridoDTO conAlarma = servicio.responder(id, ALARMA);
 
-        assertEquals("FINALIZADO", conUrgencia.estado());
-        assertEquals("URGENCIA", conUrgencia.resultado().nivel());
-        assertEquals("grafo_respiracion/urgencia_1", conUrgencia.resultado().destinoId());
+        assertEquals("FINALIZADO", conAlarma.estado());
+        assertEquals("URGENCIA", conAlarma.resultado().nivel());
+        assertEquals("grafo_activo_color/T_URGENCIA", conAlarma.resultado().destinoId());
     }
 }
