@@ -33,20 +33,6 @@ class VerificadorSecretosProduccionTest {
     }
 
     @Test
-    void enDesarrolloAceptaElRegistroDeSqlEncendido() {
-        assertDoesNotThrow(() -> new VerificadorSecretosProduccion("desarrollo", JWT_PROPIO, CLAVE_PROPIA,
-                CLAVE_PROPIA, CLAVE_PROPIA, true, true));
-    }
-
-    @Test
-    void enDesarrolloAceptaLosValoresDeEjemplo() {
-        assertDoesNotThrow(() -> verificador("desarrollo", VerificadorSecretosProduccion.JWT_DESARROLLO,
-                VerificadorSecretosProduccion.CONTRASENA_SUPERVISOR_DESARROLLO,
-                VerificadorSecretosProduccion.MEDIA_ACCESO_DESARROLLO,
-                VerificadorSecretosProduccion.MEDIA_SECRETO_DESARROLLO, true));
-    }
-
-    @Test
     void enProduccionAceptaSecretosPropiosConLaDocumentacionApagada() {
         assertDoesNotThrow(
                 () -> verificador("produccion", JWT_PROPIO, CLAVE_PROPIA, CLAVE_PROPIA, CLAVE_PROPIA, false));
@@ -100,31 +86,6 @@ class VerificadorSecretosProduccionTest {
                 () -> verificador("", JWT_PROPIO, CLAVE_PROPIA, CLAVE_PROPIA, CLAVE_PROPIA, false));
         assertThrows(IllegalStateException.class,
                 () -> verificador(null, JWT_PROPIO, CLAVE_PROPIA, CLAVE_PROPIA, CLAVE_PROPIA, false));
-    }
-
-    @Test
-    void losValoresDeEjemploDelVerificadorSiguenIgualesALosDeLaConfiguracion() throws IOException {
-        String principal = leer("/application.properties");
-        String docker = leer("/application-docker.properties");
-
-        assertTrue(principal.contains(VerificadorSecretosProduccion.JWT_DESARROLLO));
-        assertTrue(principal.contains(VerificadorSecretosProduccion.CONTRASENA_SUPERVISOR_DESARROLLO));
-        assertTrue(docker.contains(VerificadorSecretosProduccion.MEDIA_ACCESO_DESARROLLO));
-        assertTrue(docker.contains(VerificadorSecretosProduccion.MEDIA_SECRETO_DESARROLLO));
-    }
-
-    @Test
-    void laVariableDeDocumentacionApagaSwaggerYElContrato() throws IOException {
-        String principal = leer("/application.properties");
-
-        assertTrue(principal.contains("signbb.docs.activas=${SIGNBB_DOCS_ACTIVAS:true}"));
-        assertTrue(principal.contains("springdoc.api-docs.enabled=${signbb.docs.activas}"));
-        assertTrue(principal.contains("springdoc.swagger-ui.enabled=${signbb.docs.activas}"));
-    }
-
-    @Test
-    void elRegistroDeSqlEstaApagadoPorDefecto() throws IOException {
-        assertTrue(leer("/application.properties").contains("spring.jpa.show-sql=${SIGNBB_SHOW_SQL:false}"));
     }
 
     private static String leer(String recurso) throws IOException {

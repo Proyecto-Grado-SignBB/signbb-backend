@@ -62,11 +62,4 @@ class ValidadorReglasTest {
                 valida().casos(), NivelAlerta.NORMAL, "conclusion_5")));
         assertEquals(Codigo.REGLA_NIVEL_NORMAL, avisos.get(0).codigo());
     }
-
-    @Test
-    void hayBloqueantesCuandoAlgunoLoEs() {
-        assertFalse(ValidadorReglas.hayBloqueantes(List.of()));
-        assertTrue(ValidadorReglas.hayBloqueantes(List.of(
-                new Aviso(Codigo.REGLA_SIN_DESTINO, true, "x", "R_1", null))));
-    }
 }

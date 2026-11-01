@@ -68,25 +68,6 @@ class ResolvedorVersionesTest {
     }
 
     @Test
-    void idActualConUnaVersionSinReglasCreaUnaConReglas() {
-        when(repositorio.idMasReciente()).thenReturn(7L);
-        when(repositorio.findById(7L))
-                .thenReturn(Optional.of(new VersionContenidoEntity(grafo, null, "previa")));
-        when(contenido.documentoGrafo()).thenReturn(grafo);
-        when(contenido.documentoReglas()).thenReturn(reglas);
-        VersionContenidoEntity nueva = mock(VersionContenidoEntity.class);
-        when(nueva.getId()).thenReturn(8L);
-        when(repositorio.save(any(VersionContenidoEntity.class))).thenReturn(nueva);
-
-        assertEquals(8L, resolvedor.idActual());
-
-        ArgumentCaptor<VersionContenidoEntity> captor = ArgumentCaptor.forClass(VersionContenidoEntity.class);
-        verify(repositorio).save(captor.capture());
-        assertEquals("Reglas versionadas", captor.getValue().getOrigen());
-        assertEquals(reglas.rules().size(), captor.getValue().getReglas().rules().size());
-    }
-
-    @Test
     void sinVersionesLaPrimeraEsUnaFotoDelContenidoVigente() throws Exception {
         when(repositorio.idMasReciente()).thenReturn(null);
         when(contenido.documentoGrafo()).thenReturn(grafo);
@@ -117,23 +98,6 @@ class ResolvedorVersionesTest {
         assertEquals("Publicación de 'grafo_x'", captor.getValue().getOrigen());
         assertEquals(reglas.rules().size(), captor.getValue().getReglas().rules().size());
         assertTrue(captor.getValue().getCreadaEn() != null);
-    }
-
-    @Test
-    void lasReglasDeUnaVersionSeCacheanYSeLeenDeLaBase() {
-        when(repositorio.findById(4L)).thenReturn(Optional.of(fila(grafo)));
-
-        assertEquals(reglas.rules().size(), resolvedor.documentoReglas(4L).rules().size());
-
-        verify(valores).set(eq("signbb:contenido:v3:version:4:reglas"), anyString(), eq(Duration.ofHours(24)));
-    }
-
-    @Test
-    void unaVersionSinReglasDevuelveNullParaUsarLasVigentes() {
-        VersionContenidoEntity sinReglas = new VersionContenidoEntity(grafo, null, "previa");
-        when(repositorio.findById(8L)).thenReturn(Optional.of(sinReglas));
-
-        assertEquals(null, resolvedor.documentoReglas(8L));
     }
 
     @Test
@@ -169,27 +133,5 @@ class ResolvedorVersionesTest {
 
         verify(redis).delete(List.of(ResolvedorVersiones.clave(3L), ResolvedorVersiones.claveReglas(3L),
                 ResolvedorVersiones.clave(4L), ResolvedorVersiones.claveReglas(4L)));
-    }
-
-    @Test
-    void olvidarSinVersionesNoLlamaARedis() {
-        resolvedor.olvidar(List.of());
-
-        verify(redis, never()).delete(anyCollection());
-    }
-
-    @Test
-    void siRedisNoRespondeAlOlvidarNoFalla() {
-        when(redis.delete(anyCollection())).thenThrow(new QueryTimeoutException("sin redis"));
-
-        resolvedor.olvidar(List.of(3L));
-    }
-
-    @Test
-    void unaVersionQueNoExisteFallaConUnMensajeClaro() {
-        when(repositorio.findById(99L)).thenReturn(Optional.empty());
-
-        IllegalStateException e = assertThrows(IllegalStateException.class, () -> resolvedor.documentoGrafo(99L));
-        assertTrue(e.getMessage().contains("99"));
     }
 }

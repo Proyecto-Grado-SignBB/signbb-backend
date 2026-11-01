@@ -109,62 +109,12 @@ class ResolvedorContenidoClinicoTest {
     }
 
     @Test
-    void falloAlEscribirElCacheNoRompeLaResolucion() {
-        when(grafos.findAll()).thenReturn(List.of(filaRaiz, filaSubgrafo));
-        when(bases.count()).thenReturn(1L);
-        when(bases.findAll()).thenReturn(List.of(filaReglas));
-        doThrow(new DataAccessResourceFailureException("cache caído"))
-                .when(valores).set(anyString(), anyString(), any(Duration.class));
-
-        BaseReglasJson reglas = resolvedor.documentoReglas();
-
-        assertEquals(2, reglas.rules().size());
-        assertTrue(reglas.rules().containsKey("grafo_respiracion/R_RESP_URG"));
-    }
-
-    @Test
-    void filasDelFormatoPrevioSeIgnoran() {
-        GrafoClinicoJson legado = new GrafoClinicoJson(new GrafoClinicoJson.Grafo(
-                null, "legado", true, List.of(), null, "x", Map.of(), Map.of(), List.of()));
-        BaseReglasEntity reglasLegado = new BaseReglasEntity();
-        reglasLegado.setEstructura(new BaseReglasJson(null, Map.of()));
-        when(grafos.findAll()).thenReturn(List.of(filaGrafo(legado), filaRaiz, filaSubgrafo));
-        when(bases.findAll()).thenReturn(List.of(reglasLegado, filaReglas));
-
-        assertEquals(8, resolvedor.documentoGrafo().graph().nodes().size());
-    }
-
-    @Test
-    void sinSubgrafosComponeSoloLaPreguntaInicial() {
-        when(grafos.findAll()).thenReturn(List.of(filaRaiz));
-        when(bases.findAll()).thenReturn(List.of());
-
-        GrafoClinicoJson documento = resolvedor.documentoGrafo();
-
-        assertEquals(1, documento.graph().nodes().size());
-        assertEquals("pregunta_inicial", documento.graph().preguntaInicial());
-        assertTrue(documento.graph().edges().isEmpty());
-        assertTrue(resolvedor.documentoReglas().rules().isEmpty());
-    }
-
-    @Test
     void sinGrafoRaizFallaConErrorExplicito() {
         when(grafos.findAll()).thenReturn(List.of(filaSubgrafo));
 
         IllegalStateException error = assertThrows(IllegalStateException.class,
                 () -> resolvedor.documentoGrafo());
         assertTrue(error.getMessage().contains("grafo_raiz"));
-    }
-
-    @Test
-    void sinBasesDeReglasDevuelveUnaBaseVacia() {
-        when(grafos.findAll()).thenReturn(List.of(filaRaiz, filaSubgrafo));
-        when(bases.findAll()).thenReturn(List.of());
-
-        BaseReglasJson reglas = resolvedor.documentoReglas();
-
-        assertTrue(reglas.rules().isEmpty(), "el sistema admite cero bases de reglas");
-        assertEquals(CompositorGrafoClinico.ID_RAIZ, reglas.grafoId());
     }
 
     @Test

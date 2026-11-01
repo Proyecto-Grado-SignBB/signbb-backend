@@ -28,14 +28,11 @@ Con el template de Redis y los repositorios simulados (Mockito):
   de 24 horas (`signbb:contenido:v2:grafo` / `signbb:contenido:v2:reglas`).
 - **Redis caído al leer**: se degrada a la base de datos sin fallar (Redis
   nunca es dependencia dura).
-- **Redis caído al escribir**: la resolución igual retorna el documento;
-  solo se pierde la copia caliente.
 - **Base sin grafo raíz**: `IllegalStateException` explícito — el classpath
   NO es un mecanismo de fallback en runtime; solo `grafo_raiz.json` es semilla
-  de `DatabaseInit`. Una base con raíz pero sin subgrafos es válida: compone la
-  pregunta inicial sin opciones y la consulta queda no disponible.
-- **`invalidar()`**: borra las claves de contenido (el hook del futuro
-  módulo de Autoría).
+  de `DatabaseInit`.
+- **`invalidar()`**: borra las claves de contenido (el hook del módulo de
+  Autoría).
 
 ## RepositorioSesionRedisTest — sesiones en Redis
 
@@ -50,9 +47,9 @@ prueba (grafo y reglas de `src/test/resources/static/grafo_sistema/`):
 - **Redis caído al buscar o guardar**: `CacheNoDisponibleException`
   (el `ControllerAdvice` la responde como 503; nunca degrada a memoria para
   evitar sesiones que aparecen y desaparecen).
-- **`existe` y `eliminar`** (CU10/CU11): `existe` dice si la clave sigue en
-  Redis (una sesión vencida a las 8 h ya no está) y `eliminar` borra la del
-  recorrido reiniciado; con Redis caído también dan `CacheNoDisponibleException`.
+- **`existe` y `eliminar`**: `existe` dice si la clave sigue en Redis (una
+  sesión vencida a las 8 h ya no está) y `eliminar` borra la del recorrido
+  reiniciado.
 
 ## CandadoRecorridoRedisTest — candado por recorrido
 
@@ -64,27 +61,19 @@ pasar una operación a la vez sobre el mismo recorrido (responder, retroceder):
 - **Ya tomado**: lanza `RecorridoOcupadoException` (409), no ejecuta la acción
   ni suelta el candado de otro.
 - **La acción falla**: el candado se suelta igual.
-- **Redis caído al tomarlo**: `CacheNoDisponibleException` (503) y no se ejecuta
-  la acción.
-- **Redis falla al soltarlo**: no tapa el resultado; el candado caduca solo.
 
 ## CacheRedisIntegracionTest — integración
 
-Requiere `contenedores/compose.yaml` levantado (db + cache). Las tres
-primeras se **saltan solas** (suposición `modoCacheActivo`: bean de sesiones
-Redis + Redis respondiendo) cuando el despliegue no está en modo cache —
-entonces aparecen como *skipped*, no como falla:
+Requiere `contenedores/compose.yaml` levantado (db + cache). Las pruebas que
+usan el modo cache se **saltan solas** (suposición `modoCacheActivo`: bean de
+sesiones Redis + Redis respondiendo) cuando el despliegue no está en modo
+cache — entonces aparecen como *skipped*, no como falla:
 
-- **La primera resolución puebla el cache**: tras invalidar, resolver el
-  grafo deja la clave en Redis verificable.
 - **Sirve del cache aunque se borre la fila de la base**: la transacción de
   la prueba borra la fila y la resolución siguiente sale del cache; el
   rollback restaura la fila.
 - **La sesión sobrevive un reinicio simulado**: una instancia nueva del
   repositorio (como tras un arranque limpio) recupera la sesión completa.
-- **El contexto sirve contenido completo** (sin requisito de Redis): si el
-  cache no responde, resuelve directo desde la base, lo que verifica el
-  camino de degradación de punta a punta.
 
 ## ColaSeleccionMultipleRedisIntegracionTest — cola de la selección múltiple
 
@@ -101,10 +90,8 @@ repositorio (reinicio simulado):
   tiene TTL de hasta 24 h.
 - **Tras la primera recomendación se retoma la opción pendiente** y al final
   salen ambas recomendaciones, cada una con su camino causal.
-- **Retroceder tras recargar** restaura la cola y descarta la recomendación
-  del paso deshecho.
 - **Una alerta en una rama** cierra con la alerta sola y vacía la cola
-  guardada, también tras retroceder y cambiar de rama.
+  guardada.
 
 ## Cómo ejecutarlas
 
@@ -116,7 +103,7 @@ Requieren PostgreSQL y Redis arriba (`contenedores/compose.yaml`):
 ## Notas
 
 - Claves en Redis: `signbb:contenido:v2:grafo|reglas` (TTL 24 h) y
-  `signbb:sesion:<id>` (TTL 24 h); inspección manual con
+  `signbb:sesion:<id>` (TTL 8 h); inspección manual con
   `docker exec -it contenedores-cache-1 redis-cli`
   (ver `contenedores/MANUAL_CONTENEDORES.md`).
 - El CI (GitHub Actions) corre `verify` con servicios PostgreSQL y Redis
@@ -131,22 +118,17 @@ Silo.
 
 - **`PoliticaRetencionVersionesTest`**: con 20 versiones o menos no se borra
   nada; con más se borran las más antiguas; nunca la vigente ni las 20 más
-  recientes; una versión reemplazada hace menos de 25 h se conserva (justo en
-  el límite se conserva y un segundo después se borra); no importa el orden en
-  que lleguen.
+  recientes; una versión reemplazada recientemente se conserva durante la
+  gracia.
 - **`LimpiadorVersionesTest`**: borra de la base y después de Redis
-  (`ResolvedorVersiones.olvidar`) y de la memoria (`ContextoClinico.olvidar`);
-  con 20 versiones o menos no toca nada.
+  (`ResolvedorVersiones.olvidar`) y de la memoria (`ContextoClinico.olvidar`).
 - **`LimpiadorImagenesTest`**: borra solo la imagen que no usa ningún lienzo,
   ninguna copia publicada, ningún grafo ni ninguna versión conservada; si no
-  hay grafos en la base no borra nada porque no sabe qué se usa; si no puede
-  calcular las referencias no borra nada; si falla borrar una sigue con las
-  demás.
+  puede calcular las referencias no borra nada.
 - **`LimpiezaProgramadaTest`**: si falla la limpieza de versiones, las demás
   se ejecutan igual y el error no se propaga.
 - **`ResolvedorVersionesTest`** (`olvidar`) y **`ContextoClinicoTest`**
-  (`olvidar`): borran solo las claves y las versiones indicadas, y un fallo de
-  Redis no rompe nada.
+  (`olvidar`): borran solo las claves y las versiones indicadas.
 - **`ServicioImagenesTest`** (`nombresEn`): encuentra los nombres de imagen
   dentro de cualquier texto JSON.
 

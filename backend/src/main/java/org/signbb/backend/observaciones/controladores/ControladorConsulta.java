@@ -42,7 +42,7 @@ import jakarta.validation.Valid;
  * responde 404 para no revelar que existe.
  *
  * <p>
- * MODIFICADO (CU10/CU11): consultar, responder y retroceder revisan además que
+ * MODIFICADO (CU09): consultar, responder y retroceder revisan además que
  * la consulta siga vigente; si venció tras 8 horas sin actividad o ya se
  * reinició, responden 410. Se agrega {@code reiniciar}.
  *
@@ -189,7 +189,7 @@ public class ControladorConsulta {
 
     /**
      * {@code POST /api/recorridos/{id}/reiniciar}: deja la consulta como
-     * reiniciada y empieza una nueva desde la primera pregunta (CU11).
+     * reiniciada y empieza una nueva desde la primera pregunta (CU09).
      */
     @Operation(summary = "Reinicia la consulta",
             description = "Marca el recorrido como reiniciado (ABANDONADO), borra su sesión y "

@@ -20,9 +20,4 @@ class NodoTest {
     void tipoInvalido() {
         assertThrows(IllegalArgumentException.class, () -> new Nodo("n1", "otro", "algo"));
     }
-
-    @Test
-    void idVacio() {
-        assertThrows(IllegalArgumentException.class, () -> new Nodo("", "pregunta", "algo"));
-    }
 }

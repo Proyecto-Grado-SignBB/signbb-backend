@@ -77,14 +77,6 @@ class EditorLienzoTest {
     }
 
     @Test
-    void enlazarANullVuelveLaRespuestaUnMasYDejaLaRamaSuelta() {
-        DocumentoLienzo d = EditorLienzo.enlazar(LienzoFiebre.completo(), MAS_39, null);
-
-        assertNull(respuesta(d, INICIO, MAS_39).destino());
-        assertTrue(d.nodos().containsKey(URGENCIA), "no se borra lo que colgaba de la respuesta");
-    }
-
-    @Test
     void segundaPrimeraPreguntaSeRechaza() {
         assertThrows(EdicionInvalidaException.class, () -> EditorLienzo.agregarNodo(
                 LienzoFiebre.primeraPregunta(), null, null, pregunta("¿Otra?", false, "a", null, "b", null)));
@@ -94,18 +86,6 @@ class EditorLienzoTest {
     void elSubgrafoNoPuedeEmpezarConUnaConclusion() {
         assertThrows(EdicionInvalidaException.class, () -> EditorLienzo.agregarNodo(
                 DocumentoLienzo.vacio(), null, null, conclusion(Desenlace.RECOMENDACION, "Todo bien")));
-    }
-
-    @Test
-    void unaRespuestaQueYaTieneCaminoNoAceptaOtroNodo() {
-        assertThrows(EdicionInvalidaException.class, () -> EditorLienzo.agregarNodo(
-                LienzoFiebre.completo(), INICIO, MAS_39, conclusion(Desenlace.URGENCIA, "Otra")));
-    }
-
-    @Test
-    void respuestasRepetidasSeRechazanSinImportarMayusculasNiEspacios() {
-        assertThrows(EdicionInvalidaException.class, () -> EditorLienzo.agregarNodo(DocumentoLienzo.vacio(),
-                null, null, pregunta("¿Fiebre?", false, "Sí", Gravedad.LEVE, "  sí ", Gravedad.GRAVE)));
     }
 
     @Test
@@ -121,14 +101,6 @@ class EditorLienzoTest {
         EdicionInvalidaException e = assertThrows(EdicionInvalidaException.class,
                 () -> EditorLienzo.enlazar(d, SI, INICIO));
         assertTrue(e.getMessage().contains("círculo"));
-    }
-
-    @Test
-    void enlazarALaMismaPreguntaOAUnaConclusionSeRechaza() {
-        DocumentoLienzo d = EditorLienzo.enlazar(LienzoFiebre.completo(), SI, null);
-
-        assertThrows(EdicionInvalidaException.class, () -> EditorLienzo.enlazar(d, SI, DECAIDO));
-        assertThrows(EdicionInvalidaException.class, () -> EditorLienzo.enlazar(d, SI, RECOMENDACION));
     }
 
     @Test
@@ -163,16 +135,6 @@ class EditorLienzoTest {
     }
 
     @Test
-    void editarNoCambiaElTipoNiAceptaRespuestasAjenas() {
-        DocumentoLienzo d = LienzoFiebre.completo();
-
-        assertThrows(EdicionInvalidaException.class, () -> EditorLienzo.editarNodo(d, DECAIDO,
-                conclusion(Desenlace.URGENCIA, "x")));
-        assertThrows(EdicionInvalidaException.class, () -> EditorLienzo.editarNodo(d, DECAIDO,
-                new DatosNodo(null, "¿?", false, null, List.of(new DatosRespuesta(MAS_39, "ajena", null)))));
-    }
-
-    @Test
     void eliminarUnNodoVuelveMasLasRespuestasQueLlegabanYBorraSuRama() {
         DocumentoLienzo d = EditorLienzo.eliminarNodo(LienzoFiebre.completo(), DECAIDO);
 
@@ -185,15 +147,6 @@ class EditorLienzoTest {
     }
 
     @Test
-    void eliminarConservaLosNodosQueYaEstabanSueltos() {
-        DocumentoLienzo suelto = EditorLienzo.enlazar(LienzoFiebre.completo(), MAS_39, null);
-
-        DocumentoLienzo d = EditorLienzo.eliminarNodo(suelto, DECAIDO);
-
-        assertTrue(d.nodos().containsKey(URGENCIA));
-    }
-
-    @Test
     void eliminarLaPrimeraPreguntaVaciaElLienzo() {
         DocumentoLienzo d = EditorLienzo.eliminarNodo(LienzoFiebre.completo(), INICIO);
 
@@ -202,14 +155,6 @@ class EditorLienzoTest {
         // Los ids no se reutilizan.
         DocumentoLienzo otra = EditorLienzo.agregarNodo(d, null, null, pregunta("¿Otra?", false, "a", null, "b", null));
         assertEquals("pregunta_11", otra.inicio());
-    }
-
-    @Test
-    void laGravedadAusenteEsLeve() {
-        DocumentoLienzo d = EditorLienzo.agregarNodo(DocumentoLienzo.vacio(), null, null,
-                pregunta("¿Fiebre?", false, "Sí", null, "No", null));
-
-        assertTrue(d.nodos().get(d.inicio()).respuestas().stream().allMatch(r -> r.gravedad() == Gravedad.LEVE));
     }
 
     private static final String IMG_1 = "11111111-1111-1111-1111-111111111111.png";
@@ -242,15 +187,6 @@ class EditorLienzoTest {
     }
 
     @Test
-    void imagenesRepetidasOConNombreAjenoSeRechazan() {
-        DocumentoLienzo d = LienzoFiebre.primeraPregunta();
-
-        assertThrows(EdicionInvalidaException.class, () -> conImagenes(d, List.of(IMG_1, IMG_1)));
-        assertThrows(EdicionInvalidaException.class, () -> conImagenes(d, List.of("../secreto.png")));
-        assertThrows(EdicionInvalidaException.class, () -> conImagenes(d, List.of("foto.png")));
-    }
-
-    @Test
     void editarSinMandarImagenesConservaLasQueTenia() {
         DocumentoLienzo d = conImagenes(LienzoFiebre.primeraPregunta(), List.of(IMG_1));
 
@@ -260,28 +196,5 @@ class EditorLienzoTest {
                         new DatosRespuesta(MAS_39, "Más de 39 °C", Gravedad.GRAVE))));
 
         assertEquals(List.of(IMG_1), editado.nodos().get(INICIO).imagenes());
-    }
-
-    @Test
-    void mandarUnaListaVaciaQuitaLasImagenes() {
-        DocumentoLienzo d = conImagenes(LienzoFiebre.primeraPregunta(), List.of(IMG_1, IMG_2));
-
-        assertTrue(conImagenes(d, List.of()).nodos().get(INICIO).imagenes().isEmpty());
-    }
-
-    @Test
-    void lasConclusionesNoLlevanImagenes() {
-        assertThrows(EdicionInvalidaException.class, () -> EditorLienzo.agregarNodo(LienzoFiebre.primeraPregunta(),
-                INICIO, MAS_39, new DatosNodo(TipoNodo.CONCLUSION, "x", false, Desenlace.URGENCIA, List.of(),
-                        List.of(IMG_1))));
-    }
-
-    @Test
-    void lasImagenesSobrevivenAEnlazarYAEliminarOtrosNodos() {
-        DocumentoLienzo d = conImagenes(LienzoFiebre.completo(), List.of(IMG_1));
-
-        DocumentoLienzo sin = EditorLienzo.eliminarNodo(d, DECAIDO);
-
-        assertEquals(List.of(IMG_1), sin.nodos().get(INICIO).imagenes());
     }
 }

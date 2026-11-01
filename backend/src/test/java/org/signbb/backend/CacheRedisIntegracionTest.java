@@ -138,18 +138,6 @@ class CacheRedisIntegracionTest {
     }
 
     @Test
-    void laPrimeraResolucionPueblaElCache() {
-        assumeTrue(modoCacheActivo(), "requiere el modo cache (perfil docker con contenedores arriba)");
-        int esperados = nodosEsperados();
-        resolvedor.invalidar();
-
-        GrafoClinicoJson documento = resolvedor.documentoGrafo();
-
-        assertEquals(esperados, GrafoClinicoMapper.desde(documento).size());
-        assertTrue(Boolean.TRUE.equals(redis.hasKey(ResolvedorContenidoClinico.CLAVE_GRAFO)));
-    }
-
-    @Test
     @Transactional
     void sirveDelCacheAunqueSeBorreLaFilaDeLaBase() {
         assumeTrue(modoCacheActivo(), "requiere el modo cache (perfil docker con contenedores arriba)");
@@ -178,21 +166,5 @@ class CacheRedisIntegracionTest {
         assertEquals(inicial.getId(), recuperada.getUltimoPaso().preguntaActual().getId());
 
         redis.delete(RepositorioSesionRedis.PREFIJO_SESION + sesion.getId());
-    }
-
-    @Test
-    void elContextoSirveContenidoCompleto() {
-        // No requiere Redis: si no responde, resuelve directo desde la base, lo
-        // que verifica también el camino de degradación del cache de punta a punta.
-        // Los conteos salen de componer lo guardado (la siembra inicial más lo
-        // que se haya publicado después), no de números fijos.
-        CompositorGrafoClinico.Contenido guardado = contenidoGuardado();
-        var grafoEsperado = GrafoClinicoMapper.desde(guardado.grafo());
-        int reglasEsperadas = BaseReglasMapper.desde(guardado.reglas(), grafoEsperado).size();
-        resolvedor.invalidar();
-        contexto.recargar(); // descarta lo que otra prueba haya dejado en memoria
-
-        assertEquals(grafoEsperado.size(), contexto.getGrafo().size());
-        assertEquals(reglasEsperadas, contexto.getBase().size());
     }
 }

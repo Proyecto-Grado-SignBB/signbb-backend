@@ -16,7 +16,7 @@ import lombok.Data;
  * seguirlo.
  *
  * <p>
- * MODIFICADO (CU10/CU11): {@code estado} suma {@code VENCIDO} y
+ * MODIFICADO (CU09): {@code estado} suma {@code VENCIDO} y
  * {@code ABANDONADO} (ver {@code ServicioRecorridosImpl}); la columna ya era
  * texto, así que el esquema no cambia.
  *

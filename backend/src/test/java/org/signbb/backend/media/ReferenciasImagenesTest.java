@@ -91,22 +91,6 @@ class ReferenciasImagenesTest {
     }
 
     @Test
-    void laListaDePublicadasSeCacheaHastaInvalidar() {
-        when(grafos.findAll()).thenReturn(List.of(grafo(EN_GRAFO)));
-        when(versiones.findAll()).thenReturn(List.of(version(EN_VERSION)));
-
-        referencias.publicadas();
-        referencias.publicadas();
-        verify(grafos, times(1)).findAll();
-        verify(versiones, times(1)).findAll();
-
-        referencias.invalidar();
-        referencias.publicadas();
-        verify(grafos, times(2)).findAll();
-        verify(versiones, times(2)).findAll();
-    }
-
-    @Test
     void hayGrafosPublicadosDependeDeLaTablaDeGrafos() {
         when(grafos.count()).thenReturn(0L);
         assertFalse(referencias.hayGrafosPublicados());

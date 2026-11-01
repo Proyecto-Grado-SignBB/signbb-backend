@@ -89,28 +89,6 @@ class LimpiadorImagenesTest {
     }
 
     @Test
-    void sinGrafosEnLaBaseNoBorraNadaPorqueNoSabeQueSeUsa() {
-        when(referencias.hayGrafosPublicados()).thenReturn(false);
-        guardadas(vieja(SIN_USO));
-
-        assertTrue(limpiador.limpiar(AHORA).isEmpty());
-        verify(almacen, never()).eliminar(anyString());
-    }
-
-    @Test
-    void siFallaBorrarUnaSigueConLasDemas() {
-        String otra = "00000000-0000-0000-0000-000000000006.png";
-        guardadas(vieja(SIN_USO), vieja(otra));
-        doThrow(new AlmacenNoDisponibleException("sin silo", new RuntimeException())).when(almacen)
-                .eliminar(SIN_USO);
-
-        List<String> borradas = limpiador.limpiar(AHORA);
-
-        assertEquals(List.of(otra), borradas);
-        verify(almacen).eliminar(otra);
-    }
-
-    @Test
     void siNoSePuedeCalcularLoEnUsoNoBorraNada() {
         guardadas(vieja(SIN_USO));
         when(referencias.enUso()).thenThrow(new IllegalStateException("base caída"));

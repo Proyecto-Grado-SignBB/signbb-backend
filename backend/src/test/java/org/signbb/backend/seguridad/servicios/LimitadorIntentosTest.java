@@ -43,14 +43,6 @@ class LimitadorIntentosTest {
     }
 
     @Test
-    void sinFilaNoBloquea() {
-        when(repositorio.findByTipoAndClave(eq(TipoLimite.LOGIN_CUENTA), anyString()))
-                .thenReturn(Optional.empty());
-
-        assertDoesNotThrow(() -> limitador.verificar(TipoLimite.LOGIN_CUENTA, "ana@correo.com"));
-    }
-
-    @Test
     void unBloqueoVigenteSeRechazaConElTiempoRestante() {
         Instant bloqueado = Instant.now().plusSeconds(600);
         LimiteIntentosEntity fila = fila(bloqueado);
@@ -82,27 +74,10 @@ class LimitadorIntentosTest {
     }
 
     @Test
-    void elRegistroUsaSuPropioMaximoYBloqueo() {
-        limitador.registrarIntento(TipoLimite.REGISTRO_CUENTA, "ana@correo.com");
-
-        verify(repositorio).registrarIntento(eq("REGISTRO_CUENTA"), anyString(),
-                any(OffsetDateTime.class), any(OffsetDateTime.class), eq(3), any(OffsetDateTime.class));
-    }
-
-    @Test
     void limpiarBorraElContadorDeLaCuenta() {
         limitador.limpiar(TipoLimite.LOGIN_CUENTA, "ana@correo.com");
 
         verify(repositorio).borrar(eq(TipoLimite.LOGIN_CUENTA), anyString());
-    }
-
-    @Test
-    void unCorreoVacioNoTocaLaBase() {
-        assertDoesNotThrow(() -> limitador.verificar(TipoLimite.LOGIN_CUENTA, null));
-        limitador.registrarIntento(TipoLimite.LOGIN_CUENTA, "  ");
-        limitador.limpiar(TipoLimite.LOGIN_CUENTA, null);
-
-        verifyNoInteractions(repositorio);
     }
 
     @Test

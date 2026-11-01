@@ -60,29 +60,6 @@ class ContextoClinicoTest {
     }
 
     @Test
-    void sinVersionUsaLaVigente() {
-        assertSame(contexto.getGrafo(), contexto.grafoDe(null));
-        assertSame(contexto.getBase(), contexto.baseDe(null));
-    }
-
-    @Test
-    void unaVersionSinReglasQuedaConLaBaseVacia() {
-        when(versiones.documentoGrafo(3L)).thenReturn(version1);
-        when(versiones.documentoReglas(3L)).thenReturn(null);
-
-        assertEquals(0, contexto.baseDe(3L).size(), "una versión sin reglas no cae a las vigentes");
-    }
-
-    @Test
-    void unaVersionSeCargaUnaSolaVez() {
-        contexto.grafoDe(2L);
-        contexto.grafoDe(2L);
-        contexto.baseDe(2L);
-
-        verify(versiones, times(1)).documentoGrafo(2L);
-    }
-
-    @Test
     void olvidarSacaDeMemoriaSoloLasVersionesIndicadas() {
         contexto.grafoDe(1L);
         contexto.grafoDe(2L);

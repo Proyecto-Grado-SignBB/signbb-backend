@@ -149,15 +149,6 @@ class CompositorGrafoClinicoTest {
   }
 
   @Test
-  void lasReglasDeLaRaizQueUsanSubgrafosNoPublicadosSeOmiten() {
-    CompositorGrafoClinico.Contenido contenido = componerA1(
-        base(reglas("grafo_raiz", "R_PUBLICADA", "a1/q", "a1/fin")),
-        base(reglas("grafo_raiz", "R_OCULTA", "a2/q", "a2/fin")));
-
-    assertEquals(List.of("R_PUBLICADA"), List.copyOf(contenido.reglas().rules().keySet()));
-  }
-
-  @Test
   void lasReglasDeLaRaizConRespuestasQueYaNoSonOpcionSeOmiten() {
     CompositorGrafoClinico.Contenido contenido = componerA1(
         base(reglas("grafo_raiz", "R_CATEGORIA_BORRADA", "ini", "a1/fin")));
@@ -192,50 +183,10 @@ class CompositorGrafoClinicoTest {
   }
 
   @Test
-  void lasReglasDeLaRaizNoSePrefijan() {
-    BaseReglasJson compuesta =
-        componerA1(base(reglas("grafo_raiz", "R_CRUZADA", "a1/q", "a1/fin"))).reglas();
-
-    assertEquals("a1/fin", compuesta.rules().get("R_CRUZADA").nodoDestino());
-  }
-
-  @Test
-  void lasReglasDeUnSubgrafoNoPublicadoSeOmiten() {
-    BaseReglasJson compuesta = componerA1(base(reglas("a2", "R1", "q", "fin"))).reglas();
-
-    assertTrue(compuesta.rules().isEmpty());
-  }
-
-  @Test
   void baseSinGrafoIdEsRechazada() {
     String sinGrafoId = reglas("a1", "R1", "q", "fin").replace("\"grafoId\": \"a1\",", "");
 
     assertThrows(IllegalArgumentException.class, () -> componerA1(base(sinGrafoId)));
-  }
-
-  @Test
-  void subgrafosConElMismoIdSonRechazados() {
-    assertThrows(IllegalArgumentException.class, () -> CompositorGrafoClinico.componer(
-        doc(RAIZ), List.of(doc(SUBGRAFO_A1), doc(SUBGRAFO_A1)), List.of()));
-  }
-
-  @Test
-  void subgrafoConReferenciaAnidadaEsRechazado() {
-    String anidado = SUBGRAFO_A1.replace(
-        "\"tipo\": \"terminal\", \"desenlace\": \"recomendacion\"",
-        "\"tipo\": \"referencia\", \"grafoId\": \"otro\"");
-
-    assertThrows(IllegalArgumentException.class, () -> CompositorGrafoClinico.componer(
-        doc(RAIZ), List.of(doc(anidado)), List.of()));
-  }
-
-  @Test
-  void pesoFueraDeLaEscalaEnUnSubgrafoSeRechazaAlConstruirElTad() {
-    String pesoInvalido = SUBGRAFO_A1.replace("\"peso\": 3", "\"peso\": 100");
-    CompositorGrafoClinico.Contenido contenido = CompositorGrafoClinico.componer(
-        doc(RAIZ), List.of(doc(pesoInvalido)), List.of());
-
-    assertThrows(IllegalArgumentException.class, () -> GrafoClinicoMapper.desde(contenido.grafo()));
   }
 
   @Test

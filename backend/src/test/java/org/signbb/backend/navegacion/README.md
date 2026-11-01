@@ -7,28 +7,36 @@ recorrido, la lectura del contenido clínico, el motor de navegación y el
 servicio que usa la API REST. Son JUnit 5 **puro** (sin Spring, sin base de
 datos y sin Redis), así que corren igual en local y en GitHub Actions.
 
+## Enfoque
+
+Desde el 31-oct-2026 la suite se enfoca en el **comportamiento esperado de los
+CU01, CU03, CU08 y CU09** y en las excepciones que el SRS documenta. Se
+retiraron los bordes técnicos que no cambian el comportamiento observable:
+empates de la cola, destinos repetidos, formatos legados, copias defensivas y
+variantes de configuración inválida.
+
 ## Mapa de la suite
 
 | Paquete | Clase | Tests | Qué cubre |
 |---|---|---:|---|
-| `modelo` | `EstadoPacienteTest` | 9 | memoria de trabajo: respuestas, puntaje y la pila de pasos para retroceder |
-| `modelo` | `EstadoPacienteNavegacionTest` | 9 | cola de opciones pendientes, ruta, recomendaciones y su foto para deshacer |
-| `modelo` | `GrafoClinicoTest` | 25 | TAD del grafo: nodos, aristas, rutas válidas, ciclos, camino causal y tipo de interacción |
-| `modelo` | `NodoTest`, `RespuestaTest` | 3 + 2 | validación e igualdad de nodos y aristas |
-| `modelo` | `ResultadoPasoRecomendacionesTest` | 1 | recomendaciones del resultado de un paso |
-| `modelo` | `ContextoClinicoTest` | 7 | versiones del contenido clínico en memoria |
-| `datos.serializacion` | `GrafoClinicoMapperTest` | 15 | JSON ↔ TAD del grafo; rechazo de contenido inválido |
-| `datos.serializacion` | `CompositorGrafoClinicoTest` | 16 | composición raíz + subgrafos y prefijo de ids y reglas |
-| `datos.serializacion` | `JsonParserTest` | 11 | lectura de reglas en FND y rechazo de reglas mal formadas |
-| `motor` | `MotorNavegacionTest` | 10 | recorrido sobre el contenido del sistema: alertas por reglas y validación de respuestas |
-| `motor` | `MotorNavegacionRetrocederTest` | 8 | volver a la pregunta anterior con la pila de pasos |
-| `motor` | `MotorNavegacionLimiteTest` | 8 | máximo de preguntas (10 por defecto) |
-| `motor` | `MotorNavegacionColaTest` | 23 | cola de la selección múltiple: ramas, alertas, umbral, reglas y retroceder |
-| `motor` | `OrdenColaTest` | 7 | orden de la cola: gravedad, peso y antigüedad |
-| `servicios` | `ServicioNavegacionImplTest` | 12 | la fachada de la API: iniciar, responder, consultar, retroceder y errores; el camino del resultado trae el texto de cada pregunta y las razones son nombres de reglas |
-| `servicios` | `ServicioNavegacionVersionesTest` | 4 | un recorrido en curso conserva su versión del contenido |
+| `modelo` | `EstadoPacienteTest` | 5 | memoria de trabajo: respuestas, puntaje y pila de pasos |
+| `modelo` | `EstadoPacienteNavegacionTest` | 5 | cola, ruta, foto y restauración al retroceder |
+| `modelo` | `GrafoClinicoTest` | 10 | nodos, aristas, rutas, ciclos, paso, camino causal y tipo de interacción |
+| `modelo` | `NodoTest`, `RespuestaTest` | 2 + 1 | validación e igualdad de nodos y aristas |
+| `modelo` | `ResultadoPasoRecomendacionesTest` | 1 | recomendaciones con su camino |
+| `modelo` | `ContextoClinicoTest` | 4 | versiones del contenido clínico en memoria |
+| `datos.serializacion` | `GrafoClinicoMapperTest` | 7 | JSON ↔ TAD del grafo y rechazo de referencias inválidas |
+| `datos.serializacion` | `CompositorGrafoClinicoTest` | 10 | composición raíz + subgrafos, prefijo de ids y reglas |
+| `datos.serializacion` | `JsonParserTest` | 5 | reglas en FND y rechazo de destinos inválidos |
+| `motor` | `MotorNavegacionTest` | 7 | recorrido, alertas y respuesta inválida |
+| `motor` | `MotorNavegacionRetrocederTest` | 4 | volver a la pregunta anterior y deshacer reglas |
+| `motor` | `MotorNavegacionLimiteTest` | 3 | máximo de preguntas y alerta que gana al límite |
+| `motor` | `MotorNavegacionColaTest` | 10 | cola de selección múltiple, alertas y retroceso |
+| `motor` | `OrdenColaTest` | 2 | gravedad primero y mejor opción |
+| `servicios` | `ServicioNavegacionImplTest` | 10 | iniciar, responder, consultar, retroceder, resultado y 404 |
+| `servicios` | `ServicioNavegacionVersionesTest` | 3 | un recorrido conserva su versión del contenido |
 
-En total son **170 pruebas**. Las pruebas de la sesión en Redis
+En total son **89 pruebas**. Las pruebas de la sesión en Redis
 (`cache/RepositorioSesionRedisTest` y `cache/ColaSeleccionMultipleRedisIntegracionTest`)
 están documentadas en [`backend/src/test/README.md`](../../../../../README.md).
 
@@ -39,121 +47,71 @@ están documentadas en [`backend/src/test/README.md`](../../../../../README.md).
   `ContenidoEjemplo.compuesto()`, que une el grafo raíz con los subgrafos de
   respiración, gastrointestinal y actividad/color y sus reglas. Es un fixture
   del classpath de pruebas (`src/test/resources/static/grafo_sistema/`);
-  `DatabaseInit` ya no siembra subgrafos. El camino que más se prueba
-  es `pregunta_inicial → puente_respiracion → q_resp_urgencia →
-  q_resp_consulta → q_resp_normal`. En las reglas, un signo de alarma
-  (por ejemplo "Quejido al respirar") dispara R_RESP_URG (URGENCIA) y uno de
-  alerta media dispara R_RESP_CON (CONSULTAR_MEDICO); sin signos se cierra en
-  NORMAL.
+  `DatabaseInit` ya no siembra subgrafos. El camino que más se prueba es
+  `pregunta_inicial → puente_respiracion → q_resp_urgencia →
+  q_resp_consulta → q_resp_normal`.
 - **Grafos mínimos armados en código.** Los usan `MotorNavegacionLimiteTest`
   (una cadena de 12 preguntas), `MotorNavegacionColaTest` y `OrdenColaTest`.
-  Sirven para casos que el contenido real no muestra, como recorridos largos o
-  varias ramas pendientes.
 
 ## Qué se prueba y por qué importa
 
-### Alertas y validación (`MotorNavegacionTest`)
+### CU01/CU03: recorrido y resultado (`MotorNavegacionTest`)
 - El recorrido cruza de la raíz al subgrafo y una respuesta sin signos de
   alarma cierra en **NORMAL**.
 - Cada regla clínica lleva a su desenlace: un signo de alarma da URGENCIA y
-  uno de alerta media da CONSULTAR_MEDICO. Que **gane el nivel más grave**
-  cuando se disparan varias reglas se prueba en `OrdenColaTest` y
-  `MotorNavegacionColaTest`.
-- Una respuesta inválida (que no es una opción de la pregunta, varias
-  opciones en una pregunta de selección única, una opción repetida o una
-  respuesta sobre un terminal) se **rechaza antes de tocar el estado**. Así
-  no quedan hechos falsos que después disparen reglas.
+  uno de alerta media da CONSULTAR_MEDICO.
+- Una respuesta que no es opción se rechaza antes de tocar el estado, como
+  única prueba representativa de entrada inválida.
 
-### Retroceder (`MotorNavegacionRetrocederTest`)
-Cada respuesta apila un paso con la pregunta, las opciones y las reglas que
-disparó. Retroceder lo desapila.
-- Vuelve a la pregunta anterior, borra solo esa respuesta y permite tomar
-  otro camino.
-- **Deshace solo las reglas de la respuesta descartada.** Después de
-  retroceder desde una URGENCIA, responder "No, ninguno de los anteriores"
-  sigue a la siguiente pregunta sin alerta, y volver a marcar el signo dispara
-  la regla de nuevo.
-- **No reevalúa las reglas.** Se comprueba con un *spy* que `evaluar` no se
-  llama al retroceder.
-- Se puede retroceder varias veces seguidas. Retroceder sin respuestas es un
-  error de la petición (`IllegalArgumentException`, HTTP 400).
-- **Contenido cambiado.** Si la pregunta a la que se vuelve ya no existe en
-  el contenido clínico, se lanza `IllegalStateException` en lugar de
-  devolver un nodo inexistente.
-- **Sesiones guardadas antes de existir la pila.** Se reproduce el recorrido
-  y la pila queda reconstruida. Si el contenido cambió, también se lanza
-  `IllegalStateException`.
+### RF21: retroceder (`MotorNavegacionRetrocederTest`)
+- Vuelve a la pregunta anterior, borra solo esa respuesta y permite tomar otro
+  camino.
+- Deshace solo las reglas de la respuesta descartada y permite volver a
+  dispararlas.
+- Se puede retroceder varias veces seguidas; sin respuestas es un error 400.
 
 ### Límite de preguntas (`MotorNavegacionLimiteTest`)
-- Cuando el cuidador llega a la pregunta número 10, el recorrido cierra en
-  **NORMAL** con el nodo de sistema `sistema/limite_preguntas`, para que
-  ninguna sesión quede abierta indefinidamente.
-- Una regla o un terminal en la décima respuesta le ganan al límite. Es
-  decir, una alerta nunca queda tapada por el corte.
-- El límite se puede configurar (`signbb.navegacion.max-preguntas`) y un valor
-  menor que 1 se rechaza.
-- **Las respuestas deshechas no cuentan.** Retroceder y volver a responder no
-  acerca el corte.
-- Desde el cierre por límite se puede retroceder a la décima pregunta.
-- **Por qué NORMAL.** Si en diez preguntas no apareció ninguna señal de
-  alarma, no hay razón clínica para una alerta. Es una decisión del equipo
-  (23 de octubre de 2026, ítem 2.5 del plan) que se revisará con el asesor
-  clínico; estas pruebas la fijan para que un cambio sea a propósito.
+- Al llegar a la pregunta número 10 el recorrido cierra en **NORMAL** con el
+  nodo `sistema/limite_preguntas`.
+- Una regla en la décima respuesta gana al límite: una alerta nunca queda
+  tapada por el corte.
 
-### Cola de la selección múltiple (`MotorNavegacionColaTest`, `OrdenColaTest`)
-- Se sigue a fondo la opción más grave y las demás quedan pendientes.
-- Una alerta anula las recomendaciones de ramas anteriores.
-- No se repiten destinos ni preguntas.
-- Se prueba la interacción de la cola con el umbral, con las reglas compuerta
-  y con retroceder.
+### Cola de selección múltiple (`MotorNavegacionColaTest`, `OrdenColaTest`)
+- Se sigue a fondo la rama más grave y las demás quedan pendientes.
+- Las recomendaciones conservan su camino causal.
+- Una alerta termina el recorrido y descarta la cola.
+- Se puede retroceder desde el resultado final y desde la selección múltiple.
 
-### Servicio (`ServicioNavegacionImplTest`)
+### Servicio (`ServicioNavegacionImplTest`, `ServicioNavegacionVersionesTest`)
 - `iniciar` abre un recorrido EN_CURSO en `pregunta_inicial`.
-- Cada respuesta y cada retroceso **quedan guardados**: `consultar` los
-  refleja y la siguiente respuesta parte de ese estado.
+- Cada respuesta y cada retroceso quedan guardados y `consultar` los refleja.
 - Una selección múltiple con un signo de alarma cierra en URGENCIA.
-- **Un recorrido FINALIZADO no acepta más respuestas** y sigue devolviendo
-  su desenlace.
-- **Errores.** Un id inexistente da `RecursoNoEncontradoException` (HTTP 404)
-  y una lista de respuestas vacía se rechaza.
+- Un recorrido FINALIZADO no acepta más respuestas y sigue devolviendo su
+  desenlace; un id inexistente da 404.
+- Un recorrido en curso conserva la versión del contenido con la que empezó.
 
 ## Qué se quitó en la reorganización
 
 | Archivo | Motivo |
 |---|---|
-| `MotorNavegacionNormalizacionTest` + `ejemplo_*_norm.json` | Grafo de normalización de bases de datos, no clínico. La regla compuerta ya se prueba en `MotorNavegacionColaTest`. |
-| `MotorNavegacionSeguridadTest` + `ejemplo_*_sec.json` | Grafo de ciberseguridad, no clínico. El desempate y las reglas AND/OR ya están en `OrdenColaTest`, `MotorNavegacionTest` (R2/R3) y `JsonParserTest`. |
-| `MotorNavegacionSeleccionMultipleTest` | Escrito contra firmas "inferidas" y duplicado por `MotorNavegacionColaTest`. |
-| `motor/README.md`, `docs/img/grafo_norm.svg`, `docs/img/grafo_sec.svg` | Solo documentaban los dos ejemplos anteriores. |
-| Dos tests de retroceder solapados en `MotorNavegacionTest` | Se fundieron en uno al pasar a `MotorNavegacionRetrocederTest`. |
-| `modelo/ContextoTest` (7) | El TAD `Contexto` no tiene referencias en `src/main`: la navegación usa `ContextoClinico`. |
-
-Los tests que estaban en el paquete viejo `org.signbb.backend.model` se
-movieron a `navegacion.modelo` y `navegacion.datos.serializacion` sin cambiar
-su contenido. Los de reglas (`BaseReglasTest`, `ReglaClinicaTest` y
-`EvaluacionReglasAbstractaTest`) están en `reglas.modelo` (ver \ref pruebas_model).
-
-Se descartó un caso: restaurar las respuestas previas cuando una regla
-compuerta vuelve a preguntar algo ya respondido. Con la cola, el motor ya no
-vuelve a preguntar una pregunta respondida (sigue las respuestas guardadas),
-así que ese caso ya no se alcanza por el motor. Lo que sí se mantiene probado
-a nivel del TAD es que restaurar las previas funciona, en
-`EstadoPacienteTest.desapilarRestauraLasRespuestasPrevias`.
+| `MotorNavegacionNormalizacionTest` + `ejemplo_*_norm.json` | Grafo de normalización de bases de datos, no clínico. |
+| `MotorNavegacionSeguridadTest` + `ejemplo_*_sec.json` | Grafo de ciberseguridad, no clínico. |
+| `MotorNavegacionSeleccionMultipleTest` | Duplicado por `MotorNavegacionColaTest`. |
+| `modelo/ContextoTest` (7) | El TAD `Contexto` no tiene referencias en `src/main`. |
+| Bordes técnicos del 31-oct-2026 | Empates de cola, destinos repetidos, preguntas repetidas, umbrales combinados, reglas compuerta, formatos legados, copias defensivas y variantes de configuración inválida. |
 
 ## Cómo ejecutarlas
 
 Desde `backend/`:
 
-    ./mvnw test -Dtest='org.signbb.backend.navegacion.**'   # solo el módulo (no necesita PostgreSQL ni Redis)
-    ./mvnw verify                                           # suite completa, como el CI (contenedores arriba)
+    ./mvnw test -Dtest='org.signbb.backend.navegacion.**'   # solo el módulo
+    ./mvnw verify                                           # suite completa, como el CI
 
-## Resultados en GitHub Actions
+## Resultados
 
-Corrida histórica del workflow `build` (`./mvnw -B verify`, con PostgreSQL y
-Redis como servicios) sobre el commit `518f775`, el merge de `tests-navegacion`
-en `navegacion`, el 9 de octubre de 2026:
+Corrida histórica del workflow `build` sobre el commit `518f775`:
 [run 37948316527](https://github.com/Proyecto-Grado-SignBB/signbb-backend/actions/runs/37948316527).
 **BUILD SUCCESS.**
 
-Tras los recortes del 31-oct-2026, el módulo tiene **170 pruebas** y la suite
-completa del backend **603** (2 omitidas por `AutoriaIntegracionTest`).
+Tras el recorte del 31-oct-2026, el módulo tiene **89 pruebas** y la suite
+completa del backend **364** (2 omitidas por `AutoriaIntegracionTest`).

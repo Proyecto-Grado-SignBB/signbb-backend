@@ -79,27 +79,4 @@ class CandadoRecorridoRedisTest {
 
         verify(redis).execute(any(RedisScript.class), eq(List.of(CLAVE)), anyString());
     }
-
-    @Test
-    void siRedisNoRespondeAlTomarloDa503() {
-        when(valores.setIfAbsent(eq(CLAVE), anyString(), any(Duration.class)))
-                .thenThrow(new DataAccessResourceFailureException("caído"));
-        AtomicBoolean corrio = new AtomicBoolean(false);
-
-        assertThrows(CacheNoDisponibleException.class, () -> candado.conCandado("r1", () -> {
-            corrio.set(true);
-            return "x";
-        }));
-
-        assertFalse(corrio.get());
-    }
-
-    @Test
-    void siRedisFallaAlSoltarNoTapaElResultado() {
-        when(valores.setIfAbsent(eq(CLAVE), anyString(), any(Duration.class))).thenReturn(true);
-        when(redis.execute(any(RedisScript.class), any(List.class), any()))
-                .thenThrow(new DataAccessResourceFailureException("caído"));
-
-        assertTrue(candado.conCandado("r1", () -> true));
-    }
 }

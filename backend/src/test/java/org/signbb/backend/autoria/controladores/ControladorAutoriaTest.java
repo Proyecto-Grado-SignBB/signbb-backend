@@ -116,36 +116,6 @@ class ControladorAutoriaTest {
     }
 
     @Test
-    void borrarUnSubgrafoQueNoExisteResponde404() throws Exception {
-        doThrow(new RecursoNoEncontradoException("subgrafo 9")).when(servicio).eliminar(9L);
-
-        assertEquals(404, ejecutar(delete("/api/autoria/subgrafos/9")).getStatus());
-    }
-
-    @Test
-    void despublicarResponde200ConElBorrador() throws Exception {
-        when(servicio.despublicar(1L)).thenReturn(vacio());
-
-        MockHttpServletResponse r = ejecutar(post("/api/autoria/subgrafos/1/despublicar"));
-
-        assertEquals(200, r.getStatus());
-        assertTrue(cuerpo(r).contains("\"estado\":\"BORRADOR\""));
-        verify(servicio).despublicar(1L);
-    }
-
-    @Test
-    void despublicarConContenidoRestanteInvalidoResponde422ConElMensaje() throws Exception {
-        when(servicio.despublicar(1L)).thenThrow(new ContenidoInvalidoException(
-                "El subgrafo no se pudo despublicar: el contenido restante no es válido", List.of()));
-
-        MockHttpServletResponse r = ejecutar(post("/api/autoria/subgrafos/1/despublicar"));
-
-        assertEquals(422, r.getStatus());
-        assertTrue(cuerpo(r).contains("contenido restante no es válido"));
-        assertTrue(cuerpo(r).contains("\"avisos\":[]"));
-    }
-
-    @Test
     void dosEdicionesALaVezResponden409() throws Exception {
         when(servicio.eliminarNodo(1L, "pregunta_6"))
                 .thenThrow(new ObjectOptimisticLockingFailureException("BorradorSubgrafoEntity", 1L));

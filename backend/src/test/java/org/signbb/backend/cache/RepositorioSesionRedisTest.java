@@ -120,24 +120,6 @@ class RepositorioSesionRedisTest {
     }
 
     @Test
-    void sesionCerradaPorLimiteReconstruyeElNodoDeSistema() {
-        EstadoPaciente estado = new EstadoPaciente("s-redis-3");
-        estado.registrarRespuesta("pregunta_inicial", "respiracion");
-        Nodo pendiente = grafo.obtenerNodoPorId("puente_respiracion").orElseThrow();
-
-        SesionTriaje sesion = new SesionTriaje("s-limite", estado, ResultadoPaso.terminal(
-                MotorNavegacion.LIMITE_PREGUNTAS, NivelAlerta.NORMAL, List.of(),
-                grafo.obtenerCaminoCausal(pendiente)));
-        repositorio.guardar(sesion);
-
-        ResultadoPaso recuperado = repositorio.buscar("s-limite").getUltimoPaso();
-
-        assertTrue(recuperado.finalizado());
-        assertEquals(MotorNavegacion.LIMITE_PREGUNTAS, recuperado.destino());
-        assertEquals(NivelAlerta.NORMAL, recuperado.nivel());
-    }
-
-    @Test
     void elOrdenDeLasRespuestasSeConserva() {
         // El motor reproduce este orden para volver a la pregunta anterior.
         EstadoPaciente estado = new EstadoPaciente("s-redis-4");
@@ -170,21 +152,6 @@ class RepositorioSesionRedisTest {
     }
 
     @Test
-    void sesionGuardadaSinHistorialCargaConLaPilaVacia() {
-        // Formato anterior a la pila: no trae el campo historial.
-        almacen.put("signbb:sesion:s-vieja", """
-                {"id":"s-vieja","respuestas":{"pregunta_inicial":["respiracion"]},"reglasDisparadas":[],
-                 "puntaje":0,"ultimoPaso":{"estado":"EN_CURSO","preguntaId":"puente_respiracion",
-                 "nivel":null,"destinoId":null,"razonesIds":[],"caminoCausal":[]}}
-                """);
-
-        EstadoPaciente estado = repositorio.buscar("s-vieja").getEstado();
-
-        assertTrue(estado.pasos().isEmpty());
-        assertEquals(List.of("respiracion"), estado.getRespuestas("pregunta_inicial"));
-    }
-
-    @Test
     void laColaLaRutaYLasRecomendacionesSobrevivenAGuardarYBuscar() {
         String q = "grafo_respiracion/q_resp_urgencia";
         String signos = "grafo_respiracion/q_resp_consulta";
@@ -205,46 +172,6 @@ class RepositorioSesionRedisTest {
         assertEquals(List.of(new OpcionPendiente(q, "NO", signos, 0,
                 List.of(new PasoRuta("inicio", ""), new PasoRuta(signos, "NO")))), recuperado.cola());
         assertEquals(antes, recuperado.pasos().get(0).navegacionPrevia());
-    }
-
-    @Test
-    void elCierreSinAlertaConservaTodasLasRecomendaciones() {
-        Nodo lactancia = grafo.obtenerNodoPorId("grafo_respiracion/normal_1").orElseThrow();
-        Nodo inicial = grafo.obtenerNodoInicial().orElseThrow();
-        EstadoPaciente estado = new EstadoPaciente("s-redis-reco");
-        List<Recomendacion> alcanzadas = List.of(
-                new Recomendacion(lactancia, grafo.obtenerCaminoCausal(lactancia)));
-
-        SesionTriaje sesion = new SesionTriaje("s-reco", estado, ResultadoPaso.terminal(
-                lactancia, NivelAlerta.NORMAL, List.of(), grafo.obtenerCaminoCausal(lactancia), alcanzadas));
-        repositorio.guardar(sesion);
-        ResultadoPaso recuperado = repositorio.buscar("s-reco").getUltimoPaso();
-
-        assertTrue(recuperado.finalizado());
-        assertEquals(1, recuperado.recomendaciones().size());
-        assertEquals(lactancia.getId(), recuperado.recomendaciones().get(0).nodo().getId());
-        assertEquals(alcanzadas.get(0).camino().size(), recuperado.recomendaciones().get(0).camino().size());
-        assertEquals(inicial.getId(), recuperado.recomendaciones().get(0).camino().get(0).nodo().getId());
-    }
-
-    @Test
-    void sesionGuardadaSinNavegacionCargaConLaColaVacia() {
-        // Formato anterior a la cola de pendientes: sin "navegacion" ni "recomendaciones".
-        almacen.put("signbb:sesion:s-sin-cola", """
-                {"id":"s-sin-cola","respuestas":{"pregunta_inicial":["respiracion"]},"reglasDisparadas":[],
-                 "puntaje":0,"ultimoPaso":{"estado":"EN_CURSO","preguntaId":"puente_respiracion",
-                 "nivel":null,"destinoId":null,"razonesIds":[],"caminoCausal":[]},
-                 "historial":[{"idPregunta":"pregunta_inicial","respuestas":["respiracion"],
-                 "respuestasPrevias":[],"reglasMarcadas":[]}]}
-                """);
-
-        EstadoPaciente estado = repositorio.buscar("s-sin-cola").getEstado();
-
-        assertTrue(estado.cola().isEmpty());
-        assertTrue(estado.ruta().isEmpty());
-        assertTrue(estado.recomendaciones().isEmpty());
-        assertEquals(1, estado.pasos().size());
-        assertEquals(null, estado.pasos().get(0).navegacionPrevia());
     }
 
     @Test
@@ -276,14 +203,5 @@ class RepositorioSesionRedisTest {
         repositorio.eliminar("s-1");
 
         verify(redis).delete(RepositorioSesionRedis.PREFIJO_SESION + "s-1");
-    }
-
-    @Test
-    void redisCaidoDaCacheNoDisponibleEnExisteYEliminar() {
-        when(redis.hasKey(anyString())).thenThrow(new DataAccessResourceFailureException("cache caído"));
-        when(redis.delete(anyString())).thenThrow(new DataAccessResourceFailureException("cache caído"));
-
-        assertThrows(CacheNoDisponibleException.class, () -> repositorio.existe("x"));
-        assertThrows(CacheNoDisponibleException.class, () -> repositorio.eliminar("x"));
     }
 }

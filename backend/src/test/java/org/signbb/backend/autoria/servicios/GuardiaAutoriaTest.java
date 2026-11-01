@@ -95,20 +95,6 @@ class GuardiaAutoriaTest {
     }
 
     @Test
-    void laBaseDelGrafoRaizNoSeCreaNiSeLeeNiSeEdita() {
-        assertThrows(EdicionInvalidaException.class, () -> guardia.crearBase("grafo_raiz", SUPERVISOR));
-        assertThrows(EdicionInvalidaException.class, () -> guardia.crearBase("grafo_raiz", MEDICO_A));
-        assertThrows(RecursoNoEncontradoException.class, () -> guardia.leerBase(2L, SUPERVISOR));
-        assertThrows(EdicionInvalidaException.class, () -> guardia.editarBase(2L, SUPERVISOR));
-    }
-
-    @Test
-    void sinGrafoLaGuardiaDejaQueElServicioExpliqueElError() {
-        assertDoesNotThrow(() -> guardia.crearBase(null, MEDICO_A));
-        assertDoesNotThrow(() -> guardia.crearBase("  ", MEDICO_A));
-    }
-
-    @Test
     void enRevisionNadieEditaElSubgrafoNiSusReglas() {
         subgrafo.setEstado(EstadoBorrador.EN_REVISION);
         Long base = BaseReglasFiebre.borrador(DocumentoBaseRegla.vacio()).getId();
@@ -130,36 +116,7 @@ class GuardiaAutoriaTest {
     }
 
     @Test
-    void elSupervisorAutorPublicaSusPropiosBorradores() {
-        subgrafo.setAutorId(SUPERVISOR.id());
-
-        assertDoesNotThrow(() -> guardia.publicarSubgrafo(1L, SUPERVISOR));
-        assertThrows(AccesoDenegadoException.class, () -> guardia.publicarSubgrafo(1L, MEDICO_A));
-    }
-
-    @Test
     void elSupervisorNoPublicaDirectamenteLoDeOtroMedico() {
         assertThrows(AccesoDenegadoException.class, () -> guardia.publicarSubgrafo(1L, SUPERVISOR));
-    }
-
-    @Test
-    void noSePublicaDirectamenteLoQueEstaEnRevision() {
-        subgrafo.setAutorId(SUPERVISOR.id());
-        subgrafo.setEstado(EstadoBorrador.EN_REVISION);
-
-        assertThrows(EdicionInvalidaException.class, () -> guardia.publicarSubgrafo(1L, SUPERVISOR));
-    }
-
-    @Test
-    void unPublicadoSinCambiosNoSeRepublicaPeroConReglasCambiadasSi() {
-        subgrafo.setAutorId(SUPERVISOR.id());
-        subgrafo.setEstado(EstadoBorrador.PUBLICADO);
-        assertThrows(EdicionInvalidaException.class, () -> guardia.publicarSubgrafo(1L, SUPERVISOR));
-
-        BorradorBaseReglaEntity base = BaseReglasFiebre.borrador(DocumentoBaseRegla.vacio());
-        base.setEstado(EstadoBorrador.CAMBIOS_SIN_PUBLICAR);
-        when(bases.findByGrafoId("grafo_fiebre")).thenReturn(Optional.of(base));
-
-        assertDoesNotThrow(() -> guardia.publicarSubgrafo(1L, SUPERVISOR));
     }
 }

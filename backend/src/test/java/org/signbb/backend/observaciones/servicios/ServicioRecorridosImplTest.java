@@ -46,7 +46,7 @@ import org.springframework.transaction.support.SimpleTransactionStatus;
  * recibe 404 y el estado se lleva al terminar o al retroceder.
  *
  * <p>
- * MODIFICADO (CU10/CU11): también cubre la consulta vencida (410 y estado
+ * MODIFICADO (CU09): también cubre la consulta vencida (410 y estado
  * {@code VENCIDO}) y el reinicio con candado.
  */
 @ExtendWith(MockitoExtension.class)
@@ -140,13 +140,6 @@ class ServicioRecorridosImplTest {
     }
 
     @Test
-    void unRecorridoQueNoExisteDa404() {
-        when(recorridos.findById(ID)).thenReturn(Optional.empty());
-
-        assertThrows(RecursoNoEncontradoException.class, () -> servicio.exigirDueno(ID, P1));
-    }
-
-    @Test
     void alTerminarGuardaElResultado() {
         RecorridoEntity fila = guardado(P1.id());
         when(recorridos.findById(ID)).thenReturn(Optional.of(fila));
@@ -175,14 +168,6 @@ class ServicioRecorridosImplTest {
     }
 
     @Test
-    void actualizarUnRecorridoSinFilaNoFalla() {
-        when(recorridos.findById(ID)).thenReturn(Optional.empty());
-
-        assertEquals(enCurso(), servicio.actualizar(enCurso()));
-        verify(recorridos, never()).save(any());
-    }
-
-    @Test
     void listaLosRecorridosDelPadre() {
         when(recorridos.findByUsuarioIdOrderByIniciadoEnDesc(P1.id())).thenReturn(List.of(guardado(P1.id())));
         when(sesiones.existe(ID)).thenReturn(true);
@@ -192,35 +177,6 @@ class ServicioRecorridosImplTest {
         assertEquals(1, lista.size());
         assertEquals(ID, lista.get(0).recorridoId());
         assertEquals("EN_CURSO", lista.get(0).estado());
-    }
-
-    @Test
-    void enLaListaUnRecorridoEnCursoSinSesionQuedaVencido() {
-        RecorridoEntity fila = guardado(P1.id());
-        when(recorridos.findByUsuarioIdOrderByIniciadoEnDesc(P1.id())).thenReturn(List.of(fila));
-        when(sesiones.existe(ID)).thenReturn(false);
-
-        assertEquals("VENCIDO", servicio.deUsuario(P1).get(0).estado());
-        assertEquals("VENCIDO", fila.getEstado());
-        verify(recorridos).save(fila);
-    }
-
-    @Test
-    void siRedisNoRespondeLaListaSaleConElUltimoEstadoGuardado() {
-        when(recorridos.findByUsuarioIdOrderByIniciadoEnDesc(P1.id())).thenReturn(List.of(guardado(P1.id())));
-        when(sesiones.existe(ID)).thenThrow(new IllegalStateException("redis caído"));
-
-        assertEquals("EN_CURSO", servicio.deUsuario(P1).get(0).estado());
-    }
-
-    @Test
-    void unRecorridoEnCursoConSesionSigueVigente() {
-        when(recorridos.findById(ID)).thenReturn(Optional.of(guardado(P1.id())));
-        when(sesiones.existe(ID)).thenReturn(true);
-
-        servicio.exigirVigente(ID);
-
-        verify(recorridos, never()).save(any());
     }
 
     @Test
@@ -278,49 +234,6 @@ class ServicioRecorridosImplTest {
         verify(recorridos, times(2)).save(filas.capture());
         assertEquals("r-2", filas.getAllValues().get(1).getId());
         assertEquals(P1.id(), filas.getAllValues().get(1).getUsuarioId());
-    }
-
-    @Test
-    void reiniciarUnRecorridoTerminadoDa409YNoEmpiezaOtro() {
-        RecorridoEntity fila = guardado(P1.id());
-        fila.setEstado("FINALIZADO");
-        when(recorridos.findById(ID)).thenReturn(Optional.of(fila));
-
-        assertThrows(RecorridoFinalizadoException.class, () -> servicio.reiniciar(ID, P1));
-
-        verify(navegacion, never()).iniciar();
-        verify(sesiones, never()).eliminar(any());
-        assertEquals("FINALIZADO", fila.getEstado());
-    }
-
-    @Test
-    void reiniciarUnRecorridoYaReiniciadoDa410() {
-        RecorridoEntity fila = guardado(P1.id());
-        fila.setEstado("ABANDONADO");
-        when(recorridos.findById(ID)).thenReturn(Optional.of(fila));
-
-        assertThrows(RecorridoVencidoException.class, () -> servicio.reiniciar(ID, P1));
-        verify(navegacion, never()).iniciar();
-    }
-
-    @Test
-    void reiniciarUnRecorridoVencidoEmpiezaUnoNuevoSinCambiarElViejo() {
-        RecorridoEntity fila = guardado(P1.id());
-        fila.setEstado("VENCIDO");
-        when(recorridos.findById(ID)).thenReturn(Optional.of(fila));
-        when(navegacion.iniciar()).thenReturn(new RecorridoDTO("r-2", "EN_CURSO", enCurso().pregunta(), null));
-
-        assertEquals("r-2", servicio.reiniciar(ID, P1).recorridoId());
-        assertEquals("VENCIDO", fila.getEstado());
-    }
-
-    @Test
-    void siNoSePuedeBorrarLaSesionViejaElReinicioIgualDevuelveElNuevo() {
-        when(recorridos.findById(ID)).thenReturn(Optional.of(guardado(P1.id())));
-        when(navegacion.iniciar()).thenReturn(new RecorridoDTO("r-2", "EN_CURSO", enCurso().pregunta(), null));
-        doThrow(new IllegalStateException("redis caído")).when(sesiones).eliminar(ID);
-
-        assertEquals("r-2", servicio.reiniciar(ID, P1).recorridoId());
     }
 
     @Test

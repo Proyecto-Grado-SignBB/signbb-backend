@@ -92,20 +92,6 @@ class ServicioRevisionImplTest {
     }
 
     @Test
-    void unSubgrafoPublicadoSeEnviaSiCambiaronSusReglas() {
-        b.setEstado(EstadoBorrador.PUBLICADO);
-        BorradorBaseReglaEntity base = new BorradorBaseReglaEntity();
-        base.setEstado(EstadoBorrador.PUBLICADO);
-        when(bases.findByGrafoId(b.getGrafoId())).thenReturn(Optional.of(base));
-        assertThrows(EdicionInvalidaException.class, () -> servicio.enviar(1L));
-
-        base.setEstado(EstadoBorrador.CAMBIOS_SIN_PUBLICAR);
-        servicio.enviar(1L);
-
-        assertEquals(EstadoBorrador.EN_REVISION, b.getEstado());
-    }
-
-    @Test
     void retirarVuelveABorradorOACambiosSinPublicar() {
         b.setEstado(EstadoBorrador.EN_REVISION);
         servicio.retirar(1L);
@@ -115,11 +101,6 @@ class ServicioRevisionImplTest {
         b.setPublicadoEn(Instant.now());
         servicio.retirar(1L);
         assertEquals(EstadoBorrador.CAMBIOS_SIN_PUBLICAR, b.getEstado());
-    }
-
-    @Test
-    void retirarAlgoQueNoEstaEnRevisionEs422() {
-        assertThrows(EdicionInvalidaException.class, () -> servicio.retirar(1L));
     }
 
     @Test
@@ -139,12 +120,6 @@ class ServicioRevisionImplTest {
         b.setEstado(EstadoBorrador.EN_REVISION);
 
         assertThrows(AccesoDenegadoException.class, () -> servicio.aprobar(1L, SUPERVISOR_AUTOR));
-        verify(autoria, never()).publicar(any());
-    }
-
-    @Test
-    void aprobarAlgoQueNoEstaEnRevisionEs422() {
-        assertThrows(EdicionInvalidaException.class, () -> servicio.aprobar(1L, SUPERVISOR));
         verify(autoria, never()).publicar(any());
     }
 

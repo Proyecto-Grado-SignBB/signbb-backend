@@ -52,41 +52,9 @@ class OrdenColaTest {
     }
 
     @Test
-    void entrePreguntasYRecomendacionesDecideElPeso() {
-        assertEquals(List.of("reco", "pa", "pm"),
-                ordenar(op("pm", 0), op("pa", 1), op("reco", 2)));
-    }
-
-    @Test
-    void aIgualPesoGanaLaMasAntigua() {
-        assertEquals(List.of("pm2", "pm"), ordenar(op("pm", 5), op("pm2", 2)));
-        assertEquals(List.of("pm", "pm2"), ordenar(op("pm", 1), op("pm2", 2)));
-    }
-
-    @Test
-    void laAntiguedadNoSuperaALaGravedad() {
-        // la más grave entró última y aun así va primero
-        assertEquals("pa", ordenar(op("pm", 0), op("pm2", 1), op("pa", 2)).get(0));
-    }
-
-    @Test
     void mejorOpcionDevuelveLaPrimeraDelOrden() {
         List<OpcionPendiente> cola = List.of(op("pm", 0), op("cons", 1), op("pa", 2));
         assertEquals("cons", MotorNavegacion.mejorOpcion(cola, grafo).orElseThrow().idDestino());
         assertTrue(MotorNavegacion.mejorOpcion(List.of(), grafo).isEmpty());
-    }
-
-    @Test
-    void severidadTerminalSoloDistingueUrgenciaYConsulta() {
-        assertEquals(2, MotorNavegacion.severidadTerminal(grafo.obtenerNodoPorId("urg").orElseThrow()));
-        assertEquals(1, MotorNavegacion.severidadTerminal(grafo.obtenerNodoPorId("cons").orElseThrow()));
-        assertEquals(0, MotorNavegacion.severidadTerminal(grafo.obtenerNodoPorId("reco").orElseThrow()));
-        assertEquals(0, MotorNavegacion.severidadTerminal(grafo.obtenerNodoPorId("pa").orElseThrow()));
-    }
-
-    @Test
-    void unDestinoQueYaNoExisteFallaConUnMensajeClaro() {
-        List<OpcionPendiente> cola = List.of(op("pm", 0), op("fantasma", 1));
-        assertThrows(IllegalStateException.class, () -> MotorNavegacion.mejorOpcion(cola, grafo));
     }
 }

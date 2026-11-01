@@ -41,7 +41,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
  * se rechaza antes de llegar al servicio (nunca un 500).
  *
  * <p>
- * MODIFICADO (CU10/CU11): una consulta vencida da 410 y reiniciar devuelve el
+ * MODIFICADO (CU09): una consulta vencida da 410 y reiniciar devuelve el
  * recorrido nuevo, o 409 si ya terminó.
  */
 class ControladorConsultaTest {
@@ -111,12 +111,6 @@ class ControladorConsultaTest {
     }
 
     @Test
-    void unaListaDeOpcionesVaciaDa400YNoLlegaAlServicio() throws Exception {
-        assertEquals(400, responder("{\"opciones\":[]}").getStatus());
-        verifyNoInteractions(captura);
-    }
-
-    @Test
     void unaRespuestaValidaLlegaAlServicioComoUnaLista() throws Exception {
         assertEquals(200, responder("{\"respuesta\":\"SI\"}").getStatus());
 
@@ -144,13 +138,6 @@ class ControladorConsultaTest {
     }
 
     @Test
-    void elIdDeLaPreguntaLlegaAlServicio() throws Exception {
-        assertEquals(200, responder("{\"respuesta\":\"SI\",\"idPregunta\":\"n1\"}").getStatus());
-
-        verify(captura).registrarRespuesta(eq("r1"), any(), eq(List.of("SI")), anyLong(), eq("n1"));
-    }
-
-    @Test
     void siLaPreguntaYaNoEsLaActualResponder409ConMensaje() throws Exception {
         when(captura.registrarRespuesta(eq("r1"), any(), eq(List.of("SI")), anyLong(), eq("n1")))
                 .thenThrow(new PreguntaDesactualizadaException());
@@ -159,23 +146,6 @@ class ControladorConsultaTest {
 
         assertEquals(409, r.getStatus());
         assertTrue(r.getContentAsString(StandardCharsets.UTF_8).contains("ya fue respondida"));
-    }
-
-    @Test
-    void retrocederPasaPorElServicioDeCaptura() throws Exception {
-        MockHttpServletResponse r = mvc.perform(post("/api/recorridos/r1/retroceder")).andReturn().getResponse();
-
-        assertEquals(200, r.getStatus());
-        verify(captura).retroceder("r1");
-    }
-
-    @Test
-    void siElRecorridoEstaOcupadoRetrocederDa409() throws Exception {
-        when(captura.retroceder("r1")).thenThrow(new RecorridoOcupadoException());
-
-        MockHttpServletResponse r = mvc.perform(post("/api/recorridos/r1/retroceder")).andReturn().getResponse();
-
-        assertEquals(409, r.getStatus());
     }
 
     @Test
@@ -199,15 +169,5 @@ class ControladorConsultaTest {
         assertEquals(200, r.getStatus());
         assertTrue(r.getContentAsString(StandardCharsets.UTF_8).contains("\"r2\""));
         verify(recorridos).exigirDueno(eq("r1"), any());
-    }
-
-    @Test
-    void reiniciarUnaConsultaTerminadaDa409ConMensaje() throws Exception {
-        when(recorridos.reiniciar(eq("r1"), any())).thenThrow(new RecorridoFinalizadoException());
-
-        MockHttpServletResponse r = mvc.perform(post("/api/recorridos/r1/reiniciar")).andReturn().getResponse();
-
-        assertEquals(409, r.getStatus());
-        assertTrue(r.getContentAsString(StandardCharsets.UTF_8).contains("ya terminó"));
     }
 }

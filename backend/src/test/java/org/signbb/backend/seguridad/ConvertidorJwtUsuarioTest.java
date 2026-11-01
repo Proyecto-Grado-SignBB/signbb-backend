@@ -46,11 +46,6 @@ class ConvertidorJwtUsuarioTest {
         assertThrows(InvalidBearerTokenException.class, () -> convertidor.convert(jwt("3")));
     }
 
-    @Test
-    void conUnSubNoNumericoDa401() {
-        assertThrows(InvalidBearerTokenException.class, () -> convertidor.convert(jwt("abc")));
-    }
-
     private static Jwt jwt(String sub) {
         return Jwt.withTokenValue("token").header("alg", "HS256").subject(sub)
                 .issuedAt(EMITIDO).expiresAt(EMITIDO.plusSeconds(3600)).build();

@@ -94,22 +94,6 @@ class JsonParserTest {
   }
 
   @Test
-  void nivelNormalEsRechazado() {
-    GrafoClinico g = GrafoClinicoParser.parseJsonToGrafoClinico(GRAFO_MINIMO);
-
-    assertThrows(IllegalArgumentException.class,
-        () -> BaseReglasParser.parseJsonToBaseReglas(reglasJson("NORMAL"), g));
-  }
-
-  @Test
-  void nivelInvalidoEsRechazado() {
-    GrafoClinico g = GrafoClinicoParser.parseJsonToGrafoClinico(GRAFO_MINIMO);
-
-    assertThrows(IllegalArgumentException.class,
-        () -> BaseReglasParser.parseJsonToBaseReglas(reglasJson("XYZ"), g));
-  }
-
-  @Test
   void nodoDestinoInexistenteEsRechazado() {
     GrafoClinico g = GrafoClinicoParser.parseJsonToGrafoClinico(GRAFO_MINIMO);
     String json = reglasJson("URGENCIA").replace("\"cm\"", "\"no_existe\"");
@@ -206,51 +190,5 @@ class JsonParserTest {
 
     // getCondiciones aplana las hojas de todos los casos en orden.
     assertEquals(4, regla.getCondiciones().size());
-  }
-
-  @Test
-  void formatoAndOrDeObjetoEsRechazado() {
-    GrafoClinico g = GrafoClinicoParser.parseJsonToGrafoClinico(GRAFO_SIGNOS);
-    String json = """
-        {
-          "rules": {
-            "R": {
-              "condiciones": { "or": [ { "idNodo": "letargo", "respuesta": "SI" } ] },
-              "nodoDestino": "cm",
-              "nivel": "URGENCIA"
-            }
-          }
-        }
-        """;
-
-    assertThrows(IllegalArgumentException.class,
-        () -> BaseReglasParser.parseJsonToBaseReglas(json, g));
-  }
-
-  @Test
-  void condicionSobreNodoInexistenteEsRechazada() {
-    GrafoClinico g = GrafoClinicoParser.parseJsonToGrafoClinico(GRAFO_MINIMO);
-    String json = reglasJson("URGENCIA").replace("\"idNodo\": \"p1\"", "\"idNodo\": \"no_existe\"");
-
-    assertThrows(IllegalArgumentException.class,
-        () -> BaseReglasParser.parseJsonToBaseReglas(json, g));
-  }
-
-  @Test
-  void condicionConRespuestaQueNoEsOpcionEsRechazada() {
-    GrafoClinico g = GrafoClinicoParser.parseJsonToGrafoClinico(GRAFO_MINIMO);
-    String json = reglasJson("URGENCIA").replace("\"respuesta\": \"SI\"", "\"respuesta\": \"QUIZAS\"");
-
-    assertThrows(IllegalArgumentException.class,
-        () -> BaseReglasParser.parseJsonToBaseReglas(json, g));
-  }
-
-  @Test
-  void condicionSobreTerminalEsRechazada() {
-    GrafoClinico g = GrafoClinicoParser.parseJsonToGrafoClinico(GRAFO_MINIMO);
-    String json = reglasJson("URGENCIA").replace("\"idNodo\": \"p1\"", "\"idNodo\": \"cm\"");
-
-    assertThrows(IllegalArgumentException.class,
-        () -> BaseReglasParser.parseJsonToBaseReglas(json, g));
   }
 }

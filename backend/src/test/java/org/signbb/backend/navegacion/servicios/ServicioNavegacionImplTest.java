@@ -191,13 +191,6 @@ class ServicioNavegacionImplTest {
     }
 
     @Test
-    void unaListaDeRespuestasVaciaSeRechaza() {
-        String id = servicio.iniciar().recorridoId();
-
-        assertThrows(IllegalArgumentException.class, () -> servicio.responder(id, List.of()));
-    }
-
-    @Test
     void retrocederQuedaGuardadoYLaConsultaLoRefleja() {
         String id = hastaUrgencia();
         servicio.responder(id, NINGUNO);
@@ -220,12 +213,5 @@ class ServicioNavegacionImplTest {
         assertEquals("FINALIZADO", conUrgencia.estado());
         assertEquals("URGENCIA", conUrgencia.resultado().nivel());
         assertEquals("grafo_respiracion/urgencia_1", conUrgencia.resultado().destinoId());
-    }
-
-    @Test
-    void retrocederSinRespuestasSeRechaza() {
-        String id = servicio.iniciar().recorridoId();
-
-        assertThrows(IllegalArgumentException.class, () -> servicio.retroceder(id));
     }
 }

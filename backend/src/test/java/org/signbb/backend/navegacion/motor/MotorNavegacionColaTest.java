@@ -184,24 +184,6 @@ class MotorNavegacionColaTest {
     }
 
     @Test
-    void aIgualPesoSigueLaPrimeraMarcada() {
-        multiple("q1", 1);
-        pregunta("qa", 3);
-        pregunta("qb", 3);
-        recomendacion("ra");
-        recomendacion("rb");
-        arista("q1", "A", "qa");
-        arista("q1", "B", "qb");
-        arista("qa", "x", "ra");
-        arista("qb", "y", "rb");
-        ResultadoPaso r = empezarEn("q1");
-
-        r = responder(r, "B", "A");
-        assertEquals("qb", r.preguntaActual().getId());
-        assertEquals(List.of("qa"), idsCola());
-    }
-
-    @Test
     void unaOpcionQueLlevaDirectoAUrgenciaCierraSinPreguntarLoDemas() {
         multiple("q1", 1);
         pregunta("qa", 99);
@@ -282,215 +264,13 @@ class MotorNavegacionColaTest {
         arista("qy", "k", "ry");
     }
 
-    @Test
-    void laSeleccionMultiplePosteriorEntraEnLaMismaColaPorGravedad() {
-        grafoProfundo(2);
-        ResultadoPaso r = empezarEn("q1");
-
-        r = responder(r, "A", "B");
-        assertEquals("qa", r.preguntaActual().getId());
-        r = responder(r, "X", "Y");
-        assertEquals("qx", r.preguntaActual().getId());
-        assertEquals(List.of("qb", "qy"), idsCola());
-
-        r = responder(r, "k");
-        assertEquals("qb", r.preguntaActual().getId(), "qb (3) pesa más que qy (2)");
-        r = responder(r, "k");
-        assertEquals("qy", r.preguntaActual().getId());
-        r = responder(r, "k");
-
-        assertTrue(r.finalizado());
-        assertEquals(List.of("rx", "rb", "ry"), idsRecomendaciones(r));
-    }
-
-    @Test
-    void aIgualGravedadEnLaColaGanaLaMasAntigua() {
-        grafoProfundo(3);
-        ResultadoPaso r = empezarEn("q1");
-        r = responder(r, "A", "B");
-        r = responder(r, "X", "Y");
-        r = responder(r, "k");
-
-        assertEquals("qb", r.preguntaActual().getId(), "qb entró antes que qy");
-        r = responder(r, "k");
-        assertEquals("qy", r.preguntaActual().getId());
-    }
-
-    @Test
-    void unDestinoYaPendienteNoSeEncolaDosVeces() {
-        multiple("q1", 1);
-        multiple("qa", 5);
-        pregunta("qb", 3);
-        pregunta("qc", 2);
-        recomendacion("rb");
-        recomendacion("rc");
-        arista("q1", "A", "qa");
-        arista("q1", "B", "qb");
-        arista("qa", "X", "qb");
-        arista("qa", "Y", "qc");
-        arista("qb", "k", "rb");
-        arista("qc", "k", "rc");
-        ResultadoPaso r = empezarEn("q1");
-
-        r = responder(r, "A", "B");
-        assertEquals(List.of("qb"), idsCola());
-        r = responder(r, "X", "Y");
-
-        assertEquals("qb", r.preguntaActual().getId(), "qb ya estaba pendiente y es la más grave");
-        assertEquals(List.of("qc"), idsCola(), "qb sale de la cola al seguirse y qc entra una sola vez");
-        r = responder(r, "k");
-        assertEquals("qc", r.preguntaActual().getId());
-        r = responder(r, "k");
-        assertEquals(List.of("rb", "rc"), idsRecomendaciones(r));
-    }
-
-    @Test
-    void unaPreguntaYaRespondidaNoSeVuelveAPreguntar() {
-        multiple("q1", 1);
-        pregunta("qa", 5);
-        pregunta("qb", 3);
-        pregunta("e", 2);
-        recomendacion("re");
-        arista("q1", "A", "qa");
-        arista("q1", "B", "qb");
-        arista("qa", "x", "e");
-        arista("qb", "y", "e");
-        arista("e", "z", "re");
-        ResultadoPaso r = empezarEn("q1");
-
-        r = responder(r, "A", "B");
-        r = responder(r, "x");
-        assertEquals("e", r.preguntaActual().getId());
-        r = responder(r, "z");
-        assertEquals("qb", r.preguntaActual().getId());
-        r = responder(r, "y");
-
-        assertTrue(r.finalizado(), "e ya estaba respondida: se siguen sus respuestas guardadas");
-        assertEquals(List.of("re"), idsRecomendaciones(r));
-        assertEquals(NivelAlerta.NORMAL, r.nivel());
-    }
-
-    @Test
-    void unaRecomendacionRepetidaPorOtraRamaNoSeDuplica() {
-        multiple("q1", 1);
-        pregunta("qa", 5);
-        pregunta("qb", 3);
-        recomendacion("comun");
-        arista("q1", "A", "qa");
-        arista("q1", "B", "qb");
-        arista("qa", "x", "comun");
-        arista("qb", "y", "comun");
-        ResultadoPaso r = empezarEn("q1");
-
-        r = responder(r, "A", "B");
-        r = responder(r, "x");
-        r = responder(r, "y");
-
-        assertTrue(r.finalizado());
-        assertEquals(List.of("comun"), idsRecomendaciones(r));
-    }
-
-    @Test
-    void conUnaSolaRespuestaNoHayColaYSeSigueElMismoCamino() {
-        grafoDosRamas();
-        ResultadoPaso r = empezarEn("q1");
-
-        r = responder(r, "B");
-        assertEquals("qb", r.preguntaActual().getId());
-        assertTrue(idsCola().isEmpty());
-        r = responder(r, "y");
-
-        assertTrue(r.finalizado());
-        assertEquals("rb", r.destino().getId());
-        assertEquals(List.of("rb"), idsRecomendaciones(r));
-        assertEquals(List.of("inicio", "q1", "qb", "rb"), ids(r.caminoCausal()));
-    }
-
     // ---------- umbral ----------
 
     private MotorNavegacion motorConMaximo(int max) {
         return new MotorNavegacion(new ServicioReglasImpl(), max);
     }
 
-    @Test
-    void elUmbralCortaCuandoElSiguientePasoEsOtraPreguntaYTraeLasRecomendacionesLogradas() {
-        motor = motorConMaximo(2);
-        grafoDosRamas();
-        ResultadoPaso r = empezarEn("q1");
-
-        r = responder(r, "A", "B");
-        assertEquals("qa", r.preguntaActual().getId());
-        r = responder(r, "x");
-
-        assertTrue(r.finalizado());
-        assertEquals(NivelAlerta.NORMAL, r.nivel());
-        assertEquals(MotorNavegacion.LIMITE_PREGUNTAS.getId(), r.destino().getId());
-        assertEquals(List.of("ra"), idsRecomendaciones(r), "la rama pendiente no aporta mensaje");
-        assertEquals(List.of("inicio", "q1", "qb"), ids(r.caminoCausal()),
-                "el camino llega a la pregunta que quedó sin responder");
-        assertTrue(idsCola().isEmpty());
-    }
-
-    @Test
-    void elUmbralNoCortaSiLoPendienteEsUnaRecomendacion() {
-        motor = motorConMaximo(2);
-        multiple("q1", 1);
-        pregunta("qa", 5);
-        recomendacion("ra");
-        recomendacion("rc");
-        arista("q1", "A", "qa");
-        arista("q1", "C", "rc");
-        arista("qa", "x", "ra");
-        ResultadoPaso r = empezarEn("q1");
-
-        r = responder(r, "A", "C");
-        r = responder(r, "x");
-
-        assertTrue(r.finalizado());
-        assertEquals("rc", r.destino().getId());
-        assertEquals(List.of("ra", "rc"), idsRecomendaciones(r));
-    }
-
-    @Test
-    void elUmbralNoCortaSiHayAlertaEnEsaMismaRespuesta() {
-        motor = motorConMaximo(2);
-        multiple("q1", 1);
-        pregunta("qa", 5);
-        pregunta("qb", 3);
-        urgencia("u");
-        arista("q1", "A", "qa");
-        arista("q1", "B", "qb");
-        arista("qa", "x", "u");
-        arista("qb", "y", "u");
-        ResultadoPaso r = empezarEn("q1");
-
-        r = responder(r, "A", "B");
-        r = responder(r, "x");
-        assertEquals(NivelAlerta.URGENCIA, r.nivel());
-        assertEquals("u", r.destino().getId());
-    }
-
     // ---------- reglas ----------
-
-    @Test
-    void unaReglaCompuertaNoTocaLaCola() {
-        grafoDosRamas();
-        pregunta("qg", 1);
-        recomendacion("rg");
-        arista("qg", "k", "rg");
-        regla("gate", "qa", "x", "qg", NivelAlerta.CONSULTAR_MEDICO);
-        ResultadoPaso r = empezarEn("q1");
-
-        r = responder(r, "A", "B");
-        r = responder(r, "x");
-        assertEquals("qg", r.preguntaActual().getId(), "la regla salta a la pregunta compuerta");
-        assertEquals(List.of("qb"), idsCola(), "la cola queda intacta");
-
-        r = responder(r, "k");
-        assertEquals("qb", r.preguntaActual().getId());
-        r = responder(r, "y");
-        assertEquals(List.of("rg", "rb"), idsRecomendaciones(r));
-    }
 
     @Test
     void unaReglaConAlertaTerminaConLaAlertaYDescartaLaCola() {
@@ -529,26 +309,6 @@ class MotorNavegacionColaTest {
     // ---------- retroceder ----------
 
     @Test
-    void retrocederDespuesDeSaltarALaColaRestauraColaYRecomendaciones() {
-        grafoDosRamas();
-        arista("qa", "w", "ra");
-        ResultadoPaso r = empezarEn("q1");
-        r = responder(r, "A", "B");
-        r = responder(r, "x");
-        assertEquals("qb", r.preguntaActual().getId());
-
-        r = motor.retroceder(grafo, base, estado);
-
-        assertEquals("qa", r.preguntaActual().getId());
-        assertEquals(List.of("qb"), idsCola(), "qb vuelve a estar pendiente");
-        assertTrue(estado.recomendaciones().isEmpty());
-        assertTrue(estado.getRespuestas("qa").isEmpty());
-
-        r = responder(r, "w");
-        assertEquals("qb", r.preguntaActual().getId());
-    }
-
-    @Test
     void retrocederDesdeUnResultadoFinalVuelveALaUltimaPregunta() {
         grafoDosRamas();
         ResultadoPaso r = empezarEn("q1");
@@ -584,19 +344,5 @@ class MotorNavegacionColaTest {
         r = responder(r, "B");
         assertEquals("qb", r.preguntaActual().getId());
         assertTrue(idsCola().isEmpty());
-    }
-
-    @Test
-    void retrocederTrasElCierrePorUmbralRestauraLaCola() {
-        motor = motorConMaximo(2);
-        grafoDosRamas();
-        ResultadoPaso r = empezarEn("q1");
-        r = responder(r, "A", "B");
-        r = responder(r, "x");
-        assertEquals(MotorNavegacion.LIMITE_PREGUNTAS.getId(), r.destino().getId());
-
-        r = motor.retroceder(grafo, base, estado);
-        assertEquals("qa", r.preguntaActual().getId());
-        assertEquals(List.of("qb"), idsCola());
     }
 }

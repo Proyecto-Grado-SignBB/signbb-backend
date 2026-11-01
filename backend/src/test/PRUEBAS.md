@@ -41,21 +41,45 @@ documentación y se puede volver a activar quitando la anotación.
 `cache/ColaSeleccionMultipleRedisIntegracionTest` no usa Spring, pero sí un
 Redis real: se clasifica como integración y se salta sola si Redis no responde.
 
+## Enfoque
+
+Desde el 31-oct-2026 la suite prioriza el **comportamiento esperado de los
+casos de uso y requerimientos**. Se conserva un flujo representativo por CU y
+un caso por cada camino alternativo documentado en el SRS; no se persigue
+cubrir todos los bordes técnicos ni combinaciones internas.
+
+## Trazabilidad con los casos de uso
+
+| CU | Pruebas principales |
+|---|---|
+| CU01 Consultar signos de alarma | `MotorNavegacionTest`, `ServicioNavegacionImplTest`, `ConsultaIntegracionTest`, `AutoriaIntegracionTest` (integración, deshabilitada) |
+| CU02 Crear grafo clínico | `EditorLienzoTest`, `ValidadorLienzoTest`, `CompiladorSubgrafoTest`, `ServicioAutoriaImplTest` |
+| CU03 Navegar grafo | `MotorNavegacionTest`, `MotorNavegacionColaTest`, `MotorNavegacionRetrocederTest`, `OrdenColaTest`, `ConsultaIntegracionTest` |
+| CU04 Consultar historial | `ServicioRecorridosImplTest`, `ControladorConsultaTest` |
+| CU05 Autenticarse | `ServicioCuentasImplTest`, `ReglasAccesoIntegracionTest` |
+| CU06 Definir regla | `CompiladorReglasTest`, `ValidadorReglasTest`, `ServicioAutoriaReglasImplTest`, `PublicadorReglaTest` |
+| CU07 Editar grafo clínico | `EditorLienzoTest`, `ServicioAutoriaImplTest` |
+| CU08 Publicar grafo | `PublicadorSubgrafoTest`, `ServicioRevisionImplTest`, `PublicadorReglaTest` |
+| CU09 Consultar / Reanudar recorrido | `ServicioNavegacionImplTest`, `ServicioRecorridosImplTest`, `RepositorioSesionRedisTest` |
+| CU10 Administrar cuentas clínicas | `ServicioCuentasImplTest`, `LimitadorIntentosTest` |
+| CU11 Cerrar sesión | `ServicioCuentasImplTest` (cerrar todas las sesiones) |
+| CU12 Revisar grafo | `ServicioRevisionImplTest`, `GuardiaAutoriaTest`, `ControladorRevisionTest` |
+
 ## Pruebas unitarias
 
 | Módulo | Pruebas | Tipo | Documentación |
 |---|---:|---|---|
-| Navegación: TADs, parsers, motor y servicio | 170 | JUnit 5 | \ref pruebas_navegacion "Ver página" |
-| Reglas: TAD, evaluación, servicio y mapeo JSON | 23 | JUnit 5 + Mockito | \ref pruebas_reglas "Ver página" |
-| Autoría: lienzo, subgrafos, reglas, autor y revisión | 179 | JUnit 5 + Mockito | \ref pruebas_autoria "Ver página" |
-| Observaciones: captura "todo o nada", validación, dueño del recorrido y respuesta del cuidador | 56 | JUnit 5 + Mockito | \ref pruebas_observaciones "Ver página" |
-| Seguridad, sin las pruebas de integración | 54 | JUnit 5 + Mockito | \ref pruebas_seguridad "Ver página" |
-| Cache, sin las pruebas de integración | 40 | Mockito | \ref pruebas_cache "Ver página" |
-| Mantenimiento: retención de versiones e imágenes | 16 | JUnit 5 + Mockito | — |
-| Media: subida y referencias de imágenes | 16 | JUnit 5 + MockMvc | — |
+| Navegación: TADs, parsers, motor y servicio | 89 | JUnit 5 | \ref pruebas_navegacion "Ver página" |
+| Reglas: TAD, evaluación, servicio y mapeo JSON | 19 | JUnit 5 + Mockito | \ref pruebas_reglas "Ver página" |
+| Autoría: lienzo, subgrafos, reglas, autor y revisión | 107 | JUnit 5 + Mockito | \ref pruebas_autoria "Ver página" |
+| Observaciones: captura "todo o nada", validación, dueño del recorrido y respuesta del cuidador | 34 | JUnit 5 + Mockito | \ref pruebas_observaciones "Ver página" |
+| Seguridad, sin las pruebas de integración | 35 | JUnit 5 + Mockito | \ref pruebas_seguridad "Ver página" |
+| Cache, sin las pruebas de integración | 23 | Mockito | \ref pruebas_cache "Ver página" |
+| Mantenimiento: retención de versiones e imágenes | 10 | JUnit 5 + Mockito | — |
+| Media: subida y referencias de imágenes | 12 | JUnit 5 + MockMvc | — |
 | Errores generales: 400, 405, 409 y 500 con cuerpo `{mensaje, avisos}` (`config/ManejadorErroresGeneralesTest`) | 4 | JUnit 5 + MockMvc | — |
 | Validación de entradas: límites de largo y de caracteres de los DTO (`config/ValidacionEntradasTest`) | 4 | JUnit 5 + validador de Jakarta | — |
-| **Total unitarias** | **562** | | |
+| **Total unitarias** | **337** | | |
 
 Las clases de integración de cada módulo se excluyen de esta tabla y se
 listan en la sección siguiente.
@@ -67,28 +91,31 @@ listan en la sección siguiente.
 | `BackendApplicationTests` | 1 | PostgreSQL + Redis; `@SpringBootTest` | Activa | — |
 | `PersistenciaEstructuraJsonTest` | 3 | PostgreSQL + Redis; `@SpringBootTest` | Activa | — |
 | `AutoriaIntegracionTest` | 2 | PostgreSQL + Redis; `@SpringBootTest` | **Omitida (`@Disabled`)** | \ref pruebas_autoria "Ver página" |
-| `CacheRedisIntegracionTest` | 4 | PostgreSQL + Redis real; `@SpringBootTest` | Activa; se salta si no hay cache | \ref pruebas_cache "Ver página" |
-| `seguridad/ReglasAccesoIntegracionTest` | 20 | PostgreSQL + Redis; `@SpringBootTest` | Activa | \ref pruebas_seguridad "Ver página" |
-| `cache/ColaSeleccionMultipleRedisIntegracionTest` | 5 | Redis real; sin Spring ni PostgreSQL | Activa; se salta si no hay Redis | \ref pruebas_cache "Ver página" |
-| **Total integración** | **35** | | **33 activas + 2 omitidas** | |
+| `CacheRedisIntegracionTest` | 2 | PostgreSQL + Redis real; `@SpringBootTest` | Activa; se salta si no hay cache | \ref pruebas_cache "Ver página" |
+| `seguridad/ReglasAccesoIntegracionTest` | 14 | PostgreSQL + Redis; `@SpringBootTest` | Activa | \ref pruebas_seguridad "Ver página" |
+| `cache/ColaSeleccionMultipleRedisIntegracionTest` | 3 | Redis real; sin Spring ni PostgreSQL | Activa; se salta si no hay Redis | \ref pruebas_cache "Ver página" |
+| `ConsultaIntegracionTest` | 2 | PostgreSQL + Redis; `@SpringBootTest` | Activa | \ref pruebas_navegacion "Ver página" |
+| **Total integración** | **27** | | **25 activas + 2 omitidas** | |
 
 `BackendApplicationTests` comprueba que el contexto carga y que las migraciones
 de Flyway dejan el esquema que esperan las entidades. `PersistenciaEstructuraJsonTest`
 hace ida y vuelta de los documentos JSON por la columna `estructura` (`jsonb`) y
 verifica que `DatabaseInit` sembró el grafo raíz. `AutoriaIntegracionTest` arma
 un subgrafo con el servicio, lo publica y lo recorre como la cuidadora.
+`ConsultaIntegracionTest` recorre el flujo HTTP completo de CU01/CU03/CU09 sobre
+una versión del fixture de navegación.
 
 ## Totales
 
 | Tipo | Presentes | Ejecutadas | Omitidas |
 |---|---:|---:|---:|
-| Unitarias | 562 | 562 | 0 |
-| Integración | 35 | 33 | 2 |
-| **Total** | **597** | **595** | **2** |
+| Unitarias | 337 | 337 | 0 |
+| Integración | 27 | 25 | 2 |
+| **Total** | **364** | **362** | **2** |
 
 ## Resultados
 
-La ejecución local del 31-oct-2026 sobre `develop` corre **597 pruebas: 595
+La ejecución local del 31-oct-2026 sobre `develop` corre **364 pruebas: 362
 pasan y 2 se omiten** (`AutoriaIntegracionTest`, deshabilitada). El CI ejecuta
 `./mvnw -B verify` con PostgreSQL y Redis como servicios.
 
@@ -99,7 +126,7 @@ El backend usa **JaCoCo**. El informe se genera en cada `test`:
     ./mvnw test
     # abrir target/site/jacoco/index.html
 
-En la corrida del 31-oct-2026 el informe marca **81,6 % de líneas** y **80,6 %
+En la corrida del 31-oct-2026 el informe marca **75,2 % de líneas** y **74,6 %
 de instrucciones**. Incluye desglose por paquete y por clase.
 
 Para el frontend, Angular genera la cobertura con el flag `--code-coverage`:

@@ -12,7 +12,7 @@ import org.signbb.backend.seguridad.modelo.UsuarioActual;
  * recorridos". La navegación ({@code ServicioNavegacion}) no cambia.
  *
  * <p>
- * MODIFICADO (CU10/CU11): se agregan {@link #exigirVigente(String)}, que
+ * MODIFICADO (CU09): se agregan {@link #exigirVigente(String)}, que
  * detecta una consulta vencida (410) y la marca {@code VENCIDO}, y
  * {@link #reiniciar(String, UsuarioActual)}; "Mis recorridos" marca como
  * vencidas las consultas en curso cuya sesión ya no existe.
@@ -48,7 +48,7 @@ public interface ServicioRecorridos {
     void exigirVigente(String recorridoId);
 
     /**
-     * Reinicia la consulta (CU11): el recorrido queda {@code ABANDONADO}, se
+     * Reinicia la consulta (CU09): el recorrido queda {@code ABANDONADO}, se
      * borra su sesión y empieza uno nuevo a nombre del mismo padre.
      *
      * @return la primera pregunta del recorrido nuevo

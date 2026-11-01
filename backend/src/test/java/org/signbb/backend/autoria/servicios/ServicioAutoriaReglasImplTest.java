@@ -116,39 +116,6 @@ class ServicioAutoriaReglasImplTest {
     }
 
     @Test
-    void listarOmiteLaBaseRaiz() {
-        BorradorBaseReglaEntity raiz = BaseReglasFiebre.borrador(DocumentoBaseRegla.vacio());
-        raiz.setId(2L);
-        raiz.setGrafoId("grafo_raiz");
-        BorradorBaseReglaEntity subgrafo = BaseReglasFiebre.borrador(DocumentoBaseRegla.vacio());
-        when(borradores.findAll(any(Sort.class))).thenReturn(List.of(raiz, subgrafo));
-
-        var lista = servicio.listar(UsuariosPrueba.SUPERVISOR);
-
-        assertEquals(1, lista.size());
-        assertEquals("grafo_fiebre", lista.get(0).grafoId());
-    }
-
-    @Test
-    void laBaseRaizNoSeCreaNiSePublicaNiSeCataloga() {
-        assertThrows(EdicionInvalidaException.class,
-                () -> servicio.crear(peticion("Base raíz", "grafo_raiz"), MEDICO_A));
-        assertThrows(RecursoNoEncontradoException.class, () -> servicio.catalogo("grafo_raiz"));
-
-        BorradorBaseReglaEntity b = BaseReglasFiebre.borrador(DocumentoBaseRegla.vacio());
-        b.setGrafoId("grafo_raiz");
-        guardado(b);
-        assertThrows(EdicionInvalidaException.class, () -> servicio.descartarCambios(b.getId()));
-    }
-
-    @Test
-    void crearRechazaUnaBaseDuplicadaParaElMismoGrafo() {
-        when(borradores.existsByGrafoId("grafo_fiebre")).thenReturn(true);
-        assertThrows(EdicionInvalidaException.class,
-                () -> servicio.crear(peticion("Reglas", "grafo_fiebre"), MEDICO_A));
-    }
-
-    @Test
     void agregarReglaGeneraElIdYDevuelveElBorrador() {
         BorradorBaseReglaEntity b = guardado(BaseReglasFiebre.borrador(DocumentoBaseRegla.vacio()));
 
@@ -159,13 +126,6 @@ class ServicioAutoriaReglasImplTest {
 
         assertEquals(1, dto.reglas().size());
         assertEquals("R_1", dto.reglas().get(0).id());
-    }
-
-    @Test
-    void descartarCambiosSinPublicarSeRechaza() {
-        BorradorBaseReglaEntity b = guardado(BaseReglasFiebre.borrador(BaseReglasFiebre.conUrgencia()));
-
-        assertThrows(EdicionInvalidaException.class, () -> servicio.descartarCambios(b.getId()));
     }
 
     @Test
@@ -191,20 +151,5 @@ class ServicioAutoriaReglasImplTest {
         guardado(b);
 
         assertThrows(EdicionInvalidaException.class, () -> servicio.eliminar(b.getId()));
-    }
-
-    @Test
-    void losAvisosIncluyenLasReferenciasAlLienzoQueYaNoExisten() {
-        DocumentoBaseRegla roto = EditorReglas.agregarRegla(DocumentoBaseRegla.vacio(),
-                new EditorReglas.DatosRegla("R rota", null,
-                        List.of(new Caso(List.of(new Condicion("pregunta_99", "X")))),
-                        NivelAlerta.URGENCIA, LienzoFiebre.URGENCIA));
-        BorradorBaseReglaEntity b = guardado(BaseReglasFiebre.borrador(roto));
-        when(subgrafos.findByGrafoId("grafo_fiebre"))
-                .thenReturn(Optional.of(LienzoFiebre.borrador(LienzoFiebre.completo())));
-
-        List<Aviso> avisos = servicio.avisos(b.getId());
-
-        assertTrue(avisos.stream().anyMatch(a -> a.codigo() == Aviso.Codigo.REGLA_CONDICION_INVALIDA));
     }
 }

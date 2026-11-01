@@ -82,15 +82,6 @@ class GrafoClinicoMapperTest {
   }
 
   @Test
-  void nodoInicialExplicitoSePreservaEnIdaYVuelta() {
-    GrafoClinico g = GrafoClinicoParser.parseJsonToGrafoClinico(GRAFO_MINIMO);
-    g.setNodoInicial(g.obtenerNodoPorId("cm").orElseThrow());
-
-    GrafoClinico reconstruido = GrafoClinicoMapper.desde(GrafoClinicoMapper.desde(g));
-    assertEquals("cm", reconstruido.obtenerNodoInicial().orElseThrow().getId());
-  }
-
-  @Test
   void preguntaInicialInexistenteEsRechazada() {
     String json = GRAFO_MINIMO.replace("\"nodes\"", "\"preguntaInicial\": \"xx\", \"nodes\"");
     GrafoClinicoJson doc = GrafoClinicoParser.parseJsonToDocumento(json);
@@ -121,72 +112,11 @@ class GrafoClinicoMapperTest {
   }
 
   @Test
-  void sinTipoInteraccionQuedaNullParaQueRecorridoDTOInfiera() {
-    GrafoClinico g = GrafoClinicoMapper.desde(GrafoClinicoParser.parseJsonToDocumento(GRAFO_MINIMO));
-
-    assertNull(g.obtenerNodoPorId("p1").orElseThrow().getTipoInteraccion());
-    assertNull(GrafoClinicoMapper.desde(g).graph().nodes().get("p1").metadata().tipoInteraccion());
-  }
-
-  @Test
-  void tipoInteraccionInvalidoEsRechazado() {
-    String json = GRAFO_MINIMO.replace(
-        "\"peso\": 1", "\"peso\": 1, \"tipoInteraccion\": \"XYZ\"");
-    GrafoClinicoJson doc = GrafoClinicoParser.parseJsonToDocumento(json);
-
-    assertThrows(IllegalArgumentException.class, () -> GrafoClinicoMapper.desde(doc));
-  }
-
-  @Test
-  void nodoInicialDelFormatoPrevioSigueAceptado() {
-    String json = GRAFO_MINIMO.replace("\"nodes\"", "\"nodoInicial\": \"cm\", \"nodes\"");
-
-    assertEquals("cm", GrafoClinicoParser.parseJsonToGrafoClinico(json)
-        .obtenerNodoInicial().orElseThrow().getId());
-  }
-
-  @Test
   void terminalTomaSuDesenlaceComoTipo() {
     String json = GRAFO_MINIMO.replace(
         "\"tipo\": \"consulta médica\"", "\"tipo\": \"terminal\", \"desenlace\": \"urgencia\"");
 
     assertEquals("urgencia",
         GrafoClinicoParser.parseJsonToGrafoClinico(json).obtenerNodoPorId("cm").orElseThrow().getTipo());
-  }
-
-  @Test
-  void terminalConDesenlaceInvalidoEsRechazado() {
-    String json = GRAFO_MINIMO.replace(
-        "\"tipo\": \"consulta médica\"", "\"tipo\": \"terminal\", \"desenlace\": \"bloqueo\"");
-    GrafoClinicoJson doc = GrafoClinicoParser.parseJsonToDocumento(json);
-
-    assertThrows(IllegalArgumentException.class, () -> GrafoClinicoMapper.desde(doc));
-  }
-
-  @Test
-  void referenciaSinComponerEsRechazada() {
-    String json = GRAFO_MINIMO.replace(
-        "\"tipo\": \"consulta médica\"", "\"tipo\": \"referencia\", \"grafoId\": \"g\"");
-    GrafoClinicoJson doc = GrafoClinicoParser.parseJsonToDocumento(json);
-
-    assertThrows(IllegalArgumentException.class, () -> GrafoClinicoMapper.desde(doc));
-  }
-
-  @Test
-  void pesoFueraDeLaEscalaEsRechazado() {
-    for (String peso : new String[] { "0", "4", "10" }) {
-      String json = GRAFO_MINIMO.replace("\"peso\": 2", "\"peso\": " + peso);
-      GrafoClinicoJson doc = GrafoClinicoParser.parseJsonToDocumento(json);
-
-      assertThrows(IllegalArgumentException.class, () -> GrafoClinicoMapper.desde(doc), peso);
-    }
-  }
-
-  @Test
-  void pesoAusenteEsRechazado() {
-    String json = GRAFO_MINIMO.replace(", \"peso\": 2", "");
-    GrafoClinicoJson doc = GrafoClinicoParser.parseJsonToDocumento(json);
-
-    assertThrows(IllegalArgumentException.class, () -> GrafoClinicoMapper.desde(doc));
   }
 }

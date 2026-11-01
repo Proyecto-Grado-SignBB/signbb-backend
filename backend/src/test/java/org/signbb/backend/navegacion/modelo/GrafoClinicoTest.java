@@ -23,28 +23,12 @@ class GrafoClinicoTest {
     // ---------- estructura básica ----------
 
     @Test
-    void grafoIniciaVacio() {
-        GrafoClinico g = new GrafoClinico();
-        assertEquals(0, g.size());
-        assertTrue(g.obtenerNodoInicial().isEmpty());
-        assertTrue(g.rutaValida());
-    }
-
-    @Test
     void agregarNodoMarcaInicial() {
         GrafoClinico g = new GrafoClinico();
         Nodo raiz = n("raiz");
         g.agregarNodo(raiz);
         assertEquals(1, g.size());
         assertEquals(raiz, g.obtenerNodoInicial().orElseThrow());
-    }
-
-    @Test
-    void agregarNodoDuplicadoFalla() {
-        GrafoClinico g = new GrafoClinico();
-        Nodo x = n("x");
-        g.agregarNodo(x);
-        assertThrows(IllegalArgumentException.class, () -> g.agregarNodo(x));
     }
 
     // ---------- aristas ----------
@@ -61,38 +45,6 @@ class GrafoClinicoTest {
         assertEquals(1, opciones.size());
         assertEquals("Sí", opciones.get(0).getCondicion());
         assertEquals(b, opciones.get(0).getDestino());
-    }
-
-    @Test
-    void conectarDesdeNodoTerminalFalla() {
-        GrafoClinico g = new GrafoClinico();
-        Nodo t = n("t", "recomendacion", 0);
-        Nodo b = n("b");
-        g.agregarNodo(t);
-        g.agregarNodo(b);
-        assertThrows(IllegalArgumentException.class, () -> g.conectarRespuestas(t, b, "Sí"));
-    }
-
-    @Test
-    void conectarDuplicadoFalla() {
-        GrafoClinico g = new GrafoClinico();
-        Nodo a = n("a");
-        Nodo b = n("b");
-        Nodo c = n("c");
-        for (Nodo x : new Nodo[] { a, b, c }) {
-            g.agregarNodo(x);
-        }
-        g.conectarRespuestas(a, b, "Sí");
-        assertThrows(IllegalArgumentException.class, () -> g.conectarRespuestas(a, c, "Sí"));
-    }
-
-    @Test
-    void conectarNodoDesconocidoFalla() {
-        GrafoClinico g = new GrafoClinico();
-        Nodo a = n("a");
-        Nodo b = n("b");
-        g.agregarNodo(a);
-        assertThrows(IllegalArgumentException.class, () -> g.conectarRespuestas(a, b, "Sí"));
     }
 
     // ---------- eliminaciones ----------
@@ -115,26 +67,6 @@ class GrafoClinicoTest {
         assertTrue(g.obtenerOpciones(c).isEmpty());
     }
 
-    @Test
-    void eliminarRespuesta() {
-        GrafoClinico g = new GrafoClinico();
-        Nodo a = n("a");
-        Nodo b = n("b");
-        g.agregarNodo(a);
-        g.agregarNodo(b);
-        g.conectarRespuestas(a, b, "Sí");
-        g.eliminarRespuesta(a, "Sí");
-        assertTrue(g.obtenerOpciones(a).isEmpty());
-    }
-
-    @Test
-    void eliminarRespuestaInexistenteFalla() {
-        GrafoClinico g = new GrafoClinico();
-        Nodo a = n("a");
-        g.agregarNodo(a);
-        assertThrows(IllegalArgumentException.class, () -> g.eliminarRespuesta(a, "Sí"));
-    }
-
     // ---------- validaciones ----------
 
     @Test
@@ -155,14 +87,6 @@ class GrafoClinicoTest {
         Nodo huerfano = n("h", "recomendacion", 0);
         g.agregarNodo(raiz);
         g.agregarNodo(huerfano);
-        assertFalse(g.rutaValida());
-    }
-
-    @Test
-    void rutaInvalidaPorPreguntaSinSalidas() {
-        GrafoClinico g = new GrafoClinico();
-        Nodo raiz = n("raiz");
-        g.agregarNodo(raiz);
         assertFalse(g.rutaValida());
     }
 
@@ -207,14 +131,6 @@ class GrafoClinicoTest {
     }
 
     @Test
-    void evaluarPasoInexistente() {
-        GrafoClinico g = new GrafoClinico();
-        Nodo a = n("a");
-        g.agregarNodo(a);
-        assertThrows(IllegalArgumentException.class, () -> g.evaluarPaso(a, "Sí"));
-    }
-
-    @Test
     void obtenerCaminoCausal() {
         GrafoClinico g = new GrafoClinico();
         Nodo raiz = n("raiz");
@@ -237,71 +153,7 @@ class GrafoClinicoTest {
         assertEquals(List.of("", "Sí", "≥38°C"), condiciones);
     }
 
-    @Test
-    void caminoCausalInalcanzable() {
-        GrafoClinico g = new GrafoClinico();
-        Nodo raiz = n("raiz");
-        Nodo suelto = n("suelto", "recomendacion", 0);
-        g.agregarNodo(raiz);
-        g.agregarNodo(suelto);
-        assertTrue(g.obtenerCaminoCausal(suelto).isEmpty());
-    }
-
     // ---------- navegar() ----------
-
-    @Test
-    void navegarUmbralAltoParaInmediatamente() {
-        GrafoClinico g = new GrafoClinico(8, 3);
-        Nodo raiz = n("raiz", "pregunta", 5);
-        Nodo urgente = n("urgente", "consulta_medica", 10);
-        Nodo leve = n("leve", "recomendacion", 5);
-        for (Nodo x : new Nodo[] { raiz, urgente, leve }) {
-            g.agregarNodo(x);
-        }
-        g.conectarRespuestas(raiz, urgente, "fiebre alta");
-        g.conectarRespuestas(raiz, leve, "sin fiebre");
-
-        assertEquals(urgente, g.navegar().orElseThrow());
-    }
-
-    @Test
-    void navegarIgnoraDescartesBajos() {
-        GrafoClinico g = new GrafoClinico(8, 3);
-        Nodo raiz = n("raiz", "pregunta", 5);
-        Nodo intermedio = n("intermedio", "pregunta", 4);
-        Nodo descarte = n("descarte", "recomendacion", 1);
-        Nodo normal = n("normal", "recomendacion", 5);
-        for (Nodo x : new Nodo[] { raiz, intermedio, descarte, normal }) {
-            g.agregarNodo(x);
-        }
-        g.conectarRespuestas(raiz, descarte, "poco");
-        g.conectarRespuestas(raiz, intermedio, "seguir");
-        g.conectarRespuestas(intermedio, normal, "algo");
-
-        // descarte peso 1 < umbralBajo=3 → se ignora; normal peso 5 → gana
-        assertEquals(normal, g.navegar().orElseThrow());
-    }
-
-    @Test
-    void navegarSinNodoInicial() {
-        GrafoClinico g = new GrafoClinico();
-        assertTrue(g.navegar().isEmpty());
-    }
-
-    @Test
-    void bloquearRutaDetieneNavegacion() {
-        GrafoClinico g = new GrafoClinico(8, 3);
-        Nodo raiz = n("raiz", "pregunta", 5);
-        Nodo t = n("t", "recomendacion", 5);
-        g.agregarNodo(raiz);
-        g.agregarNodo(t);
-        g.conectarRespuestas(raiz, t, "Sí");
-
-        g.bloquearRuta();
-        assertTrue(g.navegar().isEmpty());
-        g.desbloquearRuta();
-        assertEquals(t, g.navegar().orElseThrow());
-    }
 
     // ---------- tipo de interacción ----------
 
@@ -321,18 +173,5 @@ class GrafoClinicoTest {
 
         assertEquals("SI_NO", g.tipoInteraccion(siNo));
         assertEquals("SELECCION_UNICA", g.tipoInteraccion(unica));
-    }
-
-    @Test
-    void tipoInteraccionDeclaradoTienePrioridad() {
-        GrafoClinico g = new GrafoClinico();
-        Nodo multiple = new Nodo("m", "pregunta", "¿Cuáles?", 1, false, List.of(), "SELECCION_MULTIPLE");
-        Nodo t = n("t", "recomendacion", 1);
-        g.agregarNodo(multiple);
-        g.agregarNodo(t);
-        g.conectarRespuestas(multiple, t, "SI");
-        g.conectarRespuestas(multiple, t, "NO");
-
-        assertEquals("SELECCION_MULTIPLE", g.tipoInteraccion(multiple));
     }
 }

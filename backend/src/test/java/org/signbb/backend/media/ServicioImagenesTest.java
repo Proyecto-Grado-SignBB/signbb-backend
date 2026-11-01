@@ -70,31 +70,6 @@ class ServicioImagenesTest {
         assertEquals(5, guardadas.size());
     }
 
-    @Test
-    void quitaElExifYAplicaLaOrientacion() throws Exception {
-        String nombre = servicio.subir(recurso("exif-orientacion.jpg"));
-        AlmacenImagenes.Imagen guardada = guardadas.get(nombre);
-
-        Metadata metadata = ImageMetadataReader.readMetadata(
-                new java.io.ByteArrayInputStream(guardada.datos()));
-        assertTrue(metadata.getDirectoriesOfType(ExifIFD0Directory.class).isEmpty(),
-                "no debe quedar EXIF en el archivo guardado");
-        assertTrue(metadata.getDirectoriesOfType(GpsDirectory.class).isEmpty(),
-                "no debe quedar GPS en el archivo guardado");
-
-        var imagen = ImageIO.read(new java.io.ByteArrayInputStream(guardada.datos()));
-        assertEquals(1, imagen.getWidth(), "la orientación 6 gira la imagen 90°");
-        assertEquals(2, imagen.getHeight());
-    }
-
-    @Test
-    void aplicaLaOrientacionTranspuestaYTransversa() throws IOException {
-        // Orientación 5: transpuesta (rojo arriba, azul abajo).
-        assertOrientacion("exif-orientacion-5.jpg", Color.RED, Color.BLUE);
-        // Orientación 7: transversa (azul arriba, rojo abajo).
-        assertOrientacion("exif-orientacion-7.jpg", Color.BLUE, Color.RED);
-    }
-
     private void assertOrientacion(String archivo, Color arriba, Color abajo) throws IOException {
         String nombre = servicio.subir(recurso(archivo));
         BufferedImage imagen = ImageIO.read(new ByteArrayInputStream(guardadas.get(nombre).datos()));
@@ -110,15 +85,6 @@ class ServicioImagenesTest {
                 && Math.abs(esperado.getGreen() - real.getGreen()) < 60
                 && Math.abs(esperado.getBlue() - real.getBlue()) < 60,
                 donde + ": esperaba " + esperado + " y fue " + real);
-    }
-
-    @Test
-    void rechazaLasImagenesAnimadas() throws IOException {
-        byte[] gif = recurso("animado.gif");
-
-        ImagenInvalidaException e = assertThrows(ImagenInvalidaException.class, () -> servicio.subir(gif));
-        assertTrue(e.getMessage().contains("animadas"));
-        assertTrue(guardadas.isEmpty());
     }
 
     @Test

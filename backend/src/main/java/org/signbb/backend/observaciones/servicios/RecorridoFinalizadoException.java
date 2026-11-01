@@ -1,7 +1,7 @@
 package org.signbb.backend.observaciones.servicios;
 
 /**
- * Se pidió reiniciar (CU11) un recorrido que ya terminó. Se responde 409: el
+ * Se pidió reiniciar (CU09) un recorrido que ya terminó. Se responde 409: el
  * resultado queda tal cual en "Mis recorridos" y, si hace falta, el padre
  * inicia una consulta nueva.
  */

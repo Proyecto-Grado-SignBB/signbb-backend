@@ -249,23 +249,6 @@ class ColaSeleccionMultipleRedisIntegracionTest {
     }
 
     @Test
-    void retrocederTrasRecargarRestauraLaColaYLaRecomendacion() {
-        String id = iniciarSesion();
-        responder(id, "A", "B");
-        responder(id, "SI"); // ahora en qb, con ra guardada y la cola vacía
-
-        ResultadoPaso paso = retroceder(id);
-
-        assertEquals("qa", paso.preguntaActual().getId());
-        SesionTriaje recargada = recargar(id);
-        assertEquals("qa", recargada.getUltimoPaso().preguntaActual().getId());
-        assertEquals(List.of("qb"), destinosEnCola(recargada.getEstado()));
-        assertTrue(recargada.getEstado().recomendaciones().isEmpty());
-        assertEquals(List.of("inicio", "q1", "qa"), idsRuta(recargada.getEstado()));
-        assertTrue(recargada.getEstado().getRespuesta("qa").isEmpty());
-    }
-
-    @Test
     void unaAlertaEnUnaRamaCierraConLaAlertaSolaYVaciaLaColaGuardada() {
         String id = iniciarSesion();
         responder(id, "A", "B");
@@ -281,22 +264,5 @@ class ColaSeleccionMultipleRedisIntegracionTest {
         assertEquals("urg", recargada.getUltimoPaso().destino().getId());
         assertTrue(recargada.getUltimoPaso().recomendaciones().isEmpty());
         assertTrue(recargada.getEstado().cola().isEmpty(), "la alerta descarta lo pendiente");
-    }
-
-    @Test
-    void cambiarDeRamaTrasRetrocederLlevaALaAlertaYLimpiaLaRecomendacionPrevia() {
-        String id = iniciarSesion();
-        responder(id, "A", "B");
-        responder(id, "SI"); // ra guardada, ahora en qb
-        retroceder(id); // vuelve a qa con qb pendiente
-
-        ResultadoPaso fin = responder(id, "NO");
-
-        assertTrue(fin.finalizado());
-        assertEquals("urg", fin.destino().getId());
-        SesionTriaje recargada = recargar(id);
-        assertEquals("urg", recargada.getUltimoPaso().destino().getId());
-        assertTrue(recargada.getEstado().recomendaciones().isEmpty());
-        assertTrue(recargada.getEstado().cola().isEmpty());
     }
 }

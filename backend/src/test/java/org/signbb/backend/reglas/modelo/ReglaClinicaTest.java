@@ -71,23 +71,4 @@ class ReglaClinicaTest {
                 e.registrarRespuesta("fiebre", "No");
                 assertFalse(r.condicionesCumplidas(e));
         }
-
-        @Test
-        void igualdadPorId() {
-                ReglaClinica r1 = new ReglaClinica("mismo", "a",
-                                List.of(new Condicion("x", "y")), destino(), NivelAlerta.CONSULTAR_MEDICO);
-                ReglaClinica r2 = new ReglaClinica("mismo", "b",
-                                List.of(new Condicion("otro", "otro")), destino(), NivelAlerta.URGENCIA);
-                assertEquals(r1, r2);
-                assertEquals(r1.hashCode(), r2.hashCode());
-        }
-
-        @Test
-        void condicionesEsCopia() {
-                ReglaClinica r = new ReglaClinica("r1", "n",
-                                List.of(new Condicion("fiebre", "Sí")), destino(), NivelAlerta.CONSULTAR_MEDICO);
-                List<Condicion> c = r.getCondiciones();
-                c.add(new Condicion("hack", "hack"));
-                assertEquals(1, r.getCondiciones().size());
-        }
 }

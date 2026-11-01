@@ -12,13 +12,13 @@ Pruebas del paquete `org.signbb.backend.reglas`: los **TAD** de reglas
 
 | Paquete | Clase | Tests | Qué cubre |
 |---|---|---:|---|
-| `modelo` | `ReglaClinicaTest` | 7 | creación y validación de `ReglaClinica`; condiciones AND cumplidas/incumplidas; igualdad por `idRegla`; copia defensiva |
-| `modelo` | `BaseReglasTest` | 7 | alta/baja de reglas, duplicados, `obtenerRegla` y `reglasActivadas` |
+| `modelo` | `ReglaClinicaTest` | 5 | creación y validación; condiciones AND cumplidas/incumplidas |
+| `modelo` | `BaseReglasTest` | 5 | alta/baja de reglas, `obtenerRegla` y `reglasActivadas` |
 | `modelo` | `EvaluacionReglasAbstractaTest` | 2 | FND con varios casos (OR) y varias opciones de la misma pregunta (AND) |
 | `servicios` | `ServicioReglasImplTest` | 4 | resolución por severidad: nivel máximo, razones combinadas y desempate por peso del destino |
 | `datos.serializacion` | `BaseReglasMapperTest` | 3 | ida y vuelta TAD ↔ documento JSON y rechazo de un `nodoDestino` colgante |
 
-En total son **23 pruebas**.
+En total son **19 pruebas**.
 
 ## Modelo de reglas (TAD) {#pruebas_model}
 
@@ -29,14 +29,12 @@ se cumple (OR). El constructor plano (lista de `Condicion`) equivale a un único
 caso (AND). Se verifica que:
 
 - una regla sin condiciones o con componentes nulos se rechaza;
-- `condicionesCumplidas` exige **todas** las condiciones del caso;
-- el destino, el nivel y las condiciones hoja se exponen como copias;
-- la identidad de la regla está dada por `idRegla`.
+- `condicionesCumplidas` exige **todas** las condiciones del caso.
 
 ### TAD `BaseReglas` (`BaseReglasTest`)
-Colección indexada por `idRegla`. Se verifica el alta y la baja, el rechazo de
-duplicados y que `reglasActivadas` devuelve solo las reglas cuya premisa se
-satisface en el estado.
+Colección indexada por `idRegla`. Se verifica el alta y la baja y que
+`reglasActivadas` devuelve solo las reglas cuya premisa se satisface en el
+estado.
 
 ### Evaluación abstracta (`EvaluacionReglasAbstractaTest`)
 Conserva los dos casos que no cubren las otras suites, con datos

@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * Fila de "Mis recorridos".
  *
  * <p>
- * MODIFICADO (CU10/CU11): el estado puede ser también {@code VENCIDO} o
+ * MODIFICADO (CU09): el estado puede ser también {@code VENCIDO} o
  * {@code ABANDONADO}.
  *
  * @param recorridoId  id del recorrido

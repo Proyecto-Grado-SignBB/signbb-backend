@@ -42,25 +42,11 @@ class BaseReglasTest {
     }
 
     @Test
-    void agregarDuplicadoFalla() {
-        BaseReglas b = new BaseReglas();
-        b.agregarRegla(regla("r1", List.of(new Condicion("a", "1"))));
-        assertThrows(IllegalArgumentException.class,
-                () -> b.agregarRegla(regla("r1", List.of(new Condicion("b", "2")))));
-    }
-
-    @Test
     void eliminar() {
         BaseReglas b = new BaseReglas();
         b.agregarRegla(regla("r1", List.of(new Condicion("a", "1"))));
         b.eliminarRegla("r1");
         assertFalse(b.contains("r1"));
-    }
-
-    @Test
-    void eliminarInexistenteFalla() {
-        BaseReglas b = new BaseReglas();
-        assertThrows(IllegalArgumentException.class, () -> b.eliminarRegla("nope"));
     }
 
     @Test

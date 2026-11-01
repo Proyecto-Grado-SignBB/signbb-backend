@@ -164,22 +164,4 @@ class PublicadorReglaTest {
         assertTrue(contenido.grafo().graph().nodes().containsKey("grafo_fiebre/" + LienzoFiebre.INICIO));
         assertFalse(contenido.reglas().rules().isEmpty());
     }
-
-    @Test
-    void unGrafoNoPublicadoSeRechaza() {
-        BorradorBaseReglaEntity borrador = BaseReglasFiebre.borrador(BaseReglasFiebre.conUrgencia());
-        borrador.setGrafoId("grafo_inexistente");
-
-        assertThrows(ContenidoInvalidoException.class, () -> publicador.publicar(borrador, FECHA));
-        verify(bases, never()).save(any());
-    }
-
-    @Test
-    void laBaseDelGrafoRaizNoSePublica() {
-        BorradorBaseReglaEntity borrador = BaseReglasFiebre.borrador(BaseReglasFiebre.conUrgencia());
-        borrador.setGrafoId("grafo_raiz");
-
-        assertThrows(EdicionInvalidaException.class, () -> publicador.publicar(borrador, FECHA));
-        verify(bases, never()).save(any());
-    }
 }

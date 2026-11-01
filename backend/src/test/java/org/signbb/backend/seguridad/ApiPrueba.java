@@ -80,7 +80,8 @@ public class ApiPrueba {
                         + "\",\"contrasena\":\"" + CLAVE + "\"}"))
                 .andReturn();
         if (r.getResponse().getStatus() != 201) {
-            throw new IllegalStateException("registro " + nombre + ": " + r.getResponse().getStatus());
+            throw new IllegalStateException("registro " + nombre + ": " + r.getResponse().getStatus()
+                    + " " + r.getResponse().getContentAsString());
         }
         return new Cuenta(idDe(correo), correo, JsonPath.read(r.getResponse().getContentAsString(), "$.token"));
     }

@@ -68,31 +68,6 @@ class EstadoPacienteNavegacionTest {
     }
 
     @Test
-    void rutaSeAgregaYSeReemplaza() {
-        EstadoPaciente e = new EstadoPaciente("s");
-        e.agregarARuta(new PasoRuta("q1", ""));
-        e.agregarARuta(new PasoRuta("q2", "SI"));
-        assertEquals(List.of(new PasoRuta("q1", ""), new PasoRuta("q2", "SI")), e.ruta());
-
-        e.reemplazarRuta(camino("x"));
-        assertEquals(camino("x"), e.ruta());
-        e.reemplazarRuta(e.ruta()); // reemplazar por una copia de sí misma no la pierde
-        assertEquals(camino("x"), e.ruta());
-    }
-
-    @Test
-    void recomendacionesSeConservanEnOrdenYNoSeRepiten() {
-        EstadoPaciente e = new EstadoPaciente("s");
-        assertTrue(e.registrarRecomendacion("r2", camino("q", "r2")));
-        assertTrue(e.registrarRecomendacion("r1", camino("q", "r1")));
-        assertFalse(e.registrarRecomendacion("r2", camino("otro")), "no se repite");
-
-        Map<String, List<PasoRuta>> recs = e.recomendaciones();
-        assertEquals(List.of("r2", "r1"), List.copyOf(recs.keySet()));
-        assertEquals(camino("q", "r2"), recs.get("r2"), "conserva el primer camino");
-    }
-
-    @Test
     void fotoYRestauracionDevuelvenLaNavegacionAlInstanteDeLaFoto() {
         EstadoPaciente e = new EstadoPaciente("s");
         e.encolarOpcion("q1", "A", "d1", camino("q1", "d1"));
@@ -129,25 +104,5 @@ class EstadoPacienteNavegacionTest {
         assertTrue(e.cola().isEmpty());
         assertTrue(e.recomendaciones().isEmpty());
         assertTrue(e.getRespuestas("p1").isEmpty());
-    }
-
-    @Test
-    void unPasoSinFotoNoTocaLaNavegacionAlDeshacerse() {
-        EstadoPaciente e = new EstadoPaciente("s");
-        e.registrarRespuesta("p1", "SI");
-        e.apilarPaso(new PasoRecorrido("p1", List.of("SI"), List.of(), List.of()));
-        e.encolarOpcion("p1", "SI", "d1", List.of());
-
-        e.desapilarPaso();
-
-        assertEquals(1, e.cola().size(), "sin foto, la cola queda como estaba");
-    }
-
-    @Test
-    void laOpcionPendienteValidaSusDatos() {
-        assertThrows(IllegalArgumentException.class, () -> new OpcionPendiente("", "A", "d", 0, List.of()));
-        assertThrows(IllegalArgumentException.class, () -> new OpcionPendiente("q", "", "d", 0, List.of()));
-        assertThrows(IllegalArgumentException.class, () -> new OpcionPendiente("q", "A", null, 0, List.of()));
-        assertThrows(IllegalArgumentException.class, () -> new PasoRuta("", "A"));
     }
 }

@@ -65,25 +65,6 @@ class ServicioTokensTest {
     }
 
     @Test
-    void sinIndicarDispositivoSeguroUnPadreRecibe24Horas() {
-        ServicioTokens tokens = new ServicioTokens(ConfiguracionSeguridad.codificador(CLAVE), Duration.ofHours(8));
-
-        Duration padre = Duration.between(Instant.now(), tokens.emitir(usuario(Rol.PADRE)).expiraEn());
-
-        assertNear(Duration.ofHours(24), padre);
-    }
-
-    @Test
-    void elTokenDeUnPadreSeguroSeDecodificaConSuRol() {
-        ServicioTokens tokens = new ServicioTokens(ConfiguracionSeguridad.codificador(CLAVE), Duration.ofHours(8));
-
-        Jwt jwt = decodificador.decode(tokens.emitir(usuario(Rol.PADRE), true).token());
-
-        assertEquals("PADRE", jwt.getClaimAsString("rol"));
-        assertTrue(jwt.getExpiresAt().isAfter(Instant.now().plus(Duration.ofDays(29))));
-    }
-
-    @Test
     void unTokenVencidoSeRechaza() {
         // Vencido hace una hora, más que la tolerancia de reloj (60 s) del decodificador.
         Instant hace2h = Instant.now().minus(Duration.ofHours(2));

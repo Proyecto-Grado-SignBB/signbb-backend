@@ -1,7 +1,7 @@
 package org.signbb.backend.observaciones.servicios;
 
 /**
- * El recorrido ya no se puede seguir (CU10): su sesión venció tras 8 horas sin
+ * El recorrido ya no se puede seguir (CU09): su sesión venció tras 8 horas sin
  * actividad, o el padre lo reinició y quedó reemplazado por uno nuevo. Se
  * responde 410 para que el cliente lleve a la persona al inicio con un aviso
  * claro, en vez de un 404 que parece un error.

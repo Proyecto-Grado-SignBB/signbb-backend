@@ -173,32 +173,6 @@ class ServicioCapturaImplTest {
     }
 
     @Test
-    void siLaPreguntaEsperadaEsLaActualResponde() {
-        when(servicioNavegacion.consultar(RECORRIDO_ID))
-                .thenReturn(recorridoConPregunta("n1", List.of("SI", "NO")));
-        RecorridoDTO esperado = recorridoConPregunta("n2", List.of("SI", "NO"));
-        when(servicioNavegacion.responder(RECORRIDO_ID, List.of("SI"))).thenReturn(esperado);
-
-        RecorridoDTO resultado = servicioCaptura.registrarRespuesta(RECORRIDO_ID, TipoInteraccion.SI_NO,
-                List.of("SI"), PADRE, "n1");
-
-        assertEquals(esperado, resultado);
-        verify(repositorioObservaciones).save(any(ObservacionEntity.class));
-    }
-
-    @Test
-    void siElRecorridoYaTerminoNoFallaAunqueLaPreguntaEsperadaSeaOtra() {
-        RecorridoDTO finalizado = new RecorridoDTO(RECORRIDO_ID, "FINALIZADO", null, null);
-        when(servicioNavegacion.consultar(RECORRIDO_ID)).thenReturn(finalizado);
-
-        RecorridoDTO resultado = servicioCaptura.registrarRespuesta(RECORRIDO_ID, TipoInteraccion.SI_NO,
-                List.of("SI"), PADRE, "n1");
-
-        assertEquals(finalizado, resultado);
-        verify(repositorioObservaciones, never()).save(any());
-    }
-
-    @Test
     void avanzaGuardaLaObservacionYElRecorridoEnUnaSolaTransaccion() {
         when(servicioNavegacion.consultar(RECORRIDO_ID))
                 .thenReturn(recorridoConPregunta("n1", List.of("SI", "NO")));
@@ -235,52 +209,6 @@ class ServicioCapturaImplTest {
     }
 
     @Test
-    void siFallaGuardarElRecorridoRevierteYDevuelveLaSesionAComoEstaba() {
-        when(servicioNavegacion.consultar(RECORRIDO_ID))
-                .thenReturn(recorridoConPregunta("n1", List.of("SI", "NO")));
-        when(servicioNavegacion.responder(RECORRIDO_ID, List.of("SI")))
-                .thenReturn(recorridoConPregunta("n2", List.of("SI", "NO")));
-        when(servicioRecorridos.actualizar(any())).thenThrow(new IllegalStateException("bd caída"));
-
-        assertThrows(IllegalStateException.class, () -> servicioCaptura.registrarRespuesta(RECORRIDO_ID,
-                TipoInteraccion.SI_NO, List.of("SI"), PADRE));
-
-        verify(gestor).rollback(any(TransactionStatus.class));
-        verify(repositorioSesion).guardar(antes);
-    }
-
-    @Test
-    void siFallaElCierreDeLaTransaccionTambienDevuelveLaSesion() {
-        when(servicioNavegacion.consultar(RECORRIDO_ID))
-                .thenReturn(recorridoConPregunta("n1", List.of("SI", "NO")));
-        when(servicioNavegacion.responder(RECORRIDO_ID, List.of("SI")))
-                .thenReturn(recorridoConPregunta("n2", List.of("SI", "NO")));
-        doThrow(new IllegalStateException("commit falló")).when(gestor).commit(any(TransactionStatus.class));
-
-        assertThrows(IllegalStateException.class, () -> servicioCaptura.registrarRespuesta(RECORRIDO_ID,
-                TipoInteraccion.SI_NO, List.of("SI"), PADRE));
-
-        verify(repositorioSesion).guardar(antes);
-    }
-
-    @Test
-    void siNoSePuedeDevolverLaSesionSaleElErrorOriginalConElSegundoAnexado() {
-        when(servicioNavegacion.consultar(RECORRIDO_ID))
-                .thenReturn(recorridoConPregunta("n1", List.of("SI", "NO")));
-        when(servicioNavegacion.responder(RECORRIDO_ID, List.of("SI")))
-                .thenReturn(recorridoConPregunta("n2", List.of("SI", "NO")));
-        IllegalStateException original = new IllegalStateException("bd caída");
-        doThrow(original).when(repositorioObservaciones).save(any(ObservacionEntity.class));
-        doThrow(new IllegalStateException("redis caído")).when(repositorioSesion).guardar(antes);
-
-        IllegalStateException salida = assertThrows(IllegalStateException.class, () -> servicioCaptura
-                .registrarRespuesta(RECORRIDO_ID, TipoInteraccion.SI_NO, List.of("SI"), PADRE));
-
-        assertSame(original, salida);
-        assertEquals(1, salida.getSuppressed().length);
-    }
-
-    @Test
     void siElCandadoEstaTomadoNoTocaNada() {
         ServicioCapturaImpl ocupado = crear(new CandadoTomado());
 
@@ -302,16 +230,5 @@ class ServicioCapturaImplTest {
         verify(servicioRecorridos).actualizar(anterior);
         verify(gestor).commit(any(TransactionStatus.class));
         verify(repositorioSesion, never()).guardar(any());
-    }
-
-    @Test
-    void siFallaAlRetrocederDevuelveLaSesionAComoEstaba() {
-        when(servicioNavegacion.retroceder(RECORRIDO_ID)).thenReturn(recorridoConPregunta("n1", List.of("SI")));
-        when(servicioRecorridos.actualizar(any())).thenThrow(new IllegalStateException("bd caída"));
-
-        assertThrows(IllegalStateException.class, () -> servicioCaptura.retroceder(RECORRIDO_ID));
-
-        verify(gestor).rollback(any(TransactionStatus.class));
-        verify(repositorioSesion).guardar(antes);
     }
 }

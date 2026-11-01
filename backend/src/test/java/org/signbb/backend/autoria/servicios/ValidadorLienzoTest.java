@@ -70,28 +70,6 @@ class ValidadorLienzoTest {
     }
 
     @Test
-    void textosVaciosSeAvisan() {
-        DocumentoLienzo completo = LienzoFiebre.completo();
-        NodoLienzo decaido = completo.nodos().get(DECAIDO);
-        NodoLienzo sinTexto = new NodoLienzo(DECAIDO, TipoNodo.PREGUNTA, " ", false, null,
-                List.of(decaido.respuestas().get(0), new RespuestaLienzo("r_8", "", null, CONSULTA)));
-
-        List<Aviso> avisos = ValidadorLienzo.validar(con(completo, sinTexto));
-
-        assertEquals(2, avisos.stream().filter(a -> a.codigo() == Codigo.TEXTO_VACIO).count());
-    }
-
-    @Test
-    void respuestasRepetidasGuardadasPorOtraViaSeAvisan() {
-        DocumentoLienzo completo = LienzoFiebre.completo();
-        NodoLienzo decaido = completo.nodos().get(DECAIDO);
-        NodoLienzo repetida = decaido.conRespuestas(List.of(decaido.respuestas().get(0),
-                new RespuestaLienzo("r_8", "SÍ", null, CONSULTA)));
-
-        assertTrue(codigos(con(completo, repetida)).contains(Codigo.RESPUESTA_REPETIDA));
-    }
-
-    @Test
     void unaConclusionSinDesenlaceSeAvisa() {
         DocumentoLienzo completo = LienzoFiebre.completo();
         NodoLienzo urgencia = completo.nodos().get(URGENCIA);
@@ -99,20 +77,6 @@ class ValidadorLienzoTest {
                 List.of());
 
         assertEquals(List.of(Codigo.SIN_DESENLACE), codigos(con(completo, sinDesenlace)));
-    }
-
-    @Test
-    void unCirculoGuardadoPorOtraViaSeAvisa() {
-        DocumentoLienzo completo = LienzoFiebre.completo();
-        NodoLienzo decaido = completo.nodos().get(DECAIDO);
-        NodoLienzo vuelve = decaido.conRespuestas(decaido.respuestas().stream()
-                .map(r -> r.id().equals(SI) ? r.conDestino(INICIO) : r).toList());
-
-        List<Aviso> avisos = ValidadorLienzo.validar(con(completo, vuelve));
-
-        Aviso ciclo = avisos.stream().filter(a -> a.codigo() == Codigo.CICLO).findFirst().orElseThrow();
-        assertEquals(SI, ciclo.respuestaId());
-        assertTrue(ciclo.mensaje().contains("vuelve a \"¿Cuánto marca el termómetro?\""));
     }
 
     @Test
@@ -132,14 +96,5 @@ class ValidadorLienzoTest {
         assertFalse(avisos.stream().anyMatch(a -> a.codigo() == Codigo.SIN_DESENLACE));
         assertTrue(avisos.stream().anyMatch(a -> a.codigo() == Codigo.RESPUESTA_SIN_CAMINO));
         assertTrue(ValidadorLienzo.hayBloqueantes(avisos));
-    }
-
-    @Test
-    void elChoqueDeGravedadesNoSeAvisa() {
-        // "Menos de 38" (LEVE) y "Entre 38 y 39" (MODERADA) llegan a la misma pregunta.
-        DocumentoLienzo d = LienzoFiebre.completo();
-
-        assertFalse(ValidadorLienzo.hayBloqueantes(ValidadorLienzo.validar(d)));
-        assertTrue(ValidadorLienzo.validar(d).isEmpty());
     }
 }

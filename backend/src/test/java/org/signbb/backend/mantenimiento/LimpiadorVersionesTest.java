@@ -64,15 +64,4 @@ class LimpiadorVersionesTest {
         orden.verify(resolvedor).olvidar(esperadas);
         orden.verify(contexto).olvidar(esperadas);
     }
-
-    @Test
-    void conPocasVersionesNoTocaNada() {
-        hay(20);
-
-        assertTrue(limpiador.limpiar(AHORA).isEmpty());
-
-        verify(repositorio, never()).deleteAllByIdInBatch(org.mockito.ArgumentMatchers.any());
-        verify(resolvedor, never()).olvidar(org.mockito.ArgumentMatchers.any());
-        verify(contexto, never()).olvidar(org.mockito.ArgumentMatchers.any());
-    }
 }

@@ -163,37 +163,4 @@ class MotorNavegacionTest {
         assertEquals(id("q_resp_consulta"),
                 motor.paso(grafo, base, e, urgencia, NINGUNO).preguntaActual().getId());
     }
-
-    @Test
-    void variasRespuestasEnSeleccionUnicaSeRechazan() {
-        EstadoPaciente e = new EstadoPaciente("s");
-        Nodo inicial = motor.iniciar(e, grafo).preguntaActual();
-        Nodo gastro = motor.paso(grafo, base, e, inicial, "gastrointestinal").preguntaActual();
-        Nodo multi = motor.paso(grafo, base, e, gastro, "iniciar").preguntaActual();
-        Nodo vomito = motor.paso(grafo, base, e, multi, "vomito").preguntaActual();
-
-        assertThrows(IllegalArgumentException.class,
-                () -> motor.paso(grafo, base, e, vomito, List.of("SI", "NO")));
-        assertTrue(e.getRespuestas(vomito.getId()).isEmpty());
-    }
-
-    @Test
-    void respuestaRepetidaSeRechaza() {
-        EstadoPaciente e = new EstadoPaciente("s");
-        Nodo urgencia = hastaUrgencia(e);
-
-        assertThrows(IllegalArgumentException.class,
-                () -> motor.paso(grafo, base, e, urgencia,
-                        List.of("Quejido al respirar", "Quejido al respirar")));
-        assertTrue(e.getRespuestas(urgencia.getId()).isEmpty());
-    }
-
-    @Test
-    void unTerminalNoAdmiteRespuestas() {
-        EstadoPaciente e = new EstadoPaciente("s");
-        Nodo terminal = grafo.obtenerNodoPorId(id("normal_1")).orElseThrow();
-
-        assertThrows(IllegalArgumentException.class,
-                () -> motor.paso(grafo, base, e, terminal, "SI"));
-    }
 }

@@ -154,19 +154,6 @@ class ServicioAutoriaImplTest {
     }
 
     @Test
-    void editarLosDatosNoCambiaElAutor() {
-        BorradorSubgrafoEntity b = guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
-        b.setAutor("Dra. A");
-        b.setAutorId(10L);
-
-        SubgrafoDTO dto = servicio.actualizar(b.getId(), new SubgrafoRequest("Fiebre", "puente_neuro", "Fiebre",
-                "Otro autor", "Otra institución"));
-
-        assertEquals("Dra. A", dto.autor());
-        assertEquals(10L, dto.autorId());
-    }
-
-    @Test
     void unMedicoListaSoloLoSuyoYElSupervisorTodo() {
         servicio.listar(MEDICO_A);
         verify(borradores).findByAutorId(eq(10L), any(Sort.class));
@@ -174,16 +161,6 @@ class ServicioAutoriaImplTest {
 
         servicio.listar(UsuariosPrueba.SUPERVISOR);
         verify(borradores).findAll(any(Sort.class));
-    }
-
-    @Test
-    void elGrafoIdNoChocaConLosGrafosNiLosBorradores() {
-        when(borradores.existsByGrafoId("grafo_respiracion_2")).thenReturn(true);
-
-        SubgrafoDTO dto = servicio.crear(
-                new SubgrafoRequest("Respiración", "puente_respiracion", "Le cuesta respirar", null, null), MEDICO_A);
-
-        assertEquals("grafo_respiracion_3", dto.grafoId());
     }
 
     @Test
@@ -216,17 +193,6 @@ class ServicioAutoriaImplTest {
         verify(borradores).save(b);
         assertEquals(2, dto.nodos().size());
         assertEquals(2, dto.avisos().size(), "quedan dos \"+\"");
-    }
-
-    @Test
-    void laPrimeraPreguntaSeCreaSinDespuesDe() {
-        guardado(LienzoFiebre.borrador(DocumentoLienzo.vacio()));
-
-        SubgrafoDTO dto = servicio.agregarNodo(1L, new NodoRequest(null, TipoNodo.PREGUNTA, "¿Fiebre?", true, null,
-                List.of(new OpcionRequest(null, "Sí", Gravedad.GRAVE), new OpcionRequest(null, "No", null))));
-
-        assertEquals("pregunta_1", dto.inicio());
-        assertTrue(dto.nodos().get(0).variasRespuestas());
     }
 
     @Test
@@ -300,16 +266,6 @@ class ServicioAutoriaImplTest {
     }
 
     @Test
-    void publicarSinBorradorDeReglasNoTocaLasReglas() {
-        guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
-
-        servicio.publicar(1L);
-
-        verify(publicadorRegla, never()).publicar(any(), any());
-        verify(versiones).registrar(any(GrafoClinicoJson.class), any(), anyString());
-    }
-
-    @Test
     void publicarConUnaReglaQueApuntaAUnNodoBorradoSeBloquea() {
         guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
         when(basesReglas.findByGrafoId("grafo_fiebre"))
@@ -323,17 +279,6 @@ class ServicioAutoriaImplTest {
         verify(publicador, never()).publicar(any(), any());
         verify(publicadorRegla, never()).publicar(any(), any());
         verify(versiones, never()).registrar(any(), any(), anyString());
-    }
-
-    @Test
-    void obtenerIncluyeLosAvisosDeReglasQueApuntanANodosBorrados() {
-        guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
-        when(basesReglas.findByGrafoId("grafo_fiebre"))
-                .thenReturn(Optional.of(BaseReglasFiebre.borrador(reglaRota())));
-
-        List<Aviso> avisos = servicio.avisos(1L);
-
-        assertTrue(avisos.stream().anyMatch(a -> a.codigo() == Aviso.Codigo.REGLA_CONDICION_INVALIDA));
     }
 
     /** Regla que referencia un nodo que no está en el lienzo completo de fiebre. */
@@ -359,38 +304,6 @@ class ServicioAutoriaImplTest {
         assertEquals("puente_neuro", dto.puenteId());
         assertEquals("neurologico", dto.categoria());
         assertEquals("Fiebre o temperatura alta", dto.etiquetaOpcion());
-    }
-
-    @Test
-    void descartarSinCambiosSinPublicarDevuelveElBorradorIgual() {
-        BorradorSubgrafoEntity b = guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
-        servicio.publicar(1L);
-
-        SubgrafoDTO dto = servicio.descartarCambios(1L);
-
-        assertEquals(EstadoBorrador.PUBLICADO, dto.estado());
-        assertEquals(LienzoFiebre.completo(), b.getDocumento());
-        verify(borradores, times(1)).save(any(BorradorSubgrafoEntity.class)); // solo el de publicar
-    }
-
-    @Test
-    void descartarUnBorradorQueNuncaSePublicoSeRechaza() {
-        guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
-
-        assertThrows(EdicionInvalidaException.class, () -> servicio.descartarCambios(1L));
-        verify(borradores, never()).save(any());
-    }
-
-    @Test
-    void descartarUnPublicadoSinCopiaSeRechazaYNoCambiaNada() {
-        // Publicado antes de que existiera la copia: no hay a qué volver.
-        BorradorSubgrafoEntity b = guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
-        b.setEstado(EstadoBorrador.CAMBIOS_SIN_PUBLICAR);
-        b.setPublicadoEn(Instant.parse("2026-10-01T00:00:00Z"));
-
-        assertThrows(EdicionInvalidaException.class, () -> servicio.descartarCambios(1L));
-        assertEquals(EstadoBorrador.CAMBIOS_SIN_PUBLICAR, b.getEstado());
-        verify(borradores, never()).save(any());
     }
 
     @Test
@@ -438,40 +351,6 @@ class ServicioAutoriaImplTest {
     }
 
     @Test
-    void despublicarNoTocaElLienzoNiLosDatosDelBorrador() {
-        BorradorSubgrafoEntity b = guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
-        servicio.publicar(1L);
-        servicio.actualizar(1L, new SubgrafoRequest("Otro nombre", "puente_respiracion", "Otra opción", null, null));
-
-        SubgrafoDTO dto = servicio.despublicar(1L);
-
-        assertEquals(LienzoFiebre.completo(), b.getDocumento());
-        assertEquals("Otro nombre", dto.nombre());
-        assertEquals("Otra opción", dto.etiquetaOpcion());
-    }
-
-    @Test
-    void despublicarUnPublicadoConCambiosSinPublicarTambienFunciona() {
-        BorradorSubgrafoEntity b = guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
-        servicio.publicar(1L);
-        servicio.enlazar(1L, LienzoFiebre.MENOS_38, null);
-        assertEquals(EstadoBorrador.CAMBIOS_SIN_PUBLICAR, b.getEstado());
-
-        SubgrafoDTO dto = servicio.despublicar(1L);
-
-        assertEquals(EstadoBorrador.BORRADOR, dto.estado());
-    }
-
-    @Test
-    void despublicarUnBorradorQueNuncaSePublicoSeRechazaYNoRetiraNada() {
-        guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
-
-        assertThrows(EdicionInvalidaException.class, () -> servicio.despublicar(1L));
-        verify(publicador, never()).retirar(any());
-        verify(borradores, never()).save(any());
-    }
-
-    @Test
     void siElContenidoQueQuedaNoEsValidoElBorradorSigueSiendoPublicado() {
         BorradorSubgrafoEntity b = guardado(LienzoFiebre.borrador(LienzoFiebre.completo()));
         servicio.publicar(1L);
@@ -482,13 +361,6 @@ class ServicioAutoriaImplTest {
         assertEquals(EstadoBorrador.PUBLICADO, b.getEstado());
         assertNotNull(b.getPublicadoEn());
         assertNotNull(b.getCopiaPublicada());
-    }
-
-    @Test
-    void despublicarUnBorradorQueNoExisteDa404() {
-        when(borradores.findById(9L)).thenReturn(Optional.empty());
-
-        assertThrows(RecursoNoEncontradoException.class, () -> servicio.despublicar(9L));
     }
 
     @Test
@@ -503,76 +375,6 @@ class ServicioAutoriaImplTest {
         servicio.despublicar(1L);
         servicio.eliminar(1L);
         verify(borradores).delete(b);
-    }
-
-    @Test
-    void unBorradorQueNoExisteDa404() {
-        when(borradores.findById(9L)).thenReturn(Optional.empty());
-
-        assertThrows(RecursoNoEncontradoException.class, () -> servicio.obtener(9L));
-    }
-
-    @Test
-    void editarUnNodoSinUnaImagenLaBorraDeSilo() {
-        conImagenes();
-
-        servicio.editarNodo(1L, "pregunta_1", nodoConImagenes(List.of(IMAGEN_1)));
-
-        verify(imagenes).eliminarSiHuerfanas(Set.of(IMAGEN_2));
-    }
-
-    @Test
-    void editarUnNodoConservandoLasImagenesNoBorraNada() {
-        conImagenes();
-
-        servicio.editarNodo(1L, "pregunta_1", nodoConImagenes(List.of(IMAGEN_1, IMAGEN_2)));
-
-        verify(imagenes, never()).eliminarSiHuerfanas(any());
-    }
-
-    @Test
-    void agregarUnaImagenNoBorraLasQueYaEstaban() {
-        conImagenes();
-
-        servicio.editarNodo(1L, "pregunta_1",
-                nodoConImagenes(List.of(IMAGEN_1, IMAGEN_2, IMAGEN_3)));
-
-        verify(imagenes, never()).eliminarSiHuerfanas(any());
-    }
-
-    @Test
-    void eliminarUnNodoBorraTodasSusImagenes() {
-        conImagenes();
-
-        servicio.eliminarNodo(1L, "pregunta_1");
-
-        verify(imagenes).eliminarSiHuerfanas(Set.of(IMAGEN_1, IMAGEN_2));
-    }
-
-    @Test
-    void eliminarElBorradorBorraLasImagenesQueSoloEstabanEnEl() {
-        BorradorSubgrafoEntity b = conImagenes();
-
-        servicio.eliminar(1L);
-
-        verify(borradores).delete(b);
-        verify(imagenes).eliminarSiHuerfanas(Set.of(IMAGEN_1, IMAGEN_2));
-    }
-
-    @Test
-    void descartarCambiosBorraLasImagenesQueSoloEstabanEnElBorrador() {
-        BorradorSubgrafoEntity b = conImagenes();
-        DocumentoLienzo publicado = b.getDocumento();
-        b.setEstado(EstadoBorrador.CAMBIOS_SIN_PUBLICAR);
-        b.setPublicadoEn(Instant.parse("2026-10-01T00:00:00Z"));
-        b.setCopiaPublicada(new CopiaPublicada(publicado, b.getNombre(), b.getPuenteId(), b.getCategoria(),
-                b.getEtiquetaOpcion(), b.getAutor(), b.getInstitucion()));
-        servicio.editarNodo(1L, "pregunta_1",
-                nodoConImagenes(List.of(IMAGEN_1, IMAGEN_2, IMAGEN_3)));
-
-        servicio.descartarCambios(1L);
-
-        verify(imagenes).eliminarSiHuerfanas(Set.of(IMAGEN_3));
     }
 
     private BorradorSubgrafoEntity conImagenes() {

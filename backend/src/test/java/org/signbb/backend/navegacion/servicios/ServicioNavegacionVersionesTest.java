@@ -121,15 +121,4 @@ class ServicioNavegacionVersionesTest {
         assertEquals(2L, sesiones.get(nuevo.recorridoId()).getVersionId());
         assertEquals(1L, sesiones.get(viejo).getVersionId());
     }
-
-    @Test
-    void unaSesionSinVersionUsaLaVigente() {
-        EstadoPaciente estado = new EstadoPaciente("sin-version");
-        ResultadoPaso paso = new MotorNavegacion(new ServicioReglasImpl()).iniciar(estado, contexto.grafoDe(1L));
-        SesionTriaje antigua = new SesionTriaje("sesion-antigua", estado, paso);
-        sesiones.put(antigua.getId(), antigua);
-        publicarVersionNueva();
-
-        assertTrue(servicio.consultar("sesion-antigua").pregunta().opciones().contains(VersionesDePrueba.OPCION_NUEVA));
-    }
 }

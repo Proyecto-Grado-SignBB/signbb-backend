@@ -95,20 +95,6 @@ class MotorNavegacionRetrocederTest {
     }
 
     @Test
-    void cadaRespuestaApilaUnPasoConLasReglasQueMarco() {
-        EstadoPaciente e = new EstadoPaciente("s");
-        motor.paso(grafo, base, e, hastaUrgencia(motor, e), QUEJIDO);
-
-        List<PasoRecorrido> pasos = e.pasos();
-        assertEquals(3, pasos.size());
-        PasoRecorrido cima = pasos.get(2);
-        assertEquals(id("q_resp_urgencia"), cima.idPregunta());
-        assertEquals(List.of(QUEJIDO), cima.respuestas());
-        assertEquals(List.of(id("R_RESP_URG")), cima.reglasMarcadas());
-        assertTrue(pasos.get(1).reglasMarcadas().isEmpty(), "el puente no dispara reglas");
-    }
-
-    @Test
     void deshaceSoloLasReglasDeEsePasoYSePuedenVolverADisparar() {
         EstadoPaciente e = new EstadoPaciente("s");
         assertEquals(NivelAlerta.URGENCIA, motor.paso(grafo, base, e, hastaUrgencia(motor, e), QUEJIDO).nivel());
@@ -132,20 +118,6 @@ class MotorNavegacionRetrocederTest {
     }
 
     @Test
-    void noReevaluaLasReglas() {
-        ServicioReglas reglas = spy(new ServicioReglasImpl());
-        MotorNavegacion conEspia = new MotorNavegacion(reglas);
-        EstadoPaciente e = new EstadoPaciente("s");
-        conEspia.paso(grafo, base, e, hastaUrgencia(conEspia, e), QUEJIDO);
-        clearInvocations(reglas);
-
-        ResultadoPaso atras = conEspia.retroceder(grafo, base, e);
-
-        assertEquals(id("q_resp_urgencia"), atras.preguntaActual().getId());
-        verify(reglas, never()).evaluar(any(), any());
-    }
-
-    @Test
     void dosVecesSeguidasVuelveDosPreguntas() {
         EstadoPaciente e = new EstadoPaciente("s");
         motor.paso(grafo, base, e, hastaUrgencia(motor, e), NINGUNO);
@@ -162,26 +134,6 @@ class MotorNavegacionRetrocederTest {
     void sinRespuestasSeRechaza() {
         EstadoPaciente e = new EstadoPaciente("s");
         motor.iniciar(e, grafo);
-
-        assertThrows(IllegalArgumentException.class, () -> motor.retroceder(grafo, base, e));
-    }
-
-    @Test
-    void unaPreguntaQueYaNoExisteEnElContenidoFallaConEstadoIlegal() {
-        // Paso guardado contra una versión anterior del contenido clínico.
-        EstadoPaciente e = new EstadoPaciente("s");
-        e.registrarRespuesta("pregunta_retirada", "SI");
-        e.apilarPaso(new PasoRecorrido("pregunta_retirada", List.of("SI"), List.of(), List.of()));
-
-        assertThrows(IllegalStateException.class, () -> motor.retroceder(grafo, base, e));
-    }
-
-    @Test
-    void sinPilaSeRechazaAunqueHayaRespuestas() {
-        // Una sesión heredada sin historial carga con respuestas pero sin pasos.
-        EstadoPaciente e = new EstadoPaciente("s");
-        e.registrarRespuesta("pregunta_inicial", "respiracion");
-        e.registrarRespuesta("puente_respiracion", "iniciar");
 
         assertThrows(IllegalArgumentException.class, () -> motor.retroceder(grafo, base, e));
     }

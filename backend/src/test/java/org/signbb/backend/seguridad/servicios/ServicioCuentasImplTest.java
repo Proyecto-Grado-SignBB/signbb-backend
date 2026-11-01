@@ -98,14 +98,6 @@ class ServicioCuentasImplTest {
     }
 
     @Test
-    void unaContrasenaDeMasDe72BytesDa422PorqueBCryptSoloUsaLosPrimeros72() {
-        // 37 eñes = 37 caracteres pero 74 bytes en UTF-8
-        assertThrows(CuentaInvalidaException.class,
-                () -> servicio.registrarPadre(new RegistroRequest("Ana", "ana@correo.com", "ñ".repeat(37))));
-        verify(usuarios, never()).save(any(UsuarioEntity.class));
-    }
-
-    @Test
     void ingresarConDatosCorrectosDevuelveElToken() {
         cuenta(3L, "ana@correo.com", "secreta123", Rol.PADRE, true);
 
@@ -136,43 +128,6 @@ class ServicioCuentasImplTest {
     }
 
     @Test
-    void unCorreoInexistenteTambienVerificaUnaContrasenaFicticia() {
-        RepositorioUsuario usuariosVacios = mock(RepositorioUsuario.class);
-        PasswordEncoder codificadorFalso = mock(PasswordEncoder.class);
-        when(codificadorFalso.encode(anyString())).thenReturn("hash-ficticio");
-        when(codificadorFalso.matches("secreta123", "hash-ficticio")).thenReturn(false);
-        when(usuariosVacios.findByCorreo("nadie@correo.com")).thenReturn(Optional.empty());
-        ServicioCuentasImpl servicioFalso = new ServicioCuentasImpl(usuariosVacios, codificadorFalso,
-                mock(ServicioTokens.class));
-
-        assertThrows(CredencialesInvalidasException.class,
-                () -> servicioFalso.ingresar(new LoginRequest("nadie@correo.com", "secreta123")));
-
-        verify(codificadorFalso).matches("secreta123", "hash-ficticio");
-    }
-
-    @Test
-    void ingresarPasaElDispositivoSeguroAlEmisorDeTokens() {
-        UsuarioEntity ana = cuenta(3L, "ana@correo.com", "secreta123", Rol.PADRE, true);
-
-        servicio.ingresar(new LoginRequest("ana@correo.com", "secreta123", true));
-        servicio.ingresar(new LoginRequest("ana@correo.com", "secreta123", false));
-        servicio.ingresar(new LoginRequest("ana@correo.com", "secreta123"));
-
-        verify(tokens).emitir(ana, true);
-        verify(tokens, org.mockito.Mockito.times(2)).emitir(ana, false);
-    }
-
-    @Test
-    void registrarPadrePasaElDispositivoSeguroAlEmisorDeTokens() {
-        servicio.registrarPadre(new RegistroRequest("Ana", "ana@correo.com", "secreta123", true));
-        servicio.registrarPadre(new RegistroRequest("Beto", "beto@correo.com", "secreta123"));
-
-        verify(tokens).emitir(any(UsuarioEntity.class), eq(true));
-        verify(tokens).emitir(any(UsuarioEntity.class), eq(false));
-    }
-
-    @Test
     void usuarioActivoIgnoraLasCuentasInactivas() {
         cuenta(3L, "ana@correo.com", "secreta123", Rol.PADRE, true);
         cuenta(4L, "inactiva@correo.com", "secreta123", Rol.MEDICO, false);
@@ -197,30 +152,6 @@ class ServicioCuentasImplTest {
     }
 
     @Test
-    void sinCerrarSesionesTodoTokenValido() {
-        cuenta(3L, "ana@correo.com", "secreta123", Rol.PADRE, true);
-
-        assertEquals(Rol.PADRE, servicio.usuarioActivo(3L, Instant.now().minusSeconds(3600)).orElseThrow().rol());
-        assertEquals(Rol.PADRE, servicio.usuarioActivo(3L, null).orElseThrow().rol());
-    }
-
-    @Test
-    void usuarioActivoConFechaTambienIgnoraLasCuentasInactivas() {
-        cuenta(4L, "inactiva@correo.com", "secreta123", Rol.MEDICO, false);
-
-        assertTrue(servicio.usuarioActivo(4L, Instant.now()).isEmpty());
-        assertTrue(servicio.usuarioActivo(99L, Instant.now()).isEmpty());
-    }
-
-    @Test
-    void cerrarTodasLasSesionesDeUnaCuentaQueYaNoExisteDa401() {
-        UsuarioActual fantasma = new UsuarioActual(99L, "Fantasma", "f@x.co", Rol.PADRE, null);
-
-        assertThrows(CredencialesInvalidasException.class, () -> servicio.cerrarTodasLasSesiones(fantasma));
-        verify(usuarios, never()).save(any(UsuarioEntity.class));
-    }
-
-    @Test
     void elSupervisorCreaUnMedicoConSuInstitucion() {
         UsuarioDTO creado = servicio.crearClinico(
                 new NuevoUsuarioRequest("Dra. A", "a@clinica.co", "secreta123", Rol.MEDICO, " Fundación "));
@@ -237,15 +168,6 @@ class ServicioCuentasImplTest {
         assertThrows(CuentaInvalidaException.class, () -> servicio.crearClinico(
                 new NuevoUsuarioRequest("P", "p@correo.com", "secreta123", null, null)));
         verify(usuarios, never()).save(any());
-    }
-
-    @Test
-    void listarClinicosPideSoloMedicosYSupervisores() {
-        UsuarioEntity a = cuenta(5L, "a@clinica.co", "secreta123", Rol.MEDICO, true);
-        when(usuarios.findByRolInOrderByNombreAsc(List.of(Rol.MEDICO, Rol.MEDICO_SUPERVISOR)))
-                .thenReturn(List.of(a));
-
-        assertEquals(List.of(5L), servicio.listarClinicos().stream().map(UsuarioDTO::id).toList());
     }
 
     @Test

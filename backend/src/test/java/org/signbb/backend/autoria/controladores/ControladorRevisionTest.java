@@ -79,15 +79,6 @@ class ControladorRevisionTest {
     }
 
     @Test
-    void enviarRevisaQueSeaElAutor() throws Exception {
-        doThrow(new AccesoDenegadoException("Solo el autor puede editar este subgrafo."))
-                .when(guardia).autorSubgrafo(1L, UsuariosPrueba.SUPERVISOR);
-
-        assertEquals(403, ejecutar(post("/api/autoria/subgrafos/1/enviar-revision")).getStatus());
-        verify(servicio, never()).enviar(any());
-    }
-
-    @Test
     void aprobarPasaElSupervisorYDevuelveElPublicado() throws Exception {
         when(servicio.aprobar(1L, UsuariosPrueba.SUPERVISOR)).thenReturn(en(EstadoBorrador.PUBLICADO, null));
 

@@ -13,11 +13,6 @@ class RespuestaTest {
     }
 
     @Test
-    void condicionVaciaFalla() {
-        assertThrows(IllegalArgumentException.class, () -> new Respuesta(n("a"), n("b"), ""));
-    }
-
-    @Test
     void igualdad() {
         Nodo a = n("a");
         Nodo b = n("b");

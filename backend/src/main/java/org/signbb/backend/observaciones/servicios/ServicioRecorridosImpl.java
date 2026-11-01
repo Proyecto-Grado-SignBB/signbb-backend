@@ -23,7 +23,7 @@ import org.springframework.transaction.support.TransactionTemplate;
  * Implementación de {@link ServicioRecorridos} sobre la tabla {@code recorrido}.
  *
  * <p>
- * MODIFICADO (CU10/CU11): usa el {@link RepositorioSesion} para saber si la
+ * MODIFICADO (CU09): usa el {@link RepositorioSesion} para saber si la
  * sesión de un recorrido en curso venció ({@code VENCIDO}); "Mis recorridos"
  * se muestra igual si Redis no responde. Al reiniciar,
  * toma el {@link CandadoRecorrido} del recorrido, lo marca

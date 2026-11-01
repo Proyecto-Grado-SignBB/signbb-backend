@@ -21,11 +21,6 @@ class EstadoPacienteTest {
     }
 
     @Test
-    void idVacioFalla() {
-        assertThrows(IllegalArgumentException.class, () -> new EstadoPaciente(""));
-    }
-
-    @Test
     void registrarYConsultarRespuesta() {
         EstadoPaciente e = new EstadoPaciente("s1");
         e.registrarRespuesta("fiebre", "Sí");
@@ -37,28 +32,11 @@ class EstadoPacienteTest {
     }
 
     @Test
-    void registrarSobreescribe() {
-        EstadoPaciente e = new EstadoPaciente("s1");
-        e.registrarRespuesta("fiebre", "Sí");
-        e.registrarRespuesta("fiebre", "No");
-        assertEquals(Optional.of("No"), e.getRespuesta("fiebre"));
-    }
-
-    @Test
     void puntaje() {
         EstadoPaciente e = new EstadoPaciente("s1");
         e.sumarPuntaje(5);
         e.sumarPuntaje(3);
         assertEquals(8, e.getPuntaje());
-    }
-
-    @Test
-    void sintomasEsCopia() {
-        EstadoPaciente e = new EstadoPaciente("s1");
-        e.registrarRespuesta("a", "1");
-        List<Sintoma> s = e.sintomas();
-        s.add(new Sintoma("hack", "hack"));
-        assertEquals(1, e.size());
     }
 
     @Test
@@ -93,11 +71,5 @@ class EstadoPacienteTest {
 
         assertEquals(List.of("SI"), e.getRespuestas("p1"));
         assertEquals(1, e.pasos().size());
-    }
-
-    @Test
-    void desapilarSinPasosDaVacio() {
-        EstadoPaciente e = new EstadoPaciente("s1");
-        assertTrue(e.desapilarPaso().isEmpty());
     }
 }

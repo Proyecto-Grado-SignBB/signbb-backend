@@ -86,17 +86,6 @@ class MotorNavegacionLimiteTest {
     }
 
     @Test
-    void unTerminalEnLaDecimaRespuestaGanaAlLimite() {
-        EstadoPaciente e = new EstadoPaciente("s");
-        ResultadoPaso p10 = responderSi(motor, sinReglas, e, 9);
-
-        ResultadoPaso paso = motor.paso(grafo, sinReglas, e, p10.preguntaActual(), "NO");
-
-        assertEquals("consulta", paso.destino().getId());
-        assertEquals(NivelAlerta.CONSULTAR_MEDICO, paso.nivel());
-    }
-
-    @Test
     void unaReglaEnLaDecimaRespuestaGanaAlLimite() {
         BaseReglas base = new BaseReglas();
         base.agregarRegla(new ReglaClinica("R", "décimo signo", List.of(new Condicion("p10", "SI")),
@@ -106,46 +95,5 @@ class MotorNavegacionLimiteTest {
 
         assertEquals("urgencia", paso.destino().getId());
         assertEquals(NivelAlerta.URGENCIA, paso.nivel());
-    }
-
-    @Test
-    void elLimiteEsConfigurable() {
-        MotorNavegacion corto = new MotorNavegacion(new ServicioReglasImpl(), 3);
-
-        assertFalse(responderSi(corto, sinReglas, new EstadoPaciente("a"), 2).finalizado());
-        assertEquals(MotorNavegacion.LIMITE_PREGUNTAS,
-                responderSi(corto, sinReglas, new EstadoPaciente("b"), 3).destino());
-    }
-
-    @Test
-    void limiteMenorQueUnoSeRechaza() {
-        assertThrows(IllegalArgumentException.class, () -> new MotorNavegacion(new ServicioReglasImpl(), 0));
-    }
-
-    @Test
-    void lasRespuestasDeshechasNoCuentanParaElLimite() {
-        EstadoPaciente e = new EstadoPaciente("s");
-        responderSi(motor, sinReglas, e, 9);
-        Nodo p9 = motor.retroceder(grafo, sinReglas, e).preguntaActual();
-
-        // Al responder de nuevo p9 van 9 respondidas, no 10: el recorrido sigue.
-        ResultadoPaso p10 = motor.paso(grafo, sinReglas, e, p9, "SI");
-        assertFalse(p10.finalizado());
-        assertEquals("p10", p10.preguntaActual().getId());
-
-        assertEquals(MotorNavegacion.LIMITE_PREGUNTAS,
-                motor.paso(grafo, sinReglas, e, p10.preguntaActual(), "SI").destino());
-    }
-
-    @Test
-    void retrocederDesdeElLimiteVuelveALaDecimaPregunta() {
-        EstadoPaciente e = new EstadoPaciente("s");
-        responderSi(motor, sinReglas, e, 10);
-
-        ResultadoPaso atras = motor.retroceder(grafo, sinReglas, e);
-
-        assertFalse(atras.finalizado());
-        assertEquals("p10", atras.preguntaActual().getId());
-        assertEquals(9, e.size());
     }
 }

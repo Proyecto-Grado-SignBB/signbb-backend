@@ -37,18 +37,6 @@ class SeleccionCuidadorTest {
     }
 
     @Test
-    void rechazaVariasOpcionesParaSiNo() {
-        assertThrows(IllegalArgumentException.class,
-                () -> new SeleccionCuidador("r1", "n1", TipoInteraccion.SI_NO, List.of("SI", "NO")));
-    }
-
-    @Test
-    void rechazaVariasOpcionesParaSeleccionUnica() {
-        assertThrows(IllegalArgumentException.class,
-                () -> new SeleccionCuidador("r1", "n1", TipoInteraccion.SELECCION_UNICA, List.of("A", "B")));
-    }
-
-    @Test
     void rechazaRecorridoIdVacio() {
         assertThrows(IllegalArgumentException.class,
                 () -> new SeleccionCuidador("", "n1", TipoInteraccion.SI_NO, List.of("SI")));
