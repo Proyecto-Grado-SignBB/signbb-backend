@@ -11,13 +11,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.signbb.backend.cache.RepositorioSesionRedis;
 import org.signbb.backend.cache.ResolvedorContenidoClinico;
+import org.signbb.backend.cache.ResolvedorVersiones;
 import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
 import org.signbb.backend.navegacion.datos.repositorios.RepositorioGrafoClinico;
+import org.signbb.backend.navegacion.datos.repositorios.RepositorioVersionContenido;
 import org.signbb.backend.navegacion.datos.serializacion.ContenidoEjemplo;
 import org.signbb.backend.navegacion.modelo.ContextoClinico;
 import org.signbb.backend.observaciones.datos.repositorios.RepositorioRecorridos;
@@ -71,10 +75,17 @@ class ReglasAccesoIntegracionTest {
     @Autowired
     private ContextoClinico contextoClinico;
 
+    @Autowired
+    private ResolvedorVersiones versiones;
+
+    @Autowired
+    private RepositorioVersionContenido repositorioVersiones;
+
     private ApiPrueba api;
     private MockMvc mvc;
     private GrafoClinicoEntity subgrafoAgregado;
     private BaseReglasEntity baseAgregada;
+    private Long versionAgregada;
 
     @BeforeEach
     void preparar() {
@@ -87,6 +98,18 @@ class ReglasAccesoIntegracionTest {
      * Estas pruebas inician recorridos reales. La siembra por defecto deja solo
      * el grafo raíz, así que se asegura el subgrafo de respiración del fixture
      * (la raíz ya tiene su referencia).
+     *
+     * <p>
+     * MODIFICADO: además de dejar las filas en la base, se registra una
+     * versión propia del contenido compuesto y se deja como la vigente. Antes
+     * esta prueba confiaba en que {@code ContextoClinico} fuera a crear su
+     * primera versión en este momento, pero si otra clase de prueba ya había
+     * resuelto el contenido clínico antes (p. ej. al arrancar el contexto),
+     * esa versión queda fijada ({@code idActual()} nunca la recalcula) y los
+     * recorridos de esta prueba se armaban sobre un grafo sin el subgrafo de
+     * respiración, dando 503 ("no disponible"). Registrar una versión propia,
+     * sin importar lo que haya antes, hace que el orden en que corren las
+     * clases de prueba no afecte el resultado.
      */
     private void asegurarContenidoNavegable() {
         GrafoClinicoEntity subgrafo = new GrafoClinicoEntity();
@@ -108,6 +131,8 @@ class ReglasAccesoIntegracionTest {
             baseAgregada = bases.save(base);
         }
         resolvedor.invalidar();
+        versionAgregada = versiones.registrar(resolvedor.documentoGrafo(), resolvedor.documentoReglas(),
+                "Prueba de reglas de acceso");
         contextoClinico.recargar();
     }
 
@@ -120,7 +145,11 @@ class ReglasAccesoIntegracionTest {
         if (baseAgregada != null) {
             bases.delete(baseAgregada);
         }
-        if (subgrafoAgregado != null || baseAgregada != null) {
+        if (versionAgregada != null) {
+            versiones.olvidar(List.of(versionAgregada));
+            repositorioVersiones.deleteById(versionAgregada);
+        }
+        if (subgrafoAgregado != null || baseAgregada != null || versionAgregada != null) {
             resolvedor.invalidar();
             contextoClinico.recargar();
         }
