@@ -10,11 +10,22 @@ package org.signbb.backend.config;
  */
 public final class PatronesTexto {
 
-    /** Una sola línea: sin saltos de línea ni otros caracteres de control. */
-    public static final String UNA_LINEA = "\\P{Cntrl}*";
+    /**
+     * Fragmento que detecta una etiqueta HTML/script ({@code <}, espacio opcional
+     * y una letra, {@code !} o {@code /}): cubre {@code <script>}, {@code </script>},
+     * {@code <img ...>}, {@code <!--...}, etc. Un {@code <} usado como comparación
+     * ("T < 38°C") no cae aquí porque no lo sigue una letra, {@code !} ni {@code /}.
+     */
+    private static final String SIN_ETIQUETAS = "(?![\\s\\S]*<\\s*[a-zA-Z!/])";
 
-    /** Texto largo: permite saltos de línea y tabulaciones, pero ningún otro carácter de control. */
-    public static final String TEXTO_LARGO = "[\\P{Cntrl}\\n\\r\\t]*";
+    /** Una sola línea: sin saltos de línea, otros caracteres de control, ni etiquetas HTML/script. */
+    public static final String UNA_LINEA = SIN_ETIQUETAS + "\\P{Cntrl}*";
+
+    /**
+     * Texto largo: permite saltos de línea y tabulaciones, pero ningún otro carácter
+     * de control, ni etiquetas HTML/script (AS-03: rechazar código malicioso).
+     */
+    public static final String TEXTO_LARGO = SIN_ETIQUETAS + "[\\P{Cntrl}\\n\\r\\t]*";
 
     /** Teléfono: dígitos, {@code +} y espacios, de 7 a 20 caracteres (por ejemplo, {@code +57 300 123 4567}). */
     public static final String TELEFONO = "[+0-9 ]{7,20}";

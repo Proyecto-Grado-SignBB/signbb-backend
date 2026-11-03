@@ -80,6 +80,17 @@ class ValidadorLienzoTest {
     }
 
     @Test
+    void unTextoDeSoloCaracteresInvisiblesCuentaComoVacio() {
+        // Relleno de hangul (U+3164): no es espacio en blanco para Java, pero no se ve nada en pantalla.
+        String invisible = "\u3164".repeat(20);
+        NodoLienzo decaido = LienzoFiebre.completo().nodos().get(DECAIDO);
+        DocumentoLienzo d = con(LienzoFiebre.completo(), new NodoLienzo(DECAIDO, decaido.tipo(), invisible,
+                decaido.variasRespuestas(), decaido.desenlace(), decaido.respuestas()));
+
+        assertTrue(codigos(d).contains(Codigo.TEXTO_VACIO));
+    }
+
+    @Test
     void unNodoSueltoBloqueaYNoSeRevisaPorDentro() {
         // La conclusión de urgencia queda suelta: su respuesta vuelve a ser un "+".
         DocumentoLienzo d = EditorLienzo.enlazar(LienzoFiebre.completo(), MAS_39, null);

@@ -15,11 +15,13 @@ import static org.mockito.Mockito.when;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.signbb.backend.autoria.datos.entidades.BorradorBaseReglaEntity;
+import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorBaseRegla;
 import org.signbb.backend.cache.ResolvedorContenidoClinico;
 import org.signbb.backend.cache.ResolvedorVersiones;
 import org.signbb.backend.navegacion.datos.entidades.GrafoClinicoEntity;
@@ -85,7 +87,9 @@ class PublicadorReglaTest {
         contexto = mock(ContextoClinico.class);
 
         // Publica el subgrafo de fiebre para que su grafo exista y la raíz lo referencie.
-        new PublicadorSubgrafo(grafos, bases, resolvedor, mock(ResolvedorVersiones.class), contexto)
+        RepositorioBorradorBaseRegla basesBorrador = mock(RepositorioBorradorBaseRegla.class);
+        when(basesBorrador.findByGrafoId(any())).thenReturn(Optional.empty());
+        new PublicadorSubgrafo(grafos, bases, basesBorrador, resolvedor, mock(ResolvedorVersiones.class), contexto)
                 .publicar(LienzoFiebre.borrador(LienzoFiebre.completo()), FECHA);
         clearInvocations(resolvedor, contexto);
 

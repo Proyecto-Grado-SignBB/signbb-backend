@@ -61,7 +61,7 @@ public final class ValidadorLienzo {
     }
 
     private static void revisarConclusion(NodoLienzo nodo, List<Aviso> avisos) {
-        if (nodo.texto() == null || nodo.texto().isBlank()) {
+        if (vacio(nodo.texto())) {
             avisos.add(new Aviso(Codigo.TEXTO_VACIO, true,
                     "Hay una conclusión sin mensaje para la cuidadora.", nodo.id(), null));
         }
@@ -72,7 +72,7 @@ public final class ValidadorLienzo {
     }
 
     private static void revisarPregunta(DocumentoLienzo documento, NodoLienzo nodo, List<Aviso> avisos) {
-        if (nodo.texto() == null || nodo.texto().isBlank()) {
+        if (vacio(nodo.texto())) {
             avisos.add(new Aviso(Codigo.TEXTO_VACIO, true, "Hay una pregunta sin texto.", nodo.id(), null));
         }
         if (nodo.respuestas().size() < MINIMO_RESPUESTAS) {
@@ -81,7 +81,7 @@ public final class ValidadorLienzo {
         }
         Set<String> textos = new HashSet<>();
         for (RespuestaLienzo r : nodo.respuestas()) {
-            if (r.texto() == null || r.texto().isBlank()) {
+            if (vacio(r.texto())) {
                 avisos.add(new Aviso(Codigo.TEXTO_VACIO, true,
                         "Una respuesta de \"" + nombre(nodo) + "\" no tiene texto.", nodo.id(), r.id()));
             } else if (!textos.add(EditorLienzo.normalizado(r.texto()))) {
@@ -126,6 +126,30 @@ public final class ValidadorLienzo {
             }
         }
         estado.put(id, 2);
+    }
+
+    /**
+     * True si el texto no tiene ningún carácter visible: nulo, solo espacios en
+     * blanco (según Unicode), o solo caracteres invisibles que no son espacios
+     * (de formato, o los rellenos de hangul como U+3164) que alguien pudo pegar
+     * para simular texto vacío y saltarse este aviso.
+     */
+    static boolean vacio(String texto) {
+        if (texto == null) {
+            return true;
+        }
+        return texto.codePoints().allMatch(ValidadorLienzo::esInvisible);
+    }
+
+    /** Espacio en blanco, carácter de formato (Cf, por ejemplo espacios de ancho cero) o relleno de hangul. */
+    private static boolean esInvisible(int puntoDeCodigo) {
+        if (Character.isWhitespace(puntoDeCodigo) || Character.getType(puntoDeCodigo) == Character.FORMAT) {
+            return true;
+        }
+        return switch (puntoDeCodigo) {
+            case 0x115F, 0x1160, 0x3164, 0xFFA0 -> true; // rellenos de hangul: se ven en blanco pero son "letras"
+            default -> false;
+        };
     }
 
     /** Texto del nodo para los mensajes, o una descripción si está vacío. */

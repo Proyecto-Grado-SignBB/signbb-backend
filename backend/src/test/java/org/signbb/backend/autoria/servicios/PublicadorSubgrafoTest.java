@@ -17,13 +17,18 @@ import static org.mockito.Mockito.when;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
+import org.signbb.backend.autoria.datos.entidades.BorradorBaseReglaEntity;
 import org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity;
+import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorBaseRegla;
 import org.signbb.backend.autoria.modelo.Aviso;
+import org.signbb.backend.autoria.modelo.Desenlace;
+import org.signbb.backend.autoria.modelo.DocumentoBaseRegla;
 import org.signbb.backend.autoria.modelo.DocumentoLienzo;
 import org.signbb.backend.cache.ResolvedorContenidoClinico;
 import org.signbb.backend.cache.ResolvedorVersiones;
@@ -39,6 +44,9 @@ import org.signbb.backend.navegacion.modelo.Nodo;
 import org.signbb.backend.navegacion.modelo.Respuesta;
 import org.signbb.backend.reglas.datos.entidades.BaseReglasEntity;
 import org.signbb.backend.reglas.datos.repositorios.RepositorioBaseReglas;
+import org.signbb.backend.reglas.modelo.Caso;
+import org.signbb.backend.reglas.modelo.Condicion;
+import org.signbb.backend.reglas.modelo.NivelAlerta;
 
 /**
  * Tests de {@link PublicadorSubgrafo} sobre el contenido del sistema
@@ -56,6 +64,7 @@ class PublicadorSubgrafoTest {
     private final List<BaseReglasEntity> baseFilas = new ArrayList<>();
     private RepositorioGrafoClinico grafos;
     private RepositorioBaseReglas bases;
+    private RepositorioBorradorBaseRegla basesBorrador;
     private ResolvedorContenidoClinico resolvedor;
     private ResolvedorVersiones versiones;
     private ContextoClinico contexto;
@@ -94,7 +103,9 @@ class PublicadorSubgrafoTest {
         resolvedor = mock(ResolvedorContenidoClinico.class);
         versiones = mock(ResolvedorVersiones.class);
         contexto = mock(ContextoClinico.class);
-        publicador = new PublicadorSubgrafo(grafos, bases, resolvedor, versiones, contexto);
+        basesBorrador = mock(RepositorioBorradorBaseRegla.class);
+        when(basesBorrador.findByGrafoId(any())).thenReturn(Optional.empty());
+        publicador = new PublicadorSubgrafo(grafos, bases, basesBorrador, resolvedor, versiones, contexto);
     }
 
     private static GrafoClinicoEntity fila(GrafoClinicoJson documento) {
@@ -289,5 +300,43 @@ class PublicadorSubgrafoTest {
         assertEquals(6, filas.size());
         assertEquals(List.of(new GrafoClinicoJson.Arista("puente_neuro", ETIQUETA, REFERENCIA, true)),
                 aristasHaciaLaReferencia());
+    }
+
+    // ---- Regla rota por eliminar su nodo destino (PA-027) ------------------
+
+    /**
+     * Reproduce el defecto encontrado en las pruebas manuales de PA-027: se publica un
+     * subgrafo con una regla, se elimina el nodo al que apuntaba esa regla, se corrige el
+     * borrador de la regla para que apunte al nodo nuevo, y se vuelve a publicar. Antes del
+     * arreglo, {@code reglas()} validaba contra la base YA publicada (con el destino viejo) en
+     * vez del borrador recién corregido, y la publicación fallaba con "nodoDestino ... no
+     * existe en el grafo" aunque el lienzo y la regla ya eran consistentes entre sí.
+     */
+    @Test
+    void siSeCorrigeUnaReglaRotaElSubgrafoSePuedeVolverAPublicar() {
+        publicador.publicar(LienzoFiebre.borrador(LienzoFiebre.completo()), FECHA);
+        baseFilas.add(baseDeFiebre());
+
+        DocumentoLienzo sinUrgencia = EditorLienzo.eliminarNodo(LienzoFiebre.completo(), LienzoFiebre.URGENCIA);
+        DocumentoLienzo corregido = EditorLienzo.agregarNodo(sinUrgencia, LienzoFiebre.INICIO, LienzoFiebre.MAS_39,
+                LienzoFiebre.conclusion(Desenlace.URGENCIA, "Vaya al hospital más cercano ahora mismo."));
+        String nuevoDestino = corregido.nodos().keySet().stream()
+                .filter(id -> !sinUrgencia.nodos().containsKey(id))
+                .findFirst().orElseThrow();
+
+        DocumentoBaseRegla reglaCorregida = EditorReglas.agregarRegla(DocumentoBaseRegla.vacio(),
+                new EditorReglas.DatosRegla("Fiebre alta", "Más de 39 grados es urgencia.",
+                        List.of(new Caso(List.of(new Condicion(LienzoFiebre.INICIO, "Más de 39 °C")))),
+                        NivelAlerta.URGENCIA, nuevoDestino));
+        when(basesBorrador.findByGrafoId("grafo_fiebre"))
+                .thenReturn(Optional.of(BaseReglasFiebre.borrador(reglaCorregida)));
+
+        CompositorGrafoClinico.Contenido contenido =
+                publicador.publicar(LienzoFiebre.borrador(corregido), FECHA);
+
+        assertFalse(contenido.grafo().graph().nodes().containsKey("grafo_fiebre/" + LienzoFiebre.URGENCIA),
+                "el nodo eliminado ya no está en el grafo publicado");
+        assertTrue(contenido.grafo().graph().nodes().containsKey("grafo_fiebre/" + nuevoDestino),
+                "el nodo nuevo sí quedó publicado");
     }
 }

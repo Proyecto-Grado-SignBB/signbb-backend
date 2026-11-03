@@ -1,5 +1,6 @@
 package org.signbb.backend.config;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -78,6 +79,22 @@ class ValidacionEntradasTest {
 
         assertTrue(mensajes(new ReglaRequest("Regla", "desc", List.of(veintiuna.subList(0, 20)), null, "destino"))
                 .isEmpty());
+    }
+
+    @Test
+    void unTextoConUnaEtiquetaHtmlOScriptSeRechaza() {
+        // AS-03: rechazar código malicioso en los textos de autoría.
+        assertTrue(mensajes(new NodoRequest(null, null, "<script>alert(1)</script>", null, null, List.of()))
+                .contains("caracteres que no se aceptan"));
+        assertTrue(mensajes(new NodoRequest(null, null, "Hola </script> mundo", null, null, List.of()))
+                .contains("caracteres que no se aceptan"));
+        assertFalse(mensajes(new OpcionRequest("r1", "<img src=x onerror=alert(1)>", null)).isEmpty());
+        assertFalse(mensajes(new ReglaRequest("<svg onload=alert(1)>", "desc",
+                List.of(List.of(new Condicion("n1", "SI"))), null, "destino")).isEmpty());
+
+        // Un "<" usado como comparación clínica no es una etiqueta y sigue permitido.
+        assertTrue(mensajes(new NodoRequest(null, null, "Temperatura < 38°C: observar en casa", null, null,
+                List.of())).isEmpty());
     }
 
     @Test

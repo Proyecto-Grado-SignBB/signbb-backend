@@ -6,7 +6,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.signbb.backend.autoria.datos.entidades.BorradorBaseReglaEntity;
 import org.signbb.backend.autoria.datos.entidades.BorradorSubgrafoEntity;
+import org.signbb.backend.autoria.datos.repositorios.RepositorioBorradorBaseRegla;
 import org.signbb.backend.autoria.modelo.Aviso;
 import org.signbb.backend.cache.ResolvedorContenidoClinico;
 import org.signbb.backend.cache.ResolvedorVersiones;
@@ -60,15 +62,21 @@ public class PublicadorSubgrafo {
 
     private final RepositorioGrafoClinico grafos;
     private final RepositorioBaseReglas bases;
+    private final RepositorioBorradorBaseRegla basesBorrador;
     private final ResolvedorContenidoClinico resolvedor;
     private final ResolvedorVersiones versiones;
     private final ContextoClinico contexto;
 
-    /** Inyecta los repositorios del contenido clínico, el cache, las versiones y el contexto en memoria. */
+    /**
+     * Inyecta los repositorios del contenido clínico (publicado y, para las reglas, también
+     * en borrador), el cache, las versiones y el contexto en memoria.
+     */
     public PublicadorSubgrafo(RepositorioGrafoClinico grafos, RepositorioBaseReglas bases,
-            ResolvedorContenidoClinico resolvedor, ResolvedorVersiones versiones, ContextoClinico contexto) {
+            RepositorioBorradorBaseRegla basesBorrador, ResolvedorContenidoClinico resolvedor,
+            ResolvedorVersiones versiones, ContextoClinico contexto) {
         this.grafos = grafos;
         this.bases = bases;
+        this.basesBorrador = basesBorrador;
         this.resolvedor = resolvedor;
         this.versiones = versiones;
         this.contexto = contexto;
@@ -115,7 +123,7 @@ public class PublicadorSubgrafo {
         GrafoClinicoJson raiz = conReferencia(filaRaiz.getEstructura(), borrador);
         subgrafos.add(subgrafo);
         CompositorGrafoClinico.Contenido compuesto = PublicacionContenido.validarComposicion(
-                "El subgrafo no se pudo publicar", raiz, subgrafos, reglas());
+                "El subgrafo no se pudo publicar", raiz, subgrafos, reglas(borrador.getGrafoId(), fecha));
 
         if (filaSubgrafo == null) {
             filaSubgrafo = new GrafoClinicoEntity();
@@ -276,12 +284,36 @@ public class PublicadorSubgrafo {
                 grafo.category(), grafo.preguntaInicial(), grafo.nodoInicial(), grafo.metadata(), nodos, aristas));
     }
 
-    /** Bases de reglas guardadas; las del formato previo (sin {@code grafoId}) se ignoran. */
-    private List<BaseReglasJson> reglas() {
+    /**
+     * Bases de reglas guardadas, para validar la composición junto con el subgrafo nuevo.
+     * Las del formato previo (sin {@code grafoId}) se ignoran. Si el subgrafo que se publica
+     * tiene su propio borrador de reglas, se sustituye su versión ya publicada (si la había)
+     * por la recién compilada del borrador: así la composición se valida contra lo que la
+     * regla va a quedar diciendo después de esta publicación, no contra lo que decía antes
+     * (evita bloquear la publicación por una referencia que el médico ya corrigió).
+     */
+    private List<BaseReglasJson> reglas(String grafoId, Instant fecha) {
+        BaseReglasJson compiladaBorrador = compilarBorradorDeReglas(grafoId, fecha);
         return bases.findAll().stream()
                 .map(fila -> fila.getEstructura())
                 .filter(b -> b != null && b.grafoId() != null && !b.grafoId().isBlank())
+                .map(b -> compiladaBorrador != null && grafoId.equals(b.grafoId()) ? compiladaBorrador : b)
                 .toList();
+    }
+
+    /**
+     * Compila el borrador de reglas de este grafo si existe y no tiene avisos bloqueantes
+     * propios; si no hay borrador, o el borrador no es publicable por sí mismo, devuelve
+     * {@code null} y la validación sigue con la base ya publicada (si la hay). El error
+     * específico de un borrador de reglas no publicable lo da, de todas formas,
+     * {@link PublicadorRegla#publicar} cuando le toque su turno.
+     */
+    private BaseReglasJson compilarBorradorDeReglas(String grafoId, Instant fecha) {
+        return basesBorrador.findByGrafoId(grafoId)
+                .filter(borrador -> ValidadorReglas.validar(borrador.getDocumento()).stream()
+                        .noneMatch(Aviso::bloqueante))
+                .map(borrador -> CompiladorReglas.compilar(borrador, fecha))
+                .orElse(null);
     }
 
     private static String idDe(GrafoClinicoJson documento) {

@@ -47,7 +47,7 @@ public final class ValidadorReglas {
             return;
         }
         String etiqueta = "\"" + nombre(idRegla, regla) + "\"";
-        if (regla.nombre() == null || regla.nombre().isBlank()) {
+        if (ValidadorLienzo.vacio(regla.nombre())) {
             avisos.add(new Aviso(Codigo.REGLA_SIN_NOMBRE, true,
                     "La regla '" + idRegla + "' no tiene nombre.", idRegla, null));
         }
