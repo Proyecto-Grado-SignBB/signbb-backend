@@ -1,0 +1,4 @@
+var classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorSubgrafoTest =
+[
+    [ "siSeCorrigeUnaReglaRotaElSubgrafoSePuedeVolverAPublicar", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorSubgrafoTest.html#ad76019262df5bdd2d0491a11ee0da8db", null ]
+];

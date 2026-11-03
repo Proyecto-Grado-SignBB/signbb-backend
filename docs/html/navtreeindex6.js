@@ -1,5 +1,9 @@
 var NAVTREEINDEX6 =
 {
+"interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html#a9a38a6cf315bdca301f3adfd462bf980":[17,0,0,0,0,0,3,25,0],
+"interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html#abbfb3327651489067cad262e129458a2":[16,0,0,0,0,0,3,25,8],
+"interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html#abbfb3327651489067cad262e129458a2":[17,0,0,0,0,0,3,25,8],
+"interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html#ae8bd1d50af49544a966ff34dbb4c3b35":[16,0,0,0,0,0,3,25,1],
 "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html#ae8bd1d50af49544a966ff34dbb4c3b35":[17,0,0,0,0,0,3,25,1],
 "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioRevision.html":[16,0,0,0,0,0,3,28],
 "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioRevision.html":[17,0,0,0,0,0,3,28],
@@ -245,9 +249,5 @@ var NAVTREEINDEX6 =
 "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#ae74b565ebb1b3c310c943c6178db09ea":[16,0,0,0,0,5,0,5],
 "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#af3d0a616ec51a97089c93684e305ffbc":[16,0,0,0,0,5,0,3],
 "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos.html":[16,0,0,0,0,5,1],
-"namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1entidades.html":[16,0,0,0,0,5,1,0],
-"namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1repositorios.html":[16,0,0,0,0,5,1,1],
-"namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1modelo.html":[16,0,0,0,0,5,2],
-"namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios.html":[16,0,0,0,0,5,3],
-"namespaceorg_1_1signbb_1_1backend_1_1reglas.html":[16,0,0,0,0,6]
+"namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1entidades.html":[16,0,0,0,0,5,1,0]
 };

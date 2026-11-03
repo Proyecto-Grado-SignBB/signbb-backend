@@ -56,7 +56,7 @@ var annotated_dup =
               [ "PublicadorRegla", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorRegla.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorRegla" ],
               [ "PublicadorReglaTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorReglaTest.html", null ],
               [ "PublicadorSubgrafo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorSubgrafo.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorSubgrafo" ],
-              [ "PublicadorSubgrafoTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorSubgrafoTest.html", null ],
+              [ "PublicadorSubgrafoTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorSubgrafoTest.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorSubgrafoTest" ],
               [ "ResolutorCatalogoNodos", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ResolutorCatalogoNodos.html", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ResolutorCatalogoNodos" ],
               [ "ResolutorCatalogoNodosTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ResolutorCatalogoNodosTest.html", null ],
               [ "ServicioAutoria", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html", "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria" ],

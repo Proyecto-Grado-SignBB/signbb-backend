@@ -143,10 +143,42 @@ void&#160;</td><td class="memItemRight"><b>retirarBorraTambienLaBaseDeReglasDelG
 void&#160;</td><td class="memItemRight"><b>retirarGuardaUnaVersionNuevaSinElSubgrafo</b> ()</td></tr>
 <tr class="memitem:ad431a51d5c038d1879c102d26251e418" id="r_ad431a51d5c038d1879c102d26251e418"><td class="memItemLeft"><a id="ad431a51d5c038d1879c102d26251e418" name="ad431a51d5c038d1879c102d26251e418"></a>
 void&#160;</td><td class="memItemRight"><b>unSubgrafoRetiradoSePuedeVolverAPublicar</b> ()</td></tr>
+<tr class="memitem:ad76019262df5bdd2d0491a11ee0da8db" id="r_ad76019262df5bdd2d0491a11ee0da8db"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad76019262df5bdd2d0491a11ee0da8db">siSeCorrigeUnaReglaRotaElSubgrafoSePuedeVolverAPublicar</a> ()</td></tr>
+<tr class="memdesc:ad76019262df5bdd2d0491a11ee0da8db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reproduce el defecto encontrado en las pruebas manuales de PA-027: se publica un subgrafo con una regla, se elimina el nodo al que apuntaba esa regla, se corrige el borrador de la regla para que apunte al nodo nuevo, y se vuelve a publicar.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Tests de <code><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1PublicadorSubgrafo.html">PublicadorSubgrafo</a></code> sobre el contenido del sistema (<code><a class="el" href="classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1ContenidoEjemplo.html">ContenidoEjemplo</a></code>) guardado en repositorios simulados: el subgrafo queda guardado y enlazado desde su pregunta puente, el contenido compuesto es navegable, y si algo falla no se guarda nada. </p>
-</div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
+<a id="ad76019262df5bdd2d0491a11ee0da8db" name="ad76019262df5bdd2d0491a11ee0da8db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad76019262df5bdd2d0491a11ee0da8db">&#9670;&#160;</a></span>siSeCorrigeUnaReglaRotaElSubgrafoSePuedeVolverAPublicar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void org.signbb.backend.autoria.servicios.PublicadorSubgrafoTest.siSeCorrigeUnaReglaRotaElSubgrafoSePuedeVolverAPublicar </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel package">package</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reproduce el defecto encontrado en las pruebas manuales de PA-027: se publica un subgrafo con una regla, se elimina el nodo al que apuntaba esa regla, se corrige el borrador de la regla para que apunte al nodo nuevo, y se vuelve a publicar. </p>
+<p>Antes del arreglo, <code class="JavaDocCode">reglas()</code> validaba contra la base YA publicada (con el destino viejo) en vez del borrador recién corregido, y la publicación fallaba con "nodoDestino ... no
+existe en el grafo" aunque el lienzo y la regla ya eran consistentes entre sí. </p>
+
+</div>
+</div>
+<hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>backend/src/test/java/org/signbb/backend/autoria/servicios/<b>PublicadorSubgrafoTest.java</b></li>
 </ul>
 </div><!-- contents -->

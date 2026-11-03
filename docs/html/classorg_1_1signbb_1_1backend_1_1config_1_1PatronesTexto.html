@@ -118,11 +118,11 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Atributos públicos estáticos</h2></td></tr>
 <tr class="memitem:a506bbce37f6b4be59631c29fb38f7f30" id="r_a506bbce37f6b4be59631c29fb38f7f30"><td class="memItemLeft"><a id="a506bbce37f6b4be59631c29fb38f7f30" name="a506bbce37f6b4be59631c29fb38f7f30"></a>
-static final String&#160;</td><td class="memItemRight"><b>UNA_LINEA</b> = &quot;\\P{Cntrl}*&quot;</td></tr>
-<tr class="memdesc:a506bbce37f6b4be59631c29fb38f7f30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Una sola línea: sin saltos de línea ni otros caracteres de control. <br /></td></tr>
+static final String&#160;</td><td class="memItemRight"><b>UNA_LINEA</b> = SIN_ETIQUETAS + &quot;\\P{Cntrl}*&quot;</td></tr>
+<tr class="memdesc:a506bbce37f6b4be59631c29fb38f7f30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Una sola línea: sin saltos de línea, otros caracteres de control, ni etiquetas HTML/script. <br /></td></tr>
 <tr class="memitem:a942d239ec087ae025d043df9819c2f55" id="r_a942d239ec087ae025d043df9819c2f55"><td class="memItemLeft"><a id="a942d239ec087ae025d043df9819c2f55" name="a942d239ec087ae025d043df9819c2f55"></a>
-static final String&#160;</td><td class="memItemRight"><b>TEXTO_LARGO</b> = &quot;[\\P{Cntrl}\\n\\r\\t]*&quot;</td></tr>
-<tr class="memdesc:a942d239ec087ae025d043df9819c2f55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Texto largo: permite saltos de línea y tabulaciones, pero ningún otro carácter de control. <br /></td></tr>
+static final String&#160;</td><td class="memItemRight"><b>TEXTO_LARGO</b> = SIN_ETIQUETAS + &quot;[\\P{Cntrl}\\n\\r\\t]*&quot;</td></tr>
+<tr class="memdesc:a942d239ec087ae025d043df9819c2f55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Texto largo: permite saltos de línea y tabulaciones, pero ningún otro carácter de control, ni etiquetas HTML/script (AS-03: rechazar código malicioso). <br /></td></tr>
 <tr class="memitem:ae2954d9612630d61fb455f9a5eed0fc5" id="r_ae2954d9612630d61fb455f9a5eed0fc5"><td class="memItemLeft"><a id="ae2954d9612630d61fb455f9a5eed0fc5" name="ae2954d9612630d61fb455f9a5eed0fc5"></a>
 static final String&#160;</td><td class="memItemRight"><b>TELEFONO</b> = &quot;[+0-9 ]{7,20}&quot;</td></tr>
 <tr class="memdesc:ae2954d9612630d61fb455f9a5eed0fc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teléfono: dígitos, <code class="JavaDocCode">+</code> y espacios, de 7 a 20 caracteres (por ejemplo, <code class="JavaDocCode">+57 300 123 4567</code>). <br /></td></tr>
