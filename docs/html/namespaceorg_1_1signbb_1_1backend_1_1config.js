@@ -1,5 +1,6 @@
 var namespaceorg_1_1signbb_1_1backend_1_1config =
 [
+    [ "ControladorErrorGenerico", "classorg_1_1signbb_1_1backend_1_1config_1_1ControladorErrorGenerico.html", "classorg_1_1signbb_1_1backend_1_1config_1_1ControladorErrorGenerico" ],
     [ "ManejadorErroresGenerales", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorErroresGenerales.html", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorErroresGenerales" ],
     [ "ManejadorErroresGeneralesTest", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorErroresGeneralesTest.html", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorErroresGeneralesTest" ],
     [ "ManejadorExcepciones", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorExcepciones.html", "classorg_1_1signbb_1_1backend_1_1config_1_1ManejadorExcepciones" ],

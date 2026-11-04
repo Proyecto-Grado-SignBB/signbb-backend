@@ -1,5 +1,9 @@
 var NAVTREEINDEX6 =
 {
+"interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html#a4e9d048018b247773dacf280573bff9c":[17,0,0,0,0,0,3,25,7],
+"interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html#a55a1cb8bea9cbfdfcb17fb69ba90fbd1":[16,0,0,0,0,0,3,25,5],
+"interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html#a55a1cb8bea9cbfdfcb17fb69ba90fbd1":[17,0,0,0,0,0,3,25,5],
+"interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html#a9a38a6cf315bdca301f3adfd462bf980":[16,0,0,0,0,0,3,25,0],
 "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html#a9a38a6cf315bdca301f3adfd462bf980":[17,0,0,0,0,0,3,25,0],
 "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html#abbfb3327651489067cad262e129458a2":[16,0,0,0,0,0,3,25,8],
 "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html#abbfb3327651489067cad262e129458a2":[17,0,0,0,0,0,3,25,8],
@@ -245,9 +249,5 @@ var NAVTREEINDEX6 =
 "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#a332d9ae5a35730076d3cbbffaef0dfc3":[16,0,0,0,0,5,0,9],
 "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#a9da8fa006ec65b04cc12de8f45952e05":[16,0,0,0,0,5,0,7],
 "namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#ab643e40096639e8da210ecbb6be97891":[16,0,0,0,0,5,0,6],
-"namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#ae561bba97018dd954b09051c1e220746":[16,0,0,0,0,5,0,8],
-"namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#ae74b565ebb1b3c310c943c6178db09ea":[16,0,0,0,0,5,0,5],
-"namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#af3d0a616ec51a97089c93684e305ffbc":[16,0,0,0,0,5,0,3],
-"namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos.html":[16,0,0,0,0,5,1],
-"namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1datos_1_1entidades.html":[16,0,0,0,0,5,1,0]
+"namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#ae561bba97018dd954b09051c1e220746":[16,0,0,0,0,5,0,8]
 };

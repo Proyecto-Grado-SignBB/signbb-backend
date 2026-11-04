@@ -67,6 +67,9 @@ var hierarchy =
     [ "org.signbb.backend.autoria.servicios.EditorLienzo", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorLienzo.html", null ],
     [ "org.signbb.backend.autoria.servicios.EditorLienzoTest", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorLienzoTest.html", null ],
     [ "org.signbb.backend.autoria.servicios.EditorReglas", "classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EditorReglas.html", null ],
+    [ "ErrorController", null, [
+      [ "org.signbb.backend.config.ControladorErrorGenerico", "classorg_1_1signbb_1_1backend_1_1config_1_1ControladorErrorGenerico.html", null ]
+    ] ],
     [ "org.signbb.backend.autoria.modelo.EstadoBorrador", "enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1EstadoBorrador.html", null ],
     [ "org.signbb.backend.navegacion.modelo.EstadoPaciente", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPaciente.html", null ],
     [ "org.signbb.backend.navegacion.modelo.EstadoPacienteNavegacionTest", "classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1EstadoPacienteNavegacionTest.html", null ],
