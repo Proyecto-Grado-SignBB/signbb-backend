@@ -24,7 +24,7 @@ public class OpcionRequest {
     private String id;
 
     @Schema(description = "Texto de la opción")
-    @Size(max = 200, message = "El texto de una respuesta no puede pasar de 200 caracteres.")
+    @Size(max = 60, message = "El texto de una respuesta no puede pasar de 60 caracteres.")
     @Pattern(regexp = PatronesTexto.UNA_LINEA, message = "El texto de una respuesta no puede tener saltos de línea.")
     private String texto;
 

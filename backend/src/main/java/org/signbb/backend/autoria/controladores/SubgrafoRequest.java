@@ -32,7 +32,7 @@ public class SubgrafoRequest {
     private String puenteId;
 
     @Schema(description = "Nombre para la familia, obligatorio: lo que verá la cuidadora", requiredMode = Schema.RequiredMode.REQUIRED)
-    @Size(max = 100, message = "El nombre para la familia no puede pasar de 100 caracteres.")
+    @Size(max = 60, message = "El nombre para la familia no puede pasar de 60 caracteres.")
     @Pattern(regexp = PatronesTexto.UNA_LINEA, message = "El nombre para la familia no puede tener saltos de línea.")
     private String etiquetaOpcion;
 
