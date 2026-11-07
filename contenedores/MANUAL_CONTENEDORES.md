@@ -130,6 +130,9 @@ El seed es idempotente. Para volver a sembrarlo desde cero hay que borrar
 PostgreSQL y Redis (`docker compose down -v`), porque las versiones y el caché
 pueden conservar contenido anterior.
 
+### Ejecutar con seed de datos
+    SIGNBB_SEED_DEMO_ACTIVA=true docker compose up -d --build
+
 ## Dar de baja
 
 Detiene y elimina los contenedores, **conservando** los datos de los
