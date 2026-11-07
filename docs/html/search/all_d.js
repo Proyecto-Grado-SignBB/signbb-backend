@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['gastrointestinal_0',['Gastrointestinal',['../entorno_pruebas.html#autotoc_md110',1,'']]],
+  ['gastrointestinal_0',['Gastrointestinal',['../entorno_pruebas.html#autotoc_md111',1,'']]],
   ['getavisos_1',['getAvisos',['../classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ContenidoInvalidoException.html#af755d437f0bcd57950f263f8f69a660a',1,'org::signbb::backend::autoria::servicios::ContenidoInvalidoException']]],
   ['getbase_2',['getBase',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html#a81a1376e12179a5b9ed00d50086d8b02',1,'org::signbb::backend::navegacion::modelo::ContextoClinico']]],
   ['getcasos_3',['getCasos',['../classorg_1_1signbb_1_1backend_1_1reglas_1_1modelo_1_1ReglaClinica.html#a568b484c581e2b1363fa1ad6d654a03f',1,'org::signbb::backend::reglas::modelo::ReglaClinica']]],
@@ -27,7 +27,7 @@ var searchData=
   ['gracia_24',['GRACIA',['../classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1LimpiadorImagenes.html#a65d4167b48255cc76d51a40b0f1a932f',1,'org.signbb.backend.mantenimiento.LimpiadorImagenes.GRACIA'],['../classorg_1_1signbb_1_1backend_1_1mantenimiento_1_1PoliticaRetencionVersiones.html#ae9ae2bb653f689e90feb3a1266fcec64',1,'org.signbb.backend.mantenimiento.PoliticaRetencionVersiones.GRACIA']]],
   ['grafo_20editorlienzotest_20servicioautoriaimpltest_25',['CU07: editar grafo (&lt;span class=&quot;tt&quot;&gt;EditorLienzoTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;ServicioAutoriaImplTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md5',1,'']]],
   ['grafo_20editorlienzotest_20validadorlienzotest_20compiladorsubgrafotest_26',['CU02: crear grafo (&lt;span class=&quot;tt&quot;&gt;EditorLienzoTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;ValidadorLienzoTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;CompiladorSubgrafoTest&lt;/span&gt;)',['../pruebas_autoria.html#autotoc_md4',1,'']]],
-  ['grafo_20raíz_27',['Grafo raíz',['../entorno_pruebas.html#autotoc_md108',1,'']]],
+  ['grafo_20raíz_27',['Grafo raíz',['../entorno_pruebas.html#autotoc_md109',1,'']]],
   ['grafo_5factivo_5fcolor_28',['Base de reglas: grafo_activo_color',['../md_docs_2entorno-pruebas_2reglas_2reglas__activo__color.html',1,'']]],
   ['grafo_5fcabeza_29',['Base de reglas: grafo_cabeza',['../md_docs_2entorno-pruebas_2reglas_2reglas__cabeza.html',1,'']]],
   ['grafo_5fgastro_30',['Base de reglas: grafo_gastro',['../md_docs_2entorno-pruebas_2reglas_2reglas__gastro.html',1,'']]],
@@ -40,7 +40,7 @@ var searchData=
   ['grafoclinicoparser_37',['GrafoClinicoParser',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1datos_1_1serializacion_1_1GrafoClinicoParser.html',1,'org::signbb::backend::navegacion::datos::serializacion']]],
   ['grafoclinicotest_38',['GrafoClinicoTest',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1GrafoClinicoTest.html',1,'org::signbb::backend::navegacion::modelo']]],
   ['grafode_39',['grafoDe',['../classorg_1_1signbb_1_1backend_1_1navegacion_1_1modelo_1_1ContextoClinico.html#a21614470c12cf34f5a30f0e47be2a86f',1,'org::signbb::backend::navegacion::modelo::ContextoClinico']]],
-  ['grafos_40',['Grafos',['../entorno_pruebas.html#autotoc_md106',1,'']]],
+  ['grafos_40',['Grafos',['../entorno_pruebas.html#autotoc_md107',1,'']]],
   ['grafos_20y_20reglas_41',['Grafos y reglas',['../index.html#autotoc_md73',1,'']]],
   ['gravedad_42',['Gravedad',['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Gravedad.html',1,'org.signbb.backend.autoria.modelo.Gravedad'],['../enumorg_1_1signbb_1_1backend_1_1autoria_1_1modelo_1_1Gravedad.html#a92d5df61d1ba15011abf3d2d4a08145a',1,'org.signbb.backend.autoria.modelo.Gravedad.Gravedad()']]],
   ['guardada_43',['Guardada',['../interfaceorg_1_1signbb_1_1backend_1_1media_1_1AlmacenImagenes.html#a87cc878de7953d039f8d5426408577bb',1,'org::signbb::backend::media::AlmacenImagenes']]],
