@@ -48,15 +48,15 @@ class ValidacionEntradasTest {
     }
 
     @Test
-    void unaPreguntaTieneMaximoDiezRespuestasYCadaTextoDe200() {
+    void unaPreguntaTieneMaximoDiezRespuestasYCadaTextoDe60() {
         List<OpcionRequest> once = new ArrayList<>();
         for (int i = 0; i < 11; i++) {
             once.add(new OpcionRequest("r" + i, "Opción " + i, null));
         }
         assertTrue(mensajes(new NodoRequest(null, null, "¿Tiene fiebre?", null, null, once)).contains("10"));
 
-        List<OpcionRequest> larga = List.of(new OpcionRequest("r1", letras(201), null));
-        assertTrue(mensajes(new NodoRequest(null, null, "¿Tiene fiebre?", null, null, larga)).contains("200"));
+        List<OpcionRequest> larga = List.of(new OpcionRequest("r1", letras(61), null));
+        assertTrue(mensajes(new NodoRequest(null, null, "¿Tiene fiebre?", null, null, larga)).contains("60"));
 
         List<OpcionRequest> diez = new ArrayList<>(once.subList(0, 10));
         assertTrue(mensajes(new NodoRequest(null, null, "¿Tiene fiebre?", null, null, diez)).isEmpty());
