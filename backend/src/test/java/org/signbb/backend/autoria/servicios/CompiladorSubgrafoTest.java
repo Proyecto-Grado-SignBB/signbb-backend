@@ -8,6 +8,7 @@ import static org.signbb.backend.autoria.servicios.LienzoFiebre.CONSULTA;
 import static org.signbb.backend.autoria.servicios.LienzoFiebre.DECAIDO;
 import static org.signbb.backend.autoria.servicios.LienzoFiebre.INICIO;
 import static org.signbb.backend.autoria.servicios.LienzoFiebre.MAS_39;
+import static org.signbb.backend.autoria.servicios.LienzoFiebre.MENOS_38;
 import static org.signbb.backend.autoria.servicios.LienzoFiebre.RECOMENDACION;
 import static org.signbb.backend.autoria.servicios.LienzoFiebre.URGENCIA;
 
@@ -98,6 +99,19 @@ class CompiladorSubgrafoTest {
         assertEquals(5, g.edges().size(), "3 respuestas de la primera pregunta y 2 de la segunda");
         assertTrue(g.edges().contains(new GrafoClinicoJson.Arista(INICIO, "Más de 39 °C", URGENCIA, true)));
         assertTrue(g.edges().contains(new GrafoClinicoJson.Arista(INICIO, "Menos de 38 °C", DECAIDO, true)));
+    }
+
+    @Test
+    void dosRespuestasPuedenLlegarALaMismaConclusion() {
+        DocumentoLienzo compartido = EditorLienzo.enlazar(LienzoFiebre.completo(), MENOS_38, CONSULTA);
+        GrafoClinicoJson.Grafo g = compilar(compartido);
+
+        assertEquals(5, g.nodes().size(), "la conclusión compartida se escribe una sola vez");
+        assertTrue(g.edges().contains(new GrafoClinicoJson.Arista(INICIO, "Menos de 38 °C", CONSULTA, true)));
+        assertTrue(g.edges().contains(new GrafoClinicoJson.Arista(DECAIDO, "Sí", CONSULTA, true)));
+        assertEquals(2, meta(g, CONSULTA).peso(), "pesa la mayor gravedad de las respuestas que llegan");
+        assertTrue(GrafoClinicoMapper.desde(CompiladorSubgrafo.compilar(
+                LienzoFiebre.borrador(compartido), FECHA)).validarCiclo());
     }
 
     @Test

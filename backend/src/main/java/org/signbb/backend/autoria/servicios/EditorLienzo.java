@@ -116,7 +116,7 @@ public final class EditorLienzo {
             RespuestaLienzo respuesta = respuestaDe(origen, respuestaId);
             if (respuesta.destino() != null) {
                 throw new EdicionInvalidaException("La respuesta \"" + respuesta.texto()
-                        + "\" ya tiene un camino. Elimina el nodo al que lleva o cámbialo por otra pregunta.");
+                        + "\" ya tiene un camino. Elimina el nodo al que lleva o cámbialo por otro nodo.");
             }
             nodos.put(origen.id(), conDestino(origen, respuestaId, id));
         }
@@ -125,22 +125,19 @@ public final class EditorLienzo {
     }
 
     /**
-     * La opción "Pregunta existente": hace que una respuesta lleve a una
-     * pregunta que ya está en el lienzo. Con {@code nodoId} nulo la respuesta
-     * vuelve a ser un "+"; lo que colgaba de ella queda suelto (no se borra).
+     * La opción "Nodo existente": hace que una respuesta lleve a una pregunta
+     * o conclusión que ya está en el lienzo. Con {@code nodoId} nulo la
+     * respuesta vuelve a ser un "+"; lo que colgaba de ella queda suelto (no
+     * se borra).
      *
-     * @throws EdicionInvalidaException     si el destino no es una pregunta,
-     *                                      es la misma pregunta o el enlace
-     *                                      forma un círculo
+     * @throws EdicionInvalidaException     si el destino es la misma pregunta
+     *                                      o el enlace forma un círculo
      * @throws RecursoNoEncontradoException si la respuesta o el nodo no existen
      */
     public static DocumentoLienzo enlazar(DocumentoLienzo documento, String respuestaId, String nodoId) {
         NodoLienzo origen = duenoDe(documento, respuestaId);
         if (nodoId != null) {
             NodoLienzo destino = nodoExistente(documento, nodoId);
-            if (!destino.esPregunta()) {
-                throw new EdicionInvalidaException("Una respuesta solo puede ir a una pregunta que ya existe.");
-            }
             if (destino.id().equals(origen.id())) {
                 throw new EdicionInvalidaException("Una respuesta no puede volver a su misma pregunta.");
             }

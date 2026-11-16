@@ -22,9 +22,9 @@ variantes de 404 y detalles de caché.
 
 | Paquete | Clase | Tests | Qué cubre |
 |---|---|---:|---|
-| `servicios` | `EditorLienzoTest` | 14 | primera pregunta, "+", enlazar, editar, eliminar, validaciones e imágenes |
+| `servicios` | `EditorLienzoTest` | 15 | primera pregunta, "+", enlazar, editar, eliminar, validaciones e imágenes |
 | `servicios` | `ValidadorLienzoTest` | 6 | avisos bloqueantes del borrador |
-| `servicios` | `CompiladorSubgrafoTest` | 6 | lienzo → `GrafoClinicoJson`: pesos, tipos, aristas y salida válida |
+| `servicios` | `CompiladorSubgrafoTest` | 7 | lienzo → `GrafoClinicoJson`: pesos, tipos, aristas y salida válida |
 | `servicios` | `PublicadorSubgrafoTest` | 12 | publicar, enlazar el puente, recomponer, despublicar y versionar |
 | `servicios` | `ServicioAutoriaImplTest` | 19 | categorías, borradores, autor, estados, publicar, descartar y despublicar |
 | `servicios` | `ServicioRevisionImplTest` | 10 | enviar, retirar, aprobar, rechazar y pendientes |
@@ -38,7 +38,7 @@ variantes de 404 y detalles de caché.
 | `controladores` | `ControladorRevisionTest` | 3 | códigos HTTP de enviar, aprobar y rechazar |
 | `modelo` | `NodoLienzoTest` | 2 | JSON del nodo y compatibilidad con lienzos sin imágenes |
 
-En total son **107 pruebas unitarias**. Las 2 de integración
+En total son **109 pruebas unitarias**. Las 2 de integración
 (`AutoriaIntegracionTest`) se cuentan aparte.
 
 ## Fixture
@@ -58,7 +58,7 @@ lienzo de fiebre del deck:
 ### CU02: crear grafo (`EditorLienzoTest`, `ValidadorLienzoTest`, `CompiladorSubgrafoTest`)
 - La primera pregunta es el inicio y sus respuestas quedan como "+".
 - El "+" crea el nodo y conecta la respuesta; también se puede enlazar a una
-  pregunta existente.
+  pregunta o conclusión existente.
 - Se rechazan una segunda primera pregunta, empezar con una conclusión, una
   conclusión sin desenlace y un círculo.
 - Los avisos bloqueantes impiden publicar: sin primera pregunta, respuesta sin

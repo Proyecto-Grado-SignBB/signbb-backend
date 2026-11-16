@@ -32,7 +32,7 @@ Cada subgrafo puede tener además su **base de reglas clínicas** (reglas de ala
 ### Back (`signbb-backend`, rama `autoria`)
 1. **Modelo y persistencia del borrador** (`c545730`): `BorradorSubgrafoEntity`, que guarda el lienzo como JSON (`DocumentoLienzo`, `NodoLienzo`, `RespuestaLienzo`). Lleva `@Version` para detectar ediciones simultáneas y los estados `BORRADOR`, `PUBLICADO` y `CAMBIOS_SIN_PUBLICAR`. Es independiente del grafo publicado.
 2. **Edición del lienzo y avisos** (`25ec6e2`):
-   - `EditorLienzo` maneja el "+", el enlace a una pregunta existente (sin permitir círculos) y editar o eliminar nodos (podando la rama huérfana).
+   - `EditorLienzo` maneja el "+", el enlace a una pregunta o conclusión existente (sin permitir círculos) y editar o eliminar nodos (podando la rama huérfana).
    - `ValidadorLienzo` genera avisos en lenguaje humano. Todos bloquean la publicación; un nodo suelto impide publicar hasta conectarlo a una respuesta o eliminarlo.
 3. **Compilar y publicar** (`3733bad`):
    - `CompiladorSubgrafo` convierte el lienzo en un `GrafoClinicoJson`. El peso es la mayor gravedad que llega al nodo, y el tipo de selección (única o múltiple) se respeta.
@@ -63,7 +63,7 @@ Cada subgrafo puede tener además su **base de reglas clínicas** (reglas de ala
 2. **Tablero y lienzo con "+"** (`18a6e54`):
    - `features/subgrafos/tablero` lista los subgrafos y crea uno nuevo con su nombre, categoría y nombre para la familia.
    - `features/subgrafos/lienzo` dibuja el árbol, que crece hacia la derecha y tiene un "+" en cada respuesta sin camino. La distribución está en `layout.ts`.
-   - `panel-nodo` sirve para crear o editar preguntas y conclusiones, y para enlazar a una pregunta existente.
+   - `panel-nodo` sirve para crear o editar preguntas y conclusiones, y para enlazar a una pregunta o conclusión existente.
    - **Se eliminaron las pantallas viejas de `features/grafos`** (flujo, editores de pregunta y desenlace, reglas y tablero) porque usaban la API anterior.
 3. **Avisos y publicar** (`4cd67a7`): una barra de avisos que al tocarse lleva al nodo, y el modal de publicar con los avisos bloqueantes.
 4. **Diálogos y errores propios** (`9dac070`):
@@ -93,7 +93,7 @@ un supervisor ve todo, pero solo edita y publica directamente lo propio.
 | GET / PUT / DELETE | `/subgrafos/{id}` | Ver / editar datos / borrar (solo si nunca se publicó) |
 | POST | `/subgrafos/{id}/nodos` | Crear nodo (el "+") |
 | PUT / DELETE | `/subgrafos/{id}/nodos/{nodoId}` | Editar / eliminar nodo |
-| PUT | `/subgrafos/{id}/respuestas/{respuestaId}/destino` | Enlazar a una pregunta existente (`{"nodoId": null}` lo quita) |
+| PUT | `/subgrafos/{id}/respuestas/{respuestaId}/destino` | Enlazar a una pregunta o conclusión existente (`{"nodoId": null}` lo quita) |
 | GET | `/subgrafos/{id}/avisos` | Avisos actuales |
 | POST | `/subgrafos/{id}/enviar-revision` | El autor lo envía a revisión (422 con avisos del lienzo y de las reglas si hay bloqueantes). Mientras está en revisión no se edita el subgrafo ni su base |
 | POST | `/subgrafos/{id}/retirar-revision` | El autor lo retira de revisión para volver a editarlo |

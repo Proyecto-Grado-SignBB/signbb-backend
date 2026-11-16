@@ -483,8 +483,8 @@ paths:
     put:
       tags:
       - Autoría
-      summary: Enlaza una respuesta a una pregunta existente
-      description: La opción "Pregunta existente". Enviar nodoId nulo quita el enlace.
+      summary: Enlaza una respuesta a una pregunta o conclusión existente
+      description: La opción "Nodo existente". Enviar nodoId nulo quita el enlace.
       operationId: enlazar
       parameters:
       - name: id
@@ -1503,12 +1503,13 @@ components:
           description: "Cuándo se aprobó o rechazó la última revisión, o nulo"
     DestinoRequest:
       type: object
-      description: Pregunta existente destino de una respuesta; nodoId nulo quita
-        el enlace.
+      description: Pregunta o conclusión existente destino de una respuesta; nodoId
+        nulo quita el enlace.
       properties:
         nodoId:
           type: string
-          description: "Id de la pregunta existente, o nulo para quitar el enlace"
+          description: "Id de la pregunta o conclusión existente, o nulo para quitar\
+            \ el enlace"
     DespuesDeRequest:
       type: object
       description: Respuesta del lienzo después de la cual se agrega un nodo.

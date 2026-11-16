@@ -32,7 +32,7 @@ import org.signbb.backend.autoria.servicios.EditorLienzo.DatosRespuesta;
 import org.signbb.backend.config.RecursoNoEncontradoException;
 
 /**
- * Tests de {@link EditorLienzo}: el "+", enlazar a una pregunta existente,
+ * Tests de {@link EditorLienzo}: el "+", enlazar a un nodo existente,
  * editar y eliminar, y lo que se rechaza en el momento de editar.
  */
 class EditorLienzoTest {
@@ -74,6 +74,15 @@ class EditorLienzoTest {
         assertEquals(DECAIDO, respuesta(d, INICIO, MENOS_38).destino());
         assertEquals(DECAIDO, respuesta(d, INICIO, ENTRE_38_39).destino());
         assertEquals(5, d.nodos().size(), "2 preguntas y 3 conclusiones");
+    }
+
+    @Test
+    void enlazarAUnaConclusionExistenteComparteElDesenlace() {
+        DocumentoLienzo d = EditorLienzo.enlazar(LienzoFiebre.completo(), MENOS_38, CONSULTA);
+
+        assertEquals(CONSULTA, respuesta(d, INICIO, MENOS_38).destino());
+        assertEquals(CONSULTA, respuesta(d, DECAIDO, SI).destino());
+        assertEquals(5, d.nodos().size(), "la conclusión compartida no duplica nodos");
     }
 
     @Test

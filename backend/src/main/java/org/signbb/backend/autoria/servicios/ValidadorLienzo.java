@@ -21,7 +21,7 @@ import org.signbb.backend.autoria.modelo.TipoNodo;
  * Solo se revisan los nodos a los que se llega desde la primera pregunta.
  * Un nodo suelto da un único aviso bloqueante: hay que conectarlo o eliminarlo
  * antes de publicar. Que dos respuestas de distinta gravedad lleguen a la misma
- * pregunta no se avisa; al compilar se toma la mayor.
+ * pregunta o conclusión no se avisa; al compilar se toma la mayor.
  */
 public final class ValidadorLienzo {
 

@@ -196,10 +196,10 @@ public class ControladorAutoria {
 
     /**
      * {@code PUT /api/autoria/subgrafos/{id}/respuestas/{respuestaId}/destino}:
-     * la opción "Pregunta existente".
+     * la opción "Nodo existente".
      */
-    @Operation(summary = "Enlaza una respuesta a una pregunta existente",
-            description = "La opción \"Pregunta existente\". Enviar nodoId nulo quita el enlace.")
+    @Operation(summary = "Enlaza una respuesta a una pregunta o conclusión existente",
+            description = "La opción \"Nodo existente\". Enviar nodoId nulo quita el enlace.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Borrador actualizado"),
             @ApiResponse(responseCode = "404", description = "El borrador, la respuesta o el nodo destino no existe",

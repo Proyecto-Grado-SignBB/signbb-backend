@@ -47,7 +47,7 @@ public interface ServicioAutoria {
     /** El "+": crea un nodo después de una respuesta, o la primera pregunta. */
     SubgrafoDTO agregarNodo(Long id, NodoRequest nodo);
 
-    /** Lleva una respuesta a una pregunta existente ({@code nodoId} nulo la vuelve "+"). */
+    /** Lleva una respuesta a una pregunta o conclusión existente ({@code nodoId} nulo la vuelve "+"). */
     SubgrafoDTO enlazar(Long id, String respuestaId, String nodoId);
 
     /** Edita un nodo. */
