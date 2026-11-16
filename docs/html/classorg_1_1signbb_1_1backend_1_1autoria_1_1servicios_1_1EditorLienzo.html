@@ -127,7 +127,7 @@ Métodos públicos estáticos</h2></td></tr>
 <tr class="memitem:a65e90c30629d87d67336b976be09d284" id="r_a65e90c30629d87d67336b976be09d284"><td class="memItemLeft">static DocumentoLienzo&#160;</td><td class="memItemRight"><a class="el" href="#a65e90c30629d87d67336b976be09d284">agregarNodo</a> (DocumentoLienzo documento, String despuesDeNodo, String respuestaId, <a class="el" href="#a287df682baa214390ccdaa7f93c08074">DatosNodo</a> datos)</td></tr>
 <tr class="memdesc:a65e90c30629d87d67336b976be09d284"><td class="mdescLeft">&#160;</td><td class="mdescRight">La acción del "+": crea un nodo y, si se indica, lo conecta como destino de una respuesta que todavía no tenía camino.  <br /></td></tr>
 <tr class="memitem:a3474c291f30a8212d1d3bd2ae7654199" id="r_a3474c291f30a8212d1d3bd2ae7654199"><td class="memItemLeft">static DocumentoLienzo&#160;</td><td class="memItemRight"><a class="el" href="#a3474c291f30a8212d1d3bd2ae7654199">enlazar</a> (DocumentoLienzo documento, String respuestaId, String nodoId)</td></tr>
-<tr class="memdesc:a3474c291f30a8212d1d3bd2ae7654199"><td class="mdescLeft">&#160;</td><td class="mdescRight">La opción "Pregunta existente": hace que una respuesta lleve a una pregunta que ya está en el lienzo.  <br /></td></tr>
+<tr class="memdesc:a3474c291f30a8212d1d3bd2ae7654199"><td class="mdescLeft">&#160;</td><td class="mdescRight">La opción "Nodo existente": hace que una respuesta lleve a una pregunta o conclusión que ya está en el lienzo.  <br /></td></tr>
 <tr class="memitem:aa2a8f9eef5e1f9472e6ac72a7614c4f3" id="r_aa2a8f9eef5e1f9472e6ac72a7614c4f3"><td class="memItemLeft">static DocumentoLienzo&#160;</td><td class="memItemRight"><a class="el" href="#aa2a8f9eef5e1f9472e6ac72a7614c4f3">editarNodo</a> (DocumentoLienzo documento, String nodoId, <a class="el" href="#a287df682baa214390ccdaa7f93c08074">DatosNodo</a> datos)</td></tr>
 <tr class="memdesc:aa2a8f9eef5e1f9472e6ac72a7614c4f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cambia el texto, el desenlace o las respuestas de un nodo.  <br /></td></tr>
 <tr class="memitem:a988d885a6d7a507bb70d9c99b0748910" id="r_a988d885a6d7a507bb70d9c99b0748910"><td class="memItemLeft">static DocumentoLienzo&#160;</td><td class="memItemRight"><a class="el" href="#a988d885a6d7a507bb70d9c99b0748910">eliminarNodo</a> (DocumentoLienzo documento, String nodoId)</td></tr>
@@ -400,11 +400,11 @@ static String&#160;</td><td class="memItemRight"><b>normalizado</b> (String text
 </table>
 </div><div class="memdoc">
 
-<p>La opción "Pregunta existente": hace que una respuesta lleve a una pregunta que ya está en el lienzo. </p>
+<p>La opción "Nodo existente": hace que una respuesta lleve a una pregunta o conclusión que ya está en el lienzo. </p>
 <p>Con <code class="JavaDocCode">nodoId</code> nulo la respuesta vuelve a ser un "+"; lo que colgaba de ella queda suelto (no se borra).</p>
 <dl class="exception"><dt>Excepciones</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EdicionInvalidaException.html" title="Una edición del lienzo que no se puede aplicar (por ejemplo, una segunda primera pregunta o un enlace...">EdicionInvalidaException</a></td><td>si el destino no es una pregunta, es la misma pregunta o el enlace forma un círculo </td></tr>
+    <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1EdicionInvalidaException.html" title="Una edición del lienzo que no se puede aplicar (por ejemplo, una segunda primera pregunta o un enlace...">EdicionInvalidaException</a></td><td>si el destino es la misma pregunta o el enlace forma un círculo </td></tr>
     <tr><td class="paramname"><a class="el" href="classorg_1_1signbb_1_1backend_1_1config_1_1RecursoNoEncontradoException.html">RecursoNoEncontradoException</a></td><td>si la respuesta o el nodo no existen </td></tr>
   </table>
   </dd>

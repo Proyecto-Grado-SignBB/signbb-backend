@@ -126,11 +126,11 @@ Mapa de la suite</h1>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Paquete  </th><th class="markdownTableHeadNone">Clase  </th><th class="markdownTableHeadRight">Tests  </th><th class="markdownTableHeadNone">Qué cubre  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">EditorLienzoTest</span>  </td><td class="markdownTableBodyRight">14  </td><td class="markdownTableBodyNone">primera pregunta, "+", enlazar, editar, eliminar, validaciones e imágenes  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">EditorLienzoTest</span>  </td><td class="markdownTableBodyRight">15  </td><td class="markdownTableBodyNone">primera pregunta, "+", enlazar, editar, eliminar, validaciones e imágenes  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">ValidadorLienzoTest</span>  </td><td class="markdownTableBodyRight">6  </td><td class="markdownTableBodyNone">avisos bloqueantes del borrador  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">CompiladorSubgrafoTest</span>  </td><td class="markdownTableBodyRight">6  </td><td class="markdownTableBodyNone">lienzo → <span class="tt">GrafoClinicoJson</span>: pesos, tipos, aristas y salida válida  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">CompiladorSubgrafoTest</span>  </td><td class="markdownTableBodyRight">7  </td><td class="markdownTableBodyNone">lienzo → <span class="tt">GrafoClinicoJson</span>: pesos, tipos, aristas y salida válida  </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">servicios</span>  </td><td class="markdownTableBodyNone"><span class="tt">PublicadorSubgrafoTest</span>  </td><td class="markdownTableBodyRight">12  </td><td class="markdownTableBodyNone">publicar, enlazar el puente, recomponer, despublicar y versionar  </td></tr>
 <tr class="markdownTableRowOdd">
@@ -156,7 +156,7 @@ Mapa de la suite</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">modelo</span>  </td><td class="markdownTableBodyNone"><span class="tt">NodoLienzoTest</span>  </td><td class="markdownTableBodyRight">2  </td><td class="markdownTableBodyNone">JSON del nodo y compatibilidad con lienzos sin imágenes  </td></tr>
 </table>
-<p>En total son <b>107 pruebas unitarias</b>. Las 2 de integración (<span class="tt">AutoriaIntegracionTest</span>) se cuentan aparte.</p>
+<p>En total son <b>109 pruebas unitarias</b>. Las 2 de integración (<span class="tt">AutoriaIntegracionTest</span>) se cuentan aparte.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
 Fixture</h1>
 <p><span class="tt">servicios/LienzoFiebre</span> arma, con las mismas operaciones del editor, el lienzo de fiebre del deck: </p><pre class="fragment">¿Cuánto marca el termómetro?
@@ -171,7 +171,7 @@ Qué se prueba y por qué importa</h1>
 CU02: crear grafo (<span class="tt">EditorLienzoTest</span>, <span class="tt">ValidadorLienzoTest</span>, <span class="tt">CompiladorSubgrafoTest</span>)</h2>
 <ul>
 <li>La primera pregunta es el inicio y sus respuestas quedan como "+".</li>
-<li>El "+" crea el nodo y conecta la respuesta; también se puede enlazar a una pregunta existente.</li>
+<li>El "+" crea el nodo y conecta la respuesta; también se puede enlazar a una pregunta o conclusión existente.</li>
 <li>Se rechazan una segunda primera pregunta, empezar con una conclusión, una conclusión sin desenlace y un círculo.</li>
 <li>Los avisos bloqueantes impiden publicar: sin primera pregunta, respuesta sin camino, una sola respuesta, conclusión incompleta y nodo suelto.</li>
 <li>El compilador conserva datos, pesos, tipo de interacción, terminales y aristas, y la salida pasa por el mapper estricto.</li>

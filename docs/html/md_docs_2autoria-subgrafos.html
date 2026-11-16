@@ -148,7 +148,7 @@ Back (<span class="tt">signbb-backend</span>, rama <span class="tt">autoria</spa
 <ol type="1">
 <li><b>Modelo y persistencia del borrador</b> (<span class="tt">c545730</span>): <span class="tt">BorradorSubgrafoEntity</span>, que guarda el lienzo como JSON (<span class="tt">DocumentoLienzo</span>, <span class="tt">NodoLienzo</span>, <span class="tt">RespuestaLienzo</span>). Lleva <span class="tt">@Version</span> para detectar ediciones simultáneas y los estados <span class="tt">BORRADOR</span>, <span class="tt">PUBLICADO</span> y <span class="tt">CAMBIOS_SIN_PUBLICAR</span>. Es independiente del grafo publicado.</li>
 <li><b>Edición del lienzo y avisos</b> (<span class="tt">25ec6e2</span>):<ul>
-<li><span class="tt">EditorLienzo</span> maneja el "+", el enlace a una pregunta existente (sin permitir círculos) y editar o eliminar nodos (podando la rama huérfana).</li>
+<li><span class="tt">EditorLienzo</span> maneja el "+", el enlace a una pregunta o conclusión existente (sin permitir círculos) y editar o eliminar nodos (podando la rama huérfana).</li>
 <li><span class="tt">ValidadorLienzo</span> genera avisos en lenguaje humano. Todos bloquean la publicación; un nodo suelto impide publicar hasta conectarlo a una respuesta o eliminarlo.</li>
 </ul>
 </li>
@@ -193,7 +193,7 @@ Front (<span class="tt">signbb-frontend</span>, rama <span class="tt">autoria</s
 <li><b>Tablero y lienzo con "+"</b> (<span class="tt">18a6e54</span>):<ul>
 <li><span class="tt">features/subgrafos/tablero</span> lista los subgrafos y crea uno nuevo con su nombre, categoría y nombre para la familia.</li>
 <li><span class="tt">features/subgrafos/lienzo</span> dibuja el árbol, que crece hacia la derecha y tiene un "+" en cada respuesta sin camino. La distribución está en <span class="tt">layout.ts</span>.</li>
-<li><span class="tt">panel-nodo</span> sirve para crear o editar preguntas y conclusiones, y para enlazar a una pregunta existente.</li>
+<li><span class="tt">panel-nodo</span> sirve para crear o editar preguntas y conclusiones, y para enlazar a una pregunta o conclusión existente.</li>
 <li><b>Se eliminaron las pantallas viejas de <span class="tt">features/grafos</span></b> (flujo, editores de pregunta y desenlace, reglas y tablero) porque usaban la API anterior.</li>
 </ul>
 </li>
@@ -234,7 +234,7 @@ Front (<span class="tt">signbb-frontend</span>, rama <span class="tt">autoria</s
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">PUT / DELETE  </td><td class="markdownTableBodyNone"><span class="tt">/subgrafos/{id}/nodos/{nodoId}</span>  </td><td class="markdownTableBodyNone">Editar / eliminar nodo  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">PUT  </td><td class="markdownTableBodyNone"><span class="tt">/subgrafos/{id}/respuestas/{respuestaId}/destino</span>  </td><td class="markdownTableBodyNone">Enlazar a una pregunta existente (<span class="tt">{"nodoId": null}</span> lo quita)  </td></tr>
+<td class="markdownTableBodyNone">PUT  </td><td class="markdownTableBodyNone"><span class="tt">/subgrafos/{id}/respuestas/{respuestaId}/destino</span>  </td><td class="markdownTableBodyNone">Enlazar a una pregunta o conclusión existente (<span class="tt">{"nodoId": null}</span> lo quita)  </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">GET  </td><td class="markdownTableBodyNone"><span class="tt">/subgrafos/{id}/avisos</span>  </td><td class="markdownTableBodyNone">Avisos actuales  </td></tr>
 <tr class="markdownTableRowEven">
