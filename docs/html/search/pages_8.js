@@ -8,13 +8,14 @@ var searchData=
   ['backend_20rama_20autoria_5',['Back (&lt;span class=&quot;tt&quot;&gt;signbb-backend&lt;/span&gt;, rama &lt;span class=&quot;tt&quot;&gt;autoria&lt;/span&gt;)',['../md_docs_2autoria-subgrafos.html#autotoc_md88',1,'']]],
   ['baja_6',['Dar de baja',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md80',1,'']]],
   ['base_20de_20datos_7',['Perfil de base de datos',['../index.html#autotoc_md69',1,'']]],
-  ['base_20de_20reglas_3a_20grafo_5factivo_5fcolor_8',['Base de reglas: grafo_activo_color',['../md_docs_2entorno-pruebas_2reglas_2reglas__activo__color.html',1,'']]],
+  ['base_20de_20reglas_3a_20grafo_5factividad_8',['Base de reglas: grafo_actividad',['../md_docs_2entorno-pruebas_2reglas_2reglas__actividad.html',1,'']]],
   ['base_20de_20reglas_3a_20grafo_5fcabeza_9',['Base de reglas: grafo_cabeza',['../md_docs_2entorno-pruebas_2reglas_2reglas__cabeza.html',1,'']]],
   ['base_20de_20reglas_3a_20grafo_5fgastro_10',['Base de reglas: grafo_gastro',['../md_docs_2entorno-pruebas_2reglas_2reglas__gastro.html',1,'']]],
-  ['base_20de_20reglas_3a_20grafo_5frespiracion_11',['Base de reglas: grafo_respiracion',['../md_docs_2entorno-pruebas_2reglas_2reglas__respiracion.html',1,'']]],
-  ['base_5freglas_12',['base_reglas',['../md_docs_2entorno-pruebas_2reglas_2base__reglas.html',1,'']]],
-  ['basereglas_20basereglastest_13',['TAD &lt;span class=&quot;tt&quot;&gt;BaseReglas&lt;/span&gt; (&lt;span class=&quot;tt&quot;&gt;BaseReglasTest&lt;/span&gt;)',['../pruebas_reglas.html#autotoc_md32',1,'']]],
-  ['basereglasmappertest_14',['Mapeo JSON (&lt;span class=&quot;tt&quot;&gt;BaseReglasMapperTest&lt;/span&gt;)',['../pruebas_reglas.html#autotoc_md36',1,'']]],
-  ['basereglastest_15',['TAD &lt;span class=&quot;tt&quot;&gt;BaseReglas&lt;/span&gt; (&lt;span class=&quot;tt&quot;&gt;BaseReglasTest&lt;/span&gt;)',['../pruebas_reglas.html#autotoc_md32',1,'']]],
-  ['bases_20de_20reglas_16',['Bases de reglas',['../entorno_pruebas.html#autotoc_md114',1,'']]]
+  ['base_20de_20reglas_3a_20grafo_5fpiel_5fcolor_11',['Base de reglas: grafo_piel_color',['../md_docs_2entorno-pruebas_2reglas_2reglas__piel__color.html',1,'']]],
+  ['base_20de_20reglas_3a_20grafo_5frespiracion_12',['Base de reglas: grafo_respiracion',['../md_docs_2entorno-pruebas_2reglas_2reglas__respiracion.html',1,'']]],
+  ['base_5freglas_13',['base_reglas',['../md_docs_2entorno-pruebas_2reglas_2base__reglas.html',1,'']]],
+  ['basereglas_20basereglastest_14',['TAD &lt;span class=&quot;tt&quot;&gt;BaseReglas&lt;/span&gt; (&lt;span class=&quot;tt&quot;&gt;BaseReglasTest&lt;/span&gt;)',['../pruebas_reglas.html#autotoc_md32',1,'']]],
+  ['basereglasmappertest_15',['Mapeo JSON (&lt;span class=&quot;tt&quot;&gt;BaseReglasMapperTest&lt;/span&gt;)',['../pruebas_reglas.html#autotoc_md36',1,'']]],
+  ['basereglastest_16',['TAD &lt;span class=&quot;tt&quot;&gt;BaseReglas&lt;/span&gt; (&lt;span class=&quot;tt&quot;&gt;BaseReglasTest&lt;/span&gt;)',['../pruebas_reglas.html#autotoc_md32',1,'']]],
+  ['bases_20de_20reglas_17',['Bases de reglas',['../entorno_pruebas.html#autotoc_md115',1,'']]]
 ];

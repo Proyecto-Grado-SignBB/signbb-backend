@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['scripts_20de_20ayuda_0',['Scripts de ayuda',['../entorno_pruebas.html#autotoc_md115',1,'']]],
+  ['scripts_20de_20ayuda_0',['Scripts de ayuda',['../entorno_pruebas.html#autotoc_md116',1,'']]],
   ['se_20ejecuta_20el_20seed_1',['Cómo se ejecuta el seed',['../entorno_pruebas.html#autotoc_md104',1,'']]],
   ['se_20hizo_20y_20qué_20falta_2',['SignBB · Autoría de subgrafos clínicos: qué se hizo y qué falta',['../md_docs_2autoria-subgrafos.html',1,'']]],
   ['se_20prueba_20y_20por_20qué_20importa_3',['se prueba y por qué importa',['../pruebas_autoria.html#autotoc_md3',1,'Qué se prueba y por qué importa'],['../pruebas_navegacion.html#autotoc_md15',1,'Qué se prueba y por qué importa'],['../pruebas_observaciones.html#autotoc_md25',1,'Qué se prueba y por qué importa'],['../pruebas_seguridad.html#autotoc_md40',1,'Qué se prueba y por qué importa']]],
   ['se_20quitó_20en_20la_20reorganización_4',['se quitó en la reorganización',['../pruebas_autoria.html#autotoc_md9',1,'Qué se quitó en la reorganización'],['../pruebas_navegacion.html#autotoc_md21',1,'Qué se quitó en la reorganización']]],
   ['secretos_20de_20producción_20verificadorsecretosproducciontest_5',['Secretos de producción (&lt;span class=&quot;tt&quot;&gt;VerificadorSecretosProduccionTest&lt;/span&gt;)',['../pruebas_seguridad.html#autotoc_md44',1,'']]],
-  ['seed_6',['seed',['../entorno_pruebas.html#autotoc_md104',1,'Cómo se ejecuta el seed'],['../entorno_pruebas.html#autotoc_md121',1,'Comprobaciones del seed']]],
+  ['seed_6',['seed',['../entorno_pruebas.html#autotoc_md104',1,'Cómo se ejecuta el seed'],['../entorno_pruebas.html#autotoc_md122',1,'Comprobaciones del seed']]],
   ['seed_20de_20datos_7',['Ejecutar con seed de datos',['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md79',1,'']]],
   ['seguimos_8',['3. Pasos que seguimos',['../md_docs_2autoria-subgrafos.html#autotoc_md87',1,'']]],
   ['seguridad_9',['seguridad',['../index.html#autotoc_md70',1,'Cuentas y seguridad'],['../pruebas_seguridad.html',1,'Pruebas del módulo de seguridad']]],
@@ -28,7 +28,7 @@ var searchData=
   ['serviciorevisionimpltest_20guardiaautoriatest_20controladores_25',['CU08/CU12: publicar y revisar (&lt;span class=&quot;tt&quot;&gt;PublicadorSubgrafoTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;ServicioRevisionImplTest&lt;/span&gt;, &lt;span class=&quot;tt&quot;&gt;GuardiaAutoriaTest&lt;/span&gt;, controladores)',['../pruebas_autoria.html#autotoc_md7',1,'']]],
   ['serviciotokenstest_26',['Tokens (&lt;span class=&quot;tt&quot;&gt;ServicioTokensTest&lt;/span&gt;)',['../pruebas_seguridad.html#autotoc_md42',1,'']]],
   ['sesiones_20en_20redis_27',['RepositorioSesionRedisTest — sesiones en Redis',['../pruebas_cache.html#autotoc_md58',1,'']]],
-  ['sh_28',['&lt;span class=&quot;tt&quot;&gt;regenerar_grafos.sh&lt;/span&gt;',['../entorno_pruebas.html#autotoc_md118',1,'']]],
+  ['sh_28',['&lt;span class=&quot;tt&quot;&gt;regenerar_grafos.sh&lt;/span&gt;',['../entorno_pruebas.html#autotoc_md119',1,'']]],
   ['signbb_20·_20autoría_20de_20subgrafos_20clínicos_3a_20qué_20se_20hizo_20y_20qué_20falta_29',['SignBB · Autoría de subgrafos clínicos: qué se hizo y qué falta',['../md_docs_2autoria-subgrafos.html',1,'']]],
   ['signbb_20—_20backend_30',['SignBB — Backend',['../index.html',1,'']]],
   ['signbb_20backend_20rama_20autoria_31',['Back (&lt;span class=&quot;tt&quot;&gt;signbb-backend&lt;/span&gt;, rama &lt;span class=&quot;tt&quot;&gt;autoria&lt;/span&gt;)',['../md_docs_2autoria-subgrafos.html#autotoc_md88',1,'']]],

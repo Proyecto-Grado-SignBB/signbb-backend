@@ -187,10 +187,10 @@ Variables de entorno</h2>
 <blockquote class="doxtable">
 <p>PostgreSQL y Silo leen su contraseña solo la primera vez, con el volumen vacío. Si se cambia después, hay que cambiarla también dentro del servicio o empezar de cero con <span class="tt">docker compose down -v</span>. </p>
 </blockquote>
-<p><b>Producción.</b> <span class="tt">SIGNBB_ENTORNO=produccion</span> obliga a dar valores propios a los secretos y <span class="tt">SIGNBB_DOCS_ACTIVAS=false</span>; si no, el backend no arranca y el log dice qué variable falta. <span class="tt">SIGNBB_SIEMBRA_ACTIVA=true</span> solo en el primer despliegue (siembra el grafo raíz; los subgrafos se publican después) y <span class="tt">false</span> después. <span class="tt">SIGNBB_SEED_DEMO_ACTIVA</span> debe quedar en <span class="tt">false</span>: crea cuentas de ejemplo y publica los cuatro subgrafos de demo. Para sembrar el entorno de demo, enciéndelo junto con la siembra y luego bórralo o ponlo en <span class="tt">false</span>.</p>
+<p><b>Producción.</b> <span class="tt">SIGNBB_ENTORNO=produccion</span> obliga a dar valores propios a los secretos y <span class="tt">SIGNBB_DOCS_ACTIVAS=false</span>; si no, el backend no arranca y el log dice qué variable falta. <span class="tt">SIGNBB_SIEMBRA_ACTIVA=true</span> solo en el primer despliegue (siembra el grafo raíz; los subgrafos se publican después) y <span class="tt">false</span> después. <span class="tt">SIGNBB_SEED_DEMO_ACTIVA</span> debe quedar en <span class="tt">false</span>: crea cuentas de ejemplo y publica los cinco subgrafos de demo. Para sembrar el entorno de demo, enciéndelo junto con la siembra y luego bórralo o ponlo en <span class="tt">false</span>.</p>
 <p><b>Seed de demo.</b> Con <span class="tt">SIGNBB_SEED_DEMO_ACTIVA=true</span> se crean:</p>
 <ul>
-<li>Médico: <span class="tt">medico.ejemplo@signbb.local</span> / <span class="tt">Medico123</span>, autor de los 4 subgrafos.</li>
+<li>Médico: <span class="tt">medico.ejemplo@signbb.local</span> / <span class="tt">Medico123</span>, autor de los 5 subgrafos.</li>
 <li>Padre: <span class="tt">padre.ejemplo@signbb.local</span> / <span class="tt">Padre123</span>.</li>
 </ul>
 <p>El seed es idempotente. Para volver a sembrarlo desde cero hay que borrar PostgreSQL y Redis (<span class="tt">docker compose down -v</span>), porque las versiones y el caché pueden conservar contenido anterior.</p>

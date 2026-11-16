@@ -115,6 +115,14 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('md_docs_2entor
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Clave  </th><th class="markdownTableHeadNone">Nombre  </th><th class="markdownTableHeadNone">Condiciones (FND)  </th><th class="markdownTableHeadNone">Nodo destino  </th><th class="markdownTableHeadNone">Nivel  </th><th class="markdownTableHeadNone">Descripción  </th></tr>
 <tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">R_ACT_CON</span>  </td><td class="markdownTableBodyNone">Consultar Actividad y Comportamiento  </td><td class="markdownTableBodyNone"><span class="tt">q_act_llanto</span> = <span class="tt">Más irritable/llora más, pero calma</span>  </td><td class="markdownTableBodyNone"><span class="tt">T_CONSULTA</span>  </td><td class="markdownTableBodyNone">CONSULTAR_MEDICO  </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">R_ACT_URG</span>  </td><td class="markdownTableBodyNone">Urgencia Actividad y Comportamiento  </td><td class="markdownTableBodyNone"><span class="tt">q_act_tono</span> = <span class="tt">Mucho más dormido / cuesta despertarlo</span> ∨<br  />
+<span class="tt">q_act_tono</span> = <span class="tt">Más flojito de lo habitual</span> ∨<br  />
+<span class="tt">q_act_tono</span> = <span class="tt">Más tieso de lo habitual / cuerpo rígido</span> ∨<br  />
+<span class="tt">q_act_tono</span> = <span class="tt">Movimientos anormales o repetitivos</span> ∨<br  />
+<span class="tt">q_act_llanto</span> = <span class="tt">Llanto inconsolable</span>  </td><td class="markdownTableBodyNone"><span class="tt">T_URGENCIA</span>  </td><td class="markdownTableBodyNone">URGENCIA  </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">R_CAB_CON</span>  </td><td class="markdownTableBodyNone">Consultar Cabeza, Ojos y Oídos  </td><td class="markdownTableBodyNone"><span class="tt">q_cab_ojos</span> = <span class="tt">Secreción repetida en ojo, sin hinchar</span> ∨<br  />
 <span class="tt">q_cab_oidos</span> = <span class="tt">Líquido transparente del oído (no agua de baño)</span>  </td><td class="markdownTableBodyNone"><span class="tt">T_CONSULTA</span>  </td><td class="markdownTableBodyNone">CONSULTAR_MEDICO  </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
@@ -149,18 +157,12 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('md_docs_2entor
 <span class="tt">q_gastro_orina</span> = <span class="tt">Sangre roja en orina/pañal</span> ∨<br  />
 <span class="tt">q_gastro_orina</span> = <span class="tt">Muchas horas sin mojar ningún pañal</span>  </td><td class="markdownTableBodyNone"><span class="tt">T_URGENCIA</span>  </td><td class="markdownTableBodyNone">URGENCIA  </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">R_NEURO_CON</span>  </td><td class="markdownTableBodyNone">Consultar Actividad y Color  </td><td class="markdownTableBodyNone"><span class="tt">q_neuro_llanto</span> = <span class="tt">Más irritable/llora más, pero calma</span> ∨<br  />
-<span class="tt">q_neuro_color</span> = <span class="tt">Color amarillo en ojos, cara o hasta pecho</span>  </td><td class="markdownTableBodyNone"><span class="tt">T_CONSULTA</span>  </td><td class="markdownTableBodyNone">CONSULTAR_MEDICO  </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"><span class="tt">R_PIEL_CON</span>  </td><td class="markdownTableBodyNone">Consultar Piel y Color  </td><td class="markdownTableBodyNone"><span class="tt">q_piel_color</span> = <span class="tt">Color amarillo en ojos, cara o hasta pecho</span>  </td><td class="markdownTableBodyNone"><span class="tt">T_CONSULTA</span>  </td><td class="markdownTableBodyNone">CONSULTAR_MEDICO  </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">R_NEURO_URG</span>  </td><td class="markdownTableBodyNone">Urgencia Actividad y Color  </td><td class="markdownTableBodyNone"><span class="tt">q_neuro_tono</span> = <span class="tt">Mucho más dormido / cuesta despertarlo</span> ∨<br  />
-<span class="tt">q_neuro_tono</span> = <span class="tt">Más flojito de lo habitual</span> ∨<br  />
-<span class="tt">q_neuro_tono</span> = <span class="tt">Más tieso de lo habitual / cuerpo rígido</span> ∨<br  />
-<span class="tt">q_neuro_tono</span> = <span class="tt">Movimientos anormales o repetitivos</span> ∨<br  />
-<span class="tt">q_neuro_llanto</span> = <span class="tt">Llanto inconsolable</span> ∨<br  />
-<span class="tt">q_neuro_color</span> = <span class="tt">Amarillo por debajo del ombligo o piernas</span> ∨<br  />
-<span class="tt">q_neuro_color</span> = <span class="tt">Palmas de manos o plantas amarillas</span> ∨<br  />
-<span class="tt">q_neuro_color</span> = <span class="tt">Amarillo + muy dormido/no come</span> ∨<br  />
-<span class="tt">q_neuro_color</span> = <span class="tt">Amarillo en primeras 24 horas</span>  </td><td class="markdownTableBodyNone"><span class="tt">T_URGENCIA</span>  </td><td class="markdownTableBodyNone">URGENCIA  </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"><span class="tt">R_PIEL_URG</span>  </td><td class="markdownTableBodyNone">Urgencia Piel y Color  </td><td class="markdownTableBodyNone"><span class="tt">q_piel_color</span> = <span class="tt">Amarillo por debajo del ombligo o piernas</span> ∨<br  />
+<span class="tt">q_piel_color</span> = <span class="tt">Palmas de manos o plantas amarillas</span> ∨<br  />
+<span class="tt">q_piel_color</span> = <span class="tt">Amarillo + muy dormido/no come</span> ∨<br  />
+<span class="tt">q_piel_color</span> = <span class="tt">Amarillo en primeras 24 horas</span>  </td><td class="markdownTableBodyNone"><span class="tt">T_URGENCIA</span>  </td><td class="markdownTableBodyNone">URGENCIA  </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">R_RESP_CON</span>  </td><td class="markdownTableBodyNone">Consultar Respiración  </td><td class="markdownTableBodyNone"><span class="tt">q_resp_vista</span> = <span class="tt">Respira diferente sin esfuerzo</span> ∨<br  />
 <span class="tt">q_resp_sonidos</span> = <span class="tt">Ruido al respirar que antes no hacía</span> ∨<br  />
@@ -176,17 +178,17 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('md_docs_2entor
 <span class="tt">q_resp_nariz</span> = <span class="tt">Congestión no permite alimentarse</span> ∨<br  />
 <span class="tt">q_resp_nariz</span> = <span class="tt">Más respiración rápida, quejido, etc.</span>  </td><td class="markdownTableBodyNone"><span class="tt">T_URGENCIA</span>  </td><td class="markdownTableBodyNone">URGENCIA  </td><td class="markdownTableBodyNone"></td></tr>
 </table>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md123"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md124"></a>
 Resumen por nivel</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Nivel  </th><th class="markdownTableHeadNone">Reglas  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">CONSULTAR_MEDICO  </td><td class="markdownTableBodyNone">4  </td></tr>
+<td class="markdownTableBodyNone">CONSULTAR_MEDICO  </td><td class="markdownTableBodyNone">5  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">URGENCIA  </td><td class="markdownTableBodyNone">4  </td></tr>
+<td class="markdownTableBodyNone">URGENCIA  </td><td class="markdownTableBodyNone">5  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>Total</b>  </td><td class="markdownTableBodyNone"><b>8</b>  </td></tr>
+<td class="markdownTableBodyNone"><b>Total</b>  </td><td class="markdownTableBodyNone"><b>10</b>  </td></tr>
 </table>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

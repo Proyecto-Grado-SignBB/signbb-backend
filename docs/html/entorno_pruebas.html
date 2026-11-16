@@ -116,10 +116,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('entorno_prueba
 <p>El entorno está formado por:</p>
 <ul>
 <li>Un supervisor, creado por <span class="tt">InicializadorSeguridad</span> si no existe.</li>
-<li>Un médico de ejemplo, autor de los cuatro subgrafos y de sus bases de reglas.</li>
+<li>Un médico de ejemplo, autor de los cinco subgrafos y de sus bases de reglas.</li>
 <li>Un padre de ejemplo.</li>
-<li>El grafo raíz con cuatro categorías.</li>
-<li>Los cuatro subgrafos publicados y sus bases de reglas.</li>
+<li>El grafo raíz con seis categorías: cinco con subgrafo publicado y Temperatura sin subgrafo.</li>
+<li>Los cinco subgrafos publicados y sus bases de reglas.</li>
 </ul>
 <p>El seed está <b>apagado por defecto</b>. Se enciende con <span class="tt">SIGNBB_SEED_DEMO_ACTIVA=true</span> y no se puede usar con <span class="tt">signbb.entorno=produccion</span>.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md103"></a>
@@ -148,7 +148,7 @@ Docker</h2>
 </div><!-- fragment --><p>El runner corre después de la seguridad y de <span class="tt">DatabaseInit</span>:</p>
 <ol type="1">
 <li>Crea el médico y el padre si no existen.</li>
-<li>Crea los borradores de los cuatro subgrafos y de sus reglas.</li>
+<li>Crea los borradores de los cinco subgrafos y de sus reglas.</li>
 <li>Publica cada subgrafo con <span class="tt">ServicioAutoria.publicar</span>.</li>
 <li>Deja al médico como autor, agrega las referencias al grafo raíz y registra una versión por subgrafo.</li>
 </ol>
@@ -203,7 +203,7 @@ Grafo de respiración</div></div>
 </div><!-- fragment --></li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md111"></a>
-Gastrointestinal</h2>
+Gastrointestinal y urinario</h2>
 <p>Subgrafo de alimentación, vómito, barriga, popó y orina. La entrada habilita una selección múltiple de subáreas; cada subárea tiene su propia lista de signos.</p>
 <div class="image">
 <object type="image/svg+xml" data="gastrointestinal.svg" style="pointer-events: none;"></object>
@@ -217,20 +217,34 @@ Grafo gastrointestinal</div></div>
 </div><!-- fragment --></li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md112"></a>
-Actividad y color</h2>
-<p>Subgrafo de movimiento/tono, llanto e ictericia. La cianosis no forma parte de este subgrafo: los signos azulados están en Respiración.</p>
+Actividad y comportamiento</h2>
+<p>Subgrafo de movimiento/tono y llanto. La cianosis no forma parte de este subgrafo: los signos azulados están en Respiración. El color y la ictericia están en Piel y color.</p>
 <div class="image">
-<object type="image/svg+xml" data="actividad_color.svg" style="pointer-events: none;"></object>
+<object type="image/svg+xml" data="actividad.svg" style="pointer-events: none;"></object>
 <div class="caption">
-Grafo de actividad y color</div></div>
+Grafo de actividad y comportamiento</div></div>
     <ul>
-<li>DOT: <span class="tt">grafos/actividad_color.dot</span></li>
-<li>SVG: <span class="tt">grafos/actividad_color.svg</span></li>
+<li>DOT: <span class="tt">grafos/actividad.dot</span></li>
+<li>SVG: <span class="tt">grafos/actividad.svg</span></li>
 <li><p class="startli">Regenerar:</p>
-<div class="fragment"><div class="line">dot -Tsvg grafos/actividad_color.dot -o grafos/actividad_color.svg</div>
+<div class="fragment"><div class="line">dot -Tsvg grafos/actividad.dot -o grafos/actividad.svg</div>
 </div><!-- fragment --></li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md113"></a>
+Piel y color</h2>
+<p>Subgrafo de coloración amarilla de la piel y los ojos (ictericia). Los signos generales de piel del documento de signos todavía no tienen subgrafo.</p>
+<div class="image">
+<object type="image/svg+xml" data="piel_color.svg" style="pointer-events: none;"></object>
+<div class="caption">
+Grafo de piel y color</div></div>
+    <ul>
+<li>DOT: <span class="tt">grafos/piel_color.dot</span></li>
+<li>SVG: <span class="tt">grafos/piel_color.svg</span></li>
+<li><p class="startli">Regenerar:</p>
+<div class="fragment"><div class="line">dot -Tsvg grafos/piel_color.dot -o grafos/piel_color.svg</div>
+</div><!-- fragment --></li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md114"></a>
 Cabeza, ojos y oídos</h2>
 <p>Subgrafo de fontanela, ojos y oídos. El signo compuesto “Pus en ojo e hinchado/rojo” se conserva como una sola opción y lleva a urgencia.</p>
 <div class="image">
@@ -244,7 +258,7 @@ Grafo de cabeza, ojos y oídos</div></div>
 <div class="fragment"><div class="line">dot -Tsvg grafos/cabeza.dot -o grafos/cabeza.svg</div>
 </div><!-- fragment --></li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md114"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md115"></a>
 Bases de reglas</h1>
 <p>Cada subgrafo tiene una base con <b>dos reglas</b>: una de <span class="tt">URGENCIA</span> y otra de <span class="tt">CONSULTAR_MEDICO</span>. No se declaran reglas <span class="tt">NORMAL</span> porque el motor las rechaza; el nivel normal se resuelve por las aristas y el cierre implícito.</p>
 <table class="markdownTable">
@@ -253,23 +267,25 @@ Bases de reglas</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Respiración  </td><td class="markdownTableBodyNone"><span class="tt">R_RESP_URG</span>  </td><td class="markdownTableBodyNone"><span class="tt">R_RESP_CON</span>  </td><td class="markdownTableBodyNone"><a class="el" href="md_docs_2entorno-pruebas_2reglas_2reglas__respiracion.html" title="Base de reglas: grafo_respiracion">reglas_respiracion.md</a>  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Gastrointestinal  </td><td class="markdownTableBodyNone"><span class="tt">R_GASTRO_URG</span>  </td><td class="markdownTableBodyNone"><span class="tt">R_GASTRO_CON</span>  </td><td class="markdownTableBodyNone"><a class="el" href="md_docs_2entorno-pruebas_2reglas_2reglas__gastro.html" title="Base de reglas: grafo_gastro">reglas_gastro.md</a>  </td></tr>
+<td class="markdownTableBodyNone">Gastrointestinal y urinario  </td><td class="markdownTableBodyNone"><span class="tt">R_GASTRO_URG</span>  </td><td class="markdownTableBodyNone"><span class="tt">R_GASTRO_CON</span>  </td><td class="markdownTableBodyNone"><a class="el" href="md_docs_2entorno-pruebas_2reglas_2reglas__gastro.html" title="Base de reglas: grafo_gastro">reglas_gastro.md</a>  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Actividad/Color  </td><td class="markdownTableBodyNone"><span class="tt">R_NEURO_URG</span>  </td><td class="markdownTableBodyNone"><span class="tt">R_NEURO_CON</span>  </td><td class="markdownTableBodyNone"><a class="el" href="md_docs_2entorno-pruebas_2reglas_2reglas__activo__color.html" title="Base de reglas: grafo_activo_color">reglas_activo_color.md</a>  </td></tr>
+<td class="markdownTableBodyNone">Cabeza, ojos y oídos  </td><td class="markdownTableBodyNone"><span class="tt">R_CAB_URG</span>  </td><td class="markdownTableBodyNone"><span class="tt">R_CAB_CON</span>  </td><td class="markdownTableBodyNone"><a class="el" href="md_docs_2entorno-pruebas_2reglas_2reglas__cabeza.html" title="Base de reglas: grafo_cabeza">reglas_cabeza.md</a>  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Cabeza/Ojos/Oídos  </td><td class="markdownTableBodyNone"><span class="tt">R_CAB_URG</span>  </td><td class="markdownTableBodyNone"><span class="tt">R_CAB_CON</span>  </td><td class="markdownTableBodyNone"><a class="el" href="md_docs_2entorno-pruebas_2reglas_2reglas__cabeza.html" title="Base de reglas: grafo_cabeza">reglas_cabeza.md</a>  </td></tr>
+<td class="markdownTableBodyNone">Actividad y comportamiento  </td><td class="markdownTableBodyNone"><span class="tt">R_ACT_URG</span>  </td><td class="markdownTableBodyNone"><span class="tt">R_ACT_CON</span>  </td><td class="markdownTableBodyNone"><a class="el" href="md_docs_2entorno-pruebas_2reglas_2reglas__actividad.html" title="Base de reglas: grafo_actividad">reglas_actividad.md</a>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Piel y color  </td><td class="markdownTableBodyNone"><span class="tt">R_PIEL_URG</span>  </td><td class="markdownTableBodyNone"><span class="tt">R_PIEL_CON</span>  </td><td class="markdownTableBodyNone"><a class="el" href="md_docs_2entorno-pruebas_2reglas_2reglas__piel__color.html" title="Base de reglas: grafo_piel_color">reglas_piel_color.md</a>  </td></tr>
 </table>
 <p>Las tablas completas muestran la FND, el nodo destino y el nivel de cada regla. La versión consolidada está en <a class="el" href="md_docs_2entorno-pruebas_2reglas_2base__reglas.html" title="base_reglas"><span class="tt">reglas/base_reglas.md</span></a>.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md115"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md116"></a>
 Scripts de ayuda</h1>
 <p>Los scripts están en <span class="tt">scripts/</span> y trabajan sobre <span class="tt">datos/</span> y <span class="tt">grafos/</span>.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md116"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md117"></a>
 <span class="tt">json_a_dot.py</span></h2>
 <p>Convierte los grafos JSON en DOT y, con <span class="tt">--render</span>, en SVG. Sirve para comprobar que el JSON y los grafos dibujados a mano coinciden. Si una arista trae <span class="tt">peso</span>, lo agrega al label como <span class="tt">(3)</span>, <span class="tt">(2)</span> o <span class="tt">(1)</span>.</p>
 <div class="fragment"><div class="line">cd docs/entorno-pruebas</div>
 <div class="line">python3 scripts/json_a_dot.py datos/grafo_*.json -o generado --render</div>
 </div><!-- fragment --><p>Salida: <span class="tt">generado/grafo_*.dot</span> y <span class="tt">generado/grafo_*.svg</span>.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md117"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md118"></a>
 <span class="tt">reglas_a_markdown.py</span></h2>
 <p>Convierte una base de reglas JSON en una tabla Markdown.</p>
 <div class="fragment"><div class="line">python3 scripts/reglas_a_markdown.py datos/reglas_gastro.json \</div>
@@ -280,7 +296,7 @@ Scripts de ayuda</h1>
 <div class="line">  python3 scripts/reglas_a_markdown.py &quot;$archivo&quot; -o &quot;reglas/${nombre}.md&quot;</div>
 <div class="line">done</div>
 <div class="line">python3 scripts/reglas_a_markdown.py datos/base_reglas.json -o reglas/base_reglas.md</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md118"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md119"></a>
 <span class="tt">regenerar_grafos.sh</span></h2>
 <p>Hace todo lo anterior de una vez:</p>
 <ul>
@@ -292,9 +308,9 @@ Scripts de ayuda</h1>
 <div class="fragment"><div class="line">cd docs/entorno-pruebas</div>
 <div class="line">./scripts/regenerar_grafos.sh</div>
 </div><!-- fragment --><p>Requisitos: <span class="tt">graphviz</span> (<span class="tt">dot</span>) y <span class="tt">python3</span>.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md119"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md120"></a>
 Validación del entorno</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md120"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md121"></a>
 Pruebas automáticas</h2>
 <p>Backend:</p>
 <div class="fragment"><div class="line">cd signbb-backend/backend</div>
@@ -304,19 +320,19 @@ Pruebas automáticas</h2>
 </div><!-- fragment --><p>Frontend:</p>
 <div class="fragment"><div class="line">cd signbb-frontend</div>
 <div class="line">npx ng test --watch=false</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md121"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md122"></a>
 Comprobaciones del seed</h2>
 <p>Con PostgreSQL arriba, después de arrancar con el seed activo:</p>
 <div class="fragment"><div class="line"><span class="keyword">select</span> correo, nombre, rol, institucion, activo</div>
 <div class="line"><span class="keyword">from</span> usuario</div>
 <div class="line"><span class="keyword">order</span> <span class="keyword">by</span> rol;</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">select</span> count(*) <span class="keyword">from</span> grafo_clinico_entity;       <span class="comment">-- 5: raíz + 4 subgrafos</span></div>
-<div class="line"><span class="keyword">select</span> count(*) <span class="keyword">from</span> base_reglas_entity;         <span class="comment">-- 4</span></div>
-<div class="line"><span class="keyword">select</span> count(*) <span class="keyword">from</span> borrador_subgrafo_entity;   <span class="comment">-- 4</span></div>
-<div class="line"><span class="keyword">select</span> count(*) <span class="keyword">from</span> version_contenido;          <span class="comment">-- 4</span></div>
-</div><!-- fragment --><p>El médico debe ver sus cuatro subgrafos en la app de autoría y el padre debe poder iniciar una consulta en la app de consulta.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md122"></a>
+<div class="line"><span class="keyword">select</span> count(*) <span class="keyword">from</span> grafo_clinico_entity;       <span class="comment">-- 6: raíz + 5 subgrafos</span></div>
+<div class="line"><span class="keyword">select</span> count(*) <span class="keyword">from</span> base_reglas_entity;         <span class="comment">-- 5</span></div>
+<div class="line"><span class="keyword">select</span> count(*) <span class="keyword">from</span> borrador_subgrafo_entity;   <span class="comment">-- 5</span></div>
+<div class="line"><span class="keyword">select</span> count(*) <span class="keyword">from</span> version_contenido;          <span class="comment">-- 5</span></div>
+</div><!-- fragment --><p>El médico debe ver sus cinco subgrafos en la app de autoría y el padre debe poder iniciar una consulta en la app de consulta. La categoría Temperatura aparece en autoría, pero no en la consulta hasta que se publique un subgrafo en ella.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md123"></a>
 Notas</h1>
 <ul>
 <li>El seed no crea el supervisor; lo hace <span class="tt">InicializadorSeguridad</span>.</li>

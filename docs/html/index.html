@@ -169,7 +169,7 @@ Cuentas y seguridad</h1>
 </table>
 <p>Para ingresar: <span class="tt">POST /api/auth/login</span> con <span class="tt">{"correo", "contrasena"}</span> devuelve <span class="tt">{token, expiraEn, usuario}</span>. El token dura 8 horas.</p>
 <p><b>Supervisor inicial.</b> Si no existe ningún supervisor, el back crea uno al arrancar. En desarrollo es <span class="tt">supervisor@signbb.local</span> / <span class="tt">Supervisor123</span>; <b>cámbialo</b> fuera de tu máquina con las variables de abajo.</p>
-<p><b>Seed de demo.</b> Con <span class="tt">SIGNBB_SEED_DEMO_ACTIVA=true</span>, después de la siembra del grafo raíz, el backend crea el médico y el padre de ejemplo y publica los cuatro subgrafos de <span class="tt">src/main/resources/seed/demo/</span> usando el flujo real de autoría. El médico queda como autor de los subgrafos y de sus bases de reglas. Cuentas de desarrollo:</p>
+<p><b>Seed de demo.</b> Con <span class="tt">SIGNBB_SEED_DEMO_ACTIVA=true</span>, después de la siembra del grafo raíz, el backend crea el médico y el padre de ejemplo y publica los cinco subgrafos de <span class="tt">src/main/resources/seed/demo/</span> usando el flujo real de autoría. El médico queda como autor de los subgrafos y de sus bases de reglas. Cuentas de desarrollo:</p>
 <ul>
 <li>Médico: <span class="tt">medico.ejemplo@signbb.local</span> / <span class="tt">Medico123</span>, institución <span class="tt">Fundación Canguro</span>.</li>
 <li>Padre: <span class="tt">padre.ejemplo@signbb.local</span> / <span class="tt">Padre123</span>.</li>
@@ -203,7 +203,7 @@ Cuentas y seguridad</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">SIGNBB_SIEMBRA_ACTIVA</span>  </td><td class="markdownTableBodyNone">Siembra solo el grafo raíz si falta (<span class="tt">DatabaseInit</span>). En producción, <span class="tt">true</span> solo en el primer despliegue  </td><td class="markdownTableBodyNone"><span class="tt">true</span>  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">SIGNBB_SEED_DEMO_ACTIVA</span>  </td><td class="markdownTableBodyNone">Crea las cuentas de demo y publica los 4 subgrafos de <span class="tt">seed/demo/</span>. <b>No usar en producción</b>  </td><td class="markdownTableBodyNone"><span class="tt">false</span>  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">SIGNBB_SEED_DEMO_ACTIVA</span>  </td><td class="markdownTableBodyNone">Crea las cuentas de demo y publica los 5 subgrafos de <span class="tt">seed/demo/</span>. <b>No usar en producción</b>  </td><td class="markdownTableBodyNone"><span class="tt">false</span>  </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">SIGNBB_SEED_MEDICO_NOMBRE</span>  </td><td class="markdownTableBodyNone">Nombre del médico de demo  </td><td class="markdownTableBodyNone"><span class="tt">Médico ejemplo - Neonatologo</span>  </td></tr>
 <tr class="markdownTableRowEven">

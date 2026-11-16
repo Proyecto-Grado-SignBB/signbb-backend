@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classorg_1_1si
 </div><!--header-->
 <div class="contents">
 
-<p>Seed de demo: cuentas de ejemplo y publicación de los cuatro subgrafos del manifiesto <code class="JavaDocCode">seed/demo/seed.json</code>.  
+<p>Seed de demo: cuentas de ejemplo y publicación de los cinco subgrafos del manifiesto <code class="JavaDocCode">seed/demo/seed.json</code>.  
  <a href="#details">Más...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -125,7 +125,7 @@ void&#160;</td><td class="memItemRight"><b>sembrar</b> ()</td></tr>
 <tr class="memdesc:ac63adf85317143d0ff1904a407b63d75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Siembra cuentas y subgrafos; todo o nada. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
-<div class="textblock"><p>Seed de demo: cuentas de ejemplo y publicación de los cuatro subgrafos del manifiesto <code class="JavaDocCode">seed/demo/seed.json</code>. </p>
+<div class="textblock"><p>Seed de demo: cuentas de ejemplo y publicación de los cinco subgrafos del manifiesto <code class="JavaDocCode">seed/demo/seed.json</code>. </p>
 <p>No crea el supervisor: lo hace <code class="JavaDocCode">InicializadorSeguridad</code>. Tampoco crea el grafo raíz: lo hace <code class="JavaDocCode">DatabaseInit</code>. Los subgrafos se publican con <code><a class="el" href="interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoria.html#acf50df8a6470610818994b1582ad5aff">ServicioAutoria#publicar(Long)</a></code>, usando borradores reales, para que el médico quede como autor y el contenido tenga versión, referencias en la raíz y copia publicada.</p>
 <p>Es idempotente: si una cuenta existe por correo o un subgrafo ya tiene borrador o grafo publicado, se omite. Pensado para una base de demo limpia; para volver a sembrar desde cero hay que borrar los volúmenes de PostgreSQL y Redis. </p>
 </div><hr/>La documentación de esta clase está generada del siguiente archivo:<ul>

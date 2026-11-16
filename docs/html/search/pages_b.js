@@ -19,7 +19,7 @@ var searchData=
   ['en_20local_16',['5. Cómo probarlo en local',['../md_docs_2autoria-subgrafos.html#autotoc_md91',1,'']]],
   ['en_20redis_17',['RepositorioSesionRedisTest — sesiones en Redis',['../pruebas_cache.html#autotoc_md58',1,'']]],
   ['enfoque_18',['Enfoque',['../pruebas_autoria.html#autotoc_md0',1,'Enfoque'],['../pruebas_navegacion.html#autotoc_md12',1,'Enfoque'],['../pruebas.html#autotoc_md49',1,'Enfoque']]],
-  ['entorno_19',['entorno',['../entorno_pruebas.html#autotoc_md119',1,'Validación del entorno'],['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md78',1,'Variables de entorno']]],
+  ['entorno_19',['entorno',['../entorno_pruebas.html#autotoc_md120',1,'Validación del entorno'],['../md_contenedores_2MANUAL__CONTENEDORES.html#autotoc_md78',1,'Variables de entorno']]],
   ['entorno_20de_20pruebas_20y_20demo_20',['Entorno de pruebas y demo',['../entorno_pruebas.html',1,'']]],
   ['errores_20a_20verificar_21',['Errores a verificar',['../md_docs_2autoria-subgrafos.html#autotoc_md97',1,'']]],
   ['es_20esta_20parte_22',['1. Qué es esta parte',['../md_docs_2autoria-subgrafos.html#autotoc_md85',1,'']]],

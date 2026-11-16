@@ -166,7 +166,7 @@ Back (<span class="tt">signbb-backend</span>, rama <span class="tt">autoria</spa
 </li>
 <li><b>Pruebas</b> (<span class="tt">4f6539d</span>, <span class="tt">d32b685</span>): son 63 del módulo, incluida una de punta a punta. Esa prueba arma un subgrafo, lo publica y lo recorre como cuidadora hasta URGENCIA. El detalle está en <span class="tt">backend/src/test/java/org/signbb/backend/autoria/README.md</span>.</li>
 <li><b>Categorías piel y temperatura</b> (<span class="tt">5b2094a</span>):<ul>
-<li>Las categorías <b>son las preguntas puente del grafo raíz</b> (<span class="tt">grafo_raiz.json</span>). Ahora son piel, temperatura, respiración, gastrointestinal y neurológico.</li>
+<li>Las categorías <b>son las preguntas puente del grafo raíz</b> (<span class="tt">grafo_raiz.json</span>). Ahora son respiración, gastrointestinal y urinario, cabeza/ojos/oídos, actividad y comportamiento, piel y color, y temperatura.</li>
 <li>Una categoría sin subgrafos no se le muestra a la cuidadora, porque el compositor la poda, y aparece sola cuando alguien publica en ella.</li>
 </ul>
 </li>
@@ -352,14 +352,14 @@ Windows (PowerShell)</h2>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md94"></a>
 Verificar que el back responde (Mac y Windows)</h2>
 <div class="fragment"><div class="line">curl http://localhost:8080/api/autoria/categorias     # en Windows: curl.exe ...</div>
-</div><!-- fragment --><p>Debe listar las cinco categorías del grafo raíz: piel, temperatura, respiración, gastrointestinal y neurológico. Si no aparecen, revisa que el backend haya arrancado con <span class="tt">SIGNBB_SIEMBRA_ACTIVA=true</span> y que la base no tenga un <span class="tt">grafo_raiz</span> viejo. <span class="tt">DatabaseInit</span> solo siembra el grafo raíz si no existe; los subgrafos ya no se siembran, se publican desde autoría o se cargan con el seed de datos.</p>
+</div><!-- fragment --><p>Debe listar las seis categorías del grafo raíz: respiración, gastrointestinal y urinario, cabeza/ojos/oídos, actividad y comportamiento, piel y color, y temperatura. Si no aparecen, revisa que el backend haya arrancado con <span class="tt">SIGNBB_SIEMBRA_ACTIVA=true</span> y que la base no tenga un <span class="tt">grafo_raiz</span> viejo. <span class="tt">DatabaseInit</span> solo siembra el grafo raíz si no existe; los subgrafos ya no se siembran, se publican desde autoría o se cargan con el seed de datos.</p>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md95"></a>
 Prueba sugerida: «Ictericia en la piel»</h2>
 <ol type="1">
-<li>En <span class="tt"><a href="http://localhost:4300">http://localhost:4300</a></span>, crea un subgrafo con la categoría <b>Piel</b> y el nombre para la familia «Piel u ojos amarillos».</li>
+<li>En <span class="tt"><a href="http://localhost:4300">http://localhost:4300</a></span>, crea un subgrafo con la categoría <b>Piel y color</b> y el nombre para la familia «Piel u ojos amarillos».</li>
 <li>Arma una pregunta con sus respuestas y conclusiones usando los "+".</li>
 <li>Publica.</li>
-<li>En <span class="tt"><a href="http://localhost:4200">http://localhost:4200</a></span> (cuidadora), entra a Piel y verifica que aparece «Piel u ojos amarillos» y que se recorre hasta la conclusión.</li>
+<li>En <span class="tt"><a href="http://localhost:4200">http://localhost:4200</a></span> (cuidadora), entra a Piel y color y verifica que aparece «Piel u ojos amarillos» y que se recorre hasta la conclusión.</li>
 </ol>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md96"></a>
 Probar la limpieza a mano</h2>
@@ -421,7 +421,7 @@ Importantes</h2>
 <li class="unchecked"><b>Historial de versiones y auditoría:</b> quién cambió qué y cuándo, y volver a una versión publicada anterior.</li>
 </ul>
 <ul class="check">
-<li class="unchecked"><b>Administrar categorías desde la interfaz.</b> Hoy se agregan editando <span class="tt">grafo_raiz.json</span>, que existe en dos copias que deben quedar idénticas, y requiere volver a sembrar la base.</li>
+<li class="unchecked"><b>Administrar categorías desde la interfaz.</b> Hoy se agregan editando <span class="tt">grafo_raiz.json</span>, que existe en cuatro copias que deben quedar idénticas (autoría, siembra, seed de demo y documentación), y requiere volver a sembrar la base.</li>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md101"></a>
 Detalles menores</h2>

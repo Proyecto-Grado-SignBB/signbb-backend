@@ -156,34 +156,38 @@ var NAVTREE =
         [ "Índice de nodos", "entorno_pruebas.html#autotoc_md108", null ],
         [ "Grafo raíz", "entorno_pruebas.html#autotoc_md109", null ],
         [ "Respiración y nariz", "entorno_pruebas.html#autotoc_md110", null ],
-        [ "Gastrointestinal", "entorno_pruebas.html#autotoc_md111", null ],
-        [ "Actividad y color", "entorno_pruebas.html#autotoc_md112", null ],
-        [ "Cabeza, ojos y oídos", "entorno_pruebas.html#autotoc_md113", null ]
+        [ "Gastrointestinal y urinario", "entorno_pruebas.html#autotoc_md111", null ],
+        [ "Actividad y comportamiento", "entorno_pruebas.html#autotoc_md112", null ],
+        [ "Piel y color", "entorno_pruebas.html#autotoc_md113", null ],
+        [ "Cabeza, ojos y oídos", "entorno_pruebas.html#autotoc_md114", null ]
       ] ],
-      [ "Bases de reglas", "entorno_pruebas.html#autotoc_md114", null ],
-      [ "Scripts de ayuda", "entorno_pruebas.html#autotoc_md115", [
-        [ "<span class=\"tt\">json_a_dot.py</span>", "entorno_pruebas.html#autotoc_md116", null ],
-        [ "<span class=\"tt\">reglas_a_markdown.py</span>", "entorno_pruebas.html#autotoc_md117", null ],
-        [ "<span class=\"tt\">regenerar_grafos.sh</span>", "entorno_pruebas.html#autotoc_md118", null ]
+      [ "Bases de reglas", "entorno_pruebas.html#autotoc_md115", null ],
+      [ "Scripts de ayuda", "entorno_pruebas.html#autotoc_md116", [
+        [ "<span class=\"tt\">json_a_dot.py</span>", "entorno_pruebas.html#autotoc_md117", null ],
+        [ "<span class=\"tt\">reglas_a_markdown.py</span>", "entorno_pruebas.html#autotoc_md118", null ],
+        [ "<span class=\"tt\">regenerar_grafos.sh</span>", "entorno_pruebas.html#autotoc_md119", null ]
       ] ],
-      [ "Validación del entorno", "entorno_pruebas.html#autotoc_md119", [
-        [ "Pruebas automáticas", "entorno_pruebas.html#autotoc_md120", null ],
-        [ "Comprobaciones del seed", "entorno_pruebas.html#autotoc_md121", null ]
+      [ "Validación del entorno", "entorno_pruebas.html#autotoc_md120", [
+        [ "Pruebas automáticas", "entorno_pruebas.html#autotoc_md121", null ],
+        [ "Comprobaciones del seed", "entorno_pruebas.html#autotoc_md122", null ]
       ] ],
-      [ "Notas", "entorno_pruebas.html#autotoc_md122", null ]
+      [ "Notas", "entorno_pruebas.html#autotoc_md123", null ]
     ] ],
     [ "base_reglas", "md_docs_2entorno-pruebas_2reglas_2base__reglas.html", null ],
-    [ "Base de reglas: grafo_activo_color", "md_docs_2entorno-pruebas_2reglas_2reglas__activo__color.html", [
-      [ "Resumen por nivel", "md_docs_2entorno-pruebas_2reglas_2reglas__activo__color.html#autotoc_md125", null ]
+    [ "Base de reglas: grafo_actividad", "md_docs_2entorno-pruebas_2reglas_2reglas__actividad.html", [
+      [ "Resumen por nivel", "md_docs_2entorno-pruebas_2reglas_2reglas__actividad.html#autotoc_md126", null ]
     ] ],
     [ "Base de reglas: grafo_cabeza", "md_docs_2entorno-pruebas_2reglas_2reglas__cabeza.html", [
-      [ "Resumen por nivel", "md_docs_2entorno-pruebas_2reglas_2reglas__cabeza.html#autotoc_md127", null ]
+      [ "Resumen por nivel", "md_docs_2entorno-pruebas_2reglas_2reglas__cabeza.html#autotoc_md128", null ]
     ] ],
     [ "Base de reglas: grafo_gastro", "md_docs_2entorno-pruebas_2reglas_2reglas__gastro.html", [
-      [ "Resumen por nivel", "md_docs_2entorno-pruebas_2reglas_2reglas__gastro.html#autotoc_md129", null ]
+      [ "Resumen por nivel", "md_docs_2entorno-pruebas_2reglas_2reglas__gastro.html#autotoc_md130", null ]
+    ] ],
+    [ "Base de reglas: grafo_piel_color", "md_docs_2entorno-pruebas_2reglas_2reglas__piel__color.html", [
+      [ "Resumen por nivel", "md_docs_2entorno-pruebas_2reglas_2reglas__piel__color.html#autotoc_md132", null ]
     ] ],
     [ "Base de reglas: grafo_respiracion", "md_docs_2entorno-pruebas_2reglas_2reglas__respiracion.html", [
-      [ "Resumen por nivel", "md_docs_2entorno-pruebas_2reglas_2reglas__respiracion.html#autotoc_md131", null ]
+      [ "Resumen por nivel", "md_docs_2entorno-pruebas_2reglas_2reglas__respiracion.html#autotoc_md134", null ]
     ] ],
     [ "Paquetes", "namespaces.html", [
       [ "Lista de paquetes", "namespaces.html", "namespaces_dup" ],
@@ -214,7 +218,7 @@ var NAVTREEINDEX =
 "classorg_1_1signbb_1_1backend_1_1observaciones_1_1servicios_1_1ServicioRecorridosImplTest.html",
 "classorg_1_1signbb_1_1backend_1_1seguridad_1_1servicios_1_1LimitadorIntentos.html#afaf92ba151425855315a12e730096b8b",
 "interfaceorg_1_1signbb_1_1backend_1_1autoria_1_1servicios_1_1ServicioAutoriaReglas.html#a4e9d048018b247773dacf280573bff9c",
-"namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#ae561bba97018dd954b09051c1e220746"
+"namespaceorg_1_1signbb_1_1backend_1_1observaciones_1_1controladores.html#a332d9ae5a35730076d3cbbffaef0dfc3"
 ];
 
 const SYNCONMSG = 'pulsar para deshabilitar sincronización';
