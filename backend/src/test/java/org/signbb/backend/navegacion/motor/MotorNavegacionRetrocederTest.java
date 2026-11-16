@@ -31,9 +31,9 @@ import org.signbb.backend.reglas.servicios.ServicioReglasImpl;
  */
 class MotorNavegacionRetrocederTest {
 
-    private static final String ACTIVO = "grafo_activo_color";
-    private static final String CATEGORIA = "Actividad y color";
-    private static final String REVISAR = "Revisar actividad y color";
+    private static final String ACTIVO = "grafo_actividad";
+    private static final String CATEGORIA = "Actividad y comportamiento";
+    private static final String REVISAR = "Revisar actividad y comportamiento";
     private static final String SI = "Sí";
     private static final String MOVIMIENTO = "Movimiento y tono";
     private static final String ALARMA = "Mucho más dormido / cuesta despertarlo";
@@ -78,7 +78,7 @@ class MotorNavegacionRetrocederTest {
         ResultadoPaso atras = motor.retroceder(grafo, base, e);
 
         assertFalse(atras.finalizado());
-        assertEquals(id("q_neuro_tono"), atras.preguntaActual().getId());
+        assertEquals(id("q_act_tono"), atras.preguntaActual().getId());
         assertTrue(e.getRespuestas(tono.getId()).isEmpty());
         assertEquals(List.of(CATEGORIA), e.getRespuestas("pregunta_inicial"),
                 "las respuestas anteriores se conservan");
@@ -96,8 +96,8 @@ class MotorNavegacionRetrocederTest {
 
         ResultadoPaso atras = motor.retroceder(grafo, base, e);
 
-        assertEquals(id("q_neuro_tono"), atras.preguntaActual().getId());
-        assertFalse(e.reglaDisparada(id("R_NEURO_URG")),
+        assertEquals(id("q_act_tono"), atras.preguntaActual().getId());
+        assertFalse(e.reglaDisparada(id("R_ACT_URG")),
                 "la regla de la respuesta deshecha ya no está disparada");
 
         ResultadoPaso normal = motor.paso(grafo, base, e, atras.preguntaActual(), NORMAL);
@@ -106,7 +106,7 @@ class MotorNavegacionRetrocederTest {
         ResultadoPaso otraVez = motor.paso(grafo, base, e,
                 motor.retroceder(grafo, base, e).preguntaActual(), ALARMA);
         assertEquals(NivelAlerta.URGENCIA, otraVez.nivel());
-        assertEquals(List.of(id("R_NEURO_URG")), idsRegla(otraVez.razones()));
+        assertEquals(List.of(id("R_ACT_URG")), idsRegla(otraVez.razones()));
     }
 
     @Test
@@ -117,7 +117,7 @@ class MotorNavegacionRetrocederTest {
         motor.retroceder(grafo, base, e);
         ResultadoPaso atras = motor.retroceder(grafo, base, e);
 
-        assertEquals(id("q_neuro_gate"), atras.preguntaActual().getId());
+        assertEquals(id("q_act_gate"), atras.preguntaActual().getId());
         assertEquals(2, e.pasos().size());
     }
 

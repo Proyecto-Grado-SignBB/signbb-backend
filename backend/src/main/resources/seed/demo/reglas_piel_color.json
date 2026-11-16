@@ -1,0 +1,49 @@
+{
+  "grafoId": "grafo_piel_color",
+  "rules": {
+    "R_PIEL_URG": {
+      "nombre": "Urgencia Piel y Color",
+      "condiciones": [
+        [
+          {
+            "idNodo": "q_piel_color",
+            "respuesta": "Amarillo por debajo del ombligo o piernas"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_piel_color",
+            "respuesta": "Palmas de manos o plantas amarillas"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_piel_color",
+            "respuesta": "Amarillo + muy dormido/no come"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_piel_color",
+            "respuesta": "Amarillo en primeras 24 horas"
+          }
+        ]
+      ],
+      "nodoDestino": "T_URGENCIA",
+      "nivel": "URGENCIA"
+    },
+    "R_PIEL_CON": {
+      "nombre": "Consultar Piel y Color",
+      "condiciones": [
+        [
+          {
+            "idNodo": "q_piel_color",
+            "respuesta": "Color amarillo en ojos, cara o hasta pecho"
+          }
+        ]
+      ],
+      "nodoDestino": "T_CONSULTA",
+      "nivel": "CONSULTAR_MEDICO"
+    }
+  }
+}

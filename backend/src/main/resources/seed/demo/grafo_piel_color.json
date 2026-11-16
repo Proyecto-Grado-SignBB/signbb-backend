@@ -1,0 +1,125 @@
+{
+  "graph": {
+    "id": "grafo_piel_color",
+    "label": "Evaluación de Piel y Color",
+    "directed": true,
+    "category": [
+      "piel",
+      "color"
+    ],
+    "preguntaInicial": "q_piel_gate",
+    "metadata": {
+      "autor": "Sistema SignBB",
+      "fechaCreacion": "2026-10-07T18:00:00Z",
+      "descripcion": "Subgrafo de coloración de la piel y los ojos (ictericia)."
+    },
+    "nodes": {
+      "q_piel_gate": {
+        "label": "¿Nota cambios en el color de la piel o los ojos de su bebé?",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_UNICA",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "q_piel_color": {
+        "label": "Marca todo lo que notes en su color.",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_MULTIPLE",
+          "peso": 3,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "T_URGENCIA": {
+        "label": "URGENCIA\nLleva a tu bebé a urgencias ahora.",
+        "metadata": {
+          "tipo": "terminal",
+          "desenlace": "urgencia",
+          "peso": 3,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "T_CONSULTA": {
+        "label": "CONSULTAR_MEDICO\nContacta hoy al Programa Madre Canguro.",
+        "metadata": {
+          "tipo": "terminal",
+          "desenlace": "consulta_medica",
+          "peso": 2,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "T_NORMAL": {
+        "label": "NORMAL\nLo que observas puede ser normal. Sigue observando.",
+        "metadata": {
+          "tipo": "terminal",
+          "desenlace": "recomendacion",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      }
+    },
+    "edges": [
+      {
+        "source": "q_piel_gate",
+        "relation": "Sí",
+        "target": "q_piel_color",
+        "directed": true
+      },
+      {
+        "source": "q_piel_gate",
+        "relation": "No",
+        "target": "T_NORMAL",
+        "directed": true
+      },
+      {
+        "source": "q_piel_color",
+        "relation": "Solo blanco de ojos amarillo, comiendo y comportándose bien",
+        "target": "T_NORMAL",
+        "directed": true,
+        "peso": 1
+      },
+      {
+        "source": "q_piel_color",
+        "relation": "Color amarillo en ojos, cara o hasta pecho",
+        "target": "T_CONSULTA",
+        "directed": true,
+        "peso": 2
+      },
+      {
+        "source": "q_piel_color",
+        "relation": "Amarillo por debajo del ombligo o piernas",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_piel_color",
+        "relation": "Palmas de manos o plantas amarillas",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_piel_color",
+        "relation": "Amarillo + muy dormido/no come",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "q_piel_color",
+        "relation": "Amarillo en primeras 24 horas",
+        "target": "T_URGENCIA",
+        "directed": true,
+        "peso": 3
+      }
+    ]
+  }
+}

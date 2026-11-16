@@ -31,7 +31,8 @@ CONFIG_POR_GRAFO = {
     "grafo_raiz": CONFIG_SIMPLE,
     "grafo_respiracion": CONFIG_SIMPLE,
     "grafo_gastro": CONFIG_ESPACIADA,
-    "grafo_activo_color": CONFIG_ESPACIADA,
+    "grafo_actividad": CONFIG_ESPACIADA,
+    "grafo_piel_color": CONFIG_ESPACIADA,
     "grafo_cabeza": CONFIG_SIMPLE,
 }
 

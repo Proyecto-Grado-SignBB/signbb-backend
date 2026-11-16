@@ -45,12 +45,12 @@ están documentadas en [`backend/src/test/README.md`](../../../../../README.md).
 - **Contenido del sistema.** Es el que usan `MotorNavegacionTest`,
   `MotorNavegacionRetrocederTest` y `ServicioNavegacionImplTest`:
   `ContenidoEjemplo.compuesto()`, que une la raíz real del sistema
-  (`src/main/resources/static/grafo_sistema/grafo_raiz.json`) con los cuatro
+  (`src/main/resources/static/grafo_sistema/grafo_raiz.json`) con los cinco
   subgrafos y reglas del seed de demo (`src/main/resources/seed/demo/`).
   `DatabaseInit` siembra la raíz; los subgrafos se publican con el seed de demo.
   El camino que más se prueba es
-  `pregunta_inicial → Actividad y color → Revisar actividad y color →
-  q_neuro_gate`.
+  `pregunta_inicial → Actividad y comportamiento → Revisar actividad y
+  comportamiento → q_act_gate`.
 - **Grafos mínimos armados en código.** Los usan `MotorNavegacionLimiteTest`
   (una cadena de 12 preguntas), `MotorNavegacionColaTest` y `OrdenColaTest`.
 

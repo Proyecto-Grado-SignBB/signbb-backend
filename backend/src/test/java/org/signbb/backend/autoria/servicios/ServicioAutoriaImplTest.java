@@ -120,21 +120,23 @@ class ServicioAutoriaImplTest {
     void lasCategoriasSonLasPreguntasPuenteDeLaRaiz() {
         List<CategoriaDTO> categorias = servicio.categorias();
 
-        assertEquals(List.of("puente_respiracion", "puente_gastro", "puente_neuro", "puente_cabeza"),
+        assertEquals(List.of("puente_respiracion", "puente_gastro", "puente_cabeza",
+                        "puente_actividad", "puente_piel_color", "puente_temperatura"),
                 categorias.stream().map(CategoriaDTO::puenteId).toList());
-        assertEquals(List.of("Respiración", "Gastrointestinal", "Actividad y color", "Cabeza, ojos y oídos"),
+        assertEquals(List.of("Respiración", "Gastrointestinal y urinario", "Cabeza, ojos y oídos",
+                        "Actividad y comportamiento", "Piel y color", "Temperatura"),
                 categorias.stream().map(CategoriaDTO::nombre).toList());
         assertTrue(categorias.get(0).pregunta().contains("respiración"));
     }
 
     @Test
     void crearArmaUnBorradorVacioConUnGrafoIdSinTildes() {
-        SubgrafoDTO dto = servicio.crear(new SubgrafoRequest("  Fiebre en niños pequeños ", "puente_neuro",
+        SubgrafoDTO dto = servicio.crear(new SubgrafoRequest("  Fiebre en niños pequeños ", "puente_temperatura",
                 " Fiebre o calentura ", "Dra. Prueba", ""), MEDICO_A);
 
         assertEquals("grafo_fiebre_en_ninos_pequenos", dto.grafoId());
         assertEquals("Fiebre en niños pequeños", dto.nombre());
-        assertEquals("Actividad y color", dto.categoria());
+        assertEquals("Temperatura", dto.categoria());
         assertEquals("Fiebre o calentura", dto.etiquetaOpcion());
         assertEquals(EstadoBorrador.BORRADOR, dto.estado());
         assertTrue(dto.nodos().isEmpty());
@@ -144,7 +146,7 @@ class ServicioAutoriaImplTest {
 
     @Test
     void elAutorSaleDeLaCuentaYNoDelRequest() {
-        SubgrafoDTO dto = servicio.crear(new SubgrafoRequest("Fiebre", "puente_neuro", "Fiebre",
+        SubgrafoDTO dto = servicio.crear(new SubgrafoRequest("Fiebre", "puente_temperatura", "Fiebre",
                 "Otro autor", "Otra institución"), MEDICO_A);
 
         assertEquals("Dra. A", dto.autor());
@@ -165,7 +167,7 @@ class ServicioAutoriaImplTest {
     @Test
     void crearSinNombreOConUnaCategoriaQueNoExisteSeRechaza() {
         assertThrows(EdicionInvalidaException.class,
-                () -> servicio.crear(new SubgrafoRequest(" ", "puente_neuro", "Fiebre", null, null), MEDICO_A));
+                () -> servicio.crear(new SubgrafoRequest(" ", "puente_temperatura", "Fiebre", null, null), MEDICO_A));
         assertThrows(EdicionInvalidaException.class,
                 () -> servicio.crear(new SubgrafoRequest("Fiebre", "puente_x", "Fiebre", null, null), MEDICO_A));
         verify(borradores, never()).save(any());
@@ -243,7 +245,7 @@ class ServicioAutoriaImplTest {
         CopiaPublicada copia = b.getCopiaPublicada();
         assertEquals(LienzoFiebre.completo(), copia.documento());
         assertEquals("Fiebre", copia.nombre());
-        assertEquals("puente_neuro", copia.puenteId());
+        assertEquals("puente_temperatura", copia.puenteId());
         assertEquals("Fiebre o temperatura alta", copia.etiquetaOpcion());
     }
 
@@ -300,8 +302,8 @@ class ServicioAutoriaImplTest {
         assertEquals(EstadoBorrador.PUBLICADO, dto.estado());
         assertEquals(LienzoFiebre.completo(), b.getDocumento());
         assertEquals("Fiebre", dto.nombre());
-        assertEquals("puente_neuro", dto.puenteId());
-        assertEquals("Actividad y color", dto.categoria());
+        assertEquals("puente_temperatura", dto.puenteId());
+        assertEquals("Temperatura", dto.categoria());
         assertEquals("Fiebre o temperatura alta", dto.etiquetaOpcion());
     }
 

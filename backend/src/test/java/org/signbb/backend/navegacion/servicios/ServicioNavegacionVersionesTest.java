@@ -106,7 +106,7 @@ class ServicioNavegacionVersionesTest {
         RecorridoDTO enCurso = servicio.consultar(viejo);
         assertFalse(enCurso.pregunta().opciones().contains(VersionesDePrueba.OPCION_NUEVA));
         // y responder tampoco lo pasa a la versión nueva
-        servicio.responder(viejo, "Actividad y color");
+        servicio.responder(viejo, "Actividad y comportamiento");
         assertEquals(1L, sesiones.get(viejo).getVersionId());
     }
 

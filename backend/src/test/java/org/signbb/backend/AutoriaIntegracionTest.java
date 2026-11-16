@@ -172,7 +172,7 @@ class AutoriaIntegracionTest {
 
     @Test
     void unSubgrafoPublicadoDesdeElLienzoSeRecorreComoCuidadora() {
-        SubgrafoDTO s = autoria.crear(new SubgrafoRequest("Fiebre prueba de integracion", "puente_neuro", ETIQUETA,
+        SubgrafoDTO s = autoria.crear(new SubgrafoRequest("Fiebre prueba de integracion", "puente_temperatura", ETIQUETA,
                 "Dra. Prueba", "Hospital de prueba"), autor);
         borradorId = s.id();
         grafoId = s.grafoId();
@@ -202,8 +202,8 @@ class AutoriaIntegracionTest {
 
         RecorridoDTO r = navegacion.iniciar();
         String id = r.recorridoId();
-        r = navegacion.responder(id, "Actividad y color");
-        assertEquals("puente_neuro", r.pregunta().id());
+        r = navegacion.responder(id, "Temperatura");
+        assertEquals("puente_temperatura", r.pregunta().id());
         assertTrue(r.pregunta().opciones().contains(ETIQUETA), "aparece la opción del subgrafo nuevo");
 
         r = navegacion.responder(id, ETIQUETA);
@@ -219,7 +219,7 @@ class AutoriaIntegracionTest {
     @Test
     void publicarElSubgrafoPublicaTambienSuBaseDeReglas() {
         String etiqueta = "Fiebre con reglas (prueba)";
-        SubgrafoDTO s = autoria.crear(new SubgrafoRequest("Fiebre con reglas", "puente_neuro", etiqueta,
+        SubgrafoDTO s = autoria.crear(new SubgrafoRequest("Fiebre con reglas", "puente_temperatura", etiqueta,
                 "Dra. Prueba", "Hospital de prueba"), autor);
         borradorId = s.id();
         grafoId = s.grafoId();
@@ -261,7 +261,7 @@ class AutoriaIntegracionTest {
 
         RecorridoDTO r = navegacion.iniciar();
         String id = r.recorridoId();
-        navegacion.responder(id, "Actividad y color");
+        navegacion.responder(id, "Temperatura");
         navegacion.responder(id, etiqueta);
         r = navegacion.responder(id, "Menos de 38 °C");
         assertEquals("FINALIZADO", r.estado());

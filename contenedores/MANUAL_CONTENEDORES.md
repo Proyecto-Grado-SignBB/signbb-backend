@@ -118,12 +118,12 @@ secretos y `SIGNBB_DOCS_ACTIVAS=false`; si no, el backend no arranca y el log
 dice qué variable falta. `SIGNBB_SIEMBRA_ACTIVA=true` solo en el primer
 despliegue (siembra el grafo raíz; los subgrafos se publican después) y
 `false` después. `SIGNBB_SEED_DEMO_ACTIVA` debe quedar en `false`: crea cuentas
-de ejemplo y publica los cuatro subgrafos de demo. Para sembrar el entorno de
+de ejemplo y publica los cinco subgrafos de demo. Para sembrar el entorno de
 demo, enciéndelo junto con la siembra y luego bórralo o ponlo en `false`.
 
 **Seed de demo.** Con `SIGNBB_SEED_DEMO_ACTIVA=true` se crean:
 
-- Médico: `medico.ejemplo@signbb.local` / `Medico123`, autor de los 4 subgrafos.
+- Médico: `medico.ejemplo@signbb.local` / `Medico123`, autor de los 5 subgrafos.
 - Padre: `padre.ejemplo@signbb.local` / `Padre123`.
 
 El seed es idempotente. Para volver a sembrarlo desde cero hay que borrar

@@ -82,27 +82,27 @@ class RepositorioSesionRedisTest {
     @Test
     void crearYBuscarSesionEnCurso() {
         EstadoPaciente estado = new EstadoPaciente();
-        estado.registrarRespuesta("grafo_activo_color/q_neuro_gate", "Sí");
-        Nodo pregunta = grafo.obtenerNodoPorId("grafo_activo_color/q_neuro_areas").orElseThrow();
+        estado.registrarRespuesta("grafo_actividad/q_act_gate", "Sí");
+        Nodo pregunta = grafo.obtenerNodoPorId("grafo_actividad/q_act_areas").orElseThrow();
 
         SesionTriaje sesion = repositorio.crear(estado, ResultadoPaso.pregunta(pregunta));
         SesionTriaje recuperada = repositorio.buscar(sesion.getId());
 
         assertEquals(sesion.getId(), recuperada.getId());
-        assertEquals(List.of("Sí"), recuperada.getEstado().getRespuestas("grafo_activo_color/q_neuro_gate"));
-        assertEquals("grafo_activo_color/q_neuro_areas", recuperada.getUltimoPaso().preguntaActual().getId());
+        assertEquals(List.of("Sí"), recuperada.getEstado().getRespuestas("grafo_actividad/q_act_gate"));
+        assertEquals("grafo_actividad/q_act_areas", recuperada.getUltimoPaso().preguntaActual().getId());
         assertFalse(recuperada.getUltimoPaso().finalizado());
     }
 
     @Test
     void guardarYBuscarSesionFinalizada() {
         EstadoPaciente estado = new EstadoPaciente();
-        estado.registrarRespuesta("grafo_activo_color/q_neuro_gate", "Sí");
-        estado.registrarRespuesta("grafo_activo_color/q_neuro_areas", "SOMNOLENCIA");
-        Nodo urgente = grafo.obtenerNodoPorId("grafo_activo_color/T_URGENCIA").orElseThrow();
+        estado.registrarRespuesta("grafo_actividad/q_act_gate", "Sí");
+        estado.registrarRespuesta("grafo_actividad/q_act_areas", "SOMNOLENCIA");
+        Nodo urgente = grafo.obtenerNodoPorId("grafo_actividad/T_URGENCIA").orElseThrow();
 
         SesionTriaje sesion = new SesionTriaje("s-finalizada", estado, ResultadoPaso.terminal(
-                urgente, NivelAlerta.URGENCIA, List.of(base.obtenerRegla("grafo_activo_color/R_NEURO_URG")),
+                urgente, NivelAlerta.URGENCIA, List.of(base.obtenerRegla("grafo_actividad/R_ACT_URG")),
                 grafo.obtenerCaminoCausal(urgente)));
         repositorio.guardar(sesion);
 
@@ -110,9 +110,9 @@ class RepositorioSesionRedisTest {
 
         assertTrue(recuperada.getUltimoPaso().finalizado());
         assertEquals(NivelAlerta.URGENCIA, recuperada.getUltimoPaso().nivel());
-        assertEquals("grafo_activo_color/T_URGENCIA", recuperada.getUltimoPaso().destino().getId());
+        assertEquals("grafo_actividad/T_URGENCIA", recuperada.getUltimoPaso().destino().getId());
         assertEquals(1, recuperada.getUltimoPaso().razones().size());
-        assertEquals("grafo_activo_color/R_NEURO_URG", recuperada.getUltimoPaso().razones().get(0).getIdRegla());
+        assertEquals("grafo_actividad/R_ACT_URG", recuperada.getUltimoPaso().razones().get(0).getIdRegla());
         assertEquals(sesion.getUltimoPaso().caminoCausal().size(),
                 recuperada.getUltimoPaso().caminoCausal().size());
     }
@@ -121,44 +121,44 @@ class RepositorioSesionRedisTest {
     void elOrdenDeLasRespuestasSeConserva() {
         // El motor reproduce este orden para volver a la pregunta anterior.
         EstadoPaciente estado = new EstadoPaciente();
-        estado.registrarRespuesta("pregunta_inicial", "Actividad y color");
-        estado.registrarRespuesta("puente_neuro", "Revisar actividad y color");
-        estado.registrarRespuesta("grafo_activo_color/q_neuro_gate", "Sí");
-        Nodo pregunta = grafo.obtenerNodoPorId("grafo_activo_color/q_neuro_areas").orElseThrow();
+        estado.registrarRespuesta("pregunta_inicial", "Actividad y comportamiento");
+        estado.registrarRespuesta("puente_actividad", "Revisar actividad y comportamiento");
+        estado.registrarRespuesta("grafo_actividad/q_act_gate", "Sí");
+        Nodo pregunta = grafo.obtenerNodoPorId("grafo_actividad/q_act_areas").orElseThrow();
 
         SesionTriaje sesion = repositorio.crear(estado, ResultadoPaso.pregunta(pregunta));
         EstadoPaciente recuperado = repositorio.buscar(sesion.getId()).getEstado();
 
-        assertEquals(List.of("pregunta_inicial", "puente_neuro", "grafo_activo_color/q_neuro_gate"),
+        assertEquals(List.of("pregunta_inicial", "puente_actividad", "grafo_actividad/q_act_gate"),
                 recuperado.sintomas().stream().map(Sintoma::idNodo).toList());
     }
 
     @Test
     void laPilaDePasosSobreviveAGuardarYBuscar() {
         EstadoPaciente estado = new EstadoPaciente();
-        estado.registrarRespuesta("grafo_activo_color/q_neuro_gate", "Sí");
-        estado.marcarReglaDisparada("grafo_activo_color/R_NEURO_URG");
-        estado.apilarPaso(new PasoRecorrido("grafo_activo_color/q_neuro_gate",
-                List.of("Sí"), List.of(), List.of("grafo_activo_color/R_NEURO_URG")));
-        Nodo pregunta = grafo.obtenerNodoPorId("grafo_activo_color/q_neuro_areas").orElseThrow();
+        estado.registrarRespuesta("grafo_actividad/q_act_gate", "Sí");
+        estado.marcarReglaDisparada("grafo_actividad/R_ACT_URG");
+        estado.apilarPaso(new PasoRecorrido("grafo_actividad/q_act_gate",
+                List.of("Sí"), List.of(), List.of("grafo_actividad/R_ACT_URG")));
+        Nodo pregunta = grafo.obtenerNodoPorId("grafo_actividad/q_act_areas").orElseThrow();
 
         SesionTriaje sesion = repositorio.crear(estado, ResultadoPaso.pregunta(pregunta));
         List<PasoRecorrido> pasos = repositorio.buscar(sesion.getId()).getEstado().pasos();
 
-        assertEquals(List.of(new PasoRecorrido("grafo_activo_color/q_neuro_gate",
-                List.of("Sí"), List.of(), List.of("grafo_activo_color/R_NEURO_URG"))), pasos);
+        assertEquals(List.of(new PasoRecorrido("grafo_actividad/q_act_gate",
+                List.of("Sí"), List.of(), List.of("grafo_actividad/R_ACT_URG"))), pasos);
     }
 
     @Test
     void laColaLaRutaYLasRecomendacionesSobrevivenAGuardarYBuscar() {
-        String q = "grafo_activo_color/q_neuro_gate";
-        String signos = "grafo_activo_color/q_neuro_areas";
+        String q = "grafo_actividad/q_act_gate";
+        String signos = "grafo_actividad/q_act_areas";
         EstadoPaciente estado = new EstadoPaciente();
         estado.registrarRespuestas(q, List.of("Sí"));
         FotoNavegacion antes = estado.fotografiarNavegacion();
         estado.reemplazarRuta(List.of(new PasoRuta("inicio", ""), new PasoRuta(q, "inicia_navegacion")));
         estado.encolarOpcion(q, "NO", signos, List.of(new PasoRuta("inicio", ""), new PasoRuta(signos, "NO")));
-        estado.registrarRecomendacion("grafo_activo_color/T_NORMAL",
+        estado.registrarRecomendacion("grafo_actividad/T_NORMAL",
                 List.of(new PasoRuta("inicio", "")));
         estado.apilarPaso(new PasoRecorrido(q, List.of("Sí"), List.of(), List.of(), antes));
         Nodo pregunta = grafo.obtenerNodoPorId(signos).orElseThrow();
@@ -185,7 +185,7 @@ class RepositorioSesionRedisTest {
                 .when(valores).set(anyString(), anyString(), any(Duration.class));
 
         EstadoPaciente estado = new EstadoPaciente();
-        Nodo pregunta = grafo.obtenerNodoPorId("grafo_activo_color/q_neuro_areas").orElseThrow();
+        Nodo pregunta = grafo.obtenerNodoPorId("grafo_actividad/q_act_areas").orElseThrow();
 
         assertThrows(CacheNoDisponibleException.class, () -> repositorio.buscar("x"));
         assertThrows(CacheNoDisponibleException.class,

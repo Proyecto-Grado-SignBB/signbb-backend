@@ -65,7 +65,7 @@ class ControladorAutoriaTest {
     }
 
     private static SubgrafoDTO vacio() {
-        return new SubgrafoDTO(1L, "grafo_fiebre", "Fiebre", "puente_neuro", "Actividad y color", "Fiebre", null, null,
+        return new SubgrafoDTO(1L, "grafo_fiebre", "Fiebre", "puente_temperatura", "Temperatura", "Fiebre", null, null,
                 EstadoBorrador.BORRADOR, null, List.of(), List.of(), null, null, null, false, 10L, null, null);
     }
 
@@ -74,7 +74,7 @@ class ControladorAutoriaTest {
         when(servicio.crear(any(), eq(UsuariosPrueba.MEDICO_A))).thenReturn(vacio());
 
         MockHttpServletResponse r = ejecutar(post("/api/autoria/subgrafos").contentType(MediaType.APPLICATION_JSON)
-                .content("{\"nombre\":\"Fiebre\",\"puenteId\":\"puente_neuro\"}"));
+                .content("{\"nombre\":\"Fiebre\",\"puenteId\":\"puente_temperatura\"}"));
 
         assertEquals(201, r.getStatus());
         assertTrue(cuerpo(r).contains("\"grafoId\":\"grafo_fiebre\""));

@@ -1,0 +1,55 @@
+{
+  "grafoId": "grafo_actividad",
+  "rules": {
+    "R_ACT_URG": {
+      "nombre": "Urgencia Actividad y Comportamiento",
+      "condiciones": [
+        [
+          {
+            "idNodo": "q_act_tono",
+            "respuesta": "Mucho más dormido / cuesta despertarlo"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_act_tono",
+            "respuesta": "Más flojito de lo habitual"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_act_tono",
+            "respuesta": "Más tieso de lo habitual / cuerpo rígido"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_act_tono",
+            "respuesta": "Movimientos anormales o repetitivos"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_act_llanto",
+            "respuesta": "Llanto inconsolable"
+          }
+        ]
+      ],
+      "nodoDestino": "T_URGENCIA",
+      "nivel": "URGENCIA"
+    },
+    "R_ACT_CON": {
+      "nombre": "Consultar Actividad y Comportamiento",
+      "condiciones": [
+        [
+          {
+            "idNodo": "q_act_llanto",
+            "respuesta": "Más irritable/llora más, pero calma"
+          }
+        ]
+      ],
+      "nodoDestino": "T_CONSULTA",
+      "nivel": "CONSULTAR_MEDICO"
+    }
+  }
+}

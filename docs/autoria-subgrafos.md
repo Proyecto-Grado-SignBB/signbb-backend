@@ -44,7 +44,7 @@ Cada subgrafo puede tener además su **base de reglas clínicas** (reglas de ala
    - Los errores salen con el formato `{mensaje, avisos}`: 422 si la edición es inválida o hay avisos, 404 si no existe y 409 si hubo una edición concurrente.
 5. **Pruebas** (`4f6539d`, `d32b685`): son 63 del módulo, incluida una de punta a punta. Esa prueba arma un subgrafo, lo publica y lo recorre como cuidadora hasta URGENCIA. El detalle está en `backend/src/test/java/org/signbb/backend/autoria/README.md`.
 6. **Categorías piel y temperatura** (`5b2094a`):
-   - Las categorías **son las preguntas puente del grafo raíz** (`grafo_raiz.json`). Ahora son piel, temperatura, respiración, gastrointestinal y neurológico.
+   - Las categorías **son las preguntas puente del grafo raíz** (`grafo_raiz.json`). Ahora son respiración, gastrointestinal y urinario, cabeza/ojos/oídos, actividad y comportamiento, piel y color, y temperatura.
    - Una categoría sin subgrafos no se le muestra a la cuidadora, porque el compositor la poda, y aparece sola cuando alguien publica en ella.
 7. **Nombre para la familia obligatorio** (`c23c5e7`): `etiquetaOpcion` es el único texto que ve la cuidadora. Si viene vacío, el back responde 422 con un mensaje claro. Ya no se usa el nombre técnico como respaldo.
 8. **Limpieza de versiones e imágenes** (`mantenimiento/`): `LimpiezaProgramada` corre todos los días a las 3:30 (primero versiones, luego imágenes) y no tiene endpoint.
@@ -234,14 +234,14 @@ npx ng test ui-autoria --watch=false --browsers=ChromeHeadless
 curl http://localhost:8080/api/autoria/categorias     # en Windows: curl.exe ...
 ```
 
-Debe listar las cinco categorías del grafo raíz: piel, temperatura, respiración, gastrointestinal y neurológico. Si no aparecen, revisa que el backend haya arrancado con `SIGNBB_SIEMBRA_ACTIVA=true` y que la base no tenga un `grafo_raiz` viejo. `DatabaseInit` solo siembra el grafo raíz si no existe; los subgrafos ya no se siembran, se publican desde autoría o se cargan con el seed de datos.
+Debe listar las seis categorías del grafo raíz: respiración, gastrointestinal y urinario, cabeza/ojos/oídos, actividad y comportamiento, piel y color, y temperatura. Si no aparecen, revisa que el backend haya arrancado con `SIGNBB_SIEMBRA_ACTIVA=true` y que la base no tenga un `grafo_raiz` viejo. `DatabaseInit` solo siembra el grafo raíz si no existe; los subgrafos ya no se siembran, se publican desde autoría o se cargan con el seed de datos.
 
 ### Prueba sugerida: «Ictericia en la piel»
 
-1. En `http://localhost:4300`, crea un subgrafo con la categoría **Piel** y el nombre para la familia «Piel u ojos amarillos».
+1. En `http://localhost:4300`, crea un subgrafo con la categoría **Piel y color** y el nombre para la familia «Piel u ojos amarillos».
 2. Arma una pregunta con sus respuestas y conclusiones usando los "+".
 3. Publica.
-4. En `http://localhost:4200` (cuidadora), entra a Piel y verifica que aparece «Piel u ojos amarillos» y que se recorre hasta la conclusión.
+4. En `http://localhost:4200` (cuidadora), entra a Piel y color y verifica que aparece «Piel u ojos amarillos» y que se recorre hasta la conclusión.
 
 ### Probar la limpieza a mano
 
@@ -280,7 +280,7 @@ La tarea corre sola a las 3:30. Para probarla sin esperar, cambia temporalmente 
 - [x] **Revisión clínica** antes de publicar (rama `seguridad`): el médico envía a revisión y un supervisor que no sea el autor aprueba (y eso publica) o rechaza con un comentario. El supervisor que es autor publica directamente sus propios grafos con `POST /subgrafos/{id}/publicar`.
 - [x] **Limpieza de versiones del contenido e imágenes sin uso.** Una tarea diaria (3:30; `signbb.limpieza.cron`, se apaga con `signbb.limpieza.activa=false`) sin endpoint. Versiones: conserva las 20 más recientes (la vigente siempre) y las reemplazadas hace menos de 25 h; borra el resto de la base, de Redis y de la memoria. Imágenes: borra de Silo las que no están en ningún lienzo, copia publicada, grafo ni versión conservada, y nunca las subidas hace menos de 24 h ni archivos con otro nombre. Ante la duda no borra. Código en `mantenimiento/`.
 - [ ] **Historial de versiones y auditoría:** quién cambió qué y cuándo, y volver a una versión publicada anterior.
-- [ ] **Administrar categorías desde la interfaz.** Hoy se agregan editando `grafo_raiz.json`, que existe en dos copias que deben quedar idénticas, y requiere volver a sembrar la base.
+- [ ] **Administrar categorías desde la interfaz.** Hoy se agregan editando `grafo_raiz.json`, que existe en cuatro copias que deben quedar idénticas (autoría, siembra, seed de demo y documentación), y requiere volver a sembrar la base.
 
 ### Detalles menores
 - [ ] Si falla la carga de la pregunta puente en el lienzo, no se avisa: el modal de publicar simplemente no la nombra.

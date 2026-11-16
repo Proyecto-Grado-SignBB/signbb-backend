@@ -32,7 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tools.jackson.databind.ObjectMapper;
 
 /**
- * Seed de demo: cuentas de ejemplo y publicación de los cuatro subgrafos del
+ * Seed de demo: cuentas de ejemplo y publicación de los cinco subgrafos del
  * manifiesto {@code seed/demo/seed.json}.
  *
  * <p>

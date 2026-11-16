@@ -41,8 +41,8 @@
           "src": []
         }
       },
-      "puente_neuro": {
-        "label": "¿Qué nota en la actividad, el color o el llanto?",
+      "puente_cabeza": {
+        "label": "¿Qué nota en la cabeza, los ojos o los oídos?",
         "metadata": {
           "tipo": "pregunta",
           "tipoInteraccion": "SELECCION_UNICA",
@@ -51,8 +51,28 @@
           "src": []
         }
       },
-      "puente_cabeza": {
-        "label": "¿Qué nota en la cabeza, los ojos o los oídos?",
+      "puente_actividad": {
+        "label": "¿Qué nota en la actividad, el comportamiento o el llanto?",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_UNICA",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "puente_piel_color": {
+        "label": "¿Qué nota en la piel o el color del bebé?",
+        "metadata": {
+          "tipo": "pregunta",
+          "tipoInteraccion": "SELECCION_UNICA",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "puente_temperatura": {
+        "label": "¿Nota fiebre o temperatura baja?",
         "metadata": {
           "tipo": "pregunta",
           "tipoInteraccion": "SELECCION_UNICA",
@@ -72,20 +92,10 @@
         }
       },
       "ref_grafo_gastro": {
-        "label": "Grafo Gastrointestinal",
+        "label": "Grafo Gastrointestinal y Urinario",
         "metadata": {
           "tipo": "referencia",
           "grafoId": "grafo_gastro",
-          "peso": 1,
-          "archivos": false,
-          "src": []
-        }
-      },
-      "ref_grafo_activo_color": {
-        "label": "Grafo de Actividad y Color",
-        "metadata": {
-          "tipo": "referencia",
-          "grafoId": "grafo_activo_color",
           "peso": 1,
           "archivos": false,
           "src": []
@@ -96,6 +106,26 @@
         "metadata": {
           "tipo": "referencia",
           "grafoId": "grafo_cabeza",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "ref_grafo_actividad": {
+        "label": "Grafo de Actividad y Comportamiento",
+        "metadata": {
+          "tipo": "referencia",
+          "grafoId": "grafo_actividad",
+          "peso": 1,
+          "archivos": false,
+          "src": []
+        }
+      },
+      "ref_grafo_piel_color": {
+        "label": "Grafo de Piel y Color",
+        "metadata": {
+          "tipo": "referencia",
+          "grafoId": "grafo_piel_color",
           "peso": 1,
           "archivos": false,
           "src": []
@@ -112,15 +142,8 @@
       },
       {
         "source": "pregunta_inicial",
-        "relation": "Gastrointestinal",
+        "relation": "Gastrointestinal y urinario",
         "target": "puente_gastro",
-        "directed": true,
-        "peso": 3
-      },
-      {
-        "source": "pregunta_inicial",
-        "relation": "Actividad y color",
-        "target": "puente_neuro",
         "directed": true,
         "peso": 3
       },
@@ -132,6 +155,27 @@
         "peso": 3
       },
       {
+        "source": "pregunta_inicial",
+        "relation": "Actividad y comportamiento",
+        "target": "puente_actividad",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "pregunta_inicial",
+        "relation": "Piel y color",
+        "target": "puente_piel_color",
+        "directed": true,
+        "peso": 3
+      },
+      {
+        "source": "pregunta_inicial",
+        "relation": "Temperatura",
+        "target": "puente_temperatura",
+        "directed": true,
+        "peso": 3
+      },
+      {
         "source": "puente_respiracion",
         "relation": "Revisar respiración y nariz",
         "target": "ref_grafo_respiracion",
@@ -139,20 +183,26 @@
       },
       {
         "source": "puente_gastro",
-        "relation": "Revisar digestión",
+        "relation": "Revisar digestión y orina",
         "target": "ref_grafo_gastro",
-        "directed": true
-      },
-      {
-        "source": "puente_neuro",
-        "relation": "Revisar actividad y color",
-        "target": "ref_grafo_activo_color",
         "directed": true
       },
       {
         "source": "puente_cabeza",
         "relation": "Revisar cabeza, ojos y oídos",
         "target": "ref_grafo_cabeza",
+        "directed": true
+      },
+      {
+        "source": "puente_actividad",
+        "relation": "Revisar actividad y comportamiento",
+        "target": "ref_grafo_actividad",
+        "directed": true
+      },
+      {
+        "source": "puente_piel_color",
+        "relation": "Revisar piel y color",
+        "target": "ref_grafo_piel_color",
         "directed": true
       }
     ]

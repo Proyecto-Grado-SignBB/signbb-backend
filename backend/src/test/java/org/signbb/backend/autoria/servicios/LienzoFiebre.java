@@ -79,14 +79,14 @@ final class LienzoFiebre {
         return EditorLienzo.enlazar(d, MENOS_38, DECAIDO);
     }
 
-    /** Borrador del subgrafo de fiebre en la categoría neurológica (actividad, color, temperatura). */
+    /** Borrador del subgrafo de fiebre en la categoría de temperatura. */
     static BorradorSubgrafoEntity borrador(DocumentoLienzo documento) {
         BorradorSubgrafoEntity b = new BorradorSubgrafoEntity();
         b.setId(1L);
         b.setGrafoId("grafo_fiebre");
         b.setNombre("Fiebre");
-        b.setPuenteId("puente_neuro");
-        b.setCategoria("Actividad y color");
+        b.setPuenteId("puente_temperatura");
+        b.setCategoria("Temperatura");
         b.setEtiquetaOpcion("Fiebre o temperatura alta");
         b.setAutor("Dra. Prueba");
         b.setInstitucion("Hospital de prueba");

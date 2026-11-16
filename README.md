@@ -107,7 +107,7 @@ arrancar. En desarrollo es `supervisor@signbb.local` / `Supervisor123`;
 **cámbialo** fuera de tu máquina con las variables de abajo.
 
 **Seed de demo.** Con `SIGNBB_SEED_DEMO_ACTIVA=true`, después de la siembra del
-grafo raíz, el backend crea el médico y el padre de ejemplo y publica los cuatro
+grafo raíz, el backend crea el médico y el padre de ejemplo y publica los cinco
 subgrafos de `src/main/resources/seed/demo/` usando el flujo real de autoría. El
 médico queda como autor de los subgrafos y de sus bases de reglas. Cuentas de
 desarrollo:
@@ -138,7 +138,7 @@ El detalle de usuarios, grafos, bases de reglas y scripts está en
 | `SIGNBB_DOCS_ACTIVAS` | `false` apaga Swagger UI y `/v3/api-docs` (responden 404). **Obligatorio en producción** | `true` |
 | `SIGNBB_SHOW_SQL` | `true` imprime el SQL en consola. En producción la app no arranca si está en `true` | `false` |
 | `SIGNBB_SIEMBRA_ACTIVA` | Siembra solo el grafo raíz si falta (`DatabaseInit`). En producción, `true` solo en el primer despliegue | `true` |
-| `SIGNBB_SEED_DEMO_ACTIVA` | Crea las cuentas de demo y publica los 4 subgrafos de `seed/demo/`. **No usar en producción** | `false` |
+| `SIGNBB_SEED_DEMO_ACTIVA` | Crea las cuentas de demo y publica los 5 subgrafos de `seed/demo/`. **No usar en producción** | `false` |
 | `SIGNBB_SEED_MEDICO_NOMBRE` | Nombre del médico de demo | `Médico ejemplo - Neonatologo` |
 | `SIGNBB_SEED_MEDICO_CORREO` | Correo del médico de demo | `medico.ejemplo@signbb.local` |
 | `SIGNBB_SEED_MEDICO_CONTRASENA` | Contraseña del médico de demo | `Medico123` |

@@ -78,7 +78,7 @@ class ResolvedorContenidoClinicoTest {
         when(valores.get(ResolvedorContenidoClinico.CLAVE_GRAFO))
                 .thenReturn(new ObjectMapper().writeValueAsString(compuesto));
 
-        assertEquals(40, resolvedor.documentoGrafo().graph().nodes().size());
+        assertEquals(45, resolvedor.documentoGrafo().graph().nodes().size());
         verify(grafos, never()).findAll();
     }
 

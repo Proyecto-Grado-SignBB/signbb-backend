@@ -39,8 +39,8 @@ import org.signbb.backend.reglas.servicios.ServicioReglasImpl;
  */
 class ServicioNavegacionImplTest {
 
-    private static final String CATEGORIA = "Actividad y color";
-    private static final String REVISAR = "Revisar actividad y color";
+    private static final String CATEGORIA = "Actividad y comportamiento";
+    private static final String REVISAR = "Revisar actividad y comportamiento";
     private static final String SI = "Sí";
     private static final String MOVIMIENTO = "Movimiento y tono";
     private static final String LLANTO = "Llanto e irritabilidad";
@@ -153,8 +153,8 @@ class ServicioNavegacionImplTest {
     void cadaRespuestaQuedaGuardadaYLaConsultaLaRefleja() {
         String id = hastaLlanto();
 
-        assertEquals("grafo_activo_color/q_neuro_llanto", servicio.consultar(id).pregunta().id());
-        assertEquals("grafo_activo_color/T_CONSULTA", servicio.responder(id, CONSULTA).resultado().destinoId());
+        assertEquals("grafo_actividad/q_act_llanto", servicio.consultar(id).pregunta().id());
+        assertEquals("grafo_actividad/T_CONSULTA", servicio.responder(id, CONSULTA).resultado().destinoId());
         assertEquals("FINALIZADO", servicio.consultar(id).estado());
         assertEquals("CONSULTAR_MEDICO", servicio.consultar(id).resultado().nivel());
     }
@@ -182,9 +182,9 @@ class ServicioNavegacionImplTest {
         PasoCausalDTO previo = camino.get(camino.size() - 2);
         assertEquals("", ultimo.condicion());
         assertEquals(cierre.resultado().mensaje(), ultimo.contenido());
-        assertEquals("grafo_activo_color/q_neuro_tono", previo.nodoId());
+        assertEquals("grafo_actividad/q_act_tono", previo.nodoId());
         assertEquals(textoTono, previo.contenido());
-        assertEquals(List.of("Urgencia Actividad y Color"), cierre.resultado().razones());
+        assertEquals(List.of("Urgencia Actividad y Comportamiento"), cierre.resultado().razones());
     }
 
     @Test
@@ -213,8 +213,8 @@ class ServicioNavegacionImplTest {
         RecorridoDTO atras = servicio.retroceder(id);
 
         assertEquals("EN_CURSO", atras.estado());
-        assertEquals("grafo_activo_color/q_neuro_tono", atras.pregunta().id());
-        assertEquals("grafo_activo_color/q_neuro_tono", servicio.consultar(id).pregunta().id());
+        assertEquals("grafo_actividad/q_act_tono", atras.pregunta().id());
+        assertEquals("grafo_actividad/q_act_tono", servicio.consultar(id).pregunta().id());
     }
 
     @Test
@@ -227,6 +227,6 @@ class ServicioNavegacionImplTest {
 
         assertEquals("FINALIZADO", conAlarma.estado());
         assertEquals("URGENCIA", conAlarma.resultado().nivel());
-        assertEquals("grafo_activo_color/T_URGENCIA", conAlarma.resultado().destinoId());
+        assertEquals("grafo_actividad/T_URGENCIA", conAlarma.resultado().destinoId());
     }
 }

@@ -1,0 +1,30 @@
+digraph grafo_actividad {
+// Generado desde grafo_actividad.json — Evaluación de Actividad y Comportamiento
+// Configuración general
+graph [ranksep=1.5, nodesep=1.2];
+node [fontname="Helvetica", style=filled, fillcolor=white, margin=0.2];
+edge [fontname="Helvetica", fontsize=11, minlen=2];
+
+// NODOS
+q_act_gate [label="¿Nota cambios en la actividad, el comportamiento o el llanto de su bebé?", color=black];
+q_act_areas [label="Marca todo lo que quieras revisar.", color=blue, fontcolor=blue];
+q_act_tono [label="Marca todo lo que notes en su movimiento o tono.", color=blue, fontcolor=blue];
+q_act_llanto [label="Marca todo lo que notes en su llanto.", color=blue, fontcolor=blue];
+T_URGENCIA [label="URGENCIA\nLleva a tu bebé a urgencias ahora.", shape=doublecircle, color=red, fontcolor=red];
+T_CONSULTA [label="CONSULTAR_MEDICO\nContacta hoy al Programa Madre Canguro.", shape=doublecircle, color=yellow, fontcolor=darkgoldenrod];
+T_NORMAL [label="NORMAL\nLo que observas puede ser normal. Sigue observando.", shape=doublecircle, color=green, fontcolor=darkgreen];
+
+// ARISTAS
+q_act_gate -> q_act_areas [label="\n   Sí   \n"];
+q_act_gate -> T_NORMAL [label="\n   No   \n"];
+q_act_areas -> q_act_tono [label="\n   Movimiento y tono (3)   \n"];
+q_act_areas -> q_act_llanto [label="\n   Llanto e irritabilidad (3)   \n"];
+q_act_tono -> T_URGENCIA [label="\n   Mucho más dormido / cuesta despertarlo (3)   \n"];
+q_act_tono -> T_URGENCIA [label="\n   Más flojito de lo habitual (3)   \n"];
+q_act_tono -> T_URGENCIA [label="\n   Más tieso de lo habitual / cuerpo rígido (3)   \n"];
+q_act_tono -> T_URGENCIA [label="\n   Movimientos anormales o repetitivos (3)   \n"];
+q_act_tono -> T_NORMAL [label="\n   Duerme bastante, pero despierta para comer y activo (1)   \n"];
+q_act_tono -> T_NORMAL [label="\n   Sobresaltos mientras duerme y luego normal (1)   \n"];
+q_act_llanto -> T_CONSULTA [label="\n   Más irritable/llora más, pero calma (2)   \n"];
+q_act_llanto -> T_URGENCIA [label="\n   Llanto inconsolable (3)   \n"];
+}

@@ -244,86 +244,6 @@
       "nodoDestino": "T_CONSULTA",
       "nivel": "CONSULTAR_MEDICO"
     },
-    "R_NEURO_URG": {
-      "nombre": "Urgencia Actividad y Color",
-      "condiciones": [
-        [
-          {
-            "idNodo": "q_neuro_tono",
-            "respuesta": "Mucho más dormido / cuesta despertarlo"
-          }
-        ],
-        [
-          {
-            "idNodo": "q_neuro_tono",
-            "respuesta": "Más flojito de lo habitual"
-          }
-        ],
-        [
-          {
-            "idNodo": "q_neuro_tono",
-            "respuesta": "Más tieso de lo habitual / cuerpo rígido"
-          }
-        ],
-        [
-          {
-            "idNodo": "q_neuro_tono",
-            "respuesta": "Movimientos anormales o repetitivos"
-          }
-        ],
-        [
-          {
-            "idNodo": "q_neuro_llanto",
-            "respuesta": "Llanto inconsolable"
-          }
-        ],
-        [
-          {
-            "idNodo": "q_neuro_color",
-            "respuesta": "Amarillo por debajo del ombligo o piernas"
-          }
-        ],
-        [
-          {
-            "idNodo": "q_neuro_color",
-            "respuesta": "Palmas de manos o plantas amarillas"
-          }
-        ],
-        [
-          {
-            "idNodo": "q_neuro_color",
-            "respuesta": "Amarillo + muy dormido/no come"
-          }
-        ],
-        [
-          {
-            "idNodo": "q_neuro_color",
-            "respuesta": "Amarillo en primeras 24 horas"
-          }
-        ]
-      ],
-      "nodoDestino": "T_URGENCIA",
-      "nivel": "URGENCIA"
-    },
-    "R_NEURO_CON": {
-      "nombre": "Consultar Actividad y Color",
-      "condiciones": [
-        [
-          {
-            "idNodo": "q_neuro_llanto",
-            "respuesta": "Más irritable/llora más, pero calma"
-          }
-        ],
-        [
-          {
-            "idNodo": "q_neuro_color",
-            "respuesta": "Color amarillo en ojos, cara o hasta pecho"
-          }
-        ]
-      ],
-      "nodoDestino": "T_CONSULTA",
-      "nivel": "CONSULTAR_MEDICO"
-    },
     "R_CAB_URG": {
       "nombre": "Urgencia Cabeza, Ojos y Oídos",
       "condiciones": [
@@ -368,6 +288,100 @@
           {
             "idNodo": "q_cab_oidos",
             "respuesta": "Líquido transparente del oído (no agua de baño)"
+          }
+        ]
+      ],
+      "nodoDestino": "T_CONSULTA",
+      "nivel": "CONSULTAR_MEDICO"
+    },
+    "R_ACT_URG": {
+      "nombre": "Urgencia Actividad y Comportamiento",
+      "condiciones": [
+        [
+          {
+            "idNodo": "q_act_tono",
+            "respuesta": "Mucho más dormido / cuesta despertarlo"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_act_tono",
+            "respuesta": "Más flojito de lo habitual"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_act_tono",
+            "respuesta": "Más tieso de lo habitual / cuerpo rígido"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_act_tono",
+            "respuesta": "Movimientos anormales o repetitivos"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_act_llanto",
+            "respuesta": "Llanto inconsolable"
+          }
+        ]
+      ],
+      "nodoDestino": "T_URGENCIA",
+      "nivel": "URGENCIA"
+    },
+    "R_ACT_CON": {
+      "nombre": "Consultar Actividad y Comportamiento",
+      "condiciones": [
+        [
+          {
+            "idNodo": "q_act_llanto",
+            "respuesta": "Más irritable/llora más, pero calma"
+          }
+        ]
+      ],
+      "nodoDestino": "T_CONSULTA",
+      "nivel": "CONSULTAR_MEDICO"
+    },
+    "R_PIEL_URG": {
+      "nombre": "Urgencia Piel y Color",
+      "condiciones": [
+        [
+          {
+            "idNodo": "q_piel_color",
+            "respuesta": "Amarillo por debajo del ombligo o piernas"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_piel_color",
+            "respuesta": "Palmas de manos o plantas amarillas"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_piel_color",
+            "respuesta": "Amarillo + muy dormido/no come"
+          }
+        ],
+        [
+          {
+            "idNodo": "q_piel_color",
+            "respuesta": "Amarillo en primeras 24 horas"
+          }
+        ]
+      ],
+      "nodoDestino": "T_URGENCIA",
+      "nivel": "URGENCIA"
+    },
+    "R_PIEL_CON": {
+      "nombre": "Consultar Piel y Color",
+      "condiciones": [
+        [
+          {
+            "idNodo": "q_piel_color",
+            "respuesta": "Color amarillo en ojos, cara o hasta pecho"
           }
         ]
       ],

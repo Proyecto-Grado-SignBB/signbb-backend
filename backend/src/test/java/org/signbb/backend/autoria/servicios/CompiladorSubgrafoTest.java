@@ -44,7 +44,7 @@ class CompiladorSubgrafoTest {
 
         assertEquals("grafo_fiebre", g.id());
         assertEquals("Fiebre", g.label());
-        assertEquals(List.of("Actividad y color"), g.category());
+        assertEquals(List.of("Temperatura"), g.category());
         assertEquals(INICIO, g.preguntaInicial());
         assertEquals("Dra. Prueba", g.metadata().get("autor"));
         assertEquals("Hospital de prueba", g.metadata().get("institucion"));

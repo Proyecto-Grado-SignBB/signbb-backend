@@ -1,22 +1,21 @@
 {
   "graph": {
-    "id": "grafo_activo_color",
-    "label": "Evaluación de Actividad y Color",
+    "id": "grafo_actividad",
+    "label": "Evaluación de Actividad y Comportamiento",
     "directed": true,
     "category": [
       "actividad",
-      "llanto",
-      "color"
+      "comportamiento"
     ],
-    "preguntaInicial": "q_neuro_gate",
+    "preguntaInicial": "q_act_gate",
     "metadata": {
       "autor": "Sistema SignBB",
       "fechaCreacion": "2026-10-07T18:00:00Z",
-      "descripcion": "Subgrafo de movimiento/tono, llanto e ictericia."
+      "descripcion": "Subgrafo de movimiento/tono y llanto."
     },
     "nodes": {
-      "q_neuro_gate": {
-        "label": "¿Nota cambios en la actividad, el llanto o el color de su bebé?",
+      "q_act_gate": {
+        "label": "¿Nota cambios en la actividad, el comportamiento o el llanto de su bebé?",
         "metadata": {
           "tipo": "pregunta",
           "tipoInteraccion": "SELECCION_UNICA",
@@ -25,7 +24,7 @@
           "src": []
         }
       },
-      "q_neuro_areas": {
+      "q_act_areas": {
         "label": "Marca todo lo que quieras revisar.",
         "metadata": {
           "tipo": "pregunta",
@@ -35,7 +34,7 @@
           "src": []
         }
       },
-      "q_neuro_tono": {
+      "q_act_tono": {
         "label": "Marca todo lo que notes en su movimiento o tono.",
         "metadata": {
           "tipo": "pregunta",
@@ -45,18 +44,8 @@
           "src": []
         }
       },
-      "q_neuro_llanto": {
+      "q_act_llanto": {
         "label": "Marca todo lo que notes en su llanto.",
-        "metadata": {
-          "tipo": "pregunta",
-          "tipoInteraccion": "SELECCION_MULTIPLE",
-          "peso": 3,
-          "archivos": false,
-          "src": []
-        }
-      },
-      "q_neuro_color": {
-        "label": "Marca todo lo que notes en su color.",
         "metadata": {
           "tipo": "pregunta",
           "tipoInteraccion": "SELECCION_MULTIPLE",
@@ -98,132 +87,83 @@
     },
     "edges": [
       {
-        "source": "q_neuro_gate",
+        "source": "q_act_gate",
         "relation": "Sí",
-        "target": "q_neuro_areas",
+        "target": "q_act_areas",
         "directed": true
       },
       {
-        "source": "q_neuro_gate",
+        "source": "q_act_gate",
         "relation": "No",
         "target": "T_NORMAL",
         "directed": true
       },
       {
-        "source": "q_neuro_areas",
+        "source": "q_act_areas",
         "relation": "Movimiento y tono",
-        "target": "q_neuro_tono",
+        "target": "q_act_tono",
         "directed": true,
         "peso": 3
       },
       {
-        "source": "q_neuro_areas",
+        "source": "q_act_areas",
         "relation": "Llanto e irritabilidad",
-        "target": "q_neuro_llanto",
+        "target": "q_act_llanto",
         "directed": true,
         "peso": 3
       },
       {
-        "source": "q_neuro_areas",
-        "relation": "Color de piel y ojos",
-        "target": "q_neuro_color",
-        "directed": true,
-        "peso": 3
-      },
-      {
-        "source": "q_neuro_tono",
+        "source": "q_act_tono",
         "relation": "Mucho más dormido / cuesta despertarlo",
         "target": "T_URGENCIA",
         "directed": true,
         "peso": 3
       },
       {
-        "source": "q_neuro_tono",
+        "source": "q_act_tono",
         "relation": "Más flojito de lo habitual",
         "target": "T_URGENCIA",
         "directed": true,
         "peso": 3
       },
       {
-        "source": "q_neuro_tono",
+        "source": "q_act_tono",
         "relation": "Más tieso de lo habitual / cuerpo rígido",
         "target": "T_URGENCIA",
         "directed": true,
         "peso": 3
       },
       {
-        "source": "q_neuro_tono",
+        "source": "q_act_tono",
         "relation": "Movimientos anormales o repetitivos",
         "target": "T_URGENCIA",
         "directed": true,
         "peso": 3
       },
       {
-        "source": "q_neuro_tono",
+        "source": "q_act_tono",
         "relation": "Duerme bastante, pero despierta para comer y activo",
         "target": "T_NORMAL",
         "directed": true,
         "peso": 1
       },
       {
-        "source": "q_neuro_tono",
+        "source": "q_act_tono",
         "relation": "Sobresaltos mientras duerme y luego normal",
         "target": "T_NORMAL",
         "directed": true,
         "peso": 1
       },
       {
-        "source": "q_neuro_llanto",
+        "source": "q_act_llanto",
         "relation": "Más irritable/llora más, pero calma",
         "target": "T_CONSULTA",
         "directed": true,
         "peso": 2
       },
       {
-        "source": "q_neuro_llanto",
+        "source": "q_act_llanto",
         "relation": "Llanto inconsolable",
-        "target": "T_URGENCIA",
-        "directed": true,
-        "peso": 3
-      },
-      {
-        "source": "q_neuro_color",
-        "relation": "Solo blanco de ojos amarillo, comiendo y comportándose bien",
-        "target": "T_NORMAL",
-        "directed": true,
-        "peso": 1
-      },
-      {
-        "source": "q_neuro_color",
-        "relation": "Color amarillo en ojos, cara o hasta pecho",
-        "target": "T_CONSULTA",
-        "directed": true,
-        "peso": 2
-      },
-      {
-        "source": "q_neuro_color",
-        "relation": "Amarillo por debajo del ombligo o piernas",
-        "target": "T_URGENCIA",
-        "directed": true,
-        "peso": 3
-      },
-      {
-        "source": "q_neuro_color",
-        "relation": "Palmas de manos o plantas amarillas",
-        "target": "T_URGENCIA",
-        "directed": true,
-        "peso": 3
-      },
-      {
-        "source": "q_neuro_color",
-        "relation": "Amarillo + muy dormido/no come",
-        "target": "T_URGENCIA",
-        "directed": true,
-        "peso": 3
-      },
-      {
-        "source": "q_neuro_color",
-        "relation": "Amarillo en primeras 24 horas",
         "target": "T_URGENCIA",
         "directed": true,
         "peso": 3

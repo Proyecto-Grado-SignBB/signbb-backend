@@ -8,20 +8,26 @@ edge [fontname="Helvetica", fontsize=10];
 pregunta_inicial [label="¿Sientes que tu bebé está diferente a como normalmente es?\nSeleccione las categorías a consultar", color=blue, fontcolor=blue];
 puente_respiracion [label="¿Qué nota en la respiración o la nariz?", color=black];
 puente_gastro [label="¿Qué nota en la alimentación, el vómito, la barriga, el popó o la orina?", color=black];
-puente_neuro [label="¿Qué nota en la actividad, el color o el llanto?", color=black];
 puente_cabeza [label="¿Qué nota en la cabeza, los ojos o los oídos?", color=black];
+puente_actividad [label="¿Qué nota en la actividad, el comportamiento o el llanto?", color=black];
+puente_piel_color [label="¿Qué nota en la piel o el color del bebé?", color=black];
+puente_temperatura [label="¿Nota fiebre o temperatura baja?", color=black];
 ref_grafo_respiracion [label="Grafo de Respiración y Nariz", color=purple, fontcolor=purple];
-ref_grafo_gastro [label="Grafo Gastrointestinal", color=purple, fontcolor=purple];
-ref_grafo_activo_color [label="Grafo de Actividad y Color", color=purple, fontcolor=purple];
+ref_grafo_gastro [label="Grafo Gastrointestinal y Urinario", color=purple, fontcolor=purple];
 ref_grafo_cabeza [label="Grafo de Cabeza, Ojos y Oídos", color=purple, fontcolor=purple];
+ref_grafo_actividad [label="Grafo de Actividad y Comportamiento", color=purple, fontcolor=purple];
+ref_grafo_piel_color [label="Grafo de Piel y Color", color=purple, fontcolor=purple];
 
 // ARISTAS
 pregunta_inicial -> puente_respiracion [label="\n   Respiración (3)   \n"];
-pregunta_inicial -> puente_gastro [label="\n   Gastrointestinal (3)   \n"];
-pregunta_inicial -> puente_neuro [label="\n   Actividad y color (3)   \n"];
+pregunta_inicial -> puente_gastro [label="\n   Gastrointestinal y urinario (3)   \n"];
 pregunta_inicial -> puente_cabeza [label="\n   Cabeza, ojos y oídos (3)   \n"];
+pregunta_inicial -> puente_actividad [label="\n   Actividad y comportamiento (3)   \n"];
+pregunta_inicial -> puente_piel_color [label="\n   Piel y color (3)   \n"];
+pregunta_inicial -> puente_temperatura [label="\n   Temperatura (3)   \n"];
 puente_respiracion -> ref_grafo_respiracion [label="\n   Revisar respiración y nariz   \n"];
-puente_gastro -> ref_grafo_gastro [label="\n   Revisar digestión   \n"];
-puente_neuro -> ref_grafo_activo_color [label="\n   Revisar actividad y color   \n"];
+puente_gastro -> ref_grafo_gastro [label="\n   Revisar digestión y orina   \n"];
 puente_cabeza -> ref_grafo_cabeza [label="\n   Revisar cabeza, ojos y oídos   \n"];
+puente_actividad -> ref_grafo_actividad [label="\n   Revisar actividad y comportamiento   \n"];
+puente_piel_color -> ref_grafo_piel_color [label="\n   Revisar piel y color   \n"];
 }

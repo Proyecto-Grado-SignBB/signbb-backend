@@ -11,15 +11,8 @@
       "grafo": "grafo_gastro.json",
       "reglas": "reglas_gastro.json",
       "puenteId": "puente_gastro",
-      "categoria": "Gastrointestinal",
-      "etiquetaOpcion": "Revisar digestión"
-    },
-    {
-      "grafo": "grafo_activo_color.json",
-      "reglas": "reglas_activo_color.json",
-      "puenteId": "puente_neuro",
-      "categoria": "Actividad y color",
-      "etiquetaOpcion": "Revisar actividad y color"
+      "categoria": "Gastrointestinal y urinario",
+      "etiquetaOpcion": "Revisar digestión y orina"
     },
     {
       "grafo": "grafo_cabeza.json",
@@ -27,6 +20,20 @@
       "puenteId": "puente_cabeza",
       "categoria": "Cabeza, ojos y oídos",
       "etiquetaOpcion": "Revisar cabeza, ojos y oídos"
+    },
+    {
+      "grafo": "grafo_actividad.json",
+      "reglas": "reglas_actividad.json",
+      "puenteId": "puente_actividad",
+      "categoria": "Actividad y comportamiento",
+      "etiquetaOpcion": "Revisar actividad y comportamiento"
+    },
+    {
+      "grafo": "grafo_piel_color.json",
+      "reglas": "reglas_piel_color.json",
+      "puenteId": "puente_piel_color",
+      "categoria": "Piel y color",
+      "etiquetaOpcion": "Revisar piel y color"
     }
   ]
 }

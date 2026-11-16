@@ -6,10 +6,10 @@ punto a punto y las demostraciones con expertos.
 El entorno está formado por:
 
 - Un supervisor, creado por `InicializadorSeguridad` si no existe.
-- Un médico de ejemplo, autor de los cuatro subgrafos y de sus bases de reglas.
+- Un médico de ejemplo, autor de los cinco subgrafos y de sus bases de reglas.
 - Un padre de ejemplo.
-- El grafo raíz con cuatro categorías.
-- Los cuatro subgrafos publicados y sus bases de reglas.
+- El grafo raíz con seis categorías: cinco con subgrafo publicado y Temperatura sin subgrafo.
+- Los cinco subgrafos publicados y sus bases de reglas.
 
 El seed está **apagado por defecto**. Se enciende con
 `SIGNBB_SEED_DEMO_ACTIVA=true` y no se puede usar con
@@ -46,7 +46,7 @@ SIGNBB_SEED_DEMO_ACTIVA=true docker compose up -d --build
 El runner corre después de la seguridad y de `DatabaseInit`:
 
 1. Crea el médico y el padre si no existen.
-2. Crea los borradores de los cuatro subgrafos y de sus reglas.
+2. Crea los borradores de los cinco subgrafos y de sus reglas.
 3. Publica cada subgrafo con `ServicioAutoria.publicar`.
 4. Deja al médico como autor, agrega las referencias al grafo raíz y registra
    una versión por subgrafo.
@@ -111,7 +111,7 @@ anteriores”: la ausencia de signos se resuelve con el “No” del filtro.
   dot -Tsvg grafos/respiracion.dot -o grafos/respiracion.svg
   ```
 
-### Gastrointestinal
+### Gastrointestinal y urinario
 
 Subgrafo de alimentación, vómito, barriga, popó y orina. La entrada habilita
 una selección múltiple de subáreas; cada subárea tiene su propia lista de
@@ -127,19 +127,35 @@ signos.
   dot -Tsvg grafos/gastrointestinal.dot -o grafos/gastrointestinal.svg
   ```
 
-### Actividad y color
+### Actividad y comportamiento
 
-Subgrafo de movimiento/tono, llanto e ictericia. La cianosis no forma parte de
-este subgrafo: los signos azulados están en Respiración.
+Subgrafo de movimiento/tono y llanto. La cianosis no forma parte de este
+subgrafo: los signos azulados están en Respiración. El color y la ictericia
+están en Piel y color.
 
-![Grafo de actividad y color](grafos/actividad_color.svg)
+![Grafo de actividad y comportamiento](grafos/actividad.svg)
 
-- DOT: `grafos/actividad_color.dot`
-- SVG: `grafos/actividad_color.svg`
+- DOT: `grafos/actividad.dot`
+- SVG: `grafos/actividad.svg`
 - Regenerar:
 
   ```bash
-  dot -Tsvg grafos/actividad_color.dot -o grafos/actividad_color.svg
+  dot -Tsvg grafos/actividad.dot -o grafos/actividad.svg
+  ```
+
+### Piel y color
+
+Subgrafo de coloración amarilla de la piel y los ojos (ictericia). Los signos
+generales de piel del documento de signos todavía no tienen subgrafo.
+
+![Grafo de piel y color](grafos/piel_color.svg)
+
+- DOT: `grafos/piel_color.dot`
+- SVG: `grafos/piel_color.svg`
+- Regenerar:
+
+  ```bash
+  dot -Tsvg grafos/piel_color.dot -o grafos/piel_color.svg
   ```
 
 ### Cabeza, ojos y oídos
@@ -166,9 +182,10 @@ el nivel normal se resuelve por las aristas y el cierre implícito.
 | Grafo | Regla de urgencia | Regla de consulta | Tabla completa |
 |---|---|---|---|
 | Respiración | `R_RESP_URG` | `R_RESP_CON` | [reglas_respiracion.md](reglas/reglas_respiracion.md) |
-| Gastrointestinal | `R_GASTRO_URG` | `R_GASTRO_CON` | [reglas_gastro.md](reglas/reglas_gastro.md) |
-| Actividad/Color | `R_NEURO_URG` | `R_NEURO_CON` | [reglas_activo_color.md](reglas/reglas_activo_color.md) |
-| Cabeza/Ojos/Oídos | `R_CAB_URG` | `R_CAB_CON` | [reglas_cabeza.md](reglas/reglas_cabeza.md) |
+| Gastrointestinal y urinario | `R_GASTRO_URG` | `R_GASTRO_CON` | [reglas_gastro.md](reglas/reglas_gastro.md) |
+| Cabeza, ojos y oídos | `R_CAB_URG` | `R_CAB_CON` | [reglas_cabeza.md](reglas/reglas_cabeza.md) |
+| Actividad y comportamiento | `R_ACT_URG` | `R_ACT_CON` | [reglas_actividad.md](reglas/reglas_actividad.md) |
+| Piel y color | `R_PIEL_URG` | `R_PIEL_CON` | [reglas_piel_color.md](reglas/reglas_piel_color.md) |
 
 Las tablas completas muestran la FND, el nodo destino y el nivel de cada regla.
 La versión consolidada está en
@@ -255,14 +272,16 @@ select correo, nombre, rol, institucion, activo
 from usuario
 order by rol;
 
-select count(*) from grafo_clinico_entity;       -- 5: raíz + 4 subgrafos
-select count(*) from base_reglas_entity;         -- 4
-select count(*) from borrador_subgrafo_entity;   -- 4
-select count(*) from version_contenido;          -- 4
+select count(*) from grafo_clinico_entity;       -- 6: raíz + 5 subgrafos
+select count(*) from base_reglas_entity;         -- 5
+select count(*) from borrador_subgrafo_entity;   -- 5
+select count(*) from version_contenido;          -- 5
 ```
 
-El médico debe ver sus cuatro subgrafos en la app de autoría y el padre debe
-poder iniciar una consulta en la app de consulta.
+El médico debe ver sus cinco subgrafos en la app de autoría y el padre debe
+poder iniciar una consulta en la app de consulta. La categoría Temperatura
+aparece en autoría, pero no en la consulta hasta que se publique un subgrafo
+en ella.
 
 ## Notas
 

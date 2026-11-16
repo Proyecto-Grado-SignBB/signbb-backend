@@ -46,8 +46,8 @@ import com.jayway.jsonpath.JsonPath;
 @SpringBootTest
 class ConsultaIntegracionTest {
 
-    private static final String CATEGORIA = "Actividad y color";
-    private static final String REVISAR = "Revisar actividad y color";
+    private static final String CATEGORIA = "Actividad y comportamiento";
+    private static final String REVISAR = "Revisar actividad y comportamiento";
     private static final String SI = "Sí";
     private static final String MOVIMIENTO = "Movimiento y tono";
     private static final String ALARMA = "Mucho más dormido / cuesta despertarlo";
@@ -119,14 +119,14 @@ class ConsultaIntegracionTest {
     void elRecorridoNormalLlegaANormalYSePuedeConsultarDespues() throws Exception {
         String id = iniciar();
 
-        assertEquals("puente_neuro", responder(id, "{\"respuesta\":\"" + CATEGORIA + "\"}"));
-        assertEquals("grafo_activo_color/q_neuro_gate",
+        assertEquals("puente_actividad", responder(id, "{\"respuesta\":\"" + CATEGORIA + "\"}"));
+        assertEquals("grafo_actividad/q_act_gate",
                 responder(id, "{\"respuesta\":\"" + REVISAR + "\"}"));
 
         String cuerpo = responderCuerpo(id, "{\"respuesta\":\"" + NO + "\"}");
         assertEquals("FINALIZADO", JsonPath.read(cuerpo, "$.estado"));
         assertEquals("NORMAL", JsonPath.read(cuerpo, "$.resultado.nivel"));
-        assertEquals("grafo_activo_color/T_NORMAL", JsonPath.read(cuerpo, "$.resultado.destinoId"));
+        assertEquals("grafo_actividad/T_NORMAL", JsonPath.read(cuerpo, "$.resultado.destinoId"));
         assertTrue(((List<?>) JsonPath.read(cuerpo, "$.resultado.razones")).isEmpty());
 
         MvcResult consulta = mvc.perform(conToken(get("/api/recorridos/{id}", id), padre.token()))
@@ -148,9 +148,9 @@ class ConsultaIntegracionTest {
         String cuerpo = responderCuerpo(id, "{\"respuesta\":\"" + ALARMA + "\"}");
         assertEquals("FINALIZADO", JsonPath.read(cuerpo, "$.estado"));
         assertEquals("URGENCIA", JsonPath.read(cuerpo, "$.resultado.nivel"));
-        assertEquals("grafo_activo_color/T_URGENCIA", JsonPath.read(cuerpo, "$.resultado.destinoId"));
+        assertEquals("grafo_actividad/T_URGENCIA", JsonPath.read(cuerpo, "$.resultado.destinoId"));
         assertTrue(((List<?>) JsonPath.read(cuerpo, "$.resultado.razones"))
-                .contains("Urgencia Actividad y Color"));
+                .contains("Urgencia Actividad y Comportamiento"));
         assertTrue(((List<?>) JsonPath.read(cuerpo, "$.resultado.caminoCausal")).size() > 0);
     }
 

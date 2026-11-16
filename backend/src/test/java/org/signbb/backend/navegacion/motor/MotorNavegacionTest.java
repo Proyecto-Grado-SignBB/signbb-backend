@@ -31,9 +31,9 @@ import org.signbb.backend.reglas.servicios.ServicioReglasImpl;
  */
 class MotorNavegacionTest {
 
-    private static final String ACTIVO = "grafo_activo_color";
-    private static final String CATEGORIA = "Actividad y color";
-    private static final String REVISAR = "Revisar actividad y color";
+    private static final String ACTIVO = "grafo_actividad";
+    private static final String CATEGORIA = "Actividad y comportamiento";
+    private static final String REVISAR = "Revisar actividad y comportamiento";
     private static final String SI = "Sí";
     private static final String MOVIMIENTO = "Movimiento y tono";
     private static final String LLANTO = "Llanto e irritabilidad";
@@ -94,12 +94,12 @@ class MotorNavegacionTest {
         Nodo inicial = motor.iniciar(e, grafo).preguntaActual();
 
         ResultadoPaso trasCategoria = motor.paso(grafo, base, e, inicial, CATEGORIA);
-        assertEquals("puente_neuro", trasCategoria.preguntaActual().getId());
+        assertEquals("puente_actividad", trasCategoria.preguntaActual().getId());
 
         ResultadoPaso trasRevisar = motor.paso(grafo, base, e,
                 trasCategoria.preguntaActual(), REVISAR);
         assertFalse(trasRevisar.finalizado());
-        assertEquals(id("q_neuro_gate"), trasRevisar.preguntaActual().getId());
+        assertEquals(id("q_act_gate"), trasRevisar.preguntaActual().getId());
     }
 
     @Test
@@ -123,7 +123,7 @@ class MotorNavegacionTest {
         assertTrue(paso.finalizado());
         assertEquals(NivelAlerta.URGENCIA, paso.nivel());
         assertEquals(id("T_URGENCIA"), paso.destino().getId());
-        assertEquals(List.of(id("R_NEURO_URG")), idsRegla(paso.razones()));
+        assertEquals(List.of(id("R_ACT_URG")), idsRegla(paso.razones()));
     }
 
     @Test
@@ -135,7 +135,7 @@ class MotorNavegacionTest {
         assertTrue(paso.finalizado());
         assertEquals(NivelAlerta.CONSULTAR_MEDICO, paso.nivel());
         assertEquals(id("T_CONSULTA"), paso.destino().getId());
-        assertEquals(List.of(id("R_NEURO_CON")), idsRegla(paso.razones()));
+        assertEquals(List.of(id("R_ACT_CON")), idsRegla(paso.razones()));
     }
 
     @Test
@@ -144,7 +144,7 @@ class MotorNavegacionTest {
         Nodo inicial = motor.iniciar(e, grafo).preguntaActual();
 
         ResultadoPaso paso = motor.paso(grafo, base, e, inicial,
-                List.of("Gastrointestinal", CATEGORIA));
+                List.of("Gastrointestinal y urinario", CATEGORIA));
 
         assertFalse(paso.finalizado());
         assertEquals("puente_gastro", paso.preguntaActual().getId());

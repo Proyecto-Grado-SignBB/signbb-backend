@@ -22,19 +22,21 @@ public final class ContenidoEjemplo {
     /** Grafo raíz del sistema (el mismo que siembra {@code DatabaseInit}). */
     public static final String RUTA_RAIZ = "static/grafo_sistema/grafo_raiz.json";
 
-    /** Subgrafos publicados por el seed de demo, uno por categoría. */
+    /** Subgrafos publicados por el seed de demo, uno por categoría con contenido. */
     public static final List<String> RUTAS_SUBGRAFOS = List.of(
             "seed/demo/grafo_respiracion.json",
             "seed/demo/grafo_gastro.json",
-            "seed/demo/grafo_activo_color.json",
-            "seed/demo/grafo_cabeza.json");
+            "seed/demo/grafo_cabeza.json",
+            "seed/demo/grafo_actividad.json",
+            "seed/demo/grafo_piel_color.json");
 
     /** Bases de reglas de los subgrafos del seed de demo. */
     public static final List<String> RUTAS_REGLAS = List.of(
             "seed/demo/reglas_respiracion.json",
             "seed/demo/reglas_gastro.json",
-            "seed/demo/reglas_activo_color.json",
-            "seed/demo/reglas_cabeza.json");
+            "seed/demo/reglas_cabeza.json",
+            "seed/demo/reglas_actividad.json",
+            "seed/demo/reglas_piel_color.json");
 
     private ContenidoEjemplo() {
     }

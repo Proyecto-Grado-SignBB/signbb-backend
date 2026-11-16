@@ -128,19 +128,19 @@ class PublicadorSubgrafoTest {
     void guardaElSubgrafoYLoEnlazaDesdeSuPreguntaPuente() {
         publicador.publicar(LienzoFiebre.borrador(LienzoFiebre.completo()), FECHA);
 
-        assertEquals(6, filas.size(), "raíz + 4 subgrafos del sistema + el nuevo");
+        assertEquals(7, filas.size(), "raíz + 5 subgrafos del sistema + el nuevo");
         assertEquals(LienzoFiebre.INICIO, documento("grafo_fiebre").graph().preguntaInicial());
 
         GrafoClinicoJson.Grafo raiz = documento(CompositorGrafoClinico.ID_RAIZ).graph();
         GrafoClinicoJson.MetadataNodo ref = raiz.nodes().get(REFERENCIA).metadata();
         assertEquals("referencia", ref.tipo());
         assertEquals("grafo_fiebre", ref.grafoId());
-        assertEquals(List.of(new GrafoClinicoJson.Arista("puente_neuro", ETIQUETA, REFERENCIA, true)),
+        assertEquals(List.of(new GrafoClinicoJson.Arista("puente_temperatura", ETIQUETA, REFERENCIA, true)),
                 aristasHaciaLaReferencia());
     }
 
     @Test
-    void laOpcionNuevaLlegaAlSubgrafoJuntoALasQueYaHabia() {
+    void laOpcionNuevaLlegaAlSubgrafo() {
         publicador.publicar(LienzoFiebre.borrador(LienzoFiebre.completo()), FECHA);
 
         List<GrafoClinicoJson> subgrafos = filas.stream().map(GrafoClinicoEntity::getEstructura)
@@ -148,10 +148,10 @@ class PublicadorSubgrafoTest {
         GrafoClinico tad = GrafoClinicoMapper.desde(CompositorGrafoClinico.componer(
                 documento(CompositorGrafoClinico.ID_RAIZ), subgrafos, ContenidoEjemplo.bases()).grafo());
 
-        Nodo puente = tad.obtenerNodoPorId("puente_neuro").orElseThrow();
+        Nodo puente = tad.obtenerNodoPorId("puente_temperatura").orElseThrow();
         List<Respuesta> opciones = tad.obtenerOpciones(puente);
-        assertEquals(List.of("Revisar actividad y color", ETIQUETA), opciones.stream().map(Respuesta::getCondicion).toList());
-        assertEquals("grafo_fiebre/" + LienzoFiebre.INICIO, opciones.get(1).getDestino().getId());
+        assertEquals(List.of(ETIQUETA), opciones.stream().map(Respuesta::getCondicion).toList());
+        assertEquals("grafo_fiebre/" + LienzoFiebre.INICIO, opciones.get(0).getDestino().getId());
     }
 
     @Test
@@ -172,8 +172,8 @@ class PublicadorSubgrafoTest {
 
         publicador.publicar(borrador, FECHA);
 
-        assertEquals(6, filas.size());
-        assertEquals(List.of(new GrafoClinicoJson.Arista("puente_neuro", "Tiene fiebre", REFERENCIA, true)),
+        assertEquals(7, filas.size());
+        assertEquals(List.of(new GrafoClinicoJson.Arista("puente_temperatura", "Tiene fiebre", REFERENCIA, true)),
                 aristasHaciaLaReferencia());
     }
 
@@ -243,7 +243,7 @@ class PublicadorSubgrafoTest {
 
         publicador.retirar(borrador);
 
-        assertEquals(5, filas.size(), "raíz + 4 subgrafos del sistema");
+        assertEquals(6, filas.size(), "raíz + 5 subgrafos del sistema");
         assertTrue(filas.stream().noneMatch(f -> "grafo_fiebre".equals(f.getEstructura().graph().id())));
         GrafoClinicoJson.Grafo raiz = documento(CompositorGrafoClinico.ID_RAIZ).graph();
         assertFalse(raiz.nodes().containsKey(REFERENCIA));
@@ -257,9 +257,8 @@ class PublicadorSubgrafoTest {
         publicador.retirar(borrador);
 
         GrafoClinico tad = contenidoNavegable();
-        Nodo puente = tad.obtenerNodoPorId("puente_neuro").orElseThrow();
-        assertEquals(List.of("Revisar actividad y color"), tad.obtenerOpciones(puente).stream()
-                .map(Respuesta::getCondicion).toList());
+        assertTrue(tad.obtenerNodoPorId("puente_temperatura").isEmpty(),
+                "la categoría sin subgrafos se poda del contenido navegable");
         assertTrue(tad.obtenerNodoPorId("grafo_fiebre/" + LienzoFiebre.INICIO).isEmpty());
     }
 
@@ -297,8 +296,8 @@ class PublicadorSubgrafoTest {
 
         publicador.publicar(borrador, FECHA);
 
-        assertEquals(6, filas.size());
-        assertEquals(List.of(new GrafoClinicoJson.Arista("puente_neuro", ETIQUETA, REFERENCIA, true)),
+        assertEquals(7, filas.size());
+        assertEquals(List.of(new GrafoClinicoJson.Arista("puente_temperatura", ETIQUETA, REFERENCIA, true)),
                 aristasHaciaLaReferencia());
     }
 
